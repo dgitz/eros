@@ -1,0 +1,384 @@
+<?xml version="1.0" ?>
+<!--Message Definition file-->
+<Messages>
+    <Message name="RemoteControl" id="0xAB10">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Fields>
+                    <field type="int16_t" name="axis1"/>
+                    <field type="int16_t" name="axis2"/>
+                    <field type="int16_t" name="axis3"/>
+                    <field type="int16_t" name="axis4"/>
+                    <field type="int16_t" name="axis5"/>
+                    <field type="int16_t" name="axis6"/>
+                    <field type="int16_t" name="axis7"/>
+                    <field type="int16_t" name="axis8"/>
+                    <field type="uint8_t" name="button1"/>
+                    <field type="uint8_t" name="button2"/>
+                    <field type="uint8_t" name="button3"/>
+                    <field type="uint8_t" name="button4"/>
+                    <field type="uint8_t" name="button5"/>
+                    <field type="uint8_t" name="button6"/>
+                    <field type="uint8_t" name="button7"/>
+                    <field type="uint8_t" name="button8"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Resource" id="0xAB11">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="Node_Name"/>
+                    <field type="uint16_t" name="RAM_Mb"/>
+                    <field type="uint8_t" name="CPU_Used"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>    
+    <Message name="Diagnostic" id="0xAB12">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="Node_Name"/>
+                    <field type="uint8_t" name="System"/>
+                    <field type="uint8_t" name="SubSystem"/>
+                    <field type="uint8_t" name="Component"/>
+                    <field type="uint8_t" name="Diagnostic_Type"/>
+                    <field type="uint8_t" name="Level" />
+                    <field type="uint8_t" name="Diagnostic_Message"/>
+                    <field type="std::string" name="Description"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="Serial">
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="System"/>
+                    <field type="char" name="SubSystem"/>
+                    <field type="char" name="Component"/>
+                    <field type="char" name="Diagnostic_Type"/>
+                    <field type="char" name="Level" />
+                    <field type="char" name="Diagnostic_Message"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Device" id="0xAB13">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="DeviceParent"/>
+                    <field type="std::string" name="DeviceName"/>
+                    <field type="std::string" name="DeviceType"/>
+                    <field type="std::string" name="Architecture"/>
+                </Fields>
+            </Protocol>
+        </Protocols>        
+    </Message>
+    <Message name="TestMessageCounter" id="0xAB14">
+        <Description>
+            <![CDATA[
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="value1"/>
+                    <field type="char" name="value2"/>
+                    <field type="char" name="value3"/>
+                    <field type="char" name="value4"/>
+                    <field type="char" name="value5"/>
+                    <field type="char" name="value6"/>
+                    <field type="char" name="value7"/>
+                    <field type="char" name="value8"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="TestMessageCommand" id="0xAB15">
+        <Description>
+            <![CDATA[
+                This message is used to command the receiving device to output data of type TestMessageCounter.  All fields in 
+                this message are assumed to be 0.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="value1"/>
+                    <field type="char" name="value2"/>
+                    <field type="char" name="value3"/>
+                    <field type="char" name="value4"/>
+                    <field type="char" name="value5"/>
+                    <field type="char" name="value6"/>
+                    <field type="char" name="value7"/>
+                    <field type="char" name="value8"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Configure_DIO_PortA" id="0xAB16">
+        <Description>
+            <![CDATA[
+                This message is used to configure GPIO Port A.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Mode"/>
+                    <field type="char" name="Pin2_Mode"/>
+                    <field type="char" name="Pin3_Mode"/>
+                    <field type="char" name="Pin4_Mode"/>
+                    <field type="char" name="Pin5_Mode"/>
+                    <field type="char" name="Pin6_Mode"/>
+                    <field type="char" name="Pin7_Mode"/>
+                    <field type="char" name="Pin8_Mode"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Mode" id="0xAB17">
+        <Description>
+            <![CDATA[
+                Sends the Mode to the other device.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="Mode"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Set_DIO_PortA" id="0xAB18">
+        <Description>
+            <![CDATA[
+                This message is used to set outputs on PortA. If a pin is not configured as an output this value is discarded.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Get_ANA_PortA" id="0xAB19">
+        <Description>
+            <![CDATA[
+                This message is used to get the Analog Inpurt PortA on the GPIO Board.  The max value of these fields is 4095.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="uint16_t" name="Pin1_Value"/>
+                    <field type="uint16_t" name="Pin2_Value"/>
+                    <field type="uint16_t" name="Pin3_Value"/>
+                    <field type="uint16_t" name="Pin4_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Get_ANA_PortB" id="0xAB20">
+        <Description>
+            <![CDATA[
+                This message is used to get the Analog Inpurt PortA on the GPIO Board.  The max value of these fields is 4095.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="uint16_t" name="Pin1_Value"/>
+                    <field type="uint16_t" name="Pin2_Value"/>
+                    <field type="uint16_t" name="Pin3_Value"/>
+                    <field type="uint16_t" name="Pin4_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Configure_DIO_PortB" id="0xAB21">
+        <Description>
+            <![CDATA[
+                This message is used to configure GPIO Port B.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Mode"/>
+                    <field type="char" name="Pin2_Mode"/>
+                    <field type="char" name="Pin3_Mode"/>
+                    <field type="char" name="Pin4_Mode"/>
+                    <field type="char" name="Pin5_Mode"/>
+                    <field type="char" name="Pin6_Mode"/>
+                    <field type="char" name="Pin7_Mode"/>
+                    <field type="char" name="Pin8_Mode"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Set_DIO_PortB" id="0xAB22">
+        <Description>
+            <![CDATA[
+                This message is used to set outputs on PortB. If a pin is not configured as an output this value is discarded.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Get_DIO_PortA" id="0xAB23">
+        <Description>
+            <![CDATA[
+                This message is used to get the inputs on PortA. If a pin is not configured as an input this value is discarded.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Get_DIO_PortB" id="0xAB24">
+        <Description>
+            <![CDATA[
+                This message is used to get the inputs on PortB. If a pin is not configured as an input this value is discarded.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="FirmwareVersion" id="0xAB25">
+        <Description>
+            <![CDATA[
+                This message is used to get the inputs on PortB. If a pin is not configured as an input this value is discarded.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="char" name="majorVersion"/>
+                    <field type="char" name="minorVersion"/>
+                    <field type="char" name="buildNumber"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="ArmControl" id="0xAB26">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Fields>
+                    <field type="uint8_t" name="device"/>
+                    <field type="int16_t" name="axis1"/>
+                    <field type="int16_t" name="axis2"/>
+                    <field type="int16_t" name="axis3"/>
+                    <field type="int16_t" name="axis4"/>
+                    <field type="int16_t" name="axis5"/>
+                    <field type="int16_t" name="axis6"/>
+                    <field type="uint8_t" name="button1"/>
+                    <field type="uint8_t" name="button2"/>
+                    <field type="uint8_t" name="button3"/>
+                    <field type="uint8_t" name="button4"/>
+                    <field type="uint8_t" name="button5"/>
+                    <field type="uint8_t" name="button6"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+	<Message name="StopMovement" id="0xAB27">
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="uint8_t" name="Level" />
+						<![CDATA[
+							1: E-Stop
+							2: Normal Stop
+						]]>
+                </Fields>
+            </Protocol>
+            <Protocol name="Serial">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Level" />
+						<![CDATA[
+							1: E-Stop
+							2: Normal Stop
+						]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+</Messages>
