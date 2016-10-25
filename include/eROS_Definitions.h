@@ -2,48 +2,28 @@
 
 #ifndef __EROS_DEFINITIONS_INCLUDED__   
 #define __EROS_DEFINITIONS_INCLUDED__
-//Start: Message Definitions
-#define StopMovement_ID 0xab27
-#define StopMovement_ID 0xab27
-#define ArmControl_ID 0xab26
-#define FirmwareVersion_ID 0xab25
-#define Get_DIO_PortB_ID 0xab24
-#define Get_DIO_PortA_ID 0xab23
-#define Set_DIO_PortB_ID 0xab22
-#define Configure_DIO_PortB_ID 0xab21
-#define Get_ANA_PortB_ID 0xab20
-#define Get_ANA_PortA_ID 0xab19
-#define Set_DIO_PortA_ID 0xab18
-#define Mode_ID 0xab17
-#define Configure_DIO_PortA_ID 0xab16
-#define TestMessageCommand_ID 0xab15
-#define TestMessageCounter_ID 0xab14
-#define Device_ID 0xab13
-#define Diagnostic_ID 0xab12
-#define Diagnostic_ID 0xab12
-#define Resource_ID 0xab11
-#define RemoteControl_ID 0xab10
-#define StopMovement_ID 0xab27
-#define StopMovement_ID 0xab27
-#define ArmControl_ID 0xab26
-#define FirmwareVersion_ID 0xab25
-#define Get_DIO_PortB_ID 0xab24
-#define Get_DIO_PortA_ID 0xab23
-#define Set_DIO_PortB_ID 0xab22
-#define Configure_DIO_PortB_ID 0xab21
-#define Get_ANA_PortB_ID 0xab20
-#define Get_ANA_PortA_ID 0xab19
-#define Set_DIO_PortA_ID 0xab18
-#define Mode_ID 0xab17
-#define Configure_DIO_PortA_ID 0xab16
-#define TestMessageCommand_ID 0xab15
-#define TestMessageCounter_ID 0xab14
-#define Device_ID 0xab13
-#define Diagnostic_ID 0xab12
-#define Diagnostic_ID 0xab12
-#define Resource_ID 0xab11
-#define RemoteControl_ID 0xab10
-//End: Message Definitions
+
+//TAG: Start Message Definitions  ALL TEXT UNTIL TAG: End IS AUTO GENERATED
+#define STOPMOVEMENT_ID 0XAB27
+#define ARMCONTROL_ID 0XAB26
+#define FIRMWAREVERSION_ID 0XAB25
+#define GET_DIO_PORTB_ID 0XAB24
+#define GET_DIO_PORTA_ID 0XAB23
+#define SET_DIO_PORTB_ID 0XAB22
+#define CONFIGURE_DIO_PORTB_ID 0XAB21
+#define GET_ANA_PORTB_ID 0XAB20
+#define GET_ANA_PORTA_ID 0XAB19
+#define SET_DIO_PORTA_ID 0XAB18
+#define MODE_ID 0XAB17
+#define CONFIGURE_DIO_PORTA_ID 0XAB16
+#define TESTMESSAGECOMMAND_ID 0XAB15
+#define TESTMESSAGECOUNTER_ID 0XAB14
+#define DEVICE_ID 0XAB13
+#define DIAGNOSTIC_ID 0XAB12
+#define RESOURCE_ID 0XAB11
+#define REMOTECONTROL_ID 0XAB10
+//TAG: End Message Definitions
+
 //Diagnostic Definitions
 #define LEVEL1 1
 #define LEVEL2 2

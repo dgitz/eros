@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-10-24 23:48:37.314037***/
+/***Created on:2016-10-25 18:38:34.159266***/
 /***Target: Parallax Propeller ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -33,3 +33,4 @@ int encode_Get_DIO_PortASerial(int* outbuffer,int* length,char Pin1_Value,char P
 int encode_Get_DIO_PortBSerial(int* outbuffer,int* length,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value);
 int encode_FirmwareVersionSerial(int* outbuffer,int* length,char majorVersion,char minorVersion,char buildNumber);
 int decode_StopMovementSerial(int* inpacket,int length,int checksum,char* Level);
+#endif

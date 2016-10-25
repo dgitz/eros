@@ -12,17 +12,17 @@ function print_usage()
 
 function basic_merge()
 {
-	rsync -avr * /home/robot/scripts
+	rsync -avr scripts/* /home/robot/scripts
 }
 
 function sync_topackage()
 {
 	echo "Syncing to: "$1
-	rsync -avr ../include/* $1/include/
-	rsync -avr ../src/Communication/MessageGeneration/generated/ros/udpmessage.h $1/include/
-	rsync -avr ../src/Communication/MessageGeneration/generated/ros/serialmessage.h $1/include/
-	rsync -avr ../src/Communication/MessageGeneration/generated/ros/udpmessage.cpp $1/util/
-	rsync -avr ../src/Communication/MessageGeneration/generated/ros/serialmessage.cpp $1/util/
+	rsync -avr include/* $1/include/
+	rsync -avr src/Communication/MessageGeneration/generated/ros/udpmessage.h $1/include/
+	rsync -avr src/Communication/MessageGeneration/generated/ros/serialmessage.h $1/include/
+	rsync -avr src/Communication/MessageGeneration/generated/ros/udpmessage.cpp $1/util/
+	rsync -avr src/Communication/MessageGeneration/generated/ros/serialmessage.cpp $1/util/
 	
 }
 if [ $# -eq 0 ]; then

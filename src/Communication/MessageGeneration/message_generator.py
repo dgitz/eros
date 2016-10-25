@@ -3,6 +3,7 @@ import os.path
 import sys
 from datetime import datetime
 from array import *
+import pdb
 
 class fieldobject(object):
     def __init__(self,datatype=None,name=None):
@@ -33,13 +34,14 @@ def generate_message(xmlfile):
     ros_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
     propeller_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
     for message in root:
+        tempstr = "#define " + message.get('name').upper() + "_ID " +  hex(int(message.get('id'),0)).upper() + "\r\n"
+        message_strings.append(tempstr)
         protocollist = []
         protocols = message.find('Protocols')
         for protocol in protocols:
             #print "Protocol: ", protocol.get('name')
             protocollist.append(protocolobject(protocol.get('name')))
-            tempstr = "#define " + message.get('name') + "_ID " +  hex(int(message.get('id'),0)) + "\r\n"
-            message_strings.append(tempstr)
+            
             if(protocol.get('name') == 'UDP'):
                 #ros_udpmessagefile_header.write('#define UDP_' + message.get('name') + '_ID ' + message.get('id') +'\r\n')
                 gui_udpmessagefile_header.write('#define UDP_' + message.get('name') + '_ID "' + message.get('id')[2:] +'"\r\n')
@@ -446,27 +448,25 @@ def generate_message(xmlfile):
                     propeller_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     propeller_serialmessagefile_cpp.write('}\r\n')
                     
-    #print message_strings
     f = open("/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h", "r")
     contents = f.readlines()
     start_index = 0
     finish_index = 0
     f.close()
     for i in range(0, len(contents)):
-        found = contents[i].find("Start: Message Definitions")
+        found = contents[i].find("TAG: Start Message Definitions")
         if (found > -1):
             start_index = i+1
-        found = contents[i].find("End: Message Definitions")
+        found = contents[i].find("TAG: End Message Definitions")
         if (found > -1):
             stop_index = i+1
-    print "Inserting at: " + str(start_index)
+
+    for i in range(start_index+1,stop_index):
+        del contents[start_index]
+    f = open("/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h", "w")
     for i in range(0,len(message_strings)):
         contents.insert(start_index,message_strings[i])  
     contents = "".join(contents)
-    print "start: " + str(start_index) + " stop: " + str(stop_index)
-    for i in range(start_index,stop_index):
-        contents.pop(start_index)
-    f = open("/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h", "w")
     f.write(contents)
     f.close()
     

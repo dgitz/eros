@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-10-24 23:48:37.313803***/
+/***Created on:2016-10-25 18:38:34.158966***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "ros/ros.h"
@@ -32,3 +32,6 @@ public:
 	std::string encode_DeviceUDP(std::string DeviceParent,std::string DeviceName,std::string DeviceType,std::string Architecture);
 	int decode_ArmControlUDP(std::vector<std::string> items,uint8_t* device,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6);
 	std::string encode_StopMovementUDP(uint8_t Level);
+private:
+};
+#endif
