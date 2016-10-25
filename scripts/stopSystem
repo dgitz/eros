@@ -1,0 +1,88 @@
+#!/bin/bash
+#Author: David Gitz
+#Purpose: Kills Software on all Devices
+
+
+declare -a Devices=("ControlModule1" "ControlModule2" "dgitzrosmaster")
+function print_usage()
+{
+    echo "Usage Instructions"
+    echo "No Options: Stop all Devices"
+    echo "-? This Menu"
+    echo "-a Stop all Devices"
+    echo "-r <device> Stop on remote device"
+    echo "-l Stop local Device"
+    
+}
+function stop_device_remote ()
+{
+    ping -w 1 $1
+    RETVAL=$?
+    if [ $RETVAL -eq 0 ]; then
+        echo "Attempting to stop on remote: " $1 
+        ssh robot@$1 "./scripts/stopSystem -l"
+    else
+        echo "Device: "$1" Not Found."
+    fi
+    
+}
+
+function stop_device_local ()
+{
+    read_tasklist
+}
+function stop_all_devices()
+{
+    echo "Stopping on all Devices"
+    #First attempt a graceful close
+    #stop_command="rosnode kill --all"
+    eval $stop_command
+    
+    #Then go through all devices to make sure all nodes are stopped.  
+    for device in "${Devices[@]}"
+    do
+        if [ $device != $HOSTNAME ]; then
+            stop_device_remote $device
+        else
+            stop_device_local $device
+        fi
+    done
+    exit 0
+}
+function read_tasklist()
+{
+    while IFS='' read -r line || [[ -n "$line" ]] ; do
+        index=0
+        
+        for i in $(echo $line | tr "\t" "\n")
+        do
+            if [ $index = 1 ]; then
+                if [[ $i == *".py"* ]]; then
+                    kill_process "python" #This is kind of dumb, really want to kill every python process?
+                else
+                    kill_process $i
+                fi
+            fi
+            let "index += 1"
+        done
+    done < "/home/robot/config/ActiveTasks"
+}
+function kill_process()
+{
+    echo "Killing: " $1
+    killall $1
+}
+#No arguments present.  Launch everywhere.
+if [ $# -eq 0 ]; then
+    stop_all_devices
+fi
+if [ "$1" = "-a" ]; then
+    stop_all_devices
+elif [ "$1" = "-r" ]; then
+    stop_device_remote $2
+elif [ "$1" = "-l" ]; then
+    stop_device_local $HOSTNAME
+elif [ "$1" = "-?" ]; then
+    print_usage
+fi
+

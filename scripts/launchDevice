@@ -1,0 +1,32 @@
+#!/bin/bash
+#Author: David Gitz
+#Purpose: Launches Software
+
+declare -a Devices=("ControlModule1" "dgitzrosmaster")
+
+function launch_device ()
+{
+    cd ~/catkin_ws
+    source devel/setup.bash
+    source ~/.bashrc
+    #touch ~/$1
+    boot_file="/home/robot/logs/output/"$1"_log.txt"
+    echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
+    export ROS_HOSTNAME=$HOSTNAME
+    export ROS_IP=$HOSTNAME
+    export ROS_MASTER_URI=http://dgitzrosmaster:11311
+    echo "ROS_MASTER: "$ROS_MASTER_URI >> $boot_file
+    echo "ROS HOSTNAME: "$ROS_HOSTNAME >> $boot_file
+    echo "Launching Device at: "$(date) >> $boot_file
+    launch_command="roslaunch icarus_rover_v2 "$1".launch"
+    eval $launch_command
+}
+
+
+while getopts "d:" options; do
+    case $options in
+        d) launch_device $OPTARG;;
+        
+    esac
+done
+

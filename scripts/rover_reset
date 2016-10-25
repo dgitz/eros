@@ -1,0 +1,6 @@
+#!/bin/bash
+#Author: David Gitz
+#Purpose: Turns off RED Power LED when interface starts to come up.
+echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness
+
+

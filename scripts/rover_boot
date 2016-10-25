@@ -1,0 +1,47 @@
+#!/bin/bash
+#Author: David Gitz
+#Purpose: Checks connectivity to ROS Master after Interface comes up.
+function comm_good()
+{
+    echo "Comm with ROS Master@"$ros_master" successful." >> $boot_file
+}
+
+function comm_bad()
+{
+    echo "No Comm with ROS Master@"$ros_master"." >> $boot_file
+    exit 0
+}
+
+
+#Turn off RED POWER LED
+ros_master="dgitzrosmaster"
+boot_file="/home/robot/logs/output/"$(hostname)"_log.txt"
+export ROS_HOSTNAME=$HOSTNAME
+export ROS_MASTER_URI=http://$ros_master:11311
+export ROS_IP=$HOSTNAME
+
+
+echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness
+sleep 5
+sudo rm $boot_file
+touch $boot_file
+sudo chown robot:robot $boot_file
+echo "Starting Boot Script at: "$(date) >> $boot_file
+RESULT="1"
+PING=$(ping $ros_master -c 1 | grep -E -o '[0-9]+ received' | cut -f1 -d' ')
+if [ "$RESULT" == "$PING" ]
+then
+    comm_good
+else
+    comm_bad
+fi
+
+echo "Setting permissions on SPI" >> $boot_file
+sudo chown robot:robot /dev/spidev0.0
+sudo chown robot:robot /dev/spidev0.1
+
+rostopic list >> $boot_file
+echo 1 | sudo dd status=none of=/sys/class/leds/led1/brightness
+echo "Completed Boot at: "$(date) >> $boot_file
+scp $boot_file robot@$ros_master:~/logs 
+
