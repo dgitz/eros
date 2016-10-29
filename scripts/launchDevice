@@ -5,7 +5,7 @@
 
 declare -a Devices=("ControlModule1" "dgitzrosmaster")
 
-function launch_device ()
+function launch_device()
 {
     cd ~/catkin_ws
     source devel/setup.bash
@@ -22,7 +22,6 @@ function launch_device ()
     launch_command="roslaunch icarus_rover_v2 "$1".launch"
     eval $launch_command
 }
-
 
 while getopts "d:" options; do
     case $options in

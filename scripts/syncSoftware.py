@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from __future__ import unicode_literals
 import sys,getopt,os
 import Helpers
@@ -78,6 +79,15 @@ def sync_local(hostname):
     for f in glob.glob(ApplicationPackage + "include/*"):
         shutil.copy(f,RootDirectory + "/catkin_ws/devel/include/" + PackageName) 
 
+
+def test(device):
+    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    #sshProcess.stdin.write("export TERM=linux\n")
+    sshProcess.stdin.write("cd ~/catkin_ws\n")
+    sshProcess.stdin.write("source devel/setup.bash\n")
+    sshProcess.stdin.write("catkin build\n")
+    stdout,stderr = sshProcess.communicate()
+    sshProcess.stdin.close()
 def sync_remote(device):
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
@@ -108,12 +118,17 @@ def sync_remote(device):
         subprocess.call("rsync -ar " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
         subprocess.call("rsync -ar " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
         subprocess.call("rsync -ar " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
+        subprocess.call("rsync -ar " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
         
         sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+        #sshProcess.stdin.write("export TERM=linux\n")
         sshProcess.stdin.write("cd ~/catkin_ws\n")
         sshProcess.stdin.write("source devel/setup.bash\n")
-        sshProcess.stdin.write("catkin build &\n")
+        #sshProcess.stdin.write("catkin build\n")
+        stdout,stderr = sshProcess.communicate()
         sshProcess.stdin.close()
+        print stderr
+        print stdout
     else:
         print "No CMakeLists.txt File found for Device: " + device 
 
@@ -142,12 +157,11 @@ def main():
             change_package(arg)
         elif opt == '-r':
             sync_remote(arg)
+            #test(arg)
         elif opt == '-l':
             sync_local(socket.gethostname())
         elif opt == '-p':
             print_package()
-    process_input(sys.argv[1:])
-
 
 if __name__ == "__main__":
     main()
