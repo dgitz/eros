@@ -18,6 +18,7 @@ ActiveTaskFile = RootDirectory + 'config/ActiveTasks'
 ActiveScenarioFile = RootDirectory + 'config/ActiveScenario'
 ApplicationPackage = '/home/robot/catkin_ws/src/' + PackageName + '/'
 DeviceList = []
+build=False
 
 def print_usage():
     print "Usage Instructions"
@@ -46,6 +47,7 @@ def print_package():
     print PackageName
 
 def sync_local(hostname):
+    print "Syncing Local: " + hostname
     #Determine what the name of the ActiveScenario is:
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
@@ -95,6 +97,10 @@ def sync_remote(device):
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
     print "Syncing Remote: " + device
+    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
+    stdout,stderr = sshProcess.communicate()
+    sshProcess.stdin.close()
     subprocess.call("rsync -avr " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -ar " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -ar " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
@@ -124,7 +130,7 @@ def sync_remote(device):
         #sshProcess.stdin.write("export TERM=linux\n")
         sshProcess.stdin.write("cd ~/catkin_ws\n")
         sshProcess.stdin.write("source devel/setup.bash\n")
-        #sshProcess.stdin.write("catkin build\n")
+        sshProcess.stdin.write("catkin build\n")
         stdout,stderr = sshProcess.communicate()
         sshProcess.stdin.close()
         print stderr
@@ -148,6 +154,9 @@ def main():
     opts, args = getopt.getopt(sys.argv[1:],"?ac:pr:l",["help"])
     if(len(opts) == 0):
         sync_all(socket.gethostname())
+    for opt,arg in opts:
+        if opt == '-b':
+            build=True
     for opt, arg in opts:
         if opt == '-?':
             print_usage()

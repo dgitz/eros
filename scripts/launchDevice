@@ -19,8 +19,14 @@ function launch_device()
     echo "ROS_MASTER: "$ROS_MASTER_URI >> $boot_file
     echo "ROS HOSTNAME: "$ROS_HOSTNAME >> $boot_file
     echo "Launching Device at: "$(date) >> $boot_file
-    launch_command="roslaunch icarus_rover_v2 "$1".launch"
-    eval $launch_command
+    var=$(find . -iname $1.launch)
+    if [ -z "$var" ]; then
+        echo "No Launch File for: "$1
+    else
+        launch_command="roslaunch icarus_rover_v2 "$1".launch"
+        eval $launch_command
+    fi
+
 }
 
 while getopts "d:" options; do
