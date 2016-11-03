@@ -6,7 +6,7 @@ import psutil
 import pdb
 import subprocess
 import socket
-ActiveTaskFile = '/home/robot/config/ActiveTasks'
+ActiveNodesFile = '/home/robot/config/ActiveNodes'
 DeviceList = []
 @contextmanager
 def suppress_stdout():
@@ -23,7 +23,7 @@ def suppress_stdout():
 
 def print_usage():
     print "Usage Instructions"
-    print "Using Active Tasks File: " + ActiveTaskFile
+    print "Using Active Nodes File: " + ActiveNodesFile
     print "No Options: Stop all Devices"
     print "-? This Menu"
     print "-a Stop all Devices"
@@ -43,7 +43,7 @@ def stop_device_remote(device):
 
 def stop_device_local():
     print "Stopping Local"
-    read_tasklist()
+    read_nodelist()
 
 def stop_all_devices():
     print "Stop All Devices"
@@ -56,9 +56,9 @@ def stop_all_devices():
             stop_device_remote(DeviceList[i].Name)
         
 
-def read_tasklist():
+def read_nodelist():
     ProcessList = []
-    f = open(ActiveTaskFile, "r")
+    f = open(ActiveNodesFile, "r")
     contents = f.readlines()
     f.close()
     for i in range(0, len(contents)):
@@ -66,14 +66,19 @@ def read_tasklist():
         items = contents[i].split('\t')
         for j in range(0,len(items)):
             #print items[j]
-            if (items[j] == "Task:"):
+            if (items[j] == "Node:"):
                 kill_process(items[j+1])
    
 
 def kill_process(process):
     for proc in psutil.process_iter():
         try:
-            if(proc.cmdline()[1].find(process) >= 0):
+            found_process=0
+            #print len(proc.cmdline())
+            for i in range(0, len(proc.cmdline())):
+                if(proc.cmdline()[i].find(process) >= 0):
+                    found_process = 1
+            if(found_process == 1):
                 print "Killing process: " + process + " with PID: " + str(proc.pid) 
                 try: 
                     with suppress_stdout():

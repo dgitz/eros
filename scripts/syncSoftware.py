@@ -56,13 +56,10 @@ def sync_local(hostname):
     print "Active Scenario: " + ActiveScenario
 
     #Remove old launch files
-    files = glob.glob(ApplicationPackage +"/launch/*")
-    for f in files:
-        os.remove(f)
+    shutil.rmtree(ApplicationPackage + "/launch")
 
     #Copy contents of /home/robot/config/scenarios/<ActiveScenario>/* to /home/robot/catkin_ws/src/icarus_rover_v2/launch/
-    for f in glob.glob(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/*"):
-        shutil.copy(f,ApplicationPackage + "launch/")
+    shutil.copytree(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch",ApplicationPackage + "launch")
     
     #Sync CMakeLists.txt to the correct device
     source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + hostname + ".txt"
