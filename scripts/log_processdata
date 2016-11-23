@@ -1,0 +1,2 @@
+#!/bin/sh
+pidstat -rud -h >> processdata.txt

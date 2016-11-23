@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-10-25 18:38:34.159171***/
+/***Created on:2016-11-21 18:01:01.386542***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -49,17 +49,18 @@ int UDPMessageHandler::decode_ResourceUDP(QList<QByteArray> items,std::string* N
 	*CPU_Used=(int)items.at(3).toInt();
 	return 1;
 }
-int UDPMessageHandler::decode_DiagnosticUDP(QList<QByteArray> items,std::string* Node_Name,int* System,int* SubSystem,int* Component,int* Diagnostic_Type,int* Level,int* Diagnostic_Message,std::string* Description)
+int UDPMessageHandler::decode_DiagnosticUDP(QList<QByteArray> items,std::string* DeviceName,std::string* Node_Name,int* System,int* SubSystem,int* Component,int* Diagnostic_Type,int* Level,int* Diagnostic_Message,std::string* Description)
 {
-	if(items.size() != 9){ return 0; }
-	*Node_Name=items.at(1).toStdString();
-	*System=(int)items.at(2).toInt();
-	*SubSystem=(int)items.at(3).toInt();
-	*Component=(int)items.at(4).toInt();
-	*Diagnostic_Type=(int)items.at(5).toInt();
-	*Level=(int)items.at(6).toInt();
-	*Diagnostic_Message=(int)items.at(7).toInt();
-	*Description=items.at(8).toStdString();
+	if(items.size() != 10){ return 0; }
+	*DeviceName=items.at(1).toStdString();
+	*Node_Name=items.at(2).toStdString();
+	*System=(int)items.at(3).toInt();
+	*SubSystem=(int)items.at(4).toInt();
+	*Component=(int)items.at(5).toInt();
+	*Diagnostic_Type=(int)items.at(6).toInt();
+	*Level=(int)items.at(7).toInt();
+	*Diagnostic_Message=(int)items.at(8).toInt();
+	*Description=items.at(9).toStdString();
 	return 1;
 }
 int UDPMessageHandler::decode_DeviceUDP(QList<QByteArray> items,std::string* DeviceParent,std::string* DeviceName,std::string* DeviceType,std::string* Architecture)
@@ -103,9 +104,17 @@ QString UDPMessageHandler::encode_ArmControlUDP(int device,int axis1,int axis2,i
 	tempstr.append(QString::number(button6));
 	return tempstr;
 }
-int UDPMessageHandler::decode_StopMovementUDP(QList<QByteArray> items,int* Level)
+QString UDPMessageHandler::encode_Arm_CommandUDP(int command)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_Arm_Command_ID);
+	tempstr.append(",");
+	tempstr.append(QString::number(command));
+	return tempstr;
+}
+int UDPMessageHandler::decode_Arm_StatusUDP(QList<QByteArray> items,int* Status)
 {
 	if(items.size() != 2){ return 0; }
-	*Level=(int)items.at(1).toInt();
+	*Status=(int)items.at(1).toInt();
 	return 1;
 }

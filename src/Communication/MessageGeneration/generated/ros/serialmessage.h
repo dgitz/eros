@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-10-25 18:38:34.159201***/
+/***Created on:2016-11-21 18:01:01.386576***/
 /***Target: Raspberry Pi ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -16,7 +16,10 @@
 #define SERIAL_Get_DIO_PortA_ID 0x23
 #define SERIAL_Get_DIO_PortB_ID 0x24
 #define SERIAL_FirmwareVersion_ID 0x25
-#define SERIAL_StopMovement_ID 0x27
+#define SERIAL_Arm_Command_ID 0x27
+#define SERIAL_Setup_ControlGroup_ID 0x28
+#define SERIAL_Tune_ControlGroup_ID 0x29
+#define SERIAL_Arm_Status_ID 0x30
 
 class SerialMessageHandler
 {
@@ -38,7 +41,10 @@ public:
 	int decode_Get_DIO_PortASerial(unsigned char* inpacket,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value);
 	int decode_Get_DIO_PortBSerial(unsigned char* inpacket,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value);
 	int decode_FirmwareVersionSerial(unsigned char* inpacket,char* majorVersion,char* minorVersion,char* buildNumber);
-	int encode_StopMovementSerial(char* outbuffer,int* length,char Level);
+	int encode_Arm_CommandSerial(char* outbuffer,int* length,char Command);
+	int encode_Setup_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,char Input_Port,char Input_PinMode,char Input_PinNumber,char Output_Port,char Output_PinMode,char Output_PinNUmber);
+	int encode_Tune_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,int Proportional_Gain,int Integral_Gain,int Derivative_Gain);
+	int encode_Arm_StatusSerial(char* outbuffer,int* length,char Status);
 private:
 };
 #endif

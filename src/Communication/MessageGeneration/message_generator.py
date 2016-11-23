@@ -295,6 +295,9 @@ def generate_message(xmlfile):
                         elif(item.datatype == 'uint16_t'):
                             ros_serialmessagefile_header.write('int ' + item.name)
                             ros_serialmessagefile_cpp.write('int ' + item.name)
+                        elif(item.datatype == 'int16_t'):
+                            ros_serialmessagefile_header.write('int ' + item.name)
+                            ros_serialmessagefile_cpp.write('int ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype
                     if(encode_for_slave == 1):
@@ -302,6 +305,9 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'uint16_t'):
+                            propeller_serialmessagefile_header.write('int ' + item.name)
+                            propeller_serialmessagefile_cpp.write('int ' + item.name)
+                        elif(item.datatype == 'int16_t'):
                             propeller_serialmessagefile_header.write('int ' + item.name)
                             propeller_serialmessagefile_cpp.write('int ' + item.name)
                         else:
@@ -327,6 +333,8 @@ def generate_message(xmlfile):
                         bytelength = bytelength +1
                     elif(item.datatype == 'uint16_t'):
                         bytelength = bytelength +2
+                    elif(item.datatype == "int16_t"):
+                        bytelength = bytelength +2
                     else:
                         print "ERROR: Datatype not supported:",item.datatype
                 if(bytelength > 8): print "ERROR ERROR ERROR: Currently Serial Messages longer than 8 bytes are not supported."
@@ -347,6 +355,14 @@ def generate_message(xmlfile):
                         if(encode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + item.name +';\r\n')
                     elif(item.datatype == 'uint16_t'):
+                        if(encode_for_master == 1):
+                            ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                        if(encode_for_slave == 1):
+                            propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '1 = ' + item.name + ' >> 8;\r\n')
+                            propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
+                            propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
+                            propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
+                    elif(item.datatype == 'int16_t'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                         if(encode_for_slave == 1):
@@ -391,6 +407,9 @@ def generate_message(xmlfile):
                         elif(item.datatype == 'uint16_t'):
                             ros_serialmessagefile_header.write('int* ' + item.name)
                             ros_serialmessagefile_cpp.write('int* ' + item.name)
+                        elif(item.datatype == 'int16_t'):
+                            ros_serialmessagefile_header.write('int* ' + item.name)
+                            ros_serialmessagefile_cpp.write('int* ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype
                     if(decode_for_slave == 1):
@@ -398,6 +417,9 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
                         elif(item.datatype == 'uint16_t'):
+                            propeller_serialmessagefile_header.write('int* ' + item.name)
+                            propeller_serialmessagefile_cpp.write('int* ' + item.name)
+                        elif(item.datatype == 'int16_t'):
                             propeller_serialmessagefile_header.write('int* ' + item.name)
                             propeller_serialmessagefile_cpp.write('int* ' + item.name)
                         else:
@@ -429,6 +451,17 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint16_t'):
+                        if(decode_for_master == 1):
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            bytecounter = bytecounter + 1
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            bytecounter = bytecounter + 1
+                        elif(decode_for_slave == 1):
+                            propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            bytecounter = bytecounter + 1
+                            propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            bytecounter = bytecounter + 1
+                    elif(item.datatype == 'int16_t'):
                         if(decode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1

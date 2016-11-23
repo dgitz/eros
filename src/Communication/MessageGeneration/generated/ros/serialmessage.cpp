@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-10-25 18:38:34.159235***/
+/***Created on:2016-11-21 18:01:01.386614***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -254,14 +254,83 @@ int SerialMessageHandler::decode_FirmwareVersionSerial(unsigned char* inpacket,c
 	*buildNumber=inpacket[2];
 	return 1;
 }
-int SerialMessageHandler::encode_StopMovementSerial(char* outbuffer,int* length,char Level)
+int SerialMessageHandler::encode_Arm_CommandSerial(char* outbuffer,int* length,char Command)
 {
 	char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x27;
 	*p_outbuffer++ = 8;
-	*p_outbuffer++ = Level;
+	*p_outbuffer++ = Command;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+8);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::encode_Setup_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,char Input_Port,char Input_PinMode,char Input_PinNumber,char Output_Port,char Output_PinMode,char Output_PinNUmber)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x28;
+	*p_outbuffer++ = 8;
+	*p_outbuffer++ = ID;
+	*p_outbuffer++ = Mode;
+	*p_outbuffer++ = Input_Port;
+	*p_outbuffer++ = Input_PinMode;
+	*p_outbuffer++ = Input_PinNumber;
+	*p_outbuffer++ = Output_Port;
+	*p_outbuffer++ = Output_PinMode;
+	*p_outbuffer++ = Output_PinNUmber;
+	int checksum = 0;
+	for(int i = 3; i < (3+8);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::encode_Tune_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,int Proportional_Gain,int Integral_Gain,int Derivative_Gain)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x29;
+	*p_outbuffer++ = 8;
+	*p_outbuffer++ = ID;
+	*p_outbuffer++ = Mode;
+	*p_outbuffer++ = Proportional_Gain;
+	*p_outbuffer++ = Integral_Gain;
+	*p_outbuffer++ = Derivative_Gain;
+	int checksum = 0;
+	for(int i = 3; i < (3+8);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::encode_Arm_StatusSerial(char* outbuffer,int* length,char Status)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x30;
+	*p_outbuffer++ = 8;
+	*p_outbuffer++ = Status;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
