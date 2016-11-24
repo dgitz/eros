@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-21 18:01:01.386446***/
+/***Created on:2016-11-23 18:53:52.254461***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -117,4 +117,16 @@ std::string UDPMessageHandler::encode_Arm_StatusUDP(uint8_t Status)
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)Status));
 	return tempstr;
+}
+int UDPMessageHandler::decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp)
+{
+	char tempstr[8];
+	sprintf(tempstr,"0x%s",items.at(0).c_str());
+	int id = (int)strtol(tempstr,NULL,0);
+	if(id != UDP_Heartbeat_ID){ return 0; }
+	if(items.size() != 4){ return 0; }
+	*Device=items.at(1);
+	*Current_Timestamp=(uint64_t)strtoull(items.at(2).c_str(),NULL,10);
+	*Expected_Timestamp=(uint64_t)strtoull(items.at(3).c_str(),NULL,10);
+	return 1;
 }

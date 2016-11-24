@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-21 18:01:01.386503***/
+/***Created on:2016-11-23 18:53:52.254497***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -11,6 +11,7 @@
 #define UDP_ArmControl_ID "AB26"
 #define UDP_Arm_Command_ID "AB27"
 #define UDP_Arm_Status_ID "AB30"
+#define UDP_Heartbeat_ID "AB31"
 
 class UDPMessageHandler
 {
@@ -24,6 +25,7 @@ public:
 	QString encode_ArmControlUDP(int device,int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int button1,int button2,int button3,int button4,int button5,int button6);
 	QString encode_Arm_CommandUDP(int command);
 	int decode_Arm_StatusUDP(QList<QByteArray> items,int* Status);
+	QString encode_HeartbeatUDP(std::string Device,uint64_t Current_Timestamp,uint64_t Expected_Timestamp);
 private:
 };
 #endif

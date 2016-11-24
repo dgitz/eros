@@ -454,4 +454,28 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Heartbeat" id="0xAB31">
+        <![CDATA[  
+            Periodic Heartbeat
+		]]>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Fields>
+                    <field type="std::string" name="Device" />
+                        <![CDATA[
+                            GUI Device Name
+                        ]]>
+                    <field type="uint64_t" name="Current_Timestamp" />
+						<![CDATA[
+                            Epoch time, in milliSeconds.  This is the current Timestamp of the device.
+						]]>
+                    <field type="uint64_t" name="Expected_Timestamp" />
+						<![CDATA[
+                            Epoch time, in milliSeconds.  This is when the next Timestamp should be received.
+						]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

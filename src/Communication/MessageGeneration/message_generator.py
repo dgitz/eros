@@ -3,6 +3,7 @@ import os.path
 import sys
 from datetime import datetime
 from array import *
+from inspect import currentframe, getframeinfo
 import pdb
 
 class fieldobject(object):
@@ -103,6 +104,9 @@ def generate_message(xmlfile):
                         if(item.datatype =='std::string'):
                             gui_udpmessagefile_header.write(item.datatype + ' ' + item.name)
                             gui_udpmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                        elif(item.datatype == 'uint64_t'):
+                            gui_udpmessagefile_header.write(item.datatype + ' ' + item.name)
+                            gui_udpmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'int16_t'):
                             gui_udpmessagefile_header.write('int ' + item.name)
                             gui_udpmessagefile_cpp.write('int ' + item.name)
@@ -110,7 +114,7 @@ def generate_message(xmlfile):
                             gui_udpmessagefile_header.write('int ' + item.name)
                             gui_udpmessagefile_cpp.write('int ' + item.name)
                         else:
-                             print "ERROR: Datatype not supported:",item.datatype
+                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
                     if(index < len(fieldlist)):
                         if(encode_for_master == 1):
@@ -140,10 +144,15 @@ def generate_message(xmlfile):
                         if(encode_for_master == 1):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(' + item.name +');\r\n')
                         if(encode_for_gui == 1):
-                            gui_udpmessagefile_cpp.write('\ttempstr.append(' + item.name +');\r\n')
+                            gui_udpmessagefile_cpp.write('\ttempstr.append(QString::fromStdString(' + item.name +'));\r\n')
                     elif(item.datatype == 'int16_t'):
                         if(encode_for_master == 1):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((int)' + item.name + '));\r\n')
+                        if(encode_for_gui == 1):
+                            gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
+                    elif(item.datatype == 'uint64_t'):
+                        if(encode_for_master == 1):
+                            ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((uint64_t)' + item.name + '));\r\n')
                         if(encode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
                     elif(item.datatype == 'uint8_t'):
@@ -189,8 +198,16 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_header.write('int* ' + item.name)
                             ros_udpmessagefile_cpp.write('int* ' + item.name)
                             itemcounter = itemcounter + 1
+                        elif(item.datatype == 'uint64_t'):
+                            ros_udpmessagefile_header.write('uint64_t* ' + item.name)
+                            ros_udpmessagefile_cpp.write('uint64_t* ' + item.name)
+                            itemcounter = itemcounter + 1
+                        elif(item.datatype == "std::string"):
+                            ros_udpmessagefile_header.write('std::string* ' + item.name)
+                            ros_udpmessagefile_cpp.write('std::string* ' + item.name)
+                            itemcounter = itemcounter + 1
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(decode_for_gui == 1):
                         if(item.datatype == 'uint8_t'):
                             gui_udpmessagefile_header.write('int* ' + item.name)
@@ -209,7 +226,7 @@ def generate_message(xmlfile):
                             gui_udpmessagefile_cpp.write('std::string* ' + item.name)
                             itemcounter = itemcounter + 1
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                         
                     index += 1
                     if(index < len(fieldlist)):
@@ -252,14 +269,20 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(' + item.datatype + ')atoi(items.at(' + str(itemcounter) + ').c_str());\r\n')
                         if(decode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(int)items.at(' + str(itemcounter) + ').toInt();\r\n')
+                    elif(item.datatype == 'uint64_t'):
+                        itemcounter = itemcounter + 1
+                        if(decode_for_master == 1):
+                            ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(' + item.datatype + ')strtoull(items.at(' + str(itemcounter) + ').c_str(),NULL,10);\r\n')
+                        if(decode_for_gui == 1):
+                            gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(int)items.at(' + str(itemcounter) + ').toInt();\r\n')
                     elif(item.datatype == 'std::string'):
                         itemcounter = itemcounter + 1
                         if(decode_for_master == 1):
-                            ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + '));\r\n')
+                            ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + ');\r\n')
                         if(decode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + ').toStdString();\r\n')
                     else:
-                        print "ERROR: Datatype not supported:",item.datatype
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     
                 if(decode_for_master == 1):
                     ros_udpmessagefile_cpp.write('\treturn 1;\r\n')
@@ -299,7 +322,7 @@ def generate_message(xmlfile):
                             ros_serialmessagefile_header.write('int ' + item.name)
                             ros_serialmessagefile_cpp.write('int ' + item.name)
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(encode_for_slave == 1):
                         if(item.datatype == 'char'):
                             propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
@@ -311,7 +334,7 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_header.write('int ' + item.name)
                             propeller_serialmessagefile_cpp.write('int ' + item.name)
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
                     if(index < len(fieldlist)):
                         if(encode_for_master == 1):
@@ -336,8 +359,8 @@ def generate_message(xmlfile):
                     elif(item.datatype == "int16_t"):
                         bytelength = bytelength +2
                     else:
-                        print "ERROR: Datatype not supported:",item.datatype
-                if(bytelength > 8): print "ERROR ERROR ERROR: Currently Serial Messages longer than 8 bytes are not supported."
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+                if(bytelength > 8): print "ERROR ERROR ERROR: Currently Serial Messages longer than 8 bytes are not supported.", " at line: ",currentframe().f_lineno
                 if(encode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\tchar *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0xAB;\r\n')
@@ -371,7 +394,7 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
                     else:
-                        print "ERROR: Datatype not supported:",item.datatype
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                 for b in range(bytelength,8):
                     if(encode_for_master == 1):
                         ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
@@ -411,7 +434,7 @@ def generate_message(xmlfile):
                             ros_serialmessagefile_header.write('int* ' + item.name)
                             ros_serialmessagefile_cpp.write('int* ' + item.name)
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(decode_for_slave == 1):
                         if(item.datatype == 'char'):
                             propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
@@ -423,7 +446,7 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_header.write('int* ' + item.name)
                             propeller_serialmessagefile_cpp.write('int* ' + item.name)
                         else:
-                            print "ERROR: Datatype not supported:",item.datatype
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
                     if(index < len(fieldlist)):
                         if(decode_for_master == 1):
@@ -473,7 +496,7 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                     else:
-                        print "ERROR: Datatype not supported:",item.datatype
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                 if(decode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     ros_serialmessagefile_cpp.write('}\r\n')

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-21 18:01:01.386542***/
+/***Created on:2016-11-23 18:53:52.254531***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -117,4 +117,16 @@ int UDPMessageHandler::decode_Arm_StatusUDP(QList<QByteArray> items,int* Status)
 	if(items.size() != 2){ return 0; }
 	*Status=(int)items.at(1).toInt();
 	return 1;
+}
+QString UDPMessageHandler::encode_HeartbeatUDP(std::string Device,uint64_t Current_Timestamp,uint64_t Expected_Timestamp)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_Heartbeat_ID);
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(Device));
+	tempstr.append(",");
+	tempstr.append(QString::number(Current_Timestamp));
+	tempstr.append(",");
+	tempstr.append(QString::number(Expected_Timestamp));
+	return tempstr;
 }

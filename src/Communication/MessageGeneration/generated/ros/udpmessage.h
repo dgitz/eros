@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-21 18:01:01.386344***/
+/***Created on:2016-11-23 18:53:52.254381***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "ros/ros.h"
@@ -24,6 +24,7 @@ public:
 		UDP_ArmControl_ID = 0xAB26,
 		UDP_Arm_Command_ID = 0xAB27,
 		UDP_Arm_Status_ID = 0xAB30,
+		UDP_Heartbeat_ID = 0xAB31,
 	};
 	UDPMessageHandler();
 	~UDPMessageHandler();
@@ -34,6 +35,7 @@ public:
 	int decode_ArmControlUDP(std::vector<std::string> items,uint8_t* device,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6);
 	int decode_Arm_CommandUDP(std::vector<std::string> items,uint8_t* command);
 	std::string encode_Arm_StatusUDP(uint8_t Status);
+	int decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp);
 private:
 };
 #endif
