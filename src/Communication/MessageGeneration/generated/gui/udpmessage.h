@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254497***/
+/***Created on:2016-11-26 08:18:18.895481***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -23,7 +23,7 @@ public:
 	int decode_DiagnosticUDP(QList<QByteArray> items,std::string* DeviceName,std::string* Node_Name,int* System,int* SubSystem,int* Component,int* Diagnostic_Type,int* Level,int* Diagnostic_Message,std::string* Description);
 	int decode_DeviceUDP(QList<QByteArray> items,std::string* DeviceParent,std::string* DeviceName,std::string* DeviceType,std::string* Architecture);
 	QString encode_ArmControlUDP(int device,int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int button1,int button2,int button3,int button4,int button5,int button6);
-	QString encode_Arm_CommandUDP(int command);
+	QString encode_Arm_CommandUDP(int Command);
 	int decode_Arm_StatusUDP(QList<QByteArray> items,int* Status);
 	QString encode_HeartbeatUDP(std::string Device,uint64_t Current_Timestamp,uint64_t Expected_Timestamp);
 private:

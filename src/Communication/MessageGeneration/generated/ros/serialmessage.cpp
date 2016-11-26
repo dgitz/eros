@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254594***/
+/***Created on:2016-11-26 08:18:18.895586***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -338,6 +338,54 @@ int SerialMessageHandler::encode_Arm_StatusSerial(char* outbuffer,int* length,ch
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+8);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::encode_Set_DIO_PortA_DefaultValueSerial(char* outbuffer,int* length,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x32;
+	*p_outbuffer++ = 8;
+	*p_outbuffer++ = Pin1_Value;
+	*p_outbuffer++ = Pin2_Value;
+	*p_outbuffer++ = Pin3_Value;
+	*p_outbuffer++ = Pin4_Value;
+	*p_outbuffer++ = Pin5_Value;
+	*p_outbuffer++ = Pin6_Value;
+	*p_outbuffer++ = Pin7_Value;
+	*p_outbuffer++ = Pin8_Value;
+	int checksum = 0;
+	for(int i = 3; i < (3+8);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::encode_Set_DIO_PortB_DefaultValueSerial(char* outbuffer,int* length,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x33;
+	*p_outbuffer++ = 8;
+	*p_outbuffer++ = Pin1_Value;
+	*p_outbuffer++ = Pin2_Value;
+	*p_outbuffer++ = Pin3_Value;
+	*p_outbuffer++ = Pin4_Value;
+	*p_outbuffer++ = Pin5_Value;
+	*p_outbuffer++ = Pin6_Value;
+	*p_outbuffer++ = Pin7_Value;
+	*p_outbuffer++ = Pin8_Value;
 	int checksum = 0;
 	for(int i = 3; i < (3+8);i++)
 	{

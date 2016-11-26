@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254657***/
+/***Created on:2016-11-26 08:18:18.895650***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_DiagnosticSerial(int* outbuffer,int* length,char System,char SubSystem,char Component,char Diagnostic_Type,char Level,char Diagnostic_Message)
@@ -377,5 +377,41 @@ int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,char* Status)
 	}
 	if(computed_checksum != checksum) { return -1; }
 	*Status=inpacket[0];
+	return 1;
+}
+int decode_Set_DIO_PortA_DefaultValueSerial(int* inpacket,int length,int checksum,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
+	*Pin1_Value=inpacket[0];
+	*Pin2_Value=inpacket[1];
+	*Pin3_Value=inpacket[2];
+	*Pin4_Value=inpacket[3];
+	*Pin5_Value=inpacket[4];
+	*Pin6_Value=inpacket[5];
+	*Pin7_Value=inpacket[6];
+	*Pin8_Value=inpacket[7];
+	return 1;
+}
+int decode_Set_DIO_PortB_DefaultValueSerial(int* inpacket,int length,int checksum,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
+	*Pin1_Value=inpacket[0];
+	*Pin2_Value=inpacket[1];
+	*Pin3_Value=inpacket[2];
+	*Pin4_Value=inpacket[3];
+	*Pin5_Value=inpacket[4];
+	*Pin6_Value=inpacket[5];
+	*Pin7_Value=inpacket[6];
+	*Pin8_Value=inpacket[7];
 	return 1;
 }

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254561***/
+/***Created on:2016-11-26 08:18:18.895549***/
 /***Target: Raspberry Pi ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -20,6 +20,8 @@
 #define SERIAL_Setup_ControlGroup_ID 0x28
 #define SERIAL_Tune_ControlGroup_ID 0x29
 #define SERIAL_Arm_Status_ID 0x30
+#define SERIAL_Set_DIO_PortA_DefaultValue_ID 0x32
+#define SERIAL_Set_DIO_PortB_DefaultValue_ID 0x33
 
 class SerialMessageHandler
 {
@@ -45,6 +47,8 @@ public:
 	int encode_Setup_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,char Input_Port,char Input_PinMode,char Input_PinNumber,char Output_Port,char Output_PinMode,char Output_PinNUmber);
 	int encode_Tune_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,int Proportional_Gain,int Integral_Gain,int Derivative_Gain);
 	int encode_Arm_StatusSerial(char* outbuffer,int* length,char Status);
+	int encode_Set_DIO_PortA_DefaultValueSerial(char* outbuffer,int* length,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value);
+	int encode_Set_DIO_PortB_DefaultValueSerial(char* outbuffer,int* length,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value);
 private:
 };
 #endif

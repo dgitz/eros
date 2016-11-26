@@ -366,7 +366,7 @@
             <Protocol name="UDP">
                 <Origin>GUI</Origin>
                 <Fields>
-                    <field type="uint8_t" name="command" />
+                    <field type="uint8_t" name="Command" />
 						<![CDATA[
 						]]>
                 </Fields>
@@ -474,6 +474,52 @@
 						<![CDATA[
                             Epoch time, in milliSeconds.  This is when the next Timestamp should be received.
 						]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Set_DIO_PortA_DefaultValue" id="0xAB32">
+        <Description>
+            <![CDATA[
+                This message is used to set default values for DIO Port A.  These values are used when the Rover is Disabled.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Set_DIO_PortB_DefaultValue" id="0xAB33">
+        <Description>
+            <![CDATA[
+                This message is used to set default values for DIO Port B.  These values are used when the Rover is Disabled.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="char" name="Pin1_Value"/>
+                    <field type="char" name="Pin2_Value"/>
+                    <field type="char" name="Pin3_Value"/>
+                    <field type="char" name="Pin4_Value"/>
+                    <field type="char" name="Pin5_Value"/>
+                    <field type="char" name="Pin6_Value"/>
+                    <field type="char" name="Pin7_Value"/>
+                    <field type="char" name="Pin8_Value"/>
                 </Fields>
             </Protocol>
         </Protocols>

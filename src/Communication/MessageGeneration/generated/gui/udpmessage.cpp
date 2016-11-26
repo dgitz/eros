@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254531***/
+/***Created on:2016-11-26 08:18:18.895515***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -104,12 +104,12 @@ QString UDPMessageHandler::encode_ArmControlUDP(int device,int axis1,int axis2,i
 	tempstr.append(QString::number(button6));
 	return tempstr;
 }
-QString UDPMessageHandler::encode_Arm_CommandUDP(int command)
+QString UDPMessageHandler::encode_Arm_CommandUDP(int Command)
 {
 	QString tempstr = "";
 	tempstr.append(UDP_Arm_Command_ID);
 	tempstr.append(",");
-	tempstr.append(QString::number(command));
+	tempstr.append(QString::number(Command));
 	return tempstr;
 }
 int UDPMessageHandler::decode_Arm_StatusUDP(QList<QByteArray> items,int* Status)

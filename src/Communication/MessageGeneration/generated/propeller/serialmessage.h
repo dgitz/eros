@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254624***/
+/***Created on:2016-11-26 08:18:18.895617***/
 /***Target: Parallax Propeller ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -20,6 +20,8 @@
 #define SERIAL_Setup_ControlGroup_ID 0x28
 #define SERIAL_Tune_ControlGroup_ID 0x29
 #define SERIAL_Arm_Status_ID 0x30
+#define SERIAL_Set_DIO_PortA_DefaultValue_ID 0x32
+#define SERIAL_Set_DIO_PortB_DefaultValue_ID 0x33
 int encode_DiagnosticSerial(int* outbuffer,int* length,char System,char SubSystem,char Component,char Diagnostic_Type,char Level,char Diagnostic_Message);
 int encode_TestMessageCounterSerial(int* outbuffer,int* length,char value1,char value2,char value3,char value4,char value5,char value6,char value7,char value8);
 int decode_TestMessageCounterSerial(int* inpacket,int length,int checksum,char* value1,char* value2,char* value3,char* value4,char* value5,char* value6,char* value7,char* value8);
@@ -39,4 +41,6 @@ int decode_Arm_CommandSerial(int* inpacket,int length,int checksum,char* Command
 int decode_Setup_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,char* Input_Port,char* Input_PinMode,char* Input_PinNumber,char* Output_Port,char* Output_PinMode,char* Output_PinNUmber);
 int decode_Tune_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,int* Proportional_Gain,int* Integral_Gain,int* Derivative_Gain);
 int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,char* Status);
+int decode_Set_DIO_PortA_DefaultValueSerial(int* inpacket,int length,int checksum,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value);
+int decode_Set_DIO_PortB_DefaultValueSerial(int* inpacket,int length,int checksum,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value);
 #endif

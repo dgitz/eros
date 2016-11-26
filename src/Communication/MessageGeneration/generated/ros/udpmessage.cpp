@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-11-23 18:53:52.254461***/
+/***Created on:2016-11-26 08:18:18.895446***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -100,14 +100,14 @@ int UDPMessageHandler::decode_ArmControlUDP(std::vector<std::string> items,uint8
 	*button6=(uint8_t)atoi(items.at(13).c_str());
 	return 1;
 }
-int UDPMessageHandler::decode_Arm_CommandUDP(std::vector<std::string> items,uint8_t* command)
+int UDPMessageHandler::decode_Arm_CommandUDP(std::vector<std::string> items,uint8_t* Command)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
 	int id = (int)strtol(tempstr,NULL,0);
 	if(id != UDP_Arm_Command_ID){ return 0; }
 	if(items.size() != 2){ return 0; }
-	*command=(uint8_t)atoi(items.at(1).c_str());
+	*Command=(uint8_t)atoi(items.at(1).c_str());
 	return 1;
 }
 std::string UDPMessageHandler::encode_Arm_StatusUDP(uint8_t Status)
