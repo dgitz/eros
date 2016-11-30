@@ -41,48 +41,58 @@ def stop_device_remote(device):
     print stdout
     
 
-def stop_device_local():
+def stop_device_local(level):
     print "Stopping Local"
-    read_nodelist()
+    read_nodelist(level)
 
-def stop_all_devices():
+def stop_all_devices(level):
     print "Stop All Devices"
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         print DeviceList[i].Name + ":" + DeviceList[i].IPAddress
         if(DeviceList[i].Name == socket.gethostname()):
-            stop_device_local()
+            stop_device_local(level)
         else:
             stop_device_remote(DeviceList[i].Name)
         
 
-def read_nodelist():
+def read_nodelist(level):
     ProcessList = []
     f = open(ActiveNodesFile, "r")
     contents = f.readlines()
     f.close()
     for i in range(0, len(contents)):
-        #print contents[i]
         items = contents[i].split('\t')
         for j in range(0,len(items)):
-            #print items[j]
             if (items[j] == "Node:"):
-                kill_process(items[j+1])
+                hostname = socket.gethostname()
+                if("ComputeModule" in hostname):
+                    kill_process2(items[j+1],level)
+                else:
+                    kill_process(items[j+1],level) 
    
-
-def kill_process(process):
+def kill_process2(process,level):
+    print process
     for proc in psutil.process_iter():
+        if proc.name in process:
+            try:
+                with suppress_stdout():
+                    subprocess.call("kill " + str(level) + " " + str(proc.pid),shell=True)
+            except:
+                print "Oops"
+
+def kill_process(process,level):
+    for proc in psutil.process_iter():
+       
         try:
             found_process=0
-            #print len(proc.cmdline())
             for i in range(0, len(proc.cmdline())):
                 if(proc.cmdline()[i].find(process) >= 0):
                     found_process = 1
             if(found_process == 1):
                 print "Killing process: " + process + " with PID: " + str(proc.pid) 
                 try: 
-                    with suppress_stdout():
-                        output = proc.kill()
+                    subprocess.call("kill " + str(level) + " " + str(proc.pid),shell=True)
                 except:
                     print "Oops"   
         except:
@@ -96,11 +106,13 @@ def main():
         if opt == '-?':
             print_usage()
         elif opt == '-a':
-            stop_all_devices()
+            stop_all_devices(-2)
+            stop_all_devices(-2)
         elif opt == '-r':
             stop_device_remote(arg)
         elif opt == '-l':
-            stop_device_local()
+            stop_device_local(-2)
+            stop_device_local(-2)
 
 if __name__ == "__main__":
     main()
