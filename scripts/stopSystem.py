@@ -44,6 +44,10 @@ def stop_device_remote(device):
 def stop_device_local(level):
     print "Stopping Local"
     read_nodelist(level)
+    if("ControlModule" in socket.gethostname()):
+        subprocess.call("sudo reboot & exit",shell=True) #Due to: https://github.com/bosch-ros-pkg/usb_cam/issues/61 If this gets resolved, remove reboot.
+        
+    
 
 def stop_all_devices(level):
     print "Stop All Devices"
@@ -107,11 +111,9 @@ def main():
             print_usage()
         elif opt == '-a':
             stop_all_devices(-2)
-            stop_all_devices(-2)
         elif opt == '-r':
             stop_device_remote(arg)
         elif opt == '-l':
-            stop_device_local(-2)
             stop_device_local(-2)
 
 if __name__ == "__main__":

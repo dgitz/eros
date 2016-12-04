@@ -8,7 +8,7 @@ import socket
 import subprocess
 import pdb
 import os.path
-
+from optparse import OptionParser
 import time
 import sys
 from functools import partial
@@ -20,25 +20,12 @@ ApplicationPackage = '/home/robot/catkin_ws/src/' + PackageName + '/'
 DeviceList = []
 build=False
 
-def print_usage():
-    print "Usage Instructions"
-    print "Using Active Scenario File: " + ActiveScenarioFile
-    print "using Application Package: " + ApplicationPackage
-    print "No Options: Sync all Devices"
-    print "-? Usage Instructions (this menu)"
-    print "-a Sync to all Devices"
-    #print "-c <Package> Change Package from default: " +  PackageName
-    #print "-p Print Current Package"
-    print "-r <device> Sync to remote device"
-    print "-l Sync to local Device"
-
 def process_input(tempstr):
     print tempstr
 
 
 def change_package(newpackage):
     PackageName = newpackage
-    print_usage()
     command = raw_input('Now What?')
     process_input(command)
     
@@ -87,7 +74,7 @@ def test(device):
     sshProcess.stdin.write("catkin build\n")
     stdout,stderr = sshProcess.communicate()
     sshProcess.stdin.close()
-def sync_remote(device):
+def sync_remote(device,build):
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
     f.close()
@@ -129,7 +116,8 @@ def sync_remote(device):
         #sshProcess.stdin.write("export TERM=linux\n")
         sshProcess.stdin.write("cd ~/catkin_ws\n")
         sshProcess.stdin.write("source devel/setup.bash\n")
-        sshProcess.stdin.write("catkin build\n")
+        if(build == "True"):
+            sshProcess.stdin.write("catkin build\n")
         stdout,stderr = sshProcess.communicate()
         sshProcess.stdin.close()
         print stderr
@@ -139,7 +127,7 @@ def sync_remote(device):
 
 
 
-def sync_all(hostname):
+def sync_all(hostname,build):
     print "Syncing All"
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
@@ -147,29 +135,23 @@ def sync_all(hostname):
         if (DeviceList[i].Name == hostname):
             sync_local(hostname)
         else:
-            sync_remote(DeviceList[i].Name)
+            sync_remote(DeviceList[i].Name,build)
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?ac:pr:l",["help"])
-    if(len(opts) == 0):
-        sync_all(socket.gethostname())
-    for opt,arg in opts:
-        if opt == '-b':
-            build=True
-    for opt, arg in opts:
-        if opt == '-?':
-            print_usage()
-        elif opt == '-a':
-            sync_all(socket.gethostname())
-        elif opt == '-c':
-            change_package(arg)
-        elif opt == '-r':
-            sync_remote(arg)
-            #test(arg)
-        elif opt == '-l':
-            sync_local(socket.gethostname())
-        elif opt == '-p':
-            print_package()
+    parser = OptionParser("syncSoftware.py [options]")
+    parser.add_option("--syncmode",dest="syncmode",default="all",help="all,remote,local [default: %default]")
+    parser.add_option("--build",dest="build",default=False,help="True,False [default: %default]")
+    parser.add_option("--device",dest="device",default="",help="DeviceName [default: %default]")
+    (opts,args) = parser.parse_args()
+    if((opts.syncmode=="remote") and (opts.device=="")):
+        print "ERROR: Remote Sync must specify a device."
+        return
+    if(opts.syncmode == "all"):
+        sync_all(socket.gethostname(),opts.build)
+    elif (opts.syncmode=="remote"):
+        sync_remote(opts.device,opts.build)
+    elif (opts.syncmode=="local"):
+        sync_local(socket.gethostname())   
 
 if __name__ == "__main__":
     main()
