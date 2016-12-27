@@ -315,6 +315,9 @@ def generate_message(xmlfile):
                         if(item.datatype == 'char'):
                             ros_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             ros_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                        elif(item.datatype == 'unsigned char'):
+                            ros_serialmessagefile_header.write(item.datatype + ' ' + item.name)
+                            ros_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'uint16_t'):
                             ros_serialmessagefile_header.write('int ' + item.name)
                             ros_serialmessagefile_cpp.write('int ' + item.name)
@@ -325,6 +328,9 @@ def generate_message(xmlfile):
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(encode_for_slave == 1):
                         if(item.datatype == 'char'):
+                            propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
+                            propeller_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                        elif(item.datatype == 'unsigned char'):
                             propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'uint16_t'):
@@ -354,25 +360,32 @@ def generate_message(xmlfile):
                 for item in fieldlist:
                     if(item.datatype == 'char'):
                         bytelength = bytelength +1
+                    elif(item.datatype == 'unsigned char'):
+                        bytelength = bytelength +1
                     elif(item.datatype == 'uint16_t'):
                         bytelength = bytelength +2
                     elif(item.datatype == "int16_t"):
                         bytelength = bytelength +2
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                if(bytelength > 8): print "ERROR ERROR ERROR: Currently Serial Messages longer than 8 bytes are not supported.", " at line: ",currentframe().f_lineno
+                if(bytelength > 12): print "ERROR ERROR ERROR: Currently Serial Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
                 if(encode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\tchar *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0xAB;\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + message_id +';\r\n')
-                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 8;\r\n')
+                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 12;\r\n')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\tint byte_counter=0;\r\n')
                     propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 0xAB;\r\n')
                     propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + message_id +';\r\n')
-                    propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 8;\r\n')
+                    propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 12;\r\n')
                 for item in fieldlist:
                     if(item.datatype == 'char'):
+                        if(encode_for_master == 1):
+                            ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                        if(encode_for_slave == 1):
+                            propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + item.name +';\r\n')
+                    elif(item.datatype == 'unsigned char'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                         if(encode_for_slave == 1):
@@ -395,23 +408,23 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                for b in range(bytelength,8):
+                for b in range(bytelength,12):
                     if(encode_for_master == 1):
                         ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
                     if(encode_for_slave == 1):
                         propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 0;\r\n') 
                 if(encode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
-                    ros_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+8);i++)\r\n\t{\r\n')
+                    ros_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+12);i++)\r\n\t{\r\n')
                     ros_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
                     ros_serialmessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n\t*length = p_outbuffer-&outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     ros_serialmessagefile_cpp.write('}\r\n')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
-                    propeller_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+8);i++)\r\n\t{\r\n')
+                    propeller_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+12);i++)\r\n\t{\r\n')
                     propeller_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
-                    propeller_serialmessagefile_cpp.write('\t}\r\n\toutbuffer[byte_counter] = checksum;\r\n\tlength[0] = 3+8+1;\r\n')
+                    propeller_serialmessagefile_cpp.write('\t}\r\n\toutbuffer[byte_counter] = checksum;\r\n\tlength[0] = 3+12+1;\r\n')
                     propeller_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     propeller_serialmessagefile_cpp.write('}\r\n')
                 
@@ -427,6 +440,9 @@ def generate_message(xmlfile):
                         if(item.datatype == 'char'):
                             ros_serialmessagefile_header.write(item.datatype + '* ' + item.name)
                             ros_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
+                        elif(item.datatype == 'unsigned char'):
+                            ros_serialmessagefile_header.write(item.datatype + '* ' + item.name)
+                            ros_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
                         elif(item.datatype == 'uint16_t'):
                             ros_serialmessagefile_header.write('int* ' + item.name)
                             ros_serialmessagefile_cpp.write('int* ' + item.name)
@@ -437,6 +453,9 @@ def generate_message(xmlfile):
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(decode_for_slave == 1):
                         if(item.datatype == 'char'):
+                            propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
+                            propeller_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
+                        elif(item.datatype == 'unsigned char'):
                             propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
                         elif(item.datatype == 'uint16_t'):
@@ -468,6 +487,12 @@ def generate_message(xmlfile):
                 bytecounter = 0
                 for item in fieldlist:
                     if(item.datatype == 'char'):
+                        if(decode_for_master == 1):
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                        if(decode_for_slave == 1):
+                            propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                        bytecounter = bytecounter + 1
+                    elif(item.datatype == 'unsigned char'):
                         if(decode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                         if(decode_for_slave == 1):
@@ -567,7 +592,7 @@ elif (sys.argv[1] == "-g"):
     ros_serialmessagefile_header.write('/***Created on:')
     ros_serialmessagefile_header.write( str(datetime.now()))
     ros_serialmessagefile_header.write('***/\r\n')
-    ros_serialmessagefile_header.write("/***Target: Raspberry Pi ***/\r\n")
+    ros_serialmessagefile_header.write("/***Target: Raspberry Pi OR Arduino ***/\r\n")
     ros_serialmessagefile_cpp = open('generated/ros/serialmessage.cpp','w')
     ros_serialmessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
     ros_serialmessagefile_cpp.write('/***Created on:')
