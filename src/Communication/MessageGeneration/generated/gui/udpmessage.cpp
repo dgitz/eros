@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-12-27 16:05:02.204719***/
+/***Created on:2017-01-13 18:21:33.366884***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -128,5 +128,13 @@ QString UDPMessageHandler::encode_HeartbeatUDP(std::string Device,uint64_t Curre
 	tempstr.append(QString::number(Current_Timestamp));
 	tempstr.append(",");
 	tempstr.append(QString::number(Expected_Timestamp));
+	return tempstr;
+}
+QString UDPMessageHandler::encode_FindTargetUDP(std::string SearchDevice)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_FindTarget_ID);
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(SearchDevice));
 	return tempstr;
 }

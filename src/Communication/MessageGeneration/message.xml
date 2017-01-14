@@ -13,18 +13,18 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="value1"/>
-                    <field type="char" name="value2"/>
-                    <field type="char" name="value3"/>
-                    <field type="char" name="value4"/>
-                    <field type="char" name="value5"/>
-                    <field type="char" name="value6"/>
-                    <field type="char" name="value7"/>
-                    <field type="char" name="value8"/>
-                    <field type="char" name="value9"/>
-                    <field type="char" name="value10"/>
-                    <field type="char" name="value11"/>
-                    <field type="char" name="value12"/>
+                    <field type="unsigned char" name="value1"/>
+                    <field type="unsigned char" name="value2"/>
+                    <field type="unsigned char" name="value3"/>
+                    <field type="unsigned char" name="value4"/>
+                    <field type="unsigned char" name="value5"/>
+                    <field type="unsigned char" name="value6"/>
+                    <field type="unsigned char" name="value7"/>
+                    <field type="unsigned char" name="value8"/>
+                    <field type="unsigned char" name="value9"/>
+                    <field type="unsigned char" name="value10"/>
+                    <field type="unsigned char" name="value11"/>
+                    <field type="unsigned char" name="value12"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -85,12 +85,12 @@
             <Protocol name="Serial">
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="System"/>
-                    <field type="char" name="SubSystem"/>
-                    <field type="char" name="Component"/>
-                    <field type="char" name="Diagnostic_Type"/>
-                    <field type="char" name="Level" />
-                    <field type="char" name="Diagnostic_Message"/>
+                    <field type="unsigned char" name="System"/>
+                    <field type="unsigned char" name="SubSystem"/>
+                    <field type="unsigned char" name="Component"/>
+                    <field type="unsigned char" name="Diagnostic_Type"/>
+                    <field type="unsigned char" name="Level" />
+                    <field type="unsigned char" name="Diagnostic_Message"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -119,14 +119,14 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="value1"/>
-                    <field type="char" name="value2"/>
-                    <field type="char" name="value3"/>
-                    <field type="char" name="value4"/>
-                    <field type="char" name="value5"/>
-                    <field type="char" name="value6"/>
-                    <field type="char" name="value7"/>
-                    <field type="char" name="value8"/>
+                    <field type="unsigned char" name="value1"/>
+                    <field type="unsigned char" name="value2"/>
+                    <field type="unsigned char" name="value3"/>
+                    <field type="unsigned char" name="value4"/>
+                    <field type="unsigned char" name="value5"/>
+                    <field type="unsigned char" name="value6"/>
+                    <field type="unsigned char" name="value7"/>
+                    <field type="unsigned char" name="value8"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -143,14 +143,14 @@
                 <Retry>true</Retry>
                 <Origin>Master</Origin>
                 <Fields>
-                    <field type="char" name="value1"/>
-                    <field type="char" name="value2"/>
-                    <field type="char" name="value3"/>
-                    <field type="char" name="value4"/>
-                    <field type="char" name="value5"/>
-                    <field type="char" name="value6"/>
-                    <field type="char" name="value7"/>
-                    <field type="char" name="value8"/>
+                    <field type="unsigned char" name="value1"/>
+                    <field type="unsigned char" name="value2"/>
+                    <field type="unsigned char" name="value3"/>
+                    <field type="unsigned char" name="value4"/>
+                    <field type="unsigned char" name="value5"/>
+                    <field type="unsigned char" name="value6"/>
+                    <field type="unsigned char" name="value7"/>
+                    <field type="unsigned char" name="value8"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -167,16 +167,16 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortID"/>
-                    <field type="char" name="Pin1_Mode"/>
-                    <field type="char" name="Pin2_Mode"/>
-                    <field type="char" name="Pin3_Mode"/>
-                    <field type="char" name="Pin4_Mode"/>
-                    <field type="char" name="Pin5_Mode"/>
-                    <field type="char" name="Pin6_Mode"/>
-                    <field type="char" name="Pin7_Mode"/>
-                    <field type="char" name="Pin8_Mode"/>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="Pin1_Mode"/>
+                    <field type="unsigned char" name="Pin2_Mode"/>
+                    <field type="unsigned char" name="Pin3_Mode"/>
+                    <field type="unsigned char" name="Pin4_Mode"/>
+                    <field type="unsigned char" name="Pin5_Mode"/>
+                    <field type="unsigned char" name="Pin6_Mode"/>
+                    <field type="unsigned char" name="Pin7_Mode"/>
+                    <field type="unsigned char" name="Pin8_Mode"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -193,9 +193,9 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="DeviceType"/>
-                    <field type="char" name="ID"/>
-                    <field type="char" name="Mode"/>
+                    <field type="unsigned char" name="DeviceType"/>
+                    <field type="unsigned char" name="ID"/>
+                    <field type="unsigned char" name="Mode"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -212,8 +212,8 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortID"/>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
                     <field type="unsigned char" name="Pin1_Value"/>
                     <field type="unsigned char" name="Pin2_Value"/>
                     <field type="unsigned char" name="Pin3_Value"/>
@@ -237,16 +237,16 @@
                 <Retry>false</Retry>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortID"/>
-                    <field type="char" name="Pin1_Value"/>
-                    <field type="char" name="Pin2_Value"/>
-                    <field type="char" name="Pin3_Value"/>
-                    <field type="char" name="Pin4_Value"/>
-                    <field type="char" name="Pin5_Value"/>
-                    <field type="char" name="Pin6_Value"/>
-                    <field type="char" name="Pin7_Value"/>
-                    <field type="char" name="Pin8_Value"/>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="Pin1_Value"/>
+                    <field type="unsigned char" name="Pin2_Value"/>
+                    <field type="unsigned char" name="Pin3_Value"/>
+                    <field type="unsigned char" name="Pin4_Value"/>
+                    <field type="unsigned char" name="Pin5_Value"/>
+                    <field type="unsigned char" name="Pin6_Value"/>
+                    <field type="unsigned char" name="Pin7_Value"/>
+                    <field type="unsigned char" name="Pin8_Value"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -261,8 +261,8 @@
             <Protocol name="Serial">
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortID"/>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
                     <field type="uint16_t" name="Pin1_Value"/>
                     <field type="uint16_t" name="Pin2_Value"/>
                     <field type="uint16_t" name="Pin3_Value"/>
@@ -281,9 +281,9 @@
                 <Retry>false</Retry>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="majorVersion"/>
-                    <field type="char" name="minorVersion"/>
-                    <field type="char" name="buildNumber"/>
+                    <field type="unsigned char" name="majorVersion"/>
+                    <field type="unsigned char" name="minorVersion"/>
+                    <field type="unsigned char" name="buildNumber"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -325,8 +325,9 @@
             </Protocol>
             <Protocol name="Serial">
                 <Origin>Master</Origin>
+                <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="Command" />
+                    <field type="unsigned char" name="Command" />
 						<![CDATA[
 						]]>
                 </Fields>
@@ -353,11 +354,11 @@
                             1: ANA_PortA
                             2: ANA_PortB
                         ]]>
-                    <field type="char" name="Input_PinMode" />
-                    <field type="char" name="Input_PinNumber" />
-                    <field type="char" name="Output_Port" />
-                    <field type="char" name="Output_PinMode" />
-                    <field type="char" name="Output_PinNUmber" />
+                    <field type="unsigned char" name="Input_PinMode" />
+                    <field type="unsigned char" name="Input_PinNumber" />
+                    <field type="unsigned char" name="Output_Port" />
+                    <field type="unsigned char" name="Output_PinMode" />
+                    <field type="unsigned char" name="Output_PinNUmber" />
                 </Fields>
             </Protocol>
         </Protocols>
@@ -367,11 +368,11 @@
             <Protocol name="Serial">
                 <Origin>Master</Origin>
                 <Fields>
-                    <field type="char" name="ID" />
+                    <field type="unsigned char" name="ID" />
                         <![CDATA[
                             1-255, Each Control Group must have a Unique ID
                         ]]>
-                    <field type="char" name="Mode" />
+                    <field type="unsigned char" name="Mode" />
 						<![CDATA[
                             0: Undefined
 							1: PID
@@ -398,8 +399,9 @@
             </Protocol>
             <Protocol name="Serial">
                 <Origin>Master</Origin>
+                <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="Status" />
+                    <field type="unsigned char" name="Status" />
 						<![CDATA[
 						]]>
                 </Fields>
@@ -433,32 +435,7 @@
     <Message name="Set_DIO_Port_DefaultValue" id="0xAB32">
         <Description>
             <![CDATA[
-                This message is used to set default values for DIO Port A.  These values are used when the Rover is Disabled.
-            ]]>
-        </Description>
-        <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Master</Origin>
-                <Fields>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortID"/>
-                    <field type="char" name="Pin1_Value"/>
-                    <field type="char" name="Pin2_Value"/>
-                    <field type="char" name="Pin3_Value"/>
-                    <field type="char" name="Pin4_Value"/>
-                    <field type="char" name="Pin5_Value"/>
-                    <field type="char" name="Pin6_Value"/>
-                    <field type="char" name="Pin7_Value"/>
-                    <field type="char" name="Pin8_Value"/>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
-    <Message name="Configure_Shield" id="0xAB33">
-        <Description>
-            <![CDATA[
-                This message is used to set default values for DIO Port A.  These values are used when the Rover is Disabled.
+                This message is used to set default values for DIO Port.  These values are used when the Rover is Disabled.
             ]]>
         </Description>
         <Protocols>
@@ -467,10 +444,52 @@
                 <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
-                    <field type="char" name="ShieldCount"/>
-                    <field type="char" name="ShieldType"/>
-                    <field type="char" name="ShieldID"/>
-                    <field type="char" name="PortCount" />
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="Pin1_Value"/>
+                    <field type="unsigned char" name="Pin2_Value"/>
+                    <field type="unsigned char" name="Pin3_Value"/>
+                    <field type="unsigned char" name="Pin4_Value"/>
+                    <field type="unsigned char" name="Pin5_Value"/>
+                    <field type="unsigned char" name="Pin6_Value"/>
+                    <field type="unsigned char" name="Pin7_Value"/>
+                    <field type="unsigned char" name="Pin8_Value"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Configure_Shield" id="0xAB33">
+        <Description>
+            <![CDATA[
+                
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="ShieldCount"/>
+                    <field type="unsigned char" name="ShieldType"/>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortCount" />
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="FindTarget" id="0xAB34">
+        <![CDATA[  
+            Periodic Heartbeat
+		]]>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Fields>
+                    <field type="std::string" name="SearchDevice" />
+                        <![CDATA[
+                            Device used to search Environment
+                        ]]>
                 </Fields>
             </Protocol>
         </Protocols>

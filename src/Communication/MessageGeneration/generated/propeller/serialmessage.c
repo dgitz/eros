@@ -1,8 +1,8 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2016-12-27 16:05:02.204850***/
+/***Created on:2017-01-13 18:21:33.367072***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
-int encode_UserMessageSerial(int* outbuffer,int* length,char value1,char value2,char value3,char value4,char value5,char value6,char value7,char value8,char value9,char value10,char value11,char value12)
+int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -29,7 +29,7 @@ int encode_UserMessageSerial(int* outbuffer,int* length,char value1,char value2,
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_UserMessageSerial(int* inpacket,int length,int checksum,char* value1,char* value2,char* value3,char* value4,char* value5,char* value6,char* value7,char* value8,char* value9,char* value10,char* value11,char* value12)
+int decode_UserMessageSerial(int* inpacket,int length,int checksum,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8,unsigned char* value9,unsigned char* value10,unsigned char* value11,unsigned char* value12)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -51,7 +51,7 @@ int decode_UserMessageSerial(int* inpacket,int length,int checksum,char* value1,
 	*value12=inpacket[11];
 	return 1;
 }
-int encode_DiagnosticSerial(int* outbuffer,int* length,char System,char SubSystem,char Component,char Diagnostic_Type,char Level,char Diagnostic_Message)
+int encode_DiagnosticSerial(int* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -78,7 +78,7 @@ int encode_DiagnosticSerial(int* outbuffer,int* length,char System,char SubSyste
 	length[0] = 3+12+1;
 	return 1;
 }
-int encode_TestMessageCounterSerial(int* outbuffer,int* length,char value1,char value2,char value3,char value4,char value5,char value6,char value7,char value8)
+int encode_TestMessageCounterSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -105,7 +105,7 @@ int encode_TestMessageCounterSerial(int* outbuffer,int* length,char value1,char 
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_TestMessageCounterSerial(int* inpacket,int length,int checksum,char* value1,char* value2,char* value3,char* value4,char* value5,char* value6,char* value7,char* value8)
+int decode_TestMessageCounterSerial(int* inpacket,int length,int checksum,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -123,7 +123,7 @@ int decode_TestMessageCounterSerial(int* inpacket,int length,int checksum,char* 
 	*value8=inpacket[7];
 	return 1;
 }
-int decode_TestMessageCommandSerial(int* inpacket,int length,int checksum,char* value1,char* value2,char* value3,char* value4,char* value5,char* value6,char* value7,char* value8)
+int decode_TestMessageCommandSerial(int* inpacket,int length,int checksum,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -141,7 +141,7 @@ int decode_TestMessageCommandSerial(int* inpacket,int length,int checksum,char* 
 	*value8=inpacket[7];
 	return 1;
 }
-int encode_Configure_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,char PortID,char Pin1_Mode,char Pin2_Mode,char Pin3_Mode,char Pin4_Mode,char Pin5_Mode,char Pin6_Mode,char Pin7_Mode,char Pin8_Mode)
+int encode_Configure_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode,unsigned char Pin5_Mode,unsigned char Pin6_Mode,unsigned char Pin7_Mode,unsigned char Pin8_Mode)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -168,7 +168,7 @@ int encode_Configure_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,cha
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_Configure_DIO_PortSerial(int* inpacket,int length,int checksum,char* ShieldID,char* PortID,char* Pin1_Mode,char* Pin2_Mode,char* Pin3_Mode,char* Pin4_Mode,char* Pin5_Mode,char* Pin6_Mode,char* Pin7_Mode,char* Pin8_Mode)
+int decode_Configure_DIO_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Mode,unsigned char* Pin2_Mode,unsigned char* Pin3_Mode,unsigned char* Pin4_Mode,unsigned char* Pin5_Mode,unsigned char* Pin6_Mode,unsigned char* Pin7_Mode,unsigned char* Pin8_Mode)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -188,7 +188,7 @@ int decode_Configure_DIO_PortSerial(int* inpacket,int length,int checksum,char* 
 	*Pin8_Mode=inpacket[9];
 	return 1;
 }
-int encode_ModeSerial(int* outbuffer,int* length,char DeviceType,char ID,char Mode)
+int encode_ModeSerial(int* outbuffer,int* length,unsigned char DeviceType,unsigned char ID,unsigned char Mode)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -215,7 +215,7 @@ int encode_ModeSerial(int* outbuffer,int* length,char DeviceType,char ID,char Mo
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_ModeSerial(int* inpacket,int length,int checksum,char* DeviceType,char* ID,char* Mode)
+int decode_ModeSerial(int* inpacket,int length,int checksum,unsigned char* DeviceType,unsigned char* ID,unsigned char* Mode)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -228,7 +228,7 @@ int decode_ModeSerial(int* inpacket,int length,int checksum,char* DeviceType,cha
 	*Mode=inpacket[2];
 	return 1;
 }
-int encode_Set_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
+int encode_Set_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -255,7 +255,7 @@ int encode_Set_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,char Port
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_Set_DIO_PortSerial(int* inpacket,int length,int checksum,char* ShieldID,char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
+int decode_Set_DIO_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -275,7 +275,7 @@ int decode_Set_DIO_PortSerial(int* inpacket,int length,int checksum,char* Shield
 	*Pin8_Value=inpacket[9];
 	return 1;
 }
-int encode_Get_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,char PortID,char Pin1_Value,char Pin2_Value,char Pin3_Value,char Pin4_Value,char Pin5_Value,char Pin6_Value,char Pin7_Value,char Pin8_Value)
+int encode_Get_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -302,7 +302,7 @@ int encode_Get_DIO_PortSerial(int* outbuffer,int* length,char ShieldID,char Port
 	length[0] = 3+12+1;
 	return 1;
 }
-int encode_Get_ANA_PortSerial(int* outbuffer,int* length,char ShieldID,char PortID,int Pin1_Value,int Pin2_Value,int Pin3_Value,int Pin4_Value)
+int encode_Get_ANA_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,int Pin1_Value,int Pin2_Value,int Pin3_Value,int Pin4_Value)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -337,7 +337,7 @@ int encode_Get_ANA_PortSerial(int* outbuffer,int* length,char ShieldID,char Port
 	length[0] = 3+12+1;
 	return 1;
 }
-int encode_FirmwareVersionSerial(int* outbuffer,int* length,char majorVersion,char minorVersion,char buildNumber)
+int encode_FirmwareVersionSerial(int* outbuffer,int* length,unsigned char majorVersion,unsigned char minorVersion,unsigned char buildNumber)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -364,7 +364,34 @@ int encode_FirmwareVersionSerial(int* outbuffer,int* length,char majorVersion,ch
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_Arm_CommandSerial(int* inpacket,int length,int checksum,char* Command)
+int encode_Arm_CommandSerial(int* outbuffer,int* length,unsigned char Command)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x27;
+	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = Command;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_Arm_CommandSerial(int* inpacket,int length,int checksum,unsigned char* Command)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -375,7 +402,7 @@ int decode_Arm_CommandSerial(int* inpacket,int length,int checksum,char* Command
 	*Command=inpacket[0];
 	return 1;
 }
-int decode_Setup_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,char* Input_Port,char* Input_PinMode,char* Input_PinNumber,char* Output_Port,char* Output_PinMode,char* Output_PinNUmber)
+int decode_Setup_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,char* Input_Port,unsigned char* Input_PinMode,unsigned char* Input_PinNumber,unsigned char* Output_Port,unsigned char* Output_PinMode,unsigned char* Output_PinNUmber)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -393,7 +420,7 @@ int decode_Setup_ControlGroupSerial(int* inpacket,int length,int checksum,char* 
 	*Output_PinNUmber=inpacket[7];
 	return 1;
 }
-int decode_Tune_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,int* Proportional_Gain,int* Integral_Gain,int* Derivative_Gain)
+int decode_Tune_ControlGroupSerial(int* inpacket,int length,int checksum,unsigned char* ID,unsigned char* Mode,int* Proportional_Gain,int* Integral_Gain,int* Derivative_Gain)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -411,7 +438,34 @@ int decode_Tune_ControlGroupSerial(int* inpacket,int length,int checksum,char* I
 	*Derivative_Gain=inpacket[7] + v_Derivative_Gain1;
 	return 1;
 }
-int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,char* Status)
+int encode_Arm_StatusSerial(int* outbuffer,int* length,unsigned char Status)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x30;
+	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = Status;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,unsigned char* Status)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -422,7 +476,34 @@ int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,char* Status)
 	*Status=inpacket[0];
 	return 1;
 }
-int decode_Set_DIO_Port_DefaultValueSerial(int* inpacket,int length,int checksum,char* ShieldID,char* PortID,char* Pin1_Value,char* Pin2_Value,char* Pin3_Value,char* Pin4_Value,char* Pin5_Value,char* Pin6_Value,char* Pin7_Value,char* Pin8_Value)
+int encode_Set_DIO_Port_DefaultValueSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x32;
+	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = ShieldID;
+	outbuffer[byte_counter++] = PortID;
+	outbuffer[byte_counter++] = Pin1_Value;
+	outbuffer[byte_counter++] = Pin2_Value;
+	outbuffer[byte_counter++] = Pin3_Value;
+	outbuffer[byte_counter++] = Pin4_Value;
+	outbuffer[byte_counter++] = Pin5_Value;
+	outbuffer[byte_counter++] = Pin6_Value;
+	outbuffer[byte_counter++] = Pin7_Value;
+	outbuffer[byte_counter++] = Pin8_Value;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_Set_DIO_Port_DefaultValueSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
@@ -442,7 +523,7 @@ int decode_Set_DIO_Port_DefaultValueSerial(int* inpacket,int length,int checksum
 	*Pin8_Value=inpacket[9];
 	return 1;
 }
-int encode_Configure_ShieldSerial(int* outbuffer,int* length,char ShieldCount,char ShieldType,char ShieldID,char PortCount)
+int encode_Configure_ShieldSerial(int* outbuffer,int* length,unsigned char ShieldCount,unsigned char ShieldType,unsigned char ShieldID,unsigned char PortCount)
 {
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
@@ -469,7 +550,7 @@ int encode_Configure_ShieldSerial(int* outbuffer,int* length,char ShieldCount,ch
 	length[0] = 3+12+1;
 	return 1;
 }
-int decode_Configure_ShieldSerial(int* inpacket,int length,int checksum,char* ShieldCount,char* ShieldType,char* ShieldID,char* PortCount)
+int decode_Configure_ShieldSerial(int* inpacket,int length,int checksum,unsigned char* ShieldCount,unsigned char* ShieldType,unsigned char* ShieldID,unsigned char* PortCount)
 {
 	int computed_checksum = 0;
 	for(int i = 0; i < length; i++)
