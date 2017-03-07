@@ -104,7 +104,7 @@ def sync_remote(device,build):
         subprocess.call("rsync -avrt " + source_file + " robot@" + device + ":" + ApplicationPackage + "package.xml" ,shell=True)
 
         #Sync source code and make 
-        subprocess.call("rsync -avrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
+        subprocess.call("rsync -apvrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
         subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-01-13 18:21:33.366884***/
+/***Created on:2017-03-06 20:23:28.322916***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -137,4 +137,12 @@ QString UDPMessageHandler::encode_FindTargetUDP(std::string SearchDevice)
 	tempstr.append(",");
 	tempstr.append(QString::fromStdString(SearchDevice));
 	return tempstr;
+}
+int UDPMessageHandler::decode_ImageUDP(QList<QByteArray> items,std::string* StreamName,int* width,int* height,)
+{
+	if(items.size() != 4){ return 0; }
+	*StreamName=items.at(1).toStdString();
+	*width=(int)items.at(2).toInt();
+	*height=(int)items.at(3).toInt();
+	return 1;
 }

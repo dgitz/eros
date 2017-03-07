@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-01-13 18:21:33.366815***/
+/***Created on:2017-03-06 20:23:28.322849***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -139,4 +139,18 @@ int UDPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::
 	if(items.size() != 2){ return 0; }
 	*SearchDevice=items.at(1);
 	return 1;
+}
+std::string UDPMessageHandler::encode_ImageUDP(std::string StreamName,uint32_t width,uint32_t height,cv::Mat Image)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_Image_ID));
+	tempstr.append(",");
+	tempstr.append(StreamName);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)width));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)height));
+	tempstr.append(",");
+	tempstr.append(std::string((const char*)Image.data));
+	return tempstr;
 }

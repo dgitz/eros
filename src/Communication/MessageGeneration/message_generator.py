@@ -28,7 +28,7 @@ def generate_message(xmlfile):
 
     ros_udpmessagefile_header.write('#ifndef UDPMESSAGE_H\r\n#define UDPMESSAGE_H\r\n')
     ros_udpmessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
-    ros_udpmessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
+    ros_udpmessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n#include <cv_bridge/cv_bridge.h>\r\n\r\n')
     gui_udpmessagefile_header.write('#ifndef UDPMESSAGE_H\r\n#define UDPMESSAGE_H\r\n')
     gui_udpmessagefile_header.write('#include <QString>\r\n#include <QList>\r\n')
     
@@ -160,6 +160,11 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((int)' + item.name + '));\r\n')
                         if(encode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
+                    elif(item.datatype == 'cv::Mat'):
+                        if(encode_for_master == 1):
+                            ros_udpmessagefile_cpp.write('\ttempstr.append(std::string((const char*)' + item.name + '.data));\r\n')
+                        if(encode_for_gui == 1):
+                            a = 1#gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
                     else:
                         if(encode_for_master == 1):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((int)' + item.name + '));\r\n')
@@ -217,6 +222,10 @@ def generate_message(xmlfile):
                             gui_udpmessagefile_header.write('int* ' + item.name)
                             gui_udpmessagefile_cpp.write('int* ' + item.name)
                             itemcounter = itemcounter + 1
+                        elif(item.datatype == 'uint32_t'):
+                            gui_udpmessagefile_header.write('int* ' + item.name)
+                            gui_udpmessagefile_cpp.write('int* ' + item.name)
+                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'int16_t'):
                             gui_udpmessagefile_header.write('int* ' + item.name)
                             gui_udpmessagefile_cpp.write('int* ' + item.name)
@@ -264,6 +273,12 @@ def generate_message(xmlfile):
                         if(decode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(int)items.at(' + str(itemcounter) + ').toInt();\r\n')
                     elif(item.datatype == 'uint16_t'):
+                        itemcounter = itemcounter + 1
+                        if(decode_for_master == 1):
+                            ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(' + item.datatype + ')atoi(items.at(' + str(itemcounter) + ').c_str());\r\n')
+                        if(decode_for_gui == 1):
+                            gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(int)items.at(' + str(itemcounter) + ').toInt();\r\n')
+                    elif(item.datatype == 'uint32_t'):
                         itemcounter = itemcounter + 1
                         if(decode_for_master == 1):
                             ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(' + item.datatype + ')atoi(items.at(' + str(itemcounter) + ').c_str());\r\n')

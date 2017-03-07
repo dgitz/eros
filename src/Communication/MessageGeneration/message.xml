@@ -494,4 +494,23 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Image" id="0xAB35">
+        <![CDATA[  
+            Image data
+		]]>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="StreamName" />
+						<![CDATA[
+                            Image Stream Name
+						]]>
+                    <field type="uint32_t" name="width" />
+                    <field type="uint32_t" name="height" />
+                    <field type="cv::Mat" name="Image" />
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>
