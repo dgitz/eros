@@ -1,9 +1,9 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-03-06 20:23:28.322849***/
-#include "udpmessage.h"
-UDPMessageHandler::UDPMessageHandler(){}
-UDPMessageHandler::~UDPMessageHandler(){}
-int UDPMessageHandler::decode_RemoteControlUDP(std::vector<std::string> items,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,int* axis7,int* axis8,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6,uint8_t* button7,uint8_t* button8)
+/***Created on:2017-03-09 06:31:14.162438***/
+#include "ipmessage.h"
+IPMessageHandler::IPMessageHandler(){}
+IPMessageHandler::~IPMessageHandler(){}
+int IPMessageHandler::decode_RemoteControlUDP(std::vector<std::string> items,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,int* axis7,int* axis8,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6,uint8_t* button7,uint8_t* button8)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
@@ -28,7 +28,7 @@ int UDPMessageHandler::decode_RemoteControlUDP(std::vector<std::string> items,in
 	*button8=(uint8_t)atoi(items.at(16).c_str());
 	return 1;
 }
-std::string UDPMessageHandler::encode_ResourceUDP(std::string Node_Name,uint16_t RAM_Mb,uint8_t CPU_Used)
+std::string IPMessageHandler::encode_ResourceUDP(std::string Node_Name,uint16_t RAM_Mb,uint8_t CPU_Used)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Resource_ID));
@@ -40,7 +40,7 @@ std::string UDPMessageHandler::encode_ResourceUDP(std::string Node_Name,uint16_t
 	tempstr.append(boost::lexical_cast<std::string>((int)CPU_Used));
 	return tempstr;
 }
-std::string UDPMessageHandler::encode_DiagnosticUDP(std::string DeviceName,std::string Node_Name,uint8_t System,uint8_t SubSystem,uint8_t Component,uint8_t Diagnostic_Type,uint8_t Level,uint8_t Diagnostic_Message,std::string Description)
+std::string IPMessageHandler::encode_DiagnosticUDP(std::string DeviceName,std::string Node_Name,uint8_t System,uint8_t SubSystem,uint8_t Component,uint8_t Diagnostic_Type,uint8_t Level,uint8_t Diagnostic_Message,std::string Description)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Diagnostic_ID));
@@ -64,7 +64,7 @@ std::string UDPMessageHandler::encode_DiagnosticUDP(std::string DeviceName,std::
 	tempstr.append(Description);
 	return tempstr;
 }
-std::string UDPMessageHandler::encode_DeviceUDP(std::string DeviceParent,std::string DeviceName,std::string DeviceType,std::string Architecture)
+std::string IPMessageHandler::encode_DeviceUDP(std::string DeviceParent,std::string DeviceName,std::string DeviceType,std::string Architecture)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Device_ID));
@@ -78,7 +78,7 @@ std::string UDPMessageHandler::encode_DeviceUDP(std::string DeviceParent,std::st
 	tempstr.append(Architecture);
 	return tempstr;
 }
-int UDPMessageHandler::decode_ArmControlUDP(std::vector<std::string> items,uint8_t* device,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6)
+int IPMessageHandler::decode_ArmControlUDP(std::vector<std::string> items,uint8_t* device,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
@@ -100,7 +100,7 @@ int UDPMessageHandler::decode_ArmControlUDP(std::vector<std::string> items,uint8
 	*button6=(uint8_t)atoi(items.at(13).c_str());
 	return 1;
 }
-int UDPMessageHandler::decode_Arm_CommandUDP(std::vector<std::string> items,uint8_t* Command)
+int IPMessageHandler::decode_Arm_CommandUDP(std::vector<std::string> items,uint8_t* Command)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
@@ -110,7 +110,7 @@ int UDPMessageHandler::decode_Arm_CommandUDP(std::vector<std::string> items,uint
 	*Command=(uint8_t)atoi(items.at(1).c_str());
 	return 1;
 }
-std::string UDPMessageHandler::encode_Arm_StatusUDP(uint8_t Status)
+std::string IPMessageHandler::encode_Arm_StatusUDP(uint8_t Status)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Arm_Status_ID));
@@ -118,7 +118,7 @@ std::string UDPMessageHandler::encode_Arm_StatusUDP(uint8_t Status)
 	tempstr.append(boost::lexical_cast<std::string>((int)Status));
 	return tempstr;
 }
-int UDPMessageHandler::decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp)
+int IPMessageHandler::decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
@@ -130,7 +130,7 @@ int UDPMessageHandler::decode_HeartbeatUDP(std::vector<std::string> items,std::s
 	*Expected_Timestamp=(uint64_t)strtoull(items.at(3).c_str(),NULL,10);
 	return 1;
 }
-int UDPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice)
+int IPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
@@ -140,16 +140,18 @@ int UDPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::
 	*SearchDevice=items.at(1);
 	return 1;
 }
-std::string UDPMessageHandler::encode_ImageUDP(std::string StreamName,uint32_t width,uint32_t height,cv::Mat Image)
+std::string IPMessageHandler::encode_ImageTCP(std::string StreamName,uint32_t width,uint32_t height,uint8_t encoding,cv::Mat Image)
 {
 	std::string tempstr = "";
-	tempstr.append(boost::lexical_cast<std::string>(UDP_Image_ID));
+	tempstr.append(boost::lexical_cast<std::string>(TCP_Image_ID));
 	tempstr.append(",");
 	tempstr.append(StreamName);
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)width));
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)height));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)encoding));
 	tempstr.append(",");
 	tempstr.append(std::string((const char*)Image.data));
 	return tempstr;

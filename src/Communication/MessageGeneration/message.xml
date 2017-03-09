@@ -499,7 +499,7 @@
             Image data
 		]]>
         <Protocols>
-            <Protocol name="UDP">
+            <Protocol name="TCP">
                 <Origin>Master</Origin>
                 <Fields>
                     <field type="std::string" name="StreamName" />
@@ -508,6 +508,7 @@
 						]]>
                     <field type="uint32_t" name="width" />
                     <field type="uint32_t" name="height" />
+                    <field type="uint8_t" name="encoding" />
                     <field type="cv::Mat" name="Image" />
                 </Fields>
             </Protocol>
