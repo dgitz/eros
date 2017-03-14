@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-01-13 18:21:33.367072***/
+/***Created on:2017-03-13 21:16:27.612766***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -76,6 +76,22 @@ int encode_DiagnosticSerial(int* outbuffer,int* length,unsigned char System,unsi
 	}
 	outbuffer[byte_counter] = checksum;
 	length[0] = 3+12+1;
+	return 1;
+}
+int decode_DiagnosticSerial(int* inpacket,int length,int checksum,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
+	*System=inpacket[0];
+	*SubSystem=inpacket[1];
+	*Component=inpacket[2];
+	*Diagnostic_Type=inpacket[3];
+	*Level=inpacket[4];
+	*Diagnostic_Message=inpacket[5];
 	return 1;
 }
 int encode_TestMessageCounterSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)

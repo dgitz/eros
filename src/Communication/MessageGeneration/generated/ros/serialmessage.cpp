@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-01-13 18:21:33.367005***/
+/***Created on:2017-03-13 21:16:27.612632***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -46,6 +46,34 @@ int SerialMessageHandler::decode_UserMessageSerial(unsigned char* inpacket,unsig
 	*value10=inpacket[9];
 	*value11=inpacket[10];
 	*value12=inpacket[11];
+	return 1;
+}
+int SerialMessageHandler::encode_DiagnosticSerial(char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x12;
+	*p_outbuffer++ = 12;
+	*p_outbuffer++ = System;
+	*p_outbuffer++ = SubSystem;
+	*p_outbuffer++ = Component;
+	*p_outbuffer++ = Diagnostic_Type;
+	*p_outbuffer++ = Level;
+	*p_outbuffer++ = Diagnostic_Message;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
 int SerialMessageHandler::decode_DiagnosticSerial(unsigned char* inpacket,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)

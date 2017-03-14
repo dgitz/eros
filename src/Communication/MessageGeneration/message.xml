@@ -83,6 +83,7 @@
                 </Fields>
             </Protocol>
             <Protocol name="Serial">
+                <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
                     <field type="unsigned char" name="System"/>
