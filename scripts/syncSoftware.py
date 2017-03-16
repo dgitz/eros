@@ -84,6 +84,7 @@ def sync_remote(device,build):
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
     stdout,stderr = sshProcess.communicate()
+    
     sshProcess.stdin.close()
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
@@ -104,7 +105,7 @@ def sync_remote(device,build):
         subprocess.call("rsync -avrt " + source_file + " robot@" + device + ":" + ApplicationPackage + "package.xml" ,shell=True)
 
         #Sync source code and make 
-        subprocess.call("rsync -avrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
+        subprocess.call("rsync -apvrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
         subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
@@ -149,6 +150,10 @@ def main():
     if(opts.syncmode == "all"):
         sync_all(socket.gethostname(),opts.build)
     elif (opts.syncmode=="remote"):
+        response = os.system("ping -c 1 " + opts.device)
+        if response != 0:
+            print "ERROR: Remote Device" + opts.device + " is Not Reachable."
+            return        
         sync_remote(opts.device,opts.build)
     elif (opts.syncmode=="local"):
         sync_local(socket.gethostname())   
