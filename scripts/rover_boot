@@ -41,7 +41,8 @@ echo "Setting permissions on SPI" >> $boot_file
 sudo chown robot:robot /dev/spidev0.0
 sudo chown robot:robot /dev/spidev0.1
 
-rostopic list >> $boot_file
+echo "Waiting on ROSCORE to start."
+
 echo 1 | sudo dd status=none of=/sys/class/leds/led1/brightness
 echo "Completed Boot at: "$(date) >> $boot_file
 scp $boot_file robot@$ros_master:~/logs 
