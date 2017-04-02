@@ -495,4 +495,21 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="PPS" id="0xAB35">
+        <Description>
+            <![CDATA[
+                This message is used for Pulse-Per-Second uses.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="counter"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

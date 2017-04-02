@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-03-13 21:16:27.612766***/
+/***Created on:2017-04-01 18:51:14.306747***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -578,5 +578,43 @@ int decode_Configure_ShieldSerial(int* inpacket,int length,int checksum,unsigned
 	*ShieldType=inpacket[1];
 	*ShieldID=inpacket[2];
 	*PortCount=inpacket[3];
+	return 1;
+}
+int encode_PPSSerial(int* outbuffer,int* length,unsigned char counter)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x35;
+	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = counter;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_PPSSerial(int* inpacket,int length,int checksum,unsigned char* counter)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
+	*counter=inpacket[0];
 	return 1;
 }

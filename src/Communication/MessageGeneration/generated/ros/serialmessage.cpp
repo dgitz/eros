@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-03-13 21:16:27.612632***/
+/***Created on:2017-04-01 18:51:14.306690***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -503,5 +503,38 @@ int SerialMessageHandler::decode_Configure_ShieldSerial(unsigned char* inpacket,
 	*ShieldType=inpacket[1];
 	*ShieldID=inpacket[2];
 	*PortCount=inpacket[3];
+	return 1;
+}
+int SerialMessageHandler::encode_PPSSerial(char* outbuffer,int* length,unsigned char counter)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x35;
+	*p_outbuffer++ = 12;
+	*p_outbuffer++ = counter;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::decode_PPSSerial(unsigned char* inpacket,unsigned char* counter)
+{
+	*counter=inpacket[0];
 	return 1;
 }

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-03-13 21:16:27.612564***/
+/***Created on:2017-04-01 18:51:14.306661***/
 /***Target: Raspberry Pi OR Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -19,6 +19,7 @@
 #define SERIAL_Arm_Status_ID 0x30
 #define SERIAL_Set_DIO_Port_DefaultValue_ID 0x32
 #define SERIAL_Configure_Shield_ID 0x33
+#define SERIAL_PPS_ID 0x35
 
 class SerialMessageHandler
 {
@@ -51,6 +52,8 @@ public:
 	int decode_Set_DIO_Port_DefaultValueSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value);
 	int encode_Configure_ShieldSerial(char* outbuffer,int* length,unsigned char ShieldCount,unsigned char ShieldType,unsigned char ShieldID,unsigned char PortCount);
 	int decode_Configure_ShieldSerial(unsigned char* inpacket,unsigned char* ShieldCount,unsigned char* ShieldType,unsigned char* ShieldID,unsigned char* PortCount);
+	int encode_PPSSerial(char* outbuffer,int* length,unsigned char counter);
+	int decode_PPSSerial(unsigned char* inpacket,unsigned char* counter);
 private:
 };
 #endif
