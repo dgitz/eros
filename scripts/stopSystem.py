@@ -6,6 +6,10 @@ import psutil
 import pdb
 import subprocess
 import socket
+import os
+import os.path
+from time import sleep
+
 ActiveNodesFile = '/home/robot/config/ActiveNodes'
 DeviceList = []
 @contextmanager
@@ -87,16 +91,27 @@ def kill_process2(process,level):
 
 def kill_process(process,level):
     for proc in psutil.process_iter():
-       
+        #pdb.set_trace()
         try:
             found_process=0
             for i in range(0, len(proc.cmdline())):
                 if(proc.cmdline()[i].find(process) >= 0):
                     found_process = 1
             if(found_process == 1):
-                print "Killing process: " + process + " with PID: " + str(proc.pid) 
+                #pdb.set_trace()
+                
                 try: 
-                    subprocess.call("kill " + str(level) + " " + str(proc.pid),shell=True)
+                    counter = 2
+                    kill_failed = False
+                    while((os.path.exists("/proc/" + str(proc.pid)) == True) and (counter < 8)):
+                        #print "Killing process: " + process + " with PID: " + str(proc.pid) + " Level: " + str(-1*counter)
+                        subprocess.call("kill " + str(-1*counter) + " " + str(proc.pid),shell=True)
+                        counter = counter + 1
+                        if(counter >= 8):
+                            kill_failed = True;
+                        sleep(0.25)
+                    if(kill_failed == True):
+                        print "Couldn't kill: " + process + " PID: " + str(proc.pid)
                 except:
                     print "Oops"   
         except:

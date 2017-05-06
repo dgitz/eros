@@ -29,6 +29,38 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Command" id="0xAB02">
+        <Description>
+            <![CDATA[
+                This message is used for command messages
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Retry>true</Retry>
+                <Fields>
+                    <field type="uint8_t" name="Command"/>
+                    <field type="uint8_t" name="Option1"/>
+                    <field type="uint8_t" name="Option2"/>
+                    <field type="uint8_t" name="Option3"/>
+                    <field type="std::string" name="CommandText"/>
+                    <field type="std::string" name="Description"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="Command"/>
+                    <field type="unsigned char" name="Option1"/>
+                    <field type="unsigned char" name="Option2"/>
+                    <field type="unsigned char" name="Option3"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
     <Message name="RemoteControl" id="0xAB10">
         <Protocols>
             <Protocol name="UDP">
@@ -170,6 +202,8 @@
                 <Fields>
                     <field type="unsigned char" name="ShieldID"/>
                     <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
                     <field type="unsigned char" name="Pin1_Mode"/>
                     <field type="unsigned char" name="Pin2_Mode"/>
                     <field type="unsigned char" name="Pin3_Mode"/>
@@ -261,6 +295,7 @@
         <Protocols>
             <Protocol name="Serial">
                 <Origin>Slave</Origin>
+                <Origin>Master</Origin>
                 <Fields>
                     <field type="unsigned char" name="ShieldID"/>
                     <field type="unsigned char" name="PortID"/>
@@ -307,30 +342,6 @@
                     <field type="uint8_t" name="button4"/>
                     <field type="uint8_t" name="button5"/>
                     <field type="uint8_t" name="button6"/>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
-	<Message name="Arm_Command" id="0xAB27">
-        <![CDATA[  
-            Arm/Disarm Command
-		]]>
-        <Protocols>
-            <Protocol name="UDP">
-                <Origin>GUI</Origin>
-                <Fields>
-                    <field type="uint8_t" name="Command" />
-						<![CDATA[
-						]]>
-                </Fields>
-            </Protocol>
-            <Protocol name="Serial">
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
-                <Fields>
-                    <field type="unsigned char" name="Command" />
-						<![CDATA[
-						]]>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -447,6 +458,8 @@
                 <Fields>
                     <field type="unsigned char" name="ShieldID"/>
                     <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
                     <field type="unsigned char" name="Pin1_Value"/>
                     <field type="unsigned char" name="Pin2_Value"/>
                     <field type="unsigned char" name="Pin3_Value"/>
@@ -455,26 +468,6 @@
                     <field type="unsigned char" name="Pin6_Value"/>
                     <field type="unsigned char" name="Pin7_Value"/>
                     <field type="unsigned char" name="Pin8_Value"/>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
-    <Message name="Configure_Shield" id="0xAB33">
-        <Description>
-            <![CDATA[
-                
-            ]]>
-        </Description>
-        <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
-                <Fields>
-                    <field type="unsigned char" name="ShieldCount"/>
-                    <field type="unsigned char" name="ShieldType"/>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortCount" />
                 </Fields>
             </Protocol>
         </Protocols>
@@ -508,6 +501,30 @@
                 <Origin>Slave</Origin>
                 <Fields>
                     <field type="unsigned char" name="counter"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+	<Message name="Configure_ANA_Port" id="0xAB36">
+        <Description>
+            <![CDATA[
+                This message is used to configure the ANA PortS.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
+                    <field type="unsigned char" name="Pin1_Mode"/>
+                    <field type="unsigned char" name="Pin2_Mode"/>
+                    <field type="unsigned char" name="Pin3_Mode"/>
+                    <field type="unsigned char" name="Pin4_Mode"/>
                 </Fields>
             </Protocol>
         </Protocols>

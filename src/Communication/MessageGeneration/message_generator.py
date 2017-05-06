@@ -392,7 +392,8 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + item.name +';\r\n')
                     elif(item.datatype == 'uint16_t'):
                         if(encode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                            ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name + ' >> 8;\r\n')
+                            ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = (' + item.name + ' & 0xFF);\r\n')
                         if(encode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '1 = ' + item.name + ' >> 8;\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
