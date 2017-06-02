@@ -5,6 +5,7 @@ from datetime import datetime
 from array import *
 from inspect import currentframe, getframeinfo
 import pdb
+from shutil import copy2
 
 class fieldobject(object):
     def __init__(self,datatype=None,name=None):
@@ -625,9 +626,14 @@ elif (sys.argv[1] == "-g"):
     #eros_definitionsfile_header = open('/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h','a')
    
     generate_message(sys.argv[2])
-
-
-
-
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
+    
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/DriverStation/DriverStation/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/DriverStation/DriverStation/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
 
 
