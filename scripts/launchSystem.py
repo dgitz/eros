@@ -5,8 +5,14 @@ import psutil
 import pdb
 import subprocess
 import socket
+from subprocess import call
 #ActiveTaskFile = '/home/robot/config/ActiveTasks'
 DeviceList = []
+def launch_roscore():
+    print "Launching ROSCore"
+    call("killall -9 roscore",shell=True,stdout=subprocess.PIPE)
+    call("killall -9 rosmaster",shell=True,stdout=subprocess.PIPE)
+    call("roscore &",shell=True,stdout=subprocess.PIPE)
 
 def print_usage():
     print "Usage Instructions"
@@ -38,11 +44,13 @@ def launch_all_devices(hostname):
 def main():
     opts, args = getopt.getopt(sys.argv[1:],"?ar:l",["help"])
     if(len(opts) == 0):
+        launch_roscore()
         launch_all_devices(socket.gethostname())
     for opt, arg in opts:
         if opt == '-?':
             print_usage()
         elif opt == '-a':
+            launch_roscore()
             launch_all_devices(socket.gethostname())
         elif opt == '-r':
             launch_device_remote(arg)

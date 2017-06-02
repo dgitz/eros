@@ -9,7 +9,7 @@ import socket
 import os
 import os.path
 from time import sleep
-
+from subprocess import call
 ActiveNodesFile = '/home/robot/config/ActiveNodes'
 DeviceList = []
 @contextmanager
@@ -62,6 +62,7 @@ def stop_all_devices(level):
             stop_device_local(level)
         else:
             stop_device_remote(DeviceList[i].Name)
+    call("rosnode kill --all",shell=True,stdout=subprocess.PIPE)
         
 
 def read_nodelist(level):
