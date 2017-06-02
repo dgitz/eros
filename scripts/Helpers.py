@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+devicefile = '/home/robot/config/DeviceFile.xml'
 class Device():
     def __init__(self,Name='',IPAddress='',Capability=''):
         self.Name = Name
@@ -6,8 +7,13 @@ class Device():
         self.Capability = Capability
 
 def ReadDeviceList(Capability):
+    #global devicefile
     DeviceList = []
-    tree = ET.parse('/home/robot/config/DeviceFile.xml')
+    try:
+        tree = ET.parse(devicefile)
+    except ET.ParseError as err:
+        print "XML " + devicefile + " parsing error: " + format(err)
+        return DeviceList
     root = tree.getroot()
     for List in root:
         #print DeviceList.tag#, child.text, child.attrib
@@ -22,6 +28,27 @@ def ReadDeviceList(Capability):
                     newDevice.IPAddress = entry.text
                 elif (entry.tag == 'Capability'):
                     newDevice.Capability = entry.text
-            if((newDevice.Capability == Capability) or (Capability == '')):
+            if(Capability == newDevice.Capability):
                 DeviceList.append(newDevice)
     return DeviceList
+
+def ReadCapabilityList():
+    #global devicefile
+    CapabilityList = []
+    tree = ET.parse(devicefile)
+    root = tree.getroot()
+    for List in root:
+        for device in List:
+            capability = ""
+            for entry in device:
+                if(entry.tag == 'Capability'):
+                    capability = entry.text
+            found = False
+            for i in range(0,len(CapabilityList)):
+                if(CapabilityList[i] == capability):
+                    found = True
+            if(found == False):
+                CapabilityList.append(capability)
+    return CapabilityList
+
+    

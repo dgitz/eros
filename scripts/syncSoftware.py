@@ -146,6 +146,7 @@ def sync_display(device):
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/* " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "executable/* " + "robot@" + device + ":" + RootDirectory + "executable/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "Dropbox/ICARUS/RoverV2/SOFTWARE/gui/* " + "robot@" + device + ":" + RootDirectory + "Dropbox/ICARUS/RoverV2/SOFTWARE/gui/" ,shell=True) 
     
 def sync_all(hostname,build):
     print "Syncing All"

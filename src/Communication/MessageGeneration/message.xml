@@ -529,4 +529,22 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Power" id="0xAB37">
+        <![CDATA[  
+            Power status of the Rover
+		]]>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="BatteryName"/>
+                    <field type="uint8_t" name="PowerLevel" />
+                    <field type="uint8_t" name="PowerState"/>
+                        <![CDATA[
+                            See eROS Definitions: POWERSTATE_*
+                        ]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

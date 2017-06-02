@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-05-05 07:38:59.367941***/
+/***Created on:2017-05-06 18:53:54.318971***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "ros/ros.h"
@@ -26,6 +26,7 @@ public:
 		UDP_Arm_Status_ID = 0xAB30,
 		UDP_Heartbeat_ID = 0xAB31,
 		UDP_FindTarget_ID = 0xAB34,
+		UDP_Power_ID = 0xAB37,
 	};
 	UDPMessageHandler();
 	~UDPMessageHandler();
@@ -38,6 +39,7 @@ public:
 	std::string encode_Arm_StatusUDP(uint8_t Status);
 	int decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp);
 	int decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice);
+	std::string encode_PowerUDP(uint8_t PowerLevel,uint8_t PowerState);
 private:
 };
 #endif
