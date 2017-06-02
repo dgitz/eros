@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-05-06 18:53:54.319127***/
+/***Created on:2017-06-02 15:48:58.913267***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -148,10 +148,11 @@ QString UDPMessageHandler::encode_FindTargetUDP(std::string SearchDevice)
 	tempstr.append(QString::fromStdString(SearchDevice));
 	return tempstr;
 }
-int UDPMessageHandler::decode_PowerUDP(QList<QByteArray> items,int* PowerLevel,int* PowerState)
+int UDPMessageHandler::decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState)
 {
-	if(items.size() != 3){ return 0; }
-	*PowerLevel=(int)items.at(1).toInt();
-	*PowerState=(int)items.at(2).toInt();
+	if(items.size() != 4){ return 0; }
+	*BatteryName=items.at(1).toStdString();
+	*PowerLevel=(int)items.at(2).toInt();
+	*PowerState=(int)items.at(3).toInt();
 	return 1;
 }

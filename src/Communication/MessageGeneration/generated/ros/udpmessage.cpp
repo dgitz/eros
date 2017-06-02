@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-05-06 18:53:54.319058***/
+/***Created on:2017-06-02 15:48:58.913201***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -145,10 +145,12 @@ int UDPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::
 	*SearchDevice=items.at(1);
 	return 1;
 }
-std::string UDPMessageHandler::encode_PowerUDP(uint8_t PowerLevel,uint8_t PowerState)
+std::string UDPMessageHandler::encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Power_ID));
+	tempstr.append(",");
+	tempstr.append(BatteryName);
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)PowerLevel));
 	tempstr.append(",");

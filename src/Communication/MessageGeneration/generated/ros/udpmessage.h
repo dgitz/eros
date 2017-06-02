@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-05-06 18:53:54.318971***/
+/***Created on:2017-06-02 15:48:58.913122***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "ros/ros.h"
@@ -39,7 +39,7 @@ public:
 	std::string encode_Arm_StatusUDP(uint8_t Status);
 	int decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp);
 	int decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice);
-	std::string encode_PowerUDP(uint8_t PowerLevel,uint8_t PowerState);
+	std::string encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState);
 private:
 };
 #endif

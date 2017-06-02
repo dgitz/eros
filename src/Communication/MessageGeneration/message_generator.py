@@ -34,6 +34,14 @@ def generate_message(xmlfile):
     
     ros_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
     propeller_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
+    IDs = []
+    for message in root:
+        IDs.append(hex(int(message.get('id'),0)).upper())
+        for i in range(len(IDs)-1):
+            if(IDs[i] == hex(int(message.get('id'),0)).upper()):
+                print "ERROR: Duplicate Message Defined: " + IDs[i]
+                exit()
+    
     for message in root:
         tempstr = "#define " + message.get('name').upper() + "_ID " +  hex(int(message.get('id'),0)).upper() + "\r\n"
         message_strings.append(tempstr)
