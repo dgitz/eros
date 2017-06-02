@@ -22,12 +22,16 @@ def print_usage():
     print "-a Check all Devices"
 
 def check_all_devices():
-    passed = True
+    passed = Helpers.checkDeviceFileFormat()
+    if(passed == False):
+        print "ERROR: DeviceFile.xml formatted incorrectly. Exiting."
+        return 0
     Empty_Capability_DeviceList = Helpers.ReadDeviceList('')
     if(len(Empty_Capability_DeviceList) > 0):
         print "WARN: All these Devices must have at least 1 Capability defined:"
         for i in range(0,len(Empty_Capability_DeviceList)):
             print Empty_Capability_DeviceList[i].Name
+        passed = False
         return 0
     capabilities = Helpers.ReadCapabilityList()
     for i in range(0,len(capabilities)):
@@ -37,6 +41,15 @@ def check_all_devices():
                 found = True
         if(found == False):
             print "WARN: Capability: " + capabilities[i] + " Not Supported"
+            passed = False
+    for i in range(0,len(SupportedCapabilityList)):
+        Devices = Helpers.ReadDeviceList(SupportedCapabilityList[i])
+        print "---------------------"
+        print "Capability: " + SupportedCapabilityList[i]
+        for j in range(0,len(Devices)):
+            print Devices[j].Name
+    if(passed == True):
+        print "All checks passed."
 
 def main():
     opts, args = getopt.getopt(sys.argv[1:],"?a",["help"])
