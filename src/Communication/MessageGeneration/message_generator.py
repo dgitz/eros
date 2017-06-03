@@ -626,6 +626,16 @@ elif (sys.argv[1] == "-g"):
     #eros_definitionsfile_header = open('/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h','a')
    
     generate_message(sys.argv[2])
+    ros_udpmessagefile_header.close()
+    ros_udpmessagefile_cpp.close()
+    gui_udpmessagefile_header.close()
+    gui_udpmessagefile_cpp.close()
+
+    ros_serialmessagefile_header.close()
+    ros_serialmessagefile_cpp.close()
+    propeller_serialmessagefile_header.close()
+    propeller_serialmessagefile_cpp.close()
+
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
