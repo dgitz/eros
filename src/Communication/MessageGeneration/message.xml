@@ -66,6 +66,10 @@
             <Protocol name="UDP">
                 <Origin>GUI</Origin>
                 <Fields>
+                    <field type="uint64_t" name="Current_Timestamp" />
+						<![CDATA[
+                            Epoch time, in milliSeconds.  This is the origination timestamp.
+						]]>
                     <field type="int16_t" name="axis1"/>
                     <field type="int16_t" name="axis2"/>
                     <field type="int16_t" name="axis3"/>

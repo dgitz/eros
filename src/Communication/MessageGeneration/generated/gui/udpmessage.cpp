@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-02 20:38:46.620414***/
+/***Created on:2017-06-03 16:41:36.278499***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -21,10 +21,12 @@ QString UDPMessageHandler::encode_CommandUDP(int Command,int Option1,int Option2
 	tempstr.append(QString::fromStdString(Description));
 	return tempstr;
 }
-QString UDPMessageHandler::encode_RemoteControlUDP(int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int axis7,int axis8,int button1,int button2,int button3,int button4,int button5,int button6,int button7,int button8)
+QString UDPMessageHandler::encode_RemoteControlUDP(uint64_t Current_Timestamp,int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int axis7,int axis8,int button1,int button2,int button3,int button4,int button5,int button6,int button7,int button8)
 {
 	QString tempstr = "";
 	tempstr.append(UDP_RemoteControl_ID);
+	tempstr.append(",");
+	tempstr.append(QString::number(Current_Timestamp));
 	tempstr.append(",");
 	tempstr.append(QString::number(axis1));
 	tempstr.append(",");

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-02 20:38:46.620326***/
+/***Created on:2017-06-03 16:41:36.278432***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -18,29 +18,30 @@ int UDPMessageHandler::decode_CommandUDP(std::vector<std::string> items,uint8_t*
 	*Description=items.at(6);
 	return 1;
 }
-int UDPMessageHandler::decode_RemoteControlUDP(std::vector<std::string> items,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,int* axis7,int* axis8,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6,uint8_t* button7,uint8_t* button8)
+int UDPMessageHandler::decode_RemoteControlUDP(std::vector<std::string> items,uint64_t* Current_Timestamp,int* axis1,int* axis2,int* axis3,int* axis4,int* axis5,int* axis6,int* axis7,int* axis8,uint8_t* button1,uint8_t* button2,uint8_t* button3,uint8_t* button4,uint8_t* button5,uint8_t* button6,uint8_t* button7,uint8_t* button8)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
 	int id = (int)strtol(tempstr,NULL,0);
 	if(id != UDP_RemoteControl_ID){ return 0; }
-	if(items.size() != 17){ return 0; }
-	*axis1=(int16_t)atoi(items.at(1).c_str());
-	*axis2=(int16_t)atoi(items.at(2).c_str());
-	*axis3=(int16_t)atoi(items.at(3).c_str());
-	*axis4=(int16_t)atoi(items.at(4).c_str());
-	*axis5=(int16_t)atoi(items.at(5).c_str());
-	*axis6=(int16_t)atoi(items.at(6).c_str());
-	*axis7=(int16_t)atoi(items.at(7).c_str());
-	*axis8=(int16_t)atoi(items.at(8).c_str());
-	*button1=(uint8_t)atoi(items.at(9).c_str());
-	*button2=(uint8_t)atoi(items.at(10).c_str());
-	*button3=(uint8_t)atoi(items.at(11).c_str());
-	*button4=(uint8_t)atoi(items.at(12).c_str());
-	*button5=(uint8_t)atoi(items.at(13).c_str());
-	*button6=(uint8_t)atoi(items.at(14).c_str());
-	*button7=(uint8_t)atoi(items.at(15).c_str());
-	*button8=(uint8_t)atoi(items.at(16).c_str());
+	if(items.size() != 18){ return 0; }
+	*Current_Timestamp=(uint64_t)strtoull(items.at(1).c_str(),NULL,10);
+	*axis1=(int16_t)atoi(items.at(2).c_str());
+	*axis2=(int16_t)atoi(items.at(3).c_str());
+	*axis3=(int16_t)atoi(items.at(4).c_str());
+	*axis4=(int16_t)atoi(items.at(5).c_str());
+	*axis5=(int16_t)atoi(items.at(6).c_str());
+	*axis6=(int16_t)atoi(items.at(7).c_str());
+	*axis7=(int16_t)atoi(items.at(8).c_str());
+	*axis8=(int16_t)atoi(items.at(9).c_str());
+	*button1=(uint8_t)atoi(items.at(10).c_str());
+	*button2=(uint8_t)atoi(items.at(11).c_str());
+	*button3=(uint8_t)atoi(items.at(12).c_str());
+	*button4=(uint8_t)atoi(items.at(13).c_str());
+	*button5=(uint8_t)atoi(items.at(14).c_str());
+	*button6=(uint8_t)atoi(items.at(15).c_str());
+	*button7=(uint8_t)atoi(items.at(16).c_str());
+	*button8=(uint8_t)atoi(items.at(17).c_str());
 	return 1;
 }
 std::string UDPMessageHandler::encode_ResourceUDP(std::string Node_Name,uint16_t RAM_Mb,uint8_t CPU_Used)
