@@ -3,14 +3,32 @@
 #Author: David Gitz
 #Purpose: Launches Software
 
-declare -a Devices=("ControlModule1" "dgitzrosmaster")
+#declare -a Devices=("ControlModule1" "dgitzrosmaster" "ControlModule2" "ComputeModule1")
 
 function launch_device()
 {
-    cd ~/catkin_ws
-    source devel/setup.bash
-    source ~/.bashrc
+    source /home/robot/catkin_ws/devel/setup.bash
     #touch ~/$1
+    counter=0
+	countmax=60 # Try for about 5 minutes
+	ros_connected=0
+    while [ $counter -lt $countmax ]
+	do
+        OUTPUT="$(/opt/ros/indigo/bin/rosnode list)"
+        if [[ $OUTPUT = *[!\ ]* ]]; then
+			let ros_connected=1
+            break
+        else
+            sleep 5
+        fi
+		let counter=$counter+1
+		v=$countmax
+		let v=$v-$counter
+		echo "Trying to contact ROS Server "$v" more times."
+		if [ $counter -eq $countmax ]; then
+			echo "Unable to contact ROS Master."
+		fi
+    done
     boot_file="/home/robot/logs/output/"$1"_log.txt"
     echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
     export ROS_HOSTNAME=$HOSTNAME
@@ -18,15 +36,18 @@ function launch_device()
     export ROS_MASTER_URI=http://dgitzrosmaster:11311
     echo "ROS_MASTER: "$ROS_MASTER_URI >> $boot_file
     echo "ROS HOSTNAME: "$ROS_HOSTNAME >> $boot_file
-    echo "Launching Device at: "$(date) >> $boot_file
-    var=$(find . -iname $1.launch)
-    if [ -z "$var" ]; then
-        echo "No Launch File for: "$1
-    else
-        launch_command="roslaunch icarus_rover_v2 "$1".launch"
-        eval $launch_command
-    fi
-
+	if [ $ros_connected -eq 1 ]; then
+		echo "Launching Device at: "$(date)
+		echo "Launching Device at: "$(date) >> $boot_file
+		var=$(find /home/robot/catkin_ws/src -iname $1.launch)
+		if [ -z "$var" ]; then
+			echo "No Launch File for: "$1
+		else
+			#launch_command="screen -d -m roslaunch icarus_rover_v2 "$1".launch"
+			launch_command="roslaunch icarus_rover_v2 "$1".launch &"
+			eval $launch_command
+		fi
+	fi
 }
 
 while getopts "d:" options; do

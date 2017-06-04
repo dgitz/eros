@@ -5,15 +5,18 @@ class Device():
         self.Name = Name
         self.IPAddress = IPAddress
         self.Capability = Capability
-
+        
+def checkDeviceFileFormat():
+    try:
+        tree = ET.parse(devicefile)
+        return True
+    except ET.ParseError as err:
+        print "XML " + devicefile + " parsing error: " + format(err)
+        return False
 def ReadDeviceList(Capability):
     #global devicefile
     DeviceList = []
-    try:
-        tree = ET.parse(devicefile)
-    except ET.ParseError as err:
-        print "XML " + devicefile + " parsing error: " + format(err)
-        return DeviceList
+    tree = ET.parse(devicefile)
     root = tree.getroot()
     for List in root:
         #print DeviceList.tag#, child.text, child.attrib

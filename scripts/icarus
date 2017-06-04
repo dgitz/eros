@@ -1,0 +1,25 @@
+### BEGIN INIT INFO
+# Provides:          icarus
+# Required-Start:    $ssh networking
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+#!/bin/bash
+. /lib/lsb/init-functions
+# Process name ( For display )
+NAME=icarus
+# Daemon name, where is the actual executable
+
+case $1 in
+ start)
+  /home/robot/scripts/rover_boot
+  ;;
+ *) 
+  # For invalid arguments, print the usage message.
+  echo "Usage: $0 {start}"
+  exit 2
+  ;;
+esac
