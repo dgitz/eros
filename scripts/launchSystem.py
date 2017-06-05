@@ -15,7 +15,12 @@ def launch_roscore():
     call("roscore &",shell=True,stdout=subprocess.PIPE)
 
 def print_usage():
-    print "Usage Instructions"
+    print "Usage Instructions: launchSystem."
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
+    print "-a Launch on all Devices."
+    print "-r <device> Launch on Remote: device."
+    print "-l Launch locally."
 
 def launch_device_remote(device):
     print "Starting Remote: " + device
@@ -42,12 +47,13 @@ def launch_all_devices(hostname):
 
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?ar:l",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"?har:l",["help"])
     if(len(opts) == 0):
-        launch_roscore()
-        launch_all_devices(socket.gethostname())
+        print_usage()
     for opt, arg in opts:
         if opt == '-?':
+            print_usage()
+        elif opt == '-h':
             print_usage()
         elif opt == '-a':
             launch_roscore()

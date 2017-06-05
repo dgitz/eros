@@ -16,11 +16,11 @@ from colored import fg, bg, attr
 DeviceList = []
 
 def print_usage():
-    print "Usage Instructions"
-    print "No Options: This Menu"
-    print "-? This Menu"
-    print "-s Shutdown all Devices"
-    print "-r Reboot all devices"
+    print "Usage Instructions: shutdownSystem."
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
+    print "-s/-a Shutdown all Devices."
+    print "-r Reboot all devices."
 
 def shutdown_all_devices():
     DeviceList = Helpers.ReadDeviceList('ROS')
@@ -55,13 +55,17 @@ def reboot_all_devices():
     
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?rs",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"?hars",["help"])
     if(len(opts) == 0):
         print_usage()
     for opt, arg in opts:
         if opt == '-?':
             print_usage()
+        elif opt == '-h':
+            print_usage()
         elif opt == '-s':
+            shutdown_all_devices()
+        elif opt == '-a':
             shutdown_all_devices()
         elif opt == '-r':
             reboot_all_devices()

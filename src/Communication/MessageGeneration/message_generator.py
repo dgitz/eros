@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import xml.etree.ElementTree as ET
 import os.path
 import sys
@@ -16,7 +17,9 @@ class protocolobject(object):
         self.name=name
 
 def print_usage():
-    print "Usage Instructions"
+    print "Usage Instructions: message_generator.py"
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
     print "Generate Message: -g <MessageFile.xml>"
 
 def generate_message(xmlfile):
@@ -572,6 +575,12 @@ def generate_message(xmlfile):
 
 
 if len(sys.argv) == 1:
+    print_usage()
+    sys.exit(0)
+elif (sys.argv[1] == "-?"):
+    print_usage()
+    sys.exit(0)
+elif (sys.argv[1] == "-h"):
     print_usage()
     sys.exit(0)
 elif (sys.argv[1] == "-g"):

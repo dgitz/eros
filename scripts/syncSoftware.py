@@ -164,9 +164,9 @@ def sync_all(hostname,build):
 
 def main():
     parser = OptionParser("syncSoftware.py [options]")
-    parser.add_option("--syncmode",dest="syncmode",default="all",help="all,remote,local,display [default: %default]")
-    parser.add_option("--build",dest="build",default=False,help="True,False [default: %default]")
-    parser.add_option("--device",dest="device",default="",help="DeviceName [default: %default]")
+    parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,remote,local,display [default: %default]")
+    parser.add_option("-b","--build",dest="build",default=False,help="True,False [default: %default]")
+    parser.add_option("-d","--device",dest="device",default="",help="DeviceName [default: %default]")
     (opts,args) = parser.parse_args()
     if((opts.syncmode=="remote") and (opts.device=="")):
         print "ERROR: Remote Sync must specify a device."

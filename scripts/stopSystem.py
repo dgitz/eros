@@ -26,13 +26,13 @@ def suppress_stdout():
             sys.stderr = old_stderr
 
 def print_usage():
-    print "Usage Instructions"
-    print "Using Active Nodes File: " + ActiveNodesFile
-    print "No Options: Stop all Devices"
-    print "-? This Menu"
-    print "-a Stop all Devices"
-    print "-r <device> Stop on remote device"
-    print "-l Stop local Device"
+    print "Usage Instructions: stopSystem."
+    #print "Using Active Nodes File: " + ActiveNodesFile + "."
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
+    print "-a Stop all Devices."
+    print "-r <device> Stop on remote device."
+    print "-l Stop local Device."
 
 def stop_device_remote(device):
     print "Stopping Remote: " + device
@@ -116,11 +116,13 @@ def kill_process(process,level):
             a=1
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?ar:l",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"?har:l",["help"])
     if(len(opts) == 0):
-        stop_all_devices(-2)
+        print_usage()
     for opt, arg in opts:
         if opt == '-?':
+            print_usage()
+        elif opt == '-h':
             print_usage()
         elif opt == '-a':
             stop_all_devices(-2)

@@ -16,10 +16,10 @@ DeviceList = []
 SupportedCapabilityList = ['ROS','Display','GPIO','Power','Network','Sensor']
 
 def print_usage():
-    print "Usage Instructions"
-    print "No Options: This Menu"
-    print "-? This Menu"
-    print "-a Check all Devices"
+    print "Usage Instructions: checkDeviceFile."
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
+    print "-a Check all Devices."
 
 def check_all_devices():
     passed = Helpers.checkDeviceFileFormat()
@@ -52,11 +52,13 @@ def check_all_devices():
         print "All checks passed."
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?a",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"h?a",["help"])
     if(len(opts) == 0):
         print_usage()
     for opt, arg in opts:
         if opt == '-?':
+            print_usage()
+        elif opt == '-h':
             print_usage()
         elif opt == '-a':
             check_all_devices()

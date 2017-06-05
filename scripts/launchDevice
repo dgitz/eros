@@ -49,11 +49,23 @@ function launch_device()
 		fi
 	fi
 }
-
-while getopts "d:" options; do
+function print_usage()
+{
+    echo "Usage Instructions: launchDevice"
+    echo "No Options: This Menu"
+    echo "-?/-h This Menu"
+    echo "-d <hostname> Launch device on this hostname.  Note: This program only works when ran locally."
+    exit
+}
+if [ -z "$1" ]
+then
+   print_usage
+   exit
+fi
+while getopts ":?hd:" options; do
     case $options in
         d) launch_device $OPTARG;;
-        
+        *) print_usage ;;
     esac
 done
 

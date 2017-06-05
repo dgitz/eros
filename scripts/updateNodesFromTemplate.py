@@ -12,11 +12,11 @@ TemplateCppFile = '/home/robot/catkin_ws/src/icarus_rover_v2/src_templates/sampl
 CodeDirectory = '/home/robot/catkin_ws/src/icarus_rover_v2/src/'
 
 def print_usage():
-    print "Usage Instructions"
-    print "Using Template Header File: \r\n" + TemplateHeaderFile + "\r\n\r\nUsing Template Cpp File: \r\n" + TemplateCppFile + "\r\n\r\nUpdating all Nodes in: \r\n" + CodeDirectory + "\r\n"
-    print "No Options: Update all Source Code"
-    print "-? This Menu"
-    print "-a Update all Source Code"
+    print "Usage Instructions: updateNodesFromTemplate."
+    #print "Using Template Header File: \r\n" + TemplateHeaderFile + "\r\n\r\nUsing Template Cpp File: \r\n" + TemplateCppFile + "\r\n\r\nUpdating all Nodes in: \r\n" + CodeDirectory + "\r\n"
+    print "No Options: This Menu."
+    print "-?/-h This Menu."
+    print "-a Update all Source Code."
 
 def update_all():
     for dirName,subdirList,fileList in os.walk(CodeDirectory):
@@ -30,11 +30,13 @@ def update_all():
     
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?a",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"?ah",["help"])
     if(len(opts) == 0):
-        update_all()
+        print_usage()
     for opt, arg in opts:
         if opt == '-?':
+            print_usage()
+        elif opt == '-h':
             print_usage()
         elif opt == '-a':
             update_all()
