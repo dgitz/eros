@@ -259,6 +259,7 @@ def generate_message(xmlfile):
                     ros_udpmessagefile_cpp.write('\tif(id != UDP_' + message.get('name') + '_ID){ return 0; }\r\n')
                     ros_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter) + '){ return 0; }\r\n')
                 if(decode_for_gui == 1):
+                    #print "ID:" + message.get('name') + str(itemcounter)
                     gui_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter) + '){ return 0; }\r\n')
                     #ros_udpmessagefile_cpp.write('\tif(std::stoi(items.at(0)) != UDP_' + message.get('name') + '_ID) { return 0; }\r\n')
                 itemcounter = 0

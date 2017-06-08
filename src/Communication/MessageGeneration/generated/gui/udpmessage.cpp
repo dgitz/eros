@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-04 21:02:52.625914***/
+/***Created on:2017-06-06 21:08:25.169618***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -156,5 +156,12 @@ int UDPMessageHandler::decode_PowerUDP(QList<QByteArray> items,std::string* Batt
 	*BatteryName=items.at(1).toStdString();
 	*PowerLevel=(int)items.at(2).toInt();
 	*PowerState=(int)items.at(3).toInt();
+	return 1;
+}
+int UDPMessageHandler::decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State)
+{
+	if(items.size() != 3){ return 0; }
+	*DeviceName=items.at(1).toStdString();
+	*State=(int)items.at(2).toInt();
 	return 1;
 }

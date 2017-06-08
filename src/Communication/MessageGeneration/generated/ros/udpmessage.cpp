@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-04 21:02:52.625845***/
+/***Created on:2017-06-06 21:08:25.169550***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -156,5 +156,15 @@ std::string UDPMessageHandler::encode_PowerUDP(std::string BatteryName,uint8_t P
 	tempstr.append(boost::lexical_cast<std::string>((int)PowerLevel));
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)PowerState));
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_EStopUDP(std::string DeviceName,uint8_t State)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_EStop_ID));
+	tempstr.append(",");
+	tempstr.append(DeviceName);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)State));
 	return tempstr;
 }

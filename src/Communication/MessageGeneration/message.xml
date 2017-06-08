@@ -551,4 +551,21 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="EStop" id="0xAB38">
+        <Description>
+            <![CDATA[
+                This message is used to send EStop command/status's
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="DeviceName"/>
+                    <field type="uint8_t" name="State"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>
