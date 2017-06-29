@@ -1,0 +1,5 @@
+#!/bin/bash
+#bags="$(rostopic list | grep resource)"
+#echo "${bags}"
+record="$(rosbag record bags)"
+echo "$record
