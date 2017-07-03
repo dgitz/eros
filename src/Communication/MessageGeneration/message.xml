@@ -350,6 +350,7 @@
             </Protocol>
         </Protocols>
     </Message>
+<!--
     <Message name="Setup_ControlGroup" id="0xAB28">
         <Protocols>
             <Protocol name="Serial">
@@ -379,6 +380,8 @@
             </Protocol>
         </Protocols>
     </Message>
+-->
+<!--
     <Message name="Tune_ControlGroup" id="0xAB29">
         <Protocols>
             <Protocol name="Serial">
@@ -400,6 +403,7 @@
             </Protocol>
         </Protocols>
     </Message>
+-->
     <Message name="Arm_Status" id="0xAB30">
         <![CDATA[  
             Status of Current Arm/Disarm State
@@ -564,6 +568,26 @@
                 <Fields>
                     <field type="std::string" name="DeviceName"/>
                     <field type="uint8_t" name="State"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="TuneControlGroup" id="0xAB39">
+        <Description>
+            <![CDATA[
+                This message is used to send Control Group tuning messages
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="ControlGroupName"/>
+                    <field type="std::string" name="Type"/>
+                    <field type="double" name="value1"/>
+                    <field type="double" name="value2"/>
+                    <field type="double" name="value3"/>
                 </Fields>
             </Protocol>
         </Protocols>

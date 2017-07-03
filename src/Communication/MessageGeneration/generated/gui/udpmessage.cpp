@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169618***/
+/***Created on:2017-07-03 10:45:07.988873***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -164,4 +164,20 @@ int UDPMessageHandler::decode_EStopUDP(QList<QByteArray> items,std::string* Devi
 	*DeviceName=items.at(1).toStdString();
 	*State=(int)items.at(2).toInt();
 	return 1;
+}
+QString UDPMessageHandler::encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_TuneControlGroup_ID);
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(ControlGroupName));
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(Type));
+	tempstr.append(",");
+	tempstr.append(QString::number(value1));
+	tempstr.append(",");
+	tempstr.append(QString::number(value2));
+	tempstr.append(",");
+	tempstr.append(QString::number(value3));
+	return tempstr;
 }

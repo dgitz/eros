@@ -125,6 +125,9 @@ def generate_message(xmlfile):
                         elif(item.datatype == 'uint8_t'):
                             gui_udpmessagefile_header.write('int ' + item.name)
                             gui_udpmessagefile_cpp.write('int ' + item.name)
+                        elif(item.datatype == 'double'):
+                            gui_udpmessagefile_header.write('double ' + item.name)
+                            gui_udpmessagefile_cpp.write('double ' + item.name)
                         else:
                              print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
@@ -218,6 +221,10 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_header.write('std::string* ' + item.name)
                             ros_udpmessagefile_cpp.write('std::string* ' + item.name)
                             itemcounter = itemcounter + 1
+                        elif(item.datatype == "double"):
+                            ros_udpmessagefile_header.write('double* ' + item.name)
+                            ros_udpmessagefile_cpp.write('double* ' + item.name)
+                            itemcounter = itemcounter + 1
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(decode_for_gui == 1):
@@ -294,6 +301,12 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + ');\r\n')
                         if(decode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + ').toStdString();\r\n')
+                    elif(item.datatype == 'double'):
+                        itemcounter = itemcounter + 1
+                        if(decode_for_master == 1):
+                             ros_udpmessagefile_cpp.write('\t*' + str(item.name) + '=(' + item.datatype + ')atof(items.at(' + str(itemcounter) + ').c_str());\r\n')
+                        if(decode_for_gui == 1):
+                            gui_udpmessagefile_cpp.write('\t*' + str(item.name) + '=items.at(' + str(itemcounter) + ').toDouble();\r\n')
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     

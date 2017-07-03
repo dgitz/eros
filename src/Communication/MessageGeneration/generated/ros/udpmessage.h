@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169469***/
+/***Created on:2017-07-03 10:45:07.988723***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "ros/ros.h"
@@ -28,6 +28,7 @@ public:
 		UDP_FindTarget_ID = 0xAB34,
 		UDP_Power_ID = 0xAB37,
 		UDP_EStop_ID = 0xAB38,
+		UDP_TuneControlGroup_ID = 0xAB39,
 	};
 	UDPMessageHandler();
 	~UDPMessageHandler();
@@ -42,6 +43,7 @@ public:
 	int decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice);
 	std::string encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState);
 	std::string encode_EStopUDP(std::string DeviceName,uint8_t State);
+	int decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3);
 private:
 };
 #endif

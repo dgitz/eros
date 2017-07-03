@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169683***/
+/***Created on:2017-07-03 10:45:07.988940***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -372,59 +372,6 @@ int SerialMessageHandler::decode_FirmwareVersionSerial(unsigned char* inpacket,u
 	*majorVersion=inpacket[0];
 	*minorVersion=inpacket[1];
 	*buildNumber=inpacket[2];
-	return 1;
-}
-int SerialMessageHandler::encode_Setup_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,char Input_Port,unsigned char Input_PinMode,unsigned char Input_PinNumber,unsigned char Output_Port,unsigned char Output_PinMode,unsigned char Output_PinNUmber)
-{
-	char *p_outbuffer;
-	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = 0xAB;
-	*p_outbuffer++ = 0x28;
-	*p_outbuffer++ = 12;
-	*p_outbuffer++ = ID;
-	*p_outbuffer++ = Mode;
-	*p_outbuffer++ = Input_Port;
-	*p_outbuffer++ = Input_PinMode;
-	*p_outbuffer++ = Input_PinNumber;
-	*p_outbuffer++ = Output_Port;
-	*p_outbuffer++ = Output_PinMode;
-	*p_outbuffer++ = Output_PinNUmber;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	*p_outbuffer++ = checksum;
-	*length = p_outbuffer-&outbuffer[0];
-	return 1;
-}
-int SerialMessageHandler::encode_Tune_ControlGroupSerial(char* outbuffer,int* length,unsigned char ID,unsigned char Mode,int Proportional_Gain,int Integral_Gain,int Derivative_Gain)
-{
-	char *p_outbuffer;
-	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = 0xAB;
-	*p_outbuffer++ = 0x29;
-	*p_outbuffer++ = 12;
-	*p_outbuffer++ = ID;
-	*p_outbuffer++ = Mode;
-	*p_outbuffer++ = Proportional_Gain;
-	*p_outbuffer++ = Integral_Gain;
-	*p_outbuffer++ = Derivative_Gain;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	*p_outbuffer++ = checksum;
-	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
 int SerialMessageHandler::encode_Arm_StatusSerial(char* outbuffer,int* length,unsigned char Status)

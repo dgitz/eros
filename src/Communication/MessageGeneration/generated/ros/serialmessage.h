@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169650***/
+/***Created on:2017-07-03 10:45:07.988905***/
 /***Target: Raspberry Pi OR Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -14,8 +14,6 @@
 #define SERIAL_Get_DIO_Port_ID 0x19
 #define SERIAL_Get_ANA_Port_ID 0x20
 #define SERIAL_FirmwareVersion_ID 0x25
-#define SERIAL_Setup_ControlGroup_ID 0x28
-#define SERIAL_Tune_ControlGroup_ID 0x29
 #define SERIAL_Arm_Status_ID 0x30
 #define SERIAL_Set_DIO_Port_DefaultValue_ID 0x32
 #define SERIAL_PPS_ID 0x35
@@ -45,8 +43,6 @@ public:
 	int encode_Get_ANA_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,int Pin1_Value,int Pin2_Value,int Pin3_Value,int Pin4_Value);
 	int decode_Get_ANA_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,int* Pin1_Value,int* Pin2_Value,int* Pin3_Value,int* Pin4_Value);
 	int decode_FirmwareVersionSerial(unsigned char* inpacket,unsigned char* majorVersion,unsigned char* minorVersion,unsigned char* buildNumber);
-	int encode_Setup_ControlGroupSerial(char* outbuffer,int* length,char ID,char Mode,char Input_Port,unsigned char Input_PinMode,unsigned char Input_PinNumber,unsigned char Output_Port,unsigned char Output_PinMode,unsigned char Output_PinNUmber);
-	int encode_Tune_ControlGroupSerial(char* outbuffer,int* length,unsigned char ID,unsigned char Mode,int Proportional_Gain,int Integral_Gain,int Derivative_Gain);
 	int encode_Arm_StatusSerial(char* outbuffer,int* length,unsigned char Status);
 	int decode_Arm_StatusSerial(unsigned char* inpacket,unsigned char* Status);
 	int encode_Set_DIO_Port_DefaultValueSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value);

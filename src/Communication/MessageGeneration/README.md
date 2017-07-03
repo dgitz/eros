@@ -8,6 +8,7 @@ UDP Supported Data Types:
 * uint64_t
 * int16_t
 * std::string
+* double
 
 Serial Supported Data Types:
 * unsigned char

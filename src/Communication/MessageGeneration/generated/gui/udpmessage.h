@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169586***/
+/***Created on:2017-07-03 10:45:07.988841***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -15,6 +15,7 @@
 #define UDP_FindTarget_ID "AB34"
 #define UDP_Power_ID "AB37"
 #define UDP_EStop_ID "AB38"
+#define UDP_TuneControlGroup_ID "AB39"
 
 class UDPMessageHandler
 {
@@ -32,6 +33,7 @@ public:
 	QString encode_FindTargetUDP(std::string SearchDevice);
 	int decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState);
 	int decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State);
+	QString encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3);
 private:
 };
 #endif

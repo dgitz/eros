@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-06-06 21:08:25.169747***/
+/***Created on:2017-07-03 10:45:07.989006***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -433,42 +433,6 @@ int encode_FirmwareVersionSerial(int* outbuffer,int* length,unsigned char majorV
 	}
 	outbuffer[byte_counter] = checksum;
 	length[0] = 3+12+1;
-	return 1;
-}
-int decode_Setup_ControlGroupSerial(int* inpacket,int length,int checksum,char* ID,char* Mode,char* Input_Port,unsigned char* Input_PinMode,unsigned char* Input_PinNumber,unsigned char* Output_Port,unsigned char* Output_PinMode,unsigned char* Output_PinNUmber)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
-	*ID=inpacket[0];
-	*Mode=inpacket[1];
-	*Input_Port=inpacket[2];
-	*Input_PinMode=inpacket[3];
-	*Input_PinNumber=inpacket[4];
-	*Output_Port=inpacket[5];
-	*Output_PinMode=inpacket[6];
-	*Output_PinNUmber=inpacket[7];
-	return 1;
-}
-int decode_Tune_ControlGroupSerial(int* inpacket,int length,int checksum,unsigned char* ID,unsigned char* Mode,int* Proportional_Gain,int* Integral_Gain,int* Derivative_Gain)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
-	*ID=inpacket[0];
-	*Mode=inpacket[1];
-	int v_Proportional_Gain1=inpacket[2]<<8;
-	*Proportional_Gain=inpacket[3] + v_Proportional_Gain1;
-	int v_Integral_Gain1=inpacket[4]<<8;
-	*Integral_Gain=inpacket[5] + v_Integral_Gain1;
-	int v_Derivative_Gain1=inpacket[6]<<8;
-	*Derivative_Gain=inpacket[7] + v_Derivative_Gain1;
 	return 1;
 }
 int encode_Arm_StatusSerial(int* outbuffer,int* length,unsigned char Status)
