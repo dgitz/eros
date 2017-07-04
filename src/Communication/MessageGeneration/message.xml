@@ -588,6 +588,8 @@
                     <field type="double" name="value1"/>
                     <field type="double" name="value2"/>
                     <field type="double" name="value3"/>
+					<field type="int16_t" name="maxvalue"/>
+					<field type="int16_t" name="minvalue"/>
                 </Fields>
             </Protocol>
         </Protocols>

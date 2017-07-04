@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-03 10:45:07.988841***/
+/***Created on:2017-07-04 08:24:51.238907***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -33,7 +33,7 @@ public:
 	QString encode_FindTargetUDP(std::string SearchDevice);
 	int decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState);
 	int decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State);
-	QString encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3);
+	QString encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3,int maxvalue,int minvalue);
 private:
 };
 #endif
