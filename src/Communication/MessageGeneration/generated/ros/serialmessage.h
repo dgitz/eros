@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-04 08:24:51.238963***/
+/***Created on:2017-07-04 09:05:23.686474***/
 /***Target: Raspberry Pi OR Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H

@@ -590,6 +590,7 @@
                     <field type="double" name="value3"/>
 					<field type="int16_t" name="maxvalue"/>
 					<field type="int16_t" name="minvalue"/>
+                    <field type="int16_t" name="defaultvalue"/>
                 </Fields>
             </Protocol>
         </Protocols>

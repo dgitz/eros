@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-04 08:24:51.238876***/
+/***Created on:2017-07-04 09:05:23.686374***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -168,13 +168,13 @@ std::string UDPMessageHandler::encode_EStopUDP(std::string DeviceName,uint8_t St
 	tempstr.append(boost::lexical_cast<std::string>((int)State));
 	return tempstr;
 }
-int UDPMessageHandler::decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue)
+int UDPMessageHandler::decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue)
 {
 	char tempstr[8];
 	sprintf(tempstr,"0x%s",items.at(0).c_str());
 	int id = (int)strtol(tempstr,NULL,0);
 	if(id != UDP_TuneControlGroup_ID){ return 0; }
-	if(items.size() != 8){ return 0; }
+	if(items.size() != 9){ return 0; }
 	*ControlGroupName=items.at(1);
 	*Type=items.at(2);
 	*value1=(double)atof(items.at(3).c_str());
@@ -182,5 +182,6 @@ int UDPMessageHandler::decode_TuneControlGroupUDP(std::vector<std::string> items
 	*value3=(double)atof(items.at(5).c_str());
 	*maxvalue=(int16_t)atoi(items.at(6).c_str());
 	*minvalue=(int16_t)atoi(items.at(7).c_str());
+	*defaultvalue=(int16_t)atoi(items.at(8).c_str());
 	return 1;
 }

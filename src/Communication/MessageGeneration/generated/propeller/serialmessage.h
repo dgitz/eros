@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-04 08:24:51.239019***/
+/***Created on:2017-07-04 09:05:23.686539***/
 /***Target: Parallax Propeller ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
