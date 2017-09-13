@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-04 09:05:23.686572***/
+/***Created on:2017-09-12 22:13:32.315872***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -133,51 +133,6 @@ int decode_DiagnosticSerial(int* inpacket,int length,int checksum,unsigned char*
 	*Diagnostic_Type=inpacket[3];
 	*Level=inpacket[4];
 	*Diagnostic_Message=inpacket[5];
-	return 1;
-}
-int encode_TestMessageCounterSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)
-{
-	int byte_counter=0;
-	outbuffer[byte_counter++] = 0xAB;
-	outbuffer[byte_counter++] = 0x14;
-	outbuffer[byte_counter++] = 12;
-	outbuffer[byte_counter++] = value1;
-	outbuffer[byte_counter++] = value2;
-	outbuffer[byte_counter++] = value3;
-	outbuffer[byte_counter++] = value4;
-	outbuffer[byte_counter++] = value5;
-	outbuffer[byte_counter++] = value6;
-	outbuffer[byte_counter++] = value7;
-	outbuffer[byte_counter++] = value8;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
-	return 1;
-}
-int decode_TestMessageCounterSerial(int* inpacket,int length,int checksum,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
-	*value1=inpacket[0];
-	*value2=inpacket[1];
-	*value3=inpacket[2];
-	*value4=inpacket[3];
-	*value5=inpacket[4];
-	*value6=inpacket[5];
-	*value7=inpacket[6];
-	*value8=inpacket[7];
 	return 1;
 }
 int decode_TestMessageCommandSerial(int* inpacket,int length,int checksum,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8)

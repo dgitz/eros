@@ -1,0 +1,28 @@
+/***************AUTO-GENERATED.  DO NOT EDIT********************/
+/***Created on:2017-09-12 22:13:32.315938***/
+/***Target: Arduino ***/
+int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = value1;
+	*p_outbuffer++ = value2;
+	*p_outbuffer++ = value3;
+	*p_outbuffer++ = value4;
+	*p_outbuffer++ = value5;
+	*p_outbuffer++ = value6;
+	*p_outbuffer++ = value7;
+	*p_outbuffer++ = value8;
+	*p_outbuffer++ = value9;
+	*p_outbuffer++ = value10;
+	*p_outbuffer++ = value11;
+	*p_outbuffer++ = value12;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12;i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}

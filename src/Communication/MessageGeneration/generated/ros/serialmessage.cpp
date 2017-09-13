@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-07-04 09:05:23.686508***/
+/***Created on:2017-09-12 22:13:32.315805***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -120,46 +120,6 @@ int SerialMessageHandler::decode_DiagnosticSerial(unsigned char* inpacket,unsign
 	*Diagnostic_Type=inpacket[3];
 	*Level=inpacket[4];
 	*Diagnostic_Message=inpacket[5];
-	return 1;
-}
-int SerialMessageHandler::encode_TestMessageCounterSerial(char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)
-{
-	char *p_outbuffer;
-	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = 0xAB;
-	*p_outbuffer++ = 0x14;
-	*p_outbuffer++ = 12;
-	*p_outbuffer++ = value1;
-	*p_outbuffer++ = value2;
-	*p_outbuffer++ = value3;
-	*p_outbuffer++ = value4;
-	*p_outbuffer++ = value5;
-	*p_outbuffer++ = value6;
-	*p_outbuffer++ = value7;
-	*p_outbuffer++ = value8;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	*p_outbuffer++ = checksum;
-	*length = p_outbuffer-&outbuffer[0];
-	return 1;
-}
-int SerialMessageHandler::decode_TestMessageCounterSerial(unsigned char* inpacket,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8)
-{
-	*value1=inpacket[0];
-	*value2=inpacket[1];
-	*value3=inpacket[2];
-	*value4=inpacket[3];
-	*value5=inpacket[4];
-	*value6=inpacket[5];
-	*value7=inpacket[6];
-	*value8=inpacket[7];
 	return 1;
 }
 int SerialMessageHandler::encode_TestMessageCommandSerial(char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)

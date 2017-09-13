@@ -151,10 +151,9 @@
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
+            <Protocol name="SPI">
                 <Retry>false</Retry>
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
+                <Type>Query</Type>
                 <Fields>
                     <field type="unsigned char" name="value1"/>
                     <field type="unsigned char" name="value2"/>
@@ -164,6 +163,10 @@
                     <field type="unsigned char" name="value6"/>
                     <field type="unsigned char" name="value7"/>
                     <field type="unsigned char" name="value8"/>
+                    <field type="unsigned char" name="value9"/>
+                    <field type="unsigned char" name="value10"/>
+                    <field type="unsigned char" name="value11"/>
+                    <field type="unsigned char" name="value12"/>
                 </Fields>
             </Protocol>
         </Protocols>

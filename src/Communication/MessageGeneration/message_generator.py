@@ -38,6 +38,11 @@ def generate_message(xmlfile):
     
     ros_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
     propeller_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
+
+    arduino_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
+    ros_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
+    ros_spimessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
+    ros_spimessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
     IDs = []
     for message in root:
         IDs.append(hex(int(message.get('id'),0)).upper())
@@ -56,18 +61,22 @@ def generate_message(xmlfile):
             protocollist.append(protocolobject(protocol.get('name')))
             
             if(protocol.get('name') == 'UDP'):
-                #ros_udpmessagefile_header.write('#define UDP_' + message.get('name') + '_ID ' + message.get('id') +'\r\n')
                 gui_udpmessagefile_header.write('#define UDP_' + message.get('name') + '_ID "' + message.get('id')[2:] +'"\r\n')
             if(protocol.get('name') == 'Serial'):
                 ros_serialmessagefile_header.write('#define SERIAL_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
                 propeller_serialmessagefile_header.write('#define SERIAL_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
+            if(protocol.get('name') == 'SPI'):
+                arduino_spimessagefile_header.write('#define SPI_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
     ros_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
+    ros_spimessagefile_header.write('\r\nclass SPIMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
     for message in root:
         protocollist = []
         protocols = message.find('Protocols')
         for protocol in protocols:
             if(protocol.get('name') == 'UDP'):
                 ros_udpmessagefile_header.write('\t\tUDP_' + message.get('name') + '_ID = ' + message.get('id') +',\r\n')
+            if(protocol.get('name') == 'SPI'):
+                ros_spimessagefile_header.write('\t\tSPI_' + message.get('name') + '_ID = ' +hex(int(message.get('id'),0)-int('0xAB00',0)) +',\r\n')
     ros_udpmessagefile_header.write('\t};\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
     ros_udpmessagefile_cpp.write('#include "udpmessage.h"\r\nUDPMessageHandler::UDPMessageHandler(){}\r\nUDPMessageHandler::~UDPMessageHandler(){}\r\n')
     gui_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
@@ -75,7 +84,11 @@ def generate_message(xmlfile):
 
     ros_serialmessagefile_header.write('\r\nclass SerialMessageHandler\r\n{\r\npublic:\r\n\tSerialMessageHandler();\r\n\t~SerialMessageHandler();\r\n')
     ros_serialmessagefile_cpp.write('#include "serialmessage.h"\r\nSerialMessageHandler::SerialMessageHandler(){}\r\nSerialMessageHandler::~SerialMessageHandler(){}\r\n')
+
     propeller_serialmessagefile_cpp.write('#include "serialmessage.h"\r\n')
+
+    ros_spimessagefile_header.write('\t};\r\n\tSPIMessageHandler();\r\n\t~SPIMessageHandler();\r\n')
+    ros_spimessagefile_cpp.write('#include "spimessage.h"\r\nSPIMessageHandler::SPIMessageHandler(){}\r\nSPIMessageHandler::~SPIMessageHandler(){}\r\n')
     for message in root:
         protocollist = []
         protocols = message.find('Protocols')
@@ -555,6 +568,77 @@ def generate_message(xmlfile):
                 if(decode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     propeller_serialmessagefile_cpp.write('}\r\n')
+            elif(protocol.get('name') == 'SPI'):
+                type_query = 0
+                type_command = 0
+                for child in protocol.findall('Type'):
+                    if(child.text == "Query"):
+                         type_query = 1
+                    if(child.text == "Command"):
+                        type_command = 1
+                if(type_query == 1):
+                    arduino_spimessagefile_header.write('int encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
+                    arduino_spimessagefile_cpp.write('int encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
+                    ros_spimessagefile_header.write('\tint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
+                    ros_spimessagefile_cpp.write('int SPIMessageHandler::decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
+                index = 0
+                for item in fieldlist:
+                    if(type_query == 1):
+                        if(item.datatype == 'unsigned char'):
+                            arduino_spimessagefile_header.write( item.datatype + ' ' + item.name)
+                            arduino_spimessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            ros_spimessagefile_header.write( item.datatype + '* ' + item.name)
+                            ros_spimessagefile_cpp.write(item.datatype + '* ' + item.name)
+                        else:
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+                    index += 1
+                    if(index < len(fieldlist)):
+                        if(type_query == 1):
+                            arduino_spimessagefile_header.write(',')
+                            arduino_spimessagefile_cpp.write(',')
+                            ros_spimessagefile_header.write(',')
+                            ros_spimessagefile_cpp.write(',')
+                if(type_query == 1):
+                    arduino_spimessagefile_header.write(');\r\n')
+                    arduino_spimessagefile_cpp.write(')\r\n{\r\n')
+                    ros_spimessagefile_header.write(');\r\n')
+                    ros_spimessagefile_cpp.write(')\r\n{\r\n')
+                message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
+                bytelength = 0
+                for item in fieldlist:
+                    if(item.datatype == 'unsigned char'):
+                        bytelength = bytelength +1
+                    else:
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+                if(bytelength <> 12): print "ERROR ERROR ERROR: Currently SPI Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
+                if(type_query == 1):
+                    arduino_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
+                    #ros_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &inbuffer[0];\r\n')
+                bytecounter = 0
+                for item in fieldlist:
+                    if(item.datatype == 'unsigned char'): 
+                        if(type_query == 1):
+                            arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                            ros_spimessagefile_cpp.write('\t*' + item.name + ' = inbuffer[' + str(bytecounter) + '];\r\n')
+                            #ros_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                            bytecounter = bytecounter + 1
+                    else:
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+                for b in range(bytelength,12):
+                    if(type_query == 1):
+                        arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
+                        ros_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n') 
+                if(type_query == 1):
+                    arduino_spimessagefile_cpp.write('\tunsigned char checksum = 0;\r\n')
+                    arduino_spimessagefile_cpp.write('\tfor(int i = 0; i < 12;i++)\r\n\t{\r\n')
+                    arduino_spimessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
+                    arduino_spimessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n\tlength[0] = 12;\r\n')
+                    arduino_spimessagefile_cpp.write('\treturn 1;\r\n')
+                    arduino_spimessagefile_cpp.write('}\r\n')
+                    ros_spimessagefile_cpp.write('\treturn 1;\r\n')
+                    ros_spimessagefile_cpp.write('}\r\n')
+                
+                
                     
     f = open("/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h", "r")
     contents = f.readlines()
@@ -585,6 +669,9 @@ def generate_message(xmlfile):
     ros_serialmessagefile_header.write('private:\r\n')
     ros_serialmessagefile_header.write('};\r\n#endif')
     propeller_serialmessagefile_header.write('#endif')
+    arduino_spimessagefile_header.write('#endif')
+    ros_spimessagefile_header.write('private:\r\n')
+    ros_spimessagefile_header.write('};\r\n#endif')
 
 
 
@@ -645,6 +732,33 @@ elif (sys.argv[1] == "-g"):
     propeller_serialmessagefile_cpp.write( str(datetime.now()))
     propeller_serialmessagefile_cpp.write('***/\r\n')
     propeller_serialmessagefile_cpp.write("/***Target: Parallax Propeller ***/\r\n")
+
+    arduino_spimessagefile_header = open('generated/arduino/spimessage.h','w')
+    arduino_spimessagefile_header.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    arduino_spimessagefile_header.write('/***Created on:')
+    arduino_spimessagefile_header.write( str(datetime.now()))
+    arduino_spimessagefile_header.write('***/\r\n')
+    arduino_spimessagefile_header.write("/***Target: Arduino ***/\r\n")
+    arduino_spimessagefile_cpp = open('generated/arduino/spimessage.cpp','w')
+    arduino_spimessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    arduino_spimessagefile_cpp.write('/***Created on:')
+    arduino_spimessagefile_cpp.write( str(datetime.now()))
+    arduino_spimessagefile_cpp.write('***/\r\n')
+    arduino_spimessagefile_cpp.write("/***Target: Arduino ***/\r\n")
+
+    ros_spimessagefile_header = open('generated/ros/spimessage.h','w+')
+    ros_spimessagefile_header.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    ros_spimessagefile_header.write('/***Created on:')
+    ros_spimessagefile_header.write( str(datetime.now()))
+    ros_spimessagefile_header.write('***/\r\n')
+    ros_spimessagefile_header.write("/***Target: Raspberry Pi ***/\r\n")
+    ros_spimessagefile_cpp = open('generated/ros/spimessage.cpp','w')
+    ros_spimessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    ros_spimessagefile_cpp.write('/***Created on:')
+    ros_spimessagefile_cpp.write( str(datetime.now()))
+    ros_spimessagefile_cpp.write('***/\r\n')
+    ros_spimessagefile_cpp.write("/***Target: Raspberry Pi ***/\r\n")
+    
     message_strings = []
     #eros_definitionsfile_header = open('/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h','a')
    
@@ -659,10 +773,18 @@ elif (sys.argv[1] == "-g"):
     propeller_serialmessagefile_header.close()
     propeller_serialmessagefile_cpp.close()
 
+    arduino_spimessagefile_header.close()
+    arduino_spimessagefile_cpp.close()
+    ros_spimessagefile_header.close()
+    ros_spimessagefile_cpp.close()
+    
+
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/spimessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/spimessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/DriverStation/DriverStation/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/DriverStation/DriverStation/')
