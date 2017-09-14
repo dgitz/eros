@@ -293,23 +293,22 @@
             </Protocol>
         </Protocols>
     </Message>
-    <Message name="Get_ANA_Port" id="0xAB20">
+    <Message name="Get_ANA_Port1" id="0xAB20">
         <Description>
             <![CDATA[
-                This message is used to get the Analog Input Port on the GPIO Board.  The max value of these fields is 4095.
+                This message is used to get the Analog Input Port 1 on the GPIO Board.  The max value of these fields is 4095.
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
-                <Origin>Slave</Origin>
-                <Origin>Master</Origin>
+            <Protocol name="SPI">
+                <Type>Query</Type>
                 <Fields>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortID"/>
                     <field type="uint16_t" name="Pin1_Value"/>
                     <field type="uint16_t" name="Pin2_Value"/>
                     <field type="uint16_t" name="Pin3_Value"/>
                     <field type="uint16_t" name="Pin4_Value"/>
+                    <field type="uint16_t" name="Pin5_Value"/>
+                    <field type="uint16_t" name="Pin6_Value"/>
                 </Fields>
             </Protocol>
         </Protocols>

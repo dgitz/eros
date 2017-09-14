@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-12 22:13:32.315805***/
+/***Created on:2017-09-13 21:18:05.808767***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -283,48 +283,6 @@ int SerialMessageHandler::decode_Get_DIO_PortSerial(unsigned char* inpacket,unsi
 	*Pin6_Value=inpacket[7];
 	*Pin7_Value=inpacket[8];
 	*Pin8_Value=inpacket[9];
-	return 1;
-}
-int SerialMessageHandler::encode_Get_ANA_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,int Pin1_Value,int Pin2_Value,int Pin3_Value,int Pin4_Value)
-{
-	char *p_outbuffer;
-	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = 0xAB;
-	*p_outbuffer++ = 0x20;
-	*p_outbuffer++ = 12;
-	*p_outbuffer++ = ShieldID;
-	*p_outbuffer++ = PortID;
-	*p_outbuffer++ = Pin1_Value >> 8;
-	*p_outbuffer++ = (Pin1_Value & 0xFF);
-	*p_outbuffer++ = Pin2_Value >> 8;
-	*p_outbuffer++ = (Pin2_Value & 0xFF);
-	*p_outbuffer++ = Pin3_Value >> 8;
-	*p_outbuffer++ = (Pin3_Value & 0xFF);
-	*p_outbuffer++ = Pin4_Value >> 8;
-	*p_outbuffer++ = (Pin4_Value & 0xFF);
-	*p_outbuffer++ = 0;
-	*p_outbuffer++ = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	*p_outbuffer++ = checksum;
-	*length = p_outbuffer-&outbuffer[0];
-	return 1;
-}
-int SerialMessageHandler::decode_Get_ANA_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,int* Pin1_Value,int* Pin2_Value,int* Pin3_Value,int* Pin4_Value)
-{
-	*ShieldID=inpacket[0];
-	*PortID=inpacket[1];
-	int v_Pin1_Value1=inpacket[2]<<8;
-	*Pin1_Value=inpacket[3] + v_Pin1_Value1;
-	int v_Pin2_Value1=inpacket[4]<<8;
-	*Pin2_Value=inpacket[5] + v_Pin2_Value1;
-	int v_Pin3_Value1=inpacket[6]<<8;
-	*Pin3_Value=inpacket[7] + v_Pin3_Value1;
-	int v_Pin4_Value1=inpacket[8]<<8;
-	*Pin4_Value=inpacket[9] + v_Pin4_Value1;
 	return 1;
 }
 int SerialMessageHandler::decode_FirmwareVersionSerial(unsigned char* inpacket,unsigned char* majorVersion,unsigned char* minorVersion,unsigned char* buildNumber)

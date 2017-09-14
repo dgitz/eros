@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-12 22:13:32.315999***/
+/***Created on:2017-09-13 21:18:05.808970***/
 /***Target: Raspberry Pi ***/
 #include "spimessage.h"
 SPIMessageHandler::SPIMessageHandler(){}
@@ -18,5 +18,21 @@ int SPIMessageHandler::decode_TestMessageCounterSPI(unsigned char* inbuffer,int 
 	*value10 = inbuffer[9];
 	*value11 = inbuffer[10];
 	*value12 = inbuffer[11];
+	return 1;
+}
+int SPIMessageHandler::decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value)
+{
+	int v_Pin1_Value = inbuffer[0]<<8;
+	*Pin1_Value = v_Pin1_Value + inbuffer[1];
+	int v_Pin2_Value = inbuffer[2]<<8;
+	*Pin2_Value = v_Pin2_Value + inbuffer[3];
+	int v_Pin3_Value = inbuffer[4]<<8;
+	*Pin3_Value = v_Pin3_Value + inbuffer[5];
+	int v_Pin4_Value = inbuffer[6]<<8;
+	*Pin4_Value = v_Pin4_Value + inbuffer[7];
+	int v_Pin5_Value = inbuffer[8]<<8;
+	*Pin5_Value = v_Pin5_Value + inbuffer[9];
+	int v_Pin6_Value = inbuffer[10]<<8;
+	*Pin6_Value = v_Pin6_Value + inbuffer[11];
 	return 1;
 }

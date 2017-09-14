@@ -577,9 +577,9 @@ def generate_message(xmlfile):
                     if(child.text == "Command"):
                         type_command = 1
                 if(type_query == 1):
-                    arduino_spimessagefile_header.write('int encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
+                    arduino_spimessagefile_header.write('\r\nint encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
                     arduino_spimessagefile_cpp.write('int encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
-                    ros_spimessagefile_header.write('\tint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
+                    ros_spimessagefile_header.write('\r\n\tint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
                     ros_spimessagefile_cpp.write('int SPIMessageHandler::decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
                 index = 0
                 for item in fieldlist:
@@ -587,6 +587,11 @@ def generate_message(xmlfile):
                         if(item.datatype == 'unsigned char'):
                             arduino_spimessagefile_header.write( item.datatype + ' ' + item.name)
                             arduino_spimessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            ros_spimessagefile_header.write( item.datatype + '* ' + item.name)
+                            ros_spimessagefile_cpp.write(item.datatype + '* ' + item.name)
+                        elif(item.datatype == 'uint16_t'):
+                            arduino_spimessagefile_header.write( 'unsigned int ' + item.name)
+                            arduino_spimessagefile_cpp.write('unsigned int ' + item.name)
                             ros_spimessagefile_header.write( item.datatype + '* ' + item.name)
                             ros_spimessagefile_cpp.write(item.datatype + '* ' + item.name)
                         else:
@@ -608,9 +613,11 @@ def generate_message(xmlfile):
                 for item in fieldlist:
                     if(item.datatype == 'unsigned char'):
                         bytelength = bytelength +1
+                    elif(item.datatype == 'uint16_t'):
+                        bytelength = bytelength +2
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                if(bytelength <> 12): print "ERROR ERROR ERROR: Currently SPI Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
+                if(bytelength > 12): print "ERROR ERROR ERROR: Currently SPI Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
                 if(type_query == 1):
                     arduino_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                     #ros_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &inbuffer[0];\r\n')
@@ -620,7 +627,14 @@ def generate_message(xmlfile):
                         if(type_query == 1):
                             arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                             ros_spimessagefile_cpp.write('\t*' + item.name + ' = inbuffer[' + str(bytecounter) + '];\r\n')
-                            #ros_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                            bytecounter = bytecounter + 1
+                    elif(item.datatype == 'uint16_t'): 
+                        if(type_query == 1):
+                            arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +'>>8;\r\n')
+                            ros_spimessagefile_cpp.write('\tint v_' + item.name + ' = inbuffer[' + str(bytecounter) + ']<<8;\r\n')
+                            bytecounter = bytecounter + 1
+                            arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
+                            ros_spimessagefile_cpp.write('\t*' + item.name + ' = v_' + item.name + ' + inbuffer[' + str(bytecounter) + '];\r\n')
                             bytecounter = bytecounter + 1
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno

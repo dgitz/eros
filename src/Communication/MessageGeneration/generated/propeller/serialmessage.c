@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-12 22:13:32.315872***/
+/***Created on:2017-09-13 21:18:05.808831***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -314,53 +314,6 @@ int encode_Get_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,
 	}
 	outbuffer[byte_counter] = checksum;
 	length[0] = 3+12+1;
-	return 1;
-}
-int encode_Get_ANA_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,int Pin1_Value,int Pin2_Value,int Pin3_Value,int Pin4_Value)
-{
-	int byte_counter=0;
-	outbuffer[byte_counter++] = 0xAB;
-	outbuffer[byte_counter++] = 0x20;
-	outbuffer[byte_counter++] = 12;
-	outbuffer[byte_counter++] = ShieldID;
-	outbuffer[byte_counter++] = PortID;
-	int v_Pin1_Value1 = Pin1_Value >> 8;
-	outbuffer[byte_counter++] = v_Pin1_Value1;
-	int v_Pin1_Value2 = Pin1_Value -(v_Pin1_Value1 << 8);
-	outbuffer[byte_counter++] = v_Pin1_Value2;
-	int v_Pin2_Value1 = Pin2_Value >> 8;
-	outbuffer[byte_counter++] = v_Pin2_Value1;
-	int v_Pin2_Value2 = Pin2_Value -(v_Pin2_Value1 << 8);
-	outbuffer[byte_counter++] = v_Pin2_Value2;
-	int v_Pin3_Value1 = Pin3_Value >> 8;
-	outbuffer[byte_counter++] = v_Pin3_Value1;
-	int v_Pin3_Value2 = Pin3_Value -(v_Pin3_Value1 << 8);
-	outbuffer[byte_counter++] = v_Pin3_Value2;
-	int v_Pin4_Value1 = Pin4_Value >> 8;
-	outbuffer[byte_counter++] = v_Pin4_Value1;
-	int v_Pin4_Value2 = Pin4_Value -(v_Pin4_Value1 << 8);
-	outbuffer[byte_counter++] = v_Pin4_Value2;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
-	return 1;
-}
-int decode_Get_ANA_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,int* Pin1_Value,int* Pin2_Value,int* Pin3_Value,int* Pin4_Value)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
-	*ShieldID=inpacket[0];
-	*PortID=inpacket[1];
 	return 1;
 }
 int encode_FirmwareVersionSerial(int* outbuffer,int* length,unsigned char majorVersion,unsigned char minorVersion,unsigned char buildNumber)
