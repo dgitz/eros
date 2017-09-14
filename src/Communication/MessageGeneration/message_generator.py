@@ -641,7 +641,7 @@ def generate_message(xmlfile):
                 for b in range(bytelength,12):
                     if(type_query == 1):
                         arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
-                        ros_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n') 
+                        #ros_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n') 
                 if(type_query == 1):
                     arduino_spimessagefile_cpp.write('\tunsigned char checksum = 0;\r\n')
                     arduino_spimessagefile_cpp.write('\tfor(int i = 0; i < 12;i++)\r\n\t{\r\n')

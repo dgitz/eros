@@ -152,7 +152,6 @@
         </Description>
         <Protocols>
             <Protocol name="SPI">
-                <Retry>false</Retry>
                 <Type>Query</Type>
                 <Fields>
                     <field type="unsigned char" name="value1"/>
@@ -268,19 +267,16 @@
             </Protocol>
         </Protocols>
     </Message>
-    <Message name="Get_DIO_Port" id="0xAB19">
+    <Message name="Get_DIO_Port1" id="0xAB19">
         <Description>
             <![CDATA[
                 This message is used to get the inputs on DIO Port. If a pin is not configured as an input this value is discarded.
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Slave</Origin>
+            <Protocol name="SPI">
+                <Type>Query</Type>
                 <Fields>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortID"/>
                     <field type="unsigned char" name="Pin1_Value"/>
                     <field type="unsigned char" name="Pin2_Value"/>
                     <field type="unsigned char" name="Pin3_Value"/>

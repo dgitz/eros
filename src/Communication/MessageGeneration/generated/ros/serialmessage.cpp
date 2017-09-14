@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-13 21:18:05.808767***/
+/***Created on:2017-09-14 06:11:37.654571***/
 /***Target: Raspberry Pi ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -258,20 +258,6 @@ int SerialMessageHandler::encode_Set_DIO_PortSerial(char* outbuffer,int* length,
 	return 1;
 }
 int SerialMessageHandler::decode_Set_DIO_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
-{
-	*ShieldID=inpacket[0];
-	*PortID=inpacket[1];
-	*Pin1_Value=inpacket[2];
-	*Pin2_Value=inpacket[3];
-	*Pin3_Value=inpacket[4];
-	*Pin4_Value=inpacket[5];
-	*Pin5_Value=inpacket[6];
-	*Pin6_Value=inpacket[7];
-	*Pin7_Value=inpacket[8];
-	*Pin8_Value=inpacket[9];
-	return 1;
-}
-int SerialMessageHandler::decode_Get_DIO_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
 {
 	*ShieldID=inpacket[0];
 	*PortID=inpacket[1];

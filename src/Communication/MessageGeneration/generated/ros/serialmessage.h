@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-13 21:18:05.808732***/
+/***Created on:2017-09-14 06:11:37.654535***/
 /***Target: Raspberry Pi OR Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -10,7 +10,6 @@
 #define SERIAL_Configure_DIO_Port_ID 0x16
 #define SERIAL_Mode_ID 0x17
 #define SERIAL_Set_DIO_Port_ID 0x18
-#define SERIAL_Get_DIO_Port_ID 0x19
 #define SERIAL_FirmwareVersion_ID 0x25
 #define SERIAL_Arm_Status_ID 0x30
 #define SERIAL_Set_DIO_Port_DefaultValue_ID 0x32
@@ -35,7 +34,6 @@ public:
 	int decode_ModeSerial(unsigned char* inpacket,unsigned char* DeviceType,unsigned char* ID,unsigned char* Mode);
 	int encode_Set_DIO_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value);
 	int decode_Set_DIO_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value);
-	int decode_Get_DIO_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value);
 	int decode_FirmwareVersionSerial(unsigned char* inpacket,unsigned char* majorVersion,unsigned char* minorVersion,unsigned char* buildNumber);
 	int encode_Arm_StatusSerial(char* outbuffer,int* length,unsigned char Status);
 	int decode_Arm_StatusSerial(unsigned char* inpacket,unsigned char* Status);

@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-13 21:18:05.808831***/
+/***Created on:2017-09-14 06:11:37.654636***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -287,33 +287,6 @@ int decode_Set_DIO_PortSerial(int* inpacket,int length,int checksum,unsigned cha
 	*Pin6_Value=inpacket[7];
 	*Pin7_Value=inpacket[8];
 	*Pin8_Value=inpacket[9];
-	return 1;
-}
-int encode_Get_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
-{
-	int byte_counter=0;
-	outbuffer[byte_counter++] = 0xAB;
-	outbuffer[byte_counter++] = 0x19;
-	outbuffer[byte_counter++] = 12;
-	outbuffer[byte_counter++] = ShieldID;
-	outbuffer[byte_counter++] = PortID;
-	outbuffer[byte_counter++] = Pin1_Value;
-	outbuffer[byte_counter++] = Pin2_Value;
-	outbuffer[byte_counter++] = Pin3_Value;
-	outbuffer[byte_counter++] = Pin4_Value;
-	outbuffer[byte_counter++] = Pin5_Value;
-	outbuffer[byte_counter++] = Pin6_Value;
-	outbuffer[byte_counter++] = Pin7_Value;
-	outbuffer[byte_counter++] = Pin8_Value;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
 	return 1;
 }
 int encode_FirmwareVersionSerial(int* outbuffer,int* length,unsigned char majorVersion,unsigned char minorVersion,unsigned char buildNumber)
