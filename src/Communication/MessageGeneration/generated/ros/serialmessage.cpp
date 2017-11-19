@@ -1,7 +1,7 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-14 06:11:37.654571***/
+/***Created on:2017-11-19 13:28:18.630295***/
 /***Target: Raspberry Pi ***/
-#include "serialmessage.h"
+#include "../include/serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
 SerialMessageHandler::~SerialMessageHandler(){}
 int SerialMessageHandler::encode_UserMessageSerial(char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -426,5 +426,146 @@ int SerialMessageHandler::decode_Configure_ANA_PortSerial(unsigned char* inpacke
 	*Pin2_Mode=inpacket[5];
 	*Pin3_Mode=inpacket[6];
 	*Pin4_Mode=inpacket[7];
+	return 1;
+}
+int SerialMessageHandler::encode_IDSerial(char* outbuffer,int* length,unsigned char DeviceID,unsigned long PartNumber)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x40;
+	*p_outbuffer++ = 12;
+	*p_outbuffer++ = DeviceID;
+	*p_outbuffer++ = PartNumber >> 24;
+	*p_outbuffer++ = PartNumber >> 16;
+	*p_outbuffer++ = PartNumber >> 8;
+	*p_outbuffer++ = (PartNumber & 0xFF);
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::decode_IDSerial(unsigned char* inpacket,unsigned char* DeviceID,unsigned long* PartNumber)
+{
+	*DeviceID=inpacket[0];
+	int v_PartNumber3=inpacket[1]<<24;
+	int v_PartNumber2=inpacket[2]<<16;
+	int v_PartNumber1=inpacket[3]<<8;
+	*PartNumber=inpacket[4] + v_PartNumber1 + v_PartNumber2 + v_PartNumber3;
+	return 1;
+}
+int SerialMessageHandler::encode_IMUSerial(char* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ)
+{
+	char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = 0xAB;
+	*p_outbuffer++ = 0x41;
+	*p_outbuffer++ = 12;
+	*p_outbuffer++ = timemS >> 24;
+	*p_outbuffer++ = timemS >> 16;
+	*p_outbuffer++ = timemS >> 8;
+	*p_outbuffer++ = (timemS & 0xFF);
+	*p_outbuffer++ = counter >> 8;
+	*p_outbuffer++ = (counter & 0xFF);
+	*p_outbuffer++ = AccX_mg >> 24;
+	*p_outbuffer++ = AccX_mg >> 16;
+	*p_outbuffer++ = AccX_mg >> 8;
+	*p_outbuffer++ = (AccX_mg & 0xFF);
+	*p_outbuffer++ = AccY_mg >> 24;
+	*p_outbuffer++ = AccY_mg >> 16;
+	*p_outbuffer++ = AccY_mg >> 8;
+	*p_outbuffer++ = (AccY_mg & 0xFF);
+	*p_outbuffer++ = AccZ_mg >> 24;
+	*p_outbuffer++ = AccZ_mg >> 16;
+	*p_outbuffer++ = AccZ_mg >> 8;
+	*p_outbuffer++ = (AccZ_mg & 0xFF);
+	*p_outbuffer++ = GyroX_mdegps >> 24;
+	*p_outbuffer++ = GyroX_mdegps >> 16;
+	*p_outbuffer++ = GyroX_mdegps >> 8;
+	*p_outbuffer++ = (GyroX_mdegps & 0xFF);
+	*p_outbuffer++ = GyroY_mdepgs >> 24;
+	*p_outbuffer++ = GyroY_mdepgs >> 16;
+	*p_outbuffer++ = GyroY_mdepgs >> 8;
+	*p_outbuffer++ = (GyroY_mdepgs & 0xFF);
+	*p_outbuffer++ = GyroZ_mdegps >> 24;
+	*p_outbuffer++ = GyroZ_mdegps >> 16;
+	*p_outbuffer++ = GyroZ_mdegps >> 8;
+	*p_outbuffer++ = (GyroZ_mdegps & 0xFF);
+	*p_outbuffer++ = MagX >> 24;
+	*p_outbuffer++ = MagX >> 16;
+	*p_outbuffer++ = MagX >> 8;
+	*p_outbuffer++ = (MagX & 0xFF);
+	*p_outbuffer++ = MagY >> 24;
+	*p_outbuffer++ = MagY >> 16;
+	*p_outbuffer++ = MagY >> 8;
+	*p_outbuffer++ = (MagY & 0xFF);
+	*p_outbuffer++ = MagZ >> 24;
+	*p_outbuffer++ = MagZ >> 16;
+	*p_outbuffer++ = MagZ >> 8;
+	*p_outbuffer++ = (MagZ & 0xFF);
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	*length = p_outbuffer-&outbuffer[0];
+	return 1;
+}
+int SerialMessageHandler::decode_IMUSerial(unsigned char* inpacket,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ)
+{
+	int v_timemS3=inpacket[0]<<24;
+	int v_timemS2=inpacket[1]<<16;
+	int v_timemS1=inpacket[2]<<8;
+	*timemS=inpacket[3] + v_timemS1 + v_timemS2 + v_timemS3;
+	int v_counter1=inpacket[4]<<8;
+	*counter=inpacket[5] + v_counter1;
+	int v_AccX_mg3=inpacket[6]<<24;
+	int v_AccX_mg2=inpacket[7]<<16;
+	int v_AccX_mg1=inpacket[8]<<8;
+	*AccX_mg=inpacket[9] + v_AccX_mg1 + v_AccX_mg2 + v_AccX_mg3;
+	int v_AccY_mg3=inpacket[10]<<24;
+	int v_AccY_mg2=inpacket[11]<<16;
+	int v_AccY_mg1=inpacket[12]<<8;
+	*AccY_mg=inpacket[13] + v_AccY_mg1 + v_AccY_mg2 + v_AccY_mg3;
+	int v_AccZ_mg3=inpacket[14]<<24;
+	int v_AccZ_mg2=inpacket[15]<<16;
+	int v_AccZ_mg1=inpacket[16]<<8;
+	*AccZ_mg=inpacket[17] + v_AccZ_mg1 + v_AccZ_mg2 + v_AccZ_mg3;
+	int v_GyroX_mdegps3=inpacket[18]<<24;
+	int v_GyroX_mdegps2=inpacket[19]<<16;
+	int v_GyroX_mdegps1=inpacket[20]<<8;
+	*GyroX_mdegps=inpacket[21] + v_GyroX_mdegps1 + v_GyroX_mdegps2 + v_GyroX_mdegps3;
+	int v_GyroY_mdepgs3=inpacket[22]<<24;
+	int v_GyroY_mdepgs2=inpacket[23]<<16;
+	int v_GyroY_mdepgs1=inpacket[24]<<8;
+	*GyroY_mdepgs=inpacket[25] + v_GyroY_mdepgs1 + v_GyroY_mdepgs2 + v_GyroY_mdepgs3;
+	int v_GyroZ_mdegps3=inpacket[26]<<24;
+	int v_GyroZ_mdegps2=inpacket[27]<<16;
+	int v_GyroZ_mdegps1=inpacket[28]<<8;
+	*GyroZ_mdegps=inpacket[29] + v_GyroZ_mdegps1 + v_GyroZ_mdegps2 + v_GyroZ_mdegps3;
+	int v_MagX3=inpacket[30]<<24;
+	int v_MagX2=inpacket[31]<<16;
+	int v_MagX1=inpacket[32]<<8;
+	*MagX=inpacket[33] + v_MagX1 + v_MagX2 + v_MagX3;
+	int v_MagY3=inpacket[34]<<24;
+	int v_MagY2=inpacket[35]<<16;
+	int v_MagY1=inpacket[36]<<8;
+	*MagY=inpacket[37] + v_MagY1 + v_MagY2 + v_MagY3;
+	int v_MagZ3=inpacket[38]<<24;
+	int v_MagZ2=inpacket[39]<<16;
+	int v_MagZ1=inpacket[40]<<8;
+	*MagZ=inpacket[41] + v_MagZ1 + v_MagZ2 + v_MagZ3;
 	return 1;
 }

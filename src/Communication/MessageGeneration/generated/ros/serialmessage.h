@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-14 06:11:37.654535***/
+/***Created on:2017-11-19 13:28:18.630261***/
 /***Target: Raspberry Pi OR Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -15,6 +15,8 @@
 #define SERIAL_Set_DIO_Port_DefaultValue_ID 0x32
 #define SERIAL_PPS_ID 0x35
 #define SERIAL_Configure_ANA_Port_ID 0x36
+#define SERIAL_ID_ID 0x40
+#define SERIAL_IMU_ID 0x41
 
 class SerialMessageHandler
 {
@@ -43,6 +45,10 @@ public:
 	int decode_PPSSerial(unsigned char* inpacket,unsigned char* counter);
 	int encode_Configure_ANA_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode);
 	int decode_Configure_ANA_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* MessageIndex,unsigned char* MessageCount,unsigned char* Pin1_Mode,unsigned char* Pin2_Mode,unsigned char* Pin3_Mode,unsigned char* Pin4_Mode);
+	int encode_IDSerial(char* outbuffer,int* length,unsigned char DeviceID,unsigned long PartNumber);
+	int decode_IDSerial(unsigned char* inpacket,unsigned char* DeviceID,unsigned long* PartNumber);
+	int encode_IMUSerial(char* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ);
+	int decode_IMUSerial(unsigned char* inpacket,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ);
 private:
 };
 #endif

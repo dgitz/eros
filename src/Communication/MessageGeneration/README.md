@@ -14,6 +14,8 @@ Serial Supported Data Types:
 * unsigned char
 * char
 * uint16_t
+* uint32_t
+* int32_t
 
 SPI Supported Data Types:
 * unsigned char

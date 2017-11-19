@@ -593,4 +593,49 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="ID" id="0XAB40">
+        <Description>
+            <![CDATA[
+                This message is used to send the ID and other information about the device
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="DeviceID"/>
+                    <field type="uint32_t" name="PartNumber"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="IMU" id="0XAB41">
+        <Description>
+            <![CDATA[
+                This message is used to send imu data
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="uint32_t" name="timemS"/>
+                    <field type="uint16_t" name="counter"/>
+                    <field type="int32_t" name="AccX_mg"/>
+                    <field type="int32_t" name="AccY_mg"/>
+                    <field type="int32_t" name="AccZ_mg"/>
+                    <field type="int32_t" name="GyroX_mdegps"/>
+                    <field type="int32_t" name="GyroY_mdepgs"/>
+                    <field type="int32_t" name="GyroZ_mdegps"/>
+                    <field type="int32_t" name="MagX"/>
+                    <field type="int32_t" name="MagY"/>
+                    <field type="int32_t" name="MagZ"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

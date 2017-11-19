@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-09-14 06:11:37.654636***/
+/***Created on:2017-11-19 13:28:18.630361***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -484,5 +484,112 @@ int decode_Configure_ANA_PortSerial(int* inpacket,int length,int checksum,unsign
 	*Pin2_Mode=inpacket[5];
 	*Pin3_Mode=inpacket[6];
 	*Pin4_Mode=inpacket[7];
+	return 1;
+}
+int encode_IDSerial(int* outbuffer,int* length,unsigned char DeviceID,unsigned long PartNumber)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x40;
+	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = DeviceID;
+	int v_PartNumber1 = PartNumber >> 8;
+	outbuffer[byte_counter++] = v_PartNumber1;
+	int v_PartNumber2 = PartNumber -(v_PartNumber1 << 8);
+	outbuffer[byte_counter++] = v_PartNumber2;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	outbuffer[byte_counter++] = 0;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_IDSerial(int* inpacket,int length,int checksum,unsigned char* DeviceID,unsigned long* PartNumber)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
+	*DeviceID=inpacket[0];
+	return 1;
+}
+int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ)
+{
+	int byte_counter=0;
+	outbuffer[byte_counter++] = 0xAB;
+	outbuffer[byte_counter++] = 0x41;
+	outbuffer[byte_counter++] = 12;
+	int v_timemS1 = timemS >> 8;
+	outbuffer[byte_counter++] = v_timemS1;
+	int v_timemS2 = timemS -(v_timemS1 << 8);
+	outbuffer[byte_counter++] = v_timemS2;
+	int v_counter1 = counter >> 8;
+	outbuffer[byte_counter++] = v_counter1;
+	int v_counter2 = counter -(v_counter1 << 8);
+	outbuffer[byte_counter++] = v_counter2;
+	int v_AccX_mg1 = AccX_mg >> 8;
+	outbuffer[byte_counter++] = v_AccX_mg1;
+	int v_AccX_mg2 = AccX_mg -(v_AccX_mg1 << 8);
+	outbuffer[byte_counter++] = v_AccX_mg2;
+	int v_AccY_mg1 = AccY_mg >> 8;
+	outbuffer[byte_counter++] = v_AccY_mg1;
+	int v_AccY_mg2 = AccY_mg -(v_AccY_mg1 << 8);
+	outbuffer[byte_counter++] = v_AccY_mg2;
+	int v_AccZ_mg1 = AccZ_mg >> 8;
+	outbuffer[byte_counter++] = v_AccZ_mg1;
+	int v_AccZ_mg2 = AccZ_mg -(v_AccZ_mg1 << 8);
+	outbuffer[byte_counter++] = v_AccZ_mg2;
+	int v_GyroX_mdegps1 = GyroX_mdegps >> 8;
+	outbuffer[byte_counter++] = v_GyroX_mdegps1;
+	int v_GyroX_mdegps2 = GyroX_mdegps -(v_GyroX_mdegps1 << 8);
+	outbuffer[byte_counter++] = v_GyroX_mdegps2;
+	int v_GyroY_mdepgs1 = GyroY_mdepgs >> 8;
+	outbuffer[byte_counter++] = v_GyroY_mdepgs1;
+	int v_GyroY_mdepgs2 = GyroY_mdepgs -(v_GyroY_mdepgs1 << 8);
+	outbuffer[byte_counter++] = v_GyroY_mdepgs2;
+	int v_GyroZ_mdegps1 = GyroZ_mdegps >> 8;
+	outbuffer[byte_counter++] = v_GyroZ_mdegps1;
+	int v_GyroZ_mdegps2 = GyroZ_mdegps -(v_GyroZ_mdegps1 << 8);
+	outbuffer[byte_counter++] = v_GyroZ_mdegps2;
+	int v_MagX1 = MagX >> 8;
+	outbuffer[byte_counter++] = v_MagX1;
+	int v_MagX2 = MagX -(v_MagX1 << 8);
+	outbuffer[byte_counter++] = v_MagX2;
+	int v_MagY1 = MagY >> 8;
+	outbuffer[byte_counter++] = v_MagY1;
+	int v_MagY2 = MagY -(v_MagY1 << 8);
+	outbuffer[byte_counter++] = v_MagY2;
+	int v_MagZ1 = MagZ >> 8;
+	outbuffer[byte_counter++] = v_MagZ1;
+	int v_MagZ2 = MagZ -(v_MagZ1 << 8);
+	outbuffer[byte_counter++] = v_MagZ2;
+	int checksum = 0;
+	for(int i = 3; i < (3+12);i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	outbuffer[byte_counter] = checksum;
+	length[0] = 3+12+1;
+	return 1;
+}
+int decode_IMUSerial(int* inpacket,int length,int checksum,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ)
+{
+	int computed_checksum = 0;
+	for(int i = 0; i < length; i++)
+	{
+		computed_checksum ^= inpacket[i];
+	}
+	if(computed_checksum != checksum) { return -1; }
 	return 1;
 }
