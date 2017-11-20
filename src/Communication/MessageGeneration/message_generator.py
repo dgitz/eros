@@ -37,6 +37,7 @@ def generate_message(xmlfile):
     gui_udpmessagefile_header.write('#include <QString>\r\n#include <QList>\r\n')
     
     ros_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
+    arduino_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
     propeller_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
 
     arduino_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
@@ -64,6 +65,7 @@ def generate_message(xmlfile):
                 gui_udpmessagefile_header.write('#define UDP_' + message.get('name') + '_ID "' + message.get('id')[2:] +'"\r\n')
             if(protocol.get('name') == 'Serial'):
                 ros_serialmessagefile_header.write('#define SERIAL_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
+                arduino_serialmessagefile_header.write('#define SERIAL_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
                 propeller_serialmessagefile_header.write('#define SERIAL_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
             if(protocol.get('name') == 'SPI'):
                 arduino_spimessagefile_header.write('#define SPI_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
@@ -84,7 +86,8 @@ def generate_message(xmlfile):
 
     ros_serialmessagefile_header.write('\r\nclass SerialMessageHandler\r\n{\r\npublic:\r\n\tSerialMessageHandler();\r\n\t~SerialMessageHandler();\r\n')
     ros_serialmessagefile_cpp.write('#include "../include/serialmessage.h"\r\nSerialMessageHandler::SerialMessageHandler(){}\r\nSerialMessageHandler::~SerialMessageHandler(){}\r\n')
-
+    arduino_serialmessagefile_header.write('\r\nclass SerialMessageHandler\r\n{\r\npublic:\r\n\tSerialMessageHandler();\r\n\t~SerialMessageHandler();\r\n')
+    arduino_serialmessagefile_cpp.write('#include "serialmessage.h"\r\nSerialMessageHandler::SerialMessageHandler(){}\r\nSerialMessageHandler::~SerialMessageHandler(){}\r\n')
     propeller_serialmessagefile_cpp.write('#include "serialmessage.h"\r\n')
 
     ros_spimessagefile_header.write('\t};\r\n\tSPIMessageHandler();\r\n\t~SPIMessageHandler();\r\n')
@@ -348,12 +351,14 @@ def generate_message(xmlfile):
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_header.write('int encode_' + message.get('name') + 'Serial(int* outbuffer,int* length,')
                     propeller_serialmessagefile_cpp.write('int encode_' + message.get('name') + 'Serial(int* outbuffer,int* length,')
+                    arduino_serialmessagefile_header.write('\tint encode_' + message.get('name') + 'Serial(unsigned char* outbuffer,int* length,')
+                    arduino_serialmessagefile_cpp.write('int SerialMessageHandler::encode_' + message.get('name') + 'Serial(unsigned char* outbuffer,int* length,')
                 index = 0
                 for item in fieldlist:
                     if(encode_for_master == 1):
                         if(item.datatype == 'char'):
                             ros_serialmessagefile_header.write(item.datatype + ' ' + item.name)
-                            ros_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            ros_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)               
                         elif(item.datatype == 'unsigned char'):
                             ros_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             ros_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
@@ -362,7 +367,7 @@ def generate_message(xmlfile):
                             ros_serialmessagefile_cpp.write('int ' + item.name)
                         elif(item.datatype == 'int16_t'):
                             ros_serialmessagefile_header.write('int ' + item.name)
-                            ros_serialmessagefile_cpp.write('int ' + item.name)
+                            ros_serialmessagefile_cpp.write('int ' + item.name)  
                         elif(item.datatype == 'uint32_t'):
                             ros_serialmessagefile_header.write('unsigned long ' + item.name)
                             ros_serialmessagefile_cpp.write('unsigned long ' + item.name)
@@ -375,21 +380,33 @@ def generate_message(xmlfile):
                         if(item.datatype == 'char'):
                             propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            arduino_serialmessagefile_header.write(item.datatype + ' ' + item.name)
+                            arduino_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'unsigned char'):
                             propeller_serialmessagefile_header.write(item.datatype + ' ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            arduino_serialmessagefile_header.write(item.datatype + ' ' + item.name)
+                            arduino_serialmessagefile_cpp.write(item.datatype + ' ' + item.name)
                         elif(item.datatype == 'uint16_t'):
                             propeller_serialmessagefile_header.write('int ' + item.name)
                             propeller_serialmessagefile_cpp.write('int ' + item.name)
+                            arduino_serialmessagefile_header.write('int ' + item.name)
+                            arduino_serialmessagefile_cpp.write('int ' + item.name)
                         elif(item.datatype == 'int16_t'):
                             propeller_serialmessagefile_header.write('int ' + item.name)
                             propeller_serialmessagefile_cpp.write('int ' + item.name)
+                            arduino_serialmessagefile_header.write('int ' + item.name)
+                            arduino_serialmessagefile_cpp.write('int ' + item.name)
                         elif(item.datatype == 'uint32_t'):
                             propeller_serialmessagefile_header.write('unsigned long ' + item.name)
                             propeller_serialmessagefile_cpp.write('unsigned long ' + item.name)
+                            arduino_serialmessagefile_header.write('unsigned long ' + item.name)
+                            arduino_serialmessagefile_cpp.write('unsigned long ' + item.name)
                         elif(item.datatype == 'int32_t'):
                             propeller_serialmessagefile_header.write('long ' + item.name)
                             propeller_serialmessagefile_cpp.write('long ' + item.name)
+                            arduino_serialmessagefile_header.write('long ' + item.name)
+                            arduino_serialmessagefile_cpp.write('long ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
@@ -400,12 +417,16 @@ def generate_message(xmlfile):
                         if(encode_for_slave == 1):
                             propeller_serialmessagefile_header.write(',')
                             propeller_serialmessagefile_cpp.write(',')
+                            arduino_serialmessagefile_header.write(',')
+                            arduino_serialmessagefile_cpp.write(',')
                 if(encode_for_master == 1):
                     ros_serialmessagefile_header.write(');\r\n')
                     ros_serialmessagefile_cpp.write(')\r\n{\r\n')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_header.write(');\r\n')
                     propeller_serialmessagefile_cpp.write(')\r\n{\r\n')
+                    arduino_serialmessagefile_header.write(');\r\n')
+                    arduino_serialmessagefile_cpp.write(')\r\n{\r\n')
                 message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
                 bytelength = 0
                 for item in fieldlist:
@@ -423,28 +444,34 @@ def generate_message(xmlfile):
                         bytelength = bytelength + 4
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                #if(bytelength > 12): print "ERROR ERROR ERROR: Currently Serial Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
+                #if(bytelength > 12): print "ERROR ERROR ERROR: Currently Serial Messages longer than 12 bytes (",str(bytelength), " defined) are not supported.", " at line: ",currentframe().f_lineno
                 if(encode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\tchar *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0xAB;\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + message_id +';\r\n')
-                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 12;\r\n')
+                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + str(bytelength) + ';\r\n')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\tint byte_counter=0;\r\n')
                     propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 0xAB;\r\n')
                     propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + message_id +';\r\n')
-                    propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 12;\r\n')
+                    propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + str(bytelength) + ';\r\n')
+                    arduino_serialmessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
+                    arduino_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0xAB;\r\n')
+                    arduino_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + message_id +';\r\n')
+                    arduino_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + str(bytelength) + ';\r\n')
                 for item in fieldlist:
                     if(item.datatype == 'char'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                         if(encode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + item.name +';\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                     elif(item.datatype == 'unsigned char'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                         if(encode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = ' + item.name +';\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                     elif(item.datatype == 'uint16_t'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name + ' >> 8;\r\n')
@@ -454,6 +481,9 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
+                            
+                            arduino_serialmessagefile_cpp.write('\tfor(int i = 2; i>0;i--)\r\n\t{\r\n')
+                            arduino_serialmessagefile_cpp.write('\t\t*p_outbuffer++ = ((' + item.name + ' >> 8*(i-1)) & 0xFF);\r\n\t}\r\n')
                     elif(item.datatype == 'int16_t'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
@@ -462,6 +492,8 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tfor(int i = 2; i>0;i--)\r\n\t{\r\n')
+                            arduino_serialmessagefile_cpp.write('\t\t*p_outbuffer++ = ((' + item.name + ' >> 8*(i-1)) & 0xFF);\r\n\t}\r\n')
                     elif(item.datatype == 'uint32_t'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name + ' >> 24;\r\n')
@@ -473,6 +505,8 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tfor(int i = 4; i>0;i--)\r\n\t{\r\n')
+                            arduino_serialmessagefile_cpp.write('\t\t*p_outbuffer++ = ((' + item.name + ' >> 8*(i-1)) & 0xFF);\r\n\t}\r\n')
                     elif(item.datatype == 'int32_t'):
                         if(encode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name + ' >> 24;\r\n')
@@ -484,27 +518,35 @@ def generate_message(xmlfile):
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'1;\r\n')
                             propeller_serialmessagefile_cpp.write('\tint v_' + item.name + '2 = ' + item.name + ' -(v_'  + item.name + '1 << 8);\r\n')
                             propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = v_' + item.name +'2;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tfor(int i = 4; i>0;i--)\r\n\t{\r\n')
+                            arduino_serialmessagefile_cpp.write('\t\t*p_outbuffer++ = ((' + item.name + ' >> 8*(i-1)) & 0xFF);\r\n\t}\r\n')
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                for b in range(bytelength,12):
-                    if(encode_for_master == 1):
-                        ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
-                    if(encode_for_slave == 1):
-                        propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 0;\r\n') 
+                #for b in range(bytelength,12):
+                #    if(encode_for_master == 1):
+                #        ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
+                #    if(encode_for_slave == 1):
+                #        propeller_serialmessagefile_cpp.write('\toutbuffer[byte_counter++] = 0;\r\n') 
                 if(encode_for_master == 1):
                     ros_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
-                    ros_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+12);i++)\r\n\t{\r\n')
+                    ros_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+' + str(bytelength) + ');i++)\r\n\t{\r\n')
                     ros_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
                     ros_serialmessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n\t*length = p_outbuffer-&outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     ros_serialmessagefile_cpp.write('}\r\n')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
-                    propeller_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+12);i++)\r\n\t{\r\n')
+                    propeller_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+' + str(bytelength) + ');i++)\r\n\t{\r\n')
                     propeller_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
-                    propeller_serialmessagefile_cpp.write('\t}\r\n\toutbuffer[byte_counter] = checksum;\r\n\tlength[0] = 3+12+1;\r\n')
+                    propeller_serialmessagefile_cpp.write('\t}\r\n\toutbuffer[byte_counter] = checksum;\r\n\tlength[0] = 3+' + str(bytelength) + '+1;\r\n')
                     propeller_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     propeller_serialmessagefile_cpp.write('}\r\n')
+                    arduino_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
+                    arduino_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+' + str(bytelength) + ');i++)\r\n\t{\r\n')
+                    arduino_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
+                    arduino_serialmessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n\t*length = p_outbuffer-&outbuffer[0];\r\n')
+                    arduino_serialmessagefile_cpp.write('\treturn 1;\r\n')
+                    arduino_serialmessagefile_cpp.write('}\r\n')
                 
                 if(decode_for_master == 1):
                     ros_serialmessagefile_header.write('\tint decode_' + message.get('name') + 'Serial(unsigned char* inpacket,')
@@ -512,6 +554,8 @@ def generate_message(xmlfile):
                 if(decode_for_slave == 1):
                     propeller_serialmessagefile_header.write('int decode_' + message.get('name') + 'Serial(int* inpacket,int length,int checksum,')
                     propeller_serialmessagefile_cpp.write('int decode_' + message.get('name') + 'Serial(int* inpacket,int length,int checksum,')
+                    arduino_serialmessagefile_header.write('\tint decode_' + message.get('name') + 'Serial(unsigned char* inpacket,')
+                    arduino_serialmessagefile_cpp.write('int SerialMessageHandler::decode_' + message.get('name') + 'Serial(unsigned char* inpacket,')
                 index = 0
                 for item in fieldlist:
                     if(decode_for_master == 1):
@@ -539,21 +583,33 @@ def generate_message(xmlfile):
                         if(item.datatype == 'char'):
                             propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
+                            arduino_serialmessagefile_header.write(item.datatype + '* ' + item.name)
+                            arduino_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
                         elif(item.datatype == 'unsigned char'):
                             propeller_serialmessagefile_header.write(item.datatype + '* ' + item.name)
                             propeller_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
+                            arduino_serialmessagefile_header.write(item.datatype + '* ' + item.name)
+                            arduino_serialmessagefile_cpp.write(item.datatype + '* ' + item.name)
                         elif(item.datatype == 'uint16_t'):
                             propeller_serialmessagefile_header.write('int* ' + item.name)
                             propeller_serialmessagefile_cpp.write('int* ' + item.name)
+                            arduino_serialmessagefile_header.write('int* ' + item.name)
+                            arduino_serialmessagefile_cpp.write('int* ' + item.name)
                         elif(item.datatype == 'int16_t'):
                             propeller_serialmessagefile_header.write('int* ' + item.name)
                             propeller_serialmessagefile_cpp.write('int* ' + item.name)
+                            arduino_serialmessagefile_header.write('int* ' + item.name)
+                            arduino_serialmessagefile_cpp.write('int* ' + item.name)
                         elif(item.datatype == 'uint32_t'):
                             propeller_serialmessagefile_header.write('unsigned long* ' + item.name)
                             propeller_serialmessagefile_cpp.write('unsigned long* ' + item.name)
+                            arduino_serialmessagefile_header.write('unsigned long* ' + item.name)
+                            arduino_serialmessagefile_cpp.write('unsigned long* ' + item.name)
                         elif(item.datatype == 'int32_t'):
                             propeller_serialmessagefile_header.write('long* ' + item.name)
                             propeller_serialmessagefile_cpp.write('long* ' + item.name)
+                            arduino_serialmessagefile_header.write('long* ' + item.name)
+                            arduino_serialmessagefile_cpp.write('long* ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
@@ -564,6 +620,8 @@ def generate_message(xmlfile):
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_header.write(',')
                             propeller_serialmessagefile_cpp.write(',')
+                            arduino_serialmessagefile_header.write(',')
+                            arduino_serialmessagefile_cpp.write(',')
                 if(decode_for_master == 1):
                     ros_serialmessagefile_header.write(');\r\n')
                     ros_serialmessagefile_cpp.write(')\r\n{\r\n')
@@ -574,74 +632,91 @@ def generate_message(xmlfile):
                     propeller_serialmessagefile_cpp.write('\tfor(int i = 0; i < length; i++)\r\n\t{\r\n')
                     propeller_serialmessagefile_cpp.write('\t\tcomputed_checksum ^= inpacket[i];\r\n\t}\r\n')
                     propeller_serialmessagefile_cpp.write('\tif(computed_checksum != checksum) { return -1; }\r\n')
+                    arduino_serialmessagefile_header.write(');\r\n')
+                    arduino_serialmessagefile_cpp.write(')\r\n{\r\n')
                 bytecounter = 0
                 for item in fieldlist:
                     if(item.datatype == 'char'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'unsigned char'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint16_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int16_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint32_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+4) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+4) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
-                            propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
+                            bytecounter = bytecounter + 1
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            bytecounter = bytecounter + 1
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                                        '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int32_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+4) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+4) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
-                            propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            bytecounter = bytecounter + 1
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                                        '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                 if(decode_for_master == 1):
@@ -650,6 +725,8 @@ def generate_message(xmlfile):
                 if(decode_for_slave == 1):
                     propeller_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     propeller_serialmessagefile_cpp.write('}\r\n')
+                    arduino_serialmessagefile_cpp.write('\treturn 1;\r\n')
+                    arduino_serialmessagefile_cpp.write('}\r\n')
             elif(protocol.get('name') == 'SPI'):
                 type_query = 0
                 type_command = 0
@@ -764,6 +841,8 @@ def generate_message(xmlfile):
     gui_udpmessagefile_header.write('};\r\n#endif')
     ros_serialmessagefile_header.write('private:\r\n')
     ros_serialmessagefile_header.write('};\r\n#endif')
+    arduino_serialmessagefile_header.write('private:\r\n')
+    arduino_serialmessagefile_header.write('};\r\n#endif')
     propeller_serialmessagefile_header.write('#endif')
     arduino_spimessagefile_header.write('#endif')
     ros_spimessagefile_header.write('private:\r\n')
@@ -808,13 +887,26 @@ elif (sys.argv[1] == "-g"):
     ros_serialmessagefile_header.write('/***Created on:')
     ros_serialmessagefile_header.write( str(datetime.now()))
     ros_serialmessagefile_header.write('***/\r\n')
-    ros_serialmessagefile_header.write("/***Target: Raspberry Pi OR Arduino ***/\r\n")
+    ros_serialmessagefile_header.write("/***Target: ROS ***/\r\n")
     ros_serialmessagefile_cpp = open('generated/ros/serialmessage.cpp','w')
     ros_serialmessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
     ros_serialmessagefile_cpp.write('/***Created on:')
     ros_serialmessagefile_cpp.write( str(datetime.now()))
     ros_serialmessagefile_cpp.write('***/\r\n')
-    ros_serialmessagefile_cpp.write("/***Target: Raspberry Pi ***/\r\n")
+    ros_serialmessagefile_cpp.write("/***Target: ROS ***/\r\n")
+    
+    arduino_serialmessagefile_header = open('generated/arduino/serialmessage.h','w+')
+    arduino_serialmessagefile_header.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    arduino_serialmessagefile_header.write('/***Created on:')
+    arduino_serialmessagefile_header.write( str(datetime.now()))
+    arduino_serialmessagefile_header.write('***/\r\n')
+    arduino_serialmessagefile_header.write("/***Target: Arduino ***/\r\n")
+    arduino_serialmessagefile_cpp = open('generated/arduino/serialmessage.cpp','w')
+    arduino_serialmessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    arduino_serialmessagefile_cpp.write('/***Created on:')
+    arduino_serialmessagefile_cpp.write( str(datetime.now()))
+    arduino_serialmessagefile_cpp.write('***/\r\n')
+    arduino_serialmessagefile_cpp.write("/***Target: Arduino ***/\r\n")
 
     propeller_serialmessagefile_header = open('generated/propeller/serialmessage.h','w')
     propeller_serialmessagefile_header.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
@@ -868,6 +960,8 @@ elif (sys.argv[1] == "-g"):
     ros_serialmessagefile_cpp.close()
     propeller_serialmessagefile_header.close()
     propeller_serialmessagefile_cpp.close()
+    arduino_serialmessagefile_header.close()
+    arduino_serialmessagefile_cpp.close()
 
     arduino_spimessagefile_header.close()
     arduino_spimessagefile_cpp.close()

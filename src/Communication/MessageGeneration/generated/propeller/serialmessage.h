@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-19 13:28:18.630327***/
+/***Created on:2017-11-20 07:46:01.311564***/
 /***Target: Parallax Propeller ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -40,7 +40,5 @@ int decode_PPSSerial(int* inpacket,int length,int checksum,unsigned char* counte
 int encode_Configure_ANA_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode);
 int decode_Configure_ANA_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* MessageIndex,unsigned char* MessageCount,unsigned char* Pin1_Mode,unsigned char* Pin2_Mode,unsigned char* Pin3_Mode,unsigned char* Pin4_Mode);
 int encode_IDSerial(int* outbuffer,int* length,unsigned char DeviceID,unsigned long PartNumber);
-int decode_IDSerial(int* inpacket,int length,int checksum,unsigned char* DeviceID,unsigned long* PartNumber);
 int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ);
-int decode_IMUSerial(int* inpacket,int length,int checksum,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ);
 #endif

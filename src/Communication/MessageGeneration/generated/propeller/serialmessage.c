@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-19 13:28:18.630361***/
+/***Created on:2017-11-20 07:46:01.311596***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -56,26 +56,18 @@ int encode_CommandSerial(int* outbuffer,int* length,unsigned char Command,unsign
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x2;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 4;
 	outbuffer[byte_counter++] = Command;
 	outbuffer[byte_counter++] = Option1;
 	outbuffer[byte_counter++] = Option2;
 	outbuffer[byte_counter++] = Option3;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+4);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+4+1;
 	return 1;
 }
 int decode_CommandSerial(int* inpacket,int length,int checksum,unsigned char* Command,unsigned char* Option1,unsigned char* Option2,unsigned char* Option3)
@@ -97,26 +89,20 @@ int encode_DiagnosticSerial(int* outbuffer,int* length,unsigned char System,unsi
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x12;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 6;
 	outbuffer[byte_counter++] = System;
 	outbuffer[byte_counter++] = SubSystem;
 	outbuffer[byte_counter++] = Component;
 	outbuffer[byte_counter++] = Diagnostic_Type;
 	outbuffer[byte_counter++] = Level;
 	outbuffer[byte_counter++] = Diagnostic_Message;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+6);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+6+1;
 	return 1;
 }
 int decode_DiagnosticSerial(int* inpacket,int length,int checksum,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)
@@ -207,26 +193,17 @@ int encode_ModeSerial(int* outbuffer,int* length,unsigned char DeviceType,unsign
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x17;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 3;
 	outbuffer[byte_counter++] = DeviceType;
 	outbuffer[byte_counter++] = ID;
 	outbuffer[byte_counter++] = Mode;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+3);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+3+1;
 	return 1;
 }
 int decode_ModeSerial(int* inpacket,int length,int checksum,unsigned char* DeviceType,unsigned char* ID,unsigned char* Mode)
@@ -247,7 +224,7 @@ int encode_Set_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x18;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 10;
 	outbuffer[byte_counter++] = ShieldID;
 	outbuffer[byte_counter++] = PortID;
 	outbuffer[byte_counter++] = Pin1_Value;
@@ -258,15 +235,13 @@ int encode_Set_DIO_PortSerial(int* outbuffer,int* length,unsigned char ShieldID,
 	outbuffer[byte_counter++] = Pin6_Value;
 	outbuffer[byte_counter++] = Pin7_Value;
 	outbuffer[byte_counter++] = Pin8_Value;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+10);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+10+1;
 	return 1;
 }
 int decode_Set_DIO_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
@@ -294,26 +269,17 @@ int encode_FirmwareVersionSerial(int* outbuffer,int* length,unsigned char majorV
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x25;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 3;
 	outbuffer[byte_counter++] = majorVersion;
 	outbuffer[byte_counter++] = minorVersion;
 	outbuffer[byte_counter++] = buildNumber;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+3);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+3+1;
 	return 1;
 }
 int encode_Arm_StatusSerial(int* outbuffer,int* length,unsigned char Status)
@@ -321,26 +287,15 @@ int encode_Arm_StatusSerial(int* outbuffer,int* length,unsigned char Status)
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x30;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 1;
 	outbuffer[byte_counter++] = Status;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+1);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+1+1;
 	return 1;
 }
 int decode_Arm_StatusSerial(int* inpacket,int length,int checksum,unsigned char* Status)
@@ -408,26 +363,15 @@ int encode_PPSSerial(int* outbuffer,int* length,unsigned char counter)
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x35;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 1;
 	outbuffer[byte_counter++] = counter;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+1);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+1+1;
 	return 1;
 }
 int decode_PPSSerial(int* inpacket,int length,int checksum,unsigned char* counter)
@@ -446,7 +390,7 @@ int encode_Configure_ANA_PortSerial(int* outbuffer,int* length,unsigned char Shi
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x36;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 8;
 	outbuffer[byte_counter++] = ShieldID;
 	outbuffer[byte_counter++] = PortID;
 	outbuffer[byte_counter++] = MessageIndex;
@@ -455,17 +399,13 @@ int encode_Configure_ANA_PortSerial(int* outbuffer,int* length,unsigned char Shi
 	outbuffer[byte_counter++] = Pin2_Mode;
 	outbuffer[byte_counter++] = Pin3_Mode;
 	outbuffer[byte_counter++] = Pin4_Mode;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+8);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
+	length[0] = 3+8+1;
 	return 1;
 }
 int decode_Configure_ANA_PortSerial(int* inpacket,int length,int checksum,unsigned char* ShieldID,unsigned char* PortID,unsigned char* MessageIndex,unsigned char* MessageCount,unsigned char* Pin1_Mode,unsigned char* Pin2_Mode,unsigned char* Pin3_Mode,unsigned char* Pin4_Mode)
@@ -491,37 +431,19 @@ int encode_IDSerial(int* outbuffer,int* length,unsigned char DeviceID,unsigned l
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x40;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 5;
 	outbuffer[byte_counter++] = DeviceID;
 	int v_PartNumber1 = PartNumber >> 8;
 	outbuffer[byte_counter++] = v_PartNumber1;
 	int v_PartNumber2 = PartNumber -(v_PartNumber1 << 8);
 	outbuffer[byte_counter++] = v_PartNumber2;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
-	outbuffer[byte_counter++] = 0;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+5);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
-	return 1;
-}
-int decode_IDSerial(int* inpacket,int length,int checksum,unsigned char* DeviceID,unsigned long* PartNumber)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
-	*DeviceID=inpacket[0];
+	length[0] = 3+5+1;
 	return 1;
 }
 int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ)
@@ -529,7 +451,7 @@ int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter
 	int byte_counter=0;
 	outbuffer[byte_counter++] = 0xAB;
 	outbuffer[byte_counter++] = 0x41;
-	outbuffer[byte_counter++] = 12;
+	outbuffer[byte_counter++] = 42;
 	int v_timemS1 = timemS >> 8;
 	outbuffer[byte_counter++] = v_timemS1;
 	int v_timemS2 = timemS -(v_timemS1 << 8);
@@ -575,21 +497,11 @@ int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter
 	int v_MagZ2 = MagZ -(v_MagZ1 << 8);
 	outbuffer[byte_counter++] = v_MagZ2;
 	int checksum = 0;
-	for(int i = 3; i < (3+12);i++)
+	for(int i = 3; i < (3+42);i++)
 	{
 		checksum ^= outbuffer[i];
 	}
 	outbuffer[byte_counter] = checksum;
-	length[0] = 3+12+1;
-	return 1;
-}
-int decode_IMUSerial(int* inpacket,int length,int checksum,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ)
-{
-	int computed_checksum = 0;
-	for(int i = 0; i < length; i++)
-	{
-		computed_checksum ^= inpacket[i];
-	}
-	if(computed_checksum != checksum) { return -1; }
+	length[0] = 3+42+1;
 	return 1;
 }

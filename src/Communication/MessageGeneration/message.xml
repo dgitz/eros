@@ -602,7 +602,6 @@
         <Protocols>
             <Protocol name="Serial">
                 <Retry>true</Retry>
-                <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
                     <field type="unsigned char" name="DeviceID"/>
@@ -620,7 +619,6 @@
         <Protocols>
             <Protocol name="Serial">
                 <Retry>true</Retry>
-                <Origin>Master</Origin>
                 <Origin>Slave</Origin>
                 <Fields>
                     <field type="uint32_t" name="timemS"/>
