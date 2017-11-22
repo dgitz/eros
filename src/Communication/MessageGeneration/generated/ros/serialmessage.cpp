@@ -1,12 +1,12 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-20 07:46:01.311463***/
+/***Created on:2017-11-21 20:37:54.556078***/
 /***Target: ROS ***/
 #include "../include/serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
 SerialMessageHandler::~SerialMessageHandler(){}
-int SerialMessageHandler::encode_UserMessageSerial(char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
+int SerialMessageHandler::encode_UserMessageSerial(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x1;
@@ -29,6 +29,8 @@ int SerialMessageHandler::encode_UserMessageSerial(char* outbuffer,int* length,u
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -48,9 +50,9 @@ int SerialMessageHandler::decode_UserMessageSerial(unsigned char* inpacket,unsig
 	*value12=inpacket[15];
 	return 1;
 }
-int SerialMessageHandler::encode_CommandSerial(char* outbuffer,int* length,unsigned char Command,unsigned char Option1,unsigned char Option2,unsigned char Option3)
+int SerialMessageHandler::encode_CommandSerial(unsigned char* outbuffer,int* length,unsigned char Command,unsigned char Option1,unsigned char Option2,unsigned char Option3)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x2;
@@ -65,6 +67,8 @@ int SerialMessageHandler::encode_CommandSerial(char* outbuffer,int* length,unsig
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -76,9 +80,9 @@ int SerialMessageHandler::decode_CommandSerial(unsigned char* inpacket,unsigned 
 	*Option3=inpacket[7];
 	return 1;
 }
-int SerialMessageHandler::encode_DiagnosticSerial(char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
+int SerialMessageHandler::encode_DiagnosticSerial(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x12;
@@ -95,6 +99,8 @@ int SerialMessageHandler::encode_DiagnosticSerial(char* outbuffer,int* length,un
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -108,9 +114,9 @@ int SerialMessageHandler::decode_DiagnosticSerial(unsigned char* inpacket,unsign
 	*Diagnostic_Message=inpacket[9];
 	return 1;
 }
-int SerialMessageHandler::encode_TestMessageCommandSerial(char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)
+int SerialMessageHandler::encode_TestMessageCommandSerial(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x15;
@@ -129,12 +135,14 @@ int SerialMessageHandler::encode_TestMessageCommandSerial(char* outbuffer,int* l
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
-int SerialMessageHandler::encode_Configure_DIO_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode,unsigned char Pin5_Mode,unsigned char Pin6_Mode,unsigned char Pin7_Mode,unsigned char Pin8_Mode)
+int SerialMessageHandler::encode_Configure_DIO_PortSerial(unsigned char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode,unsigned char Pin5_Mode,unsigned char Pin6_Mode,unsigned char Pin7_Mode,unsigned char Pin8_Mode)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x16;
@@ -157,6 +165,8 @@ int SerialMessageHandler::encode_Configure_DIO_PortSerial(char* outbuffer,int* l
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -176,9 +186,9 @@ int SerialMessageHandler::decode_Configure_DIO_PortSerial(unsigned char* inpacke
 	*Pin8_Mode=inpacket[15];
 	return 1;
 }
-int SerialMessageHandler::encode_ModeSerial(char* outbuffer,int* length,unsigned char DeviceType,unsigned char ID,unsigned char Mode)
+int SerialMessageHandler::encode_ModeSerial(unsigned char* outbuffer,int* length,unsigned char DeviceType,unsigned char ID,unsigned char Mode)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x17;
@@ -192,6 +202,8 @@ int SerialMessageHandler::encode_ModeSerial(char* outbuffer,int* length,unsigned
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -202,9 +214,9 @@ int SerialMessageHandler::decode_ModeSerial(unsigned char* inpacket,unsigned cha
 	*Mode=inpacket[6];
 	return 1;
 }
-int SerialMessageHandler::encode_Set_DIO_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
+int SerialMessageHandler::encode_Set_DIO_PortSerial(unsigned char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x18;
@@ -225,6 +237,8 @@ int SerialMessageHandler::encode_Set_DIO_PortSerial(char* outbuffer,int* length,
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -249,9 +263,9 @@ int SerialMessageHandler::decode_FirmwareVersionSerial(unsigned char* inpacket,u
 	*buildNumber=inpacket[6];
 	return 1;
 }
-int SerialMessageHandler::encode_Arm_StatusSerial(char* outbuffer,int* length,unsigned char Status)
+int SerialMessageHandler::encode_Arm_StatusSerial(unsigned char* outbuffer,int* length,unsigned char Status)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x30;
@@ -263,6 +277,8 @@ int SerialMessageHandler::encode_Arm_StatusSerial(char* outbuffer,int* length,un
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -271,9 +287,9 @@ int SerialMessageHandler::decode_Arm_StatusSerial(unsigned char* inpacket,unsign
 	*Status=inpacket[4];
 	return 1;
 }
-int SerialMessageHandler::encode_Set_DIO_Port_DefaultValueSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
+int SerialMessageHandler::encode_Set_DIO_Port_DefaultValueSerial(unsigned char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x32;
@@ -296,6 +312,8 @@ int SerialMessageHandler::encode_Set_DIO_Port_DefaultValueSerial(char* outbuffer
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -315,9 +333,9 @@ int SerialMessageHandler::decode_Set_DIO_Port_DefaultValueSerial(unsigned char* 
 	*Pin8_Value=inpacket[15];
 	return 1;
 }
-int SerialMessageHandler::encode_PPSSerial(char* outbuffer,int* length,unsigned char counter)
+int SerialMessageHandler::encode_PPSSerial(unsigned char* outbuffer,int* length,unsigned char counter)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x35;
@@ -329,6 +347,8 @@ int SerialMessageHandler::encode_PPSSerial(char* outbuffer,int* length,unsigned 
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }
@@ -337,9 +357,9 @@ int SerialMessageHandler::decode_PPSSerial(unsigned char* inpacket,unsigned char
 	*counter=inpacket[4];
 	return 1;
 }
-int SerialMessageHandler::encode_Configure_ANA_PortSerial(char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode)
+int SerialMessageHandler::encode_Configure_ANA_PortSerial(unsigned char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode)
 {
-	char *p_outbuffer;
+	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
 	*p_outbuffer++ = 0xAB;
 	*p_outbuffer++ = 0x36;
@@ -358,6 +378,8 @@ int SerialMessageHandler::encode_Configure_ANA_PortSerial(char* outbuffer,int* l
 		checksum ^= outbuffer[i];
 	}
 	*p_outbuffer++ = checksum;
+	*p_outbuffer++ = 10;
+	*p_outbuffer++ = 13;
 	*length = p_outbuffer-&outbuffer[0];
 	return 1;
 }

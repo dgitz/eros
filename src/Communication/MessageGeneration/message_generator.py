@@ -346,8 +346,8 @@ def generate_message(xmlfile):
                         encode_for_slave = 1
                 #print message.get('name'), " Encoding/Decoding for Master: ", encode_for_master, ",", decode_for_master, " Encoding/Decoding for Slave: ", encode_for_slave, ",", decode_for_slave 
                 if(encode_for_master == 1):                
-                    ros_serialmessagefile_header.write('\tint encode_' + message.get('name') + 'Serial(char* outbuffer,int* length,')
-                    ros_serialmessagefile_cpp.write('int SerialMessageHandler::encode_' + message.get('name') + 'Serial(char* outbuffer,int* length,')
+                    ros_serialmessagefile_header.write('\tint encode_' + message.get('name') + 'Serial(unsigned char* outbuffer,int* length,')
+                    ros_serialmessagefile_cpp.write('int SerialMessageHandler::encode_' + message.get('name') + 'Serial(unsigned char* outbuffer,int* length,')
                 if(encode_for_slave == 1):
                     propeller_serialmessagefile_header.write('int encode_' + message.get('name') + 'Serial(int* outbuffer,int* length,')
                     propeller_serialmessagefile_cpp.write('int encode_' + message.get('name') + 'Serial(int* outbuffer,int* length,')
@@ -446,7 +446,7 @@ def generate_message(xmlfile):
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                 #if(bytelength > 12): print "ERROR ERROR ERROR: Currently Serial Messages longer than 12 bytes (",str(bytelength), " defined) are not supported.", " at line: ",currentframe().f_lineno
                 if(encode_for_master == 1):
-                    ros_serialmessagefile_cpp.write('\tchar *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
+                    ros_serialmessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 0xAB;\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + message_id +';\r\n')
                     ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = ' + str(bytelength) + ';\r\n')
@@ -531,7 +531,10 @@ def generate_message(xmlfile):
                     ros_serialmessagefile_cpp.write('\tint checksum = 0;\r\n')
                     ros_serialmessagefile_cpp.write('\tfor(int i = 3; i < (3+' + str(bytelength) + ');i++)\r\n\t{\r\n')
                     ros_serialmessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n')
-                    ros_serialmessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n\t*length = p_outbuffer-&outbuffer[0];\r\n')
+                    ros_serialmessagefile_cpp.write('\t}\r\n\t*p_outbuffer++ = checksum;\r\n')
+                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 10;\r\n')
+                    ros_serialmessagefile_cpp.write('\t*p_outbuffer++ = 13;\r\n')
+                    ros_serialmessagefile_cpp.write('\t*length = p_outbuffer-&outbuffer[0];\r\n')
                     ros_serialmessagefile_cpp.write('\treturn 1;\r\n')
                     ros_serialmessagefile_cpp.write('}\r\n')
                 if(encode_for_slave == 1):
@@ -641,14 +644,14 @@ def generate_message(xmlfile):
                             ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'unsigned char'):
                         if(decode_for_master == 1):
                             ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint16_t'):
                         if(decode_for_master == 1):
@@ -658,10 +661,10 @@ def generate_message(xmlfile):
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int16_t'):
                         if(decode_for_master == 1):
@@ -671,10 +674,10 @@ def generate_message(xmlfile):
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1;\r\n')
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint32_t'):
                         if(decode_for_master == 1):
@@ -688,13 +691,13 @@ def generate_message(xmlfile):
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+3) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+3) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int32_t'):
@@ -709,13 +712,13 @@ def generate_message(xmlfile):
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter) + ']<<24;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+3) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter) + ']<<16;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+3) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
+                            arduino_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '] + v_' + str(item.name) + '1 ' + \
+                            arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
