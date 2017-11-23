@@ -641,23 +641,23 @@ def generate_message(xmlfile):
                 for item in fieldlist:
                     if(item.datatype == 'char'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                             arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'unsigned char'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '];\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         if(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter) + '];\r\n')
                             arduino_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '];\r\n')
                         bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint16_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1;\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
@@ -668,9 +668,9 @@ def generate_message(xmlfile):
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int16_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1;\r\n')
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
                             propeller_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter) + ']<<8;\r\n')
@@ -681,13 +681,13 @@ def generate_message(xmlfile):
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint32_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+4) + ']<<24;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+3) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+4) + ']<<16;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+3) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1 ' + \
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):
@@ -702,13 +702,13 @@ def generate_message(xmlfile):
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'int32_t'):
                         if(decode_for_master == 1):
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+4) + ']<<24;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '3=inpacket[' + str(bytecounter+3) + ']<<24;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+4) + ']<<16;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '2=inpacket[' + str(bytecounter+3) + ']<<16;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+4) + ']<<8;\r\n')
+                            ros_serialmessagefile_cpp.write('\tint v_' + str(item.name) + '1=inpacket[' + str(bytecounter+3) + ']<<8;\r\n')
                             bytecounter = bytecounter + 1
-                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+4) + '] + v_' + str(item.name) + '1 ' + \
+                            ros_serialmessagefile_cpp.write('\t*' + str(item.name) + '=inpacket[' + str(bytecounter+3) + '] + v_' + str(item.name) + '1 ' + \
                                         '+ v_' + str(item.name) + '2 + v_' + str(item.name) + '3;\r\n')
                             bytecounter = bytecounter + 1
                         elif(decode_for_slave == 1):

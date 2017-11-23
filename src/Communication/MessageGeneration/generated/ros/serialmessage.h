@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-21 20:37:54.556042***/
+/***Created on:2017-11-22 07:33:54.252977***/
 /***Target: ROS ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H

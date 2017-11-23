@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-21 20:37:54.556148***/
+/***Created on:2017-11-22 07:33:54.253085***/
 /***Target: Arduino ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
