@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-22 07:33:54.253156***/
+/***Created on:2017-11-24 09:51:43.776510***/
 /***Target: Parallax Propeller ***/
 #include "serialmessage.h"
 int encode_UserMessageSerial(int* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -444,64 +444,5 @@ int encode_IDSerial(int* outbuffer,int* length,unsigned char DeviceID,unsigned l
 	}
 	outbuffer[byte_counter] = checksum;
 	length[0] = 3+5+1;
-	return 1;
-}
-int encode_IMUSerial(int* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ)
-{
-	int byte_counter=0;
-	outbuffer[byte_counter++] = 0xAB;
-	outbuffer[byte_counter++] = 0x41;
-	outbuffer[byte_counter++] = 42;
-	int v_timemS1 = timemS >> 8;
-	outbuffer[byte_counter++] = v_timemS1;
-	int v_timemS2 = timemS -(v_timemS1 << 8);
-	outbuffer[byte_counter++] = v_timemS2;
-	int v_counter1 = counter >> 8;
-	outbuffer[byte_counter++] = v_counter1;
-	int v_counter2 = counter -(v_counter1 << 8);
-	outbuffer[byte_counter++] = v_counter2;
-	int v_AccX_mg1 = AccX_mg >> 8;
-	outbuffer[byte_counter++] = v_AccX_mg1;
-	int v_AccX_mg2 = AccX_mg -(v_AccX_mg1 << 8);
-	outbuffer[byte_counter++] = v_AccX_mg2;
-	int v_AccY_mg1 = AccY_mg >> 8;
-	outbuffer[byte_counter++] = v_AccY_mg1;
-	int v_AccY_mg2 = AccY_mg -(v_AccY_mg1 << 8);
-	outbuffer[byte_counter++] = v_AccY_mg2;
-	int v_AccZ_mg1 = AccZ_mg >> 8;
-	outbuffer[byte_counter++] = v_AccZ_mg1;
-	int v_AccZ_mg2 = AccZ_mg -(v_AccZ_mg1 << 8);
-	outbuffer[byte_counter++] = v_AccZ_mg2;
-	int v_GyroX_mdegps1 = GyroX_mdegps >> 8;
-	outbuffer[byte_counter++] = v_GyroX_mdegps1;
-	int v_GyroX_mdegps2 = GyroX_mdegps -(v_GyroX_mdegps1 << 8);
-	outbuffer[byte_counter++] = v_GyroX_mdegps2;
-	int v_GyroY_mdepgs1 = GyroY_mdepgs >> 8;
-	outbuffer[byte_counter++] = v_GyroY_mdepgs1;
-	int v_GyroY_mdepgs2 = GyroY_mdepgs -(v_GyroY_mdepgs1 << 8);
-	outbuffer[byte_counter++] = v_GyroY_mdepgs2;
-	int v_GyroZ_mdegps1 = GyroZ_mdegps >> 8;
-	outbuffer[byte_counter++] = v_GyroZ_mdegps1;
-	int v_GyroZ_mdegps2 = GyroZ_mdegps -(v_GyroZ_mdegps1 << 8);
-	outbuffer[byte_counter++] = v_GyroZ_mdegps2;
-	int v_MagX1 = MagX >> 8;
-	outbuffer[byte_counter++] = v_MagX1;
-	int v_MagX2 = MagX -(v_MagX1 << 8);
-	outbuffer[byte_counter++] = v_MagX2;
-	int v_MagY1 = MagY >> 8;
-	outbuffer[byte_counter++] = v_MagY1;
-	int v_MagY2 = MagY -(v_MagY1 << 8);
-	outbuffer[byte_counter++] = v_MagY2;
-	int v_MagZ1 = MagZ >> 8;
-	outbuffer[byte_counter++] = v_MagZ1;
-	int v_MagZ2 = MagZ -(v_MagZ1 << 8);
-	outbuffer[byte_counter++] = v_MagZ2;
-	int checksum = 0;
-	for(int i = 3; i < (3+42);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	outbuffer[byte_counter] = checksum;
-	length[0] = 3+42+1;
 	return 1;
 }

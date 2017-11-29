@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-22 07:33:54.253085***/
+/***Created on:2017-11-24 09:51:43.776452***/
 /***Target: Arduino ***/
 #include "serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -387,66 +387,6 @@ int SerialMessageHandler::encode_IDSerial(unsigned char* outbuffer,int* length,u
 	}
 	int checksum = 0;
 	for(int i = 3; i < (3+5);i++)
-	{
-		checksum ^= outbuffer[i];
-	}
-	*p_outbuffer++ = checksum;
-	*length = p_outbuffer-&outbuffer[0];
-	return 1;
-}
-int SerialMessageHandler::encode_IMUSerial(unsigned char* outbuffer,int* length,unsigned long timemS,int counter,long AccX_mg,long AccY_mg,long AccZ_mg,long GyroX_mdegps,long GyroY_mdepgs,long GyroZ_mdegps,long MagX,long MagY,long MagZ)
-{
-	unsigned char *p_outbuffer;
-	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = 0xAB;
-	*p_outbuffer++ = 0x41;
-	*p_outbuffer++ = 42;
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((timemS >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 2; i>0;i--)
-	{
-		*p_outbuffer++ = ((counter >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((AccX_mg >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((AccY_mg >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((AccZ_mg >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((GyroX_mdegps >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((GyroY_mdepgs >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((GyroZ_mdegps >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((MagX >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((MagY >> 8*(i-1)) & 0xFF);
-	}
-	for(int i = 4; i>0;i--)
-	{
-		*p_outbuffer++ = ((MagZ >> 8*(i-1)) & 0xFF);
-	}
-	int checksum = 0;
-	for(int i = 3; i < (3+42);i++)
 	{
 		checksum ^= outbuffer[i];
 	}

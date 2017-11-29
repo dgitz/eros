@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-22 07:33:54.252977***/
+/***Created on:2017-11-24 09:51:43.776355***/
 /***Target: ROS ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H
@@ -16,7 +16,6 @@
 #define SERIAL_PPS_ID 0x35
 #define SERIAL_Configure_ANA_Port_ID 0x36
 #define SERIAL_ID_ID 0x40
-#define SERIAL_IMU_ID 0x41
 
 class SerialMessageHandler
 {
@@ -46,7 +45,6 @@ public:
 	int encode_Configure_ANA_PortSerial(unsigned char* outbuffer,int* length,unsigned char ShieldID,unsigned char PortID,unsigned char MessageIndex,unsigned char MessageCount,unsigned char Pin1_Mode,unsigned char Pin2_Mode,unsigned char Pin3_Mode,unsigned char Pin4_Mode);
 	int decode_Configure_ANA_PortSerial(unsigned char* inpacket,unsigned char* ShieldID,unsigned char* PortID,unsigned char* MessageIndex,unsigned char* MessageCount,unsigned char* Pin1_Mode,unsigned char* Pin2_Mode,unsigned char* Pin3_Mode,unsigned char* Pin4_Mode);
 	int decode_IDSerial(unsigned char* inpacket,unsigned char* DeviceID,unsigned long* PartNumber);
-	int decode_IMUSerial(unsigned char* inpacket,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ);
 private:
 };
 #endif

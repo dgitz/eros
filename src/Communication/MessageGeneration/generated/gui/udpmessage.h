@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-22 07:33:54.252907***/
+/***Created on:2017-11-24 09:51:43.776295***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>

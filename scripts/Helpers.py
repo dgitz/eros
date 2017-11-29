@@ -1,8 +1,11 @@
 import xml.etree.ElementTree as ET
 devicefile = '/home/robot/config/DeviceFile.xml'
 class Device():
-    def __init__(self,Name='',IPAddress='',Capability=''):
+    def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber=''):
         self.Name = Name
+        self.Parent = Parent
+        self.ID = ID
+        self.PartNumber = PartNumber
         self.IPAddress = IPAddress
         self.Capability = Capability
         
@@ -31,6 +34,12 @@ def ReadDeviceList(Capability):
                     newDevice.IPAddress = entry.text
                 elif (entry.tag == 'Capability'):
                     newDevice.Capability = entry.text
+                elif (entry.tag == 'ID'):
+                    newDevice.ID = int(entry.text)
+                elif (entry.tag == 'PartNumber'):
+                    newDevice.PartNumber = entry.text
+                elif (entry.tag == 'ParentDevice'):
+                    newDevice.Parent = entry.text
             if(Capability == newDevice.Capability):
                 DeviceList.append(newDevice)
     return DeviceList

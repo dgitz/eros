@@ -35,6 +35,7 @@ def print_package():
 
 def sync_local(hostname):
     print "Syncing Local: " + hostname
+    
     #Determine what the name of the ActiveScenario is:
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
@@ -43,10 +44,60 @@ def sync_local(hostname):
     print "Active Scenario: " + ActiveScenario
 
     #Remove old launch files
-    shutil.rmtree(ApplicationPackage + "/launch")
-
+    if(os.path.isdir(ApplicationPackage + "launch") == True):
+        shutil.rmtree(ApplicationPackage + "launch")
+    os.mkdir(ApplicationPackage + "launch")
+    
     #Copy contents of /home/robot/config/scenarios/<ActiveScenario>/* to /home/robot/catkin_ws/src/icarus_rover_v2/launch/
-    shutil.copytree(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch",ApplicationPackage + "launch")
+    shutil.copyfile(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/" + hostname + ".launch","/tmp/config/" + hostname + ".launch")
+   
+    AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
+    for f in AutoLaunchList:
+        update_launch = False
+        sourcelaunch = ''
+        if(f.Parent == hostname):
+            if(f.PartNumber == '110012'):
+                update_launch = True
+                sourcelaunch = "/home/robot/catkin_ws/src/icarus_rover_v2/src/Pose/auto_launch/imu_node.launch"
+        if(update_launch == True):
+            shutil.copyfile(sourcelaunch,"/tmp/config/tmp.launch")
+            outputlines = []
+            newlaunchfilelines = []
+            with open("/tmp/config/tmp.launch") as fd:
+                lines = fd.readlines()
+            for l in lines:
+                if l.find("xml") >= 0:
+                    a = 1
+                elif l.find("launch") >= 0:
+                    a = 1
+                elif l.find("<DeviceName>") >= 0:
+                    l = l.replace("<DeviceName>",f.Name)
+                    outputlines.append(l)
+                elif l.find("<DeviceID>") >= 0:
+                    l = l.replace("<DeviceID>",str(f.ID))
+                    outputlines.append(l)
+                elif l.find("<PartNumber>") >= 0:
+                    l = l.replace("<PartNumber>",f.PartNumber)
+                    outputlines.append(l)
+                else:
+                    outputlines.append(l)
+            with open("/tmp/config/" + hostname + ".launch") as fd:
+                lines = fd.readlines()
+            for l in lines:
+                if l.find("</launch>") >= 0:
+                    for g in outputlines:
+                        newlaunchfilelines.append(str(g))
+                    
+                    newlaunchfilelines.append(l)
+                else:
+                    newlaunchfilelines.append(l)
+            out_file = open("/tmp/config/" + hostname + ".launch", "w")
+            for l in newlaunchfilelines:
+                out_file.write(str(l))
+                
+            out_file.close()
+            
+    shutil.copyfile("/tmp/config/" + hostname + ".launch",ApplicationPackage + "launch/" + hostname + ".launch")
     
     #Sync CMakeLists.txt to the correct device
     source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + hostname + ".txt"
@@ -86,9 +137,62 @@ def sync_remote(device,build):
     stdout,stderr = sshProcess.communicate()
     
     sshProcess.stdin.close()
-    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
+    shutil.copyfile(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/" + device + ".launch","/tmp/config/" + device + ".launch")
+    #subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
+    AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
+    for f in AutoLaunchList:
+        update_launch = False
+        sourcelaunch = ''
+        if(f.Parent == device):
+            if(f.PartNumber == '110012'):
+                update_launch = True
+                sourcelaunch = "/home/robot/catkin_ws/src/icarus_rover_v2/src/Pose/auto_launch/imu_node.launch"
+        if(update_launch == True):
+            shutil.copyfile(sourcelaunch,"/tmp/config/tmp.launch")
+            outputlines = []
+            newlaunchfilelines = []
+            with open("/tmp/config/tmp.launch") as fd:
+                lines = fd.readlines()
+            for l in lines:
+                if l.find("xml") >= 0:
+                    a = 1
+                elif l.find("launch") >= 0:
+                    a = 1
+                elif l.find("<DeviceName>") >= 0:
+                    l = l.replace("<DeviceName>",f.Name)
+                    outputlines.append(l)
+                elif l.find("<DeviceID>") >= 0:
+                    l = l.replace("<DeviceID>",str(f.ID))
+                    outputlines.append(l)
+                elif l.find("<PartNumber>") >= 0:
+                    l = l.replace("<PartNumber>",f.PartNumber)
+                    outputlines.append(l)
+                else:
+                    outputlines.append(l)
+            with open("/tmp/config/" + device + ".launch") as fd:
+                lines = fd.readlines()
+            for l in lines:
+                if l.find("</launch>") >= 0:
+                    for g in outputlines:
+                        newlaunchfilelines.append(str(g))
+                    
+                    newlaunchfilelines.append(l)
+                else:
+                    newlaunchfilelines.append(l)
+            out_file = open("/tmp/config/" + device + ".launch", "w")
+            for l in newlaunchfilelines:
+                out_file.write(str(l))
+                
+            out_file.close()
+            
+    #shutil.copyfile("/tmp/config/" + hostname + ".launch",ApplicationPackage + "launch/" + hostname + ".launch")
+    
+    subprocess.call("rsync -avrt /tmp/config/" + device + ".launch " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
+    subprocess.call("rsync -avrt " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)
+    subprocess.call("rsync -avrt " + RootDirectory + "config/ControlGroup.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/MiscConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/urdf/* " + "robot@" + device + ":" + RootDirectory + "config/urdf/" ,shell=True) 
@@ -108,6 +212,7 @@ def sync_remote(device,build):
         subprocess.call("rsync -apvrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
+        subprocess.call("rsync -avrt " + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
         subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
         subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/include/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/include/",shell=True)
         #subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
@@ -138,14 +243,20 @@ def sync_display(device):
     
     #sshProcess.stdin.close()
     #subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
-    subprocess.call("rsync -avrtR " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
+    subprocess.call("rsync -avrt " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/MiscConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/urdf/* " + "robot@" + device + ":" + RootDirectory + "config/urdf/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
-    subprocess.call("rsync -avrt " + RootDirectory + "config/* " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/ControlGroup.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
+    subprocess.call("rsync -avrt " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/JoystickCalibration.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "executable/* " + "robot@" + device + ":" + RootDirectory + "executable/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/src/eROS/include/*.h " + "robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/include/",shell=True)
+    subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/src/icarus_rover_v2/include/*.h " + "robot@" + device + ":" + RootDirectory + "catkin_ws/src/icarus_rover_v2/include/",shell=True)
     subprocess.call("rsync -avrt " + RootDirectory + "Dropbox/ICARUS/RoverV2/SOFTWARE/gui/* " + "robot@" + device + ":" + RootDirectory + "Dropbox/ICARUS/RoverV2/SOFTWARE/gui/" ,shell=True) 
     
 def sync_all(hostname,build):

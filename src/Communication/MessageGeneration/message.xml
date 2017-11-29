@@ -610,30 +610,4 @@
             </Protocol>
         </Protocols>
     </Message>
-    <Message name="IMU" id="0XAB41">
-        <Description>
-            <![CDATA[
-                This message is used to send imu data
-            ]]>
-        </Description>
-        <Protocols>
-            <Protocol name="Serial">
-                <Retry>true</Retry>
-                <Origin>Slave</Origin>
-                <Fields>
-                    <field type="uint32_t" name="timemS"/>
-                    <field type="uint16_t" name="counter"/>
-                    <field type="int32_t" name="AccX_mg"/>
-                    <field type="int32_t" name="AccY_mg"/>
-                    <field type="int32_t" name="AccZ_mg"/>
-                    <field type="int32_t" name="GyroX_mdegps"/>
-                    <field type="int32_t" name="GyroY_mdepgs"/>
-                    <field type="int32_t" name="GyroZ_mdegps"/>
-                    <field type="int32_t" name="MagX"/>
-                    <field type="int32_t" name="MagY"/>
-                    <field type="int32_t" name="MagZ"/>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
 </Messages>

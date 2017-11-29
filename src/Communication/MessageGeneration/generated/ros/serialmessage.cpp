@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-22 07:33:54.253012***/
+/***Created on:2017-11-24 09:51:43.776381***/
 /***Target: ROS ***/
 #include "../include/serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
@@ -402,51 +402,5 @@ int SerialMessageHandler::decode_IDSerial(unsigned char* inpacket,unsigned char*
 	int v_PartNumber2=inpacket[5]<<16;
 	int v_PartNumber1=inpacket[6]<<8;
 	*PartNumber=inpacket[7] + v_PartNumber1 + v_PartNumber2 + v_PartNumber3;
-	return 1;
-}
-int SerialMessageHandler::decode_IMUSerial(unsigned char* inpacket,unsigned long* timemS,int* counter,long* AccX_mg,long* AccY_mg,long* AccZ_mg,long* GyroX_mdegps,long* GyroY_mdepgs,long* GyroZ_mdegps,long* MagX,long* MagY,long* MagZ)
-{
-	int v_timemS3=inpacket[3]<<24;
-	int v_timemS2=inpacket[4]<<16;
-	int v_timemS1=inpacket[5]<<8;
-	*timemS=inpacket[6] + v_timemS1 + v_timemS2 + v_timemS3;
-	int v_counter1=inpacket[7]<<8;
-	*counter=inpacket[8] + v_counter1;
-	int v_AccX_mg3=inpacket[9]<<24;
-	int v_AccX_mg2=inpacket[10]<<16;
-	int v_AccX_mg1=inpacket[11]<<8;
-	*AccX_mg=inpacket[12] + v_AccX_mg1 + v_AccX_mg2 + v_AccX_mg3;
-	int v_AccY_mg3=inpacket[13]<<24;
-	int v_AccY_mg2=inpacket[14]<<16;
-	int v_AccY_mg1=inpacket[15]<<8;
-	*AccY_mg=inpacket[16] + v_AccY_mg1 + v_AccY_mg2 + v_AccY_mg3;
-	int v_AccZ_mg3=inpacket[17]<<24;
-	int v_AccZ_mg2=inpacket[18]<<16;
-	int v_AccZ_mg1=inpacket[19]<<8;
-	*AccZ_mg=inpacket[20] + v_AccZ_mg1 + v_AccZ_mg2 + v_AccZ_mg3;
-	int v_GyroX_mdegps3=inpacket[21]<<24;
-	int v_GyroX_mdegps2=inpacket[22]<<16;
-	int v_GyroX_mdegps1=inpacket[23]<<8;
-	*GyroX_mdegps=inpacket[24] + v_GyroX_mdegps1 + v_GyroX_mdegps2 + v_GyroX_mdegps3;
-	int v_GyroY_mdepgs3=inpacket[25]<<24;
-	int v_GyroY_mdepgs2=inpacket[26]<<16;
-	int v_GyroY_mdepgs1=inpacket[27]<<8;
-	*GyroY_mdepgs=inpacket[28] + v_GyroY_mdepgs1 + v_GyroY_mdepgs2 + v_GyroY_mdepgs3;
-	int v_GyroZ_mdegps3=inpacket[29]<<24;
-	int v_GyroZ_mdegps2=inpacket[30]<<16;
-	int v_GyroZ_mdegps1=inpacket[31]<<8;
-	*GyroZ_mdegps=inpacket[32] + v_GyroZ_mdegps1 + v_GyroZ_mdegps2 + v_GyroZ_mdegps3;
-	int v_MagX3=inpacket[33]<<24;
-	int v_MagX2=inpacket[34]<<16;
-	int v_MagX1=inpacket[35]<<8;
-	*MagX=inpacket[36] + v_MagX1 + v_MagX2 + v_MagX3;
-	int v_MagY3=inpacket[37]<<24;
-	int v_MagY2=inpacket[38]<<16;
-	int v_MagY1=inpacket[39]<<8;
-	*MagY=inpacket[40] + v_MagY1 + v_MagY2 + v_MagY3;
-	int v_MagZ3=inpacket[41]<<24;
-	int v_MagZ2=inpacket[42]<<16;
-	int v_MagZ1=inpacket[43]<<8;
-	*MagZ=inpacket[44] + v_MagZ1 + v_MagZ2 + v_MagZ3;
 	return 1;
 }
