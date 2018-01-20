@@ -610,4 +610,24 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Firmware" id="0xAB41">
+        <Description>
+            <![CDATA[
+                This message is used to send Firmware info for each node
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="NodeName"/>
+                    <field type="std::string" name="Description"/>
+                    <field type="uint8_t" name="MajorRelease"/>
+                    <field type="uint8_t" name="MinorRelease"/>
+                    <field type="uint8_t" name="BuildNumber"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

@@ -1,6 +1,6 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-24 09:51:43.776325***/
-#include "../include/udpmessage.h"
+/***Created on:2018-01-03 07:22:16.202891***/
+#include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
 QString UDPMessageHandler::encode_CommandUDP(int Command,int Option1,int Option2,int Option3,std::string CommandText,std::string Description)
@@ -186,4 +186,14 @@ QString UDPMessageHandler::encode_TuneControlGroupUDP(std::string ControlGroupNa
 	tempstr.append(",");
 	tempstr.append(QString::number(defaultvalue));
 	return tempstr;
+}
+int UDPMessageHandler::decode_FirmwareUDP(QList<QByteArray> items,std::string* NodeName,std::string* Description,int* MajorRelease,int* MinorRelease,int* BuildNumber)
+{
+	if(items.size() != 6){ return 0; }
+	*NodeName=items.at(1).toStdString();
+	*Description=items.at(2).toStdString();
+	*MajorRelease=(int)items.at(3).toInt();
+	*MinorRelease=(int)items.at(4).toInt();
+	*BuildNumber=(int)items.at(5).toInt();
+	return 1;
 }

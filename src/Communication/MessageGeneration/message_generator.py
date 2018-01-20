@@ -82,7 +82,7 @@ def generate_message(xmlfile):
     ros_udpmessagefile_header.write('\t};\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
     ros_udpmessagefile_cpp.write('#include "../include/udpmessage.h"\r\nUDPMessageHandler::UDPMessageHandler(){}\r\nUDPMessageHandler::~UDPMessageHandler(){}\r\n')
     gui_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
-    gui_udpmessagefile_cpp.write('#include "../include/udpmessage.h"\r\nUDPMessageHandler::UDPMessageHandler(){}\r\nUDPMessageHandler::~UDPMessageHandler(){}\r\n')
+    gui_udpmessagefile_cpp.write('#include "udpmessage.h"\r\nUDPMessageHandler::UDPMessageHandler(){}\r\nUDPMessageHandler::~UDPMessageHandler(){}\r\n')
 
     ros_serialmessagefile_header.write('\r\nclass SerialMessageHandler\r\n{\r\npublic:\r\n\tSerialMessageHandler();\r\n\t~SerialMessageHandler();\r\n')
     ros_serialmessagefile_cpp.write('#include "../include/serialmessage.h"\r\nSerialMessageHandler::SerialMessageHandler(){}\r\nSerialMessageHandler::~SerialMessageHandler(){}\r\n')
@@ -820,12 +820,13 @@ def generate_message(xmlfile):
     contents = f.readlines()
     start_index = 0
     finish_index = 0
+    stop_index = 0
     f.close()
     for i in range(0, len(contents)):
-        found = contents[i].find("TAG: Start Message Definitions")
+        found = contents[i].find("TAG: Start Message")
         if (found > -1):
             start_index = i+1
-        found = contents[i].find("TAG: End Message Definitions")
+        found = contents[i].find("TAG: End Message")
         if (found > -1):
             stop_index = i+1
 

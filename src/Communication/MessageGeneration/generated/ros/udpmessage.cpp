@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-11-24 09:51:43.776260***/
+/***Created on:2018-01-03 07:22:16.202820***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -184,4 +184,20 @@ int UDPMessageHandler::decode_TuneControlGroupUDP(std::vector<std::string> items
 	*minvalue=(int16_t)atoi(items.at(7).c_str());
 	*defaultvalue=(int16_t)atoi(items.at(8).c_str());
 	return 1;
+}
+std::string UDPMessageHandler::encode_FirmwareUDP(std::string NodeName,std::string Description,uint8_t MajorRelease,uint8_t MinorRelease,uint8_t BuildNumber)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_Firmware_ID));
+	tempstr.append(",");
+	tempstr.append(NodeName);
+	tempstr.append(",");
+	tempstr.append(Description);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)MajorRelease));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)MinorRelease));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)BuildNumber));
+	return tempstr;
 }
