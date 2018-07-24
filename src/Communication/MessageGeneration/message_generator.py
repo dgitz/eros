@@ -41,6 +41,7 @@ def generate_message(xmlfile):
     propeller_serialmessagefile_header.write('#ifndef SERIALMESSAGE_H\r\n#define SERIALMESSAGE_H\r\n')
 
     arduino_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
+    arduino_spimessagefile_cpp.write('#include "spimessage.h"\r\n')
     ros_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
     ros_spimessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
     ros_spimessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
@@ -743,6 +744,11 @@ def generate_message(xmlfile):
                     arduino_spimessagefile_cpp.write('int encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int* length,')
                     ros_spimessagefile_header.write('\r\n\tint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
                     ros_spimessagefile_cpp.write('int SPIMessageHandler::decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int * length,')
+                elif(type_command == 1):
+                    arduino_spimessagefile_header.write('\r\nint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int* length,unsigned char checksum,')
+                    arduino_spimessagefile_cpp.write('\r\nint decode_' + message.get('name') + 'SPI(unsigned char* inbuffer,int* length,unsigned char checksum,')
+                    ros_spimessagefile_header.write('\r\n\tint encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int * length,')
+                    ros_spimessagefile_cpp.write('int SPIMessageHandler::encode_' + message.get('name') + 'SPI(unsigned char* outbuffer,int * length,')
                 index = 0
                 for item in fieldlist:
                     if(type_query == 1):
@@ -758,14 +764,22 @@ def generate_message(xmlfile):
                             ros_spimessagefile_cpp.write(item.datatype + '* ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+                    elif(type_command == 1):
+                        if(item.datatype == 'unsigned char'):
+                            arduino_spimessagefile_header.write('unsigned char * ' + item.name)
+                            arduino_spimessagefile_cpp.write('unsigned char * ' + item.name)
+                            ros_spimessagefile_header.write( item.datatype + ' ' + item.name)
+                            ros_spimessagefile_cpp.write( item.datatype + ' ' + item.name)
+                        else:
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     index += 1
                     if(index < len(fieldlist)):
-                        if(type_query == 1):
+                        if((type_query == 1) or (type_command == 1)):
                             arduino_spimessagefile_header.write(',')
                             arduino_spimessagefile_cpp.write(',')
                             ros_spimessagefile_header.write(',')
                             ros_spimessagefile_cpp.write(',')
-                if(type_query == 1):
+                if((type_query == 1) or (type_command == 1)):
                     arduino_spimessagefile_header.write(');\r\n')
                     arduino_spimessagefile_cpp.write(')\r\n{\r\n')
                     ros_spimessagefile_header.write(');\r\n')
@@ -782,13 +796,18 @@ def generate_message(xmlfile):
                 if(bytelength > 12): print "ERROR ERROR ERROR: Currently SPI Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
                 if(type_query == 1):
                     arduino_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
-                    #ros_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &inbuffer[0];\r\n')
+                elif(type_command == 1):
+                    ros_spimessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                 bytecounter = 0
                 for item in fieldlist:
                     if(item.datatype == 'unsigned char'): 
                         if(type_query == 1):
                             arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                             ros_spimessagefile_cpp.write('\t*' + item.name + ' = inbuffer[' + str(bytecounter) + '];\r\n')
+                            bytecounter = bytecounter + 1
+                        elif(type_command == 1):
+                            arduino_spimessagefile_cpp.write('\t*' + item.name + ' = inbuffer[' + str(bytecounter) + '];\r\n')
+                            ros_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name + ';\r\n')
                             bytecounter = bytecounter + 1
                     elif(item.datatype == 'uint16_t'): 
                         if(type_query == 1):
@@ -798,12 +817,15 @@ def generate_message(xmlfile):
                             arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = ' + item.name +';\r\n')
                             ros_spimessagefile_cpp.write('\t*' + item.name + ' = v_' + item.name + ' + inbuffer[' + str(bytecounter) + '];\r\n')
                             bytecounter = bytecounter + 1
+                        elif(type_command == 1):
+                            print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                 for b in range(bytelength,12):
                     if(type_query == 1):
                         arduino_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n')
-                        #ros_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n') 
+                    elif(type_command == 1):
+                        ros_spimessagefile_cpp.write('\t*p_outbuffer++ = 0;\r\n') 
                 if(type_query == 1):
                     arduino_spimessagefile_cpp.write('\tunsigned char checksum = 0;\r\n')
                     arduino_spimessagefile_cpp.write('\tfor(int i = 0; i < 12;i++)\r\n\t{\r\n')
@@ -813,6 +835,19 @@ def generate_message(xmlfile):
                     arduino_spimessagefile_cpp.write('}\r\n')
                     ros_spimessagefile_cpp.write('\treturn 1;\r\n')
                     ros_spimessagefile_cpp.write('}\r\n')
+                elif(type_command == 1):
+                    arduino_spimessagefile_cpp.write('\tunsigned char calc_checksum = SPI_' + message.get('name') + '_ID;\r\n')
+                    arduino_spimessagefile_cpp.write('\tfor(int i = 0; i < 12; i++)\r\n\t{\r\n')
+                    arduino_spimessagefile_cpp.write('\t\tcalc_checksum ^= inbuffer[i];\r\n\t}\r\n')
+                    arduino_spimessagefile_cpp.write('\tif(calc_checksum == checksum)\r\n\t{\r\n')
+                    arduino_spimessagefile_cpp.write('\t\treturn 1;\r\n\t}\r\n')
+                    arduino_spimessagefile_cpp.write('\telse\r\n\t{\r\n\t\treturn 0;\r\n\t}\r\n}')
+                    ros_spimessagefile_cpp.write('\tunsigned char checksum = 0;\r\n')
+                    ros_spimessagefile_cpp.write('\tfor(int i = 0; i < 12; i++)\r\n\t{\r\n')
+                    ros_spimessagefile_cpp.write('\t\tchecksum ^= outbuffer[i];\r\n\t}\r\n')
+                    ros_spimessagefile_cpp.write('\t*p_outbuffer++ = checksum;\r\n')
+                    ros_spimessagefile_cpp.write('\tlength[0] = 12;\r\n')
+                    ros_spimessagefile_cpp.write('\treturn 1;\r\n}')
                 
                 
                     

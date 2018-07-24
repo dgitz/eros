@@ -1,6 +1,7 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-01-03 07:22:16.203165***/
+/***Created on:2018-07-24 07:28:40.257228***/
 /***Target: Arduino ***/
+#include "spimessage.h"
 int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
 {
 	unsigned char *p_outbuffer;
@@ -75,4 +76,24 @@ int encode_Get_ANA_Port1SPI(unsigned char* outbuffer,int* length,unsigned int Pi
 	*p_outbuffer++ = checksum;
 	length[0] = 12;
 	return 1;
+}
+
+int decode_LEDStripControlSPI(unsigned char* inbuffer,int* length,unsigned char checksum,unsigned char * LEDPixelMode,unsigned char * Param1,unsigned char * Param2)
+{
+	*LEDPixelMode = inbuffer[0];
+	*Param1 = inbuffer[1];
+	*Param2 = inbuffer[2];
+	unsigned char calc_checksum = SPI_LEDStripControl_ID;
+	for(int i = 0; i < 12; i++)
+	{
+		calc_checksum ^= inbuffer[i];
+	}
+	if(calc_checksum == checksum)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }

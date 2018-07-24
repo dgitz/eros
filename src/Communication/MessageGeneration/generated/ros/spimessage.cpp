@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-01-03 07:22:16.203228***/
+/***Created on:2018-07-24 07:28:40.257290***/
 /***Target: Raspberry Pi ***/
 #include "../include/spimessage.h"
 SPIMessageHandler::SPIMessageHandler(){}
@@ -46,5 +46,30 @@ int SPIMessageHandler::decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * len
 	*Pin5_Value = v_Pin5_Value + inbuffer[9];
 	int v_Pin6_Value = inbuffer[10]<<8;
 	*Pin6_Value = v_Pin6_Value + inbuffer[11];
+	return 1;
+}
+int SPIMessageHandler::encode_LEDStripControlSPI(unsigned char* outbuffer,int * length,unsigned char LEDPixelMode,unsigned char Param1,unsigned char Param2)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = LEDPixelMode;
+	*p_outbuffer++ = Param1;
+	*p_outbuffer++ = Param2;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12; i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
 	return 1;
 }

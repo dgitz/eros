@@ -630,4 +630,21 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="LEDStripControl" id="0xAB42">
+        <Description>
+            <![CDATA[
+                This message is used to set the LED Strip Modes
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="SPI">
+                <Type>Command</Type>
+                <Fields>
+                    <field type="unsigned char" name="LEDPixelMode"/>
+                    <field type="unsigned char" name="Param1"/>
+                    <field type="unsigned char" name="Param2"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

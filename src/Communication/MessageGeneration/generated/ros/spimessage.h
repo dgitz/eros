@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-01-03 07:22:16.203197***/
+/***Created on:2018-07-24 07:28:40.257260***/
 /***Target: Raspberry Pi ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H
@@ -21,6 +21,7 @@ public:
 		SPI_TestMessageCounter_ID = 0x14,
 		SPI_Get_DIO_Port1_ID = 0x19,
 		SPI_Get_ANA_Port1_ID = 0x20,
+		SPI_LEDStripControl_ID = 0x42,
 	};
 	SPIMessageHandler();
 	~SPIMessageHandler();
@@ -30,6 +31,8 @@ public:
 	int decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value);
 
 	int decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
+
+	int encode_LEDStripControlSPI(unsigned char* outbuffer,int * length,unsigned char LEDPixelMode,unsigned char Param1,unsigned char Param2);
 private:
 };
 #endif
