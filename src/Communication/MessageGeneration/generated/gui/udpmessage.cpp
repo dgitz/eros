@@ -1,12 +1,32 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2017-03-13 21:16:27.612493***/
+/***Created on:2018-07-24 07:28:40.256954***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
-QString UDPMessageHandler::encode_RemoteControlUDP(int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int axis7,int axis8,int button1,int button2,int button3,int button4,int button5,int button6,int button7,int button8)
+QString UDPMessageHandler::encode_CommandUDP(int Command,int Option1,int Option2,int Option3,std::string CommandText,std::string Description)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_Command_ID);
+	tempstr.append(",");
+	tempstr.append(QString::number(Command));
+	tempstr.append(",");
+	tempstr.append(QString::number(Option1));
+	tempstr.append(",");
+	tempstr.append(QString::number(Option2));
+	tempstr.append(",");
+	tempstr.append(QString::number(Option3));
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(CommandText));
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(Description));
+	return tempstr;
+}
+QString UDPMessageHandler::encode_RemoteControlUDP(uint64_t Current_Timestamp,int axis1,int axis2,int axis3,int axis4,int axis5,int axis6,int axis7,int axis8,int button1,int button2,int button3,int button4,int button5,int button6,int button7,int button8)
 {
 	QString tempstr = "";
 	tempstr.append(UDP_RemoteControl_ID);
+	tempstr.append(",");
+	tempstr.append(QString::number(Current_Timestamp));
 	tempstr.append(",");
 	tempstr.append(QString::number(axis1));
 	tempstr.append(",");
@@ -104,14 +124,6 @@ QString UDPMessageHandler::encode_ArmControlUDP(int device,int axis1,int axis2,i
 	tempstr.append(QString::number(button6));
 	return tempstr;
 }
-QString UDPMessageHandler::encode_Arm_CommandUDP(int Command)
-{
-	QString tempstr = "";
-	tempstr.append(UDP_Arm_Command_ID);
-	tempstr.append(",");
-	tempstr.append(QString::number(Command));
-	return tempstr;
-}
 int UDPMessageHandler::decode_Arm_StatusUDP(QList<QByteArray> items,int* Status)
 {
 	if(items.size() != 2){ return 0; }
@@ -137,4 +149,51 @@ QString UDPMessageHandler::encode_FindTargetUDP(std::string SearchDevice)
 	tempstr.append(",");
 	tempstr.append(QString::fromStdString(SearchDevice));
 	return tempstr;
+}
+int UDPMessageHandler::decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState)
+{
+	if(items.size() != 4){ return 0; }
+	*BatteryName=items.at(1).toStdString();
+	*PowerLevel=(int)items.at(2).toInt();
+	*PowerState=(int)items.at(3).toInt();
+	return 1;
+}
+int UDPMessageHandler::decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State)
+{
+	if(items.size() != 3){ return 0; }
+	*DeviceName=items.at(1).toStdString();
+	*State=(int)items.at(2).toInt();
+	return 1;
+}
+QString UDPMessageHandler::encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3,int maxvalue,int minvalue,int defaultvalue)
+{
+	QString tempstr = "";
+	tempstr.append(UDP_TuneControlGroup_ID);
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(ControlGroupName));
+	tempstr.append(",");
+	tempstr.append(QString::fromStdString(Type));
+	tempstr.append(",");
+	tempstr.append(QString::number(value1));
+	tempstr.append(",");
+	tempstr.append(QString::number(value2));
+	tempstr.append(",");
+	tempstr.append(QString::number(value3));
+	tempstr.append(",");
+	tempstr.append(QString::number(maxvalue));
+	tempstr.append(",");
+	tempstr.append(QString::number(minvalue));
+	tempstr.append(",");
+	tempstr.append(QString::number(defaultvalue));
+	return tempstr;
+}
+int UDPMessageHandler::decode_FirmwareUDP(QList<QByteArray> items,std::string* NodeName,std::string* Description,int* MajorRelease,int* MinorRelease,int* BuildNumber)
+{
+	if(items.size() != 6){ return 0; }
+	*NodeName=items.at(1).toStdString();
+	*Description=items.at(2).toStdString();
+	*MajorRelease=(int)items.at(3).toInt();
+	*MinorRelease=(int)items.at(4).toInt();
+	*BuildNumber=(int)items.at(5).toInt();
+	return 1;
 }

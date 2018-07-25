@@ -29,11 +29,47 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="Command" id="0xAB02">
+        <Description>
+            <![CDATA[
+                This message is used for command messages
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Retry>true</Retry>
+                <Fields>
+                    <field type="uint8_t" name="Command"/>
+                    <field type="uint8_t" name="Option1"/>
+                    <field type="uint8_t" name="Option2"/>
+                    <field type="uint8_t" name="Option3"/>
+                    <field type="std::string" name="CommandText"/>
+                    <field type="std::string" name="Description"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="Command"/>
+                    <field type="unsigned char" name="Option1"/>
+                    <field type="unsigned char" name="Option2"/>
+                    <field type="unsigned char" name="Option3"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
     <Message name="RemoteControl" id="0xAB10">
         <Protocols>
             <Protocol name="UDP">
                 <Origin>GUI</Origin>
                 <Fields>
+                    <field type="uint64_t" name="Current_Timestamp" />
+						<![CDATA[
+                            Epoch time, in milliSeconds.  This is the origination timestamp.
+						]]>
                     <field type="int16_t" name="axis1"/>
                     <field type="int16_t" name="axis2"/>
                     <field type="int16_t" name="axis3"/>
@@ -115,10 +151,8 @@
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
+            <Protocol name="SPI">
+                <Type>Query</Type>
                 <Fields>
                     <field type="unsigned char" name="value1"/>
                     <field type="unsigned char" name="value2"/>
@@ -128,6 +162,10 @@
                     <field type="unsigned char" name="value6"/>
                     <field type="unsigned char" name="value7"/>
                     <field type="unsigned char" name="value8"/>
+                    <field type="unsigned char" name="value9"/>
+                    <field type="unsigned char" name="value10"/>
+                    <field type="unsigned char" name="value11"/>
+                    <field type="unsigned char" name="value12"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -170,6 +208,8 @@
                 <Fields>
                     <field type="unsigned char" name="ShieldID"/>
                     <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
                     <field type="unsigned char" name="Pin1_Mode"/>
                     <field type="unsigned char" name="Pin2_Mode"/>
                     <field type="unsigned char" name="Pin3_Mode"/>
@@ -227,19 +267,16 @@
             </Protocol>
         </Protocols>
     </Message>
-    <Message name="Get_DIO_Port" id="0xAB19">
+    <Message name="Get_DIO_Port1" id="0xAB19">
         <Description>
             <![CDATA[
                 This message is used to get the inputs on DIO Port. If a pin is not configured as an input this value is discarded.
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Slave</Origin>
+            <Protocol name="SPI">
+                <Type>Query</Type>
                 <Fields>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortID"/>
                     <field type="unsigned char" name="Pin1_Value"/>
                     <field type="unsigned char" name="Pin2_Value"/>
                     <field type="unsigned char" name="Pin3_Value"/>
@@ -252,22 +289,22 @@
             </Protocol>
         </Protocols>
     </Message>
-    <Message name="Get_ANA_Port" id="0xAB20">
+    <Message name="Get_ANA_Port1" id="0xAB20">
         <Description>
             <![CDATA[
-                This message is used to get the Analog Input Port on the GPIO Board.  The max value of these fields is 4095.
+                This message is used to get the Analog Input Port 1 on the GPIO Board.  The max value of these fields is 4095.
             ]]>
         </Description>
         <Protocols>
-            <Protocol name="Serial">
-                <Origin>Slave</Origin>
+            <Protocol name="SPI">
+                <Type>Query</Type>
                 <Fields>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortID"/>
                     <field type="uint16_t" name="Pin1_Value"/>
                     <field type="uint16_t" name="Pin2_Value"/>
                     <field type="uint16_t" name="Pin3_Value"/>
                     <field type="uint16_t" name="Pin4_Value"/>
+                    <field type="uint16_t" name="Pin5_Value"/>
+                    <field type="uint16_t" name="Pin6_Value"/>
                 </Fields>
             </Protocol>
         </Protocols>
@@ -311,30 +348,7 @@
             </Protocol>
         </Protocols>
     </Message>
-	<Message name="Arm_Command" id="0xAB27">
-        <![CDATA[  
-            Arm/Disarm Command
-		]]>
-        <Protocols>
-            <Protocol name="UDP">
-                <Origin>GUI</Origin>
-                <Fields>
-                    <field type="uint8_t" name="Command" />
-						<![CDATA[
-						]]>
-                </Fields>
-            </Protocol>
-            <Protocol name="Serial">
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
-                <Fields>
-                    <field type="unsigned char" name="Command" />
-						<![CDATA[
-						]]>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
+<!--
     <Message name="Setup_ControlGroup" id="0xAB28">
         <Protocols>
             <Protocol name="Serial">
@@ -364,6 +378,8 @@
             </Protocol>
         </Protocols>
     </Message>
+-->
+<!--
     <Message name="Tune_ControlGroup" id="0xAB29">
         <Protocols>
             <Protocol name="Serial">
@@ -385,6 +401,7 @@
             </Protocol>
         </Protocols>
     </Message>
+-->
     <Message name="Arm_Status" id="0xAB30">
         <![CDATA[  
             Status of Current Arm/Disarm State
@@ -447,6 +464,8 @@
                 <Fields>
                     <field type="unsigned char" name="ShieldID"/>
                     <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
                     <field type="unsigned char" name="Pin1_Value"/>
                     <field type="unsigned char" name="Pin2_Value"/>
                     <field type="unsigned char" name="Pin3_Value"/>
@@ -455,26 +474,6 @@
                     <field type="unsigned char" name="Pin6_Value"/>
                     <field type="unsigned char" name="Pin7_Value"/>
                     <field type="unsigned char" name="Pin8_Value"/>
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
-    <Message name="Configure_Shield" id="0xAB33">
-        <Description>
-            <![CDATA[
-                
-            ]]>
-        </Description>
-        <Protocols>
-            <Protocol name="Serial">
-                <Retry>false</Retry>
-                <Origin>Master</Origin>
-                <Origin>Slave</Origin>
-                <Fields>
-                    <field type="unsigned char" name="ShieldCount"/>
-                    <field type="unsigned char" name="ShieldType"/>
-                    <field type="unsigned char" name="ShieldID"/>
-                    <field type="unsigned char" name="PortCount" />
                 </Fields>
             </Protocol>
         </Protocols>
@@ -491,6 +490,159 @@
                         <![CDATA[
                             Device used to search Environment
                         ]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="PPS" id="0xAB35">
+        <Description>
+            <![CDATA[
+                This message is used for Pulse-Per-Second uses.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>false</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="counter"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+	<Message name="Configure_ANA_Port" id="0xAB36">
+        <Description>
+            <![CDATA[
+                This message is used to configure the ANA PortS.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Master</Origin>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="ShieldID"/>
+                    <field type="unsigned char" name="PortID"/>
+                    <field type="unsigned char" name="MessageIndex"/>
+                    <field type="unsigned char" name="MessageCount"/>
+                    <field type="unsigned char" name="Pin1_Mode"/>
+                    <field type="unsigned char" name="Pin2_Mode"/>
+                    <field type="unsigned char" name="Pin3_Mode"/>
+                    <field type="unsigned char" name="Pin4_Mode"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Power" id="0xAB37">
+        <![CDATA[  
+            Power status of the Rover
+		]]>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Fields>
+                    <field type="std::string" name="BatteryName"/>
+                    <field type="uint8_t" name="PowerLevel" />
+                    <field type="uint8_t" name="PowerState"/>
+                        <![CDATA[
+                            See eROS Definitions: POWERSTATE_*
+                        ]]>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="EStop" id="0xAB38">
+        <Description>
+            <![CDATA[
+                This message is used to send EStop command/status's
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="DeviceName"/>
+                    <field type="uint8_t" name="State"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="TuneControlGroup" id="0xAB39">
+        <Description>
+            <![CDATA[
+                This message is used to send Control Group tuning messages
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>GUI</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="ControlGroupName"/>
+                    <field type="std::string" name="Type"/>
+                    <field type="double" name="value1"/>
+                    <field type="double" name="value2"/>
+                    <field type="double" name="value3"/>
+					<field type="int16_t" name="maxvalue"/>
+					<field type="int16_t" name="minvalue"/>
+                    <field type="int16_t" name="defaultvalue"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="ID" id="0XAB40">
+        <Description>
+            <![CDATA[
+                This message is used to send the ID and other information about the device
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="Serial">
+                <Retry>true</Retry>
+                <Origin>Slave</Origin>
+                <Fields>
+                    <field type="unsigned char" name="DeviceID"/>
+                    <field type="uint32_t" name="PartNumber"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="Firmware" id="0xAB41">
+        <Description>
+            <![CDATA[
+                This message is used to send Firmware info for each node
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="NodeName"/>
+                    <field type="std::string" name="Description"/>
+                    <field type="uint8_t" name="MajorRelease"/>
+                    <field type="uint8_t" name="MinorRelease"/>
+                    <field type="uint8_t" name="BuildNumber"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="LEDStripControl" id="0xAB42">
+        <Description>
+            <![CDATA[
+                This message is used to set the LED Strip Modes
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="SPI">
+                <Type>Command</Type>
+                <Fields>
+                    <field type="unsigned char" name="LEDPixelMode"/>
+                    <field type="unsigned char" name="Param1"/>
+                    <field type="unsigned char" name="Param2"/>
                 </Fields>
             </Protocol>
         </Protocols>
