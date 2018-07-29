@@ -277,14 +277,8 @@
             <Protocol name="SPI">
                 <Type>Query</Type>
                 <Fields>
-                    <field type="unsigned char" name="Pin1_Value"/>
-                    <field type="unsigned char" name="Pin2_Value"/>
-                    <field type="unsigned char" name="Pin3_Value"/>
-                    <field type="unsigned char" name="Pin4_Value"/>
-                    <field type="unsigned char" name="Pin5_Value"/>
-                    <field type="unsigned char" name="Pin6_Value"/>
-                    <field type="unsigned char" name="Pin7_Value"/>
-                    <field type="unsigned char" name="Pin8_Value"/>
+                    <field type="uint16_t" name="EncoderA_TickSpeed_Offset"/>
+                    <field type="uint16_t" name="EncoderB_TickSpeed_Offset"/>
                 </Fields>
             </Protocol>
         </Protocols>

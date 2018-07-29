@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-07-24 07:28:40.257228***/
+/***Created on:2018-07-29 08:09:41.999248***/
 /***Target: Arduino ***/
 #include "spimessage.h"
 int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
@@ -27,18 +27,18 @@ int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned c
 	length[0] = 12;
 	return 1;
 }
-int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned char Pin1_Value,unsigned char Pin2_Value,unsigned char Pin3_Value,unsigned char Pin4_Value,unsigned char Pin5_Value,unsigned char Pin6_Value,unsigned char Pin7_Value,unsigned char Pin8_Value)
+int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned int EncoderA_TickSpeed_Offset,unsigned int EncoderB_TickSpeed_Offset)
 {
 	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = Pin1_Value;
-	*p_outbuffer++ = Pin2_Value;
-	*p_outbuffer++ = Pin3_Value;
-	*p_outbuffer++ = Pin4_Value;
-	*p_outbuffer++ = Pin5_Value;
-	*p_outbuffer++ = Pin6_Value;
-	*p_outbuffer++ = Pin7_Value;
-	*p_outbuffer++ = Pin8_Value;
+	*p_outbuffer++ = EncoderA_TickSpeed_Offset>>8;
+	*p_outbuffer++ = EncoderA_TickSpeed_Offset;
+	*p_outbuffer++ = EncoderB_TickSpeed_Offset>>8;
+	*p_outbuffer++ = EncoderB_TickSpeed_Offset;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;

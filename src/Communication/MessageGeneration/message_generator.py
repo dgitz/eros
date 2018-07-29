@@ -45,6 +45,8 @@ def generate_message(xmlfile):
     ros_spimessagefile_header.write('#ifndef SPIMESSAGE_H\r\n#define SPIMESSAGE_H\r\n')
     ros_spimessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
     ros_spimessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
+    arduino_spimessagefile_header.write('#define BYTE2_OFFSET 32768\r\n')
+    ros_spimessagefile_header.write('#define BYTE2_OFFSET 32768\r\n')
     IDs = []
     for message in root:
         IDs.append(hex(int(message.get('id'),0)).upper())

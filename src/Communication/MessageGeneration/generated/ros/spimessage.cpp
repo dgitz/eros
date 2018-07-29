@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-07-24 07:28:40.257290***/
+/***Created on:2018-07-29 08:09:41.999309***/
 /***Target: Raspberry Pi ***/
 #include "../include/spimessage.h"
 SPIMessageHandler::SPIMessageHandler(){}
@@ -20,16 +20,12 @@ int SPIMessageHandler::decode_TestMessageCounterSPI(unsigned char* inbuffer,int 
 	*value12 = inbuffer[11];
 	return 1;
 }
-int SPIMessageHandler::decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,unsigned char* Pin1_Value,unsigned char* Pin2_Value,unsigned char* Pin3_Value,unsigned char* Pin4_Value,unsigned char* Pin5_Value,unsigned char* Pin6_Value,unsigned char* Pin7_Value,unsigned char* Pin8_Value)
+int SPIMessageHandler::decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* EncoderA_TickSpeed_Offset,uint16_t* EncoderB_TickSpeed_Offset)
 {
-	*Pin1_Value = inbuffer[0];
-	*Pin2_Value = inbuffer[1];
-	*Pin3_Value = inbuffer[2];
-	*Pin4_Value = inbuffer[3];
-	*Pin5_Value = inbuffer[4];
-	*Pin6_Value = inbuffer[5];
-	*Pin7_Value = inbuffer[6];
-	*Pin8_Value = inbuffer[7];
+	int v_EncoderA_TickSpeed_Offset = inbuffer[0]<<8;
+	*EncoderA_TickSpeed_Offset = v_EncoderA_TickSpeed_Offset + inbuffer[1];
+	int v_EncoderB_TickSpeed_Offset = inbuffer[2]<<8;
+	*EncoderB_TickSpeed_Offset = v_EncoderB_TickSpeed_Offset + inbuffer[3];
 	return 1;
 }
 int SPIMessageHandler::decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value)
