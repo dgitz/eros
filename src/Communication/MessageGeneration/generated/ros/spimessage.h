@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-07-29 08:09:41.999278***/
+/***Created on:2018-08-06 20:28:18.107677***/
 /***Target: Raspberry Pi ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H
@@ -19,6 +19,7 @@ class SPIMessageHandler
 public:
 	enum MessageID
 	{
+		SPI_Diagnostic_ID = 0x12,
 		SPI_TestMessageCounter_ID = 0x14,
 		SPI_Get_DIO_Port1_ID = 0x19,
 		SPI_Get_ANA_Port1_ID = 0x20,
@@ -26,6 +27,8 @@ public:
 	};
 	SPIMessageHandler();
 	~SPIMessageHandler();
+
+	int decode_DiagnosticSPI(unsigned char* inbuffer,int * length,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message);
 
 	int decode_TestMessageCounterSPI(unsigned char* inbuffer,int * length,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8,unsigned char* value9,unsigned char* value10,unsigned char* value11,unsigned char* value12);
 

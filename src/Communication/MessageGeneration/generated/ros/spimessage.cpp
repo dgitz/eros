@@ -1,9 +1,19 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-07-29 08:09:41.999309***/
+/***Created on:2018-08-06 20:28:18.107706***/
 /***Target: Raspberry Pi ***/
 #include "../include/spimessage.h"
 SPIMessageHandler::SPIMessageHandler(){}
 SPIMessageHandler::~SPIMessageHandler(){}
+int SPIMessageHandler::decode_DiagnosticSPI(unsigned char* inbuffer,int * length,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)
+{
+	*System = inbuffer[0];
+	*SubSystem = inbuffer[1];
+	*Component = inbuffer[2];
+	*Diagnostic_Type = inbuffer[3];
+	*Level = inbuffer[4];
+	*Diagnostic_Message = inbuffer[5];
+	return 1;
+}
 int SPIMessageHandler::decode_TestMessageCounterSPI(unsigned char* inbuffer,int * length,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8,unsigned char* value9,unsigned char* value10,unsigned char* value11,unsigned char* value12)
 {
 	*value1 = inbuffer[0];

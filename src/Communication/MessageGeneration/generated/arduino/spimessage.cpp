@@ -1,7 +1,32 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-07-29 08:09:41.999248***/
+/***Created on:2018-08-06 20:28:18.107649***/
 /***Target: Arduino ***/
 #include "spimessage.h"
+int encode_DiagnosticSPI(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = System;
+	*p_outbuffer++ = SubSystem;
+	*p_outbuffer++ = Component;
+	*p_outbuffer++ = Diagnostic_Type;
+	*p_outbuffer++ = Level;
+	*p_outbuffer++ = Diagnostic_Message;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12;i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}
 int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned char value1,unsigned char value2,unsigned char value3,unsigned char value4,unsigned char value5,unsigned char value6,unsigned char value7,unsigned char value8,unsigned char value9,unsigned char value10,unsigned char value11,unsigned char value12)
 {
 	unsigned char *p_outbuffer;

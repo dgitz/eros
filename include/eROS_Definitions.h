@@ -37,11 +37,13 @@
 #define ROVER 1
 #define GROUND_STATION 5
 #define REMOTE_CONTROL 7
+#define SYSTEM_UNKNOWN 255
 //TAG: End SystemID
 
 //TAG: Start Subsystem
 #define ENTIRE_SYSTEM 0
 #define ROBOT_CONTROLLER 1
+#define SUBSYSTEM_UNKNOWN 255
 //TAG: End Subsystem
 
 //TAG: Start Component
@@ -59,6 +61,7 @@
 #define DYNAMICS_NODE 14
 #define POWER_NODE 15
 #define POSE_NODE 16
+#define COMPONENT_UNKNOWN 255
 //TAG: End Component
 
 //TAG: Start DiagnosticType
@@ -84,6 +87,7 @@
 #define WARN 3  //This Level implies that a program is not running as expected, but may continue to operate in a diminished capacity.
 #define ERROR 4 //This Level implies that a program will not initialize or some other kind of crash.
 #define FATAL 5  //This Level implies that a program has failed so bad it can cause injury to itself or others.
+#define LEVEL_UNKNOWN 255
 //TAG: End DiagnosticLevelDefinition
 
 //TAG: Start DiagnosticMessage
@@ -102,10 +106,11 @@
 #define RESOURCE_LEAK 13
 #define HIGH_RESOURCE_USAGE 14
 #define UNKNOWN_STATE 15
+#define UNKNOWN_MESSAGE 255
 //TAG: End DiagnosticMessage
 
 //TAG: Start ArmedState
-#define ARMEDSTATUS_UNDEFINED 0f
+#define ARMEDSTATUS_UNDEFINED 0
 #define ARMEDSTATUS_ARMED 1
 #define ARMEDSTATUS_DISARMED_CANNOTARM 2
 #define ARMEDSTATUS_DISARMED 3
@@ -193,7 +198,7 @@
 #define LEDPIXELCOLOR_RED 1
 #define LEDPIXELCOLOR_GREEN 2
 #define LEDPIXELCOLOR_BLUE 3
-#define LEDPIXELCOLOR_WHITE 255
+#define LEDPIXELCOLOR_WHITE 4
 //TAG: End LEDPixelColor
 
 #endif

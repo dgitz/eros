@@ -130,6 +130,17 @@
                     <field type="unsigned char" name="Diagnostic_Message"/>
                 </Fields>
             </Protocol>
+            <Protocol name="SPI">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="unsigned char" name="System"/>
+                    <field type="unsigned char" name="SubSystem"/>
+                    <field type="unsigned char" name="Component"/>
+                    <field type="unsigned char" name="Diagnostic_Type"/>
+                    <field type="unsigned char" name="Level" />
+                    <field type="unsigned char" name="Diagnostic_Message"/>
+                </Fields>
+            </Protocol>
         </Protocols>
     </Message>
     <Message name="Device" id="0xAB13">
