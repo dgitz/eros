@@ -23,10 +23,11 @@ def print_usage():
     print "-r Reboot all devices."
 
 def shutdown_all_devices():
+    os.system("/home/robot/scripts/stopSystem.py -k")
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):
-            print "Not shutting down my host: " + socket.gethostname()
+            print "Not shutting down my host, but restarting tasks: " + socket.gethostname()
         else:
             print "Shutting down Device: " + DeviceList[i].Name
             sshProcess = subprocess.Popen(['ssh',"robot@" + DeviceList[i].Name], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
@@ -39,9 +40,11 @@ def shutdown_all_devices():
             #print ('%s%s Device: %s is still online!' % (fg('red'),attr('bold'),DeviceList[i].Name))
             #    reset = attr('reset')
             #    print (reset)
+    
             
 
 def reboot_all_devices():
+    os.system("/home/robot/scripts/stopSystem.py -k")
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):

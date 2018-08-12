@@ -22,6 +22,11 @@ def update_all():
     for dirName,subdirList,fileList in os.walk(CodeDirectory):
         for fname in fileList:
             if(("node" in fname) and ("~" not in fname) and ("process" not in fname) and ("orig" not in fname)):
+                with open(dirName + "/" + fname, 'r') as f:
+                    first_line = f.readline()
+                    if  "OBSOLETE" in first_line:
+                        continue
+                fname
                 if(".h" in fname):
                     subprocess.call("meld " + TemplateHeaderFile + " " + dirName + "/" + fname,shell=True)
                 elif(".cpp" in fname):

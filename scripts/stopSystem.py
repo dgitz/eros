@@ -10,7 +10,11 @@ import os
 import os.path
 from time import sleep
 from subprocess import call
-ActiveNodesFile = '/home/robot/config/ActiveNodes'
+RootDirectory = '/home/robot/'
+PackageName = "icarus_rover_v2"
+ActiveTaskFile = RootDirectory + 'config/ActiveTasks'
+ActiveScenarioFile = RootDirectory + 'config/ActiveScenario'
+ApplicationPackage = '/home/robot/catkin_ws/src/' + PackageName + '/'
 DeviceList = []
 @contextmanager
 def suppress_stdout():
@@ -30,93 +34,141 @@ def print_usage():
     #print "Using Active Nodes File: " + ActiveNodesFile + "."
     print "No Options: This Menu."
     print "-?/-h This Menu."
-    print "-a Stop all Devices."
-    print "-r <device> Stop on remote device."
-    print "-l Stop local Device."
+    print "-s Stop all Devices, but leaves Always On Nodes Running."
+    print "-d <DeviceName> Stop this Device, but leaves Always On Nodes Running."
+    print "-k Stop all Devices, including Always On Nodes."
 
-def stop_device_remote(device):
-    print "Stopping Remote: " + device
-    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    sshProcess.stdin.write("cd ~\n")
-    sshProcess.stdin.write("python scripts/stopSystem.py -l\n")
-    stdout,stderr = sshProcess.communicate()
-    sshProcess.stdin.close()
-    print stderr
-    print stdout
+
     
-
-def stop_device_local(level):
-    print "Stopping Local"
-    read_nodelist(level)
-    #if("ControlModule" in socket.gethostname()):
-    #    subprocess.call("sudo reboot & exit",shell=True) #Due to: https://github.com/bosch-ros-pkg/usb_cam/issues/61 If this gets resolved, remove reboot.
-        
-    
-
-def stop_all_devices(level):
+def kill_all_devices():
+    print "Kill All Devices"
+    os.system("rosnode kill --all")
+    os.system("rosnode cleanup")
+def safestop_all_devices():
     print "Stop All Devices"
     DeviceList = Helpers.ReadDeviceList('ROS')
-    for i in range(0,len(DeviceList)):
-        print DeviceList[i].Name + ":" + DeviceList[i].IPAddress
-        if(DeviceList[i].Name == socket.gethostname()):
-            stop_device_local(level)
-        else:
-            stop_device_remote(DeviceList[i].Name)
-    call("rosnode kill --all",shell=True,stdout=subprocess.PIPE)
-        
-
-def read_nodelist(level):
-    ProcessList = []
-    f = open(ActiveNodesFile, "r")
+    #Determine what Nodes should always be running, don't stop these.
+    f = open(RootDirectory + 'config/ActiveScenario', "r")
     contents = f.readlines()
     f.close()
-    for i in range(0, len(contents)):
-        items = contents[i].split('\t')
-        for j in range(0,len(items)):
-            if (items[j] == "Node:"):
-                hostname = socket.gethostname()
-                if("ComputeModule" in hostname):
-                    kill_process2(items[j+1],level)
-                else:
-                    kill_process(items[j+1],level) 
-   
-def kill_process2(process,level):
-    print process
-    for proc in psutil.process_iter():
-        if proc.name in process:
-            try:
-                with suppress_stdout():
-                    subprocess.call("kill " + str(level) + " " + str(proc.pid),shell=True)
-            except:
-                print "Oops"
+    ActiveScenario = "".join(contents[0].split())
+    nodelist_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/NodeList.txt"
+    AlwaysOnSection = 0
+    nodes_to_keep = []
+    with open(nodelist_file) as f:
+        for line in f:
+            head,sep,tail = line.partition("#")
+            head = head.replace(" ","")
+            head = head.replace("\n","")
+            if(head != ""):
+                if "AlwaysOnNodes" in head:
+                    AlwaysOnSection = 1
+                elif "}" in head:
+                    if(AlwaysOnSection == 1):
+                        AlwaysOnSection = 0
+                elif (AlwaysOnSection == 1):
 
-def kill_process(process,level):
-    for proc in psutil.process_iter():
-        try:
-            found_process=0
-            for i in range(0, len(proc.cmdline())):
-                if(proc.cmdline()[i].find(process) >= 0):
-                    found_process = 1
-            if(found_process == 1):
-                try: 
-                    counter = 2
-                    kill_failed = False
-                    while((os.path.exists("/proc/" + str(proc.pid)) == True) and (counter < 8)):
-                        #print "Killing process: " + process + " with PID: " + str(proc.pid) + " Level: " + str(-1*counter)
-                        subprocess.call("kill " + str(-1*counter) + " " + str(proc.pid),shell=True)
-                        counter = counter + 1
-                        if(counter >= 8):
-                            kill_failed = True;
-                        sleep(0.25)
-                    if(kill_failed == True):
-                        print "Couldn't kill: " + process + " PID: " + str(proc.pid)
-                except:
-                    print "Oops"   
-        except:
-            a=1
+                    target_device = head[head.index("device")+8:-2]
+                    for device in DeviceList:
+                        if(target_device == device.Name):
+                            nodeconfig_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/NodeLaunch/" + head[1:head.index("=>")-1] + ".xml"
+                            if(os.path.isfile(nodeconfig_file) == False):
+                                print "ERROR: Node Config File: " + nodeconfig_file + " Does Not Exist.  Exiting."
+                                return [-1,-1]
+                            with open(nodeconfig_file) as fd:
+                                for readline in fd:
+                                    if("node name=" in readline):
+                                        nodes_to_keep.append("/" + device.Name + readline[readline.index('node name="$(env ROS_HOSTNAME)_')+30:readline.index("pkg")-2])          
+                                #    if(RunningNodeSection == 1):
+                                #        launch_file.write(readline)
+                                #    elif(AlwaysOnSection == 1):
+                                #        launch_file_alwayson.write(readline)
+                                fd.close() 
+    v = subprocess.Popen(['rosnode','list'], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0)
+    out,error = v.communicate()
+    nodelist = out.decode('utf-8').split('\n')
+    for node in nodelist:
+        kill_node = True
+        empty = False
+        if(node == ""):
+            empty = True
+            kill_node = False
+        elif(node == "/rosout"):
+            kill_node = False
+        else:
+            for keep in nodes_to_keep:
+                if(keep == node):
+                    kill_node = False
+        if(kill_node == True):
+            print "Killing: " + node
+            os.system("rosnode kill " + node)
+        elif (empty == False):
+            print "Keeping: " + node
+    os.system("rosnode cleanup")
+def safestop_device(device):
+    print "Stopping: " + device
+    DeviceList = Helpers.ReadDeviceList('ROS')
+    #Determine what Nodes should always be running, don't stop these.
+    f = open(RootDirectory + 'config/ActiveScenario', "r")
+    contents = f.readlines()
+    f.close()
+    ActiveScenario = "".join(contents[0].split())
+    nodelist_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/NodeList.txt"
+    AlwaysOnSection = 0
+    nodes_to_keep = []
+    with open(nodelist_file) as f:
+        for line in f:
+            head,sep,tail = line.partition("#")
+            head = head.replace(" ","")
+            head = head.replace("\n","")
+            if(head != ""):
+                if "AlwaysOnNodes" in head:
+                    AlwaysOnSection = 1
+                elif "}" in head:
+                    if(AlwaysOnSection == 1):
+                        AlwaysOnSection = 0
+                elif (AlwaysOnSection == 1):
+
+                    target_device = head[head.index("device")+8:-2]
+                    if(target_device == device):
+                        nodeconfig_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/NodeLaunch/" + head[1:head.index("=>")-1] + ".xml"
+                        if(os.path.isfile(nodeconfig_file) == False):
+                            print "ERROR: Node Config File: " + nodeconfig_file + " Does Not Exist.  Exiting."
+                            return [-1,-1]
+                        with open(nodeconfig_file) as fd:
+                            for readline in fd:
+                                if("node name=" in readline):
+                                    nodes_to_keep.append("/" + device + readline[readline.index('node name="$(env ROS_HOSTNAME)_')+30:readline.index("pkg")-2])          
+                            fd.close() 
+
+    v = subprocess.Popen(['rosnode','list'], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0)
+    out,error = v.communicate()
+    nodelist = out.decode('utf-8').split('\n')
+    for node in nodelist:
+        kill_node = True
+        empty = False
+        if(node == ""):
+            empty = True
+            kill_node = False
+        elif(node == "/rosout"):
+            kill_node = False
+        elif(device not in node):
+            kill_node = False
+        else:
+            for keep in nodes_to_keep:
+                if(keep == node):
+                    kill_node = False
+        if(kill_node == True):
+            print "Killing: " + node
+            os.system("rosnode kill " + node)
+        elif (empty == False):
+            print "Keeping: " + node
+    os.system("rosnode cleanup")
+    
+        
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:],"?har:l",["help"])
+    opts, args = getopt.getopt(sys.argv[1:],"?hskd:",["help"])
     if(len(opts) == 0):
         print_usage()
     for opt, arg in opts:
@@ -124,12 +176,12 @@ def main():
             print_usage()
         elif opt == '-h':
             print_usage()
-        elif opt == '-a':
-            stop_all_devices(-2)
-        elif opt == '-r':
-            stop_device_remote(arg)
-        elif opt == '-l':
-            stop_device_local(-2)
+        elif opt == '-s':
+            safestop_all_devices()
+        elif opt == '-k':
+            kill_all_devices()
+        elif opt == '-d':
+            safestop_device(arg)
         else:
             print_usage()
 

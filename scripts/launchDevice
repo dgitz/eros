@@ -43,9 +43,11 @@ function launch_device()
 		if [ -z "$var" ]; then
 			echo "No Launch File for: "$1
 		else
-			#launch_command="screen -d -m roslaunch icarus_rover_v2 "$1".launch"
+                    	launch_command="roslaunch icarus_rover_v2 "$1"_AlwaysOn.launch &"
+			eval $launch_command
 			launch_command="roslaunch icarus_rover_v2 "$1".launch &"
 			eval $launch_command
+            
 		fi
 	fi
 }
