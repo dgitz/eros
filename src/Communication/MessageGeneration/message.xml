@@ -141,6 +141,17 @@
                     <field type="unsigned char" name="Diagnostic_Message"/>
                 </Fields>
             </Protocol>
+            <Protocol name="I2C">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="unsigned char" name="System"/>
+                    <field type="unsigned char" name="SubSystem"/>
+                    <field type="unsigned char" name="Component"/>
+                    <field type="unsigned char" name="Diagnostic_Type"/>
+                    <field type="unsigned char" name="Level" />
+                    <field type="unsigned char" name="Diagnostic_Message"/>
+                </Fields>
+            </Protocol>
         </Protocols>
     </Message>
     <Message name="Device" id="0xAB13">
@@ -163,6 +174,23 @@
         </Description>
         <Protocols>
             <Protocol name="SPI">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="unsigned char" name="value1"/>
+                    <field type="unsigned char" name="value2"/>
+                    <field type="unsigned char" name="value3"/>
+                    <field type="unsigned char" name="value4"/>
+                    <field type="unsigned char" name="value5"/>
+                    <field type="unsigned char" name="value6"/>
+                    <field type="unsigned char" name="value7"/>
+                    <field type="unsigned char" name="value8"/>
+                    <field type="unsigned char" name="value9"/>
+                    <field type="unsigned char" name="value10"/>
+                    <field type="unsigned char" name="value11"/>
+                    <field type="unsigned char" name="value12"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="I2C">
                 <Type>Query</Type>
                 <Fields>
                     <field type="unsigned char" name="value1"/>
@@ -288,8 +316,18 @@
             <Protocol name="SPI">
                 <Type>Query</Type>
                 <Fields>
-                    <field type="uint16_t" name="EncoderA_TickSpeed_Offset"/>
-                    <field type="uint16_t" name="EncoderB_TickSpeed_Offset"/>
+                    <field type="uint16_t" name="u1"/>
+                    <field type="uint16_t" name="u2"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="I2C">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="uint16_t" name="u1"/>
+                    <field type="uint16_t" name="u2"/>
+                    <field type="uint16_t" name="u3"/>
+                    <field type="uint16_t" name="u4"/>
+
                 </Fields>
             </Protocol>
         </Protocols>

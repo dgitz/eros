@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-06 20:28:18.107485***/
+/***Created on:2018-08-19 07:10:30.216754***/
 /***Target: Arduino ***/
 #ifndef SERIALMESSAGE_H
 #define SERIALMESSAGE_H

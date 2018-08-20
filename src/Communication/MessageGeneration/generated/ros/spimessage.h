@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-06 20:28:18.107677***/
+/***Created on:2018-08-19 07:10:30.240934***/
 /***Target: Raspberry Pi ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H
@@ -32,7 +32,7 @@ public:
 
 	int decode_TestMessageCounterSPI(unsigned char* inbuffer,int * length,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8,unsigned char* value9,unsigned char* value10,unsigned char* value11,unsigned char* value12);
 
-	int decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* EncoderA_TickSpeed_Offset,uint16_t* EncoderB_TickSpeed_Offset);
+	int decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* u1,uint16_t* u2);
 
 	int decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
 

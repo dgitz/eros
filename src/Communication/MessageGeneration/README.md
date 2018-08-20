@@ -24,3 +24,9 @@ SPI Protocol:
 - Supported Data Types:
 * unsigned char
 * uint16_t
+
+I2C Protocol:
+- Message Types:
+* Query -- Used to read a series of values 
+- Supported Data Types:
+* unsigned char

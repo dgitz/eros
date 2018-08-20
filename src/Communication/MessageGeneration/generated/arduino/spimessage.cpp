@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-06 20:28:18.107649***/
+/***Created on:2018-08-19 07:10:30.240820***/
 /***Target: Arduino ***/
 #include "spimessage.h"
 int encode_DiagnosticSPI(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
@@ -52,14 +52,14 @@ int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned c
 	length[0] = 12;
 	return 1;
 }
-int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned int EncoderA_TickSpeed_Offset,unsigned int EncoderB_TickSpeed_Offset)
+int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned int u1,unsigned int u2)
 {
 	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
-	*p_outbuffer++ = EncoderA_TickSpeed_Offset>>8;
-	*p_outbuffer++ = EncoderA_TickSpeed_Offset;
-	*p_outbuffer++ = EncoderB_TickSpeed_Offset>>8;
-	*p_outbuffer++ = EncoderB_TickSpeed_Offset;
+	*p_outbuffer++ = u1>>8;
+	*p_outbuffer++ = u1;
+	*p_outbuffer++ = u2>>8;
+	*p_outbuffer++ = u2;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
 	*p_outbuffer++ = 0;
