@@ -305,7 +305,6 @@ def sync_display(device):
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/ControlGroup.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
-    subprocess.call("rsync -avrt " + RootDirectory + "config/JoystickCalibration.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "executable/* " + "robot@" + device + ":" + RootDirectory + "executable/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/src/eROS/include/*.h " + "robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/include/",shell=True)
     subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/src/icarus_rover_v2/include/*.h " + "robot@" + device + ":" + RootDirectory + "catkin_ws/src/icarus_rover_v2/include/",shell=True)

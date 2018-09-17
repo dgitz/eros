@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-19 07:10:30.201509***/
+/***Created on:2018-08-23 07:05:58.972472***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -167,6 +167,17 @@ std::string UDPMessageHandler::encode_EStopUDP(std::string DeviceName,uint8_t St
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)State));
 	return tempstr;
+}
+int UDPMessageHandler::decode_EStopUDP(std::vector<std::string> items,std::string* DeviceName,uint8_t* State)
+{
+	char tempstr[8];
+	sprintf(tempstr,"0x%s",items.at(0).c_str());
+	int id = (int)strtol(tempstr,NULL,0);
+	if(id != UDP_EStop_ID){ return 0; }
+	if(items.size() != 3){ return 0; }
+	*DeviceName=items.at(1);
+	*State=(uint8_t)atoi(items.at(2).c_str());
+	return 1;
 }
 int UDPMessageHandler::decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue)
 {

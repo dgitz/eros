@@ -237,48 +237,42 @@ def generate_message(xmlfile):
                     gui_udpmessagefile_header.write('\tint decode_' + message.get('name') + 'UDP(QList<QByteArray> items,')
                     gui_udpmessagefile_cpp.write('int UDPMessageHandler::decode_' + message.get('name') + 'UDP(QList<QByteArray> items,')
                 index = 0
-                itemcounter = 1
+                itemcounter_gui = 1
+                itemcounter_master = 1
                 for item in fieldlist:
                     if(decode_for_master == 1):
+                        itemcounter_master = itemcounter_master + 1
                         if(item.datatype == 'uint8_t'):
                             ros_udpmessagefile_header.write(item.datatype + '* ' + item.name)
                             ros_udpmessagefile_cpp.write(item.datatype + '* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'int16_t'):
                             ros_udpmessagefile_header.write('int* ' + item.name)
                             ros_udpmessagefile_cpp.write('int* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'uint64_t'):
                             ros_udpmessagefile_header.write('uint64_t* ' + item.name)
                             ros_udpmessagefile_cpp.write('uint64_t* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == "std::string"):
                             ros_udpmessagefile_header.write('std::string* ' + item.name)
                             ros_udpmessagefile_cpp.write('std::string* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == "double"):
                             ros_udpmessagefile_header.write('double* ' + item.name)
                             ros_udpmessagefile_cpp.write('double* ' + item.name)
-                            itemcounter = itemcounter + 1
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                     if(decode_for_gui == 1):
+                        itemcounter_gui = itemcounter_gui + 1
                         if(item.datatype == 'uint8_t'):
                             gui_udpmessagefile_header.write('int* ' + item.name)
                             gui_udpmessagefile_cpp.write('int* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'uint16_t'):
                             gui_udpmessagefile_header.write('int* ' + item.name)
                             gui_udpmessagefile_cpp.write('int* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'int16_t'):
                             gui_udpmessagefile_header.write('int* ' + item.name)
                             gui_udpmessagefile_cpp.write('int* ' + item.name)
-                            itemcounter = itemcounter + 1
                         elif(item.datatype == 'std::string'):
                             gui_udpmessagefile_header.write('std::string* ' + item.name)
                             gui_udpmessagefile_cpp.write('std::string* ' + item.name)
-                            itemcounter = itemcounter + 1
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                         
@@ -299,10 +293,10 @@ def generate_message(xmlfile):
                 if(decode_for_master == 1):
                     ros_udpmessagefile_cpp.write('\tchar tempstr[8];\r\n\tsprintf(tempstr,"0x%s",items.at(0).c_str());\r\n\tint id = (int)strtol(tempstr,NULL,0);\r\n')
                     ros_udpmessagefile_cpp.write('\tif(id != UDP_' + message.get('name') + '_ID){ return 0; }\r\n')
-                    ros_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter) + '){ return 0; }\r\n')
+                    ros_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_master) + '){ return 0; }\r\n')
                 if(decode_for_gui == 1):
                     #print "ID:" + message.get('name') + str(itemcounter)
-                    gui_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter) + '){ return 0; }\r\n')
+                    gui_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_gui) + '){ return 0; }\r\n')
                     #ros_udpmessagefile_cpp.write('\tif(std::stoi(items.at(0)) != UDP_' + message.get('name') + '_ID) { return 0; }\r\n')
                 itemcounter = 0
                 for item in fieldlist:

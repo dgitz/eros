@@ -605,6 +605,7 @@
         <Protocols>
             <Protocol name="UDP">
                 <Origin>Master</Origin>
+                <Origin>GUI</Origin>
                 <Retry>false</Retry>
                 <Fields>
                     <field type="std::string" name="DeviceName"/>

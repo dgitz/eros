@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-19 07:10:30.243390***/
+/***Created on:2018-08-23 07:05:58.972954***/
 /***Target: Arduino ***/
 #include "i2cmessage.h"
 int encode_DiagnosticI2C(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)

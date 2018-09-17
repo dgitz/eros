@@ -7,10 +7,12 @@
 
 function launch_device()
 {
+    sudo chown -R robot /dev/ttyAMA0
+    echo -ne '|-BOOTING: '$(date) > /dev/ttyAMA0
     source /home/robot/catkin_ws/devel/setup.bash
     #touch ~/$1
     counter=0
-	countmax=60 # Try for about 5 minutes
+	countmax=20 # Try for about 5 minutes
 	ros_connected=0
     while [ $counter -lt $countmax ]
 	do
@@ -21,11 +23,11 @@ function launch_device()
         else
             sleep 5
         fi
-		let counter=$counter+1
+        	let counter=$counter+1
 		v=$countmax
 		let v=$v-$counter
-		echo "Trying to contact ROS Server "$v" more times."
-		if [ $counter -eq $countmax ]; then
+    	echo "Trying to contact ROS Server "$v" more times."
+    	if [ $counter -eq $countmax ]; then
 			echo "Unable to contact ROS Master."
 		fi
     done
@@ -33,7 +35,7 @@ function launch_device()
     echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
     export ROS_HOSTNAME=$HOSTNAME
     export ROS_IP=$HOSTNAME
-    export ROS_MASTER_URI=http://dgitzrosmaster:11311
+    export ROS_MASTER_URI=http://ControlModule1:11311
     echo "ROS_MASTER: "$ROS_MASTER_URI >> $boot_file
     echo "ROS HOSTNAME: "$ROS_HOSTNAME >> $boot_file
 	if [ $ros_connected -eq 1 ]; then
@@ -50,6 +52,7 @@ function launch_device()
             
 		fi
 	fi
+    echo -ne '|-STARTING: '$(date) > /dev/ttyAMA0
 }
 function print_usage()
 {
