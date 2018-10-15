@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#TODO: Fix udpmessage to match working example in icarus_rover_v2
 import xml.etree.ElementTree as ET
 import os.path
 import sys
@@ -31,8 +32,8 @@ def generate_message(xmlfile):
     root = tree.getroot()
 
     ros_udpmessagefile_header.write('#ifndef UDPMESSAGE_H\r\n#define UDPMESSAGE_H\r\n')
-    ros_udpmessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
-    ros_udpmessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
+    ros_udpmessagefile_header.write('#include "Definitions.h"\r\n#include <stdio.h>\r\n')
+    ros_udpmessagefile_header.write('#include <iostream>\r\n#include <vector>\r\n#include <ctime>\r\n#include <boost/lexical_cast.hpp>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
     gui_udpmessagefile_header.write('#ifndef UDPMESSAGE_H\r\n#define UDPMESSAGE_H\r\n')
     gui_udpmessagefile_header.write('#include <QString>\r\n#include <QList>\r\n')
     

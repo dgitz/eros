@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-08-23 07:05:58.973012***/
+/***Created on:2018-10-14 16:33:05.455044***/
 /***Target: Raspberry Pi ***/
 #include "../include/i2cmessage.h"
 I2CMessageHandler::I2CMessageHandler(){}
@@ -40,5 +40,53 @@ int I2CMessageHandler::decode_Get_DIO_Port1I2C(unsigned char* inbuffer,int * len
 	*u3 = v_u3 + inbuffer[5];
 	int v_u4 = inbuffer[6]<<8;
 	*u4 = v_u4 + inbuffer[7];
+	return 1;
+}
+int I2CMessageHandler::decode_Get_IMUAccI2C(unsigned char* inbuffer,int * length,uint16_t* acc1_x,uint16_t* acc1_y,uint16_t* acc1_z,uint16_t* acc2_x,uint16_t* acc2_y,uint16_t* acc2_z)
+{
+	int v_acc1_x = inbuffer[0]<<8;
+	*acc1_x = v_acc1_x + inbuffer[1];
+	int v_acc1_y = inbuffer[2]<<8;
+	*acc1_y = v_acc1_y + inbuffer[3];
+	int v_acc1_z = inbuffer[4]<<8;
+	*acc1_z = v_acc1_z + inbuffer[5];
+	int v_acc2_x = inbuffer[6]<<8;
+	*acc2_x = v_acc2_x + inbuffer[7];
+	int v_acc2_y = inbuffer[8]<<8;
+	*acc2_y = v_acc2_y + inbuffer[9];
+	int v_acc2_z = inbuffer[10]<<8;
+	*acc2_z = v_acc2_z + inbuffer[11];
+	return 1;
+}
+int I2CMessageHandler::decode_Get_IMUGyroI2C(unsigned char* inbuffer,int * length,uint16_t* gyro1_x,uint16_t* gyro1_y,uint16_t* gyro1_z,uint16_t* gyro2_x,uint16_t* gyro2_y,uint16_t* gyro2_z)
+{
+	int v_gyro1_x = inbuffer[0]<<8;
+	*gyro1_x = v_gyro1_x + inbuffer[1];
+	int v_gyro1_y = inbuffer[2]<<8;
+	*gyro1_y = v_gyro1_y + inbuffer[3];
+	int v_gyro1_z = inbuffer[4]<<8;
+	*gyro1_z = v_gyro1_z + inbuffer[5];
+	int v_gyro2_x = inbuffer[6]<<8;
+	*gyro2_x = v_gyro2_x + inbuffer[7];
+	int v_gyro2_y = inbuffer[8]<<8;
+	*gyro2_y = v_gyro2_y + inbuffer[9];
+	int v_gyro2_z = inbuffer[10]<<8;
+	*gyro2_z = v_gyro2_z + inbuffer[11];
+	return 1;
+}
+int I2CMessageHandler::decode_Get_IMUMagI2C(unsigned char* inbuffer,int * length,uint16_t* mag1_x,uint16_t* mag1_y,uint16_t* mag1_z,uint16_t* mag2_x,uint16_t* mag2_y,uint16_t* mag2_z)
+{
+	int v_mag1_x = inbuffer[0]<<8;
+	*mag1_x = v_mag1_x + inbuffer[1];
+	int v_mag1_y = inbuffer[2]<<8;
+	*mag1_y = v_mag1_y + inbuffer[3];
+	int v_mag1_z = inbuffer[4]<<8;
+	*mag1_z = v_mag1_z + inbuffer[5];
+	int v_mag2_x = inbuffer[6]<<8;
+	*mag2_x = v_mag2_x + inbuffer[7];
+	int v_mag2_y = inbuffer[8]<<8;
+	*mag2_y = v_mag2_y + inbuffer[9];
+	int v_mag2_z = inbuffer[10]<<8;
+	*mag2_z = v_mag2_z + inbuffer[11];
 	return 1;
 }
