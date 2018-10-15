@@ -12,7 +12,7 @@ from optparse import OptionParser
 import time
 import sys
 from functools import partial
-from colored import fg, bg, attr
+#from colored import fg, bg, attr
 DeviceList = []
 
 def print_usage():
