@@ -409,6 +409,17 @@
 		            <field type="uint16_t" name="acc2_z" description="IMU2 unsigned cm/s^2"/>
                 </Fields>
             </Protocol>
+            <Protocol name="SPI">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="uint16_t" name="acc1_x" description="IMU1 unsigned cm/s^2"/>
+                    <field type="uint16_t" name="acc1_y" description="IMU1 unsigned cm/s^2"/>
+		            <field type="uint16_t" name="acc1_z" description="IMU1 unsigned cm/s^2"/>
+	                <field type="uint16_t" name="acc2_x" description="IMU2 unsigned cm/s^2"/>
+                    <field type="uint16_t" name="acc2_y" description="IMU2 unsigned cm/s^2"/>
+		            <field type="uint16_t" name="acc2_z" description="IMU2 unsigned cm/s^2"/>
+                </Fields>
+            </Protocol>
         </Protocols>
     </Message>
     <Message name="Get_IMUGyro" id="0xAB28">
@@ -429,6 +440,17 @@
 		            <field type="uint16_t" name="gyro2_z" description="IMU2 unsigned mdeg/s"/>
                 </Fields>
             </Protocol>
+            <Protocol name="SPI">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="uint16_t" name="gyro1_x" description="IMU1 unsigned mdeg/s"/>
+                    <field type="uint16_t" name="gyro1_y" description="IMU1 unsigned mdeg/s"/>
+		            <field type="uint16_t" name="gyro1_z" description="IMU1 unsigned mdeg/s"/>
+	                <field type="uint16_t" name="gyro2_x" description="IMU2 unsigned mdeg/s"/>
+                    <field type="uint16_t" name="gyro2_y" description="IMU2 unsigned mdeg/s"/>
+		            <field type="uint16_t" name="gyro2_z" description="IMU2 unsigned mdeg/s"/>
+                </Fields>
+            </Protocol>
         </Protocols>
     </Message>
     <Message name="Get_IMUMag" id="0xAB29">
@@ -439,6 +461,17 @@
         </Description>
         <Protocols>
             <Protocol name="I2C">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="uint16_t" name="mag1_x" description="IMU1 unsigned mgauss"/>
+                    <field type="uint16_t" name="mag1_y" description="IMU1 unsigned mgauss"/>
+	                <field type="uint16_t" name="mag1_z" description="IMU1 unsigned mgauss"/>
+	                <field type="uint16_t" name="mag2_x" description="IMU2 unsigned mgauss"/>
+                    <field type="uint16_t" name="mag2_y" description="IMU2 unsigned mgauss"/>
+		            <field type="uint16_t" name="mag2_z" description="IMU2 unsigned mgauss"/>
+                </Fields>
+            </Protocol>
+            <Protocol name="SPI">
                 <Type>Query</Type>
                 <Fields>
                     <field type="uint16_t" name="mag1_x" description="IMU1 unsigned mgauss"/>
