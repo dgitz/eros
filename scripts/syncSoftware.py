@@ -132,7 +132,7 @@ def sync_local(hostname):
     #Sync package.xml to the correct device
     source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/package/" + hostname + ".xml"
     dest_file = ApplicationPackage + "package.xml"
-    shutil.copy(source_file,dest_file)
+    shutil.copy(source_file,dest_file,True)
 
     #Sync other config items
     for f in glob.glob(RootDirectory + "config/urdf/*"):
@@ -248,7 +248,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/urdf/* " + "robot@" + device + ":" + RootDirectory + "config/urdf/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
-
+    subprocess.call("rsync -avrt " + RootDirectory + "storage/AUDIO/output/* " + "robot@" + device + ":" + RootDirectory + "storage/AUDIO/output/" ,shell=True) 
     
     source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + device + ".txt"
     if(os.path.isfile(source_file) == True):
