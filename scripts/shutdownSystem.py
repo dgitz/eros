@@ -34,12 +34,6 @@ def shutdown_all_devices():
             sshProcess.stdin.write("sudo shutdown -h now\n")
             stdout,stderr = sshProcess.communicate()
             sshProcess.stdin.close()
-            #time.sleep(3)
-            #response = os.system("ping -c 4 " + DeviceList[i].Name)
-            #if response != 0:
-            #print ('%s%s Device: %s is still online!' % (fg('red'),attr('bold'),DeviceList[i].Name))
-            #    reset = attr('reset')
-            #    print (reset)
     
             
 

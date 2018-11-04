@@ -38,6 +38,7 @@ elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
 fi
 
 if [[ $HOSTNAME == "ControlModule1" ]]; then
+  mpg321 -g 30 /home/robot/storage/AUDIO/output/RobotPoweringUp.mp3
   cd /home/robot/catkin_ws
   source /home/robot/catkin_ws/devel/setup.bash
   echo "Starting ROSCore" >> $boot_file
