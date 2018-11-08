@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-10-14 16:33:05.454870***/
+/***Created on:2018-11-08 06:41:05.829634***/
 /***Target: Arduino ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H

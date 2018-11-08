@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-10-14 16:33:05.454895***/
+/***Created on:2018-11-08 06:41:05.829659***/
 /***Target: Arduino ***/
 #include "spimessage.h"
 int encode_DiagnosticSPI(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)

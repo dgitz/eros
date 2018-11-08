@@ -30,3 +30,12 @@ I2C Protocol:
 * Query -- Used to read a series of values 
 - Supported Data Types:
 * unsigned char
+
+JSON Protocol
+- Origin Types:
+* Server -- Message transmitted from Server to Client
+* Client -- Message transmitted from Client to Server
+- Supported Data Types:
+* std::string
+* icarus_rover_v2::diagnostic
+* std::vector::icarus_rover_v2::device (Does not encode Pins)

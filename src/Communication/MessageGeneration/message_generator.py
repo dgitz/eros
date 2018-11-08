@@ -55,7 +55,11 @@ def generate_message(xmlfile):
     ros_i2cmessagefile_header.write('#include "ros/ros.h"\r\n#include "Definitions.h"\r\n#include "ros/time.h"\r\n#include <stdio.h>\r\n')
     ros_i2cmessagefile_header.write('#include <iostream>\r\n#include <ctime>\r\n#include <fstream>\r\n#include <iostream>\r\n\r\n')
 
-
+    ros_jsonmessagefile_header.write('#ifndef JSONMESSAGE_H\r\n#define JSONMESSAGE_H\r\n')
+    ros_jsonmessagefile_header.write('#include "Definitions.h"\r\n#include <stdio.h>\r\n')
+    ros_jsonmessagefile_header.write('#include <iostream>\r\n#include <vector>\r\n#include <ctime>\r\n#include <boost/lexical_cast.hpp>\r\n#include <fstream>\r\n#include <iostream>\r\n')
+    ros_jsonmessagefile_header.write('#include "icarus_rover_v2/diagnostic.h"\r\n')
+    ros_jsonmessagefile_header.write('#include "icarus_rover_v2/device.h"\r\n')
     IDs = []
     for message in root:
         IDs.append(hex(int(message.get('id'),0)).upper())
@@ -83,9 +87,11 @@ def generate_message(xmlfile):
                 arduino_spimessagefile_header.write('#define SPI_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
             if(protocol.get('name') == 'I2C'):
                 arduino_i2cmessagefile_header.write('#define I2C_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
+
     ros_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
     ros_spimessagefile_header.write('\r\nclass SPIMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
     ros_i2cmessagefile_header.write('\r\nclass I2CMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
+    ros_jsonmessagefile_header.write('\r\nclass JSONMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
     for message in root:
         protocollist = []
         protocols = message.find('Protocols')
@@ -96,6 +102,8 @@ def generate_message(xmlfile):
                 ros_spimessagefile_header.write('\t\tSPI_' + message.get('name') + '_ID = ' +hex(int(message.get('id'),0)-int('0xAB00',0)) +',\r\n')
             if(protocol.get('name') == 'I2C'):
                 ros_i2cmessagefile_header.write('\t\tI2C_' + message.get('name') + '_ID = ' +hex(int(message.get('id'),0)-int('0xAB00',0)) +',\r\n')
+            if(protocol.get('name') == 'JSON'):
+                ros_jsonmessagefile_header.write('\t\tJSON_' + message.get('name') + '_ID = ' + message.get('id') +',\r\n')
     ros_udpmessagefile_header.write('\t};\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
     ros_udpmessagefile_cpp.write('#include "../include/udpmessage.h"\r\nUDPMessageHandler::UDPMessageHandler(){}\r\nUDPMessageHandler::~UDPMessageHandler(){}\r\n')
     gui_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tUDPMessageHandler();\r\n\t~UDPMessageHandler();\r\n')
@@ -112,6 +120,10 @@ def generate_message(xmlfile):
 
     ros_i2cmessagefile_header.write('\t};\r\n\tI2CMessageHandler();\r\n\t~I2CMessageHandler();\r\n')
     ros_i2cmessagefile_cpp.write('#include "../include/i2cmessage.h"\r\nI2CMessageHandler::I2CMessageHandler(){}\r\nI2CMessageHandler::~I2CMessageHandler(){}\r\n')
+
+    ros_jsonmessagefile_header.write('\t};\r\n\tJSONMessageHandler();\r\n\t~JSONMessageHandler();\r\n')
+    ros_jsonmessagefile_cpp.write('#include "../include/jsonmessage.h"\r\nJSONMessageHandler::JSONMessageHandler(){}\r\nJSONMessageHandler::~JSONMessageHandler(){}\r\n')
+
     for message in root:
         protocollist = []
         protocols = message.find('Protocols')
@@ -346,6 +358,109 @@ def generate_message(xmlfile):
                 if(decode_for_gui == 1):
                     gui_udpmessagefile_cpp.write('\treturn 1;\r\n')
                     gui_udpmessagefile_cpp.write('}\r\n')
+            elif(protocol.get('name') == 'JSON'):
+                encode_for_server = 0
+                encode_for_client = 0
+                decode_for_server = 0
+                decode_for_client = 0
+                for child in protocol.findall('Origin'):
+                    if(child.text == "Server"):
+                        encode_for_server = 1
+                        decode_for_client = 1
+                    if(child.text == "Client"):
+                        encode_for_client = 1
+                        decode_for_server = 1
+
+                encode_for_client = 0
+                decode_for_server = 0
+                decode_for_client = 0
+                if(encode_for_server == 1):
+                    ros_jsonmessagefile_header.write('\tstd::string encode_' + message.get('name') + 'JSON(')
+                    ros_jsonmessagefile_cpp.write('std::string JSONMessageHandler::encode_' + message.get('name') + 'JSON(')
+            
+                index = 0
+                for item in fieldlist:
+                    if(encode_for_server == 1):
+                        if(item.datatype == "std::vector::icarus_rover_v2::device"):
+                            ros_jsonmessagefile_header.write("std::vector<icarus_rover_v2::device>" + ' ' + item.name)
+                            ros_jsonmessagefile_cpp.write("std::vector<icarus_rover_v2::device>" + ' ' + item.name)
+                        else:
+                            ros_jsonmessagefile_header.write(item.datatype + ' ' + item.name)
+                            ros_jsonmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                    index += 1
+                    if(index < len(fieldlist)):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_header.write(',')
+                            ros_jsonmessagefile_cpp.write(',')
+                        
+
+                if(encode_for_server == 1):    
+                    ros_jsonmessagefile_header.write(');\r\n')
+                    ros_jsonmessagefile_cpp.write(')\r\n{\r\n')
+                    ros_jsonmessagefile_cpp.write('\tstd::string tempstr = "{\\"ID\\":' + str(int(message.get('id'),0))+',\\"data\\":{";\r\n')
+
+                index = 0
+                for item in fieldlist:
+                    if(item.datatype =='std::string'):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"'+item.name + '\\":\\""+' + item.name + '+"\\""')
+                    elif(item.datatype =='icarus_rover_v2::diagnostic'):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"' + item.name + '\\":{\";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"DeviceName\\":\\""+' + item.name + '.DeviceName+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Node_Name\\":\\""+' + item.name + '.Node_Name+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"System\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.System)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"SubSystem\\":"+boost::lexical_cast<std::string>((int)+' + item.name + '.SubSystem)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Component\\":"+boost::lexical_cast<std::string>((int)+' + item.name + '.Component)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Diagnostic_Type\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.Diagnostic_Type)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Level\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.Level)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Diagnostic_Message\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.Diagnostic_Message)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Description\\":\\""+' + item.name + '.Description+"\\"}";\r\n')
+                    elif(item.datatype =='std::vector::icarus_rover_v2::device'):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"' + item.name + '\\":[\";\r\n')
+                            ros_jsonmessagefile_cpp.write('\tfor(std::size_t i = 0; i < ' + item.name + '.size(); i++)\r\n\t{\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="{";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"DeviceParent\\":\\""+' + item.name + '.at(i).DeviceParent+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"PartNumber\\":\\""+' + item.name + '.at(i).PartNumber+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"DeviceName\\":\\""+' + item.name + '.at(i).DeviceName+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"DeviceType\\":\\""+' + item.name + '.at(i).DeviceType+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"PrimaryIP\\":\\""+' + item.name + '.at(i).PrimaryIP+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"Architecture\\":\\""+' + item.name + '.at(i).Architecture+"\\",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"Capabilities\\":[";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\tfor(std::size_t j = 0; j < ' + item.name + '.at(i).Capabilities' + '.size(); j++)\r\n\t\t{\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\t\ttempstr+="\\""+' + item.name + '.at(i).Capabilities.at(j)' + '+"\\"";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\t\tif(j < (' + item.name + '.at(i).Capabilities.size()-1))\r\n\t\t\t{\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\t\t\ttempstr+=",";\r\n\t\t\t}\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\t}\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="],";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"BoardCount\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.at(i).BoardCount)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"HatCount\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.at(i).HatCount)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"ShieldCount\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.at(i).ShieldCount)+",";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="\\"SensorCount\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.at(i).SensorCount);\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\ttempstr+="}";\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\tif(i < (' + item.name + '.size()-1))\r\n\t\t{\r\n')
+                            ros_jsonmessagefile_cpp.write('\t\t\ttempstr+=",";\r\n\t\t}\r\n')
+                            ros_jsonmessagefile_cpp.write('\t}\r\n')
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="]";\r\n')
+                            
+                    else:
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+
+                    index += 1
+
+                    if(index < len(fieldlist)):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write(',";\r\n')
+
+                    else:
+                        if(encode_for_server == 1):
+                            a = 1
+                if(encode_for_server == 1):
+                    ros_jsonmessagefile_cpp.write('\ttempstr+="}}";\r\n')
+                    ros_jsonmessagefile_cpp.write('\treturn tempstr;\r\n')
+                    ros_jsonmessagefile_cpp.write('}\r\n')
+                
             elif(protocol.get('name') == 'Serial'):
                 encode_for_master = 0
                 encode_for_slave = 0
@@ -1019,6 +1134,8 @@ def generate_message(xmlfile):
     arduino_i2cmessagefile_header.write('#endif')
     ros_i2cmessagefile_header.write('private:\r\n')
     ros_i2cmessagefile_header.write('};\r\n#endif')
+    ros_jsonmessagefile_header.write('private:\r\n')
+    ros_jsonmessagefile_header.write('};\r\n#endif')
 
 
 
@@ -1144,6 +1261,18 @@ elif (sys.argv[1] == "-g"):
     ros_i2cmessagefile_cpp.write( str(datetime.now()))
     ros_i2cmessagefile_cpp.write('***/\r\n')
     ros_i2cmessagefile_cpp.write("/***Target: Raspberry Pi ***/\r\n")
+
+    ros_jsonmessagefile_header = open('generated/ros/jsonmessage.h','w+')
+    ros_jsonmessagefile_header.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    ros_jsonmessagefile_header.write('/***Created on:')
+    ros_jsonmessagefile_header.write( str(datetime.now()))
+    ros_jsonmessagefile_header.write('***/\r\n')
+    ros_jsonmessagefile_cpp = open('generated/ros/jsonmessage.cpp','w+')
+    ros_jsonmessagefile_cpp.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    ros_jsonmessagefile_cpp.write('/***Created on:')
+    ros_jsonmessagefile_cpp.write( str(datetime.now()))
+    ros_jsonmessagefile_cpp.write('***/\r\n')
+
     
     message_strings = []
     #eros_definitionsfile_header = open('/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h','a')
@@ -1170,16 +1299,21 @@ elif (sys.argv[1] == "-g"):
     arduino_i2cmessagefile_cpp.close()
     ros_i2cmessagefile_header.close()
     ros_i2cmessagefile_cpp.close()
+
+    ros_jsonmessagefile_header.close()
+    ros_jsonmessagefile_cpp.close()
     
 
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/jsonmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/spimessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/i2cmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/udpmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/spimessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/i2cmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/jsonmessage.cpp','/home/robot/catkin_ws/src/icarus_rover_v2/util/')
     
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/DriverStation/DriverStation/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/DriverStation/DriverStation/')
