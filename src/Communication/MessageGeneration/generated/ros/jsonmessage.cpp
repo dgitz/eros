@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-11-08 06:41:05.829892***/
+/***Created on:2018-11-12 06:50:47.053430***/
 #include "../include/jsonmessage.h"
 JSONMessageHandler::JSONMessageHandler(){}
 JSONMessageHandler::~JSONMessageHandler(){}
@@ -53,6 +53,13 @@ std::string JSONMessageHandler::encode_DeviceJSON(std::vector<icarus_rover_v2::d
 		}
 	}
 	tempstr+="]";
+	tempstr+="}}";
+	return tempstr;
+}
+std::string JSONMessageHandler::encode_Arm_StatusJSON(uint8_t armed_status)
+{
+	std::string tempstr = "{\"ID\":43824,\"data\":{";
+	tempstr+="\"armed_status\":\""+std::to_string(armed_status)+"\"";
 	tempstr+="}}";
 	return tempstr;
 }

@@ -39,3 +39,4 @@ JSON Protocol
 * std::string
 * icarus_rover_v2::diagnostic
 * std::vector::icarus_rover_v2::device (Does not encode Pins)
+* uint8_t

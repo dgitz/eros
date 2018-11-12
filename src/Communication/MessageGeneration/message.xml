@@ -463,60 +463,6 @@
             </Protocol>
         </Protocols>
     </Message>
-<!--
-    <Message name="Setup_ControlGroup" id="0xAB28">
-        <Protocols>
-            <Protocol name="Serial">
-                <Origin>Master</Origin>
-                <Fields>
-                    <field type="char" name="ID" />
-                        <![CDATA[
-                            1-255, Each Control Group must have a Unique ID
-                        ]]>
-                    <field type="char" name="Mode" />
-						<![CDATA[
-                            0: Undefined
-							1: PID
-						]]>
-                    <field type="char" name="Input_Port" />
-                        <![CDATA[
-                            0: Undefined
-                            1: ANA_PortA
-                            2: ANA_PortB
-                        ]]>
-                    <field type="unsigned char" name="Input_PinMode" />
-                    <field type="unsigned char" name="Input_PinNumber" />
-                    <field type="unsigned char" name="Output_Port" />
-                    <field type="unsigned char" name="Output_PinMode" />
-                    <field type="unsigned char" name="Output_PinNUmber" />
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
--->
-<!--
-    <Message name="Tune_ControlGroup" id="0xAB29">
-        <Protocols>
-            <Protocol name="Serial">
-                <Origin>Master</Origin>
-                <Fields>
-                    <field type="unsigned char" name="ID" />
-                        <![CDATA[
-                            1-255, Each Control Group must have a Unique ID
-                        ]]>
-                    <field type="unsigned char" name="Mode" />
-						<![CDATA[
-                            0: Undefined
-							1: PID
-						]]>
-                    <field type="int16_t" name="Proportional_Gain" />
-                    <field type="int16_t" name="Integral_Gain" />
-                    <field type="int16_t" name="Derivative_Gain" />
-                </Fields>
-            </Protocol>
-        </Protocols>
-    </Message>
--->
     <Message name="Arm_Status" id="0xAB30">
         <![CDATA[  
             Status of Current Arm/Disarm State
@@ -537,6 +483,12 @@
                     <field type="unsigned char" name="Status" />
 						<![CDATA[
 						]]>
+                </Fields>
+            </Protocol>
+            <Protocol name="JSON">
+                <Origin>Server</Origin>
+                <Fields>
+                    <field type="uint8_t" name="armed_status"/> 
                 </Fields>
             </Protocol>
         </Protocols>

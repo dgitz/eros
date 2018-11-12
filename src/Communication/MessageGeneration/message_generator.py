@@ -87,6 +87,9 @@ def generate_message(xmlfile):
                 arduino_spimessagefile_header.write('#define SPI_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
             if(protocol.get('name') == 'I2C'):
                 arduino_i2cmessagefile_header.write('#define I2C_' + message.get('name') + '_ID ' + hex(int(message.get('id'),0)-int('0xAB00',0)) + '\r\n')
+            if(protocol.get('name') == 'JSON'):
+                www_jsonmessagefile.write('export const JSON_' + message.get('name') + '_ID: number = ' + str(int(message.get('id'),0)) + ';\r\n')
+                
 
     ros_udpmessagefile_header.write('\r\nclass UDPMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
     ros_spimessagefile_header.write('\r\nclass SPIMessageHandler\r\n{\r\npublic:\r\n\tenum MessageID\r\n\t{\r\n')
@@ -373,10 +376,14 @@ def generate_message(xmlfile):
 
                 encode_for_client = 0
                 decode_for_server = 0
-                decode_for_client = 0
                 if(encode_for_server == 1):
                     ros_jsonmessagefile_header.write('\tstd::string encode_' + message.get('name') + 'JSON(')
                     ros_jsonmessagefile_cpp.write('std::string JSONMessageHandler::encode_' + message.get('name') + 'JSON(')
+                if(decode_for_client == 1):
+                    
+                    www_jsonmessagefile.write('export interface ' + message.get('name') + ' {\r\n')
+                    www_jsonmessagefile.write('\trx_count: number;\r\n')
+
             
                 index = 0
                 for item in fieldlist:
@@ -386,7 +393,7 @@ def generate_message(xmlfile):
                             ros_jsonmessagefile_cpp.write("std::vector<icarus_rover_v2::device>" + ' ' + item.name)
                         else:
                             ros_jsonmessagefile_header.write(item.datatype + ' ' + item.name)
-                            ros_jsonmessagefile_cpp.write(item.datatype + ' ' + item.name)
+                            ros_jsonmessagefile_cpp.write(item.datatype + ' ' + item.name)                        
                     index += 1
                     if(index < len(fieldlist)):
                         if(encode_for_server == 1):
@@ -400,7 +407,7 @@ def generate_message(xmlfile):
                     ros_jsonmessagefile_cpp.write('\tstd::string tempstr = "{\\"ID\\":' + str(int(message.get('id'),0))+',\\"data\\":{";\r\n')
 
                 index = 0
-                for item in fieldlist:
+                for item in fieldlist: 
                     if(item.datatype =='std::string'):
                         if(encode_for_server == 1):
                             ros_jsonmessagefile_cpp.write('\ttempstr+="\\"'+item.name + '\\":\\""+' + item.name + '+"\\""')
@@ -416,6 +423,16 @@ def generate_message(xmlfile):
                             ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Level\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.Level)+",";\r\n')
                             ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Diagnostic_Message\\":"+boost::lexical_cast<std::string>((int)' + item.name + '.Diagnostic_Message)+",";\r\n')
                             ros_jsonmessagefile_cpp.write('\ttempstr+="\\"Description\\":\\""+' + item.name + '.Description+"\\"}";\r\n')
+                        if(decode_for_client == 1): 
+                            www_jsonmessagefile.write('\tDeviceName: string;\r\n')
+                            www_jsonmessagefile.write('\tNode_Name: string;\r\n')
+                            www_jsonmessagefile.write('\tSystem: number;\r\n')
+                            www_jsonmessagefile.write('\tSubSystem: number;\r\n')
+                            www_jsonmessagefile.write('\tComponent: number;\r\n')
+                            www_jsonmessagefile.write('\tDiagnostic_Type: number;\r\n')
+                            www_jsonmessagefile.write('\tLevel: number;\r\n')
+                            www_jsonmessagefile.write('\tDiagnostic_Message: number;\r\n')
+                            www_jsonmessagefile.write('\tDescription: string;\r\n')  
                     elif(item.datatype =='std::vector::icarus_rover_v2::device'):
                         if(encode_for_server == 1):
                             ros_jsonmessagefile_cpp.write('\ttempstr+="\\"' + item.name + '\\":[\";\r\n')
@@ -443,6 +460,24 @@ def generate_message(xmlfile):
                             ros_jsonmessagefile_cpp.write('\t\t\ttempstr+=",";\r\n\t\t}\r\n')
                             ros_jsonmessagefile_cpp.write('\t}\r\n')
                             ros_jsonmessagefile_cpp.write('\ttempstr+="]";\r\n')
+                        if(decode_for_client == 1):
+                            www_jsonmessagefile.write('\tDeviceParent: string;\r\n')
+                            www_jsonmessagefile.write('\tPartNumber: string;\r\n')
+                            www_jsonmessagefile.write('\tDeviceName: string;\r\n')
+                            www_jsonmessagefile.write('\tDeviceType: string;\r\n')
+                            www_jsonmessagefile.write('\tPrimaryIP: string;\r\n')
+                            www_jsonmessagefile.write('\tArchitecture: string;\r\n')
+                            www_jsonmessagefile.write('\tID: number;\r\n')
+                            www_jsonmessagefile.write('\tCapabilities: string[];\r\n')
+                            www_jsonmessagefile.write('\tBoardCount: number;\r\n')
+                            www_jsonmessagefile.write('\tHatCount: number;\r\n')
+                            www_jsonmessagefile.write('\tShieldCount: number;\r\n')
+                            www_jsonmessagefile.write('\tSensorCount: number;\r\n')
+                    elif(item.datatype =='uint8_t'):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write('\ttempstr+="\\"'+item.name + '\\":\\""+std::to_string(' + item.name + ')+"\\"";\r\n')
+                        if(decode_for_client == 1):
+                            www_jsonmessagefile.write('\t' + item.name + ': number;\r\n')
                             
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
@@ -460,6 +495,107 @@ def generate_message(xmlfile):
                     ros_jsonmessagefile_cpp.write('\ttempstr+="}}";\r\n')
                     ros_jsonmessagefile_cpp.write('\treturn tempstr;\r\n')
                     ros_jsonmessagefile_cpp.write('}\r\n')
+                if(decode_for_client == 1):
+                    www_jsonmessagefile.write('}\r\n')
+                    www_jsonmessagefile.write('export class ' + message.get('name') + 'Service implements ' + message.get('name') + ' {\r\n')
+                    www_jsonmessagefile.write('\tprivate _rx_count: number;\r\n')
+                    www_jsonmessagefile.write('\tget rx_count(): number {\r\n\t\treturn this._rx_count;\r\n\t}\r\n')
+                    www_jsonmessagefile.write('\tset rx_count(v: number) {\r\n\t\tthis._rx_count = v;\r\n\t}\r\n')
+                for item in fieldlist: 
+                    if(item.datatype =='std::string'):
+                        if(decode_for_client == 1):
+                            a = 1
+                            #ros_jsonmessagefile_cpp.write('\ttempstr+="\\"'+item.name + '\\":\\""+' + item.name + '+"\\""')
+                    elif(item.datatype =='icarus_rover_v2::diagnostic'):
+                        if(decode_for_client == 1):
+                            www_jsonmessagefile.write('\tprivate _DeviceName: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Node_Name: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _System: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _SubSystem: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Component: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Diagnostic_Type: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Level: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Diagnostic_Message: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Description: string;\r\n')
+                            www_jsonmessagefile.write('\tget DeviceName(): string {\r\n\t\treturn this._DeviceName;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset DeviceName(v: string) {\r\n\t\tthis._DeviceName = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Node_Name(): string {\r\n\t\treturn this._Node_Name;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Node_Name(v: string) {\r\n\t\tthis._Node_Name = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget System(): number {\r\n\t\treturn this._System;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset System(v: number) {\r\n\t\tthis._System = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget SubSystem(): number {\r\n\t\treturn this._SubSystem;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset SubSystem(v: number) {\r\n\t\tthis._SubSystem = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Component(): number {\r\n\t\treturn this._Component;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Component(v: number) {\r\n\t\tthis._Component = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Diagnostic_Type(): number {\r\n\t\treturn this._Diagnostic_Type;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Diagnostic_Type(v: number) {\r\n\t\tthis._Diagnostic_Type = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Level(): number {\r\n\t\treturn this._Level;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Level(v: number) {\r\n\t\tthis._Level = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Diagnostic_Message(): number {\r\n\t\treturn this._Diagnostic_Message;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Diagnostic_Message(v: number) {\r\n\t\tthis._Diagnostic_Message = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Description(): string {\r\n\t\treturn this._Description;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Description(v: string) {\r\n\t\tthis._Description = v;\r\n\t}\r\n')
+                    elif(item.datatype =='std::vector::icarus_rover_v2::device'):
+                        if(decode_for_client == 1):
+                            www_jsonmessagefile.write('\tprivate _DeviceParent: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _PartNumber: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _DeviceName: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _DeviceType: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _PrimaryIP: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Architecture: string;\r\n')
+                            www_jsonmessagefile.write('\tprivate _ID: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _Capabilities: string[];\r\n')
+                            www_jsonmessagefile.write('\tprivate _BoardCount: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _HatCount: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _ShieldCount: number;\r\n')
+                            www_jsonmessagefile.write('\tprivate _SensorCount: number;\r\n')
+                            www_jsonmessagefile.write('\tget DeviceParent(): string {\r\n\t\treturn this._DeviceParent;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset DeviceParent(v: string) {\r\n\t\tthis._DeviceParent = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget PartNumber(): string {\r\n\t\treturn this._PartNumber;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset PartNumber(v: string) {\r\n\t\tthis._PartNumber = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget DeviceName(): string {\r\n\t\treturn this._DeviceName;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset DeviceName(v: string) {\r\n\t\tthis._DeviceName = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget DeviceType(): string {\r\n\t\treturn this._DeviceType;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset DeviceType(v: string) {\r\n\t\tthis._DeviceType = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget PrimaryIP(): string {\r\n\t\treturn this._PrimaryIP;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset PrimaryIP(v: string) {\r\n\t\tthis._PrimaryIP = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Architecture(): string {\r\n\t\treturn this._Architecture;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Architecture(v: string) {\r\n\t\tthis._Architecture = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget ID(): number {\r\n\t\treturn this._ID;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset ID(v: number) {\r\n\t\tthis._ID = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget Capabilities(): string[] {\r\n\t\treturn this._Capabilities;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset Capabilities(v: string[]) {\r\n\t\tthis._Capabilities = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget BoardCount(): number {\r\n\t\treturn this._BoardCount;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset BoardCount(v: number) {\r\n\t\tthis._BoardCount = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget HatCount(): number {\r\n\t\treturn this._HatCount;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset HatCount(v: number) {\r\n\t\tthis._HatCount = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget ShieldCount(): number {\r\n\t\treturn this._ShieldCount;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset ShieldCount(v: number) {\r\n\t\tthis._ShieldCount = v;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tget SensorCount(): number {\r\n\t\treturn this._SensorCount;\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset SensorCount(v: number) {\r\n\t\tthis._SensorCount = v;\r\n\t}\r\n')
+
+                            
+                    elif(item.datatype == 'uint8_t'):
+                        if(decode_for_client == 1):
+                            www_jsonmessagefile.write('\tprivate _' + item.name + ': number;\r\n')
+                            www_jsonmessagefile.write('\tget ' + item.name + '(): number {\r\n\t\treturn this._' + item.name + ';\r\n\t}\r\n')
+                            www_jsonmessagefile.write('\tset ' + item.name + '(v: number) {\r\n\t\tthis._' + item.name + ' = v;\r\n\t}\r\n')        
+                    else:
+                        print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
+
+                    index += 1
+
+                    if(index < len(fieldlist)):
+                        if(encode_for_server == 1):
+                            ros_jsonmessagefile_cpp.write(',";\r\n')
+
+                    else:
+                        if(encode_for_server == 1):
+                            a = 1
+                if(decode_for_client == 1):
+                    www_jsonmessagefile.write('}\r\n')
+                
+                
                 
             elif(protocol.get('name') == 'Serial'):
                 encode_for_master = 0
@@ -1273,6 +1409,12 @@ elif (sys.argv[1] == "-g"):
     ros_jsonmessagefile_cpp.write( str(datetime.now()))
     ros_jsonmessagefile_cpp.write('***/\r\n')
 
+    www_jsonmessagefile = open('generated/www/jsonclass.ts','w+')
+    www_jsonmessagefile.write('/***************AUTO-GENERATED.  DO NOT EDIT********************/\r\n')
+    www_jsonmessagefile.write('/***Created on:')
+    www_jsonmessagefile.write( str(datetime.now()))
+    www_jsonmessagefile.write('***/\r\n')
+
     
     message_strings = []
     #eros_definitionsfile_header = open('/home/robot/catkin_ws/src/eROS/include/eROS_Definitions.h','a')
@@ -1302,6 +1444,8 @@ elif (sys.argv[1] == "-g"):
 
     ros_jsonmessagefile_header.close()
     ros_jsonmessagefile_cpp.close()
+
+    www_jsonmessagefile.close()
     
 
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/ros/serialmessage.h','/home/robot/catkin_ws/src/icarus_rover_v2/include/')
@@ -1319,5 +1463,6 @@ elif (sys.argv[1] == "-g"):
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/DriverStation/DriverStation/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
+    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/www/jsonclass.ts','/home/robot/gui/WebUserInterface/WebConfigUI/src/classes/auto_generated/')
 
 
