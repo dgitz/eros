@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<Sensor>
+    <Type>IMU</Type>
+    <XAcc>
+        <Bias>0</Bias>
+    </XAcc>
+    <YAcc>
+        <Bias>0</Bias>
+    </YAcc>
+    <ZAcc>
+        <Bias>0</Bias>
+    </ZAcc>
+    <XGyro>
+        <Bias>0</Bias>
+    </XGyro>
+    <YGyro>
+        <Bias>0</Bias>
+    </YGyro>
+    <ZGyro>
+        <Bias>0</Bias>
+    </ZGyro>
+    <XMag>
+        <Bias>40</Bias>
+    </XMag>
+    <YMag>
+        <Bias>-4</Bias>
+    </YMag>
+    <ZMag>
+        <Bias>-27.0</Bias>
+    </ZMag>
+</Sensor>

@@ -1,0 +1,22 @@
+<launch>
+  <!-- By default we do not overwrite the URDF. Change the following to true to change the default behavior -->
+  <arg name="load_robot_description" default="true"/>
+
+  <!-- Load universal robot description format (URDF) -->
+  <param name="robot_description" textfile="/home/robot/config/urdf/robotmodel.xml"/>
+    
+  <!-- The semantic description that corresponds to the URDF -->
+  <param name="robot_description_semantic" textfile="$(find icarus_rover_v2)/config/robot.srdf" />
+  
+  <!-- Load to the parameter server yaml files -->
+  <group ns="robot_description_planning">    
+    <rosparam command="load" file="$(find icarus_rover_v2)/config/joint_limits.yaml"/>
+  </group>
+
+  <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
+  <group ns="robot_description_kinematics">
+    <rosparam command="load" file="$(find icarus_rover_v2)/config/kinematics.yaml"/>
+  </group>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" />
+ 
+</launch>

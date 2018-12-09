@@ -1,0 +1,8 @@
+<node name="$(env ROS_HOSTNAME)_diagnostic_node" pkg="icarus_rover_v2" type="diagnostic_node"  output="screen" clear_params="true">
+        <param name="startup_delay"       value="5.0"/>
+        <param name="verbosity_level"       value="INFO"/>
+        <param name="require_pps_to_start"  value="false"/> 
+        <param name="RAM_usage_threshold_MB"    value="2000"/>
+        <param name="CPU_usage_threshold_percent"    value="30"/> 
+        <param name="Log_Resources_Used"        value="false"/>  
+</node>

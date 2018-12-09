@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot name="robotarm">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0" radius="0"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 0.0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+  
+    
+  <joint name="leftarm_baserotate" type="revolute">
+    <limit effort="1000.0" lower="-3.14159" upper="3.14159" velocity="0.5"/>
+    <parent link="base_link"/>
+    <child link="leftarm_armbase"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <joint name="asusxtioncamera_fixedjoint" type="revolute">
+    <limit effort="1000.0" lower="-3.14159" upper="3.14159" velocity="0.5"/>
+    <parent link="base_link"/>
+    <child link="asusxtioncamera_link"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+ 
+  <link name="asusxtioncamera_link">
+    <visual>
+      <geometry>
+        <cylinder length="0" radius="0"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 0.0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+
+  <link name="leftarm_armbase">
+    <visual>
+      <geometry>
+        <cylinder length=".006" radius=".203"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+    <joint name="leftarm_armrotate" type="revolute">
+    <limit effort="1000.0" lower="-.69813" upper=".69813" velocity="0.5"/>
+    <parent link="leftarm_armbase"/>
+    <child link="leftarm_arm"/>
+    <axis xyz="0 1 0"/>
+    <origin rpy="0 -.69813 0" xyz="0 0 .05"/>
+  </joint>
+
+  <link name="leftarm_arm">
+    <visual>
+      <geometry>
+        <box size=".4 .05 .05"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 .2"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+     <joint name="leftarm_forearmrotate" type="revolute">
+    <limit effort="1000.0" lower="-3.14159" upper="3.14159" velocity="0.5"/>
+    <parent link="leftarm_arm"/>
+    <child link="leftarm_forearm"/>
+    <axis xyz="0 1 0"/>
+    <origin rpy="0 0 0" xyz="0 0 .4"/>
+  </joint>
+  
+  <link name="leftarm_forearm">
+    <visual>
+      <geometry>
+        <box size=".6 .05 .05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.089 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+    <joint name="leftarm_gripperrotate" type="revolute">
+    <limit effort="1000.0" lower="-1.5708" upper="1.5708" velocity="0.5"/>
+    <parent link="leftarm_forearm"/>
+    <child link="leftarm_gripper_emptylink"/>
+    <axis xyz="0 1 0"/>
+    <origin rpy="0 .7853 0" xyz="-.365 0 0"/>
+  </joint>
+
+    <link name="leftarm_gripper_emptylink">
+    <visual>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+     <joint name="leftarm_gripperpivot" type="revolute">
+    <limit effort="1000.0" lower="-3.14159" upper="3.14159" velocity="0.5"/>
+    <parent link="leftarm_gripper_emptylink"/>
+    <child link="leftarm_gripper"/>
+    <axis xyz="1 0 0"/>
+    <origin rpy="0 0 0" xyz="-.043 0 0"/>
+  </joint>
+    
+ <link name="leftarm_gripper">
+    <visual>
+      <geometry>
+        <box size=".076 .019 .019"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.081 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+</robot>

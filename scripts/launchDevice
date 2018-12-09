@@ -3,11 +3,12 @@
 #Author: David Gitz
 #Purpose: Launches Software
 
-#declare -a Devices=("ControlModule1" "dgitzrosmaster" "ControlModule2" "ComputeModule1")
+#declare -a Devices=("ControlModule1" "dgitzrosmaster" "ControlModule2" "ComputeModule1" "BuildServer1")
 
 function launch_device()
 {
     sudo chown -R robot /dev/ttyAMA0
+    echo -ne "|\x$(printf %x 157)|\x$(printf %x 187)|\x$(printf %x 188)" > /dev/ttyAMA0
     echo -ne '|-BOOTING: '$(date) > /dev/ttyAMA0
     source /home/robot/catkin_ws/devel/setup.bash
     #touch ~/$1

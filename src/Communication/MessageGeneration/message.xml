@@ -59,6 +59,15 @@
                     <field type="unsigned char" name="Option3"/>
                 </Fields>
             </Protocol>
+            <Protocol name="SPI">
+                <Type>Command</Type>
+                <Fields>
+                    <field type="unsigned char" name="Command"/>
+                    <field type="unsigned char" name="Option1"/>
+                    <field type="unsigned char" name="Option2"/>
+                    <field type="unsigned char" name="Option3"/>
+                </Fields>
+            </Protocol>
         </Protocols>
     </Message>
     <Message name="RemoteControl" id="0xAB10">
@@ -526,6 +535,12 @@
 						<![CDATA[
 						]]>
                 </Fields>
+            </Protocol>
+            <Protocol name="SPI">
+                <Type>Command</Type>
+                <Fields>
+                    <field type="unsigned char" name="Status"/>
+                 </Fields>
             </Protocol>
         </Protocols>
     </Message>

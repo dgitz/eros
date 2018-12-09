@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<Sensor>
+    <Type>QuadratureEncoder</Type>
+    <OutputDataType>signal</OutputDataType>
+    <Units>degree/second</Units>
+    <MinInputValue>-32768.0</MinInputValue>
+    <MaxInputValue>32768</MaxInputValue>
+    <MinOutputValue>-32768.0</MinOutputValue>
+    <MaxOutputValue>32768.0</MaxOutputValue>
+</Sensor>
