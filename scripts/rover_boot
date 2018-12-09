@@ -18,11 +18,12 @@ elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
   sudo mount /dev/sda1 /home/robot/external/ -o uid=robot -o gid=robot
 fi
 
-
+ulimit -c unlimited
+sudo bash -c 'echo core.%e.%p > /proc/sys/kernel/core_pattern'
 sleep 5
-sudo rm $boot_file
-touch $boot_file
-#sudo chown robot:robot $boot_file
+
+sudo chown robot:robot $boot_file
+sudo chown -R robot /home/robot/logs/
 echo "Starting Boot Script at: "$(date) >> $boot_file
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
   echo "ControlModule booting"
@@ -48,6 +49,8 @@ fi
 echo "Completed Boot at: "$(date) >> $boot_file
 
 
-echo "Launching Device" 
-/home/robot/scripts/launchDevice -d $HOSTNAME
+if [[ $HOSTNAME == *"ControlModule"* ]]; then
+    echo "Launching Device" 
+    /home/robot/scripts/launchDevice -d $HOSTNAME
+fi
 

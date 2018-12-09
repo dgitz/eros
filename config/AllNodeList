@@ -1,0 +1,11 @@
+http://ControlModule1:38377/ 	/ControlModule1_command_node
+http://ControlModule1:39405/ 	/ControlModule1_master_node
+http://ControlModule1:46515/ 	/ControlModule1_safety_node
+http://ControlModule1:35605/ 	/ControlModule1_timemaster_node
+http://ControlModule2:34375/ 	/ControlModule2_diagnostic_node
+http://ControlModule2:33401/ 	/ControlModule2_master_node
+http://ControlModule2:40357/ 	/ControlModule2_networktransceiver_node
+http://dgitzrosmaster:39231/ 	/dgitzrosmaster_master_node
+http://dgitzrosmaster:44749/ 	/dgitzrosmaster_sample_node
+http://dgitzrosmaster:41433/ 	/dgitzrosmaster_topicremapper_node
+http://ControlModule1:42939/ 	/rosout

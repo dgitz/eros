@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<SensorConfigFile>
+    <TopicType>float_timestamp</TopicType>
+    <TopicNameRemap>/right_encoder</TopicNameRemap>
+</SensorConfigFile>

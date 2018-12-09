@@ -1,13 +1,15 @@
 import xml.etree.ElementTree as ET
+import pdb
 devicefile = '/home/robot/config/DeviceFile.xml'
 class Device():
-    def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber=''):
+    def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber='',Architecture=''):
         self.Name = Name
         self.Parent = Parent
         self.ID = ID
         self.PartNumber = PartNumber
         self.IPAddress = IPAddress
         self.Capability = Capability
+        self.Architecture = Architecture
         
 def checkDeviceFileFormat():
     try:
@@ -40,10 +42,42 @@ def ReadDeviceList(Capability):
                     newDevice.PartNumber = entry.text
                 elif (entry.tag == 'ParentDevice'):
                     newDevice.Parent = entry.text
+                elif (entry.tag == 'Architecture'):
+                    newDevice.Architecture = entry.text
             if(Capability == newDevice.Capability):
                 DeviceList.append(newDevice)
     return DeviceList
-
+def GetDeviceInfo(devicename):
+    #global devicefile
+    DeviceList = []
+    tree = ET.parse(devicefile)
+    root = tree.getroot()
+    for List in root:
+        #print DeviceList.tag#, child.text, child.attrib
+        for device in List:
+            #print Device.tag, Device.text, Device.attrib
+            newDevice = Device()
+            add_device = 0
+            for entry in device:
+                if (entry.tag == 'DeviceName'):
+                    newDevice.Name = entry.text
+                elif (entry.tag == 'PrimaryIP'):
+                    newDevice.IPAddress = entry.text
+                elif (entry.tag == 'Capability'):
+                    newDevice.Capability = entry.text
+                elif (entry.tag == 'ID'):
+                    newDevice.ID = int(entry.text)
+                elif (entry.tag == 'PartNumber'):
+                    newDevice.PartNumber = entry.text
+                elif (entry.tag == 'ParentDevice'):
+                    newDevice.Parent = entry.text
+                elif (entry.tag == 'Architecture'):
+                    newDevice.Architecture = entry.text
+                DeviceList.append(newDevice)
+    for dev in DeviceList:
+        if(dev.Name == devicename):
+            return dev
+    
 def ReadCapabilityList():
     #global devicefile
     CapabilityList = []

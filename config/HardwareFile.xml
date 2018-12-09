@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<DeviceListFile>
+  <DeviceList>
+    <Device>
+        <ParentDevice>None</ParentDevice>
+        <DeviceName>dgitzrosmaster</DeviceName>
+        <DeviceType>ComputeModule</DeviceType>
+        <PrimaryIP>10.0.0.111</PrimaryIP>
+        <Architecture>x86_64</Architecture>
+        <Capability>ROS</Capability>
+        <BoardCount>1</BoardCount>
+        <SensorCount>0</SensorCount>
+    </Device>
+   
+    <Device>
+        <ParentDevice>dgitzrosmaster</ParentDevice>
+        <DeviceName>AsusXtionCamera</DeviceName>
+        <DeviceType>3DCamera</DeviceType>
+    </Device>
+
+    <Device>
+        <ParentDevice>dgitzrosmaster</ParentDevice>
+        <DeviceName>ArduinoBoard1</DeviceName>
+        <DeviceType>ArduinoBoard</DeviceType>
+        <Architecture>ArduinoUno</Architecture>
+        <ID>17</ID>
+        <ShieldCount>1</ShieldCount>
+        <SensorCount>0</SensorCount>
+    </Device>
+    <Device>
+        <ParentDevice>ArduinoBoard1</ParentDevice>
+        <DeviceName>ServoShield1</DeviceName>
+        <DeviceType>ServoShield</DeviceType>
+        <ID>1</ID>
+        <PinCount>1</PinCount>
+        <Pin>
+            <Number>2</Number>
+            <Function>PWMOutput</Function>
+            <DefaultValue>127</DefaultValue>
+        </Pin>
+        <Pin>
+            <Number>12</Number>
+            <Function>PWMOutput</Function>
+            <DefaultValue>127</DefaultValue>
+        </Pin>
+        <Pin>
+            <Number>5</Number>
+            <Function>PWMOutput</Function>
+            <DefaultValue>127</DefaultValue>
+        </Pin>
+    </Device>
+  </DeviceList>
+</DeviceListFile>

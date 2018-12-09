@@ -1,8 +1,28 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-10-14 16:33:05.454895***/
+/***Created on:2018-12-04 20:43:49.904732***/
 /***Target: Arduino ***/
 #include "spimessage.h"
-int encode_DiagnosticSPI(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
+
+int decode_CommandSPI(unsigned char* inbuffer,int* length,unsigned char checksum,unsigned char * Command,unsigned char * Option1,unsigned char * Option2,unsigned char * Option3)
+{
+	*Command = inbuffer[0];
+	*Option1 = inbuffer[1];
+	*Option2 = inbuffer[2];
+	*Option3 = inbuffer[3];
+	unsigned char calc_checksum = SPI_Command_ID;
+	for(int i = 0; i < 12; i++)
+	{
+		calc_checksum ^= inbuffer[i];
+	}
+	if(calc_checksum == checksum)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}int encode_DiagnosticSPI(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
 {
 	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];
@@ -103,6 +123,23 @@ int encode_Get_ANA_Port1SPI(unsigned char* outbuffer,int* length,unsigned int Pi
 	return 1;
 }
 
+int decode_Arm_StatusSPI(unsigned char* inbuffer,int* length,unsigned char checksum,unsigned char * Status)
+{
+	*Status = inbuffer[0];
+	unsigned char calc_checksum = SPI_Arm_Status_ID;
+	for(int i = 0; i < 12; i++)
+	{
+		calc_checksum ^= inbuffer[i];
+	}
+	if(calc_checksum == checksum)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
 int decode_LEDStripControlSPI(unsigned char* inbuffer,int* length,unsigned char checksum,unsigned char * LEDPixelMode,unsigned char * Param1,unsigned char * Param2)
 {
 	*LEDPixelMode = inbuffer[0];

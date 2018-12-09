@@ -1,10 +1,34 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-10-14 16:33:05.454945***/
+/***Created on:2018-12-04 20:43:49.904782***/
 /***Target: Raspberry Pi ***/
 #include "../include/spimessage.h"
 SPIMessageHandler::SPIMessageHandler(){}
 SPIMessageHandler::~SPIMessageHandler(){}
-int SPIMessageHandler::decode_DiagnosticSPI(unsigned char* inbuffer,int * length,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)
+int SPIMessageHandler::encode_CommandSPI(unsigned char* outbuffer,int * length,unsigned char Command,unsigned char Option1,unsigned char Option2,unsigned char Option3)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = Command;
+	*p_outbuffer++ = Option1;
+	*p_outbuffer++ = Option2;
+	*p_outbuffer++ = Option3;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12; i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}int SPIMessageHandler::decode_DiagnosticSPI(unsigned char* inbuffer,int * length,unsigned char* System,unsigned char* SubSystem,unsigned char* Component,unsigned char* Diagnostic_Type,unsigned char* Level,unsigned char* Diagnostic_Message)
 {
 	*System = inbuffer[0];
 	*SubSystem = inbuffer[1];
@@ -54,7 +78,31 @@ int SPIMessageHandler::decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * len
 	*Pin6_Value = v_Pin6_Value + inbuffer[11];
 	return 1;
 }
-int SPIMessageHandler::encode_LEDStripControlSPI(unsigned char* outbuffer,int * length,unsigned char LEDPixelMode,unsigned char Param1,unsigned char Param2)
+int SPIMessageHandler::encode_Arm_StatusSPI(unsigned char* outbuffer,int * length,unsigned char Status)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = Status;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12; i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}int SPIMessageHandler::encode_LEDStripControlSPI(unsigned char* outbuffer,int * length,unsigned char LEDPixelMode,unsigned char Param1,unsigned char Param2)
 {
 	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];

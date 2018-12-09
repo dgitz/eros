@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<SystemFile>
+    <LeverArmList>
+        <LeverArm>
+            <Name>Encoder1</Name>
+            <ReferenceLeverArm>BodyOrigin</ReferenceLeverArm>
+            <x units="meter">.1</x>
+            <y units="meter">0.2</y>
+            <z units="meter">0.3</z>
+            <roll units="degree">20.0</roll>
+            <pitch units="degree">30.0</pitch>
+            <yaw units="degree">80.0</yaw>
+        </LeverArm>
+        <LeverArm>
+            <Name>IMU1</Name>
+            <ReferenceLeverArm>BodyOrigin</ReferenceLeverArm>
+            <x units="meter">0</x>
+            <y units="meter">0</y>
+            <z units="meter">0</z>
+            <roll units="degree">0</roll>
+            <pitch units="degree">0</pitch>
+            <yaw units="degree">0</yaw>
+        </LeverArm>
+        <LeverArm>
+            <Name>IMU2</Name>
+            <ReferenceLeverArm>BodyOrigin</ReferenceLeverArm>
+            <x units="meter">0</x>
+            <y units="meter">0</y>
+            <z units="meter">0</z>
+            <roll units="degree">0</roll>
+            <pitch units="degree">180.0</pitch>
+            <yaw units="degree">0</yaw>
+        </LeverArm>
+        <LeverArm>
+            <Name>Truth1</Name>
+            <ReferenceLeverArm>BodyOrigin</ReferenceLeverArm>
+            <x units="meter">0</x>
+            <y units="meter">0</y>
+            <z units="meter">0</z>
+            <roll units="degree">0</roll>
+            <pitch units="degree">0</pitch>
+            <yaw units="degree">0</yaw>
+        </LeverArm>
+    </LeverArmList>
+</SystemFile>

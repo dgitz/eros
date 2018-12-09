@@ -1,0 +1,7 @@
+<node name="$(env ROS_HOSTNAME)_sample_node" pkg="icarus_rover_v2" type="sample_node"  output="screen" clear_params="true">
+        
+    <param name="verbosity_level"       value="DEBUG"/>
+        <param name="require_pps_to_start"  value="true"/> 
+        <param name="loop1_rate"            value="20.0"/> <!-- Process Update -->  
+        <param name="loop2_rate"            value="5.0"/> <!-- Publish -->
+</node>

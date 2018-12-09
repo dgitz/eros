@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<Sensor>
+    <Type>Potentiometer</Type>
+    <OutputDataType>signal</OutputDataType>
+    <Units>degree</Units>
+    <MinInputValue>0</MinInputValue>
+    <MaxInputValue>1024</MaxInputValue>
+    <MinOutputValue>0</MinOutputValue>
+    <MaxOutputValue>180</MaxOutputValue>
+</Sensor>

@@ -1,0 +1,40 @@
+#Available devices: dgitzrosmaster,ControlModule1,ControlModule2
+#Always Running Section
+#Use a pound sign for comments
+AlwaysOnNodes = {
+    "TimeMaster_Node" => device["ControlModule1"]
+    #Communications
+    "NetworkTransceiver_Node" => device["ControlModule2"] 
+    
+}
+#Normal Running Section
+RunningNodes = {
+    #Communications
+    "TopicRemapper_Node"    => device["ControlModule2"]
+#Control
+    "Master_Node" => device["ControlModule1"]
+    "Master_Node" => device["ControlModule2"]
+    "Master_Node" => device["dgitzrosmaster"]
+    "Command_Node" => device["ControlModule1"]
+    #"CommandLauncher_Node" => device["ControlModule1"] #Raspi Cam not starting!
+
+#Diagnostics
+    "Diagnostic_Node" => device["ControlModule2"]
+    "Safety_Node" => device["ControlModule1"]
+
+
+    
+
+#Board and Hat
+    "HatController_Node" => device["ControlModule1"]
+    "BoardController_Node" => device["ControlModule2"]
+    "HatController_Node" => device["ControlModule2"]
+
+#User Control
+    #"Audio_Node" => device["ControlModule1"]
+
+#Testing
+    "Sample_Node" => device["dgitzrosmaster"]
+    #"Sample_Node2" => device["dgitzrosmaster"]
+    
+}
