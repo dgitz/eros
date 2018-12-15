@@ -3,6 +3,7 @@
 #Use a pound sign for comments
 AlwaysOnNodes = {
     "TimeMaster_Node" => device["ControlModule1"]
+    "TimeSlave_Node" => device["ControlModule2"]
     #Communications
     "NetworkTransceiver_Node" => device["ControlModule2"] 
     
