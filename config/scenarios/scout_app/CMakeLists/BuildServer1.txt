@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   roslaunch
-    message_generation
+  message_generation
   sensor_msgs
   roslib
 )
@@ -75,6 +75,7 @@ add_message_files(
   controlgroup.msg
   leverarm.msg
   encoder.msg
+  timesyncinfo.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -235,22 +236,19 @@ add_library(i2cmessage util/i2cmessage.cpp)
 
 #Libraries-Drivers
 add_library(lcddriver src/Diagnostics/Driver/LCDDriver.cpp)
-add_library(terminalhatdriver src/Board/Driver/TerminalHatDriver.cpp)
-add_library(gpiohatdriver src/Board/Driver/GPIOHatDriver.cpp)
-add_library(servohatdriver src/Board/Driver/ServoHatDriver.cpp)
+add_library(terminalhatdriver src/Board/Driver/TerminalHatDriver.cpp) #Only compatible for armv7l
+add_library(gpiohatdriver src/Board/Driver/GPIOHatDriver.cpp) #Only compatible for armv7l
+add_library(servohatdriver src/Board/Driver/ServoHatDriver.cpp) #Only compatible for armv7l
 
 
 #Master Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/master_node)
 add_library(master_node_process src/Control/MasterNodeProcess.cpp)
-#add_dependencies(master_node_process icarus_rover_v2_generate_messages_cpp)
+add_dependencies(master_node_process icarus_rover_v2_generate_messages_cpp)
 add_executable(master_node src/Control/master_node.cpp)
 target_link_libraries(master_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor serialmessage master_node_process)
 catkin_add_gtest(test_master_node_process src/Control/unit_tests/test_master_node_process.cpp)
 target_link_libraries(test_master_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} master_node_process logger serialmessage)
-
-#Dependencies
-#add_dependencies(master_node_process icarus_rover_v2_generate_messages_cpp)
 
 #Command Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/command_node)
@@ -263,12 +261,21 @@ target_link_libraries(test_command_node_process ${catkin_LIBRARIES} ${Boost_LIBR
 
 #TimeMaster Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/timemaster_node)
-add_library(timemaster_node_process src/Timing/timemaster_node_process.cpp)
+add_library(timemaster_node_process src/Timing/TimeMasterNodeProcess.cpp)
 #add_dependencies(timemaster_node_process icarus_rover_v2_generate_messages_cpp)
 add_executable(timemaster_node src/Timing/timemaster_node.cpp)
 target_link_libraries(timemaster_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor timemaster_node_process)
 catkin_add_gtest(test_timemaster_node_process src/Timing/unit_tests/test_timemaster_node_process.cpp)
 target_link_libraries(test_timemaster_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} timemaster_node_process logger serialmessage)
+
+#TimeSlave Node
+file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/timeslave_node)
+add_library(timeslave_node_process src/Timing/TimeSlaveNodeProcess.cpp)
+#add_dependencies(timeslave_node_process icarus_rover_v2_generate_messages_cpp)
+add_executable(timeslave_node src/Timing/timeslave_node.cpp)
+target_link_libraries(timeslave_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor timeslave_node_process)
+catkin_add_gtest(test_timeslave_node_process src/Timing/unit_tests/test_timeslave_node_process.cpp)
+target_link_libraries(test_timeslave_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} timeslave_node_process logger serialmessage)
 
 #Diagnostic Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/diagnostic_node)
@@ -301,8 +308,8 @@ target_link_libraries(test_commandlauncher_node_process ${catkin_LIBRARIES} ${Bo
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/safety_node)
 add_library(safety_node_process src/Diagnostics/SafetyNodeProcess.cpp)
 #add_dependencies(safety_node_process icarus_rover_v2_generate_messages_cpp)
-add_executable(safety_node src/Diagnostics/safety_node.cpp) #Only compatible for ControlModule
-target_link_libraries(safety_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor safety_node_process terminalhatdriver)
+add_executable(safety_node src/Diagnostics/safety_node.cpp) #Only compatible for armv7l
+target_link_libraries(safety_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor safety_node_process terminalhatdriver) #Only compatible for armv7l
 catkin_add_gtest(test_safety_node_process src/Diagnostics/unit_tests/test_safety_node_process.cpp)
 target_link_libraries(test_safety_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES} safety_node_process)
 
@@ -310,8 +317,8 @@ target_link_libraries(test_safety_node_process ${catkin_LIBRARIES} ${Boost_LIBRA
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/hatcontroller_node)
 add_library(hatcontroller_node_process src/Board/HatControllerNodeProcess.cpp)
 #add_dependencies(hatcontroller_node_process icarus_rover_v2_generate_messages_cpp)
-add_executable(hatcontroller_node src/Board/hatcontroller_node.cpp)
-target_link_libraries(hatcontroller_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor wiringPi i2cmessage gpiohatdriver servohatdriver terminalhatdriver hatcontroller_node_process)
+add_executable(hatcontroller_node src/Board/hatcontroller_node.cpp) #Only compatible for armv7l
+target_link_libraries(hatcontroller_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} logger resourcemonitor wiringPi i2cmessage gpiohatdriver servohatdriver terminalhatdriver hatcontroller_node_process) #Only compatible for armv7l
 catkin_add_gtest(test_hatcontroller_node_process src/Board/unit_tests/test_hatcontroller_node_process.cpp)
 target_link_libraries(test_hatcontroller_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} hatcontroller_node_process logger)
 
@@ -326,8 +333,8 @@ target_link_libraries(test_hatcontroller_node_process ${catkin_LIBRARIES} ${Boos
 
 #Topic Remapper Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/topicremapper_node)
-add_library(topicremapper_node_process src/Communication/topicremapper_node_process.cpp)
-#add_dependencies(topicremapper_node_process icarus_rover_v2_generate_messages_cpp)
+add_library(topicremapper_node_process src/Communication/TopicRemapperNodeProcess.cpp)
+add_dependencies(topicremapper_node_process icarus_rover_v2_generate_messages_cpp)
 add_executable(topicremapper_node src/Communication/topicremapper_node.cpp)
 target_link_libraries(topicremapper_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} logger resourcemonitor topicremapper_node_process)
 catkin_add_gtest(test_topicremapper_node_process src/Communication/unit_tests/test_topicremapper_node_process.cpp)
@@ -335,14 +342,10 @@ target_link_libraries(test_topicremapper_node_process ${catkin_LIBRARIES} ${Boos
 
 #Board Controller Node
 file(MAKE_DIRECTORY /home/robot/catkin_ws/build/test_results/icarus_rover_v2/boardcontroller_node)
-add_library(boardcontroller_node_process src/Board/boardcontroller_node_process.cpp)
+add_library(boardcontroller_node_process src/Board/BoardControllerNodeProcess.cpp)
 add_dependencies(boardcontroller_node_process icarus_rover_v2_generate_messages_cpp)
 add_executable(boardcontroller_node src/Board/boardcontroller_node.cpp)
 target_link_libraries(boardcontroller_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${TinyXML_LIBRARIES} ${roscpp_LIBRARIES} spimessage boardcontroller_node_process logger resourcemonitor)
 catkin_add_gtest(test_boardcontroller_node_process src/Board/unit_tests/test_boardcontroller_node_process.cpp)
 target_link_libraries(test_boardcontroller_node_process ${catkin_LIBRARIES} ${Boost_LIBRARIES}  ${TinyXML_LIBRARIES} spimessage boardcontroller_node_process logger)
-
-
-
-
 
