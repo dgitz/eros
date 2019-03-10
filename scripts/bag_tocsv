@@ -7,7 +7,7 @@ function print_usage()
     echo "Usage Instructions: bag_tocsv"
     echo "No Options: This Menu"
     echo "-?/-h This Menu"
-    echo "-m <mode> Convert bag files based on mode.  Supported Modes: pose,resource."
+    echo "-m <mode> Convert bag files based on mode.  Supported Modes: pose,resource,time."
     echo "-b <bag file> Bag File."
     echo "-o <Output Directory> Directory to store output csv files."
     exit
@@ -22,27 +22,14 @@ function convert()
     bagname=$(basename $2)
     bagname=${bagname%.*}
     echo "Creating:"$3/$bagname
-    rm -r -f "$3/$bagname" >> /dev/null
-    mkdir "$3/$bagname"
+    #rm -r -f "$3/$bagname" >> /dev/null
+    mkdir "$3/$bagname" >> /dev/null
     echo $bagname
     if [ "$1" = "pose" ]
     then
-        
-        #echo "Converting Joystick"
-        #rostopic echo -b $2 -p /DriverStation/joystick   > "$3/$bagname/joystick.csv" &
-        #echo "Converting Armed State"
-        #rostopic echo -b $2 -p /armed_state > "$3/$bagname/armed_state.csv" &
         echo "Converting pose"
-        rostopic echo -b $2 -p /IMU1_raw > "$3/$bagname/IMU1_raw.csv" &
-        rostopic echo -b $2 -p /IMU2_raw > "$3/$bagname/IMU2_raw.csv" &
-        #rostopic echo -b $2 -p /pose > "$3/$bagname/pose.csv" &
-	#	rostopic echo -b $2 -p /sim/encoder > "$3/$bagname/sim_encoder.csv" &
-	#		rostopic echo -b $2 -p /sim/pose > "$3/$bagname/sim_pose.csv" &
-	#	rostopic echo -b $2 -p /sim/gps > "$3/$bagname/sim_gps.csv" &
-	#	rostopic echo -b $2 -p /sim/imu > "$3/$bagname/sim_imu.csv" &
-        #rostopic echo -b $2 -p /IMU1 > "$3/$bagname/IMU1.csv" &
-        #rostopic echo -b $2 -p /IMU2 > "$3/$bagname/IMU2.csv" &
-        #rostopic echo -b $2 -p /Truth1 > "$3/$bagname/Truth1.csv" &
+        rostopic echo -b $2 -p /LeftIMU > "$3/$bagname/LeftIMU.csv" &
+        rostopic echo -b $2 -p /RightIMU > "$3/$bagname/RightIMU.csv" &
         wait
         echo "All Conversion Complete"
     elif [ "$1" = "resource" ]
@@ -55,14 +42,31 @@ function convert()
                 if [[ $i != *"icarus_rover_v2/resource"* ]]; then
                     v=${i#/}                    
                     v="${v//"/"/"-"}" 
+                    
                     rostopic echo -b $2 -p $i > "$3/$bagname/$v.csv" &
                 fi
             fi
 
         done
-	wait
-	echo "All Conversion Complete"
-        #rostopic echo -b $2 -p /dgitzrosmaster_sample_node/resource > "$3/$bagname/resource.csv" &
+	    wait
+	    echo "All Conversion Complete"
+    elif [ "$1" = "time" ]
+    then
+        topics=$(rosbag info $2 | grep "timesyncinfo")
+        IFS=': ' list=($topics)
+        for i in "${list[@]}"
+        do
+            if [[ $i == *"timesyncinfo"* ]]; then
+                if [[ $i != *"icarus_rover_v2/timesyncinfo"* ]]; then
+                    v=${i#/}                    
+                    v="${v//"/"/"-"}" 
+                    rostopic echo -b $2 -p $i > "$3/$bagname/$v.csv" &
+                fi
+            fi
+
+        done
+	    wait
+	    echo "All Conversion Complete"
     fi
 
 }

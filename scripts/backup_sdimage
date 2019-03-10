@@ -1,0 +1,19 @@
+#!/bin/sh
+#Author: David Gitz
+
+device=$1
+ping -q -c4 $device 2>/dev/null 1>/dev/null
+if [ $? -eq 0 ]
+then
+	echo "Device: "$device" Found..."
+else
+   echo "Device: "$device" Not Reachable."
+    exit -1
+fi
+DATE=`date +%d%b%Y`
+#ssh robot@BuildServer1 "sudo dd if=/dev/mmcblk0 bs=1M | gzip -" | dd of=BuildServer1_6Jan2018.gz
+image_path="/home/robot/images/"$device"_"$DATE".gz"
+exec_string="ssh robot@"$device" "\""sudo dd if=/dev/mmcblk0 bs=1M | gzip -"\"" | dd of="$image_path
+echo "Copying Image for Device: "$device" to: "$image_path
+eval $exec_string
+

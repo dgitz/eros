@@ -7,9 +7,9 @@
 
 function launch_device()
 {
-    sudo chown -R robot /dev/ttyAMA0
-    echo -ne "|\x$(printf %x 157)|\x$(printf %x 187)|\x$(printf %x 188)" > /dev/ttyAMA0
-    echo -ne '|-BOOTING: '$(date) > /dev/ttyAMA0
+    sudo chown -R robot /dev/ttyUSB0
+    echo -ne "|\x$(printf %x 157)|\x$(printf %x 187)|\x$(printf %x 188)" > /dev/ttyUSB0
+    echo -ne '|-BOOTING: '$(date) > /dev/ttyUSB0
     source /home/robot/catkin_ws/devel/setup.bash
     #touch ~/$1
     counter=0
@@ -53,7 +53,7 @@ function launch_device()
             
 		fi
 	fi
-    echo -ne '|-STARTING: '$(date) > /dev/ttyAMA0
+    echo -ne '|-STARTING: '$(date) > /dev/ttyUSB0
 }
 function print_usage()
 {
