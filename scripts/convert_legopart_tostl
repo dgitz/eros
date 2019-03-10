@@ -1,0 +1,33 @@
+#!/bin/bash
+function print_usage()
+{
+    echo "Usage Instructions"
+    echo "-c <input directory> <output directory>"
+    echo "  NOTE: Input Directory is likely:/usr/share/ldraw/parts"
+}
+
+function convert_batch()
+{
+    cd ~/Applications/ldraw2stl/
+    input_dir=$1
+    output_dir=$2
+    echo "Input Dir: "$input_dir
+    echo "Output Dir: "$output_dir
+    for file in $input_dir/*; do
+        filename=${file##*/}  
+        base=${filename%.*}
+        echo $base
+        cmd="./bin/dat2stl --file "$file" --scale 0.039370079 > "$output_dir""$base".stl"
+        eval $cmd
+    done
+}
+
+
+if [ $# -eq 0 ]; then
+    print_usage
+fi
+if [ "$1" = "-s" ]; then
+    convert $2 $3
+elif [ "$1" = "-c" ]; then
+    convert_batch $2 $3
+fi
