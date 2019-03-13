@@ -1,0 +1,4 @@
+string PartNumber
+uint8 ID
+---
+string connectionstring
