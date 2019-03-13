@@ -1,0 +1,22 @@
+<package>
+  <name>eros</name>
+  <version>1.12.7</version>
+  <description>The icarus_rover_v2 package</description>
+  <maintainer email="davidgitz@gmail.com">dgitz</maintainer>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/sensor_msgs</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>std_msgs</run_depend>
+
+
+  <export>
+  </export>
+</package>
