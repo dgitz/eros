@@ -51,6 +51,11 @@ def sync_local(hostname):
     os.unlink(RootDirectory + "config/SensorLink.xml")
     os.unlink(RootDirectory + "config/SystemFile.xml")
     os.unlink(RootDirectory + "config/TopicMap.xml")
+
+    if(os.path.isdir(RootDirectory + "config/scriptfiles") == True):
+        shutil.rmtree(RootDirectory + "config/scriptfiles")
+    os.mkdir(RootDirectory + "config/scriptfiles")
+    os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/scriptfiles/* " + RootDirectory + "/config/scriptfiles/")
     
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/ControlGroup.xml",RootDirectory + "config/ControlGroup.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/DeviceFile.xml",RootDirectory + "config/DeviceFile.xml")
@@ -59,6 +64,7 @@ def sync_local(hostname):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SensorLink.xml",RootDirectory + "config/SensorLink.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SystemFile.xml",RootDirectory + "config/SystemFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
+    
 
     
     #Remove old launch files
@@ -141,6 +147,9 @@ def sync_local(hostname):
     os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/models/* " + RootDirectory + "/.gazebo/models/")
 
     #Other application launch files
+
+    #Other Packages
+    os.system("cp -r ~/other_packages/json/include/nlohmann " + RootDirectory + "catkin_ws/devel/include/")
 
 def test(device):
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
@@ -266,7 +275,7 @@ def sync_buildserver(device,build):
         subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
         subprocess.call("rsync -avrt " + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
         subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
-        subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/include/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/include/",shell=True)
+        subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/",shell=True)
         
         #subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
         #subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
