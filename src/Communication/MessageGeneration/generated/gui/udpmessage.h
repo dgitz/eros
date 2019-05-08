@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-05 20:01:31.379742***/
+/***Created on:2019-05-08 07:54:47.453489***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -38,7 +38,7 @@ public:
 	int decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State);
 	QString encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3,int maxvalue,int minvalue,int defaultvalue);
 	int decode_FirmwareUDP(QList<QByteArray> items,std::string* NodeName,std::string* Description,int* MajorRelease,int* MinorRelease,int* BuildNumber);
-	int decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int* Electrical,int* Software,int* Communications,int* Sensors,int* Actuators,int* Data_Storage,int* Remote_Control,int* Target_Acquisition,int* Power,int* Pose,int* Timing,int* System_Resource);
+	int decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int* Electrical,int* Software,int* Communications,int* Sensors,int* Actuators,int* Data_Storage,int* Remote_Control,int* Target_Acquisition,int* Pose,int* Timing,int* System_Resource);
 private:
 };
 #endif

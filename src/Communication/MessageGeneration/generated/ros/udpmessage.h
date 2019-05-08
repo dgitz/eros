@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-05 20:01:31.379656***/
+/***Created on:2019-05-08 07:54:47.453373***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "Definitions.h"
@@ -48,7 +48,7 @@ public:
 	int decode_EStopUDP(std::vector<std::string> items,std::string* DeviceName,uint8_t* State);
 	int decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue);
 	std::string encode_FirmwareUDP(std::string NodeName,std::string Description,uint8_t MajorRelease,uint8_t MinorRelease,uint8_t BuildNumber);
-	std::string encode_SubsystemDiagnosticUDP(uint8_t Electrical,uint8_t Software,uint8_t Communications,uint8_t Sensors,uint8_t Actuators,uint8_t Data_Storage,uint8_t Remote_Control,uint8_t Target_Acquisition,uint8_t Power,uint8_t Pose,uint8_t Timing,uint8_t System_Resource);
+	std::string encode_SubsystemDiagnosticUDP(uint8_t Electrical,uint8_t Software,uint8_t Communications,uint8_t Sensors,uint8_t Actuators,uint8_t Data_Storage,uint8_t Remote_Control,uint8_t Target_Acquisition,uint8_t Pose,uint8_t Timing,uint8_t System_Resource);
 private:
 };
 #endif

@@ -785,7 +785,6 @@
                     <field type="uint8_t" name="Data_Storage"/>
                     <field type="uint8_t" name="Remote_Control"/>
                     <field type="uint8_t" name="Target_Acquisition"/>
-                    <field type="uint8_t" name="Power"/>
                     <field type="uint8_t" name="Pose"/>
                     <field type="uint8_t" name="Timing"/>
                     <field type="uint8_t" name="System_Resource"/>

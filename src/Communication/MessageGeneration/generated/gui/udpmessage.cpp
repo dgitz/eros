@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-05 20:01:31.379765***/
+/***Created on:2019-05-08 07:54:47.453519***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -207,9 +207,9 @@ int UDPMessageHandler::decode_FirmwareUDP(QList<QByteArray> items,std::string* N
 	*BuildNumber=(int)items.at(5).toInt();
 	return 1;
 }
-int UDPMessageHandler::decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int* Electrical,int* Software,int* Communications,int* Sensors,int* Actuators,int* Data_Storage,int* Remote_Control,int* Target_Acquisition,int* Power,int* Pose,int* Timing,int* System_Resource)
+int UDPMessageHandler::decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int* Electrical,int* Software,int* Communications,int* Sensors,int* Actuators,int* Data_Storage,int* Remote_Control,int* Target_Acquisition,int* Pose,int* Timing,int* System_Resource)
 {
-	if(items.size() != 13){ return 0; }
+	if(items.size() != 12){ return 0; }
 	*Electrical=(int)items.at(1).toInt();
 	*Software=(int)items.at(2).toInt();
 	*Communications=(int)items.at(3).toInt();
@@ -218,9 +218,8 @@ int UDPMessageHandler::decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int
 	*Data_Storage=(int)items.at(6).toInt();
 	*Remote_Control=(int)items.at(7).toInt();
 	*Target_Acquisition=(int)items.at(8).toInt();
-	*Power=(int)items.at(9).toInt();
-	*Pose=(int)items.at(10).toInt();
-	*Timing=(int)items.at(11).toInt();
-	*System_Resource=(int)items.at(12).toInt();
+	*Pose=(int)items.at(9).toInt();
+	*Timing=(int)items.at(10).toInt();
+	*System_Resource=(int)items.at(11).toInt();
 	return 1;
 }
