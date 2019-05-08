@@ -44,6 +44,7 @@ public:
 		DiagTypeMap[POWER] = "POWER";
 		DiagTypeMap[POSE] = "POSE";
 		DiagTypeMap[TIMING] = "TIMING";
+        DiagTypeMap[SYSTEM_RESOURCE] = "SYSTEM RESOURCE";
 		DiagTypeMap[GENERAL_ERROR] = "GENERAL ERROR";
 
 		DiagLevelMap[DEBUG] = "DEBUG";

@@ -28,6 +28,7 @@ add_message_files(
   leverarm.msg
   encoder.msg
   timesyncinfo.msg
+  subsystem_diagnostic.msg
 
  )
 ## Generate services in the 'srv' folder

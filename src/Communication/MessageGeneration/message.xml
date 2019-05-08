@@ -766,4 +766,32 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="SubsystemDiagnostic" id="0xAB43">
+        <Description>
+            <![CDATA[
+                This message is used to send Diagnostic Status for each Subsystem
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="uint8_t" name="Electrical"/>
+                    <field type="uint8_t" name="Software"/>
+                    <field type="uint8_t" name="Communications"/>
+                    <field type="uint8_t" name="Sensors"/>
+                    <field type="uint8_t" name="Actuators"/>
+                    <field type="uint8_t" name="Data_Storage"/>
+                    <field type="uint8_t" name="Remote_Control"/>
+                    <field type="uint8_t" name="Target_Acquisition"/>
+                    <field type="uint8_t" name="Power"/>
+                    <field type="uint8_t" name="Pose"/>
+                    <field type="uint8_t" name="Timing"/>
+                    <field type="uint8_t" name="System_Resource"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    
 </Messages>
