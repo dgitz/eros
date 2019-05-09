@@ -4,6 +4,7 @@
 #define __EROS_DEFINITIONS_INCLUDED__
 
 //TAG: Start Message
+#define SUBSYSTEMDIAGNOSTIC_ID 0XAB43
 #define LEDSTRIPCONTROL_ID 0XAB42
 #define FIRMWARE_ID 0XAB41
 #define ID_ID 0XAB40
@@ -68,7 +69,6 @@
 //TAG: End Component
 
 //TAG: Start DiagnosticType
-#define NOERROR 0
 #define ELECTRICAL 1
 #define SOFTWARE 2
 #define COMMUNICATIONS 3
@@ -77,9 +77,9 @@
 #define DATA_STORAGE 6
 #define REMOTE_CONTROL 7
 #define TARGET_ACQUISITION 8
-#define POWER 9
-#define POSE 10
-#define TIMING 11
+#define POSE 9
+#define TIMING 10
+#define SYSTEM_RESOURCE 11
 #define GENERAL_ERROR 255
 //TAG: End DiagnosticType
 

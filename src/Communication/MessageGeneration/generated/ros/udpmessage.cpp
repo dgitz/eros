@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2018-12-04 20:43:49.904453***/
+/***Created on:2019-05-08 08:00:47.522023***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -210,5 +210,33 @@ std::string UDPMessageHandler::encode_FirmwareUDP(std::string NodeName,std::stri
 	tempstr.append(boost::lexical_cast<std::string>((int)MinorRelease));
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)BuildNumber));
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_SubsystemDiagnosticUDP(uint8_t Electrical,uint8_t Software,uint8_t Communications,uint8_t Sensors,uint8_t Actuators,uint8_t Data_Storage,uint8_t Remote_Control,uint8_t Target_Acquisition,uint8_t Pose,uint8_t Timing,uint8_t System_Resource)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_SubsystemDiagnostic_ID));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Electrical));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Software));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Communications));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Sensors));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Actuators));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Data_Storage));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Remote_Control));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Target_Acquisition));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Pose));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Timing));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)System_Resource));
 	return tempstr;
 }

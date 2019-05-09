@@ -296,7 +296,7 @@ def generate_message(xmlfile):
                     ros_udpmessagefile_cpp.write('\tif(id != UDP_' + message.get('name') + '_ID){ return 0; }\r\n')
                     ros_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_master) + '){ return 0; }\r\n')
                 if(decode_for_gui == 1):
-                    #print "ID:" + message.get('name') + str(itemcounter)
+                    print "ID:" + message.get('name') + " Count: " + str(itemcounter_gui)
                     gui_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_gui) + '){ return 0; }\r\n')
                     #ros_udpmessagefile_cpp.write('\tif(std::stoi(items.at(0)) != UDP_' + message.get('name') + '_ID) { return 0; }\r\n')
                 itemcounter = 0
@@ -1183,7 +1183,7 @@ elif (sys.argv[1] == "-g"):
     
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/DriverStation/DriverStation/')
     copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/DriverStation/DriverStation/')
-    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
-    copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
+    #copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.h','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
+    #copy2('/home/robot/catkin_ws/src/eROS/src/Communication/MessageGeneration/generated/gui/udpmessage.cpp','/home/robot/gui/Diagnostics_GUI/Diagnostics_GUI/')
 
 

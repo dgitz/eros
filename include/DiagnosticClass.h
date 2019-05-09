@@ -41,9 +41,9 @@ public:
 		DiagTypeMap[DATA_STORAGE] = "DATA_STORAGE";
 		DiagTypeMap[REMOTE_CONTROL] = "REMOTE_CONTROL";
 		DiagTypeMap[TARGET_ACQUISITION] = "TARGET ACQUISITION";
-		DiagTypeMap[POWER] = "POWER";
 		DiagTypeMap[POSE] = "POSE";
 		DiagTypeMap[TIMING] = "TIMING";
+        DiagTypeMap[SYSTEM_RESOURCE] = "SYSTEM RESOURCE";
 		DiagTypeMap[GENERAL_ERROR] = "GENERAL ERROR";
 
 		DiagLevelMap[DEBUG] = "DEBUG";
