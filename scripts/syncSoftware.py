@@ -36,7 +36,8 @@ def print_package():
 
 def sync_local(hostname):
     print "Syncing Local: " + hostname
-    
+    if not os.path.exists("/tmp/config/"):
+        os.makedirs("/tmp/config/")
     #Determine what the name of the ActiveScenario is:
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
@@ -93,6 +94,7 @@ def sync_local(hostname):
             else:
                 print "Found: " + f.Name + " to build autolaunch but PN: " + f.PartNumber + " is Not Supported"
         if(update_launch == True):
+            
             shutil.copyfile(sourcelaunch,"/tmp/config/tmp.launch")
             outputlines = []
             newlaunchfilelines = []
@@ -181,6 +183,7 @@ def sync_buildserver(device,build):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SensorLink.xml",RootDirectory + "config/SensorLink.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SystemFile.xml",RootDirectory + "config/SystemFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
+    
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
     stdout,stderr = sshProcess.communicate()
@@ -253,6 +256,7 @@ def sync_buildserver(device,build):
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SensorLink.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/* " + "robot@" + device + ":" + RootDirectory + "config/scenarios/" ,shell=True) 
@@ -378,8 +382,7 @@ def sync_remote(device,build):
                 out_file.write(str(l))
                 
             out_file.close()
-            
-    #shutil.copyfile("/tmp/config/" + hostname + ".launch",ApplicationPackage + "launch/" + hostname + ".launch")
+
     subprocess.call("rsync -avrt /tmp/config/" + device + ".launch " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt /tmp/config/" + device + "_AlwaysOn.launch " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/ControlGroup.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
@@ -389,6 +392,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SensorLink.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scriptfiles/* " + "robot@" + device + ":" + RootDirectory + "config/scriptfiles/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/* " + "robot@" + device + ":" + RootDirectory + "config/scenarios/" ,shell=True) 
@@ -413,7 +417,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
     subprocess.call("rsync -avrt " + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
     subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
-    subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/include/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/include/",shell=True)
+    subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/",shell=True)
     #subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
     #subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
     
@@ -421,7 +425,10 @@ def sync_remote(device,build):
         print "Syncing Binaries"
         subprocess.call("rsync -apvrt " + ApplicationPackage + "package.xml " + "robot@" + device + ":" + ApplicationPackage + "",shell=True)
         subprocess.call("rsync -apvrt " + ApplicationPackage + "CMakeLists.txt " + "robot@" + device + ":" + ApplicationPackage + "",shell=True)
-        subprocess.call("rsync -avrt " + BinaryPackage + "* " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
+        subprocess.call("rsync -avt " + BinaryPackage + "*.so " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
+        subprocess.call("rsync -avt " + BinaryPackage + "*.a " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
+        subprocess.call("ssh robot@" + device + " & mkdir " + BinaryPackage + "icarus_rover_v2",shell=True)
+        subprocess.call("rsync -avt " + BinaryPackage + "icarus_rover_v2/* " + "robot@" + device + ":" + BinaryPackage + "icarus_rover_v2/",shell=True)
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     #sshProcess.stdin.write("export TERM=linux\n")
     sshProcess.stdin.write("cd ~/catkin_ws\n")
@@ -470,7 +477,8 @@ def sync_all(hostname,build):
         if (DeviceList[i].Name == hostname):
             sync_local(hostname)
         else:
-            if(DeviceList[i].Name != "dgitzrosmaster"):
+            if((DeviceList[i].Name != "dgitzrosmaster") and
+               (DeviceList[i].Name != "dgitzdev")):
                 sync_remote(DeviceList[i].Name,build)
     DeviceList = Helpers.ReadDeviceList('Display')
     for i in range(0,len(DeviceList)):
