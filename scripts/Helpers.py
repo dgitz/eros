@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import pdb
 devicefile = '/home/robot/config/DeviceFile.xml'
 class Device():
-    def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber='',Architecture=''):
+    def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber='',Architecture='',DeviceType=''):
         self.Name = Name
         self.Parent = Parent
         self.ID = ID
@@ -10,6 +10,7 @@ class Device():
         self.IPAddress = IPAddress
         self.Capability = Capability
         self.Architecture = Architecture
+        self.DeviceType=DeviceType
         
 def checkDeviceFileFormat():
     try:
@@ -43,7 +44,9 @@ def ReadDeviceList(Capability):
                 elif (entry.tag == 'ParentDevice'):
                     newDevice.Parent = entry.text
                 elif (entry.tag == 'Architecture'):
-                    newDevice.Architecture = entry.text
+                    newDevice.Architecture = entry.text 
+                elif (entry.tag == 'DeviceType'):
+                    newDevice.DeviceType = entry.text
             if(Capability == newDevice.Capability):
                 DeviceList.append(newDevice)
     return DeviceList
@@ -73,6 +76,8 @@ def GetDeviceInfo(devicename):
                     newDevice.Parent = entry.text
                 elif (entry.tag == 'Architecture'):
                     newDevice.Architecture = entry.text
+                elif (entry.tag == 'DeviceType'):
+                    newDevice.DeviceType = entry.text
                 DeviceList.append(newDevice)
     for dev in DeviceList:
         if(dev.Name == devicename):

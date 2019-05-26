@@ -1,4 +1,0 @@
-<node name="$(env ROS_HOSTNAME)_safety_node" pkg="icarus_rover_v2" type="safety_node"  output="screen" clear_params="true">
-	    <param name="verbosity_level"       value="DEBUG"/>
-        <param name="require_pps_to_start"  value="false"/>    
-</node>

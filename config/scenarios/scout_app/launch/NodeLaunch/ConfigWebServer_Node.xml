@@ -1,9 +1,0 @@
-<node name="$(env ROS_HOSTNAME)_webserver_node" pkg="icarus_rover_v2" type="webserver_node"  output="screen" clear_params="true">
-        <param name="verbosity_level"       value="INFO"/>
-        <param name="require_pps_to_start"  value="false"/> 
-        <param name="loop1_rate"            value="1"/> <!--  -->
-        <param name="loop2_rate"            value="10"/> <!---->
-        <param name="loop3_rate"            value="20"/> <!-- process update -->
-        <param name="ServerPort"         value="8080"/>
-        <param name="www"                   value="/home/robot/gui/www/WebConfigUI/"/>
-</node>

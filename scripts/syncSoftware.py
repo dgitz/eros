@@ -400,7 +400,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "storage/AUDIO/output/* " + "robot@" + device + ":" + RootDirectory + "storage/AUDIO/output/" ,shell=True) 
     subprocess.call("rsync -avrt " + ActiveScenarioFile + " robot@" + device + ":" + ActiveScenarioFile ,shell=True) 
-    source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + device + ".txt"
+    source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + targetinfo.DeviceType + ".txt"
     if(os.path.isfile(source_file) == True):
         #Sync CMakeLists.txt to the correct device
         subprocess.call("rsync -avrt " + source_file + " robot@" + device + ":" + ApplicationPackage + "CMakeLists.txt" ,shell=True)
@@ -424,7 +424,6 @@ def sync_remote(device,build):
     if(mydeviceinfo.Architecture == targetinfo.Architecture):
         print "Syncing Binaries"
         subprocess.call("rsync -apvrt " + ApplicationPackage + "package.xml " + "robot@" + device + ":" + ApplicationPackage + "",shell=True)
-        subprocess.call("rsync -apvrt " + ApplicationPackage + "CMakeLists.txt " + "robot@" + device + ":" + ApplicationPackage + "",shell=True)
         subprocess.call("rsync -avt " + BinaryPackage + "*.so " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
         subprocess.call("rsync -avt " + BinaryPackage + "*.a " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
         subprocess.call("ssh robot@" + device + " & mkdir " + BinaryPackage + "icarus_rover_v2",shell=True)
