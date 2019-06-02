@@ -1,0 +1,16 @@
+http://ControlModule1:43665/ 	/ControlModule1_command_node
+http://ControlModule1:36481/ 	/ControlModule1_imu_node
+http://ControlModule1:43849/ 	/ControlModule1_master_node
+http://ControlModule1:39315/ 	/ControlModule1_timemaster_node
+http://ControlModule2:43399/ 	/ControlModule2_boardcontroller_node
+http://ControlModule2:42077/ 	/ControlModule2_diagnostic_node
+http://ControlModule2:46033/ 	/ControlModule2_hatcontroller_node
+http://ControlModule2:35359/ 	/ControlModule2_master_node
+http://ControlModule2:39107/ 	/ControlModule2_networktransceiver_node
+http://ControlModule2:41053/ 	/ControlModule2_timeslave_node
+http://ControlModule2:39923/ 	/ControlModule2_topicremapper_node
+http://dgitzdev:37417/ 	/dgitzdev_master_node
+http://dgitzdev:36537/ 	/dgitzdev_sample_node
+http://dgitzrosmaster:39397/ 	/dgitzrosmaster_datalogger_node
+http://dgitzrosmaster:45171/ 	/dgitzrosmaster_master_node
+http://ControlModule1:34925/ 	/rosout
