@@ -196,6 +196,15 @@
 #define SIGNALSTATE_CALIBRATING 6
 //TAG: End SignalState
 
+//TAG: Start SignalType
+#define SIGNALTYPE_UNDEFINED 0
+#define SIGNALTYPE_ACCELERATION 1 //m/s^2
+#define SIGNALTYPE_ROTATION_RATE 2 //deg/s
+#define SIGNALTYPE_MAGNETIC_FIELD 3 //uT
+#define SIGNALTYPE_TEMPERATURE 4 //C
+#define SIGNALTYPE_DISTANCE 5 //m
+#define SIGNALTYPE_ANGLE 6 //Degree
+//TAG: End SignalType
 //Diagnostic Definitions
 #define LEVEL1 1
 #define LEVEL2 2
