@@ -1,6 +1,9 @@
 %***************AUTO-GENERATED.  DO NOT EDIT********************/
-%***Created on:%2017-12-10 07:33:26.500865%***/
+%***Created on:%2019-06-13 08:15:36.984995%***/
 global Message
+Message.SUBSYSTEMDIAGNOSTIC_ID = 0XAB43;
+Message.LEDSTRIPCONTROL_ID = 0XAB42;
+Message.FIRMWARE_ID = 0XAB41;
 Message.ID_ID = 0XAB40;
 Message.TUNECONTROLGROUP_ID = 0XAB39;
 Message.ESTOP_ID = 0XAB38;
@@ -11,6 +14,9 @@ Message.FINDTARGET_ID = 0XAB34;
 Message.SET_DIO_PORT_DEFAULTVALUE_ID = 0XAB32;
 Message.HEARTBEAT_ID = 0XAB31;
 Message.ARM_STATUS_ID = 0XAB30;
+Message.GET_IMUMAG_ID = 0XAB29;
+Message.GET_IMUGYRO_ID = 0XAB28;
+Message.GET_IMUACC_ID = 0XAB27;
 Message.ARMCONTROL_ID = 0XAB26;
 Message.FIRMWAREVERSION_ID = 0XAB25;
 Message.GET_ANA_PORT1_ID = 0XAB20;
@@ -32,11 +38,14 @@ global System
 System.ROVER = 1;
 System.GROUND_STATION = 5;
 System.REMOTE_CONTROL = 7;
+System.SYSTEM_UNKNOWN = 255;
 
 
 global Subsystem
 Subsystem.ENTIRE_SYSTEM = 0;
 Subsystem.ROBOT_CONTROLLER = 1;
+Subsystem.ROBOT_MONITOR = 2;
+Subsystem.SUBSYSTEM_UNKNOWN = 255;
 
 
 global Component
@@ -54,10 +63,10 @@ Component.COMMUNICATION_NODE = 13;
 Component.DYNAMICS_NODE = 14;
 Component.POWER_NODE = 15;
 Component.POSE_NODE = 16;
+Component.COMPONENT_UNKNOWN = 255;
 
 
 global DiagnosticType
-DiagnosticType.NOERROR = 0;
 DiagnosticType.ELECTRICAL = 1;
 DiagnosticType.SOFTWARE = 2;
 DiagnosticType.COMMUNICATIONS = 3;
@@ -66,9 +75,9 @@ DiagnosticType.ACTUATORS = 5;
 DiagnosticType.DATA_STORAGE = 6;
 DiagnosticType.REMOTE_CONTROL = 7;
 DiagnosticType.TARGET_ACQUISITION = 8;
-DiagnosticType.POWER = 9;
-DiagnosticType.POSE = 10;
-DiagnosticType.TIMING = 11;
+DiagnosticType.POSE = 9;
+DiagnosticType.TIMING = 10;
+DiagnosticType.SYSTEM_RESOURCE = 11;
 DiagnosticType.GENERAL_ERROR = 255;
 
 
@@ -79,6 +88,7 @@ DiagnosticLevel.NOTICE = 2;
 DiagnosticLevel.WARN = 3;
 DiagnosticLevel.ERROR = 4;
 DiagnosticLevel.FATAL = 5;
+DiagnosticLevel.LEVEL_UNKNOWN = 255;
 
 
 global DiagnosticMessage
@@ -97,6 +107,7 @@ DiagnosticMessage.DIAGNOSTIC_FAILED = 12;
 DiagnosticMessage.RESOURCE_LEAK = 13;
 DiagnosticMessage.HIGH_RESOURCE_USAGE = 14;
 DiagnosticMessage.UNKNOWN_STATE = 15;
+DiagnosticMessage.UNKNOWN_MESSAGE = 255;
 
 
 global ArmedState
@@ -113,7 +124,37 @@ SignalState.SIGNALSTATE_UNDEFINED = 0;
 SignalState.SIGNALSTATE_INVALID = 1;
 SignalState.SIGNALSTATE_INITIALIZING = 2;
 SignalState.SIGNALSTATE_UPDATED = 3;
-SignalState.SIGNALSTATE_HOLD = 4;
-SignalState.SIGNALSTATE_CALIBRATING = 5;
+SignalState.SIGNALSTATE_EXTRAPOLATED = 4;
+SignalState.SIGNALSTATE_HOLD = 5;
+SignalState.SIGNALSTATE_CALIBRATING = 6;
+
+
+
+
+global SignalType
+SignalType.SIGNALTYPE_UNDEFINED = 0;
+SignalType.SIGNALTYPE_ACCELERATION = 1;
+SignalType.SIGNALTYPE_ROTATION_RATE = 2;
+SignalType.SIGNALTYPE_MAGNETIC_FIELD = 3;
+SignalType.SIGNALTYPE_TEMPERATURE = 4;
+SignalType.SIGNALTYPE_DISTANCE = 5;
+SignalType.SIGNALTYPE_ANGLE = 6;
+
+
+global LEDPixelMode
+LEDPixelMode.LEDPIXELMODE_NONE = 0;
+LEDPixelMode.LEDPIXELMODE_NORMAL = 1;
+LEDPixelMode.LEDPIXELMODE_WARN = 2;
+LEDPixelMode.LEDPIXELMODE_ERROR = 3;
+LEDPixelMode.LEDPIXELMODE_COLORSELECT = 4;
+LEDPixelMode.LEDPIXELMODE_FOCUS = 5;
+
+
+global LEDPixelColor
+LEDPixelColor.LEDPIXELCOLOR_OFF = 0;
+LEDPixelColor.LEDPIXELCOLOR_RED = 1;
+LEDPixelColor.LEDPIXELCOLOR_GREEN = 2;
+LEDPixelColor.LEDPIXELCOLOR_BLUE = 3;
+LEDPixelColor.LEDPIXELCOLOR_WHITE = 4;
 
 
