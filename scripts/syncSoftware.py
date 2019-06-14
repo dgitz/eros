@@ -394,7 +394,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scriptfiles/* " + "robot@" + device + ":" + RootDirectory + "config/scriptfiles/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
-    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/* " + "robot@" + device + ":" + RootDirectory + "config/scenarios/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/urdf/* " + "robot@" + device + ":" + RootDirectory + "config/urdf/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "scripts/* " + "robot@" + device + ":" + RootDirectory + "scripts/" ,shell=True) 
@@ -411,13 +411,15 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt " + source_file + " robot@" + device + ":" + ApplicationPackage + "package.xml" ,shell=True)
 
     #Sync source code and make 
-
-    subprocess.call("rsync -apvrt " + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
-    subprocess.call("rsync -avrt " + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
-    subprocess.call("rsync -avrt " + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
-    subprocess.call("rsync -avrt " + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
-    subprocess.call("rsync -avrlt " + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
-    subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/src/eROS/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/",shell=True)
+    exclude = ""
+    if(mydeviceinfo.Architecture != targetinfo.Architecture):
+        exclude = "--exclude '*.o' --exclude '*.out' --exclude 'CMakeCache.txt' --exclude 'Makefile' --exclude '*.cmake' --exclude 'CMakeFiles/*' " 
+    subprocess.call("rsync -avprt " + exclude + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
+    subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
+    subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
+    subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
+    subprocess.call("rsync -avrlt " + exclude + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
+    subprocess.call("rsync -avrlt " + exclude + RootDirectory + "catkin_ws/src/eROS/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/",shell=True)
     #subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
     #subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
     
