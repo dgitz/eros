@@ -1,4 +1,5 @@
 #signal
+string name
 float64 tov
 uint8 type
 float64 value
