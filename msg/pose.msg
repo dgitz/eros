@@ -1,6 +1,7 @@
 #pose
-float32 tov
-Header header
+float64 timestamp
+uint64 sequence_number
+float64 tov
 signal yawrate
 signal pitchrate
 signal rollrate
@@ -10,5 +11,3 @@ signal roll
 signal east
 signal north
 signal elev
-signal wheelspeed
-signal groundspeed
