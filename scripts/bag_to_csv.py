@@ -11,11 +11,14 @@ import pdb
 def get_topics(mode):
     topics = []
     if(mode == "pose"):
-        topics.append('/RightIMU')
-        topics.append('/LeftIMU')
-        topics.append('/RollServo')
-        topics.append('/PanServo')
+        topics.append('/RightIMU_Simulated')
+        topics.append('/LeftIMU_Simulated')
+        topics.append('/LeftWheelEncoder_Simulated')
+        topics.append('/RightWheelEncoder_Simulated')
+        topics.append('/LeftMotorController')
+        topics.append('/RightMotorController')
         topics.append('/TiltServo')
+        topics.append('/TruthPose_Simulated')
     return topics
 def message_to_csv(stream, msg, flatten=False):
     """
