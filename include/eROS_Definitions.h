@@ -215,6 +215,7 @@
 #define SIGNALTYPE_DISTANCE 5 //m
 #define SIGNALTYPE_ANGLE 6 //Degree
 #define SIGNALTYPE_VELOCITY 7 //m/s
+#define SIGNALTYPE_TICKSPEED 8 //Ticks/second
 //TAG: End SignalType
 //Diagnostic Definitions
 #define LEVEL1 1
