@@ -43,6 +43,7 @@ add_message_files(
   encoder.msg
   timesyncinfo.msg
   subsystem_diagnostic.msg
+  systemsnapshot_state.msg
 
 
  )
@@ -52,6 +53,7 @@ add_service_files(
     srv_connection.srv
     srv_device.srv
     srv_leverarm.srv
+    srv_snapshotstate.srv
  )
 generate_messages(DEPENDENCIES std_msgs)
 

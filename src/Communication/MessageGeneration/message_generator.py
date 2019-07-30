@@ -113,6 +113,7 @@ def generate_message(xmlfile):
     ros_i2cmessagefile_header.write('\t};\r\n\tI2CMessageHandler();\r\n\t~I2CMessageHandler();\r\n')
     ros_i2cmessagefile_cpp.write('#include "../include/i2cmessage.h"\r\nI2CMessageHandler::I2CMessageHandler(){}\r\nI2CMessageHandler::~I2CMessageHandler(){}\r\n')
     for message in root:
+        message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
         protocollist = []
         protocols = message.find('Protocols')
         for protocol in protocols:
@@ -122,8 +123,9 @@ def generate_message(xmlfile):
             for field in fields:
                 #print "Field date Type: ", field.get('type'), " name: ", field.get('name')
                 fieldlist.append(fieldobject(field.get('type'),field.get('name')))
-           
+            print 'Encoding: ' + protocol.get('name') + ' Message: ' + message.get('name') + ' ID: ' + message_id
             if(protocol.get('name') == 'UDP'):
+                
                 encode_for_master = 0
                 encode_for_gui = 0
                 decode_for_master = 0
@@ -296,7 +298,6 @@ def generate_message(xmlfile):
                     ros_udpmessagefile_cpp.write('\tif(id != UDP_' + message.get('name') + '_ID){ return 0; }\r\n')
                     ros_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_master) + '){ return 0; }\r\n')
                 if(decode_for_gui == 1):
-                    print "ID:" + message.get('name') + " Count: " + str(itemcounter_gui)
                     gui_udpmessagefile_cpp.write('\tif(items.size() != ' + str(itemcounter_gui) + '){ return 0; }\r\n')
                     #ros_udpmessagefile_cpp.write('\tif(std::stoi(items.at(0)) != UDP_' + message.get('name') + '_ID) { return 0; }\r\n')
                 itemcounter = 0
@@ -441,7 +442,6 @@ def generate_message(xmlfile):
                     propeller_serialmessagefile_cpp.write(')\r\n{\r\n')
                     arduino_serialmessagefile_header.write(');\r\n')
                     arduino_serialmessagefile_cpp.write(')\r\n{\r\n')
-                message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
                 bytelength = 0
                 for item in fieldlist:
                     if(item.datatype == 'char'):
@@ -797,7 +797,6 @@ def generate_message(xmlfile):
                     arduino_spimessagefile_cpp.write(')\r\n{\r\n')
                     ros_spimessagefile_header.write(');\r\n')
                     ros_spimessagefile_cpp.write(')\r\n{\r\n')
-                message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
                 bytelength = 0
                 for item in fieldlist:
                     if(item.datatype == 'unsigned char'):
@@ -914,7 +913,7 @@ def generate_message(xmlfile):
                     arduino_i2cmessagefile_cpp.write(')\r\n{\r\n')
                     ros_i2cmessagefile_header.write(');\r\n')
                     ros_i2cmessagefile_cpp.write(')\r\n{\r\n')
-                message_id = hex(int(message.get('id'),0)-int('0xAB00',0))
+               
                 bytelength = 0
                 for item in fieldlist:
                     if(item.datatype == 'unsigned char'):

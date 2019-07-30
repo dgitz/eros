@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-08 08:00:47.522023***/
+/***Created on:2019-07-25 07:26:41.265907***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -238,5 +238,21 @@ std::string UDPMessageHandler::encode_SubsystemDiagnosticUDP(uint8_t Electrical,
 	tempstr.append(boost::lexical_cast<std::string>((int)Timing));
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)System_Resource));
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_SystemSnapshotStateUDP(std::string State,uint8_t PercentComplete,uint16_t SystemSnapshotCount,std::string SourceDevice,std::string SystemSnapshotPath)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_SystemSnapshotState_ID));
+	tempstr.append(",");
+	tempstr.append(State);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)PercentComplete));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)SystemSnapshotCount));
+	tempstr.append(",");
+	tempstr.append(SourceDevice);
+	tempstr.append(",");
+	tempstr.append(SystemSnapshotPath);
 	return tempstr;
 }

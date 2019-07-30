@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-08 08:00:47.522511***/
+/***Created on:2019-07-25 07:26:41.266283***/
 /***Target: Raspberry Pi ***/
 #include "../include/i2cmessage.h"
 I2CMessageHandler::I2CMessageHandler(){}
