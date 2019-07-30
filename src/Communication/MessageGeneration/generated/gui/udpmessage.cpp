@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-08 08:00:47.522098***/
+/***Created on:2019-07-25 07:26:41.265962***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -221,5 +221,15 @@ int UDPMessageHandler::decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int
 	*Pose=(int)items.at(9).toInt();
 	*Timing=(int)items.at(10).toInt();
 	*System_Resource=(int)items.at(11).toInt();
+	return 1;
+}
+int UDPMessageHandler::decode_SystemSnapshotStateUDP(QList<QByteArray> items,std::string* State,int* PercentComplete,int* SystemSnapshotCount,std::string* SourceDevice,std::string* SystemSnapshotPath)
+{
+	if(items.size() != 6){ return 0; }
+	*State=items.at(1).toStdString();
+	*PercentComplete=(int)items.at(2).toInt();
+	*SystemSnapshotCount=(int)items.at(3).toInt();
+	*SourceDevice=items.at(4).toStdString();
+	*SystemSnapshotPath=items.at(5).toStdString();
 	return 1;
 }

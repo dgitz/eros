@@ -1,0 +1,6 @@
+string query
+---
+uint8 state
+string device
+string active_snapshot_path
+string active_snapshot_name

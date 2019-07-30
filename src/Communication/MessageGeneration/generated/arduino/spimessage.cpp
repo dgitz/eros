@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-05-08 08:00:47.522343***/
+/***Created on:2019-07-25 07:26:41.266138***/
 /***Target: Arduino ***/
 #include "spimessage.h"
 

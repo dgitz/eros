@@ -5,7 +5,7 @@ Edit the message.xml file to build messages.  Source code is generated for UDP, 
 UDP Supported Data Types:
 * uint8_t
 * uint16_t
-* uint64_t
+* uint64_t (NOT FULLY SUPPORTED)
 * int16_t
 * std::string
 * double

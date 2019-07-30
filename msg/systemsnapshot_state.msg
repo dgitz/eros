@@ -1,0 +1,6 @@
+#systemsnapshot_state
+string state
+uint8 percent_complete
+uint16 systemsnapshot_count
+string source_device
+string snapshot_path

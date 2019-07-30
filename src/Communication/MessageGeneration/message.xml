@@ -792,5 +792,25 @@
             </Protocol>
         </Protocols>
     </Message>
+     <Message name="SystemSnapshotState" id="0xAB44">
+        <Description>
+            <![CDATA[
+                This message is used to send the System Snapshot Status
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="std::string" name="State"/>
+                    <field type="uint8_t" name="PercentComplete"/>
+                    <field type="uint16_t" name="SystemSnapshotCount"/>
+                    <field type="std::string" name="SourceDevice"/>
+                    <field type="std::string" name="SystemSnapshotPath"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
     
 </Messages>
