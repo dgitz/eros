@@ -44,15 +44,17 @@ def sync_local(hostname):
     f.close()
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
-    
-    os.unlink(RootDirectory + "config/ControlGroup.xml")
-    os.unlink(RootDirectory + "config/DeviceFile.xml")
-    os.unlink(RootDirectory + "config/JoystickCalibration.xml")
-    os.unlink(RootDirectory + "config/MiscConfig.xml")
-    os.unlink(RootDirectory + "config/SensorLink.xml")
-    os.unlink(RootDirectory + "config/SystemFile.xml")
-    os.unlink(RootDirectory + "config/TopicMap.xml")
-
+    try:
+        os.unlink(RootDirectory + "config/ControlGroup.xml")
+        os.unlink(RootDirectory + "config/DeviceFile.xml")
+        os.unlink(RootDirectory + "config/JoystickCalibration.xml")
+        os.unlink(RootDirectory + "config/MiscConfig.xml")
+        os.unlink(RootDirectory + "config/SensorLink.xml")
+        os.unlink(RootDirectory + "config/SystemFile.xml")
+        os.unlink(RootDirectory + "config/TopicMap.xml")
+        os.unlink(RootDirectory + "config/SnapshotConfig.xml")
+    except:
+        a=1#Do nothing
     if(os.path.isdir(RootDirectory + "config/scriptfiles") == True):
         shutil.rmtree(RootDirectory + "config/scriptfiles")
     os.mkdir(RootDirectory + "config/scriptfiles")
@@ -65,7 +67,7 @@ def sync_local(hostname):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SensorLink.xml",RootDirectory + "config/SensorLink.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SystemFile.xml",RootDirectory + "config/SystemFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
-    
+    os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SnapshotConfig.xml",RootDirectory + "config/SnapshotConfig.xml")
 
     
     #Remove old launch files
@@ -175,6 +177,7 @@ def sync_buildserver(device,build):
     os.unlink(RootDirectory + "config/SensorLink.xml")
     os.unlink(RootDirectory + "config/SystemFile.xml")
     os.unlink(RootDirectory + "config/TopicMap.xml")
+    os.unlink(RootDirectory + "config/SnapshotConfig.xml")
     
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/ControlGroup.xml",RootDirectory + "config/ControlGroup.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/DeviceFile.xml",RootDirectory + "config/DeviceFile.xml")
@@ -183,6 +186,7 @@ def sync_buildserver(device,build):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SensorLink.xml",RootDirectory + "config/SensorLink.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SystemFile.xml",RootDirectory + "config/SystemFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
+    os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SnapshotConfig.xml",RootDirectory + "config/SnapshotConfig.xml")
     
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
@@ -256,7 +260,8 @@ def sync_buildserver(device,build):
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SensorLink.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
-    
+    subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SnapshotConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/* " + "robot@" + device + ":" + RootDirectory + "config/scenarios/" ,shell=True) 
@@ -313,6 +318,7 @@ def sync_remote(device,build):
     os.unlink(RootDirectory + "config/SensorLink.xml")
     os.unlink(RootDirectory + "config/SystemFile.xml")
     os.unlink(RootDirectory + "config/TopicMap.xml")
+    os.unlink(RootDirectory + "config/SnapshotConfig.xml")
     
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/ControlGroup.xml",RootDirectory + "config/ControlGroup.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/DeviceFile.xml",RootDirectory + "config/DeviceFile.xml")
@@ -321,6 +327,7 @@ def sync_remote(device,build):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SensorLink.xml",RootDirectory + "config/SensorLink.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SystemFile.xml",RootDirectory + "config/SystemFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
+    os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SnapshotConfig.xml",RootDirectory + "config/SnapshotConfig.xml")
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
     stdout,stderr = sshProcess.communicate()
@@ -392,6 +399,7 @@ def sync_remote(device,build):
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SensorLink.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/SnapshotConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scriptfiles/* " + "robot@" + device + ":" + RootDirectory + "config/scriptfiles/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
@@ -459,6 +467,7 @@ def sync_display(device):
     subprocess.call("rsync -avrt " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/MiscConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt " + RootDirectory + "config/TopicMap.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/SnapshotConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/targets/* " + "robot@" + device + ":" + RootDirectory + "config/targets/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/sensors/* " + "robot@" + device + ":" + RootDirectory + "config/sensors/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/urdf/* " + "robot@" + device + ":" + RootDirectory + "config/urdf/" ,shell=True) 

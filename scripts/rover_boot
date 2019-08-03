@@ -4,17 +4,21 @@
 
 ros_master="ControlModule1"
 boot_file="/home/robot/logs/output/"$(hostname)"_log.txt"
+sudo chown robot:robot $boot_file
+rm $boot_file
+touch $boot_file
+sleep 2
 export ROS_HOSTNAME=$HOSTNAME
 export ROS_MASTER_URI=http://$ros_master:11311
 export ROS_IP=$HOSTNAME
 
 
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
-    echo "ControlModule booting"
-    echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness 
+    echo "ControlModule init" >> $boot_file
+    echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness
     
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
-  echo "ComputeModule booting"
+  echo "ComputeModule init" >> $boot_file
   sudo mount /dev/sda1 /home/robot/external/ -o uid=robot -o gid=robot
 fi
 
@@ -22,11 +26,11 @@ ulimit -c unlimited
 sudo bash -c 'echo core.%e.%p > /proc/sys/kernel/core_pattern'
 sleep 5
 
-sudo chown robot:robot $boot_file
+
 sudo chown -R robot /home/robot/logs/
 echo "Starting Boot Script at: "$(date) >> $boot_file
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
-  echo "ControlModule booting"
+  echo "ControlModule booting" >> $boot_file
   echo "Setting permissions on SPI" >> $boot_file
   sudo chown robot:robot /dev/spidev0.0
   sudo chown robot:robot /dev/spidev0.1
@@ -34,8 +38,11 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
   sudo chown robot /dev/video0
   sudo chown robot /dev/vchiq
   echo 1 | sudo dd status=none of=/sys/class/leds/led1/brightness
+  cd /home/robot/linux-dash/app/server
+  echo "Starting Dashboard Server" >> $boot_file
+  sudo node index.js --port 81 2>> $boot_file >> $boot_file &
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
-  echo "ComputeModule booting"
+  echo "ComputeModule booting" >> $boot_file
 fi
 
 if [[ $HOSTNAME == "ControlModule1" ]]; then
@@ -43,14 +50,14 @@ if [[ $HOSTNAME == "ControlModule1" ]]; then
   cd /home/robot/catkin_ws
   source /home/robot/catkin_ws/devel/setup.bash
   echo "Starting ROSCore" >> $boot_file
-  exec roscore 2> $boot_file > /dev/null &
+  exec roscore 2>> $boot_file > /dev/null &
   sleep 5
 fi
 echo "Completed Boot at: "$(date) >> $boot_file
 
 
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
-    echo "Launching Device" 
+    echo "Launching Device" >> $boot_file
     /home/robot/scripts/launchDevice -d $HOSTNAME
 fi
 
