@@ -3,10 +3,11 @@
 Logger::Logger()
 {
 }
+
 Logger::Logger(std::string level,std::string modpath,std::string name)
 {
 	console_print = true;
-	verbosity = get_verbosity_level(level);
+	verbosity = map_logverbosity_toint(level);
 	line_counter = 0;
 	name.erase(name.begin());
 	replace(name.begin(),name.end(),'/','_');
@@ -21,7 +22,7 @@ Logger::Logger(std::string level,std::string modpath,std::string name)
 Logger::Logger(std::string level,std::string name)
 {
 	console_print = true;
-	verbosity = get_verbosity_level(level);
+	verbosity = map_logverbosity_toint(level);
 	line_counter = 0;
 	name.erase(name.begin());
 	replace(name.begin(),name.end(),'/','_');
@@ -37,7 +38,49 @@ Logger::Logger(std::string level,std::string name)
 Logger::~Logger()
 {
 }
-int Logger::get_verbosity_level(std::string level)
+void Logger::set_logverbosity(int v)
+{
+	if(v == verbosity)
+	{
+		return;
+	}
+	if((v < 0) or (v > FATAL))
+	{
+		return;
+	}
+	std::string tempstr = "Changing Log Level from " + map_logverbosity_tostring(verbosity) + " to " + map_logverbosity_tostring(v) + ".";
+	verbosity = v;
+	print_log(verbosity,tempstr);
+}
+std::string Logger::map_logverbosity_tostring(int v)
+{
+	switch(v)
+	{
+		case DEBUG:
+			return "DEBUG";
+			break;
+		case INFO: 
+			return "INFO";
+			break;
+		case NOTICE:
+			return "NOTICE";
+			break;
+		case WARN:
+			return "WARN";
+			break;
+		case ERROR:
+			return "ERROR";
+			break;
+		case FATAL:
+			return "FATAL";
+			break;
+		default:
+			return "UNKNOWN";
+			break;
+	}
+	return "UNKNOWN";
+}
+int Logger::map_logverbosity_toint(std::string level)
 {
 	if     (level=="DEBUG"){    return DEBUG;}
 	else if(level=="INFO"){     return INFO; }
