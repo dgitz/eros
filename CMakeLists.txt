@@ -44,6 +44,7 @@ add_message_files(
   timesyncinfo.msg
   subsystem_diagnostic.msg
   systemsnapshot_state.msg
+  loadfactor.msg
 
 
  )
