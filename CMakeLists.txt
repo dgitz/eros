@@ -45,6 +45,7 @@ add_message_files(
   subsystem_diagnostic.msg
   systemsnapshot_state.msg
   loadfactor.msg
+  uptime.msg
 
 
  )
