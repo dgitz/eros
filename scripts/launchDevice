@@ -3,7 +3,7 @@
 #Author: David Gitz
 #Purpose: Launches Software
 
-#declare -a Devices=("ControlModule1" "dgitzrosmaster" "ControlModule2" "ComputeModule1" "BuildServer1")
+#declare -a Devices=("MasterModule" "ControlModule1" "dgitzrosmaster" "ControlModule2" "ComputeModule1" "BuildServer1" "dgitzdev")
 
 function launch_device()
 {
@@ -13,7 +13,7 @@ function launch_device()
     source /home/robot/catkin_ws/devel/setup.bash
     #touch ~/$1
     counter=0
-	countmax=20 # Try for about 5 minutes
+	countmax=5 # Try for about 5 minutes
 	ros_connected=0
     while [ $counter -lt $countmax ]
 	do
@@ -36,7 +36,7 @@ function launch_device()
     echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
     export ROS_HOSTNAME=$HOSTNAME
     export ROS_IP=$HOSTNAME
-    export ROS_MASTER_URI=http://ControlModule1:11311
+    export ROS_MASTER_URI=http://MasterModule:11311
     echo "ROS_MASTER: "$ROS_MASTER_URI >> $boot_file
     echo "ROS HOSTNAME: "$ROS_HOSTNAME >> $boot_file
 	if [ $ros_connected -eq 1 ]; then

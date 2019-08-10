@@ -8,8 +8,9 @@ from optparse import OptionParser
 from datetime import datetime
 import time
 import pdb
-def get_topics(mode):
+def get_topics(mode,bag):
     topics = []
+    search_list = []
     if(mode == "pose"):
         topics.append('/RightIMU_Simulated')
         topics.append('/LeftIMU_Simulated')
@@ -19,8 +20,18 @@ def get_topics(mode):
         topics.append('/RightMotorController')
         topics.append('/TiltServo')
         topics.append('/TruthPose_Simulated')
+    if(mode == "performance"):
+        search_list.append("resource")
+        search_list.append("loadfactor")
+        search_list.append("uptime")
+    
+    all_topic_list = bag.get_type_and_topic_info().topics
+    for t in all_topic_list:
+        for item in search_list:
+            if(item in t):
+                topics.append(t)
     return topics
-def message_to_csv(stream, msg, flatten=False):
+def message_to_csv(breakpoint,stream, msg, flatten=False,):
     """
     stream: StringIO
     msg: message
@@ -28,8 +39,10 @@ def message_to_csv(stream, msg, flatten=False):
     try:
         for s in type(msg).__slots__:
             val = msg.__getattribute__(s)
-            message_to_csv(stream, val, flatten)
+            message_to_csv(breakpoint,stream, val, flatten)
     except:
+        #if(breakpoint == 1):
+        #    pdb.set_trace()
         msg_str = str(msg)
         if msg_str.find(",") is not -1:
             if flatten:
@@ -38,6 +51,8 @@ def message_to_csv(stream, msg, flatten=False):
                 msg_str = msg_str.strip(" ")
             else:
                 msg_str = "\"" + msg_str + "\""
+                msg_str = msg_str.replace('(',',')
+                msg_str = msg_str.replace(')','')
         stream.write("," + msg_str)
 
 def message_type_to_csv(stream, msg, parent_content_name=""):
@@ -45,6 +60,7 @@ def message_type_to_csv(stream, msg, parent_content_name=""):
     stream: StringIO
     msg: message
     """
+    
     try:
         for s in type(msg).__slots__:
             val = msg.__getattribute__(s)
@@ -76,9 +92,12 @@ def bag_to_csv(mode, output_dir,fname):
         exit(1)
 
     try:
-        for topic, msg, time in bag.read_messages(topics=get_topics(mode),
+        for topic, msg, time in bag.read_messages(topics=get_topics(mode,bag),
                                                   start_time=stime,
                                                   end_time=etime):
+            breakpoint=0            
+            if(topic == "/dgitzdev/loadfactor"):
+                breakpoint=1
             if streamdict.has_key(topic):
                 stream = streamdict[topic]
             else:
@@ -95,7 +114,7 @@ def bag_to_csv(mode, output_dir,fname):
                 stream.write('\n')
 
             stream.write(datetime.fromtimestamp(time.to_time()).strftime('%Y/%m/%d/%H:%M:%S.%f'))
-            message_to_csv(stream, msg, flatten=False)
+            message_to_csv(breakpoint,stream, msg, flatten=False)
             stream.write('\n')
         [s.close for s in streamdict.values()]
     except Exception as e:
@@ -123,7 +142,7 @@ if __name__ == '__main__':
     parser.add_option("-d", "--bag directory",dest="bag_directory",
             help="bagfile directory")
     parser.add_option("-m", "--mode",dest="mode",
-            help="Mode: Supported Options: pose")
+            help="Mode: Supported Options: pose,performance")
     parser.add_option("-o", "--output dir",dest="output_dir",
             help="output directory")
     (options, args) = parser.parse_args()
