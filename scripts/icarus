@@ -15,7 +15,7 @@ NAME=icarus
 
 case $1 in
  start)
-  /home/robot/scripts/rover_boot
+  /home/robot/scripts/rover_boot 2> /dev/null > /dev/null &
   ;;
  *) 
   # For invalid arguments, print the usage message.

@@ -23,7 +23,7 @@ def print_usage():
     print "-r Reboot all devices."
 
 def shutdown_all_devices():
-    os.system("/home/robot/scripts/stopSystem.py -k")
+    #os.system("/home/robot/scripts/stopSystem.py -k")
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):
@@ -38,7 +38,7 @@ def shutdown_all_devices():
             
 
 def reboot_all_devices():
-    os.system("/home/robot/scripts/stopSystem.py -k")
+    #os.system("/home/robot/scripts/stopSystem.py -k")
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):

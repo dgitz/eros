@@ -20,7 +20,22 @@ ApplicationPackage = '/home/robot/catkin_ws/src/' + PackageName + '/'
 BinaryPackage = '/home/robot/catkin_ws/devel/lib/'
 DeviceList = []
 build=False
+class IPObject(object):
+    def __init__(self,Name,Address):
+        self.Name = Name
+        self.Address = Address
 
+def generate_AllIPDeviceList():
+    list = []
+    list.append(IPObject('MasterModule','10.0.0.4'))
+    list.append(IPObject('dgitzdev','10.0.0.190'))
+    list.append(IPObject('dgitzrosmaster','10.0.0.111'))
+    list.append(IPObject('DriverStation','10.0.0.114'))
+    list.append(IPObject('ControlModule1','10.0.0.128'))
+    list.append(IPObject('ControlModule2','10.0.0.110'))
+    list.append(IPObject('BuildServer1','10.0.0.179'))
+    return list
+  
 def process_input(tempstr):
     print tempstr
 
@@ -35,6 +50,7 @@ def print_package():
     print PackageName
 
 def sync_local(hostname):
+    
     print "Syncing Local: " + hostname
     if not os.path.exists("/tmp/config/"):
         os.makedirs("/tmp/config/")
@@ -82,6 +98,19 @@ def sync_local(hostname):
     #Copy contents of /home/robot/config/scenarios/<ActiveScenario>/* to /home/robot/catkin_ws/src/icarus_rover_v2/launch/
     #shutil.copyfile(RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/" + hostname + ".launch","/tmp/config/" + hostname + ".launch")
    
+    iplist = generate_AllIPDeviceList()
+    out_file = open("/tmp/hosts", "w")
+    out_file.write("127.0.0.1       localhost\n")
+    out_file.write("127.0.0.1       " + hostname + "\n")
+    out_file.write("::1     ip6-localhost ip6-loopback\n")
+    out_file.write("fe00::0 ip6-localnet\n")
+    out_file.write("ff00::0 ip6-mcastprefix\n")
+    out_file.write("ff02::1 ip6-allnodes\n")
+    out_file.write("ff02::2 ip6-allrouters\n")
+    for dev in iplist:
+        out_file.write(dev.Address + "\t" + dev.Name + "\n")
+    out_file.close()
+    subprocess.call("sudo cp /tmp/hosts /etc" ,shell=True)
     AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
     for f in AutoLaunchList:
         update_launch = False
@@ -192,6 +221,23 @@ def sync_buildserver(device,build):
     sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
     stdout,stderr = sshProcess.communicate()
     
+    sshProcess.stdin.close()
+    iplist = generate_AllIPDeviceList()
+    out_file = open("/tmp/hosts_" + device, "w")
+    out_file.write("127.0.0.1       localhost\n")
+    out_file.write("127.0.0.1       " + device + "\n")
+    out_file.write("::1     ip6-localhost ip6-loopback\n")
+    out_file.write("fe00::0 ip6-localnet\n")
+    out_file.write("ff00::0 ip6-mcastprefix\n")
+    out_file.write("ff02::1 ip6-allnodes\n")
+    out_file.write("ff02::2 ip6-allrouters\n")
+    for dev in iplist:
+        out_file.write(dev.Address + "\t" + dev.Name + "\n")
+    out_file.close()
+    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/" ,shell=True) 
+    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
+    stdout,stderr = sshProcess.communicate()
     sshProcess.stdin.close()
     if not os.path.exists("/tmp/config/"):
         os.makedirs("/tmp/config/")
@@ -339,6 +385,23 @@ def sync_remote(device,build):
     if((alwayson_nodecount < 0) or (running_nodecount < 0)):
         return 
     #subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
+    iplist = generate_AllIPDeviceList()
+    out_file = open("/tmp/hosts_" + device, "w")
+    out_file.write("127.0.0.1       localhost\n")
+    out_file.write("127.0.0.1       " + device + "\n")
+    out_file.write("::1     ip6-localhost ip6-loopback\n")
+    out_file.write("fe00::0 ip6-localnet\n")
+    out_file.write("ff00::0 ip6-mcastprefix\n")
+    out_file.write("ff02::1 ip6-allnodes\n")
+    out_file.write("ff02::2 ip6-allrouters\n")
+    for dev in iplist:
+        out_file.write(dev.Address + "\t" + dev.Name + "\n")
+    out_file.close()
+    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/" ,shell=True) 
+    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
+    stdout,stderr = sshProcess.communicate()
+    sshProcess.stdin.close()
     AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
     for f in AutoLaunchList:
         update_launch = False
