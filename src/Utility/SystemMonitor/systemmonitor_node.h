@@ -1,4 +1,4 @@
-#include "TaskMonitorNodeProcess.cpp"
+#include "SystemMonitorNodeProcess.cpp"
 //C System Files
 #include <unistd.h>
 #include <csignal>
@@ -22,17 +22,17 @@
 //Project
 #include "../../../include/logger.h"
 WINDOW *create_newwin(int height, int width, int starty, int startx);
-class TaskMonitorNode {
+class SystemMonitorNode {
 public:
 
-	~TaskMonitorNode()
+	~SystemMonitorNode()
 	{
 	}
 	/*! \brief Initialize
 	 *
 	 */
 	bool start(int argc,char **argv);
-	TaskMonitorNodeProcess* get_process() { return process; }
+	SystemMonitorNodeProcess* get_process() { return process; }
 	bool update();
 	void thread_loop();
 
@@ -55,7 +55,9 @@ private:
 	eros::diagnostic rescan_topics();
 	void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
 	void resource_Callback(const eros::resource::ConstPtr& msg);
+	void resourceAvailable_Callback(const eros::resource::ConstPtr& msg);
 	void uptime_Callback(const std_msgs::Float32::ConstPtr& msg);
+	void snapshotstate_Callback(const eros::systemsnapshot_state::ConstPtr& msg);
 	//Utility Functions
 	/*! \brief Measures time delay between 2 ros::Time timestamps.
 	 *  Generally, if wanting to measure the time from now to a previous mark,
@@ -71,7 +73,7 @@ private:
 	double ros_rate;
 	boost::shared_ptr<ros::NodeHandle> n;
 
-	TaskMonitorNodeProcess *process;
+	SystemMonitorNodeProcess *process;
 	Logger *logger;
 	ros::Time boot_time;
 	ros::Time current_time;
@@ -86,7 +88,9 @@ private:
 
 	WINDOW *window_header;
 	WINDOW *window_tasklist;
-	WINDOW *window_footer;
+	WINDOW *window_footer_left;
+	WINDOW *window_footer_center;
+	WINDOW *window_footer_right;
 	uint16_t mainwindow_width,mainwindow_height;
 	std::string active_scenario;
 	std::string base_node_name;
@@ -95,7 +99,14 @@ private:
 
 	std::vector<ros::Subscriber> resource_subs;
 	std::vector<ros::Subscriber> heartbeat_subs;
+	std::vector<ros::Subscriber> resourceavailable_subs;
+	ros::Subscriber snapshotstate_sub;
+	ros::Publisher command_pub;
 	ros::Subscriber uptime_sub;
 	uint16_t start_node_index;
-
+	MEVENT event;
+	int selected_task_index;
+	bool select_task_mode;
+	bool change_loglevel_mode;
+	int selected_loglevel_value;
 };

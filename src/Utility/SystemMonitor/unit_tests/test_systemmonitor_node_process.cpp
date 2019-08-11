@@ -1,25 +1,26 @@
 #include <gtest/gtest.h>
 #include "ros/ros.h"
 #include "ros/time.h"
-#include "../TaskMonitorNodeProcess.h"
+#include "../SystemMonitorNodeProcess.h"
 
-std::string Node_Name = "/unittest_taskmonitor_node_process";
+std::string Node_Name = "/unittest_systemmonitor_node_process";
 std::string Host_Name = "unittest";
 std::string ros_DeviceName = Host_Name;
-void print_taskinfo(std::vector<TaskMonitorNodeProcess::Task> list)
+void print_taskinfo(std::vector<SystemMonitorNodeProcess::Task> list)
 {
+	printf("--- TASK INFO --- \n");
 	for(std::size_t i = 0; i < list.size(); ++i)
 	{
 		printf("[%d] Host: %s Name: %s\n",list.at(i).id,list.at(i).host_device.c_str(),list.at(i).node_name.c_str());
 	}
 }
-TaskMonitorNodeProcess *initializeprocess()
+SystemMonitorNodeProcess *initializeprocess()
 {
 	uint16_t mainwindow_width = 200;
 	uint16_t mainwindow_height = 50;
-	TaskMonitorNodeProcess *process;
-	process = new TaskMonitorNodeProcess;
-	process->initialize("taskmonitor_node", Node_Name, Host_Name);
+	SystemMonitorNodeProcess *process;
+	process = new SystemMonitorNodeProcess;
+	process->initialize("systemmonitor_node", Node_Name, Host_Name);
 	bool status = process->set_mainwindow(200,50);
 	if(status == false)
 	{
@@ -30,7 +31,9 @@ TaskMonitorNodeProcess *initializeprocess()
 	EXPECT_TRUE(status);
 	std::vector<std::string> hosts;
 	std::vector<std::string> nodes;
-	EXPECT_TRUE(process->read_nodelist("/home/robot/catkin_ws/src/eROS/src/Utility/TaskMonitor/unit_tests/UnitTest_AllNodeList",&hosts,&nodes) == true);
+	std::vector<std::string> resource_topics;
+	std::vector<std::string> heartbeat_topics;
+	EXPECT_TRUE(process->read_nodelist("/home/robot/catkin_ws/src/eROS/src/Utility/SystemMonitor/unit_tests/",&hosts,&nodes,&resource_topics,&heartbeat_topics) == true);
 	eros::diagnostic diag = process->init_nodelist(hosts,nodes);
 	EXPECT_TRUE(diag.Level <= NOTICE);
 	
@@ -39,18 +42,18 @@ TaskMonitorNodeProcess *initializeprocess()
 
 TEST(Template, Process_Initialization)
 {
-	TaskMonitorNodeProcess *process = initializeprocess();
+	SystemMonitorNodeProcess *process = initializeprocess();
 	
 	
 }
 TEST(Execution,Process_Execution)
 {
-	TaskMonitorNodeProcess *process = initializeprocess();
+	SystemMonitorNodeProcess *process = initializeprocess();
 	eros::diagnostic diag = process->update(0.0,0.0);
 	EXPECT_TRUE(diag.Level <= NOTICE);
 	print_taskinfo(process->get_alltasks());
 
-	std::vector<TaskMonitorNodeProcess::Task> tasklist = process->get_alltasks();
+	std::vector<SystemMonitorNodeProcess::Task> tasklist = process->get_alltasks();
 	double current_time = 0.0;
 	double dt = 0.1;
 	double time_since_ping = 0.0;
@@ -61,6 +64,7 @@ TEST(Execution,Process_Execution)
 			{
 				eros::heartbeat msg;
 				msg.Node_Name = "/" + tasklist.at(i).node_name;
+				msg.stamp = process->get_rostime();
 				eros::heartbeat::ConstPtr msg_ptr(new eros::heartbeat(msg));
 				diag = process->new_heartbeatmessage(msg_ptr);
 				EXPECT_TRUE(diag.Level <= NOTICE);
@@ -107,7 +111,7 @@ TEST(Execution,Process_Execution)
 		else
 		{
 			EXPECT_TRUE(tasklist.at(i).initialized == true);
-			EXPECT_TRUE(tasklist.at(i).type == TaskMonitorNodeProcess::TaskType::EROS);
+			EXPECT_TRUE(tasklist.at(i).type == SystemMonitorNodeProcess::TaskType::EROS);
 			EXPECT_TRUE(tasklist.at(i).state == TASKSTATE_RUNNING);
 		}
 	}
