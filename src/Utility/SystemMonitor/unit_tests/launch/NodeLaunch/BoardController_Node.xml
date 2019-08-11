@@ -1,0 +1,7 @@
+<node name="$(env ROS_HOSTNAME)_boardcontroller_node" pkg="icarus_rover_v2" type="boardcontroller_node" output="screen" clear_params="true">  
+	    <param name="verbosity_level"       value="NOTICE"/>
+        <param name="require_pps_to_start"  value="true"/>
+        <param name="loop1_rate"            value="1.0"/> <!-- Set LED Mode, Query Board Diagnostics -->
+        <param name="loop2_rate"            value="40.0"/> <!-- Query Encoder,process update, publish ready to arm -->
+        <param name="loop3_rate"            value="200.0"/> <!-- SPI Comm -->
+</node>

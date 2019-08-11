@@ -17,6 +17,7 @@
 #include <eros/heartbeat.h>
 #include <eros/command.h>
 #include <eros/resource.h>
+#include <eros/systemsnapshot_state.h>
 //Project
 #include "../../../include/eROS_Definitions.h"
 #define COMMTIMEOUT_THRESHOLD 3.0
@@ -38,8 +39,20 @@
 #define GREEN_COLOR 4
 #define BLUE_COLOR 5
 
-#define KEY_Q 113
-class TaskMonitorNodeProcess {
+#define KEY_q 113
+#define KEY_Q 81
+#define KEY_s 83
+#define KEY_S 115
+#define KEY_c 99
+#define KEY_C 67
+#define KEY_g 103
+#define KEY_G 71
+#define KEY_l 108
+#define KEY_L 76
+#define KEY_d 100
+#define KEY_D 68
+#define ENTER_KEY 10
+class SystemMonitorNodeProcess {
 public:
     //Constants
     //Enums;
@@ -68,6 +81,18 @@ public:
 		double last_ping_time;
 		uint64_t restart_count;
 	};
+	struct Module
+	{
+		bool initialized;
+		std::string name;
+		int8_t RAMFree_Perc;
+		int8_t CPUFree_Perc;
+		int8_t DISKFree_Perc;
+	};
+	struct SystemSnap
+	{
+		eros::systemsnapshot_state state;
+	};
 	///Initialization Functions
 	/*! \brief NodeProcess specific Initialization
 	 *
@@ -90,14 +115,24 @@ public:
 		mainwindow_width = 0;
 		mainwindow_height = 0;
 		uptime = -1.0;
+		snap.state.state = "UNKNOWN";
 		return diagnostic;
 	}
-	bool read_nodelist(std::string node_list_path,std::vector<std::string> *hosts,std::vector<std::string> *nodes);
+	bool read_nodelist(std::string node_list_path,std::vector<std::string> *hosts,std::vector<std::string> *nodes,
+		std::vector<std::string> *resource_topics,std::vector<std::string> *heartbeat_topics,std::vector<std::string> *resource_available_topics);
 	eros::diagnostic init_nodelist(std::vector<std::string> hosts,std::vector<std::string> nodes);
 	//Update Functions
 	/*! \brief Implementation of the update function
 	 *
 	 */
+	ros::Time get_rostime()
+	{
+		ros::Time t;
+		t.sec = (int64_t)ros_time;
+		double rem = ros_time - (double)t.sec;
+		t.nsec = (int64_t)(rem * 1000000.0);
+		return t;
+	}
 	eros::diagnostic update(double t_dt,double t_ros_time);
 
 	//Attribute Functions
@@ -116,6 +151,8 @@ public:
 	eros::diagnostic get_diagnostic() { return diagnostic; }
 	std::vector<Task> get_alltasks() { return tasklist; }
 	std::vector<std::string> get_taskbuffer();
+	std::vector<std::string> get_modulebuffer();
+	SystemSnap get_systemsnapinfo() { return snap; }
 	eros::diagnostic ping_nodes();
 	//Message Functions
 	/*! \brief  Process Command Message.  All implementation should use at least the code in this Sample Function.
@@ -150,9 +187,12 @@ public:
 		return -1;
 	}
 	eros::diagnostic new_resourcemessage(const eros::resource::ConstPtr& t_ptr);
+	eros::diagnostic new_resourceavailablemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_ptr);
+	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
 	//Support Functions
 	std::string get_taskheader();
+	std::vector<std::string> get_devicelistheader();
 	eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr);
 	std::string map_taskstate_tostring(uint8_t state);
@@ -167,8 +207,10 @@ private:
 	std::string base_node_name,node_name;
 	double run_time,ros_time;
 	std::vector<Task> tasklist;
+	std::vector<Module> modulelist;
 	std::vector<std::string> resource_topics;
 	std::vector<std::string> heartbeat_topics;
 	double uptime;
+	SystemSnap snap;
 
 };

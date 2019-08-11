@@ -1,1 +1,1 @@
-add_subdirectory(TaskMonitor)
+add_subdirectory(SystemMonitor)

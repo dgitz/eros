@@ -1,0 +1,12 @@
+<node name="$(env ROS_HOSTNAME)_networktransceiver_node" pkg="icarus_rover_v2" type="networktransceiver_node"  output="screen" clear_params="true">
+        <param name="verbosity_level"       value="NOTICE"/>
+        <param name="startup_delay"         value="5.0" />
+        <param name="require_pps_to_start"  value="false"/> 
+        <param name="Send_Multicast_Group"       value="239.255.43.21"/>
+        <param name="Send_Multicast_Port"        value="45454"/>
+        <param name="Recv_Unicast_Port"          value="5678"/>
+        <param name="Mode"                  value="DriverStation"/> <!--Diagnostics_GUI-->
+        <param name="loop1_rate"            value="20.0"/> <!-- Send High Priority Messages -->  
+        <param name="loop2_rate"            value="5.0"/> <!-- Send Medium and Low Priority Messages, Ready To Arm -->
+        <param name="loop3_rate"            value="50.0"/> <!-- Process Update -->
+</node>
