@@ -88,6 +88,9 @@ public:
 		int8_t RAMFree_Perc;
 		int8_t CPUFree_Perc;
 		int8_t DISKFree_Perc;
+		double last_heartbeat;
+		double last_heartbeat_delta;
+		uint8_t state;
 	};
 	struct SystemSnap
 	{
@@ -150,6 +153,7 @@ public:
 	}
 	eros::diagnostic get_diagnostic() { return diagnostic; }
 	std::vector<Task> get_alltasks() { return tasklist; }
+	std::vector<Module> get_allmodules() { return modulelist; }
 	std::vector<std::string> get_taskbuffer();
 	std::vector<std::string> get_modulebuffer();
 	SystemSnap get_systemsnapinfo() { return snap; }
@@ -192,7 +196,7 @@ public:
 	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
 	//Support Functions
 	std::string get_taskheader();
-	std::vector<std::string> get_devicelistheader();
+	std::vector<std::string> get_modulelistheader();
 	eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr);
 	std::string map_taskstate_tostring(uint8_t state);
