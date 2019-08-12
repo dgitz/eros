@@ -169,11 +169,9 @@ bool SystemMonitorNode::init_screen()
 		std::string str(buffer);
 		mvwprintw(window_tasklist,TASKSTART_COORD_Y+1,TASKSTART_COORD_X,buffer);
 	}
-	
-	
 	//Static Content -- Device Window
 	{
-		std::vector<std::string> list = process->get_devicelistheader();
+		std::vector<std::string> list = process->get_modulelistheader();
 		for(std::size_t i = 0; i < list.size(); ++i)
 		{
 			mvwprintw(window_footer_right, i+1,1,list.at(i).c_str());
@@ -410,14 +408,92 @@ bool SystemMonitorNode::update_windowfooter()
 	{//Right Footer
 
 		{
+			std::vector<SystemMonitorNodeProcess::Module> modules = process->get_allmodules();
 			std::vector<std::string> list = process->get_modulebuffer();
+			if(list.size() != modules.size())
+			{
+				logger->log_error("Module Count Mismatch.");
+				return false;
+			}
 			for(std::size_t i = 0; i < list.size(); ++i)
 			{
+				uint8_t color = 0;
+				switch(modules.at(i).state)
+				{
+					case TASKSTATE_UNDEFINED:
+						color = RED_COLOR;
+						break;
+						case TASKSTATE_INITIALIZING:
+						color = YELLOW_COLOR;
+						break;
+						case TASKSTATE_NODATA:
+						color = RED_COLOR;
+						break;
+						case TASKSTATE_RUNNING:
+						color = GREEN_COLOR;
+						break;
+						case TASKSTATE_STOPPED:
+						color = YELLOW_COLOR;
+						default:
+						color = RED_COLOR;
+						break;
+				}
+				wattron(window_footer_right,COLOR_PAIR(color));
 				mvwprintw(window_footer_right,4+i,1,list.at(i).c_str());
 				wclrtoeol(window_footer_right);
+				wattroff(window_footer_right,COLOR_PAIR(color));
 			}
 		}
 	}
+	/*
+	
+	std::vector<SystemMonitorNodeProcess::Task> tasklist = process->get_alltasks();
+		if(taskbuffer.size() != tasklist.size())
+		{
+			return false;
+		}
+		int index = 0;
+		for(std::size_t i = start_node_index; i < taskbuffer.size(); ++i)
+		{
+			if(index >= TASKPAGE_COUNT)
+			{
+				break;
+			}
+			uint8_t color = 0;
+			switch(tasklist.at(i).state)
+			{
+				case TASKSTATE_UNDEFINED:
+					color = RED_COLOR;
+					break;
+					case TASKSTATE_INITIALIZING:
+					color = YELLOW_COLOR;
+					break;
+					case TASKSTATE_NODATA:
+					color = RED_COLOR;
+					break;
+					case TASKSTATE_RUNNING:
+					color = GREEN_COLOR;
+					break;
+					case TASKSTATE_STOPPED:
+					color = YELLOW_COLOR;
+					default:
+					color = RED_COLOR;
+					break;
+			}
+			if(i == (std::size_t)selected_task_index)
+			{
+				mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X,"***");
+			}
+			else
+			{
+				mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X,"   ");
+			}
+			
+			wattron(window_tasklist,COLOR_PAIR(color));
+			mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X+3,taskbuffer.at(i).c_str());
+			wclrtoeol(window_tasklist);
+			wattroff(window_tasklist,COLOR_PAIR(color));
+	 */
 	box(window_footer_left, 0 , 0);			
 	wrefresh(window_footer_left);
 	box(window_footer_center, 0 , 0);			

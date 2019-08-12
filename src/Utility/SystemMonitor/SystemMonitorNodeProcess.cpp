@@ -4,6 +4,18 @@ eros::diagnostic SystemMonitorNodeProcess::update(double t_dt,double t_ros_time)
     eros::diagnostic diag = diagnostic;
     ros_time = t_ros_time;
     run_time += t_dt;
+    for(std::size_t i = 0; i < modulelist.size(); ++i)
+    {
+        modulelist.at(i).last_heartbeat_delta = fabs(ros_time - modulelist.at(i).last_heartbeat);
+        if((modulelist.at(i).last_heartbeat_delta >= 0.0) and (modulelist.at(i).last_heartbeat_delta < (10.0*COMMTIMEOUT_THRESHOLD)))
+        {
+            modulelist.at(i).state = TASKSTATE_RUNNING;;
+        }
+        else
+        {
+            modulelist.at(i).state = TASKSTATE_NODATA;
+        }
+    }
     for(std::size_t i = 0; i < tasklist.size(); ++i)
     {
         if(tasklist.at(i).initialized == false)
@@ -183,6 +195,9 @@ bool SystemMonitorNodeProcess::read_nodelist(std::string node_list_dir,std::vect
             module.RAMFree_Perc = -1;
             module.CPUFree_Perc = -1;
             module.DISKFree_Perc = -1;
+            module.last_heartbeat = 0.0;
+            module.last_heartbeat_delta = 0.0;
+            module.state = TASKSTATE_NODATA;
             std::string tempstr = "/" + module.name + "/resource_available";
             resource_available_topics->push_back(tempstr);
             push_topiclist("eros/resource",tempstr);
@@ -262,6 +277,7 @@ eros::diagnostic SystemMonitorNodeProcess::new_resourceavailablemessage(const er
         if(t_ptr->Node_Name.find(modulelist.at(i).name) != std::string::npos)
         {
             found = true;
+            modulelist.at(i).last_heartbeat = t_ptr->stamp.toSec();
             modulelist.at(i).RAMFree_Perc = t_ptr->RAM_Perc;
             modulelist.at(i).CPUFree_Perc = t_ptr->CPU_Perc;
             modulelist.at(i).DISKFree_Perc = t_ptr->DISK_Perc;
@@ -347,7 +363,7 @@ std::string SystemMonitorNodeProcess::get_taskheader()
     sprintf(buffer,"   ID\tDevice\t\t\tNode Name\t\t\t\t\t\tStatus\t\t      RESTARTS\tPID\tCPU(%%)\tRAM(MB)\tRx");
     return std::string(buffer);
 }
-std::vector<std::string> SystemMonitorNodeProcess::get_devicelistheader()
+std::vector<std::string> SystemMonitorNodeProcess::get_modulelistheader()
 {
     std::vector<std::string> list;
     {
@@ -357,7 +373,7 @@ std::vector<std::string> SystemMonitorNodeProcess::get_devicelistheader()
     }
      {
         char buffer[256];
-        sprintf(buffer,"Device\t\t\tRAM(%%)\tCPU(%%)\tDISK(%%)");
+        sprintf(buffer,"Device\t\t\tRAM(%%)\tCPU(%%)\tDISK(%%)\tRx");
         list.push_back(std::string(buffer));
     }
     return list;
@@ -367,12 +383,24 @@ std::vector<std::string> SystemMonitorNodeProcess::get_modulebuffer()
     std::vector<std::string> list;
     for(std::size_t i = 0; i < modulelist.size(); ++i)
     {
+        int ramfree_perc = modulelist.at(i).RAMFree_Perc;
+        int cpufree_perc = modulelist.at(i).CPUFree_Perc;
+        int diskfree_perc = modulelist.at(i).DISKFree_Perc;
+        double dt = modulelist.at(i).last_heartbeat_delta;
+        if(modulelist.at(i).state == TASKSTATE_NODATA)
+        {
+            ramfree_perc = -1;
+            cpufree_perc = -1;
+            diskfree_perc = -1;
+            dt = -1.0;
+        }
         char tempstr[128];
-        sprintf(tempstr,"%s\t\t%d\t%d\t%d", 
+        sprintf(tempstr,"%s\t\t%d\t%d\t%d\t%4.2f", 
             modulelist.at(i).name.c_str(),
-            modulelist.at(i).RAMFree_Perc,
-            modulelist.at(i).CPUFree_Perc,
-            modulelist.at(i).DISKFree_Perc);
+            ramfree_perc,
+            cpufree_perc,
+            diskfree_perc,
+            dt);
         list.push_back(std::string(tempstr));
     }
     return list;
@@ -385,6 +413,17 @@ std::vector<std::string> SystemMonitorNodeProcess::get_taskbuffer()
     std::vector<std::string> buffer;
     for(std::size_t i = 0; i < tasklist.size(); ++i)
     {
+        int pid = tasklist.at(i).pid;
+        int cpu_used_perc = tasklist.at(i).cpu_used_perc;
+        int mem_used_perc = tasklist.at(i).mem_used_perc;
+        double dt = tasklist.at(i).last_heartbeat_delta;
+        if(tasklist.at(i).state == TASKSTATE_NODATA)
+        {
+            pid = -1;
+            cpu_used_perc = -1;
+            mem_used_perc = -1;
+            dt = -1.0;
+        }
         char tempstr[mainwindow_width];
         sprintf(tempstr,"%d\t%s\t%s\t\t%s\t%lu\t%d\t%d\t%d\t%.2f",
             tasklist.at(i).id,
@@ -392,10 +431,10 @@ std::vector<std::string> SystemMonitorNodeProcess::get_taskbuffer()
             fixed_width(tasklist.at(i).node_name,node_length).c_str(),
             fixed_width(map_taskstate_tostring(tasklist.at(i).state),state_length).c_str(),
             tasklist.at(i).restart_count,
-            tasklist.at(i).pid,
-            tasklist.at(i).cpu_used_perc,
-            tasklist.at(i).mem_used_perc,
-            tasklist.at(i).last_heartbeat_delta);
+            pid,
+            cpu_used_perc,
+            mem_used_perc,
+            dt);
         buffer.push_back(std::string(tempstr));
 
         /*
