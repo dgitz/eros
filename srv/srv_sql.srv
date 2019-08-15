@@ -1,0 +1,6 @@
+uint8 type
+string cmd
+---
+int8 status
+string[] fields
+string[] response

@@ -91,6 +91,7 @@ bool SystemMonitorNodeProcess::read_nodelist(std::string node_list_dir,std::vect
 	{
 		while (getline(nodelist_file, line))
 		{
+            line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
             line_counter++;
             boost::trim_left(line);
             if(line.size() > 0)
@@ -115,7 +116,9 @@ bool SystemMonitorNodeProcess::read_nodelist(std::string node_list_dir,std::vect
             {
                 printf("[ERROR] Unable to parse file: %s at line: %d\n",node_list_path.c_str(),line_counter);
             }
-            std::string instance_name = items.at(0).substr(1,items.at(0).size()-3);
+            std::string instance_name = items.at(0).substr(1,items.at(0).size()-2);
+            boost::trim_left(instance_name);
+            boost::trim_right(instance_name);
             std::size_t index = items.at(1).find("device[");
             std::string tempstr = items.at(1).substr(index+8);
             std::string host = tempstr.substr(0,tempstr.find("\""));
