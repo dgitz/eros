@@ -61,6 +61,7 @@ def sync_local(hostname):
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
     try:
+        os.unlink(RootDirectory + "config/NodeList.txt")
         os.unlink(RootDirectory + "config/ControlGroup.xml")
         os.unlink(RootDirectory + "config/DeviceFile.xml")
         os.unlink(RootDirectory + "config/JoystickCalibration.xml")
@@ -75,7 +76,7 @@ def sync_local(hostname):
         shutil.rmtree(RootDirectory + "config/scriptfiles")
     os.mkdir(RootDirectory + "config/scriptfiles")
     os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/scriptfiles/* " + RootDirectory + "/config/scriptfiles/")
-    
+    os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/NodeList.txt",RootDirectory + "config/NodeList.txt")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/ControlGroup.xml",RootDirectory + "config/ControlGroup.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/DeviceFile.xml",RootDirectory + "config/DeviceFile.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/JoystickCalibration.xml",RootDirectory + "config/JoystickCalibration.xml")

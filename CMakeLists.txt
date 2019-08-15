@@ -56,6 +56,7 @@ add_service_files(
     srv_device.srv
     srv_leverarm.srv
     srv_snapshotstate.srv
+    srv_sql.srv
  )
 generate_messages(DEPENDENCIES std_msgs)
 
