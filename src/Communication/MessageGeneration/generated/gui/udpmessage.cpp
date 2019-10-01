@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.265962***/
+/***Created on:2019-09-30 19:51:03.880427***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -175,14 +175,12 @@ int UDPMessageHandler::decode_EStopUDP(QList<QByteArray> items,std::string* Devi
 	*State=(int)items.at(2).toInt();
 	return 1;
 }
-QString UDPMessageHandler::encode_TuneControlGroupUDP(std::string ControlGroupName,std::string Type,double value1,double value2,double value3,int maxvalue,int minvalue,int defaultvalue)
+QString UDPMessageHandler::encode_TuneControlGroupUDP(std::string ControlGroupName,double value1,double value2,double value3,int maxvalue,int minvalue,int defaultvalue)
 {
 	QString tempstr = "";
 	tempstr.append(UDP_TuneControlGroup_ID);
 	tempstr.append(",");
 	tempstr.append(QString::fromStdString(ControlGroupName));
-	tempstr.append(",");
-	tempstr.append(QString::fromStdString(Type));
 	tempstr.append(",");
 	tempstr.append(QString::number(value1));
 	tempstr.append(",");

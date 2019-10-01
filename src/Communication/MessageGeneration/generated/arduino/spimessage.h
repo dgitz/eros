@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.266117***/
+/***Created on:2019-09-30 19:51:03.880590***/
 /***Target: Arduino ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H
@@ -9,6 +9,7 @@
 #define SPI_TestMessageCounter_ID 0x14
 #define SPI_Get_DIO_Port1_ID 0x19
 #define SPI_Get_ANA_Port1_ID 0x20
+#define SPI_Get_ANA_Port2_ID 0x21
 #define SPI_Arm_Status_ID 0x30
 #define SPI_LEDStripControl_ID 0x42
 
@@ -21,6 +22,8 @@ int encode_TestMessageCounterSPI(unsigned char* outbuffer,int* length,unsigned c
 int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned int u1,unsigned int u2);
 
 int encode_Get_ANA_Port1SPI(unsigned char* outbuffer,int* length,unsigned int Pin1_Value,unsigned int Pin2_Value,unsigned int Pin3_Value,unsigned int Pin4_Value,unsigned int Pin5_Value,unsigned int Pin6_Value);
+
+int encode_Get_ANA_Port2SPI(unsigned char* outbuffer,int* length,unsigned int Pin1_Value,unsigned int Pin2_Value,unsigned int Pin3_Value,unsigned int Pin4_Value,unsigned int Pin5_Value,unsigned int Pin6_Value);
 
 int decode_Arm_StatusSPI(unsigned char* inbuffer,int* length,unsigned char checksum,unsigned char * Status);
 

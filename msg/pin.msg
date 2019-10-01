@@ -2,7 +2,6 @@
 time stamp
 string Name
 string ParentDevice
-uint8 Number
 string Function
 int32 Value
 int32 DefaultValue
