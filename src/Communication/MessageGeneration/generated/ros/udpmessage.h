@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.265834***/
+/***Created on:2019-09-30 19:51:03.880306***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "Definitions.h"
@@ -47,7 +47,7 @@ public:
 	std::string encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState);
 	std::string encode_EStopUDP(std::string DeviceName,uint8_t State);
 	int decode_EStopUDP(std::vector<std::string> items,std::string* DeviceName,uint8_t* State);
-	int decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,std::string* Type,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue);
+	int decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue);
 	std::string encode_FirmwareUDP(std::string NodeName,std::string Description,uint8_t MajorRelease,uint8_t MinorRelease,uint8_t BuildNumber);
 	std::string encode_SubsystemDiagnosticUDP(uint8_t Electrical,uint8_t Software,uint8_t Communications,uint8_t Sensors,uint8_t Actuators,uint8_t Data_Storage,uint8_t Remote_Control,uint8_t Target_Acquisition,uint8_t Pose,uint8_t Timing,uint8_t System_Resource);
 	std::string encode_SystemSnapshotStateUDP(std::string State,uint8_t PercentComplete,uint16_t SystemSnapshotCount,std::string SourceDevice,std::string SystemSnapshotPath);

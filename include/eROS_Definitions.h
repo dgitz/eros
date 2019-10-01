@@ -23,6 +23,7 @@
 #define GET_IMUACC_ID 0XAB27
 #define ARMCONTROL_ID 0XAB26
 #define FIRMWAREVERSION_ID 0XAB25
+#define GET_ANA_PORT2_ID 0XAB21
 #define GET_ANA_PORT1_ID 0XAB20
 #define GET_DIO_PORT1_ID 0XAB19
 #define SET_DIO_PORT_ID 0XAB18
@@ -230,6 +231,7 @@
 #define SIGNALTYPE_ANGLE 6 //Degree
 #define SIGNALTYPE_VELOCITY 7 //m/s
 #define SIGNALTYPE_TICKSPEED 8 //Ticks/second
+#define SIGNALTYPE_UNITLESS 255 //Unit Less
 //TAG: End SignalType
 //Diagnostic Definitions
 #define LEVEL1 1
@@ -261,4 +263,19 @@
 #define SQLCOMMANDTYPE_DATAQUERY 3
 //TAG: End SQLCommandType
 
+//TAG: Port Definitions
+#define PORT_UNKNOWN 0
+#define PORT_DIGIPORT_1 1
+#define PORT_DIGIPORT_2 2
+#define PORT_DIGIPORT_3 3
+#define PORT_DIGIPORT_4 4
+#define PORT_DIGOPORT_1 5
+#define PORT_DIGOPORT_2 6
+#define PORT_DIGOPORT_3 7
+#define PORT_DIGOPORT_4 8
+#define PORT_ANAPORT_1 9
+#define PORT_ANAPORT_2 10
+#define PORT_ANAPORT_3 11
+#define PORT_ANAPORT_4 12
+//TAG: End Port Definitions
 #endif

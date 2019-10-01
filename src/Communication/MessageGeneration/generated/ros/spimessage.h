@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.266158***/
+/***Created on:2019-09-30 19:51:03.880632***/
 /***Target: Raspberry Pi ***/
 #ifndef SPIMESSAGE_H
 #define SPIMESSAGE_H
@@ -24,6 +24,7 @@ public:
 		SPI_TestMessageCounter_ID = 0x14,
 		SPI_Get_DIO_Port1_ID = 0x19,
 		SPI_Get_ANA_Port1_ID = 0x20,
+		SPI_Get_ANA_Port2_ID = 0x21,
 		SPI_Arm_Status_ID = 0x30,
 		SPI_LEDStripControl_ID = 0x42,
 	};
@@ -39,6 +40,8 @@ public:
 	int decode_Get_DIO_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* u1,uint16_t* u2);
 
 	int decode_Get_ANA_Port1SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
+
+	int decode_Get_ANA_Port2SPI(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
 
 	int encode_Arm_StatusSPI(unsigned char* outbuffer,int * length,unsigned char Status);
 

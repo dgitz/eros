@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.266240***/
+/***Created on:2019-09-30 19:51:03.880717***/
 /***Target: Raspberry Pi ***/
 #ifndef I2CMESSAGE_H
 #define I2CMESSAGE_H
@@ -21,6 +21,8 @@ public:
 		I2C_Diagnostic_ID = 0x12,
 		I2C_TestMessageCounter_ID = 0x14,
 		I2C_Get_DIO_Port1_ID = 0x19,
+		I2C_Get_ANA_Port1_ID = 0x20,
+		I2C_Get_ANA_Port2_ID = 0x21,
 		I2C_Get_IMUAcc_ID = 0x27,
 		I2C_Get_IMUGyro_ID = 0x28,
 		I2C_Get_IMUMag_ID = 0x29,
@@ -33,6 +35,10 @@ public:
 	int decode_TestMessageCounterI2C(unsigned char* inbuffer,int * length,unsigned char* value1,unsigned char* value2,unsigned char* value3,unsigned char* value4,unsigned char* value5,unsigned char* value6,unsigned char* value7,unsigned char* value8,unsigned char* value9,unsigned char* value10,unsigned char* value11,unsigned char* value12);
 
 	int decode_Get_DIO_Port1I2C(unsigned char* inbuffer,int * length,uint16_t* u1,uint16_t* u2,uint16_t* u3,uint16_t* u4);
+
+	int decode_Get_ANA_Port1I2C(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
+
+	int decode_Get_ANA_Port2I2C(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value);
 
 	int decode_Get_IMUAccI2C(unsigned char* inbuffer,int * length,uint16_t* acc1_x,uint16_t* acc1_y,uint16_t* acc1_z,uint16_t* acc2_x,uint16_t* acc2_y,uint16_t* acc2_z);
 

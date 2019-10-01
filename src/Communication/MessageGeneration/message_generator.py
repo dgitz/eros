@@ -922,7 +922,7 @@ def generate_message(xmlfile):
                         bytelength = bytelength +2
                     else:
                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
-                if(bytelength > 12): print "ERROR ERROR ERROR: Currently SPI Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
+                if(bytelength > 12): print "ERROR ERROR ERROR: Currently I2C Messages longer than 12 bytes are not supported.", " at line: ",currentframe().f_lineno
                 if(type_query == 1):
                     arduino_i2cmessagefile_cpp.write('\tunsigned char *p_outbuffer;\r\n\tp_outbuffer = &outbuffer[0];\r\n')
                 #elif(type_command == 1):

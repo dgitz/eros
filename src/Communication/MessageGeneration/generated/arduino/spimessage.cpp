@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.266138***/
+/***Created on:2019-09-30 19:51:03.880612***/
 /***Target: Arduino ***/
 #include "spimessage.h"
 
@@ -98,6 +98,31 @@ int encode_Get_DIO_Port1SPI(unsigned char* outbuffer,int* length,unsigned int u1
 	return 1;
 }
 int encode_Get_ANA_Port1SPI(unsigned char* outbuffer,int* length,unsigned int Pin1_Value,unsigned int Pin2_Value,unsigned int Pin3_Value,unsigned int Pin4_Value,unsigned int Pin5_Value,unsigned int Pin6_Value)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = Pin1_Value>>8;
+	*p_outbuffer++ = Pin1_Value;
+	*p_outbuffer++ = Pin2_Value>>8;
+	*p_outbuffer++ = Pin2_Value;
+	*p_outbuffer++ = Pin3_Value>>8;
+	*p_outbuffer++ = Pin3_Value;
+	*p_outbuffer++ = Pin4_Value>>8;
+	*p_outbuffer++ = Pin4_Value;
+	*p_outbuffer++ = Pin5_Value>>8;
+	*p_outbuffer++ = Pin5_Value;
+	*p_outbuffer++ = Pin6_Value>>8;
+	*p_outbuffer++ = Pin6_Value;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12;i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}
+int encode_Get_ANA_Port2SPI(unsigned char* outbuffer,int* length,unsigned int Pin1_Value,unsigned int Pin2_Value,unsigned int Pin3_Value,unsigned int Pin4_Value,unsigned int Pin5_Value,unsigned int Pin6_Value)
 {
 	unsigned char *p_outbuffer;
 	p_outbuffer = &outbuffer[0];

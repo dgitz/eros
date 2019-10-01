@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-07-25 07:26:41.266283***/
+/***Created on:2019-09-30 19:51:03.880738***/
 /***Target: Raspberry Pi ***/
 #include "../include/i2cmessage.h"
 I2CMessageHandler::I2CMessageHandler(){}
@@ -40,6 +40,38 @@ int I2CMessageHandler::decode_Get_DIO_Port1I2C(unsigned char* inbuffer,int * len
 	*u3 = v_u3 + inbuffer[5];
 	int v_u4 = inbuffer[6]<<8;
 	*u4 = v_u4 + inbuffer[7];
+	return 1;
+}
+int I2CMessageHandler::decode_Get_ANA_Port1I2C(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value)
+{
+	int v_Pin1_Value = inbuffer[0]<<8;
+	*Pin1_Value = v_Pin1_Value + inbuffer[1];
+	int v_Pin2_Value = inbuffer[2]<<8;
+	*Pin2_Value = v_Pin2_Value + inbuffer[3];
+	int v_Pin3_Value = inbuffer[4]<<8;
+	*Pin3_Value = v_Pin3_Value + inbuffer[5];
+	int v_Pin4_Value = inbuffer[6]<<8;
+	*Pin4_Value = v_Pin4_Value + inbuffer[7];
+	int v_Pin5_Value = inbuffer[8]<<8;
+	*Pin5_Value = v_Pin5_Value + inbuffer[9];
+	int v_Pin6_Value = inbuffer[10]<<8;
+	*Pin6_Value = v_Pin6_Value + inbuffer[11];
+	return 1;
+}
+int I2CMessageHandler::decode_Get_ANA_Port2I2C(unsigned char* inbuffer,int * length,uint16_t* Pin1_Value,uint16_t* Pin2_Value,uint16_t* Pin3_Value,uint16_t* Pin4_Value,uint16_t* Pin5_Value,uint16_t* Pin6_Value)
+{
+	int v_Pin1_Value = inbuffer[0]<<8;
+	*Pin1_Value = v_Pin1_Value + inbuffer[1];
+	int v_Pin2_Value = inbuffer[2]<<8;
+	*Pin2_Value = v_Pin2_Value + inbuffer[3];
+	int v_Pin3_Value = inbuffer[4]<<8;
+	*Pin3_Value = v_Pin3_Value + inbuffer[5];
+	int v_Pin4_Value = inbuffer[6]<<8;
+	*Pin4_Value = v_Pin4_Value + inbuffer[7];
+	int v_Pin5_Value = inbuffer[8]<<8;
+	*Pin5_Value = v_Pin5_Value + inbuffer[9];
+	int v_Pin6_Value = inbuffer[10]<<8;
+	*Pin6_Value = v_Pin6_Value + inbuffer[11];
 	return 1;
 }
 int I2CMessageHandler::decode_Get_IMUAccI2C(unsigned char* inbuffer,int * length,uint16_t* acc1_x,uint16_t* acc1_y,uint16_t* acc1_z,uint16_t* acc2_x,uint16_t* acc2_y,uint16_t* acc2_z)

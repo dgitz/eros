@@ -38,7 +38,6 @@ add_message_files(
   battery.msg
   iopins.msg
   pose.msg
-  controlgroup.msg
   leverarm.msg
   encoder.msg
   timesyncinfo.msg
@@ -46,6 +45,7 @@ add_message_files(
   systemsnapshot_state.msg
   loadfactor.msg
   uptime.msg
+  tune_controlgroup.msg
 
 
  )
@@ -57,6 +57,7 @@ add_service_files(
     srv_leverarm.srv
     srv_snapshotstate.srv
     srv_sql.srv
+    srv_pin.srv
  )
 generate_messages(DEPENDENCIES std_msgs)
 
