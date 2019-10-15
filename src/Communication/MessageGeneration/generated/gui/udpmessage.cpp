@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-09-30 19:51:03.880427***/
+/***Created on:2019-10-14 04:45:55.483847***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -229,5 +229,17 @@ int UDPMessageHandler::decode_SystemSnapshotStateUDP(QList<QByteArray> items,std
 	*SystemSnapshotCount=(int)items.at(3).toInt();
 	*SourceDevice=items.at(4).toStdString();
 	*SystemSnapshotPath=items.at(5).toStdString();
+	return 1;
+}
+int UDPMessageHandler::decode_ControlGroupValueUDP(QList<QByteArray> items,double* tov,std::string* ControlGroupName,double* Command,double* Sense,double* Error,double* Error_perc,double* Output)
+{
+	if(items.size() != 8){ return 0; }
+	*tov=items.at(1).toDouble();
+	*ControlGroupName=items.at(2).toStdString();
+	*Command=items.at(3).toDouble();
+	*Sense=items.at(4).toDouble();
+	*Error=items.at(5).toDouble();
+	*Error_perc=items.at(6).toDouble();
+	*Output=items.at(7).toDouble();
 	return 1;
 }

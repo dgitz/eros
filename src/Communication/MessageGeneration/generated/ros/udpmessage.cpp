@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-09-30 19:51:03.880372***/
+/***Created on:2019-10-14 04:45:55.483795***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -253,5 +253,25 @@ std::string UDPMessageHandler::encode_SystemSnapshotStateUDP(std::string State,u
 	tempstr.append(SourceDevice);
 	tempstr.append(",");
 	tempstr.append(SystemSnapshotPath);
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_ControlGroupValueUDP(double tov,std::string ControlGroupName,double Command,double Sense,double Error,double Error_perc,double Output)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_ControlGroupValue_ID));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)tov));
+	tempstr.append(",");
+	tempstr.append(ControlGroupName);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Command));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Sense));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Error));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Error_perc));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Output));
 	return tempstr;
 }

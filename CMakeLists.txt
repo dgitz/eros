@@ -46,6 +46,7 @@ add_message_files(
   loadfactor.msg
   uptime.msg
   tune_controlgroup.msg
+  view_controlgroup.msg
 
 
  )
