@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-14 04:45:55.483847***/
+/***Created on:2019-10-20 03:43:36.664668***/
 #include "udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -231,9 +231,9 @@ int UDPMessageHandler::decode_SystemSnapshotStateUDP(QList<QByteArray> items,std
 	*SystemSnapshotPath=items.at(5).toStdString();
 	return 1;
 }
-int UDPMessageHandler::decode_ControlGroupValueUDP(QList<QByteArray> items,double* tov,std::string* ControlGroupName,double* Command,double* Sense,double* Error,double* Error_perc,double* Output)
+int UDPMessageHandler::decode_ControlGroupValueUDP(QList<QByteArray> items,double* tov,std::string* ControlGroupName,double* Command,double* Sense,double* Error,double* Error_perc,double* Output,double* IntegralError,double* DerivativeError,double* P_Output,double* I_Output,double* D_Output)
 {
-	if(items.size() != 8){ return 0; }
+	if(items.size() != 13){ return 0; }
 	*tov=items.at(1).toDouble();
 	*ControlGroupName=items.at(2).toStdString();
 	*Command=items.at(3).toDouble();
@@ -241,5 +241,21 @@ int UDPMessageHandler::decode_ControlGroupValueUDP(QList<QByteArray> items,doubl
 	*Error=items.at(5).toDouble();
 	*Error_perc=items.at(6).toDouble();
 	*Output=items.at(7).toDouble();
+	*IntegralError=items.at(8).toDouble();
+	*DerivativeError=items.at(9).toDouble();
+	*P_Output=items.at(10).toDouble();
+	*I_Output=items.at(11).toDouble();
+	*D_Output=items.at(12).toDouble();
+	return 1;
+}
+int UDPMessageHandler::decode_SystemStateUDP(QList<QByteArray> items,int* State,int* Option1,int* Option2,int* Option3,std::string* StateText,std::string* Description)
+{
+	if(items.size() != 7){ return 0; }
+	*State=(int)items.at(1).toInt();
+	*Option1=(int)items.at(2).toInt();
+	*Option2=(int)items.at(3).toInt();
+	*Option3=(int)items.at(4).toInt();
+	*StateText=items.at(5).toStdString();
+	*Description=items.at(6).toStdString();
 	return 1;
 }

@@ -6,3 +6,8 @@ float64 sensor_value
 float64 error_value
 float64 errorperc_value
 float64 output_value
+float64 integral_error
+float64 derivative_error
+float64 P_output
+float64 I_output
+float64 D_output

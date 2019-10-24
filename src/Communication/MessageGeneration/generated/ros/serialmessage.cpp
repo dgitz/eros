@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-14 04:45:55.483894***/
+/***Created on:2019-10-20 03:43:36.664711***/
 /***Target: ROS ***/
 #include "../include/serialmessage.h"
 SerialMessageHandler::SerialMessageHandler(){}
