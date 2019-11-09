@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-09-30 19:51:03.880402***/
+/***Created on:2019-10-20 03:43:36.664646***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -19,6 +19,8 @@
 #define UDP_Firmware_ID "AB41"
 #define UDP_SubsystemDiagnostic_ID "AB43"
 #define UDP_SystemSnapshotState_ID "AB44"
+#define UDP_ControlGroupValue_ID "AB45"
+#define UDP_SystemState_ID "AB46"
 
 class UDPMessageHandler
 {
@@ -41,6 +43,8 @@ public:
 	int decode_FirmwareUDP(QList<QByteArray> items,std::string* NodeName,std::string* Description,int* MajorRelease,int* MinorRelease,int* BuildNumber);
 	int decode_SubsystemDiagnosticUDP(QList<QByteArray> items,int* Electrical,int* Software,int* Communications,int* Sensors,int* Actuators,int* Data_Storage,int* Remote_Control,int* Target_Acquisition,int* Pose,int* Timing,int* System_Resource);
 	int decode_SystemSnapshotStateUDP(QList<QByteArray> items,std::string* State,int* PercentComplete,int* SystemSnapshotCount,std::string* SourceDevice,std::string* SystemSnapshotPath);
+	int decode_ControlGroupValueUDP(QList<QByteArray> items,double* tov,std::string* ControlGroupName,double* Command,double* Sense,double* Error,double* Error_perc,double* Output,double* IntegralError,double* DerivativeError,double* P_Output,double* I_Output,double* D_Output);
+	int decode_SystemStateUDP(QList<QByteArray> items,int* State,int* Option1,int* Option2,int* Option3,std::string* StateText,std::string* Description);
 private:
 };
 #endif

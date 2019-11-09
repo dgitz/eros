@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-09-30 19:51:03.880306***/
+/***Created on:2019-10-20 03:43:36.664552***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "Definitions.h"
@@ -32,6 +32,8 @@ public:
 		UDP_Firmware_ID = 0xAB41,
 		UDP_SubsystemDiagnostic_ID = 0xAB43,
 		UDP_SystemSnapshotState_ID = 0xAB44,
+		UDP_ControlGroupValue_ID = 0xAB45,
+		UDP_SystemState_ID = 0xAB46,
 	};
 	UDPMessageHandler();
 	~UDPMessageHandler();
@@ -51,6 +53,8 @@ public:
 	std::string encode_FirmwareUDP(std::string NodeName,std::string Description,uint8_t MajorRelease,uint8_t MinorRelease,uint8_t BuildNumber);
 	std::string encode_SubsystemDiagnosticUDP(uint8_t Electrical,uint8_t Software,uint8_t Communications,uint8_t Sensors,uint8_t Actuators,uint8_t Data_Storage,uint8_t Remote_Control,uint8_t Target_Acquisition,uint8_t Pose,uint8_t Timing,uint8_t System_Resource);
 	std::string encode_SystemSnapshotStateUDP(std::string State,uint8_t PercentComplete,uint16_t SystemSnapshotCount,std::string SourceDevice,std::string SystemSnapshotPath);
+	std::string encode_ControlGroupValueUDP(double tov,std::string ControlGroupName,double Command,double Sense,double Error,double Error_perc,double Output,double IntegralError,double DerivativeError,double P_Output,double I_Output,double D_Output);
+	std::string encode_SystemStateUDP(uint8_t State,uint8_t Option1,uint8_t Option2,uint8_t Option3,std::string StateText,std::string Description);
 private:
 };
 #endif

@@ -119,7 +119,8 @@ void Logger::log_diagnostic(eros::diagnostic diagnostic)
 
 	char tempstr[2048];
 
-	sprintf(tempstr,"System: %s Subsystem: %s Component: %s Type: %s Message: %s Description: %s",
+	sprintf(tempstr,"Device: %s System: %s Subsystem: %s Component: %s Type: %s Message: %s Description: %s",
+			diagnostic.DeviceName.c_str(),
 			diagclass.get_DiagSystemString(diagnostic.System).c_str(),
 			diagclass.get_DiagSubSystemString(diagnostic.SubSystem).c_str(),
 			diagclass.get_DiagComponentString(diagnostic.Component).c_str(),

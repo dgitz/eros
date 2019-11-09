@@ -830,4 +830,52 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="ControlGroupValue" id="0xAB45">
+        <Description>
+            <![CDATA[
+                This message is used to send Control Group values
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="double" name="tov"/>
+                    <field type="std::string" name="ControlGroupName"/>
+                    <field type="double" name="Command"/>
+                    <field type="double" name="Sense"/>
+                    <field type="double" name="Error"/>
+                    <field type="double" name="Error_perc"/>
+                    <field type="double" name="Output"/>
+                    <field type="double" name="IntegralError"/>
+                    <field type="double" name="DerivativeError"/>
+                    <field type="double" name="P_Output"/>
+                    <field type="double" name="I_Output"/>
+                    <field type="double" name="D_Output"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
+    <Message name="SystemState" id="0xAB46">
+        <Description>
+            <![CDATA[
+                This message is used for command messages
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="UDP">
+                <Origin>Master</Origin>
+                <Retry>false</Retry>
+                <Fields>
+                    <field type="uint8_t" name="State"/>
+                    <field type="uint8_t" name="Option1"/>
+                    <field type="uint8_t" name="Option2"/>
+                    <field type="uint8_t" name="Option3"/>
+                    <field type="std::string" name="StateText"/>
+                    <field type="std::string" name="Description"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

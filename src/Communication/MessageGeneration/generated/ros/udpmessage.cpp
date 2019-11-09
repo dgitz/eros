@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-09-30 19:51:03.880372***/
+/***Created on:2019-10-20 03:43:36.664618***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -253,5 +253,53 @@ std::string UDPMessageHandler::encode_SystemSnapshotStateUDP(std::string State,u
 	tempstr.append(SourceDevice);
 	tempstr.append(",");
 	tempstr.append(SystemSnapshotPath);
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_ControlGroupValueUDP(double tov,std::string ControlGroupName,double Command,double Sense,double Error,double Error_perc,double Output,double IntegralError,double DerivativeError,double P_Output,double I_Output,double D_Output)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_ControlGroupValue_ID));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)tov));
+	tempstr.append(",");
+	tempstr.append(ControlGroupName);
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Command));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Sense));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Error));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Error_perc));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Output));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)IntegralError));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)DerivativeError));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)P_Output));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)I_Output));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)D_Output));
+	return tempstr;
+}
+std::string UDPMessageHandler::encode_SystemStateUDP(uint8_t State,uint8_t Option1,uint8_t Option2,uint8_t Option3,std::string StateText,std::string Description)
+{
+	std::string tempstr = "";
+	tempstr.append(boost::lexical_cast<std::string>(UDP_SystemState_ID));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)State));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Option1));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Option2));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((int)Option3));
+	tempstr.append(",");
+	tempstr.append(StateText);
+	tempstr.append(",");
+	tempstr.append(Description);
 	return tempstr;
 }

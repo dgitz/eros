@@ -213,11 +213,18 @@ def generate_message(xmlfile):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((int)' + item.name + '));\r\n')
                         if(encode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
-                    else:
+                    elif(item.datatype == 'uint16_t'):
                         if(encode_for_master == 1):
                             ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((int)' + item.name + '));\r\n')
                         if(encode_for_gui == 1):
                             gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
+                    elif(item.datatype == 'double'):
+                        if(encode_for_master == 1):
+                            ros_udpmessagefile_cpp.write('\ttempstr.append(boost::lexical_cast<std::string>((double)' + item.name + '));\r\n')
+                        if(encode_for_gui == 1):
+                            gui_udpmessagefile_cpp.write('\ttempstr.append(QString::number(' + item.name + '));\r\n')
+                    else:
+                         print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
 
                     index += 1
 
@@ -276,6 +283,9 @@ def generate_message(xmlfile):
                         elif(item.datatype == 'std::string'):
                             gui_udpmessagefile_header.write('std::string* ' + item.name)
                             gui_udpmessagefile_cpp.write('std::string* ' + item.name)
+                        elif(item.datatype == 'double'):
+                            gui_udpmessagefile_header.write('double* ' + item.name)
+                            gui_udpmessagefile_cpp.write('double* ' + item.name)
                         else:
                             print "ERROR: Datatype not supported:",item.datatype, " at line: ",currentframe().f_lineno
                         

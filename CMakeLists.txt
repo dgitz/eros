@@ -46,6 +46,8 @@ add_message_files(
   loadfactor.msg
   uptime.msg
   tune_controlgroup.msg
+  view_controlgroup.msg
+  system_state.msg
 
 
  )
@@ -76,6 +78,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   FILES_MATCHING PATTERN "*.h")
 add_library(logger util/logger.cpp)
+add_library(eros_math util/eros_math.cpp)
 add_subdirectory(src/Utility)
 
 
