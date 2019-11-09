@@ -126,25 +126,28 @@
 #define ARMEDSTATUS_ARMING 5
 //TAG: End ArmedState
 
-//Board Types
+//TAG: Start BoardTypes
 #define BOARDTYPE_UNDEFINED 0
 #define BOARDTYPE_ARDUINOUNO 1
 #define BOARDTYPE_ARDUINOMEGA 2
+//TAG: End BoardTypes
 
-//Shield Types
+//TAG: Start ShieldTypes
 #define SHIELDTYPE_UNDEFINED 0
 #define SHIELDTYPE_SERVOSHIELD 1
 #define SHIELDTYPE_LCDSHIELD 2
 #define SHIELDTYPE_RELAYSHIELD 3
 #define SHIELDTYPE_TERMINALSHIELD 4
 #define SHIELDTYPE_NONE 255
+//TAG: End ShieldTypes
 
-//Hat Types
+//TAG: Start HatTypes
 #define HATTYPE_UNDEFINED 0
 #define HATTYPE_TERMINALSHIELD 1
 #define HATTYPE_SERVOHAT 2
+//TAG: End HatTypes
 
-//Rover Commands
+//TAG: Start RoverCommands
 #define ROVERCOMMAND_UNDEFINED 0
 #define ROVERCOMMAND_BOOT 1
 #define ROVERCOMMAND_NONE 2
@@ -166,45 +169,50 @@
 #define ROVERCOMMAND_SIMULATIONCCONTROL 18
 #define ROVERCOMMAND_WAIT 254
 #define ROVERCOMMAND_UNKNOWN 255
+//TAG: End RoverCommands
 
-
-//Rover States
+//TAG: Start RoverStates
 #define ROVERSTATE_UNDEFINED 0
 #define ROVERSTATE_SIMULATION 1
 #define ROVERSTATE_UNKNOWN 255
+//TAG: End RoverStates
 
-//Rover Simulation States
+//TAG: Start RoverSimulationStates
 #define ROVERSTATE_SIMULATION_UNDEFINED 0
 #define ROVERSTATE_SIMULATION_NOTRUNNING 1
 #define ROVERSTATE_SIMULATION_RUNNING 2
+//TAG: End RoverSimulationStates
 
-
-//Node/Rover States
+//TAG: Start NodeStates
 #define NODESTATE_UNDEFINED 0
 #define NODESTATE_BOOTING 1
 #define NODESTATE_RUNNING 2
 #define NODESTATE_SEARCHING_FOR_RECHARGE_FACILITY 3
 #define NODESTATE_ACQUIRING_TARGET 4
+//TAG: End NodeStates
 
-//Power States
+//TAG: Start PowerStates
 #define POWERSTATE_UNDEFINED 0
 #define POWERSTATE_NORMAL 1
 #define POWERSTATE_STANDBY 2
 #define POWERSTATE_CHANGINGACTIVEBATTERY 3
 #define POWERSTATE_REQUIRERECHARGE 4
 #define POWERSTATE_EMERGENCY 5
+//TAG: End PowerStates
 
-//EStop States
+//TAG: Start EStopStates
 #define ESTOP_UNDEFINED 0
 #define ESTOP_DISACTIVATED 1
 #define ESTOP_ACTIVATED 2
+//TAG: End EStopStates
 
-//Task States
+//TAG: Start TaskStates
 #define TASKSTATE_UNDEFINED 0
 #define TASKSTATE_NODATA 1
 #define TASKSTATE_INITIALIZING 2
 #define TASKSTATE_RUNNING 3
 #define TASKSTATE_STOPPED 4
+//TAG: End TaskStates
 
 //TAG: Start SignalState
 #define SIGNALSTATE_UNDEFINED 0
@@ -242,6 +250,15 @@
 #define ROVERCOMMAND_SIMULATIONCONTROL_PAUSESIM 3
 //TAG: End RoverCommand_SimulationControl
 
+//TAG: Start SignalClass
+#define SIGNALCLASS_UNDEFINED 0
+#define SIGNALCLASS_SENSORSIGNAL 1
+#define SIGNALCLASS_TIMEDSIGNAL 2
+#define SIGNALCLASS_PROCESSEDSIGNAL 3
+#define SIGNALCLASS_INPUTSIGNAL 4
+#define SIGNALCLASS_POSESIGNAL 5
+//TAG: End SignalClass
+
 //TAG: Start SignalType
 #define SIGNALTYPE_UNDEFINED 0
 #define SIGNALTYPE_ACCELERATION 1 //m/s^2
@@ -254,6 +271,8 @@
 #define SIGNALTYPE_TICKSPEED 8 //Ticks/second
 #define SIGNALTYPE_UNITLESS 255 //Unit Less
 //TAG: End SignalType
+
+
 //Diagnostic Definitions
 #define LEVEL1 1
 #define LEVEL2 2
