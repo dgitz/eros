@@ -11,7 +11,7 @@ import pdb
 def get_topics(mode,bag):
     topics = []
     search_list = []
-    if(mode == "pose"):
+    if((mode == "all") or (mode == "pose")):
         topics.append('/RightIMU_Simulated')
         topics.append('/LeftIMU_Simulated')
         topics.append('/LeftWheelEncoder_Simulated')
@@ -20,7 +20,7 @@ def get_topics(mode,bag):
         topics.append('/RightMotorController')
         topics.append('/TiltServo')
         topics.append('/TruthPose_Simulated')
-    if(mode == "performance"):
+    if((mode == "all") or (mode == "performance")):
         search_list.append("resource")
         search_list.append("loadfactor")
         search_list.append("uptime")
@@ -122,19 +122,21 @@ def bag_to_csv(mode, output_dir,fname):
     finally:
         bag.close()
 
-
-def main(options):
+def convert(bag_directory,mode,output_dir):
     start = time.time()
-    for f in os.listdir(options.bag_directory):
+    for f in os.listdir(bag_directory):
         
         if ".bag" in f:
             print "Converting: " + f
             folder_name = f[4:f.find(".bag")]
-            if(os.path.isdir(options.output_dir + folder_name) == False):
-                os.mkdir(options.output_dir + folder_name)
-            shutil.copy(options.bag_directory + f,options.output_dir + folder_name + '/' + folder_name + ".bag")
-            bag_to_csv(options.mode,options.output_dir + folder_name,options.output_dir + folder_name + '/' + folder_name + ".bag")
-    print "Conversion Complete."
+            if(os.path.isdir(output_dir + folder_name + "_CSV") == False):
+                os.mkdir(output_dir + folder_name + "_CSV")
+            shutil.copy(bag_directory + f,output_dir + folder_name + '_CSV/' + folder_name + ".bag")
+            bag_to_csv(mode,output_dir + folder_name+ "_CSV",output_dir + folder_name + '_CSV/' + folder_name + ".bag")
+    print "Conversion of " + bag_directory + " Complete."
+    
+def main(options):
+    convert(options.bag_directory,options.mode,options.output_dir)
 
 if __name__ == '__main__':
     print "rosbag_to_csv start!!"
@@ -142,7 +144,7 @@ if __name__ == '__main__':
     parser.add_option("-d", "--bag directory",dest="bag_directory",
             help="bagfile directory")
     parser.add_option("-m", "--mode",dest="mode",
-            help="Mode: Supported Options: pose,performance")
+            help="Mode: Supported Options: all,pose,performance")
     parser.add_option("-o", "--output dir",dest="output_dir",
             help="output directory")
     (options, args) = parser.parse_args()

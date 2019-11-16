@@ -487,15 +487,22 @@ def sync_remote(device,build):
     if(mydeviceinfo.Architecture != targetinfo.Architecture):
         exclude = "--exclude '*.o' --exclude '*.out' --exclude 'CMakeCache.txt' --exclude 'Makefile' --exclude '*.cmake' --exclude 'CMakeFiles/*' " 
     subprocess.call("rsync -avprt " + exclude + ApplicationPackage + "src/* " + "robot@" + device + ":" + ApplicationPackage + "src/",shell=True)
+    subprocess.call("rsync -avprt " + exclude + ApplicationPackage + "src_templates/* " + "robot@" + device + ":" + ApplicationPackage + "src_templates/",shell=True)
     subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "util/* " + "robot@" + device + ":" + ApplicationPackage + "util/",shell=True)
     subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "msg/* " + "robot@" + device + ":" + ApplicationPackage + "msg/",shell=True)
     subprocess.call("rsync -avrt " + exclude + ApplicationPackage + "srv/* " + "robot@" + device + ":" + ApplicationPackage + "srv/",shell=True)
     subprocess.call("rsync -avrlt " + exclude + ApplicationPackage + "include/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
     subprocess.call("rsync -avrlt " + exclude + RootDirectory + "catkin_ws/src/eROS/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/eROS/",shell=True)
+    if(targetinfo.Architecture == 'x86_64'):
+        #subprocess.call("rsync -avrlt " + exclude + RootDirectory + "catkin_ws/src/icarus_sim/* robot@" + device + ":" + RootDirectory + "catkin_ws/src/icarus_sim/",shell=True)
+        subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/models/* " + "robot@" + device + ":" + RootDirectory + "/.gazebo/models/" ,shell=True) 
+        subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/models/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/icarus_sim/models/" ,shell=True) 
+        subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/worlds/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/icarus_sim/worlds/" ,shell=True) 
+
     #subprocess.call("rsync -avrlt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + RootDirectory + "catkin_ws/devel/include/" + PackageName,shell=True)
     #subprocess.call("rsync -avrt " + RootDirectory + "catkin_ws/devel/include/" + PackageName + "/* " + "robot@" + device + ":" + ApplicationPackage + "include/",shell=True)
     
-    if(mydeviceinfo.Architecture == targetinfo.Architecture):
+    if((mydeviceinfo.Architecture == targetinfo.Architecture)):# and (mydeviceinfo.Architecture != 'x86_64')):
         print "Syncing Binaries"
         subprocess.call("rsync -apvrt " + ApplicationPackage + "package.xml " + "robot@" + device + ":" + ApplicationPackage + "",shell=True)
         subprocess.call("rsync -avt " + BinaryPackage + "*.so " + "robot@" + device + ":" + BinaryPackage + "",shell=True)
