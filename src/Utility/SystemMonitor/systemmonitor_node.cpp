@@ -46,9 +46,10 @@ bool SystemMonitorNode::start(int argc, char **argv)
 	std::vector<std::string> nodes;
 	std::vector<std::string> resource_topics;
 	std::vector<std::string> heartbeat_topics;
+	std::vector<std::string> loadfactor_topics;
 	std::vector<std::string> resourceavailable_topics;
 	status = process->read_nodelist("/home/robot/config/scenarios/" + active_scenario + "/",&hosts,&nodes,
-		&resource_topics,&heartbeat_topics,&resourceavailable_topics);
+		&resource_topics,&heartbeat_topics,&loadfactor_topics,&resourceavailable_topics);
 	if(status == false)
 	{
 		return false;
@@ -68,6 +69,13 @@ bool SystemMonitorNode::start(int argc, char **argv)
 		logger->log_info("[" + std::to_string(i) + "] " + heartbeat_topics.at(i));
 		ros::Subscriber sub = n->subscribe<eros::heartbeat>(heartbeat_topics.at(i),5,&SystemMonitorNode::heartbeat_Callback,this);
 		heartbeat_subs.push_back(sub);
+	}
+	logger->log_info("--- Subscribing to LoadFactor Topics ---");
+	for(std::size_t i = 0; i < loadfactor_topics.size(); ++i)
+	{
+		logger->log_info("[" + std::to_string(i) + "] " + loadfactor_topics.at(i));
+		ros::Subscriber sub = n->subscribe<eros::loadfactor>(loadfactor_topics.at(i),5,&SystemMonitorNode::loadfactor_Callback,this);
+		loadfactor_subs.push_back(sub);
 	}
 	logger->log_info("--- Subscribing to Resource Available Topics ---");
 	for(std::size_t i = 0; i < resourceavailable_topics.size(); ++i)
@@ -135,9 +143,10 @@ bool SystemMonitorNode::init_screen()
 	}
 	window_header = create_newwin(mainwindow_height/6, mainwindow_width, 0, 0);
 	window_tasklist = create_newwin(TASKPAGE_COUNT+4, mainwindow_width, mainwindow_height/6, 0);
-	window_footer_left = create_newwin((2*(mainwindow_height/6))-5, mainwindow_width/3, mainwindow_height/6+TASKPAGE_COUNT+4, 0);
-	window_footer_center = create_newwin((mainwindow_height/6)+3, mainwindow_width/3, mainwindow_height/6+TASKPAGE_COUNT+4, mainwindow_width/3);
-	window_footer_right = create_newwin((2*(mainwindow_height/6))-5, mainwindow_width/3, mainwindow_height/6+TASKPAGE_COUNT+4, 2*mainwindow_width/3);
+	window_footer_left = create_newwin((2*(mainwindow_height/6))-5, mainwindow_width/4.0, mainwindow_height/6+TASKPAGE_COUNT+4, 0);
+	window_footer_center = create_newwin((mainwindow_height/6)+3, mainwindow_width/3.0, mainwindow_height/6+TASKPAGE_COUNT+4, mainwindow_width/4);
+	double remaining_width = (1/4.0)+(1/3.0);
+	window_footer_right = create_newwin((2*(mainwindow_height/6))-5, (1.0-remaining_width)*mainwindow_width, mainwindow_height/6+TASKPAGE_COUNT+4, remaining_width*mainwindow_width+1);
 	wbkgd(window_header,COLOR_PAIR(NO_COLOR));
 	keypad(window_header, TRUE);
 	keypad(window_tasklist, TRUE);
@@ -736,6 +745,19 @@ eros::diagnostic SystemMonitorNode::rescan_topics()
 				resource_subs.push_back(sub);
 			}
 		}
+		if(info.datatype == "eros/loadfactor")
+		{
+			int v = process->push_topiclist(info.datatype,info.name);
+			if(v == 1)
+			{
+				found_new_topics++;
+				char tempstr[255];
+				sprintf(tempstr,"Subscribing to loadfactor topic: %s",info.name.c_str());
+				logger->log_info(tempstr);
+				ros::Subscriber sub = n->subscribe<eros::loadfactor>(info.name,2,&SystemMonitorNode::loadfactor_Callback,this);
+				loadfactor_subs.push_back(sub);
+			}
+		}
 		if(info.datatype == "eros/heartbeat")
 		{
 			int v = process->push_topiclist(info.datatype,info.name);
@@ -777,6 +799,14 @@ void SystemMonitorNode::heartbeat_Callback(const eros::heartbeat::ConstPtr& msg)
 void SystemMonitorNode::resource_Callback(const eros::resource::ConstPtr& msg)
 {
 	eros::diagnostic diag = process->new_resourcemessage(msg);
+	if(diag.Level > NOTICE)
+	{
+		logger->log_diagnostic(diag);
+	}
+}
+void SystemMonitorNode::loadfactor_Callback(const eros::loadfactor::ConstPtr& msg)
+{
+	eros::diagnostic diag = process->new_loadfactormessage(msg);
 	if(diag.Level > NOTICE)
 	{
 		logger->log_diagnostic(diag);

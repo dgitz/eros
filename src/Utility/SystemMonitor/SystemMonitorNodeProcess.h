@@ -17,6 +17,7 @@
 #include <eros/heartbeat.h>
 #include <eros/command.h>
 #include <eros/resource.h>
+#include <eros/loadfactor.h>
 #include <eros/systemsnapshot_state.h>
 //Project
 #include "../../../include/eROS_Definitions.h"
@@ -88,6 +89,9 @@ public:
 		int8_t RAMFree_Perc;
 		int8_t CPUFree_Perc;
 		int8_t DISKFree_Perc;
+		double loadfactor_1min;
+		double loadfactor_5min;
+		double loadfactor_15min;
 		double last_heartbeat;
 		double last_heartbeat_delta;
 		uint8_t state;
@@ -122,7 +126,10 @@ public:
 		return diagnostic;
 	}
 	bool read_nodelist(std::string node_list_path,std::vector<std::string> *hosts,std::vector<std::string> *nodes,
-		std::vector<std::string> *resource_topics,std::vector<std::string> *heartbeat_topics,std::vector<std::string> *resource_available_topics);
+		std::vector<std::string> *resource_topics,
+		std::vector<std::string> *heartbeat_topics,
+		std::vector<std::string> *loadfactor_topics,
+		std::vector<std::string> *resource_available_topics);
 	eros::diagnostic init_nodelist(std::vector<std::string> hosts,std::vector<std::string> nodes);
 	//Update Functions
 	/*! \brief Implementation of the update function
@@ -192,6 +199,7 @@ public:
 	}
 	eros::diagnostic new_resourcemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_resourceavailablemessage(const eros::resource::ConstPtr& t_ptr);
+	eros::diagnostic new_loadfactormessage(const eros::loadfactor::ConstPtr& t_ptr);
 	eros::diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
 	//Support Functions
