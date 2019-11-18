@@ -19,6 +19,7 @@
 #include <eros/resource.h>
 #include <eros/loadfactor.h>
 #include <eros/pose.h>
+#include <eros/uptime.h>
 #include <eros/systemsnapshot_state.h>
 //Project
 #include "../../../include/eROS_Definitions.h"
@@ -88,6 +89,7 @@ public:
 	{
 		bool initialized;
 		std::string name;
+		double uptime;
 		int8_t RAMFree_Perc;
 		int8_t CPUFree_Perc;
 		int8_t DISKFree_Perc;
@@ -133,6 +135,7 @@ public:
 		std::vector<std::string> *resource_topics,
 		std::vector<std::string> *heartbeat_topics,
 		std::vector<std::string> *loadfactor_topics,
+		std::vector<std::string> *deviceuptime_topics,
 		std::vector<std::string> *resource_available_topics);
 	eros::diagnostic init_nodelist(std::vector<std::string> hosts,std::vector<std::string> nodes);
 	//Update Functions
@@ -199,12 +202,37 @@ public:
 			heartbeat_topics.push_back(name);
 			return 1;
 		}
+		else if(type == "eros/loadfactor")
+		{
+			for(std::size_t i = 0; i < loadfactor_topics.size();i++)
+			{
+				if(loadfactor_topics.at(i) == name)
+				{
+					return 0;
+				}
+			}
+			loadfactor_topics.push_back(name);
+			return 1;
+		}
+		else if(type == "eros/uptime")
+		{
+			for(std::size_t i = 0; i < deviceuptime_topics.size();i++)
+			{
+				if(deviceuptime_topics.at(i) == name)
+				{
+					return 0;
+				}
+			}
+			deviceuptime_topics.push_back(name);
+			return 1;
+		}
 		return -1;
 	}
 	eros::diagnostic new_truthpose(const eros::pose::ConstPtr& t_ptr);
 	eros::diagnostic new_resourcemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_resourceavailablemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_loadfactormessage(const eros::loadfactor::ConstPtr& t_ptr);
+	eros::diagnostic new_deviceuptime(const eros::uptime::ConstPtr& t_ptr);
 	eros::diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
 	//Support Functions
@@ -221,6 +249,7 @@ private:
 	std::string exec(const char* cmd,bool wait_for_result);
 	std::string fixed_width(std::string item,uint16_t width);
 	Task create_task(uint16_t id,std::string host,std::string name);
+	std::string convert_uptime(double t);
 	uint16_t mainwindow_width,mainwindow_height;
 	eros::diagnostic diagnostic;
 	std::string base_node_name,node_name;
@@ -229,6 +258,8 @@ private:
 	std::vector<Module> modulelist;
 	std::vector<std::string> resource_topics;
 	std::vector<std::string> heartbeat_topics;
+	std::vector<std::string> loadfactor_topics;
+	std::vector<std::string> deviceuptime_topics;
 	double uptime;
 	PoseHelper pose_helper;
 	SystemSnap snap;
