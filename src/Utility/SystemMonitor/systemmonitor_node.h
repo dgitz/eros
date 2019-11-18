@@ -59,6 +59,8 @@ private:
 	void resourceAvailable_Callback(const eros::resource::ConstPtr& msg);
 	void uptime_Callback(const std_msgs::Float32::ConstPtr& msg);
 	void snapshotstate_Callback(const eros::systemsnapshot_state::ConstPtr& msg);
+	void truthpose_Callback(const eros::pose::ConstPtr& msg);
+	void roverpose_Callback(const eros::pose::ConstPtr& msg);
 	//Utility Functions
 	/*! \brief Measures time delay between 2 ros::Time timestamps.
 	 *  Generally, if wanting to measure the time from now to a previous mark,
@@ -102,6 +104,8 @@ private:
 	std::vector<ros::Subscriber> heartbeat_subs;
 	std::vector<ros::Subscriber> resourceavailable_subs;
 	std::vector<ros::Subscriber> loadfactor_subs;
+	ros::Subscriber truthpose_sub;
+	ros::Subscriber roverpose_sub;
 	ros::Subscriber snapshotstate_sub;
 	ros::Publisher command_pub;
 	ros::Subscriber uptime_sub;

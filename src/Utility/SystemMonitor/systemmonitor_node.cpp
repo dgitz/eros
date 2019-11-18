@@ -92,7 +92,8 @@ bool SystemMonitorNode::start(int argc, char **argv)
 		sprintf(tempstr,"[%d] %s",(int)i,tasks.at(i).node_name.c_str());
 		logger->log_info(std::string(tempstr));
 	}
-	
+	truthpose_sub = n->subscribe<eros::pose>("/TruthPose_Simulated",2,&SystemMonitorNode::truthpose_Callback,this);
+
 	time (&rawtime);
   	timeinfo = localtime(&rawtime);
 	
@@ -239,6 +240,42 @@ bool SystemMonitorNode::update_windowheader()
 		}
 		std::string str(buffer);
 		mvwprintw(window_header,RUNTIME_COORD_Y,(int)(mainwindow_width-str.size())/2,buffer);
+	}
+	{//Poses
+		uint8_t truthpose_state = process->get_truthposestate();
+		uint8_t color = 0;
+		switch(truthpose_state)
+		{
+			case SIGNALSTATE_UNDEFINED:
+				color = NO_COLOR;
+				break;
+			case SIGNALSTATE_INVALID:
+				color = NO_COLOR;
+				break;
+			case SIGNALSTATE_INITIALIZING:
+				color = YELLOW_COLOR;
+				break;
+			case SIGNALSTATE_UPDATED:
+				color = BLUE_COLOR;
+				break;
+			case SIGNALSTATE_HOLD:
+				color = GREEN_COLOR;
+				break;
+			case SIGNALSTATE_EXTRAPOLATED:
+				color = GREEN_COLOR;
+				break;
+			case SIGNALSTATE_CALIBRATING:
+				color = YELLOW_COLOR;
+				break;
+			default:
+				color = NO_COLOR;
+				break;
+		}
+		wattron(window_header,COLOR_PAIR(color));
+		mvwprintw(window_header,ROSTIME_COORD_Y+2,ROSTIME_COORD_X,"%s",process->get_truthposestring().c_str());
+		wclrtoeol(window_header);
+		wattroff(window_header,COLOR_PAIR(color));
+		
 	}
 	box(window_header, 0 , 0);
 	wrefresh(window_header);
@@ -783,6 +820,10 @@ eros::diagnostic SystemMonitorNode::rescan_topics()
 	}
 	logger->log_info(tempstr);
 	return diag;
+}
+void SystemMonitorNode::truthpose_Callback(const eros::pose::ConstPtr& msg)
+{
+	process->new_truthpose(msg);
 }
 void SystemMonitorNode::uptime_Callback(const std_msgs::Float32::ConstPtr& msg)
 {

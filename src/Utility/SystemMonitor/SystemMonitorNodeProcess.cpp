@@ -270,6 +270,20 @@ SystemMonitorNodeProcess::Task SystemMonitorNodeProcess::create_task(uint16_t id
     task.restart_count = 0;
     return task;
 }
+eros::diagnostic SystemMonitorNodeProcess::new_truthpose(const eros::pose::ConstPtr& t_ptr)
+{
+    eros::diagnostic diag = diagnostic;
+    char tempstr[256];
+    sprintf(tempstr,"Truth Pose: N: %4.2f(m) E: %4.2f(m) Z: %4.2f(m) Heading: %4.2f(deg)==%s",
+        t_ptr->north.value,
+        t_ptr->east.value,
+        t_ptr->elev.value,
+        t_ptr->yaw.value,
+        pose_helper.compute_heading_simplestring(PoseHelper::HeadingReference::COMMON_YAW,t_ptr->yaw.value).c_str());
+    truthpose_state = t_ptr->yaw.status; 
+    truthpose_string = std::string(tempstr);
+    return diag;
+}
 eros::diagnostic SystemMonitorNodeProcess::new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr)
 {
      eros::diagnostic diag = diagnostic;
