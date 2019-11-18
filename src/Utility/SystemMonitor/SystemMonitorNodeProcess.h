@@ -18,9 +18,11 @@
 #include <eros/command.h>
 #include <eros/resource.h>
 #include <eros/loadfactor.h>
+#include <eros/pose.h>
 #include <eros/systemsnapshot_state.h>
 //Project
 #include "../../../include/eROS_Definitions.h"
+#include "../../../include/PoseHelper.h"
 #define COMMTIMEOUT_THRESHOLD 3.0
 #define MINWINDOW_WIDTH 140
 #define ACTIVESCENARIO_Y 1 //Centered
@@ -123,6 +125,8 @@ public:
 		mainwindow_height = 0;
 		uptime = -1.0;
 		snap.state.state = "UNKNOWN";
+		truthpose_state = SIGNALSTATE_UNDEFINED;
+		truthpose_string = "Truth Pose: Not Received.";
 		return diagnostic;
 	}
 	bool read_nodelist(std::string node_list_path,std::vector<std::string> *hosts,std::vector<std::string> *nodes,
@@ -197,12 +201,15 @@ public:
 		}
 		return -1;
 	}
+	eros::diagnostic new_truthpose(const eros::pose::ConstPtr& t_ptr);
 	eros::diagnostic new_resourcemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_resourceavailablemessage(const eros::resource::ConstPtr& t_ptr);
 	eros::diagnostic new_loadfactormessage(const eros::loadfactor::ConstPtr& t_ptr);
 	eros::diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
 	//Support Functions
+	std::string get_truthposestring() { return truthpose_string; }
+	uint8_t get_truthposestate() { return truthpose_state; }
 	std::string get_taskheader();
 	std::vector<std::string> get_modulelistheader();
 	eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
@@ -223,6 +230,9 @@ private:
 	std::vector<std::string> resource_topics;
 	std::vector<std::string> heartbeat_topics;
 	double uptime;
+	PoseHelper pose_helper;
 	SystemSnap snap;
+	std::string truthpose_string;
+	uint8_t truthpose_state;
 
 };
