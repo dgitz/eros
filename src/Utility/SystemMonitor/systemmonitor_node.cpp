@@ -47,9 +47,10 @@ bool SystemMonitorNode::start(int argc, char **argv)
 	std::vector<std::string> resource_topics;
 	std::vector<std::string> heartbeat_topics;
 	std::vector<std::string> loadfactor_topics;
+	std::vector<std::string> deviceuptime_topics;
 	std::vector<std::string> resourceavailable_topics;
 	status = process->read_nodelist("/home/robot/config/scenarios/" + active_scenario + "/",&hosts,&nodes,
-		&resource_topics,&heartbeat_topics,&loadfactor_topics,&resourceavailable_topics);
+		&resource_topics,&heartbeat_topics,&loadfactor_topics,&deviceuptime_topics,&resourceavailable_topics);
 	if(status == false)
 	{
 		return false;
@@ -76,6 +77,13 @@ bool SystemMonitorNode::start(int argc, char **argv)
 		logger->log_info("[" + std::to_string(i) + "] " + loadfactor_topics.at(i));
 		ros::Subscriber sub = n->subscribe<eros::loadfactor>(loadfactor_topics.at(i),5,&SystemMonitorNode::loadfactor_Callback,this);
 		loadfactor_subs.push_back(sub);
+	}
+	logger->log_info("--- Subscribing to Device Uptime Topics ---");
+	for(std::size_t i = 0; i < deviceuptime_topics.size(); ++i)
+	{
+		logger->log_info("[" + std::to_string(i) + "] " + deviceuptime_topics.at(i));
+		ros::Subscriber sub = n->subscribe<eros::uptime>(deviceuptime_topics.at(i),5,&SystemMonitorNode::deviceuptime_Callback,this);
+		deviceuptime_subs.push_back(sub);
 	}
 	logger->log_info("--- Subscribing to Resource Available Topics ---");
 	for(std::size_t i = 0; i < resourceavailable_topics.size(); ++i)
@@ -144,10 +152,10 @@ bool SystemMonitorNode::init_screen()
 	}
 	window_header = create_newwin(mainwindow_height/6, mainwindow_width, 0, 0);
 	window_tasklist = create_newwin(TASKPAGE_COUNT+4, mainwindow_width, mainwindow_height/6, 0);
-	window_footer_left = create_newwin((2*(mainwindow_height/6))-5, mainwindow_width/4.0, mainwindow_height/6+TASKPAGE_COUNT+4, 0);
-	window_footer_center = create_newwin((mainwindow_height/6)+3, mainwindow_width/3.0, mainwindow_height/6+TASKPAGE_COUNT+4, mainwindow_width/4);
-	double remaining_width = (1/4.0)+(1/3.0);
-	window_footer_right = create_newwin((2*(mainwindow_height/6))-5, (1.0-remaining_width)*mainwindow_width, mainwindow_height/6+TASKPAGE_COUNT+4, remaining_width*mainwindow_width+1);
+	window_footer_left = create_newwin((2*(mainwindow_height/6))-5, mainwindow_width/6.0, mainwindow_height/6+TASKPAGE_COUNT+4, 0);
+	window_footer_center = create_newwin((mainwindow_height/6)+3, mainwindow_width/3.0, mainwindow_height/6+TASKPAGE_COUNT+4, mainwindow_width/6.0);
+	double remaining_width = (1/6.0)+(1/3.0);
+	window_footer_right = create_newwin((2*(mainwindow_height/6))-5, (1.0-remaining_width)*mainwindow_width, mainwindow_height/6+TASKPAGE_COUNT+4, remaining_width*mainwindow_width);
 	wbkgd(window_header,COLOR_PAIR(NO_COLOR));
 	keypad(window_header, TRUE);
 	keypad(window_tasklist, TRUE);
@@ -795,6 +803,19 @@ eros::diagnostic SystemMonitorNode::rescan_topics()
 				loadfactor_subs.push_back(sub);
 			}
 		}
+		if(info.datatype == "eros/uptime")
+		{
+			int v = process->push_topiclist(info.datatype,info.name);
+			if(v == 1)
+			{
+				found_new_topics++;
+				char tempstr[255];
+				sprintf(tempstr,"Subscribing to uptime topic: %s",info.name.c_str());
+				logger->log_info(tempstr);
+				ros::Subscriber sub = n->subscribe<eros::uptime>(info.name,2,&SystemMonitorNode::deviceuptime_Callback,this);
+				deviceuptime_subs.push_back(sub);
+			}
+		}
 		if(info.datatype == "eros/heartbeat")
 		{
 			int v = process->push_topiclist(info.datatype,info.name);
@@ -828,6 +849,10 @@ void SystemMonitorNode::truthpose_Callback(const eros::pose::ConstPtr& msg)
 void SystemMonitorNode::uptime_Callback(const std_msgs::Float32::ConstPtr& msg)
 {
 	process->set_uptime(msg->data);
+}
+void SystemMonitorNode::deviceuptime_Callback(const eros::uptime::ConstPtr& msg)
+{
+	process->new_deviceuptime(msg);
 }
 void SystemMonitorNode::heartbeat_Callback(const eros::heartbeat::ConstPtr& msg)
 {

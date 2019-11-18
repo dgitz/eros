@@ -81,6 +81,7 @@ bool SystemMonitorNodeProcess::read_nodelist(std::string node_list_dir,std::vect
     std::vector<std::string> *resource_topics,
     std::vector<std::string> *heartbeat_topics,
     std::vector<std::string> *loadfactor_topics,
+    std::vector<std::string> *deviceuptime_topics,
     std::vector<std::string> *resource_available_topics)
 {
     bool status = false;
@@ -214,6 +215,9 @@ bool SystemMonitorNodeProcess::read_nodelist(std::string node_list_dir,std::vect
             std::string tempstr2 = "/" + module.name + "/loadfactor";
             push_topiclist("eros/loadfactor",tempstr2);
             loadfactor_topics->push_back(tempstr2);
+            std::string tempstr3 = "/" + module.name + "/uptime";
+            push_topiclist("eros/uptime",tempstr3);
+            deviceuptime_topics->push_back(tempstr3);
         }
     }
 
@@ -293,6 +297,35 @@ eros::diagnostic SystemMonitorNodeProcess::new_systemsnapshotstatemessage(const 
      snap.state.source_device = t_ptr->source_device;
      snap.state.snapshot_path = t_ptr->snapshot_path;
      return diag;
+}
+eros::diagnostic SystemMonitorNodeProcess::new_deviceuptime(const eros::uptime::ConstPtr& t_ptr)
+{
+    bool found = false;
+    eros::diagnostic diag = diagnostic;
+    for(std::size_t i = 0; i < modulelist.size(); ++i)
+    {
+        if(t_ptr->DeviceName.find(modulelist.at(i).name) != std::string::npos)
+        {
+            found = true;
+            modulelist.at(i).last_heartbeat = t_ptr->stamp.toSec();
+            modulelist.at(i).uptime = t_ptr->uptime;
+        }
+    }
+    if(found == false)
+    {
+        diag.Level = WARN;
+        diag.Diagnostic_Message = DROPPING_PACKETS;
+        diag.Description = "Did not find Module: " + t_ptr->DeviceName;
+        return diag;
+    }
+    else
+    {
+        diag.Level = INFO;
+        diag.Diagnostic_Message = NOERROR;
+        diag.Description = "LoadFactor Updated.";
+        return diag;
+    }
+   return diag;
 }
 eros::diagnostic SystemMonitorNodeProcess::new_loadfactormessage(const eros::loadfactor::ConstPtr& t_ptr)
 {
@@ -432,7 +465,7 @@ std::vector<std::string> SystemMonitorNodeProcess::get_modulelistheader()
     */
     {
         char buffer[256];
-        sprintf(buffer,"Device\t\tAv RAM(%%) Av CPU(%%) Av DISK(%%) Load Factor\tRx\t\t");
+        sprintf(buffer,"Device\t\t\tAv RAM(%%) Av CPU(%%) Av DISK(%%) Load Factor\tRx\t\t");
         list.push_back(std::string(buffer));
     }
     return list;
@@ -449,6 +482,7 @@ std::vector<std::string> SystemMonitorNodeProcess::get_modulebuffer()
         double loadfactor_5min = modulelist.at(i).loadfactor_5min;
         double loadfactor_15min = modulelist.at(i).loadfactor_15min;
         double dt = modulelist.at(i).last_heartbeat_delta;
+        std::string uptime = convert_uptime(modulelist.at(i).uptime);
         if(modulelist.at(i).state == TASKSTATE_NODATA)
         {
             ramfree_perc = -1;
@@ -458,10 +492,12 @@ std::vector<std::string> SystemMonitorNodeProcess::get_modulebuffer()
             loadfactor_5min = -1.0;
             loadfactor_15min = -1.0;
             dt = -1.0;
+            uptime = "(-hr -m -s)\t";
         }
         char tempstr[128];
-        sprintf(tempstr,"%s\t\t%d\t%d\t%d\t[%2.1f,%2.1f,%2.1f]\t%4.2f", 
+        sprintf(tempstr,"%s%s\t%d\t%d\t%d\t[%2.1f,%2.1f,%2.1f]\t%4.2f", 
             modulelist.at(i).name.c_str(),
+            uptime.c_str(),
             ramfree_perc,
             cpufree_perc,
             diskfree_perc,
@@ -657,4 +693,16 @@ std::string SystemMonitorNodeProcess::exec(const char *cmd, bool wait_for_result
 		throw;
 	}
     return result;
+}
+std::string SystemMonitorNodeProcess::convert_uptime(double t)
+{
+    int min = (int)(t)/60;
+    int sec = (int)(t) % 60;
+    int hr = min / 60;
+    min = min % 60;
+    std::string tempstr = "(";
+    tempstr += std::to_string(hr) + "hr ";
+    tempstr += std::to_string(min) + "m ";
+    tempstr += std::to_string(sec) + "s)";
+    return tempstr;
 }

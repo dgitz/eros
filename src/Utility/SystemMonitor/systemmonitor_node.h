@@ -58,6 +58,7 @@ private:
 	void loadfactor_Callback(const eros::loadfactor::ConstPtr& msg);
 	void resourceAvailable_Callback(const eros::resource::ConstPtr& msg);
 	void uptime_Callback(const std_msgs::Float32::ConstPtr& msg);
+	void deviceuptime_Callback(const eros::uptime::ConstPtr& msg);
 	void snapshotstate_Callback(const eros::systemsnapshot_state::ConstPtr& msg);
 	void truthpose_Callback(const eros::pose::ConstPtr& msg);
 	void roverpose_Callback(const eros::pose::ConstPtr& msg);
@@ -104,6 +105,7 @@ private:
 	std::vector<ros::Subscriber> heartbeat_subs;
 	std::vector<ros::Subscriber> resourceavailable_subs;
 	std::vector<ros::Subscriber> loadfactor_subs;
+	std::vector<ros::Subscriber> deviceuptime_subs;
 	ros::Subscriber truthpose_sub;
 	ros::Subscriber roverpose_sub;
 	ros::Subscriber snapshotstate_sub;
