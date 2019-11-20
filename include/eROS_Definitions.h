@@ -43,6 +43,7 @@
 
 //TAG: Start System
 #define ROVER 1
+#define SIMROVER 2
 #define GROUND_STATION 5
 #define REMOTE_CONTROL 7
 #define SYSTEM_UNKNOWN 255
