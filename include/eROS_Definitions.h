@@ -319,4 +319,13 @@
 #define PORT_ANAPORT_3 11
 #define PORT_ANAPORT_4 12
 //TAG: End Port Definitions
+
+//TAG: DataTypes
+#define DATATYPE_UNKNOWN 0
+#define DATATYPE_BOOL 1
+#define DATATYPE_DOUBLE 2
+#define DATATYPE_STRING 3
+#define DATATYPE_VECTORDOUBLE 4
+#define DATATYPE_MATRIXDOUBLE 5
+//TAG: End DataTypes
 #endif
