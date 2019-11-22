@@ -28,12 +28,12 @@ public:
     void set_logverbosity(int v);
     ~Logger();
 
-    void log_debug(std::string tempstr);
-    void log_info(std::string tempstr);
-    void log_notice(std::string tempstr);
-    void log_warn(std::string tempstr);
-    void log_error(std::string tempstr);
-    void log_fatal(std::string tempstr);
+    void log_debug(std::string filename,uint64_t linenumber,std::string tempstr);
+    void log_info(std::string filename,uint64_t linenumber,std::string tempstr);
+    void log_notice(std::string filename,uint64_t linenumber,std::string tempstr);
+    void log_warn(std::string filename,uint64_t linenumber,std::string tempstr);
+    void log_error(std::string filename,uint64_t linenumber,std::string tempstr);
+    void log_fatal(std::string filename,uint64_t linenumber,std::string tempstr);
     void log_diagnostic(eros::diagnostic diagnostic);
     void disable_consoleprint() { console_print = false; }
 private:
@@ -44,7 +44,7 @@ private:
     char file_path[120];
     std::string map_logverbosity_tostring(int v);
     int map_logverbosity_toint(std::string level);
-    void print_log(int level,std::string tempstr);
+    void print_log(std::string filename,uint64_t linenumber,int level,std::string tempstr);
     bool console_print;
 
     DiagnosticClass diagclass;
