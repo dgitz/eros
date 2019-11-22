@@ -499,55 +499,6 @@ bool SystemMonitorNode::update_windowfooter()
 			}
 		}
 	}
-	/*
-	
-	std::vector<SystemMonitorNodeProcess::Task> tasklist = process->get_alltasks();
-		if(taskbuffer.size() != tasklist.size())
-		{
-			return false;
-		}
-		int index = 0;
-		for(std::size_t i = start_node_index; i < taskbuffer.size(); ++i)
-		{
-			if(index >= TASKPAGE_COUNT)
-			{
-				break;
-			}
-			uint8_t color = 0;
-			switch(tasklist.at(i).state)
-			{
-				case TASKSTATE_UNDEFINED:
-					color = RED_COLOR;
-					break;
-					case TASKSTATE_INITIALIZING:
-					color = YELLOW_COLOR;
-					break;
-					case TASKSTATE_NODATA:
-					color = RED_COLOR;
-					break;
-					case TASKSTATE_RUNNING:
-					color = GREEN_COLOR;
-					break;
-					case TASKSTATE_STOPPED:
-					color = YELLOW_COLOR;
-					default:
-					color = RED_COLOR;
-					break;
-			}
-			if(i == (std::size_t)selected_task_index)
-			{
-				mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X,"***");
-			}
-			else
-			{
-				mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X,"   ");
-			}
-			
-			wattron(window_tasklist,COLOR_PAIR(color));
-			mvwprintw(window_tasklist,TASKSTART_COORD_Y+2+(int)index,TASKSTART_COORD_X+3,taskbuffer.at(i).c_str());
-			wclrtoeol(window_tasklist);
-			wattroff(window_tasklist,COLOR_PAIR(color));
-	 */
 	box(window_footer_left, 0 , 0);			
 	wrefresh(window_footer_left);
 	box(window_footer_center, 0 , 0);			

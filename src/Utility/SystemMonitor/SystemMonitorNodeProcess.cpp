@@ -609,39 +609,7 @@ eros::diagnostic SystemMonitorNodeProcess::ping_nodes()
     uint16_t success_ping_count = 0;
     for(std::size_t i = 0; i < tasklist.size(); ++i)
     {
-        /*
-        if(tasklist.at(i).type == TaskType::ROS)
-        {
-            char tempstr[512];
-            sprintf(tempstr,"rosnode ping -c 1 %s 2> /dev/null",tasklist.at(i).node_name.c_str());
-            std::string result = exec(tempstr,true);
-            std::size_t found1=result.find("time=");
-            if (found1!=std::string::npos)
-            {
-                std::string substr1 = result.substr(found1+5);
-                std::size_t found2 = substr1.find("ms");
-                if(found2 != std::string::npos)
-                {
-                    tasklist.at(i).initialized = true;
-                    success_ping_count++;
-                    std::string substr2 = substr1.substr(0,found2);
-                    tasklist.at(i).last_ping_time = std::atof(substr2.c_str())/1000.0;
-                }
-                else
-                {
-                    tasklist.at(i).last_ping_time = -1.0;
-                }
-            }
-            else
-            {
-                tasklist.at(i).last_ping_time = -1.0;
-            }
-        }
-        else
-        {
-            success_ping_count++;
-        }
-        */
+
         
     }
     if(success_ping_count == (uint16_t)tasklist.size())
