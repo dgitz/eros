@@ -116,5 +116,8 @@ private:
 	int selected_task_index;
 	bool select_task_mode;
 	bool change_loglevel_mode;
+	bool taskcommand_pause_mode;
+	bool taskcommand_resume_mode;
+	bool taskcommand_reset_mode;
 	int selected_loglevel_value;
 };

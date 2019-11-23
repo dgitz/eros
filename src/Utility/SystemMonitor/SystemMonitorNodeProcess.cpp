@@ -9,7 +9,6 @@ eros::diagnostic SystemMonitorNodeProcess::update(double t_dt,double t_ros_time)
         modulelist.at(i).last_heartbeat_delta = fabs(ros_time - modulelist.at(i).last_heartbeat);
         if((modulelist.at(i).last_heartbeat_delta >= 0.0) and (modulelist.at(i).last_heartbeat_delta < (10.0*COMMTIMEOUT_THRESHOLD)))
         {
-            modulelist.at(i).state = TASKSTATE_RUNNING;;
         }
         else
         {
@@ -35,7 +34,6 @@ eros::diagnostic SystemMonitorNodeProcess::update(double t_dt,double t_ros_time)
                 tasklist.at(i).last_heartbeat_delta = max_delay;
                 if((tasklist.at(i).last_heartbeat_delta >= 0.0) and (tasklist.at(i).last_heartbeat_delta < COMMTIMEOUT_THRESHOLD))
                 {
-                    tasklist.at(i).state = TASKSTATE_RUNNING;;
                 }
                 else
                 {
@@ -47,7 +45,6 @@ eros::diagnostic SystemMonitorNodeProcess::update(double t_dt,double t_ros_time)
                 tasklist.at(i).last_heartbeat_delta = tasklist.at(i).last_ping_time;
                 if(tasklist.at(i).last_heartbeat_delta < COMMTIMEOUT_THRESHOLD)
                 {
-                    tasklist.at(i).state = TASKSTATE_RUNNING;;
                 }
                 else
                 {
@@ -427,6 +424,7 @@ eros::diagnostic SystemMonitorNodeProcess::new_heartbeatmessage(const eros::hear
             found = true;
             tasklist.at(i).last_heartbeat = t_ptr->stamp.toSec();
             tasklist.at(i).received_state = t_ptr->TaskState;
+            tasklist.at(i).state = tasklist.at(i).received_state;
             tasklist.at(i).type = TaskType::EROS;
             tasklist.at(i).initialized = true;
         }
@@ -587,17 +585,32 @@ std::string SystemMonitorNodeProcess::map_taskstate_tostring(uint8_t state)
         case TASKSTATE_UNDEFINED:
             return "UNDEFINED";
             break;
+        case TASKSTATE_START:
+            return "START";
+            break;
         case TASKSTATE_NODATA:
             return "NO DATA";
             break;
         case TASKSTATE_INITIALIZING:
             return "INITIALIZING";
             break;
+        case TASKSTATE_INITIALIZED:
+            return "INITIALIZED";
+            break;
+        case TASKSTATE_LOADING:
+            return "LOADING";
+            break;
         case TASKSTATE_RUNNING:
             return "RUNNING";
             break;
-        case TASKSTATE_STOPPED:
-            return "STOPPED";
+        case TASKSTATE_PAUSE:
+            return "PAUSED";
+            break;
+        case TASKSTATE_RESET:
+            return "RESET";
+            break;
+        case TASKSTATE_FINISHED:
+            return "FINISHED";
             break;    
         default:
             return "UNDEFINED";
