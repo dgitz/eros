@@ -32,7 +32,7 @@ public:
 		DiagComponentMap[POSE_NODE] = "POSE NODE";
 		DiagComponentMap[COMPONENT_UNKNOWN] = "COMPONENT UNKNOWN";
 
-		DiagTypeMap[NOERROR] = "NO ERROR";
+		DiagTypeMap[0] = "UNKNOWN";
 		DiagTypeMap[ELECTRICAL] = "ELECTRICAL";
 		DiagTypeMap[SOFTWARE] = "SOFTWARE";
 		DiagTypeMap[COMMUNICATIONS] = "COMMUNICATIONS";
