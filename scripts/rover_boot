@@ -3,11 +3,11 @@
 #Author: David Gitz
 
 ros_master="MasterModule"
-boot_file="/home/robot/logs/output/"$(hostname)"_log.txt"
+boot_file="/home/robot/var/log/output/"$(hostname)"_log.txt"
 sudo chown robot:robot $boot_file
 sudo chown robot:robot /etc/hosts
 sudo chmod 664 /etc/hosts
-
+mkdir -p /home/robot/var/log/output/
 rm $boot_file
 touch $boot_file
 sleep 2
@@ -30,7 +30,8 @@ sudo bash -c 'echo core.%e.%p > /proc/sys/kernel/core_pattern'
 sleep 5
 
 
-sudo chown -R robot /home/robot/logs/
+sudo chown -R robot /home/robot/var/log/
+
 echo "Starting Boot Script at: "$(date) >> $boot_file
 #Device Type launch stuff
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
@@ -83,7 +84,20 @@ echo "Completed Boot at: "$(date) >> $boot_file
 
 
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
+    rosnode kill --all
+    sleep 3
     echo "Launching Device" >> $boot_file
     /home/robot/scripts/launchDevice -d $HOSTNAME
 fi
 
+
+echo "Launching auxiliary nodes on modules." >> $boot_file
+if [[ $HOSTNAME == "ControlModule1" ]]; then
+    cd /home/robot/catkin_ws
+    source /home/robot/catkin_ws/devel/setup.bash
+    rosnode kill /raspicam_node
+    sleep 3
+    echo "starting nodes" >> $boot_file
+    roslaunch raspicam_node camera.launch >> $boot_file 2>&1 &
+fi
+echo "Finished Launch." >> $boot_file

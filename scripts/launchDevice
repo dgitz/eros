@@ -17,7 +17,7 @@ function launch_device()
 	ros_connected=0
     while [ $counter -lt $countmax ]
 	do
-        OUTPUT="$(/opt/ros/indigo/bin/rosnode list)"
+        OUTPUT="$(/opt/ros/kinetic/bin/rosnode list)"
         if [[ $OUTPUT = *[!\ ]* ]]; then
 			let ros_connected=1
             break
@@ -32,7 +32,7 @@ function launch_device()
 			echo "Unable to contact ROS Master."
 		fi
     done
-    boot_file="/home/robot/logs/output/"$1"_log.txt"
+    boot_file="/home/robot/var/log/output/"$1"_log.txt"
     echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
     export ROS_HOSTNAME=$HOSTNAME
     export ROS_IP=$HOSTNAME
@@ -46,10 +46,12 @@ function launch_device()
 		if [ -z "$var" ]; then
 			echo "No Launch File for: "$1
 		else
-                    	launch_command="roslaunch icarus_rover_v2 "$1"_AlwaysOn.launch &"
+            launch_command="roslaunch icarus_rover_v2 "$1"_AlwaysOn.launch &"
 			eval $launch_command
 			launch_command="roslaunch icarus_rover_v2 "$1".launch &"
 			eval $launch_command
+            #launch_command="roslaunch raspicam_node camerav1_1280x720.launch &"
+            #eval $launch_command
             
 		fi
 	fi
