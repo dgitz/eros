@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-20 03:43:36.664552***/
+/***Created on:2019-12-11 06:12:15.303482***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include "Definitions.h"
@@ -46,7 +46,7 @@ public:
 	std::string encode_Arm_StatusUDP(uint8_t Status);
 	int decode_HeartbeatUDP(std::vector<std::string> items,std::string* Device,uint64_t* Current_Timestamp,uint64_t* Expected_Timestamp);
 	int decode_FindTargetUDP(std::vector<std::string> items,std::string* SearchDevice);
-	std::string encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState);
+	std::string encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState,double Voltage,double Current);
 	std::string encode_EStopUDP(std::string DeviceName,uint8_t State);
 	int decode_EStopUDP(std::vector<std::string> items,std::string* DeviceName,uint8_t* State);
 	int decode_TuneControlGroupUDP(std::vector<std::string> items,std::string* ControlGroupName,double* value1,double* value2,double* value3,int* maxvalue,int* minvalue,int* defaultvalue);
