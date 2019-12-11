@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-20 03:43:36.664618***/
+/***Created on:2019-12-11 06:12:15.303544***/
 #include "../include/udpmessage.h"
 UDPMessageHandler::UDPMessageHandler(){}
 UDPMessageHandler::~UDPMessageHandler(){}
@@ -146,7 +146,7 @@ int UDPMessageHandler::decode_FindTargetUDP(std::vector<std::string> items,std::
 	*SearchDevice=items.at(1);
 	return 1;
 }
-std::string UDPMessageHandler::encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState)
+std::string UDPMessageHandler::encode_PowerUDP(std::string BatteryName,uint8_t PowerLevel,uint8_t PowerState,double Voltage,double Current)
 {
 	std::string tempstr = "";
 	tempstr.append(boost::lexical_cast<std::string>(UDP_Power_ID));
@@ -156,6 +156,10 @@ std::string UDPMessageHandler::encode_PowerUDP(std::string BatteryName,uint8_t P
 	tempstr.append(boost::lexical_cast<std::string>((int)PowerLevel));
 	tempstr.append(",");
 	tempstr.append(boost::lexical_cast<std::string>((int)PowerState));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Voltage));
+	tempstr.append(",");
+	tempstr.append(boost::lexical_cast<std::string>((double)Current));
 	return tempstr;
 }
 std::string UDPMessageHandler::encode_EStopUDP(std::string DeviceName,uint8_t State)
