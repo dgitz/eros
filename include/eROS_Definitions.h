@@ -77,7 +77,7 @@
 //TAG: Start DiagnosticType
 #define ELECTRICAL 1
 #define SOFTWARE 2
-#define COMMUNICATIONS 3
+#define uCOMMUNICATIONS 3
 #define SENSORS 4
 #define ACTUATORS 5
 #define DATA_STORAGE 6
@@ -271,6 +271,8 @@
 #define SIGNALTYPE_ANGLE 6 //Degree
 #define SIGNALTYPE_VELOCITY 7 //m/s
 #define SIGNALTYPE_TICKSPEED 8 //Ticks/second
+#define SIGNALTYPE_CURRENT 9 //amps
+#define SIGNALTYPE_VOLTAGE //voltage
 #define SIGNALTYPE_UNITLESS 255 //Unit Less
 //TAG: End SignalType
 
