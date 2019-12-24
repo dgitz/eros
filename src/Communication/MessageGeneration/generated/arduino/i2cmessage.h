@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-20 03:43:36.664899***/
+/***Created on:2019-12-11 06:12:15.303816***/
 /***Target: Arduino ***/
 #ifndef I2CMESSAGE_H
 #define I2CMESSAGE_H
