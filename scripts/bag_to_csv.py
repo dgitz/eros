@@ -12,6 +12,10 @@ def get_topics(mode,bag):
     topics = []
     search_list = []
     if((mode == "all") or (mode == "pose")):
+        topics.append('/RightIMU')
+        topics.append('/LeftIMU')
+        topics.append('/RightIMU_Temperature')
+        topics.append('/LeftIMU_Temperature')
         topics.append('/RightIMU_Simulated')
         topics.append('/LeftIMU_Simulated')
         topics.append('/LeftWheelEncoder_Simulated')
@@ -41,8 +45,6 @@ def message_to_csv(breakpoint,stream, msg, flatten=False,):
             val = msg.__getattribute__(s)
             message_to_csv(breakpoint,stream, val, flatten)
     except:
-        #if(breakpoint == 1):
-        #    pdb.set_trace()
         msg_str = str(msg)
         if msg_str.find(",") is not -1:
             if flatten:
@@ -96,8 +98,6 @@ def bag_to_csv(mode, output_dir,fname):
                                                   start_time=stime,
                                                   end_time=etime):
             breakpoint=0            
-            if(topic == "/dgitzdev/loadfactor"):
-                breakpoint=1
             if streamdict.has_key(topic):
                 stream = streamdict[topic]
             else:

@@ -3,6 +3,6 @@
 #Author: David Gitz
 
 ros_master="ControlModule1"
-boot_file="/home/robot/logs/output/"$(hostname)"_log.txt"
+boot_file="/home/robot/var/log/output/"$(hostname)"_log.txt"
 echo "Powering off at: "$(date) >> $boot_file
 
