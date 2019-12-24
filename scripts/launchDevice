@@ -32,7 +32,7 @@ function launch_device()
 			echo "Unable to contact ROS Master."
 		fi
     done
-    boot_file="/home/robot/var/log/output/"$1"_log.txt"
+    boot_file="/var/log/output/"$1"_log.txt"
     echo "MY HOSTNAME:" $HOSTNAME >> $boot_file
     export ROS_HOSTNAME=$HOSTNAME
     export ROS_IP=$HOSTNAME
