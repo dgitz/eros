@@ -19,7 +19,7 @@ ActiveScenarioFile = RootDirectory + 'config/ActiveScenario'
 ApplicationPackage = '/home/robot/catkin_ws/src/' + PackageName + '/'
 BinaryPackage = '/home/robot/catkin_ws/devel/lib/'
 DeviceList = []
-ThirdPartyPackages = ['raspicam_node']
+ThirdPartyPackages = ['raspicam_node','audio_common','sound_play']
 build=False
 class IPObject(object):
     def __init__(self,Name,Address):
@@ -539,7 +539,7 @@ def sync_remote(device,build):
         for i in range(0,len(ThirdPartyPackages)):
             subprocess.call("rsync -avt " + BinaryPackage + ThirdPartyPackages[i] +"/* " + "robot@" + device + ":" + BinaryPackage + ThirdPartyPackages[i] + "/",shell=True)
     for i in range(0,len(ThirdPartyPackages)):
-        subprocess.call("rsync -avt " + RootDirectory + "catkin_ws/src/" + ThirdPartyPackages[i] + "/launch/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/" + ThirdPartyPackages[i] + "/launch/",shell=True)
+        subprocess.call("rsync -avt " + RootDirectory + "catkin_ws/src/" + ThirdPartyPackages[i] + "/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/" + ThirdPartyPackages[i] + "/",shell=True)
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     #sshProcess.stdin.write("export TERM=linux\n")
     sshProcess.stdin.write("cd ~/catkin_ws\n")

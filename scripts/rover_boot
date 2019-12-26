@@ -99,5 +99,6 @@ if [[ $HOSTNAME == "ControlModule1" ]]; then
     sleep 3
     echo "starting nodes" >> $boot_file
     roslaunch raspicam_node camera.launch >> $boot_file 2>&1 &
+    roslaunch sound_play soundplay_node.launch >> $boot_file 2>&1 &
 fi
 echo "Finished Launch." >> $boot_file
