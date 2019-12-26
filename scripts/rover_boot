@@ -6,6 +6,9 @@ ros_master="MasterModule"
 boot_file="/var/log/output/"$(hostname)"_log.txt"
 sudo chown robot:robot $boot_file
 sudo chown robot:robot /etc/hosts
+sudo chown robot:robot /home/robot/config/ActiveNodes
+sudo chown robot:robot /home/robot/config/AllNodeList
+sudo chown robot:robot /home/robot/unsorted
 sudo chmod 664 /etc/hosts
 mkdir -p /var/log/output/
 rm $boot_file
