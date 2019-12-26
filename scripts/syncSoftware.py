@@ -36,6 +36,7 @@ def generate_AllIPDeviceList():
     list.append(IPObject('ControlModule2','10.0.0.110'))
     list.append(IPObject('BuildServer1','10.0.0.179'))
     list.append(IPObject('BuildServer0','10.0.0.180'))
+    list.append(IPObject('DevModule1','10.0.0.161'))
     return list
   
 def process_input(tempstr):
