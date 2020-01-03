@@ -322,7 +322,7 @@ eros::diagnostic SystemMonitorNodeProcess::new_truthpose(const eros::pose::Const
 {
     eros::diagnostic diag = diagnostic;
     char tempstr[256];
-    sprintf(tempstr,"Truth Pose: N: %4.2f(m) E: %4.2f(m) Z: %4.2f(m) Heading: %4.2f(deg)==%s",
+    sprintf(tempstr,"Truth Pose: N: %4.2f(m) E: %4.2f(m) Z: %4.2f(m) Yaw: %4.2f(deg)==%s",
         t_ptr->north.value,
         t_ptr->east.value,
         t_ptr->elev.value,
