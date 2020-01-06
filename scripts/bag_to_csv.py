@@ -24,10 +24,12 @@ def get_topics(mode,bag):
         topics.append('/RightMotorController')
         topics.append('/TiltServo')
         topics.append('/TruthPose_Simulated')
+        topics.append('/armed_state')
     if((mode == "all") or (mode == "performance")):
         search_list.append("resource")
         search_list.append("loadfactor")
         search_list.append("uptime")
+        search_list.append("diagnostic")
     
     all_topic_list = bag.get_type_and_topic_info().topics
     for t in all_topic_list:
@@ -133,13 +135,14 @@ def convert(bag_directory,mode,output_dir):
                 os.mkdir(output_dir + folder_name + "_CSV")
             shutil.copy(bag_directory + f,output_dir + folder_name + '_CSV/' + folder_name + ".bag")
             bag_to_csv(mode,output_dir + folder_name+ "_CSV",output_dir + folder_name + '_CSV/' + folder_name + ".bag")
+            subprocess.call("rosbag info " + output_dir + folder_name + "_CSV" + "/" + folder_name + ".bag >> " + output_dir + folder_name + "_CSV/bag_info.txt",shell=True)
     print "Conversion of " + bag_directory + " Complete."
     
 def main(options):
     convert(options.bag_directory,options.mode,options.output_dir)
 
 if __name__ == '__main__':
-    print "rosbag_to_csv start!!"
+    print "Extract Data!!"
     parser = OptionParser(usage="%prog [options] bagfile")
     parser.add_option("-d", "--bag directory",dest="bag_directory",
             help="bagfile directory")
