@@ -24,12 +24,13 @@ FileType_ARMEDSTATE = 6
 DataType_UNKNOWN = 0
 DataType_CPUPERC = 1
 DataType_RAMPERC = 2
-DataType_DISKPERC = 3
-DataType_LOADFACTOR_1MIN = 4
-DataType_LOADFACTOR_5MIN = 5
-DataType_LOADFACTOR_15MIN = 6
-DataType_DIAGNOSTICLEVEL = 7
-DataType_ARMEDSTATE = 8
+DataType_RAMMB = 3
+DataType_DISKPERC = 4
+DataType_LOADFACTOR_1MIN = 5
+DataType_LOADFACTOR_5MIN = 6
+DataType_LOADFACTOR_15MIN = 7
+DataType_DIAGNOSTICLEVEL = 8
+DataType_ARMEDSTATE = 9
 class Signal():
     def __init__(self,filetype=FileType_UNKNOWN,datatype=DataType_UNKNOWN,name='',node_name=''):
         self.filetype = filetype
@@ -63,7 +64,6 @@ def convert_datetime(timestamp):
     t = datetime.datetime(int(v[0]),int(v[1]),int(v[2]),int(v[3]),int(v[4]),sec,msec)
     t_tov = (t-datetime.datetime(1970,1,1)).total_seconds()
     return t_tov,error
-
 def load_alldata(directory):
     signals = []
     tempstr = "\nLoading Directory: " + directory
@@ -95,7 +95,7 @@ def load_alldata(directory):
     for f in files_loaded:
         tempstr+="\nLoaded file: " + f
     return signals,tempstr
-def analyze(data_directory,output_directory,show_graphics):
+def analyze(data_directory,output_directory,extra_signal_list,show_graphics):
     signals = []
     messages = []
     log_directories = []
@@ -147,6 +147,12 @@ def analyze(data_directory,output_directory,show_graphics):
                         if(found_me == False):
                             messages.append(message)
                     counter = counter + 1
+    extra_signals = []
+    list_sig = extra_signal_list.split(',')
+    for i in range(0,len(list_sig)):
+        for j in range(0,len(signals)):
+            if(list_sig[i] in signals[j].name):
+                extra_signals.append(signals[j])
     #Find Earliest start time
     stop_time = 0  # A small start time
     start_time = signals[0].tov[0]*1000000.0  # A really big start time
@@ -166,6 +172,35 @@ def analyze(data_directory,output_directory,show_graphics):
     fd.write("Log Duration: " + str(log_duration) + " sec\n")
     fd.write("Total Duration: " + str(stop_time-start_time) + " sec\n")
     # Signal Type Specific Analysis
+    fd.write("RAM Usage Analysis\n")
+    ramused_MB_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_RAMMB)
+    potential_memoryleak_signals = []
+    bin_count = 10
+    perc_increase = 5.0
+    for i in range(0,len(ramused_MB_signals)):
+        v = []
+        bin_t = (ramused_MB_signals[i].tov[-1]-ramused_MB_signals[i].tov[0])/bin_count
+        t = ramused_MB_signals[i].tov[0]
+        for j in range(0,len(ramused_MB_signals[i].tov)):
+            dt = ramused_MB_signals[i].tov[j]-t
+            if(dt > bin_t):
+                v.append(ramused_MB_signals[i].value[j])
+                t = ramused_MB_signals[i].tov[j]
+        count = 0
+        for j in range(1,len(v)):
+            if(v[j] > ((1+perc_increase/100.0)*v[0])):
+                count = count + 1
+        if(count > (bin_count/2)):
+            sig = ramused_MB_signals[i]
+            potential_memoryleak_signals.append(sig)
+    if(len(potential_memoryleak_signals) > 0):
+        tempstr = "[WARN]: Potential Memory Leak Signals:"
+        print tempstr
+        fd.write(tempstr + "\n")
+        for i in range(0,len(potential_memoryleak_signals)):
+            tempstr = "[" + str(i+1) + "/" + str(len(potential_memoryleak_signals)) + "] Name: " + potential_memoryleak_signals[i].name
+            print tempstr
+            fd.write("\t" + tempstr + "\n")
     fd.write("Armed State Analysis\n")
     armed_states = []
     armed_state_count = 0
@@ -216,13 +251,16 @@ def analyze(data_directory,output_directory,show_graphics):
         fd.write("\t[" + str(i+1) + "/" + str(len(messages)) +"] Msg: " + messages[i].name + " type: " + messages[i].data_type + " count: " + str(messages[i].count) + " Rate: " + str(rate) + " Hz\n")
     fd.close()
     print "Analysis Complete"
-    figs = drawgraphs(signals,show_graphics)
+    figs = drawgraphs(signals,show_graphics,False)
+    drawgraphs(extra_signals,False,True)
     if(show_graphics == False):
         print "Saving Figures"
         for fig in figs:
             title = fig._suptitle.get_text() 
             fig.savefig(output_directory + "/" + title + ".png",bbox_inches='tight',dpi=600)
         print "Figures Saved"
+    else:
+        plt.show()
     
 def flatten(signals):
     output = []
@@ -230,7 +268,7 @@ def flatten(signals):
         for j in range(0,len(signals[i])):
             output.append(signals[i][j])
     return output
-def drawgraphs(signals,show_figures):
+def drawgraphs(signals,show_figures,suppress_warnings):
     figlist = []
     cpuused_perc_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_CPUPERC)
     if(len(cpuused_perc_signals) > 0):
@@ -250,45 +288,27 @@ def drawgraphs(signals,show_figures):
         mng.resize(*mng.window.maxsize())
         figlist.append(fig)
     else:
-        print "WARN: No CPU Used Perc Signals Available."
-    ramused_perc_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_RAMPERC)
-    if(len(ramused_perc_signals) > 0):
-        title = 'RAM Used by Node (%)'
+        if(suppress_warnings == False):
+            print "WARN: No CPU Used Perc Signals Available."
+    ramused_MB_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_RAMMB)
+    if(len(ramused_MB_signals) > 0):
+        title = 'RAM Used by Node (MB)'
         fig = plt.figure()
         plt1 = fig.add_subplot(111)
-        for i in range(0,len(ramused_perc_signals)):
-            plt1.plot(ramused_perc_signals[i].tov,ramused_perc_signals[i].value,label=ramused_perc_signals[i].name)      
+        for i in range(0,len(ramused_MB_signals)):
+            plt1.plot(ramused_MB_signals[i].tov,ramused_MB_signals[i].value,label=ramused_MB_signals[i].name)      
         plt1.legend(prop={'size':10})        
         plt.xlabel('Time (sec)')
-        plt.ylabel('Percent')
+        plt.ylabel('RAM (MB)')
         plt.suptitle(title)
-        plt.ylim(bottom=0,top=100)
         plt.xlim(left=0) 
         fig.canvas.set_window_title(title)
         mng = plt.get_current_fig_manager()
         mng.resize(*mng.window.maxsize())
         figlist.append(fig)
     else:
-        print "WARN: No RAM Used Perc Signals Available."
-    diskused_perc_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_DISKPERC)
-    if(len(diskused_perc_signals) > 0):
-        title = 'DISK Used by Node (%)'
-        fig = plt.figure()
-        plt1 = fig.add_subplot(111)
-        for i in range(0,len(diskused_perc_signals)):
-            plt1.plot(diskused_perc_signals[i].tov,diskused_perc_signals[i].value,label=diskused_perc_signals[i].name)      
-        plt1.legend(prop={'size':10})          
-        plt.xlabel('Time (sec)')
-        plt.ylabel('Percent')
-        plt.suptitle(title)
-        plt.ylim(bottom=0,top=100)
-        plt.xlim(left=0) 
-        fig.canvas.set_window_title(title)
-        mng = plt.get_current_fig_manager()
-        mng.resize(*mng.window.maxsize())
-        figlist.append(fig)
-    else:
-        print "WARN: No DISK Used Perc Signals Available."
+        if(suppress_warnings == False):
+            print "WARN: No RAM Used Perc Signals Available."
     loadfactor_1min_signals = get_signalsbytype(signals,FileType_LOADFACTOR,DataType_LOADFACTOR_1MIN)
     loadfactor_5min_signals = get_signalsbytype(signals,FileType_LOADFACTOR,DataType_LOADFACTOR_5MIN)
     loadfactor_15min_signals = get_signalsbytype(signals,FileType_LOADFACTOR,DataType_LOADFACTOR_15MIN)
@@ -315,7 +335,8 @@ def drawgraphs(signals,show_figures):
         mng.resize(*mng.window.maxsize())
         figlist.append(fig)
     else:
-        print "WARN: No Load Factor Signals Available."
+        if(suppress_warnings == False):
+            print "WARN: No Load Factor Signals Available."
     cpuav_perc_signals = get_signalsbytype(signals,FileType_RESOURCEAVAILABLE,DataType_CPUPERC)
     ramav_perc_signals = get_signalsbytype(signals,FileType_RESOURCEAVAILABLE,DataType_RAMPERC)
     diskav_perc_signals = get_signalsbytype(signals,FileType_RESOURCEAVAILABLE,DataType_DISKPERC)
@@ -353,9 +374,8 @@ def drawgraphs(signals,show_figures):
         mng.resize(*mng.window.maxsize())
         figlist.append(fig)
     else:
-        print "WARN: No Resource Available Signals Available."
-    if(show_figures == 1):
-        plt.show()
+        if(suppress_warnings == False):
+            print "WARN: No Resource Available Signals Available."
     return figlist
     
 def sync_timebase(signals):
@@ -446,17 +466,14 @@ def load_csv(filetype,directory,f):
     elif(filetype == FileType_RESOURCEUSED):
         nodename = f[0:len(f)-13]
         signal_cpuused_perc = Signal(FileType_RESOURCEUSED,DataType_CPUPERC,nodename+'_cpuused',nodename)
-        signal_ramused_perc = Signal(FileType_RESOURCEUSED,DataType_RAMPERC,nodename+'_ramused',nodename)
-        signal_diskused_perc = Signal(FileType_RESOURCEUSED,DataType_DISKPERC,nodename+'_diskused',nodename)
+        signal_ramused_MB = Signal(FileType_RESOURCEUSED,DataType_RAMMB,nodename+'_ramused',nodename)
         TIMESTAMP_SEC_COL = 1
         TIMESTAMP_NSEC_COL = 2
+        RAMMB_COL = 5
         CPUPERC_COL = 6
-        RAMPERC_COL = 7
-        DISKPERC_COL = 8
         tov = []
         cpu = []
         ram = []
-        disk = []
         with open (directory + f) as fd:
             content = fd.readlines()
             counter = 0
@@ -469,19 +486,15 @@ def load_csv(filetype,directory,f):
                     nsec = float(data[TIMESTAMP_NSEC_COL])
                     tov.append(sec + nsec/1000000000.0)
                     cpu.append(float(data[CPUPERC_COL]))
-                    ram.append(float(data[RAMPERC_COL]))
-                    disk.append(float(data[DISKPERC_COL]))
+                    ram.append(float(data[RAMMB_COL]))
                     
                 counter=counter+1
         signal_cpuused_perc.tov = tov[:]
         signal_cpuused_perc.value = cpu[:]
-        signal_ramused_perc.tov = tov[:]
-        signal_ramused_perc.value = ram[:]
-        signal_diskused_perc.tov = tov[:]
-        signal_diskused_perc.value = disk[:]
+        signal_ramused_MB.tov = tov[:]
+        signal_ramused_MB.value = ram[:]
         signals.append(signal_cpuused_perc)
-        signals.append(signal_ramused_perc)
-        signals.append(signal_diskused_perc)
+        signals.append(signal_ramused_MB)
     elif(filetype == FileType_LOADFACTOR):
         devicename = f[0:len(f)-15]
         signal_1min = Signal(FileType_LOADFACTOR,DataType_LOADFACTOR_1MIN,devicename+'_loadfactor1min',devicename)
@@ -568,12 +581,13 @@ def main():
     parser = OptionParser("analyze_data.py [options]")
     parser.add_option("-d","--data_directory",dest="data_directory",help="Data Directory")
     parser.add_option("-o","--output_directory",dest="output_directory",help="Output Directory")
+    parser.add_option("-e","--extra",dest="extra_signals",default="",help="Comma Separated list of signals to graph.")
     parser.add_option("-s","--show/save",dest="show_save",default="Show",help="Show/Save Graphics [default: %default]")
     (opts,args) = parser.parse_args()
     show_graphics = True
     if(opts.show_save == "Save"):
         show_graphics = False
-    analyze(opts.data_directory,opts.output_directory,show_graphics)
+    analyze(opts.data_directory,opts.output_directory,opts.extra_signals,show_graphics)
     
 
     
