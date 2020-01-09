@@ -50,7 +50,7 @@ void Logger::set_logverbosity(int v)
 	}
 	std::string tempstr = "Changing Log Level from " + map_logverbosity_tostring(verbosity) + " to " + map_logverbosity_tostring(v) + ".";
 	verbosity = v;
-	print_log(verbosity,tempstr);
+	print_log("",0,verbosity,tempstr);
 }
 std::string Logger::map_logverbosity_tostring(int v)
 {
@@ -90,29 +90,29 @@ int Logger::map_logverbosity_toint(std::string level)
 	else if(level=="FATAL"){    return FATAL; }
 	else{                       return DEBUG; }
 }
-void Logger::log_debug(std::string tempstr)
+void Logger::log_debug(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(DEBUG,tempstr);
+	print_log(filename,linenumber,DEBUG,tempstr);
 }
-void Logger::log_info(std::string tempstr)
+void Logger::log_info(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(INFO,tempstr);
+	print_log(filename,linenumber,INFO,tempstr);
 }
-void Logger::log_notice(std::string tempstr)
+void Logger::log_notice(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(NOTICE,tempstr);
+	print_log(filename,linenumber,NOTICE,tempstr);
 }
-void Logger::log_warn(std::string tempstr)
+void Logger::log_warn(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(WARN,tempstr);
+	print_log(filename,linenumber,WARN,tempstr);
 }
-void Logger::log_error(std::string tempstr)
+void Logger::log_error(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(ERROR,tempstr);
+	print_log(filename,linenumber,ERROR,tempstr);
 }
-void Logger::log_fatal(std::string tempstr)
+void Logger::log_fatal(std::string filename,uint64_t linenumber,std::string tempstr)
 {
-	print_log(FATAL,tempstr);
+	print_log(filename,linenumber,FATAL,tempstr);
 }
 void Logger::log_diagnostic(eros::diagnostic diagnostic)
 {
@@ -131,22 +131,22 @@ void Logger::log_diagnostic(eros::diagnostic diagnostic)
 	switch(diagnostic.Level)
 	{
 	case DEBUG:
-		log_debug(std::string(tempstr));
+		log_debug("",0,std::string(tempstr));
 		break;
 	case INFO:
-		log_info(std::string(tempstr));
+		log_info("",0,std::string(tempstr));
 		break;
 	case NOTICE:
-		log_notice(std::string(tempstr));
+		log_notice("",0,std::string(tempstr));
 		break;
 	case WARN:
-		log_warn(std::string(tempstr));
+		log_warn("",0,std::string(tempstr));
 		break;
 	case ERROR:
-		log_error(std::string(tempstr));
+		log_error("",0,std::string(tempstr));
 		break;
 	case FATAL:
-		log_fatal(std::string(tempstr));
+		log_fatal("",0,std::string(tempstr));
 		break;
 	}
 	/*
@@ -173,7 +173,7 @@ void Logger::log_diagnostic(eros::diagnostic diagnostic)
 		}
 	 */
 }
-void Logger::print_log(int level,std::string tempstr)
+void Logger::print_log(std::string filename,uint64_t linenumber,int level,std::string tempstr)
 {
 	time_t rawtime;
 	struct tm * timeinfo;
@@ -185,33 +185,38 @@ void Logger::print_log(int level,std::string tempstr)
 	strftime(datebuffer,80,"%d/%m/%Y %I:%M:%S",timeinfo);
 	std::string str(datebuffer);
 	log_file.open(file_path,ios::out | ios::app | ios::binary|std::ios::ate);
+	std::string swcode_info = "";
+	if(linenumber > 0)
+	{
+		swcode_info = filename + "(" + std::to_string(linenumber) + ")";
+	}
 	if(log_file.is_open() && level >= verbosity)
 	{
 		line_counter++;
 		switch (level)
 		{
 		case DEBUG:
-			log_file << datebuffer << "\tDEBUG\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: DEBUG: " << swcode_info << " " << tempstr << endl;
 			if(console_print) { printf("[%s %s]: DEBUG: %s\n",datebuffer,node_name.c_str(),tempstr.c_str()); }
 			break;
 		case INFO:
-			log_file << datebuffer << "\tINFO\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: INFO: " << swcode_info << " " << tempstr << endl;
 			if(console_print) {printf("[%s %s]: INFO: %s\n",datebuffer,node_name.c_str(),tempstr.c_str()); }
 			break;
 		case NOTICE:
-			log_file << datebuffer << "\tNOTICE\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: NOTICE: " << swcode_info << " " << tempstr << endl;
 			if(console_print) {printf("%s[%s %s]: NOTICE: %s%s\n",GREEN_FOREGROUND,datebuffer,node_name.c_str(),tempstr.c_str(),END_COLOR); }
 			break;
 		case WARN:
-			log_file << datebuffer << "\tWARN\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: WARN: " << swcode_info << " " << tempstr << endl;
 			if(console_print) {printf("%s[%s %s]: WARN: %s%s\n",YELLOW_FOREGROUND,datebuffer,node_name.c_str(),tempstr.c_str(),END_COLOR); }
 			break;
 		case ERROR:
-			log_file << datebuffer << "\tERROR\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: ERROR: " << swcode_info << " " << tempstr << endl;
 			if(console_print) {printf("%s[%s %s]: ERROR: %s%s\n",RED_FOREGROUND,datebuffer,node_name.c_str(),tempstr.c_str(),END_COLOR); }
 			break;
 		case FATAL:
-			log_file << datebuffer << "\tFATAL\t" << tempstr << endl;
+			log_file << "[" << datebuffer << "]: FATAL: " << swcode_info << " " << tempstr << endl;
 			if(console_print) {printf("%s[%s %s]: FATAL: %s%s\n",RED_FOREGROUND,datebuffer,node_name.c_str(),tempstr.c_str(),END_COLOR); }
 			break;
 		default:
