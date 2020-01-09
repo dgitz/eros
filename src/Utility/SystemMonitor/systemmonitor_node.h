@@ -62,6 +62,7 @@ private:
 	void snapshotstate_Callback(const eros::systemsnapshot_state::ConstPtr& msg);
 	void truthpose_Callback(const eros::pose::ConstPtr& msg);
 	void roverpose_Callback(const eros::pose::ConstPtr& msg);
+	void battery_Callback(const eros::battery::ConstPtr& msg);
 	//Utility Functions
 	/*! \brief Measures time delay between 2 ros::Time timestamps.
 	 *  Generally, if wanting to measure the time from now to a previous mark,
@@ -111,6 +112,7 @@ private:
 	ros::Subscriber snapshotstate_sub;
 	ros::Publisher command_pub;
 	ros::Subscriber uptime_sub;
+	ros::Subscriber battery_sub;
 	uint16_t start_node_index;
 	MEVENT event;
 	int selected_task_index;

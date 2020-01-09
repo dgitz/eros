@@ -686,6 +686,8 @@
                         <![CDATA[
                             See eROS Definitions: POWERSTATE_*
                         ]]>
+                    <field type="double" name="Voltage"/>
+                    <field type="double" name="Current"/>
                 </Fields>
             </Protocol>
         </Protocols>

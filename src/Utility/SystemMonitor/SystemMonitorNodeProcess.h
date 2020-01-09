@@ -20,6 +20,7 @@
 #include <eros/loadfactor.h>
 #include <eros/pose.h>
 #include <eros/uptime.h>
+#include <eros/battery.h>
 #include <eros/systemsnapshot_state.h>
 //Project
 #include "../../../include/eROS_Definitions.h"
@@ -136,6 +137,7 @@ public:
 		snap.state.state = "UNKNOWN";
 		truthpose_state = SIGNALSTATE_UNDEFINED;
 		truthpose_string = "Truth Pose: Not Received.";
+		powerinfo_string = "--.-V --.-A";
 		return diagnostic;
 	}
 	bool read_nodelist(std::string node_list_path,std::vector<std::string> *hosts,std::vector<std::string> *nodes,
@@ -242,7 +244,9 @@ public:
 	eros::diagnostic new_deviceuptime(const eros::uptime::ConstPtr& t_ptr);
 	eros::diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_ptr);
 	eros::diagnostic new_systemsnapshotstatemessage(const eros::systemsnapshot_state::ConstPtr& t_ptr);
+	eros::diagnostic new_batterymessage(const eros::battery::ConstPtr& t_ptr);
 	//Support Functions
+	std::string get_powerinfo_string() { return powerinfo_string; }
 	std::string get_truthposestring() { return truthpose_string; }
 	uint8_t get_truthposestate() { return truthpose_state; }
 	std::string get_taskheader();
@@ -272,5 +276,6 @@ private:
 	SystemSnap snap;
 	std::string truthpose_string;
 	uint8_t truthpose_state;
+	std::string powerinfo_string;
 
 };

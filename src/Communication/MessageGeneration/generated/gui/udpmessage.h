@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-10-20 03:43:36.664646***/
+/***Created on:2019-12-11 06:12:15.303570***/
 #ifndef UDPMESSAGE_H
 #define UDPMESSAGE_H
 #include <QString>
@@ -36,7 +36,7 @@ public:
 	int decode_Arm_StatusUDP(QList<QByteArray> items,int* Status);
 	QString encode_HeartbeatUDP(std::string Device,uint64_t Current_Timestamp,uint64_t Expected_Timestamp);
 	QString encode_FindTargetUDP(std::string SearchDevice);
-	int decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState);
+	int decode_PowerUDP(QList<QByteArray> items,std::string* BatteryName,int* PowerLevel,int* PowerState,double* Voltage,double* Current);
 	QString encode_EStopUDP(std::string DeviceName,int State);
 	int decode_EStopUDP(QList<QByteArray> items,std::string* DeviceName,int* State);
 	QString encode_TuneControlGroupUDP(std::string ControlGroupName,double value1,double value2,double value3,int maxvalue,int minvalue,int defaultvalue);

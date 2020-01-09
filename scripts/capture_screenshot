@@ -1,0 +1,8 @@
+#!/bin/bash
+#Author: David Gitz
+#Usage Instructions: run ./scripts/capture_screenshot <DESTINATION_FOLDER>
+for i in {1..5}
+do
+    scrot '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f '$1
+    sleep 1
+done
