@@ -32,6 +32,7 @@ bool SystemMonitorNode::start(int argc, char **argv)
 	uptime_sub = n->subscribe<std_msgs::Float32>("/Uptime",1,&SystemMonitorNode::uptime_Callback,this);
 	snapshotstate_sub = n->subscribe<eros::systemsnapshot_state>("/System/Snapshot/State",5,&SystemMonitorNode::snapshotstate_Callback,this);
 	command_pub =  n->advertise<eros::command>("/command",20);
+	battery_sub = n->subscribe<eros::battery>("/battery",1,&SystemMonitorNode::battery_Callback,this);
 	logger = new Logger("debug",node_name);
 	logger->disable_consoleprint();
 	boot_time = ros::Time::now();
@@ -248,6 +249,10 @@ bool SystemMonitorNode::update_windowheader()
 		}
 		std::string str(buffer);
 		mvwprintw(window_header,RUNTIME_COORD_Y,(int)(mainwindow_width-str.size())/2,buffer);
+	}
+	{//Power Info
+		std::string powerinfo = process->get_powerinfo_string();
+		mvwprintw(window_header,RUNTIME_COORD_Y,mainwindow_width-powerinfo.size()-1,powerinfo.c_str());
 	}
 	{//Poses
 		uint8_t truthpose_state = process->get_truthposestate();
@@ -889,6 +894,14 @@ void SystemMonitorNode::resourceAvailable_Callback(const eros::resource::ConstPt
 void SystemMonitorNode::snapshotstate_Callback(const eros::systemsnapshot_state::ConstPtr& msg)
 {
 	eros::diagnostic diag = process->new_systemsnapshotstatemessage(msg);
+	if(diag.Level > NOTICE)
+	{
+		logger->log_diagnostic(diag);
+	}
+}
+void SystemMonitorNode::battery_Callback(const eros::battery::ConstPtr& msg)
+{
+	eros::diagnostic diag = process->new_batterymessage(msg);
 	if(diag.Level > NOTICE)
 	{
 		logger->log_diagnostic(diag);

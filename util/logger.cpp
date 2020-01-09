@@ -14,7 +14,7 @@ Logger::Logger(std::string level,std::string modpath,std::string name)
 	char buffer[100];
 	sprintf(buffer,"%s.out",name.c_str());
 
-	sprintf(file_path,"/home/robot/logs/output/%s/%s",modpath.c_str(),buffer);
+	sprintf(file_path,"/var/log/output/%s/%s",modpath.c_str(),buffer);
 	ofstream log_file;
 	log_file.open(file_path); //Overwrite file.
 	log_file.close();
@@ -30,7 +30,7 @@ Logger::Logger(std::string level,std::string name)
 	char buffer[100];
 	sprintf(buffer,"%s.out",name.c_str());
 
-	sprintf(file_path,"/home/robot/logs/output/%s",buffer);
+	sprintf(file_path,"/var/log/output/%s",buffer);
 	ofstream log_file;
 	log_file.open(file_path); //Overwrite file.
 	log_file.close();

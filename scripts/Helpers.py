@@ -78,7 +78,7 @@ def GetDeviceInfo(devicename):
                     newDevice.Architecture = entry.text
                 elif (entry.tag == 'DeviceType'):
                     newDevice.DeviceType = entry.text
-                DeviceList.append(newDevice)
+            DeviceList.append(newDevice)
     for dev in DeviceList:
         if(dev.Name == devicename):
             return dev

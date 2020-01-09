@@ -14,7 +14,19 @@ import sys
 from functools import partial
 #from colored import fg, bg, attr
 DeviceList = []
+class IPObject(object):
+    def __init__(self,Name,Address):
+        self.Name = Name
+        self.Address = Address
 
+def generate_IgnoreDeviceList():
+    list = []
+    list.append('dgitzdev')
+    list.append('dgitzrosmaster')
+    list.append('DriverStation')
+    list.append('BuildServer1')
+    list.append('MasterModule')
+    return list
 def print_usage():
     print "Usage Instructions: shutdownSystem."
     print "No Options: This Menu."
@@ -23,32 +35,46 @@ def print_usage():
     print "-r Reboot all devices."
 
 def shutdown_all_devices():
-    #os.system("/home/robot/scripts/stopSystem.py -k")
+    ignorelist = generate_IgnoreDeviceList()
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):
             print "Not shutting down my host, but restarting tasks: " + socket.gethostname()
         else:
-            print "Shutting down Device: " + DeviceList[i].Name
-            sshProcess = subprocess.Popen(['ssh',"robot@" + DeviceList[i].Name], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-            sshProcess.stdin.write("sudo shutdown -h now\n")
-            stdout,stderr = sshProcess.communicate()
-            sshProcess.stdin.close()
+            ignore = False
+            for j in range(0,len(ignorelist)):
+                if(DeviceList[i].Name == ignorelist[j]):
+                    ignore = True
+            if(ignore == True):
+                print "Ignoring: " + DeviceList[i].Name
+            else:
+                print "Shutting down Device: " + DeviceList[i].Name
+                sshProcess = subprocess.Popen(['ssh',"robot@" + DeviceList[i].Name], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+                sshProcess.stdin.write("sudo shutdown -h now\n")
+                stdout,stderr = sshProcess.communicate()
+                sshProcess.stdin.close()
     
             
 
 def reboot_all_devices():
-    #os.system("/home/robot/scripts/stopSystem.py -k")
+    ignorelist = generate_IgnoreDeviceList()
     DeviceList = Helpers.ReadDeviceList('ROS')
     for i in range(0,len(DeviceList)):
         if(DeviceList[i].Name == socket.gethostname()):
             print "Not rebooting my host: " + socket.gethostname()
         else:
-            print "Rebooting Device: " + DeviceList[i].Name
-            sshProcess = subprocess.Popen(['ssh',"robot@" + DeviceList[i].Name], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-            sshProcess.stdin.write("sudo shutdown -r now\n")
-            stdout,stderr = sshProcess.communicate()
-            sshProcess.stdin.close()
+            ignore = False
+            for j in range(0,len(ignorelist)):
+                if(DeviceList[i].Name == ignorelist[j]):
+                    ignore = True
+            if(ignore == True):
+                print "Ignoring: " + DeviceList[i].Name
+            else:
+                print "Rebooting Device: " + DeviceList[i].Name
+                sshProcess = subprocess.Popen(['ssh',"robot@" + DeviceList[i].Name], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+                sshProcess.stdin.write("sudo shutdown -r now\n")
+                stdout,stderr = sshProcess.communicate()
+                sshProcess.stdin.close()
     
 
 def main():

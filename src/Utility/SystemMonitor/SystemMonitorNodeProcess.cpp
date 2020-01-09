@@ -274,11 +274,55 @@ SystemMonitorNodeProcess::Task SystemMonitorNodeProcess::create_task(uint16_t id
     task.restart_count = 0;
     return task;
 }
+eros::diagnostic SystemMonitorNodeProcess::new_batterymessage(const eros::battery::ConstPtr& t_ptr)
+{
+    eros::diagnostic diag = diagnostic;
+    bool powerinfo_available = true;
+    switch(t_ptr->powerstate)
+    {
+        case POWERSTATE_UNDEFINED:
+            powerinfo_available = false;
+            break;
+        case POWERSTATE_NORMAL:
+            powerinfo_available = true;
+            break;
+        case POWERSTATE_STANDBY:
+            powerinfo_available = true;
+            break;
+        case POWERSTATE_CHANGINGACTIVEBATTERY:
+            powerinfo_available = false;
+            break;
+        case POWERSTATE_REQUIRERECHARGE:
+            powerinfo_available = true;
+            break;
+        case POWERSTATE_EMERGENCY:
+            powerinfo_available = true;
+            break;
+        case POWERSTATE_CHARGING:
+            powerinfo_available = true;
+            break;
+        default:
+            powerinfo_available = false;
+            
+            break;
+    }
+    if(powerinfo_available == true)
+    {
+        char tempstr[128];
+        sprintf(tempstr,"%2.1fV %2.1fA",t_ptr->voltage,t_ptr->current);
+        powerinfo_string = std::string(tempstr);
+    }
+    else
+    {
+        powerinfo_string = "--.-V   --.-A";
+    }
+    return diag;
+}
 eros::diagnostic SystemMonitorNodeProcess::new_truthpose(const eros::pose::ConstPtr& t_ptr)
 {
     eros::diagnostic diag = diagnostic;
     char tempstr[256];
-    sprintf(tempstr,"Truth Pose: N: %4.2f(m) E: %4.2f(m) Z: %4.2f(m) Heading: %4.2f(deg)==%s",
+    sprintf(tempstr,"Truth Pose: N: %4.2f(m) E: %4.2f(m) Z: %4.2f(m) Yaw: %4.2f(deg)==%s",
         t_ptr->north.value,
         t_ptr->east.value,
         t_ptr->elev.value,

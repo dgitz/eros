@@ -13,7 +13,8 @@ fi
 DATE=`date +%d%b%Y`
 #ssh robot@BuildServer1 "sudo dd if=/dev/mmcblk0 bs=1M | gzip -" | dd of=BuildServer1_6Jan2018.gz
 image_path="/home/robot/images/"$device"_"$DATE".gz"
-exec_string="ssh robot@"$device" "\""sudo dd if=/dev/mmcblk0 bs=1M | gzip -"\"" | dd of="$image_path
+exec_string="ssh -t robot@"$device" "\""sudo dd if=/dev/mmcblk0 bs=1M | gzip -"\"" | dd of="$image_path
 echo "Copying Image for Device: "$device" to: "$image_path
+echo $exec_string
 eval $exec_string
 
