@@ -56,6 +56,13 @@
 #define KEY_L 76
 #define KEY_d 100
 #define KEY_D 68
+#define KEY_r 114
+#define KEY_R 82
+#define KEY_p 112
+#define KEY_P 80
+#define KEY_m 109
+#define KEY_M 77
+
 #define ENTER_KEY 10
 class SystemMonitorNodeProcess {
 public:
