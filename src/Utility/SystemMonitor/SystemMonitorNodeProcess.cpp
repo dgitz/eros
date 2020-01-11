@@ -4,17 +4,20 @@ eros::diagnostic SystemMonitorNodeProcess::update(double t_dt,double t_ros_time)
     eros::diagnostic diag = diagnostic;
     ros_time = t_ros_time;
     run_time += t_dt;
+    std::string tempstr = "";
     for(std::size_t i = 0; i < modulelist.size(); ++i)
     {
         modulelist.at(i).last_heartbeat_delta = fabs(ros_time - modulelist.at(i).last_heartbeat);
         if((modulelist.at(i).last_heartbeat_delta >= 0.0) and (modulelist.at(i).last_heartbeat_delta < (10.0*COMMTIMEOUT_THRESHOLD)))
-        {
+        { 
+            modulelist.at(i).state = TASKSTATE_RUNNING;
         }
         else
         {
-            modulelist.at(i).state = TASKSTATE_NODATA;
+            modulelist.at(i).state = TASKSTATE_NODATA;   
         }
     }
+
     for(std::size_t i = 0; i < tasklist.size(); ++i)
     {
         if(tasklist.at(i).initialized == false)
@@ -413,6 +416,7 @@ eros::diagnostic SystemMonitorNodeProcess::new_resourceavailablemessage(const er
             modulelist.at(i).RAMFree_Perc = t_ptr->RAM_Perc;
             modulelist.at(i).CPUFree_Perc = t_ptr->CPU_Perc;
             modulelist.at(i).DISKFree_Perc = t_ptr->DISK_Perc;
+
         }
     }
     if(found == false)
