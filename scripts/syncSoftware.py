@@ -57,6 +57,12 @@ def sync_local(hostname):
     print "Syncing Local: " + hostname
     if not os.path.exists("/tmp/config/"):
         os.makedirs("/tmp/config/")
+    firmware_versions = Helpers.ReadFirmwareVersions(ApplicationPackage)
+    fw_file = open("/tmp/firmware_list.txt", "w")
+    for fw in firmware_versions:
+        fw_file.write('Name: ' + fw.Name + ' Major Version: ' + str(fw.Major_Release) + ' Minor Version: ' + str(fw.Minor_Release) + ' Build Number: ' + str(fw.Build_Number) + ' Desc: ' + fw.Description + '\n')
+    fw_file.close()  
+    os.system("cp /tmp/firmware_list.txt " + RootDirectory + "/config/FirmwareList.txt")
     #Determine what the name of the ActiveScenario is:
     f = open(ActiveScenarioFile, "r")
     contents = f.readlines()
@@ -76,6 +82,7 @@ def sync_local(hostname):
     if(os.path.isdir(RootDirectory + "config/scriptfiles") == True):
         shutil.rmtree(RootDirectory + "config/scriptfiles")
     os.mkdir(RootDirectory + "config/scriptfiles")
+    
     os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/scriptfiles/* " + RootDirectory + "/config/scriptfiles/")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/configdatabase.db",RootDirectory + "config/configdatabase.db")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/NodeList.txt",RootDirectory + "config/NodeList.txt")
@@ -205,6 +212,12 @@ def sync_buildserver(device,build):
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
     print "Syncing Build Server: " + device
+    firmware_versions = Helpers.ReadFirmwareVersions(ApplicationPackage)
+    fw_file = open("/tmp/firmware_list.txt", "w")
+    for fw in firmware_versions:
+        fw_file.write('Name: ' + fw.Name + ' Major Version: ' + str(fw.Major_Release) + ' Minor Version: ' + str(fw.Minor_Release) + ' Build Number: ' + str(fw.Build_Number) + ' Desc: ' + fw.Description + '\n')
+    fw_file.close()  
+    subprocess.call("rsync -avrt /tmp/firmware_list.txt " + "robot@" + device + ":" + RootDirectory + "config/FirmwareList.txt" ,shell=True)
     os.unlink(RootDirectory + "config/configdatabase.db")
     os.unlink(RootDirectory + "config/NodeList.txt")
     os.unlink(RootDirectory + "config/ControlGroup.xml")
@@ -379,6 +392,12 @@ def sync_remote(device,build):
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
     print "Syncing Remote: " + device
+    firmware_versions = Helpers.ReadFirmwareVersions(ApplicationPackage)
+    fw_file = open("/tmp/firmware_list.txt", "w")
+    for fw in firmware_versions:
+        fw_file.write('Name: ' + fw.Name + ' Major Version: ' + str(fw.Major_Release) + ' Minor Version: ' + str(fw.Minor_Release) + ' Build Number: ' + str(fw.Build_Number) + ' Desc: ' + fw.Description + '\n')
+    fw_file.close()  
+    subprocess.call("rsync -avrt /tmp/firmware_list.txt " + "robot@" + device + ":" + RootDirectory + "config/FirmwareList.txt" ,shell=True)
     os.unlink(RootDirectory + "config/configdatabase.db")
     os.unlink(RootDirectory + "config/NodeList.txt")
     os.unlink(RootDirectory + "config/ControlGroup.xml")
@@ -561,6 +580,12 @@ def sync_display(device):
     #sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     #sshProcess.stdin.write("rm " + ApplicationPackage + "launch/*\n")
     #stdout,stderr = sshProcess.communicate()
+    firmware_versions = Helpers.ReadFirmwareVersions(ApplicationPackage)
+    fw_file = open("/tmp/firmware_list.txt", "w")
+    for fw in firmware_versions:
+        fw_file.write('Name: ' + fw.Name + ' Major Version: ' + str(fw.Major_Release) + ' Minor Version: ' + str(fw.Minor_Release) + ' Build Number: ' + str(fw.Build_Number) + ' Desc: ' + fw.Description + '\n')
+    fw_file.close()  
+    subprocess.call("rsync -avrt /tmp/firmware_list.txt " + "robot@" + device + ":" + RootDirectory + "config/FirmwareList.txt" ,shell=True)
     iplist = generate_AllIPDeviceList()
     out_file = open("/tmp/hosts_" + device, "w")
     out_file.write("127.0.0.1       localhost\n")
