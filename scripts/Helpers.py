@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import pdb
+import glob,os,shutil
 devicefile = '/home/robot/config/DeviceFile.xml'
 class Device():
     def __init__(self,Name='',Parent='',IPAddress='',Capability='',ID=0,PartNumber='',Architecture='',DeviceType=''):
@@ -11,7 +12,13 @@ class Device():
         self.Capability = Capability
         self.Architecture = Architecture
         self.DeviceType=DeviceType
-        
+class FirmwareVersion():
+    def __init__(self,Name='',Major_Release=0,Minor_Release=0,Build_Number=0,Description=''):
+        self.Name = Name
+        self.Major_Release = Major_Release
+        self.Minor_Release = Minor_Release
+        self.Build_Number = Build_Number
+        self.Description = Description    
 def checkDeviceFileFormat():
     try:
         tree = ET.parse(devicefile)
@@ -101,5 +108,36 @@ def ReadCapabilityList():
             if(found == False):
                 CapabilityList.append(capability)
     return CapabilityList
+def ReadFirmwareVersions(content_directory):
+    firmware_list = []
+    for directory,dir_list,file_list in os.walk(content_directory):
+        for fname in file_list:
+            if('sandbox' not in directory):
+                if 'node.h' in fname:
+                    with open(directory + "/" + fname, 'r') as f:
+                        lines = f.readlines()
+                        contains_info = False
+                        node_name = ''
+                        major_version = 0
+                        minor_version = 0
+                        build_number = 0
+                        description = ''
+                        
+                        for line in lines:
+                            if 'BASE_NODE_NAME' in line:
+                                contains_info = True
+                                node_name = line[32:-3]
+                            if 'MAJOR_RELEASE_VERSION' in line:
+                                major_version = int(line[38:-2].strip())
+                            if 'MINOR_RELEASE_VERSION' in line:
+                                minor_version = int(line[38:-2].strip())
+                            if 'BUILD_NUMBER' in line:
+                                build_number = int(line[29:-2].strip())
+                            if 'FIRMWARE_DESCRIPTION' in line:
+                                description = line[38:-3]
+                        if(contains_info == True):
+                            firmware_list.append(FirmwareVersion(node_name,major_version,minor_version,build_number,description))
+    firmware_list = sorted(firmware_list,key=lambda firmware: firmware.Name)   
+    return firmware_list
 
     
