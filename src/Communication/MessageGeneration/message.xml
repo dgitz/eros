@@ -880,4 +880,19 @@
             </Protocol>
         </Protocols>
     </Message>
+    <Message name="TestProgram" id="0xAB47">
+        <Description>
+            <![CDATA[
+                This message is used to command a Test Program to be run and view the current state.  If the TestProgram is already running this will not restart it.
+            ]]>
+        </Description>
+        <Protocols>
+            <Protocol name="I2C">
+                <Type>Query</Type>
+                <Fields>
+                    <field type="unsigned char" name="ProgramState" description="The current state of the Test Program"/>
+                </Fields>
+            </Protocol>
+        </Protocols>
+    </Message>
 </Messages>

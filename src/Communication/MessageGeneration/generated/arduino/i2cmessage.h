@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-12-11 06:12:15.303816***/
+/***Created on:2020-01-25 07:38:19.291584***/
 /***Target: Arduino ***/
 #ifndef I2CMESSAGE_H
 #define I2CMESSAGE_H
@@ -11,6 +11,7 @@
 #define I2C_Get_IMUAcc_ID 0x27
 #define I2C_Get_IMUGyro_ID 0x28
 #define I2C_Get_IMUMag_ID 0x29
+#define I2C_TestProgram_ID 0x47
 
 int encode_DiagnosticI2C(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message);
 
@@ -27,4 +28,6 @@ int encode_Get_IMUAccI2C(unsigned char* outbuffer,int* length,unsigned int acc1_
 int encode_Get_IMUGyroI2C(unsigned char* outbuffer,int* length,unsigned int gyro1_x,unsigned int gyro1_y,unsigned int gyro1_z,unsigned int gyro2_x,unsigned int gyro2_y,unsigned int gyro2_z);
 
 int encode_Get_IMUMagI2C(unsigned char* outbuffer,int* length,unsigned int mag1_x,unsigned int mag1_y,unsigned int mag1_z,unsigned int mag2_x,unsigned int mag2_y,unsigned int mag2_z);
+
+int encode_TestProgramI2C(unsigned char* outbuffer,int* length,unsigned char ProgramState);
 #endif

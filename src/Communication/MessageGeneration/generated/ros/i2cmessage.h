@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-12-11 06:12:15.303855***/
+/***Created on:2020-01-25 07:38:19.291628***/
 /***Target: Raspberry Pi ***/
 #ifndef I2CMESSAGE_H
 #define I2CMESSAGE_H
@@ -26,6 +26,7 @@ public:
 		I2C_Get_IMUAcc_ID = 0x27,
 		I2C_Get_IMUGyro_ID = 0x28,
 		I2C_Get_IMUMag_ID = 0x29,
+		I2C_TestProgram_ID = 0x47,
 	};
 	I2CMessageHandler();
 	~I2CMessageHandler();
@@ -45,6 +46,8 @@ public:
 	int decode_Get_IMUGyroI2C(unsigned char* inbuffer,int * length,uint16_t* gyro1_x,uint16_t* gyro1_y,uint16_t* gyro1_z,uint16_t* gyro2_x,uint16_t* gyro2_y,uint16_t* gyro2_z);
 
 	int decode_Get_IMUMagI2C(unsigned char* inbuffer,int * length,uint16_t* mag1_x,uint16_t* mag1_y,uint16_t* mag1_z,uint16_t* mag2_x,uint16_t* mag2_y,uint16_t* mag2_z);
+
+	int decode_TestProgramI2C(unsigned char* inbuffer,int * length,unsigned char* ProgramState);
 private:
 };
 #endif

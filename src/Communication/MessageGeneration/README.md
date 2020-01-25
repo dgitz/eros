@@ -30,3 +30,4 @@ I2C Protocol:
 * Query -- Used to read a series of values 
 - Supported Data Types:
 * unsigned char
+* uint16_t

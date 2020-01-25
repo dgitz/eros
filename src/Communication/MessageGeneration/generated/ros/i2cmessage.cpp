@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-12-11 06:12:15.303875***/
+/***Created on:2020-01-25 07:38:19.291649***/
 /***Target: Raspberry Pi ***/
 #include "../include/i2cmessage.h"
 I2CMessageHandler::I2CMessageHandler(){}
@@ -120,5 +120,10 @@ int I2CMessageHandler::decode_Get_IMUMagI2C(unsigned char* inbuffer,int * length
 	*mag2_y = v_mag2_y + inbuffer[9];
 	int v_mag2_z = inbuffer[10]<<8;
 	*mag2_z = v_mag2_z + inbuffer[11];
+	return 1;
+}
+int I2CMessageHandler::decode_TestProgramI2C(unsigned char* inbuffer,int * length,unsigned char* ProgramState)
+{
+	*ProgramState = inbuffer[0];
 	return 1;
 }
