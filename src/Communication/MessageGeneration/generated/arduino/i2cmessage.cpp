@@ -1,5 +1,5 @@
 /***************AUTO-GENERATED.  DO NOT EDIT********************/
-/***Created on:2019-12-11 06:12:15.303836***/
+/***Created on:2020-01-25 07:38:19.291607***/
 /***Target: Arduino ***/
 #include "i2cmessage.h"
 int encode_DiagnosticI2C(unsigned char* outbuffer,int* length,unsigned char System,unsigned char SubSystem,unsigned char Component,unsigned char Diagnostic_Type,unsigned char Level,unsigned char Diagnostic_Message)
@@ -193,6 +193,31 @@ int encode_Get_IMUMagI2C(unsigned char* outbuffer,int* length,unsigned int mag1_
 	*p_outbuffer++ = mag2_y;
 	*p_outbuffer++ = mag2_z>>8;
 	*p_outbuffer++ = mag2_z;
+	unsigned char checksum = 0;
+	for(int i = 0; i < 12;i++)
+	{
+		checksum ^= outbuffer[i];
+	}
+	*p_outbuffer++ = checksum;
+	length[0] = 12;
+	return 1;
+}
+int encode_TestProgramI2C(unsigned char* outbuffer,int* length,unsigned char ProgramState)
+{
+	unsigned char *p_outbuffer;
+	p_outbuffer = &outbuffer[0];
+	*p_outbuffer++ = ProgramState;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
+	*p_outbuffer++ = 0;
 	unsigned char checksum = 0;
 	for(int i = 0; i < 12;i++)
 	{
