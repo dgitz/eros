@@ -277,6 +277,7 @@
 #define SIGNALTYPE_ANGLE 6 //Degree
 #define SIGNALTYPE_VELOCITY 7 //m/s
 #define SIGNALTYPE_TICKSPEED 8 //Ticks/second
+#define SIGNALTYPE_FORCE 9 //Newtons
 #define SIGNALTYPE_UNITLESS 255 //Unit Less
 //TAG: End SignalType
 
