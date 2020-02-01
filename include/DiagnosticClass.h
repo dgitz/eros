@@ -6,7 +6,7 @@ class DiagnosticClass
 {
 public:
 	DiagnosticClass()
-{
+	{
 		DiagSystemMap[ROVER] = "ROVER";
 		DiagSystemMap[GROUND_STATION] = "GROUND STATION";
 		DiagSystemMap[REMOTE_CONTROL] = "REMOTE CONTROL";
@@ -43,7 +43,7 @@ public:
 		DiagTypeMap[TARGET_ACQUISITION] = "TARGET ACQUISITION";
 		DiagTypeMap[POSE] = "POSE";
 		DiagTypeMap[TIMING] = "TIMING";
-        DiagTypeMap[SYSTEM_RESOURCE] = "SYSTEM RESOURCE";
+		DiagTypeMap[SYSTEM_RESOURCE] = "SYSTEM RESOURCE";
 		DiagTypeMap[GENERAL_ERROR] = "GENERAL ERROR";
 
 		DiagLevelMap[DEBUG] = "DEBUG";
@@ -70,40 +70,39 @@ public:
 		DiagMessageMap[HIGH_RESOURCE_USAGE] = "HIGH RESOURCE USAGE";
 		DiagMessageMap[UNKNOWN_STATE] = "UNKNOWN STATE";
 		DiagMessageMap[UNKNOWN_MESSAGE] = "UNKNOWN MESSAGE";
-}
+	}
 	~DiagnosticClass()
 	{
-
 	}
 	std::string get_DiagSystemString(uint8_t v)
 	{
-		return lookup_key(DiagSystemMap,v,SYSTEM_UNKNOWN);
+		return lookup_key(DiagSystemMap, v, SYSTEM_UNKNOWN);
 	}
 	std::string get_DiagSubSystemString(uint8_t v)
 	{
-		return lookup_key(DiagSubSystemMap,v,SUBSYSTEM_UNKNOWN);
+		return lookup_key(DiagSubSystemMap, v, SUBSYSTEM_UNKNOWN);
 	}
 	std::string get_DiagComponentString(uint8_t v)
 	{
-		return lookup_key(DiagComponentMap,v,COMPONENT_UNKNOWN);
+		return lookup_key(DiagComponentMap, v, COMPONENT_UNKNOWN);
 	}
 	std::string get_DiagTypeString(uint8_t v)
 	{
-		return lookup_key(DiagTypeMap,v,GENERAL_ERROR);
+		return lookup_key(DiagTypeMap, v, GENERAL_ERROR);
 	}
 	std::string get_DiagLevelString(uint8_t v)
 	{
-		return lookup_key(DiagLevelMap,v,LEVEL_UNKNOWN);
+		return lookup_key(DiagLevelMap, v, LEVEL_UNKNOWN);
 	}
 	std::string get_DiagMessageString(uint8_t v)
-		{
-			return lookup_key(DiagMessageMap,v,UNKNOWN_MESSAGE);
-		}
+	{
+		return lookup_key(DiagMessageMap, v, UNKNOWN_MESSAGE);
+	}
 
 private:
-	std::string lookup_key(std::map<uint8_t,std::string> keymap,uint8_t v,uint8_t v_default)
+	std::string lookup_key(std::map<uint8_t, std::string> keymap, uint8_t v, uint8_t v_default)
 	{
-		if(keymap.find(v) != keymap.end())
+		if (keymap.find(v) != keymap.end())
 		{
 			return keymap[v];
 		}
@@ -112,12 +111,12 @@ private:
 			return keymap[v_default];
 		}
 	}
-	std::map<uint8_t,std::string> DiagSystemMap;
-	std::map<uint8_t,std::string> DiagSubSystemMap;
-	std::map<uint8_t,std::string> DiagComponentMap;
-	std::map<uint8_t,std::string> DiagTypeMap;
-	std::map<uint8_t,std::string> DiagLevelMap;
-	std::map<uint8_t,std::string> DiagMessageMap;
+	std::map<uint8_t, std::string> DiagSystemMap;
+	std::map<uint8_t, std::string> DiagSubSystemMap;
+	std::map<uint8_t, std::string> DiagComponentMap;
+	std::map<uint8_t, std::string> DiagTypeMap;
+	std::map<uint8_t, std::string> DiagLevelMap;
+	std::map<uint8_t, std::string> DiagMessageMap;
 };
 
 #endif
