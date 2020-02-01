@@ -7,6 +7,7 @@
 #define PN_110012 "110012" // Sparkfun Razor IMU
 #define PN_110013 "110013" // Adafruit LSM9DS0 IMU
 #define PN_110015 "110015" // NAVX-MXP IMU6
+#define PN_160002 "160002" // Adafruit I2S MEMS Microphone
 #define PN_361006 "361006" // AndyMark Redline 775 Motor
 #define PN_361008 "361008" // Actuonix P16 Linear Actuator
 #define PN_362009 "362009" // Victor SPX Motor Controller
