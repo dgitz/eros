@@ -1,11 +1,16 @@
 #ifndef POSEHELPER_H
 #define POSEHELPER_H
 #include <map>
+#include <eros/pose.h>
 #include "eROS_Definitions.h"
 class PoseHelper
 {
 public:
 	const double SIMPLEHEADING_STRING_RESOLUTION_DEG = 22.5;
+	const double YAWROTATE_THRESHOLD_DEGS = 2.0;
+	const double PITCHROTATE_THRESHOLD_DEGS = 2.0;
+	const double ROLLROTATE_THRESHOLD_DEGS = 2.0;
+	const double FORWARDVELOCITY_THRESHOLD_MPS = 0.1;
 	enum class HeadingReference
 	{
 		UNKNOWN=0,
@@ -36,6 +41,63 @@ public:
 	~PoseHelper()
 	{
 
+	}
+	std::string get_simplepose_string(eros::pose pose)
+	{
+		std::string simple_string = "POSE:";
+		bool anything_moving = false;
+		// Check Yaw Rate
+		if(pose.yawrate.value > YAWROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " ROTATING LEFT";
+		}
+		else if(pose.yawrate.value < -YAWROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " ROTATING RIGHT";
+		}
+
+		// Check Pitch Rate
+		if(pose.pitchrate.value > PITCHROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " PITCHING FORWARD";
+		}
+		else if(pose.pitchrate.value < -PITCHROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " PITCHING BACKWARDS";
+		}
+
+		// Check Roll Rate
+		if(pose.rollrate.value > ROLLROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " ROLLING LEFT";
+		}
+		else if(pose.rollrate.value < -ROLLROTATE_THRESHOLD_DEGS)
+		{
+			anything_moving = true;
+			simple_string += " ROLLING RIGHT";
+		}
+
+		// Check Forward Velocity
+		if(pose.forward_velocity.value > FORWARDVELOCITY_THRESHOLD_MPS)
+		{
+			anything_moving = true;
+			simple_string += " DRIVING FORWARDS";
+		}
+		else if(pose.forward_velocity.value < -FORWARDVELOCITY_THRESHOLD_MPS)
+		{
+			anything_moving = true;
+			simple_string += " DRIVING BACKWARDS";
+		}
+		if(anything_moving == false)
+		{
+			simple_string += " STATIONARY.";
+		}
+		return simple_string;
 	}
 	// HEADING STUFF
 	double get_simple_headingstring_map_resolution() { return SIMPLEHEADING_STRING_RESOLUTION_DEG; }

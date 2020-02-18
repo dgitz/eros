@@ -232,26 +232,26 @@
 #define SIGNALSTATE_CALIBRATING 6
 //TAG: End SignalState
 
-//TAG: RoverCommand_Calibration
+//TAG: Start RoverCommand_Calibration
 #define ROVERCOMMAND_CALIBRATION_UNDEFINED 0
 #define ROVERCOMMAND_CALIBRATION_NONE 1
 #define ROVERCOMMAND_CALIBRATION_MAGNETOMETER 2
 #define ROVERCOMMAND_CALIBRATION_MOUNTINGANGLEOFFSET 3
 //TAG: End RoverCommand_Calibration
 
-//TAG: RoverCommand_Snapshot
+//TAG: Start RoverCommand_Snapshot
 #define ROVERCOMMAND_SNAPSHOT_UNDEFINED 0
 #define ROVERCOMMAND_SNAPSHOT_CLEARALL 1
 #define ROVERCOMMAND_SNAPSHOT_NEWSNAPSHOT 2
 //TAG: End RoverCommand_Snapshot
 
-//TAG: RoverCommand_SnapshotMode
+//TAG: Start RoverCommand_SnapshotMode
 #define ROVERCOMMAND_SNAPSHOTMODE_UNDEFINED 0
 #define ROVERCOMMAND_SNAPSHOTMODE_MANUAL 1
 #define ROVERCOMMAND_SNAPSHOTMODE_AUTO 2
 //TAG: End RoverCommand_SnapshotMode
 
-//TAG: RoverCommand_SimulationControl
+//TAG: Start RoverCommand_SimulationControl
 #define ROVERCOMMAND_SIMULATIONCONTROL_UNDEFINED 0
 #define ROVERCOMMAND_SIMULATIONCONTROL_RESETWORLD 1
 #define ROVERCOMMAND_SIMULATIONCONTROL_STARTSIM 2
@@ -265,6 +265,7 @@
 #define SIGNALCLASS_PROCESSEDSIGNAL 3
 #define SIGNALCLASS_INPUTSIGNAL 4
 #define SIGNALCLASS_POSESIGNAL 5
+#define SIGNALCLASS_TRUTHSIGNAL 6
 //TAG: End SignalClass
 
 //TAG: Start SignalType
@@ -312,7 +313,7 @@
 #define SQLCOMMANDTYPE_DATAQUERY 3
 //TAG: End SQLCommandType
 
-//TAG: Port Definitions
+//TAG: Start Port Definitions
 #define PORT_UNKNOWN 0
 #define PORT_DIGIPORT_1 1
 #define PORT_DIGIPORT_2 2
@@ -328,7 +329,7 @@
 #define PORT_ANAPORT_4 12
 //TAG: End Port Definitions
 
-//TAG: DataTypes
+//TAG: Start DataTypes
 #define DATATYPE_UNKNOWN 0
 #define DATATYPE_BOOL 1
 #define DATATYPE_DOUBLE 2
@@ -337,7 +338,7 @@
 #define DATATYPE_MATRIXDOUBLE 5
 //TAG: End DataTypes
 
-//TAG: TestProgram States
+//TAG: Start TestProgram States
 #define TESTPROGRAMSTATE_UNKNOWN 0
 #define TESTPROGRAMSTATE_IDLE 1
 #define TESTPROGRAMSTATE_START 2

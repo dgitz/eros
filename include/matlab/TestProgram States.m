@@ -1,0 +1,12 @@
+%***************AUTO-GENERATED.  DO NOT EDIT********************/
+%***Created on:%2020-02-18 05:43:04.493170%***/
+classdef TestProgram States < uint8
+	enumeration
+		TESTPROGRAMSTATE_UNKNOWN_ (0)
+		TESTPROGRAMSTATE_IDLE_ (1)
+		TESTPROGRAMSTATE_START_ (2)
+		TESTPROGRAMSTATE_RUNNING_ (3)
+		TESTPROGRAMSTATE_PASSED_ (4)
+		TESTPROGRAMSTATE_FAILED_ (5)
+	end
+end

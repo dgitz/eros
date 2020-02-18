@@ -8,6 +8,7 @@ public:
 	DiagnosticClass()
 	{
 		DiagSystemMap[ROVER] = "ROVER";
+		DiagSystemMap[SIMROVER] = "SIM ROVER";
 		DiagSystemMap[GROUND_STATION] = "GROUND STATION";
 		DiagSystemMap[REMOTE_CONTROL] = "REMOTE CONTROL";
 		DiagSystemMap[SYSTEM_UNKNOWN] = "SYSTEM UNKNOWN";

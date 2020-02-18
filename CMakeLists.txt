@@ -69,7 +69,7 @@ add_message_files(
   iopins.msg
   pose.msg
   leverarm.msg
-  encoder.msg
+  odom.msg
   timesyncinfo.msg
   subsystem_diagnostic.msg
   systemsnapshot_state.msg
