@@ -1,4 +1,3 @@
-float64 timestamp
 uint64 sequence_number
 float64 tov
 #linear acc

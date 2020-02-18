@@ -1,0 +1,13 @@
+%***************AUTO-GENERATED.  DO NOT EDIT********************/
+%***Created on:%2020-02-18 05:43:04.492734%***/
+classdef SignalState < uint8
+	enumeration
+		SIGNALSTATE_UNDEFINED_ (0)
+		SIGNALSTATE_INVALID_ (1)
+		SIGNALSTATE_INITIALIZING_ (2)
+		SIGNALSTATE_UPDATED_ (3)
+		SIGNALSTATE_EXTRAPOLATED_ (4)
+		SIGNALSTATE_HOLD_ (5)
+		SIGNALSTATE_CALIBRATING_ (6)
+	end
+end
