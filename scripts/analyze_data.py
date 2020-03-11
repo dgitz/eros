@@ -172,6 +172,10 @@ def analyze(data_directory,output_directory,extra_signal_list,show_graphics):
     fd.write("Log Duration: " + str(log_duration) + " sec\n")
     fd.write("Total Duration: " + str(stop_time-start_time) + " sec\n")
     # Signal Type Specific Analysis
+    fd.write("CPU Usage Analysis\n")
+    cpuused_perc_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_CPUPERC)
+    for i in range(0,len(cpuused_perc_signals)):
+        fd.write("[" + str(i+1) + "/" + str(len(cpuused_perc_signals)) + " Process: " + cpuused_perc_signals[i].name + " Max CPU Usage: " + str(max(cpuused_perc_signals[i].value)) + "\n")
     fd.write("RAM Usage Analysis\n")
     ramused_MB_signals = get_signalsbytype(signals,FileType_RESOURCEUSED,DataType_RAMMB)
     potential_memoryleak_signals = []
@@ -252,7 +256,6 @@ def analyze(data_directory,output_directory,extra_signal_list,show_graphics):
     fd.close()
     print "Analysis Complete"
     figs = drawgraphs(signals,show_graphics,False)
-    drawgraphs(extra_signals,False,True)
     if(show_graphics == False):
         print "Saving Figures"
         for fig in figs:
@@ -276,13 +279,13 @@ def drawgraphs(signals,show_figures,suppress_warnings):
         fig = plt.figure()
         plt1 = fig.add_subplot(111)
         for i in range(0,len(cpuused_perc_signals)):
-            plt1.plot(cpuused_perc_signals[i].tov,cpuused_perc_signals[i].value,label=cpuused_perc_signals[i].name)      
+            plt1.plot(cpuused_perc_signals[i].tov,cpuused_perc_signals[i].value,label=cpuused_perc_signals[i].name) 
         plt1.legend(prop={'size':10})    
         plt.xlabel('Time (sec)')
         plt.ylabel('Percent')
         plt.suptitle(title)
         plt.ylim(bottom=0,top=100)
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         fig.canvas.set_window_title(title)
         mng = plt.get_current_fig_manager()
         mng.resize(*mng.window.maxsize())
@@ -301,7 +304,7 @@ def drawgraphs(signals,show_figures,suppress_warnings):
         plt.xlabel('Time (sec)')
         plt.ylabel('RAM (MB)')
         plt.suptitle(title)
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         fig.canvas.set_window_title(title)
         mng = plt.get_current_fig_manager()
         mng.resize(*mng.window.maxsize())
@@ -324,12 +327,12 @@ def drawgraphs(signals,show_figures,suppress_warnings):
             plt1.plot(loadfactor_15min_signals[j].tov,loadfactor_15min_signals[j].value,label='15 Min')
             plt1.legend(prop={'size':10})  
             plt1.title.set_text(loadfactor_1min_signals[j].node_name) 
-            plt.xlim(left=0)  
+            plt.xlim(left=signals[0].tov[0]) 
             plt.ylim(0,1)
         plt.xlabel('Time (sec)')
         plt.ylabel('Factor')
         plt.suptitle(title)
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         fig.canvas.set_window_title(title)
         mng = plt.get_current_fig_manager()
         mng.resize(*mng.window.maxsize())
@@ -350,7 +353,7 @@ def drawgraphs(signals,show_figures,suppress_warnings):
         plt1.set_ylabel('Percent')
         plt1.title.set_text('CPU Available')
         plt.ylim(bottom=0,top=100) 
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         plt2 = fig.add_subplot(312)
         for i in range(0,len(ramav_perc_signals)):
             plt2.plot(ramav_perc_signals[i].tov,ramav_perc_signals[i].value,label=ramav_perc_signals[i].node_name)
@@ -358,7 +361,7 @@ def drawgraphs(signals,show_figures,suppress_warnings):
         plt2.set_ylabel('Percent') 
         plt2.legend(prop={'size':10})
         plt.ylim(bottom=0,top=100) 
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         plt3 = fig.add_subplot(313)
         for i in range(0,len(diskav_perc_signals)):
             plt3.plot(diskav_perc_signals[i].tov,diskav_perc_signals[i].value,label=diskav_perc_signals[i].node_name)
@@ -366,7 +369,7 @@ def drawgraphs(signals,show_figures,suppress_warnings):
         plt3.set_ylabel('Percent')
         plt3.legend(prop={'size':10}) 
         plt.ylim(bottom=0,top=100)
-        plt.xlim(left=0) 
+        plt.xlim(left=signals[0].tov[0]) 
         plt.xlabel('Time (sec)')
         plt.suptitle(title)
         fig.canvas.set_window_title(title)
@@ -469,8 +472,8 @@ def load_csv(filetype,directory,f):
         signal_ramused_MB = Signal(FileType_RESOURCEUSED,DataType_RAMMB,nodename+'_ramused',nodename)
         TIMESTAMP_SEC_COL = 1
         TIMESTAMP_NSEC_COL = 2
-        RAMMB_COL = 5
-        CPUPERC_COL = 6
+        RAMMB_COL = 6
+        CPUPERC_COL = 7
         tov = []
         cpu = []
         ram = []
@@ -541,9 +544,9 @@ def load_csv(filetype,directory,f):
         signal_diskav_perc = Signal(FileType_RESOURCEAVAILABLE,DataType_DISKPERC,devicename+'_diskavailable',devicename)
         TIMESTAMP_SEC_COL = 1
         TIMESTAMP_NSEC_COL = 2
-        CPUPERC_COL = 6
-        RAMPERC_COL = 7
-        DISKPERC_COL = 8
+        CPUPERC_COL = 7
+        RAMPERC_COL = 8
+        DISKPERC_COL = 9
         tov = []
         cpu = []
         ram = []
