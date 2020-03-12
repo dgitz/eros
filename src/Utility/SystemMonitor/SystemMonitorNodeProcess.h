@@ -25,7 +25,7 @@
 //Project
 #include "../../../include/eROS_Definitions.h"
 #include "../../../include/PoseHelper.h"
-#define COMMTIMEOUT_THRESHOLD 3.0
+#define COMMTIMEOUT_THRESHOLD 10.0
 #define MINWINDOW_WIDTH 140
 #define ACTIVESCENARIO_Y 1 //Centered
 #define ROSTIME_COORD_X 1 //Left Justified

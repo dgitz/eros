@@ -66,35 +66,35 @@ bool SystemMonitorNode::start(int argc, char **argv)
 	for (std::size_t i = 0; i < resource_topics.size(); ++i)
 	{
 		logger->log_info("",0,"[" + std::to_string(i) + "] " + resource_topics.at(i));
-		ros::Subscriber sub = n->subscribe<eros::resource>(resource_topics.at(i), 5, &SystemMonitorNode::resource_Callback, this);
+		ros::Subscriber sub = n->subscribe<eros::resource>(resource_topics.at(i), 500, &SystemMonitorNode::resource_Callback, this);
 		resource_subs.push_back(sub);
 	}
 	logger->log_info(__FILE__,__LINE__,"--- Subscribing to Heartbeat Topics ---");
 	for (std::size_t i = 0; i < heartbeat_topics.size(); ++i)
 	{
 		logger->log_info("",0,"[" + std::to_string(i) + "] " + heartbeat_topics.at(i));
-		ros::Subscriber sub = n->subscribe<eros::heartbeat>(heartbeat_topics.at(i), 5, &SystemMonitorNode::heartbeat_Callback, this);
+		ros::Subscriber sub = n->subscribe<eros::heartbeat>(heartbeat_topics.at(i), 500, &SystemMonitorNode::heartbeat_Callback, this);
 		heartbeat_subs.push_back(sub);
 	}
 	logger->log_info(__FILE__,__LINE__,"--- Subscribing to LoadFactor Topics ---");
 	for (std::size_t i = 0; i < loadfactor_topics.size(); ++i)
 	{
 		logger->log_info("",0,"[" + std::to_string(i) + "] " + loadfactor_topics.at(i));
-		ros::Subscriber sub = n->subscribe<eros::loadfactor>(loadfactor_topics.at(i), 5, &SystemMonitorNode::loadfactor_Callback, this);
+		ros::Subscriber sub = n->subscribe<eros::loadfactor>(loadfactor_topics.at(i), 500, &SystemMonitorNode::loadfactor_Callback, this);
 		loadfactor_subs.push_back(sub);
 	}
 	logger->log_info(__FILE__,__LINE__,"--- Subscribing to Device Uptime Topics ---");
 	for (std::size_t i = 0; i < deviceuptime_topics.size(); ++i)
 	{
 		logger->log_info("",0,"[" + std::to_string(i) + "] " + deviceuptime_topics.at(i));
-		ros::Subscriber sub = n->subscribe<eros::uptime>(deviceuptime_topics.at(i), 5, &SystemMonitorNode::deviceuptime_Callback, this);
+		ros::Subscriber sub = n->subscribe<eros::uptime>(deviceuptime_topics.at(i), 500, &SystemMonitorNode::deviceuptime_Callback, this);
 		deviceuptime_subs.push_back(sub);
 	}
 	logger->log_info(__FILE__,__LINE__,"--- Subscribing to Resource Available Topics ---");
 	for (std::size_t i = 0; i < resourceavailable_topics.size(); ++i)
 	{
 		logger->log_info("",0,"[" + std::to_string(i) + "] " + resourceavailable_topics.at(i));
-		ros::Subscriber sub = n->subscribe<eros::resource>(resourceavailable_topics.at(i), 5, &SystemMonitorNode::resourceAvailable_Callback, this);
+		ros::Subscriber sub = n->subscribe<eros::resource>(resourceavailable_topics.at(i), 500, &SystemMonitorNode::resourceAvailable_Callback, this);
 		resourceavailable_subs.push_back(sub);
 	}
 	logger->log_info(__FILE__,__LINE__,"--- Monitoring Tasks ---");
