@@ -26,6 +26,7 @@ def generate_IgnoreDeviceList():
     list.append('DriverStation')
     list.append('BuildServer1')
     list.append('MasterModule')
+
     return list
 def print_usage():
     print "Usage Instructions: shutdownSystem."

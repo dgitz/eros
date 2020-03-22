@@ -37,6 +37,7 @@ def generate_AllIPDeviceList():
     list.append(IPObject('BuildServer1','10.0.0.179'))
     list.append(IPObject('BuildServer0','10.0.0.180'))
     list.append(IPObject('DevModule1','10.0.0.161'))
+    list.append(IPObject('GPUModule1','10.0.0.10'))
     return list
   
 def process_input(tempstr):
@@ -258,11 +259,11 @@ def sync_buildserver(device,build):
     for dev in iplist:
         out_file.write(dev.Address + "\t" + dev.Name + "\n")
     out_file.close()
-    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/" ,shell=True) 
-    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
-    stdout,stderr = sshProcess.communicate()
-    sshProcess.stdin.close()
+    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/hosts" ,shell=True) 
+    #sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    #sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
+    #stdout,stderr = sshProcess.communicate()
+    #sshProcess.stdin.close()
     if not os.path.exists("/tmp/config/"):
         os.makedirs("/tmp/config/")
     [alwayson_nodecount,running_nodecount] = generate_launch(ActiveScenario,device)
@@ -442,11 +443,11 @@ def sync_remote(device,build):
     for dev in iplist:
         out_file.write(dev.Address + "\t" + dev.Name + "\n")
     out_file.close()
-    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/" ,shell=True) 
-    sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
-    stdout,stderr = sshProcess.communicate()
-    sshProcess.stdin.close()
+    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/hosts" ,shell=True) 
+    #sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
+    #sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
+    #stdout,stderr = sshProcess.communicate()
+    #sshProcess.stdin.close()
     AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
     for f in AutoLaunchList:
         update_launch = False
@@ -558,7 +559,8 @@ def sync_remote(device,build):
         for i in range(0,len(ThirdPartyPackages)):
             subprocess.call("rsync -avt " + BinaryPackage + ThirdPartyPackages[i] +"/* " + "robot@" + device + ":" + BinaryPackage + ThirdPartyPackages[i] + "/",shell=True)
     for i in range(0,len(ThirdPartyPackages)):
-        subprocess.call("rsync -avt " + RootDirectory + "catkin_ws/src/" + ThirdPartyPackages[i] + "/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/" + ThirdPartyPackages[i] + "/",shell=True)
+	if((targetinfo.Architecture != 'aarch64')):
+        	subprocess.call("rsync -avt " + RootDirectory + "catkin_ws/src/" + ThirdPartyPackages[i] + "/* " + "robot@" + device + ":" + RootDirectory + "/catkin_ws/src/" + ThirdPartyPackages[i] + "/",shell=True)
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     #sshProcess.stdin.write("export TERM=linux\n")
     sshProcess.stdin.write("cd ~/catkin_ws\n")

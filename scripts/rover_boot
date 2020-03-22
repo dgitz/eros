@@ -8,6 +8,7 @@ sudo chown robot:robot /home/robot/config/ActiveNodes
 sudo chown robot:robot /home/robot/config/AllNodeList
 sudo chown robot:robot /home/robot/unsorted
 sudo chmod 664 /etc/hosts
+sudo mv /tmp/hosts /etc/hosts
 #sleep 1
 export ROS_HOSTNAME=$HOSTNAME
 export ROS_MASTER_URI=http://$ros_master:11311
@@ -21,6 +22,9 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
   log_message "ComputeModule init"
   sudo mount /dev/sda1 /home/robot/external/ -o uid=robot -o gid=robot
+
+elif [[ $HOSTNAME == *"GPUModule"* ]]; then
+    log_message "GPUModule init"
 fi
 
 ulimit -c unlimited
@@ -41,9 +45,11 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
   sudo chown robot /dev/vchiq
   echo 1 | sudo dd status=none of=/sys/class/leds/led1/brightness
   mkdir -p /home/robot/storage/DATALOGS/
+  mkdir -p /home/robot/storage/AUDIO/
   mkdir -p /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
   mkdir -p /home/robot/storage/SNAPSHOT/DEVICESNAPSHOT/
   sudo chown robot:robot /home/robot/storage/DATALOGS/
+  sudo chown robot:robot /home/robot/storage/AUDIO/
   sudo chown robot:robot /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
   sudo chown robot:robot /home/robot/storage/SNAPSHOT/DEVICESNAPSHOT/
   #cd /home/robot/linux-dash/app/server
@@ -56,6 +62,18 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
 
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
   echo "ComputeModule booting" >> $boot_file
+elif [[ $HOSTNAME == *"GPUModule"* ]]; then
+  echo "GPUModule booting" >> $boot_file
+  log_message "GPUModule booting"
+  sudo service ntp start
+  mkdir -p /home/robot/storage/DATALOGS/
+  mkdir -p /home/robot/storage/AUDIO/
+  mkdir -p /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
+  mkdir -p /home/robot/storage/SNAPSHOT/DEVICESNAPSHOT/
+  sudo chown robot:robot /home/robot/storage/DATALOGS/
+  sudo chown robot:robot /home/robot/storage/AUDIO/
+  sudo chown robot:robot /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
+  sudo chown robot:robot /home/robot/storage/SNAPSHOT/DEVICESNAPSHOT/
 fi
 
 #Specific Device launch stuff
@@ -82,8 +100,9 @@ log_message "Completed Boot."
 
 
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
-    rosnode kill --all
-    #sleep 1
+    log_message "Launching Device"
+    /home/robot/scripts/launchDevice -d $HOSTNAME
+elif [[ $HOSTNAME == *"GPUModule"* ]]; then
     log_message "Launching Device"
     /home/robot/scripts/launchDevice -d $HOSTNAME
 fi
