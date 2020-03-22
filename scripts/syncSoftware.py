@@ -29,7 +29,7 @@ class IPObject(object):
 def generate_AllIPDeviceList():
     list = []
     list.append(IPObject('MasterModule','10.0.0.4'))
-    list.append(IPObject('dgitzdev','10.0.0.224'))
+    list.append(IPObject('dgitzdev','10.0.0.190'))
     list.append(IPObject('dgitzrosmaster','10.0.0.111'))
     list.append(IPObject('DriverStation','10.0.0.114'))
     list.append(IPObject('ControlModule1','10.0.0.128'))

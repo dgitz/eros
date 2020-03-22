@@ -1,7 +1,7 @@
 #!/bin/bash
 #Usage: log_message "Some Text"
 #Usage: echo "a command" | log_message
-boot_logfile="/var/log/output/"$(hostname)"_log.txt"
+boot_file="/var/log/output/"$(hostname)"_log.txt"
 mkdir -p /var/log/output/
 touch $boot_file
 sudo chown robot:robot $boot_file
