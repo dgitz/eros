@@ -10,4 +10,6 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
   echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
   echo "Compute Module"
+elif [[ $HOSTNAME == *"GPUModule"* ]]; then
+  echo "GPU Module"
 fi

@@ -18,7 +18,7 @@ function launch_device()
     while [ $counter -lt $countmax ]
 	do
         log_message "Searching for ROS Connection"
-        OUTPUT="$(/opt/ros/kinetic/bin/rosnode list)"
+        OUTPUT="$(/opt/ros/$ROS_DISTRO/bin/rosnode list)"
         if [[ $OUTPUT = *[!\ ]* ]]; then
 			let ros_connected=1
             break
