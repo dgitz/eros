@@ -44,6 +44,8 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
   sudo chown robot /dev/video0
   sudo chown robot /dev/vchiq
   echo 1 | sudo dd status=none of=/sys/class/leds/led1/brightness
+  mkdir -p /home/robot/catkin_ws/src/running_config/
+  sudo chown robot:robot /home/robot/catkin_ws/src/running_config/
   mkdir -p /home/robot/storage/DATALOGS/
   mkdir -p /home/robot/storage/AUDIO/
   mkdir -p /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
@@ -62,10 +64,14 @@ if [[ $HOSTNAME == *"ControlModule"* ]]; then
 
 elif [[ $HOSTNAME == *"ComputeModule"* ]]; then
   echo "ComputeModule booting" >> $boot_file
+  mkdir -p /home/robot/catkin_ws/src/running_config/
+  sudo chown robot:robot /home/robot/catkin_ws/src/running_config/
 elif [[ $HOSTNAME == *"GPUModule"* ]]; then
   echo "GPUModule booting" >> $boot_file
   log_message "GPUModule booting"
   sudo service ntp start
+  mkdir -p /home/robot/catkin_ws/src/running_config/
+  sudo chown robot:robot /home/robot/catkin_ws/src/running_config/
   mkdir -p /home/robot/storage/DATALOGS/
   mkdir -p /home/robot/storage/AUDIO/
   mkdir -p /home/robot/storage/SNAPSHOT/SYSTEMSNAPSHOT/
@@ -108,14 +114,14 @@ elif [[ $HOSTNAME == *"GPUModule"* ]]; then
 fi
 
 
-log_message "Launching auxiliary nodes on modules." 
-if [[ $HOSTNAME == "ControlModule1" ]]; then
-    cd /home/robot/catkin_ws
-    source /home/robot/catkin_ws/devel/setup.bash
-    rosnode kill /raspicam_node
-    #sleep 1
-    log_message "starting nodes"
-    echo "roslaunch raspicam_node camera.launch" | log_message
-    echo "roslaunch sound_play soundplay_node.launch" | log_message
-fi
+#log_message "Launching auxiliary nodes on modules." 
+#if [[ $HOSTNAME == "ControlModule1" ]]; then
+#    cd /home/robot/catkin_ws
+#    source /home/robot/catkin_ws/devel/setup.bash
+#    rosnode kill /raspicam_node
+#    #sleep 1
+#    log_message "starting nodes"
+#    echo "roslaunch raspicam_node camera.launch" | log_message
+#    echo "roslaunch sound_play soundplay_node.launch" | log_message
+#fi
 log_message "Finished Launch."
