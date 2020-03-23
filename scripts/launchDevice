@@ -39,20 +39,29 @@ function launch_device()
     export ROS_MASTER_URI=http://MasterModule:11311
     log_message "ROS_MASTER: "$ROS_MASTER_URI
     log_message "ROS HOSTNAME: "$ROS_HOSTNAME
+    cd /home/robot/catkin_ws/
 	if [ $ros_connected -eq 1 ]; then
 		log_message "Launching Device."
-		var=$(find /home/robot/catkin_ws/src -iname $1.launch)
-		if [ -z "$var" ]; then
-			echo "No Launch File for: "$1
-		else
-            launch_command="roslaunch icarus_rover_v2 "$1"_AlwaysOn.launch &"
-			eval $launch_command
-			launch_command="roslaunch icarus_rover_v2 "$1".launch &"
-			eval $launch_command
-            #launch_command="roslaunch raspicam_node camerav1_1280x720.launch &"
-            #eval $launch_command
+        for filename in "/home/robot/catkin_ws/src/running_config/launch"/*
+        do
+            launch="${filename##*/}"
+            launch_command="roslaunch running_config "$launch" &"
+            echo $launch_command
+            eval $launch_command
+            sleep 2
+        done
+		#var=$(find /home/robot/catkin_ws/src -iname $1.launch)
+		#if [ -z "$var" ]; then
+		#	echo "No Launch File for: "$1
+		#else
+        #    launch_command="roslaunch icarus_rover_v2 "$1"_AlwaysOn.launch &"
+	    #		eval $launch_command
+	    #		launch_command="roslaunch icarus_rover_v2 "$1".launch &"
+	    #		eval $launch_command
+        #    #launch_command="roslaunch raspicam_node camerav1_1280x720.launch &"
+        #    #eval $launch_command
             
-		fi
+		#fi
 	fi
     echo -ne '|-STARTING: '$(date) > /dev/ttyUSB0
 }
