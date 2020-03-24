@@ -14,7 +14,7 @@ export ROS_HOSTNAME=$HOSTNAME
 export ROS_MASTER_URI=http://$ros_master:11311
 export ROS_IP=$HOSTNAME
 
-
+log_message "MY HOSTNAME: "$HOSTNAME
 if [[ $HOSTNAME == *"ControlModule"* ]]; then
     log_message "ControlModule init"
     echo 0 | sudo dd status=none of=/sys/class/leds/led1/brightness
@@ -104,24 +104,9 @@ elif [[ $HOSTNAME == "ControlModule1" ]]; then
 fi
 log_message "Completed Boot."
 
+log_message "Starting Boot scripts on Device"
+/home/robot/scripts/runBoot -d $HOSTNAME
 
-if [[ $HOSTNAME == *"ControlModule"* ]]; then
-    log_message "Launching Device"
-    /home/robot/scripts/launchDevice -d $HOSTNAME
-elif [[ $HOSTNAME == *"GPUModule"* ]]; then
-    log_message "Launching Device"
-    /home/robot/scripts/launchDevice -d $HOSTNAME
-fi
-
-
-#log_message "Launching auxiliary nodes on modules." 
-#if [[ $HOSTNAME == "ControlModule1" ]]; then
-#    cd /home/robot/catkin_ws
-#    source /home/robot/catkin_ws/devel/setup.bash
-#    rosnode kill /raspicam_node
-#    #sleep 1
-#    log_message "starting nodes"
-#    echo "roslaunch raspicam_node camera.launch" | log_message
-#    echo "roslaunch sound_play soundplay_node.launch" | log_message
-#fi
+log_message "Launching ROS on Device"
+/home/robot/scripts/launchDevice -d $HOSTNAME
 log_message "Finished Launch."

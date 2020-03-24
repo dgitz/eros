@@ -71,19 +71,26 @@ def sync_local(hostname):
     f.close()
     ActiveScenario = "".join(contents[0].split())
     print "Active Scenario: " + ActiveScenario
-    os.unlink(RootDirectory + "config/configdatabase.db")
-    os.unlink(RootDirectory + "config/NodeList.txt")
-    os.unlink(RootDirectory + "config/ControlGroup.xml")
-    os.unlink(RootDirectory + "config/DeviceFile.xml")
-    os.unlink(RootDirectory + "config/JoystickCalibration.xml")
-    os.unlink(RootDirectory + "config/MiscConfig.xml")
-    os.unlink(RootDirectory + "config/SensorLink.xml")
-    os.unlink(RootDirectory + "config/SystemFile.xml")
-    os.unlink(RootDirectory + "config/TopicMap.xml")
-    os.unlink(RootDirectory + "config/SnapshotConfig.xml")
+    try:
+        os.unlink(RootDirectory + "config/configdatabase.db")
+        os.unlink(RootDirectory + "config/NodeList.txt")
+        os.unlink(RootDirectory + "config/ControlGroup.xml")
+        os.unlink(RootDirectory + "config/DeviceFile.xml")
+        os.unlink(RootDirectory + "config/JoystickCalibration.xml")
+        os.unlink(RootDirectory + "config/MiscConfig.xml")
+        os.unlink(RootDirectory + "config/SensorLink.xml")
+        os.unlink(RootDirectory + "config/SystemFile.xml")
+        os.unlink(RootDirectory + "config/TopicMap.xml")
+        os.unlink(RootDirectory + "config/SnapshotConfig.xml")
+    except:
+        a = 1
     if(os.path.isdir(RootDirectory + "config/scriptfiles") == True):
         shutil.rmtree(RootDirectory + "config/scriptfiles")
     os.mkdir(RootDirectory + "config/scriptfiles")
+    if(os.path.isdir(RootDirectory + "boot") == True):
+        shutil.rmtree(RootDirectory + "boot")
+    os.mkdir(RootDirectory + "boot")
+    os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/BootLaunch/" + hostname + "/*" + " " + RootDirectory + "/boot/ 2>/dev/null")
     
     os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "/scriptfiles/* " + RootDirectory + "/config/scriptfiles/")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/configdatabase.db",RootDirectory + "config/configdatabase.db")
@@ -178,6 +185,7 @@ def sync_local(hostname):
     shutil.copyfile("/tmp/config/" + hostname + ".launch",ConfigurationPackage + "launch/" + hostname + ".launch")
     shutil.copyfile("/tmp/config/" + hostname + "_AlwaysOn.launch",ConfigurationPackage + "launch/" + hostname + "_AlwaysOn.launch")
     os.system("cp -rf " + RootDirectory + "config/scenarios/" + ActiveScenario + "launch/OtherPackageLaunch/" + hostname + "/*" + " " + ConfigurationPackage + "/launch/ 2>/dev/null")
+    
     #Sync CMakeLists.txt to the correct device
     source_file = RootDirectory + "config/scenarios/" + ActiveScenario + "/CMakeLists/" + hostname + ".txt"
     dest_file = ApplicationPackage + "CMakeLists.txt"
