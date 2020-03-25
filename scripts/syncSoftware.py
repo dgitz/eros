@@ -253,10 +253,14 @@ def sync_buildserver(device,build):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SnapshotConfig.xml",RootDirectory + "config/SnapshotConfig.xml")
     
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    sshProcess.stdin.write("rm " + ConfigurationPackage + "launch/*\n")
-    stdout,stderr = sshProcess.communicate()
-    
+    sshProcess.stdin.write("rm -r -f " + RootDirectory + "/boot\n")
+    sshProcess.stdin.write("mkdir -p " + RootDirectory + "/boot\n")
+    sshProcess.stdin.write("rm -r -f " + ConfigurationPackage + "/launch\n")
+    sshProcess.stdin.write("mkdir -p " + ConfigurationPackage + "/launch\n")
     sshProcess.stdin.close()
+    sshProcess.wait()
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/BootLaunch/" + device + "/* robot@" +  device + ":" + RootDirectory + "/boot/",shell=True)
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/OtherPackageLaunch/" + device + "/*" + " robot@" + device + ":" + ConfigurationPackage + "/launch/ ",shell=True)
     iplist = generate_AllIPDeviceList()
     out_file = open("/tmp/hosts_" + device, "w")
     out_file.write("127.0.0.1       localhost\n")
@@ -269,7 +273,10 @@ def sync_buildserver(device,build):
     for dev in iplist:
         out_file.write(dev.Address + "\t" + dev.Name + "\n")
     out_file.close()
-    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/hosts" ,shell=True) 
+    subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/hosts" ,shell=True)
+    subprocess.call("rm -r -f " + RootDirectory + "/boot",shell=True)
+    subprocess.call("mkdir " + RootDirectory + "/boot",shell=True)
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/BootLaunch/" + device + "/* robot@" +  device + ":" + RootDirectory + "/boot/",shell=True)
     #sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
     #sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
     #stdout,stderr = sshProcess.communicate()
@@ -431,16 +438,19 @@ def sync_remote(device,build):
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/TopicMap.xml",RootDirectory + "config/TopicMap.xml")
     os.symlink(RootDirectory + "config/scenarios/" + ActiveScenario + "/SnapshotConfig.xml",RootDirectory + "config/SnapshotConfig.xml")
     sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    sshProcess.stdin.write("rm " + ConfigurationPackage + "launch/*\n")
-    stdout,stderr = sshProcess.communicate()
-    
+    sshProcess.stdin.write("rm -r -f " + RootDirectory + "/boot\n")
+    sshProcess.stdin.write("mkdir -p " + RootDirectory + "/boot\n")
+    sshProcess.stdin.write("rm -r -f " + ConfigurationPackage + "/launch\n")
+    sshProcess.stdin.write("mkdir -p " + ConfigurationPackage + "/launch\n")
     sshProcess.stdin.close()
+    sshProcess.wait()
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/BootLaunch/" + device + "/* robot@" +  device + ":" + RootDirectory + "/boot/",shell=True)
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/OtherPackageLaunch/" + device + "/*" + " robot@" + device + ":" + ConfigurationPackage + "/launch/ ",shell=True)
     if not os.path.exists("/tmp/config/"):
         os.makedirs("/tmp/config/")
     [alwayson_nodecount,running_nodecount] = generate_launch(ActiveScenario,device)
     if((alwayson_nodecount < 0) or (running_nodecount < 0)):
         return 
-    #subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ApplicationPackage + "launch/" ,shell=True) 
     iplist = generate_AllIPDeviceList()
     out_file = open("/tmp/hosts_" + device, "w")
     out_file.write("127.0.0.1       localhost\n")
@@ -454,10 +464,6 @@ def sync_remote(device,build):
         out_file.write(dev.Address + "\t" + dev.Name + "\n")
     out_file.close()
     subprocess.call("rsync -avrt /tmp/hosts_" + device + " robot@" + device + ":/tmp/hosts" ,shell=True) 
-    #sshProcess = subprocess.Popen(['ssh',"robot@" + device], stdin=subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines=True,bufsize=0) 
-    #sshProcess.stdin.write("cp /tmp/hosts_" + device + " /etc/hosts\n")
-    #stdout,stderr = sshProcess.communicate()
-    #sshProcess.stdin.close()
     AutoLaunchList = Helpers.ReadDeviceList('AutoLaunch')
     for f in AutoLaunchList:
         update_launch = False
@@ -511,7 +517,7 @@ def sync_remote(device,build):
 
     subprocess.call("rsync -avrt /tmp/config/" + device + ".launch " + "robot@" + device + ":" + ConfigurationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt /tmp/config/" + device + "_AlwaysOn.launch " + "robot@" + device + ":" + ConfigurationPackage + "launch/" ,shell=True) 
-    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/OtherPackageLaunch/" + device + "/*" + " robot@" + device + ":" + ConfigurationPackage + "/launch/ ",shell=True)
+    
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/ControlGroup.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)
     subprocess.call("rsync -avrt --copy-links " + RootDirectory + "config/JoystickCalibration.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
