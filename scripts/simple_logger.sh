@@ -10,7 +10,7 @@ function log_message {
   get_TimeStamp
   if [ -n "$1" ]; then
       MESSAGE="$1"
-      echo -e "${Time} $MESSAGE" | tee -a $boot_logfile
+      echo -e "${Time} $MESSAGE" | tee -a $boot_file
   else
       MESSAGE=$(tee)
       echo -e "${Time} exec:$MESSAGE" >> $boot_file
