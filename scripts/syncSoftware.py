@@ -624,7 +624,7 @@ def sync_display(device):
     sshProcess.stdin.close()
     #sshProcess.stdin.close()
     subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/* " + "robot@" + device + ":" + RootDirectory + "config/scenarios/" + ActiveScenario + "/" ,shell=True) 
-    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ConfiguratinonPackage + "launch/" ,shell=True) 
+    subprocess.call("rsync -avrt " + RootDirectory + "config/scenarios/" + ActiveScenario + "/launch/* " + "robot@" + device + ":" + ConfigurationPackage + "launch/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/DeviceFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/SystemFile.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True) 
     subprocess.call("rsync -avrt " + RootDirectory + "config/MiscConfig.xml " + "robot@" + device + ":" + RootDirectory + "config/" ,shell=True)  
