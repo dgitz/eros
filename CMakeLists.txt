@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(eros)
+## Compile as C++11, supported in ROS Kinetic and newer
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+add_definitions(-std=c++11 -Wall -Wextra -Wno-switch)
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  message_generation
+  genmsg
+  actionlib_msgs
+)
+add_message_files(
+  DIRECTORY msg
+  FILES
+  command.msg
+  diagnostic.msg
+  heartbeat.msg
+  resource.msg
+  subsystem_diagnostic.msg
+  uptime.msg
+)
+add_service_files(
+  FILES
+  srv_firmware.srv
+)
+add_action_files(
+  DIRECTORY action
+  FILES
+  action_systemsnapshot.action
+)
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
+
+catkin_package(
+)
+
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
