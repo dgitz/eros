@@ -1,0 +1,8 @@
+#Firmware
+---
+string BaseNodeName
+string NodeName
+uint8 MajorRelease
+uint8 MinorRelease
+uint8 BuildNumber
+string Description
