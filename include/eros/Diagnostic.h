@@ -1,3 +1,5 @@
+/*! \file Diagnostic.h
+ */
 #ifndef EROSDIAGNOSTIC_H
 #define EROSDIAGNOSTIC_H
 #include <eros/eROS_Definitions.h>
@@ -5,6 +7,10 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+/*! \class Diagnostic
+    \brief Diagnostic class
+    Diagnostic class used to create and update diagnostic information.
+*/
 class Diagnostic
 {
    public:
@@ -293,15 +299,3 @@ class Diagnostic
 };
 
 #endif  // EROSDIAGNOSTIC_H
-
-struct DiagnosticDefinition {
-    std::string device_name;
-    std::string node_name;
-    System::MainSystem system;
-    System::SubSystem subsystem;
-    System::Component component;
-    Diagnostic::DiagnosticType type;
-    Diagnostic::Message message;
-    Level level;
-    std::string description;
-};
