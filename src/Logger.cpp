@@ -2,7 +2,8 @@
 
 Logger::Logger() {
 }
-
+Logger::~Logger() {
+}
 Logger::Logger(std::string level, std::string directory, std::string name) {
     console_print = true;
     use_ROS_logger = false;
@@ -31,8 +32,7 @@ Logger::Logger(std::string level, std::string name) {
     log_file.open(file_path);  // Overwrite file.
     log_file.close();
 }
-Logger::~Logger() {
-}
+
 void Logger::set_logverbosity(Level::Type level) {
     if (level == verbosity) {
         return;
