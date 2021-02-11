@@ -3,6 +3,9 @@
 
 #ifndef EROSDEFINITIONS_H
 #define EROSDEFINITIONS_H
+
+//! Define if ROS is Installed or Not.
+#define ROS_INSTALLED
 #include <string>
 
 /*! \class System

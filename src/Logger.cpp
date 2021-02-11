@@ -5,6 +5,7 @@ Logger::Logger() {
 
 Logger::Logger(std::string level, std::string directory, std::string name) {
     console_print = true;
+    use_ROS_logger = false;
     verbosity = Level::LevelType(level);
     line_counter = 0;
     replace(name.begin(), name.end(), '/', '_');
@@ -17,6 +18,7 @@ Logger::Logger(std::string level, std::string directory, std::string name) {
 }
 Logger::Logger(std::string level, std::string name) {
     console_print = true;
+    use_ROS_logger = false;
     verbosity = Level::LevelType(level);
     line_counter = 0;
     replace(name.begin(), name.end(), '/', '_');
@@ -137,6 +139,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                         printf(
                             "[%s %s]: DEBUG: %s\n", datebuffer, node_name.c_str(), tempstr.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_DEBUG("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 case Level::Type::INFO:
                     log_file << "[" << datebuffer << "]: INFO: " << swcode_info << " " << tempstr
@@ -145,6 +152,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                         printf(
                             "[%s %s]: INFO: %s\n", datebuffer, node_name.c_str(), tempstr.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_INFO("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 case Level::Type::NOTICE:
                     log_file << "[" << datebuffer << "]: NOTICE: " << swcode_info << " " << tempstr
@@ -157,6 +169,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                                tempstr.c_str(),
                                END_COLOR.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_INFO("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 case Level::Type::WARN:
                     log_file << "[" << datebuffer << "]: WARN: " << swcode_info << " " << tempstr
@@ -169,6 +186,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                                tempstr.c_str(),
                                END_COLOR.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_WARN("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 case Level::Type::ERROR:
                     log_file << "[" << datebuffer << "]: ERROR: " << swcode_info << " " << tempstr
@@ -181,6 +203,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                                tempstr.c_str(),
                                END_COLOR.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_ERROR("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 case Level::Type::FATAL:
                     log_file << "[" << datebuffer << "]: FATAL: " << swcode_info << " " << tempstr
@@ -193,6 +220,11 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                                tempstr.c_str(),
                                END_COLOR.c_str());
                     }
+#ifdef ROS_INSTALLED
+                    if (use_ROS_logger == true) {
+                        ROS_FATAL("%s", tempstr.c_str());
+                    }
+#endif
                     break;
                 default: break;
             }

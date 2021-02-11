@@ -99,9 +99,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aff2b23c131ad0dd7ddc3b22d28cf5292"><td class="memItemLeft" align="right" valign="top"><a id="aff2b23c131ad0dd7ddc3b22d28cf5292"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_logverbosity</b> (<a class="el" href="classLevel.html#a5213bbab7358b0ef4fefc284cb7b5eff">Level::Type</a> level)</td></tr>
 <tr class="separator:aff2b23c131ad0dd7ddc3b22d28cf5292"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac34b432419098ff9eee8ae8ff7687c2"><td class="memItemLeft" align="right" valign="top"><a id="aac34b432419098ff9eee8ae8ff7687c2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>disable_consoleprint</b> ()</td></tr>
+<tr class="memitem:aac34b432419098ff9eee8ae8ff7687c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#aac34b432419098ff9eee8ae8ff7687c2">disable_consoleprint</a> ()</td></tr>
+<tr class="memdesc:aac34b432419098ff9eee8ae8ff7687c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Console Output.  <a href="#aac34b432419098ff9eee8ae8ff7687c2">More...</a><br /></td></tr>
 <tr class="separator:aac34b432419098ff9eee8ae8ff7687c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc75be609a67cb8914aadd3eab34a04e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#afc75be609a67cb8914aadd3eab34a04e">enable_ROS_logger</a> ()</td></tr>
+<tr class="memdesc:afc75be609a67cb8914aadd3eab34a04e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ROS <a class="el" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a>.  <a href="#afc75be609a67cb8914aadd3eab34a04e">More...</a><br /></td></tr>
+<tr class="separator:afc75be609a67cb8914aadd3eab34a04e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe031b2ab6e95106e5fd10dca0212b9d"><td class="memItemLeft" align="right" valign="top"><a id="afe031b2ab6e95106e5fd10dca0212b9d"></a>
 <a class="el" href="classLogger.html#a577e9790d89f93ee725d68d627341048">LoggerStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#afe031b2ab6e95106e5fd10dca0212b9d">LOG_DEBUG</a> (std::string filename, uint64_t linenumber, std::string tempstr)</td></tr>
 <tr class="memdesc:afe031b2ab6e95106e5fd10dca0212b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a Debug Line. Do not use, use: log_debug. <br /></td></tr>
@@ -247,6 +250,63 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>disable_consoleprint<
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aac34b432419098ff9eee8ae8ff7687c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac34b432419098ff9eee8ae8ff7687c2">&#9670;&nbsp;</a></span>disable_consoleprint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::disable_consoleprint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disable Console Output. </p>
+<p>Does not affect ROS Console Output </p>
+
+</div>
+</div>
+<a id="afc75be609a67cb8914aadd3eab34a04e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc75be609a67cb8914aadd3eab34a04e">&#9670;&nbsp;</a></span>enable_ROS_logger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Logger::enable_ROS_logger </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable ROS <a class="el" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>If the ROS Console Output was enabled or not. </dd></dl>
 
 </div>
 </div>
