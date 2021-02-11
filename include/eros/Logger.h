@@ -12,6 +12,10 @@
 #include "Diagnostic.h"
 #include "eROS_Definitions.h"
 
+#ifdef ROS_INSTALLED
+#include <ros/console.h>
+#endif
+
 //! Log a Debug Line
 /*!
   \param tempstr The string to output.
@@ -88,8 +92,27 @@ class Logger
     }
 
     void set_logverbosity(Level::Type level);
+
+    //! Disable Console Output
+    /*!
+      \brief Does not affect ROS Console Output
+    */
     void disable_consoleprint() {
         console_print = false;
+    }
+
+    //! Enable ROS Logger
+    /*!
+      \return If the ROS Console Output was enabled or not.
+    */
+    bool enable_ROS_logger() {
+#ifdef ROS_INSTALLED
+        use_ROS_logger = true;
+        return true;
+#else
+        use_ROS_logger = false;
+#endif
+        return false;
     }
     ~Logger();
 
@@ -127,5 +150,6 @@ class Logger
                            Level::Type level,
                            std::string tempstr);
     bool console_print;
+    bool use_ROS_logger;
 };
 #endif

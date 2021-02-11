@@ -13,6 +13,7 @@ TEST(BasicTest, TestOperation) {
                            System::Component::ENTIRE_SUBSYSTEM);
     std::unique_ptr<Logger> logger(new Logger(
         "INFO", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name));
+    EXPECT_TRUE(logger->enable_ROS_logger() == true);
     EXPECT_TRUE(logger->log_debug("A String that should debug") ==
                 Logger::LoggerStatus::LOG_SUPPRESSED);
     EXPECT_TRUE(logger->log_info("A String that should info") == Logger::LoggerStatus::LOG_WRITTEN);
@@ -24,6 +25,7 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(logger->log_fatal("A String that should fatal") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 }
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
