@@ -25,6 +25,7 @@ TEST(BasicTest, TestDefintions) {
         // Test Type: Type
         for (uint8_t i = 1; i < (uint8_t)(Level::Type::END_OF_LIST); ++i) {
             EXPECT_FALSE(Level::LevelString((Level::Type)(i)) == "UNKNOWN");
+            EXPECT_TRUE(Level::LevelType(Level::LevelString((Level::Type)(i))) == (Level::Type)(i));
         }
     }
 
