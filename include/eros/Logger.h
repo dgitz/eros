@@ -1,5 +1,4 @@
 /*! \file Logger.h
-  \brief Logger Class
  */
 #ifndef LOGGER_H
 #define LOGGER_H
