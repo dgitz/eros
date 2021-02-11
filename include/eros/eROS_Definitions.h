@@ -144,6 +144,27 @@ class Level
             default: return LevelString(Level::Type::UNKNOWN); break;
         }
     }
+    static Level::Type LevelType(std::string level) {
+        if (level == "DEBUG") {
+            return Level::Type::DEBUG;
+        }
+        if (level == "INFO") {
+            return Level::Type::INFO;
+        }
+        if (level == "NOTICE") {
+            return Level::Type::NOTICE;
+        }
+        if (level == "WARN") {
+            return Level::Type::WARN;
+        }
+        if (level == "ERROR") {
+            return Level::Type::ERROR;
+        }
+        if (level == "FATAL") {
+            return Level::Type::FATAL;
+        }
+        return Level::Type::UNKNOWN;
+    }
 };
 /*! \class ArmDisarm
     \brief ArmDisarm class

@@ -1,6 +1,7 @@
 /*! \file test_diagnostics.cpp
  */
 #include <eros/Diagnostic.h>
+#include <eros/Logger.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
 TEST(BasicTest, TestDefintions) {
@@ -17,10 +18,12 @@ TEST(BasicTest, TestDefintions) {
 TEST(BasicTest, DiagnosticHelper) {
     Diagnostic diag_helper;
     diag_helper.initialize("UnitTestDevice",
-                           "UnitTestNode",
+                           "UnitTestNode-Diagnostics",
                            System::MainSystem::SIMROVER,
                            System::SubSystem::ENTIRE_SYSTEM,
                            System::Component::ENTIRE_SUBSYSTEM);
+    std::unique_ptr<Logger> logger(new Logger(
+        "DEBUG", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name));
     {
         std::vector<Diagnostic::DiagnosticType> diag_types;
         diag_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
@@ -41,6 +44,7 @@ TEST(BasicTest, DiagnosticHelper) {
                                           Diagnostic::Message::NOERROR,
                                           "No Error");
         printf("Diag: %s\n", Diagnostic::pretty("\t", diag).c_str());
+        EXPECT_TRUE(logger->log_diagnostic(diag) == Logger::LoggerStatus::LOG_WRITTEN);
         EXPECT_TRUE(diag.level > Level::Type::WARN);
     }
     {
@@ -72,6 +76,7 @@ TEST(BasicTest, DiagnosticHelper) {
 
         for (std::size_t i = 0; i < diagnostics.size(); ++i) {
             printf("Diag: %s\n", Diagnostic::pretty("\t", diagnostics.at(i)).c_str());
+            logger->log_diagnostic(diagnostics.at(i));
             EXPECT_TRUE(diagnostics.at(i).level <= Level::Type::NOTICE);
         }
     }
