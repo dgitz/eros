@@ -1,3 +1,5 @@
+#ifndef EROS_BASENODEPROCESS_H
+#define EROS_BASENODEPROCESS_H
 // BaseNodeProcess class
 // C System Files
 #include <stdlib.h>
@@ -43,7 +45,7 @@ class BaseNodeProcess
                     System::MainSystem t_system,
                     System::SubSystem t_subsystem,
                     System::Component t_component,
-                    std::unique_ptr<Logger> _logger) {
+                    Logger* _logger) {
         base_node_name = t_base_node_name;
         node_state = Node::State::INITIALIZING;
         unittest_running = false;
@@ -93,6 +95,7 @@ class BaseNodeProcess
     std::vector<Diagnostic::DiagnosticDefinition> run_unittest();
     ros::Time convert_time(struct timeval t);
     ros::Time convert_time(double t);
+
     std::string exec(const char* cmd, bool wait_for_result);
     // Printing Functions
     void print_message(std::string level,
@@ -105,7 +108,7 @@ class BaseNodeProcess
     }
 
    protected:
-    std::unique_ptr<Logger> logger;
+    Logger* logger;
     std::string base_node_name;
     Node::State node_state;
     Diagnostic diagnostic_helper;
@@ -120,3 +123,5 @@ class BaseNodeProcess
    private:
     double run_time, ros_time;
 };
+
+#endif  // EROS_BASENODEPROCESS_H

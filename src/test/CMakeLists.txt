@@ -11,5 +11,5 @@ target_link_libraries(test_diagnostics ${catkin_LIBRARIES} ${Boost_LIBRARIES} lo
 add_dependencies(test_diagnostics eros_generate_messages_cpp)
 
 catkin_add_gtest(test_base test_base.cpp)
-target_link_libraries(test_base ${catkin_LIBRARIES}  ${Boost_LIBRARIES} baseNodeProcess)
+target_link_libraries(test_base ${catkin_LIBRARIES}  ${Boost_LIBRARIES} baseNodeProcess baseNode)
 add_dependencies(test_base eros_generate_messages_cpp)

@@ -1,5 +1,6 @@
 /*! \file test_diagnostics.cpp
  */
+#include <eros/BaseNode.h>
 #include <eros/BaseNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
@@ -8,22 +9,6 @@ class BaseNodeProcessTester : public BaseNodeProcess
 {
    public:
     BaseNodeProcessTester() {
-        Diagnostic diag_helper;
-        diag_helper.initialize("UnitTestDevice",
-                               "UnitTestNode-BaseNodeProcess",
-                               System::MainSystem::SIMROVER,
-                               System::SubSystem::ENTIRE_SYSTEM,
-                               System::Component::ENTIRE_SUBSYSTEM);
-        std::unique_ptr<Logger> logger(new Logger(
-            "INFO", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name));
-
-        initialize(diag_helper.get_root_diagnostic().node_name,
-                   diag_helper.get_root_diagnostic().node_name,
-                   diag_helper.get_root_diagnostic().device_name,
-                   diag_helper.get_root_diagnostic().system,
-                   diag_helper.get_root_diagnostic().subsystem,
-                   diag_helper.get_root_diagnostic().component,
-                   logger);
     }
     ~BaseNodeProcessTester() {
     }
@@ -55,11 +40,85 @@ class BaseNodeProcessTester : public BaseNodeProcess
         return diag_list;
     }
 };
-TEST(BasicTest, TestOperation) {
-    BaseNodeProcessTester tester;
-    EXPECT_TRUE(false);
-}
+class BaseNodeTester : public BaseNode
+{
+   public:
+    const std::string BASE_NODE_NAME = "unittester_node";
 
+    const uint8_t MAJOR_RELEASE_VERSION = 4;
+    const uint8_t MINOR_RELEASE_VERSION = 1;
+    const uint8_t BUILD_NUMBER = 0;
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 3-Aug-2019";
+
+    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::SIMROVER;
+    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::ROBOT_CONTROLLER;
+    const System::Component DIAGNOSTIC_COMPONENT = System::Component::CONTROLLER;
+    BaseNodeTester() {
+    }
+
+    bool start(int argc, char** argv) {
+        process = new BaseNodeProcessTester();
+        set_basenodename(BASE_NODE_NAME);
+        initialize_firmware(
+            MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
+        Logger* logger = new Logger("INFO", "/home/robot/var/log/output/", BASE_NODE_NAME);
+        process->initialize(get_basenodename(),
+                            get_nodename(),
+                            get_hostname(),
+                            DIAGNOSTIC_SYSTEM,
+                            DIAGNOSTIC_SUBSYSTEM,
+                            DIAGNOSTIC_COMPONENT,
+                            logger);
+        return true;
+    }
+    BaseNodeProcessTester* get_process() {
+        return process;
+    }
+    ~BaseNodeTester() {
+    }
+    bool run_loop1() {
+        return false;
+    }
+    bool run_loop2() {
+        return false;
+    }
+    bool run_loop3() {
+        return false;
+    }
+    bool run_001hz() {
+        return false;
+    }
+    bool run_01hz() {
+        return false;
+    }
+    bool run_01hz_noisy() {
+        return false;
+    }
+    bool run_1hz() {
+        return false;
+    }
+    bool run_10hz() {
+        return false;
+    }
+    void thread_loop() {
+    }
+    void cleanup() {
+        delete logger;
+        delete process;
+    }
+
+   private:
+    BaseNodeProcessTester* process;
+};
+TEST(BasicTest, TestOperation_BaseNode) {
+    BaseNodeTester* tester = new BaseNodeTester;
+    int argc;
+    char** argv;
+    EXPECT_TRUE(tester->start(argc, argv));
+    EXPECT_TRUE(tester->update(Node::State::RUNNING));
+
+    delete tester;
+}
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
