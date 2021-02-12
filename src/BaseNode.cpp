@@ -179,7 +179,6 @@ bool BaseNode::update(Node::State node_state) {
         rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
         run_01hz_noisy();
         last_01hz_noisy_timer = ros::Time::now();
-        logger->log_info("Node State: " + Node::NodeStateString(node_state));
     }
     mtime = measure_time_diff(ros::Time::now(), last_01hz_timer);
     if (mtime >= 10.0) {

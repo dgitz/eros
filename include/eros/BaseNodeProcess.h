@@ -54,6 +54,9 @@ class BaseNodeProcess
         ready_to_arm = false;
         logger = _logger;
     }
+    bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types) {
+        return diagnostic_helper.enable_diagnostics(diagnostic_types);
+    }
 
     /*! \brief Derived Process Initialization */
     virtual Diagnostic::DiagnosticDefinition finish_initialization() = 0;
@@ -106,6 +109,7 @@ class BaseNodeProcess
     Logger* get_logger() {
         return logger;
     }
+    bool request_statechange(Node::State newstate);
 
    protected:
     Logger* logger;
@@ -113,7 +117,7 @@ class BaseNodeProcess
     Node::State node_state;
     Diagnostic diagnostic_helper;
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_ros_time);
-    bool request_statechange(Node::State newstate);
+
     eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
     eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
 

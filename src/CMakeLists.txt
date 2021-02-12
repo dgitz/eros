@@ -11,3 +11,8 @@ target_link_libraries(baseNode ${catkin_LIBRARIES} baseNodeProcess logger)
 add_dependencies(baseNode eros_generate_messages_cpp)
 
 add_subdirectory(test)
+
+install(TARGETS logger baseNodeProcess baseNode
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
