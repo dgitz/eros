@@ -1,0 +1,4 @@
+<map id="BaseNodeProcess" name="BaseNodeProcess">
+<area shape="rect" id="node2" href="$classDiagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information. " alt="" coords="5,5,89,32"/>
+<area shape="rect" id="node3" href="$classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="153,5,214,32"/>
+</map>

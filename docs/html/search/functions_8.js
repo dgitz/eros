@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pretty',['pretty',['../classDiagnostic.html#ae3442c8a69e6c77f60f521edd992151a',1,'Diagnostic::pretty()'],['../classDiagnostic.html#a7690400ce80b420f459b889c9f778948',1,'Diagnostic::pretty(std::string pre, std::vector&lt; DiagnosticDefinition &gt; diagnostics)'],['../classDiagnostic.html#a9e6715059c6ff3fa05c39b8c66eac06b',1,'Diagnostic::pretty(std::string pre, DiagnosticDefinition diag)']]]
+  ['mainsystemstring',['MainSystemString',['../classSystem.html#a19f46e9dc3c7c249028291cdde0979c7',1,'System']]],
+  ['measure_5ftime_5fdiff',['measure_time_diff',['../classBaseNode.html#aa8374e44eb82f202b4f776fc9e05ed80',1,'BaseNode']]]
 ];

@@ -1,0 +1,5 @@
+<map id="System::ComponentString" name="System::ComponentString">
+<area shape="rect" id="node2" href="$classDiagnostic.html#a9e6715059c6ff3fa05c39b8c66eac06b" title="Generate human readable string of a diagnostic. " alt="" coords="260,5,385,32"/>
+<area shape="rect" id="node3" href="$classLogger.html#a5bd868046b82aa6d6b7d2bf144d5fc09" title="Log a Diagnostic. Do not use, use: log_diagnostic. " alt="" coords="229,56,416,83"/>
+<area shape="rect" id="node4" href="$classLogger.html#afc75be609a67cb8914aadd3eab34a04e" title="Enable ROS Logger. " alt="" coords="464,49,607,90"/>
+</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_2eh',['Logger.h',['../Logger_8h.html',1,'']]]
+  ['eros_5fdefinitions_2eh',['eROS_Definitions.h',['../eROS__Definitions_8h.html',1,'']]]
 ];

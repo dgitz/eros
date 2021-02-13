@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wait',['WAIT',['../classCommand.html#a4ca33b8d40e12deca5e7bb4190426ee1ad5cc6a0064b5c25ba37826aa3fda910c',1,'Command']]],
-  ['warn',['WARN',['../classLevel.html#a5213bbab7358b0ef4fefc284cb7b5effa32bd8a1db2275458673903bdb84cb277',1,'Level']]]
+  ['vision',['VISION',['../classSystem.html#a7a2992377dce6edb4e58bf8bc443a24da7e0587ea8ffdd03a191500efa700d619',1,'System']]]
 ];

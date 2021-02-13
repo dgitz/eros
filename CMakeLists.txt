@@ -32,12 +32,18 @@ add_action_files(
 )
 generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
 
-catkin_package(
-)
+catkin_package(INCLUDE_DIRS include)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
 
+
 add_subdirectory(src)
+
+install(
+  DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+

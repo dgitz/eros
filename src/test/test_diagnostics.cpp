@@ -22,8 +22,8 @@ TEST(BasicTest, DiagnosticHelper) {
                            System::MainSystem::SIMROVER,
                            System::SubSystem::ENTIRE_SYSTEM,
                            System::Component::ENTIRE_SUBSYSTEM);
-    std::unique_ptr<Logger> logger(new Logger(
-        "DEBUG", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name));
+    Logger* logger = new Logger(
+        "DEBUG", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name);
     {
         std::vector<Diagnostic::DiagnosticType> diag_types;
         diag_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
@@ -80,8 +80,9 @@ TEST(BasicTest, DiagnosticHelper) {
             EXPECT_TRUE(diagnostics.at(i).level <= Level::Type::NOTICE);
         }
     }
+    delete logger;
 }
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

@@ -2,7 +2,8 @@
 
 Logger::Logger() {
 }
-
+Logger::~Logger() {
+}
 Logger::Logger(std::string level, std::string directory, std::string name) {
     console_print = true;
     use_ROS_logger = false;
@@ -26,13 +27,12 @@ Logger::Logger(std::string level, std::string name) {
     char buffer[100];
     sprintf(buffer, "%s.out", name.c_str());
 
-    sprintf(file_path, "/var/log/output/%s", buffer);
+    sprintf(file_path, "/home/robot/var/log/output/%s", buffer);
     std::ofstream log_file;
     log_file.open(file_path);  // Overwrite file.
     log_file.close();
 }
-Logger::~Logger() {
-}
+
 void Logger::set_logverbosity(Level::Type level) {
     if (level == verbosity) {
         return;
