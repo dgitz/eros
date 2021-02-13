@@ -1,3 +1,6 @@
+/*! \file BaseNodeProcess.h
+ */
+
 #ifndef EROS_BASENODEPROCESS_H
 #define EROS_BASENODEPROCESS_H
 // BaseNodeProcess class
@@ -29,13 +32,24 @@
 class BaseNodeProcess
 {
    public:
-    BaseNodeProcess() : logger(nullptr), base_node_name("") {
+    BaseNodeProcess()
+        : logger(nullptr),
+          base_node_name(""),
+          node_state(Node::State::UNKNOWN),
+          diagnostic_helper(),
+          unittest_running(false),
+          ready_to_arm(false),
+          run_time(0.0),
+          system_time(0.0) {
     }
     virtual ~BaseNodeProcess() {
     }
     // Constants
+
     // Enums
+
     // Structs
+
     // Initialization Functions
 
     /*! \brief Initializes Process.  Should be called right after instantiating variable. */
@@ -48,10 +62,7 @@ class BaseNodeProcess
                     Logger* _logger) {
         base_node_name = t_base_node_name;
         node_state = Node::State::INITIALIZING;
-        unittest_running = false;
-        run_time = 0.0;
         diagnostic_helper.initialize(t_hostname, t_node_name, t_system, t_subsystem, t_component);
-        ready_to_arm = false;
         logger = _logger;
     }
     bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types) {
@@ -62,11 +73,11 @@ class BaseNodeProcess
     virtual Diagnostic::DiagnosticDefinition finish_initialization() = 0;
     /*! \brief Resets Process. Used for counters, timers, etc.*/
     virtual void reset() = 0;
+
     // Update Functions
 
     /*! \brief Update function must be implemented in Derived Process.  This is used for all state
      * machine logic, etc. */
-
     virtual Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time) = 0;
 
     // Attribute Functions
@@ -82,9 +93,23 @@ class BaseNodeProcess
     std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics() {
         return diagnostic_helper.get_diagnostics();
     }
-    double getROSTime() {
-        return ros_time;
+    double get_system_time() {
+        return system_time;
     }
+    double get_run_time() {
+        return run_time;
+    }
+
+    Logger* get_logger() {
+        return logger;
+    }
+
+    //! Request a Node State Change
+    /*!
+      \param newstate The state to be changed to.
+      \return If the state change was successful (true) or not (false)
+    */
+    bool request_statechange(Node::State newstate);
 
     // Message Functions
     virtual std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
@@ -96,36 +121,63 @@ class BaseNodeProcess
     virtual std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() = 0;
     /*! \brief Runs Unit Test on Derived Process. */
     std::vector<Diagnostic::DiagnosticDefinition> run_unittest();
+
+    //! Convert struct timeval to ros::Time
+    /*!
+      \param t Standard timeval object
+      \return Time converted to ros::Time
+    */
     ros::Time convert_time(struct timeval t);
+
+    //! Convert time as a float to ros::Time
+    /*!
+      \param t timestamp in seconds.
+      \return Time converted to ros::Time
+    */
     ros::Time convert_time(double t);
 
+    //! Execute a command
+    /*!
+      \param cmd The command to execute
+      \param wait_for_results If function should return results or not.
+      \return The result of the command
+    */
     std::string exec(const char* cmd, bool wait_for_result);
     // Printing Functions
-    void print_message(std::string level,
-                       std::string time_str,
-                       std::string filename,
-                       int line_number,
-                       std::string msg);
-    Logger* get_logger() {
-        return logger;
-    }
-    bool request_statechange(Node::State newstate);
 
    protected:
+    //! Convert eros::command message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
+
+    //! Convert eros::diagnostic message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
+
+    //! Base Update Function of all Node Process Classes.
+    /*!
+      \param t_dt The delta in the sample time.
+      \param t_system_time The current system time.
+      \return A Diagnostic reflecting the status of the function.
+    */
+    Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
+
     Logger* logger;
     std::string base_node_name;
     Node::State node_state;
     Diagnostic diagnostic_helper;
-    Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_ros_time);
-
-    eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
-    eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
 
     bool unittest_running;
     bool ready_to_arm;
 
    private:
-    double run_time, ros_time;
+    double run_time, system_time;
 };
 
 #endif  // EROS_BASENODEPROCESS_H

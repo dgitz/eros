@@ -122,5 +122,6 @@ int main(int argc, char **argv) {
     }
     node->cleanup();
     thread.detach();
+    delete node;
     return 0;
 }

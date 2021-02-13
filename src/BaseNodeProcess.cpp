@@ -1,7 +1,7 @@
 #include <eros/BaseNodeProcess.h>
-Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, double t_ros_time) {
+Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, double t_system_time) {
     run_time += t_dt;
-    ros_time = t_ros_time;
+    system_time = t_system_time;
     Diagnostic::DiagnosticDefinition diag =
         diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                             Level::Type::INFO,

@@ -1,6 +1,10 @@
+/*! \file SampleNodeProcess.h
+ */
 #ifndef SAMPLENODEPROCESS_H
 #define SAMPLENODEPROCESS_H
 #include <eros/BaseNodeProcess.h>
+/*! \class SampleNodeProcess SampleNodeProcess.h "SampleNodeProcess.h"
+ *  \brief This is a SampleNodeProcess class illustrating usage of the EROS BaseNodeProcess. */
 class SampleNodeProcess : public BaseNodeProcess
 {
    public:

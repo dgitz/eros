@@ -1,11 +1,10 @@
 #include <eros/BaseNode.h>
-
 void BaseNode::set_basenodename(std::string t_base_node_name) {
     base_node_name = t_base_node_name;
 }
-void BaseNode::initialize_firmware(uint8_t t_major_version,
-                                   uint8_t t_minor_version,
-                                   uint8_t t_build_number,
+void BaseNode::initialize_firmware(uint16_t t_major_version,
+                                   uint16_t t_minor_version,
+                                   uint16_t t_build_number,
                                    std::string t_description) {
     firmware_version.MajorVersion = t_major_version;
     firmware_version.MinorVersion = t_minor_version;
