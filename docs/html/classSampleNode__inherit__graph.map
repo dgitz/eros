@@ -1,0 +1,3 @@
+<map id="SampleNode" name="SampleNode">
+<area shape="rect" id="node2" href="$classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class. " alt="" coords="13,5,95,32"/>
+</map>

@@ -11,8 +11,8 @@ TEST(BasicTest, TestOperation) {
                            System::MainSystem::SIMROVER,
                            System::SubSystem::ENTIRE_SYSTEM,
                            System::Component::ENTIRE_SUBSYSTEM);
-    std::unique_ptr<Logger> logger(new Logger(
-        "INFO", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name));
+    Logger* logger = new Logger(
+        "INFO", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name);
     EXPECT_TRUE(logger->enable_ROS_logger() == true);
     EXPECT_TRUE(logger->log_debug("A String that should debug") ==
                 Logger::LoggerStatus::LOG_SUPPRESSED);
@@ -24,9 +24,10 @@ TEST(BasicTest, TestOperation) {
                 Logger::LoggerStatus::LOG_WRITTEN);
     EXPECT_TRUE(logger->log_fatal("A String that should fatal") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
+    delete logger;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

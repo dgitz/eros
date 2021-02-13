@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update_5fdiagnostic',['update_diagnostic',['../classDiagnostic.html#a0e7d861203a027fc57b5714610580bcf',1,'Diagnostic::update_diagnostic(Diagnostic::DiagnosticType diagnostic_type, Level::Type level, Diagnostic::Message message, std::string description)'],['../classDiagnostic.html#af9b7d35a8454ed1d682ce6c60801cf22',1,'Diagnostic::update_diagnostic(DiagnosticDefinition diag)'],['../classDiagnostic.html#ab0ff2b7bb42231087bca65d9f9c8ca1d',1,'Diagnostic::update_diagnostic(std::string device_name, Diagnostic::DiagnosticType diagnostic_type, Level::Type level, Diagnostic::Message message, std::string description)']]]
+  ['preinitialize_5fbasenode',['preinitialize_basenode',['../classBaseNode.html#af3abaab5aa67e132b1aeab2257b4f4e5',1,'BaseNode']]],
+  ['pretty',['pretty',['../classDiagnostic.html#ae3442c8a69e6c77f60f521edd992151a',1,'Diagnostic::pretty()'],['../classDiagnostic.html#a7690400ce80b420f459b889c9f778948',1,'Diagnostic::pretty(std::string pre, std::vector&lt; DiagnosticDefinition &gt; diagnostics)'],['../classDiagnostic.html#a9e6715059c6ff3fa05c39b8c66eac06b',1,'Diagnostic::pretty(std::string pre, DiagnosticDefinition diag)']]]
 ];

@@ -1,0 +1,5 @@
+<map id="BaseNode" name="BaseNode">
+<area shape="rect" id="node2" href="$structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="5,5,215,32"/>
+<area shape="rect" id="node3" href="$structFirmware.html" title="Firmware" alt="" coords="239,5,315,32"/>
+<area shape="rect" id="node4" href="$classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="381,5,442,32"/>
+</map>

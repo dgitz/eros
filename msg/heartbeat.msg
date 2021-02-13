@@ -2,4 +2,4 @@
 time stamp
 string BaseNodeName
 string NodeName
-uint8 TaskState
+uint8 NodeState

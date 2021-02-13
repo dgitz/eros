@@ -64,7 +64,8 @@ class Diagnostic
         TEMPERATURE_LOW = 9,      /*!< Diagnostic Failed. */
         RESOURCE_LEAK = 10,       /*!< Resource Leakage occurred. */
         HIGH_RESOURCE_USAGE = 11, /*!< High Resource Usage. */
-        END_OF_LIST = 12          /*!< Last item of list. Used for Range Checks. */
+        DIAGNOSTIC_FAILED = 12,   /*! < Diagnostic Failed.*/
+        END_OF_LIST = 13          /*!< Last item of list. Used for Range Checks. */
     };
     //! Convert Diagnostic::Message to human readable string
     /*!
@@ -85,6 +86,7 @@ class Diagnostic
             case Diagnostic::Message::TEMPERATURE_LOW: return "TEMPERATURE_LOW"; break;
             case Diagnostic::Message::RESOURCE_LEAK: return "RESOURCE_LEAK"; break;
             case Diagnostic::Message::HIGH_RESOURCE_USAGE: return "HIGH_RESOURCE_USAGE"; break;
+            case Diagnostic::Message::DIAGNOSTIC_FAILED: return "DIAGNOSTIC_FAILED"; break;
             default: return DiagnosticMessageString(Diagnostic::Message::UNKNOWN); break;
         }
     }

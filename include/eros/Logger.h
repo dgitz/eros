@@ -74,6 +74,7 @@ class Logger
         END_OF_LIST = 4     /*!< Last item of list. Used for Range Checks. */
     };
     Logger();
+    ~Logger();
     //! Instantiate a Logger
     /*!
       \param level A string representation of the Verbosity Level.  Possible values:
@@ -114,7 +115,6 @@ class Logger
 #endif
         return false;
     }
-    ~Logger();
 
     //! Log a Debug Line.  Do not use, use: log_debug
     LoggerStatus LOG_DEBUG(std::string filename, uint64_t linenumber, std::string tempstr);

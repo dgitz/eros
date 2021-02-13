@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['level',['Level',['../classLevel.html',1,'']]],
-  ['logger',['Logger',['../classLogger.html',1,'']]]
+  ['diagnostic',['Diagnostic',['../classDiagnostic.html',1,'']]],
+  ['diagnosticdefinition',['DiagnosticDefinition',['../structDiagnostic_1_1DiagnosticDefinition.html',1,'Diagnostic']]]
 ];

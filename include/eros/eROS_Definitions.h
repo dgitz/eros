@@ -13,6 +13,12 @@
     Holds System and lower level definitions based on the Hierarchy:
    System <- System::SubSystem <- System::Component
 */
+struct Firmware {
+    uint16_t MajorVersion;
+    uint16_t MinorVersion;
+    uint16_t BuildNumber;
+    std::string Description;
+};
 class System
 {
    public:
