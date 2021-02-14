@@ -1,4 +1,4 @@
 <map id="include/eros/BaseNode.h" name="include/eros/BaseNode.h">
-<area shape="rect" id="node2" href="$systemmonitor__node_8h.html" title="nodes/SystemMonitor\l/systemmonitor_node.h" alt="" coords="5,80,164,121"/>
-<area shape="rect" id="node3" href="$SampleNode_8h.html" title="template/include/test\l_node/SampleNode.h" alt="" coords="189,80,335,121"/>
+<area shape="rect" id="node2" href="$_02_02cookiecutter_8node__classname_03_03_8h_source.html" title="auto_template/\{\{cookiecutter.project\l_name\}\}/nodes/\{\{cookiecutter.node\l_classname\}\}/\{\{cookiecutter.node\l_classname\}\}.h" alt="" coords="5,80,236,151"/>
+<area shape="rect" id="node3" href="$systemmonitor__node_8h.html" title="nodes/SystemMonitor\l/systemmonitor_node.h" alt="" coords="260,95,419,136"/>
 </map>

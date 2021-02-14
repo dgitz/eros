@@ -1,7 +1,7 @@
-/*! \file SampleNode.h
+/*! \file {{cookiecutter.node_classname}}.h
  */
-#ifndef SAMPLENODE_H
-#define SAMPLENODE_H
+#ifndef {{cookiecutter.node_classname}}_H
+#define {{cookiecutter.node_classname}}_H
 // C System Files
 // C++ System Files
 // ROS Base Functionality
@@ -9,16 +9,15 @@
 // Project
 #include <eros/BaseNode.h>
 
-#include "SampleNodeProcess.h"
+#include "{{cookiecutter.process_classname}}.h"
 
-/*! \class SampleNode SampleNode.h "SampleNode.h"
- *  \brief This is a SampleNode class illustrating usage of the EROS BaseNodeProcess and EROS
- * BaseNode..*/
-class SampleNode : public BaseNode
+/*! \class {{cookiecutter.node_classname}} {{cookiecutter.node_classname}}.h "{{cookiecutter.node_classname}}.h"
+ *  \brief */
+class {{cookiecutter.node_classname}} : public BaseNode
 {
    public:
     /*! \brief The base name of the Node.*/
-    const std::string BASE_NODE_NAME = "sample_node";
+    const std::string BASE_NODE_NAME = "{{cookiecutter.node_name_binary}}";
 
     /*! \brief The Major Release Version of the Node.*/
     const uint16_t MAJOR_RELEASE_VERSION = 0;
@@ -33,16 +32,16 @@ class SampleNode : public BaseNode
     const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 12-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
-    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::SIMROVER;
+    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::{{cookiecutter.system}};
 
     /*! \brief What Subsystem this Node falls under.*/
-    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::ROBOT_CONTROLLER;
+    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::{{cookiecutter.subsystem}};
 
     /*! \brief What Component this Node falls under.*/
-    const System::Component DIAGNOSTIC_COMPONENT = System::Component::CONTROLLER;
-    SampleNode();
-    ~SampleNode();
-    SampleNodeProcess* get_process() {
+    const System::Component DIAGNOSTIC_COMPONENT = System::Component::{{cookiecutter.component}};
+    {{cookiecutter.node_classname}}();
+    ~{{cookiecutter.node_classname}}();
+    {{cookiecutter.process_classname}}* get_process() {
         return process;
     }
     bool start(int argc, char** argv);
@@ -60,7 +59,7 @@ class SampleNode : public BaseNode
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
-    SampleNodeProcess* process;
+    {{cookiecutter.process_classname}}* process;
 };
 
-#endif  // SAMPLENODE_H
+#endif  // {{cookiecutter.node_classname}}_H
