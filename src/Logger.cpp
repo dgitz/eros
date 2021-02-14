@@ -1,6 +1,6 @@
 #include <eros/Logger.h>
 
-Logger::Logger() {
+Logger::Logger() : verbosity(Level::Type::WARN) {
 }
 Logger::~Logger() {
 }
@@ -89,7 +89,7 @@ Logger::LoggerStatus Logger::LOG_DIAGNOSTIC(std::string filename,
         System::ComponentString(diagnostic.component).c_str(),
         Diagnostic::DiagnosticTypeString(diagnostic.type).c_str(),
         Diagnostic::DiagnosticMessageString(diagnostic.message).c_str(),
-        diagnostic.device_name.c_str());
+        diagnostic.description.c_str());
     switch (diagnostic.level) {
         case Level::Type::DEBUG:
             return LOG_DEBUG(filename, linenumber, std::string(tempstr));

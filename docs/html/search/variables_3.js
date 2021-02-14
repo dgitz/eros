@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['major_5frelease_5fversion',['MAJOR_RELEASE_VERSION',['../classSampleNode.html#a3aa18a4be5096ea9b14cc4754341ea31',1,'SampleNode']]],
-  ['minor_5frelease_5fversion',['MINOR_RELEASE_VERSION',['../classSampleNode.html#ab61e860d5849c1b529ee3e6f257b0ba8',1,'SampleNode']]]
+  ['firmware_5fdescription',['FIRMWARE_DESCRIPTION',['../classSystemMonitorNode.html#ad4ccc7a77942ffd1761306a3118e87d1',1,'SystemMonitorNode::FIRMWARE_DESCRIPTION()'],['../classSampleNode.html#a77c2fb809cd3863390cf98e8f3296c8d',1,'SampleNode::FIRMWARE_DESCRIPTION()']]]
 ];

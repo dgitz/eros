@@ -90,6 +90,9 @@ class BaseNodeProcess
     bool get_ready_to_arm() {
         return ready_to_arm;
     }
+    Diagnostic::DiagnosticDefinition get_root_diagnostic() {
+        return diagnostic_helper.get_root_diagnostic();
+    }
     std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics() {
         return diagnostic_helper.get_diagnostics();
     }
@@ -143,9 +146,22 @@ class BaseNodeProcess
       \return The result of the command
     */
     std::string exec(const char* cmd, bool wait_for_result);
+
+    static bool isEqual(double a, double b, double eps);
     // Printing Functions
 
+    // Destructors
+    virtual void cleanup() = 0;
+    void base_cleanup();
+
    protected:
+    //! Convert eros::heartbeat message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
+
     //! Convert eros::command message (as received via a ROS Node) to the regular datatype
     /*!
       \param t_ptr The pointer to the object

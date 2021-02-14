@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   actionlib_msgs
 )
+find_package(Curses)
 add_message_files(
   DIRECTORY msg
   FILES
@@ -41,7 +42,7 @@ include_directories(
 
 
 add_subdirectory(src)
-
+add_subdirectory(nodes)
 install(
   DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

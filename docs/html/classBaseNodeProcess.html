@@ -60,6 +60,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classBaseNodeProcess-members.html">List of all members</a>  </div>
@@ -79,6 +80,8 @@ Inheritance diagram for BaseNodeProcess:</div>
 <map name="BaseNodeProcess_inherit__map" id="BaseNodeProcess_inherit__map">
 <area shape="rect" id="node2" href="classBaseNodeProcessTester.html" title="BaseNodeProcessTester" alt="" coords="5,80,173,107"/>
 <area shape="rect" id="node3" href="classSampleNodeProcess.html" title="This is a SampleNodeProcess class illustrating usage of the EROS BaseNodeProcess. ..." alt="" coords="198,80,343,107"/>
+<area shape="rect" id="node4" href="classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="367,80,526,107"/>
+<area shape="rect" id="node5" href="classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="349,155,544,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -121,6 +124,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_runtime</b> ()<
 <tr class="memitem:a8536bf1a905c820994f74ae849a4ae4e"><td class="memItemLeft" align="right" valign="top"><a id="a8536bf1a905c820994f74ae849a4ae4e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_ready_to_arm</b> ()</td></tr>
 <tr class="separator:a8536bf1a905c820994f74ae849a4ae4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1c554ec10c53cd99a999a101f4bcdcc"><td class="memItemLeft" align="right" valign="top"><a id="ab1c554ec10c53cd99a999a101f4bcdcc"></a>
+<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_root_diagnostic</b> ()</td></tr>
+<tr class="separator:ab1c554ec10c53cd99a999a101f4bcdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfe2d8e6e1c773ee7873d448bb768de6"><td class="memItemLeft" align="right" valign="top"><a id="adfe2d8e6e1c773ee7873d448bb768de6"></a>
 std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_diagnostics</b> ()</td></tr>
 <tr class="separator:adfe2d8e6e1c773ee7873d448bb768de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,9 +162,24 @@ std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.htm
 <tr class="memitem:a5995efa47fa2d70ac5de384e94e90b3e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e">exec</a> (const char *cmd, bool wait_for_result)</td></tr>
 <tr class="memdesc:a5995efa47fa2d70ac5de384e94e90b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a command.  <a href="#a5995efa47fa2d70ac5de384e94e90b3e">More...</a><br /></td></tr>
 <tr class="separator:a5995efa47fa2d70ac5de384e94e90b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2433f70837e43cdbe93ac494acc550d"><td class="memItemLeft" align="right" valign="top"><a id="af2433f70837e43cdbe93ac494acc550d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()=0</td></tr>
+<tr class="separator:af2433f70837e43cdbe93ac494acc550d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a218554fade04a5f6a5967e6708c0f246"><td class="memItemLeft" align="right" valign="top"><a id="a218554fade04a5f6a5967e6708c0f246"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</td></tr>
+<tr class="separator:a218554fade04a5f6a5967e6708c0f246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ad7c47083330fe422c0fcfdbc1494b860"><td class="memItemLeft" align="right" valign="top"><a id="ad7c47083330fe422c0fcfdbc1494b860"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isEqual</b> (double a, double b, double eps)</td></tr>
+<tr class="separator:ad7c47083330fe422c0fcfdbc1494b860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:ad4713076a8ac3c66fc3cfb5135cada39"><td class="memItemLeft" align="right" valign="top">eros::heartbeat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#ad4713076a8ac3c66fc3cfb5135cada39">convert_fromptr</a> (const eros::heartbeat::ConstPtr &amp;t_ptr)</td></tr>
+<tr class="memdesc:ad4713076a8ac3c66fc3cfb5135cada39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert eros::heartbeat message (as received via a ROS <a class="el" href="classNode.html" title="Node class. ">Node</a>) to the regular datatype.  <a href="#ad4713076a8ac3c66fc3cfb5135cada39">More...</a><br /></td></tr>
+<tr class="separator:ad4713076a8ac3c66fc3cfb5135cada39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7444ae3554bbef1f2f8742372dcbc160"><td class="memItemLeft" align="right" valign="top">eros::command&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a7444ae3554bbef1f2f8742372dcbc160">convert_fromptr</a> (const eros::command::ConstPtr &amp;t_ptr)</td></tr>
 <tr class="memdesc:a7444ae3554bbef1f2f8742372dcbc160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert eros::command message (as received via a ROS <a class="el" href="classNode.html" title="Node class. ">Node</a>) to the regular datatype.  <a href="#a7444ae3554bbef1f2f8742372dcbc160">More...</a><br /></td></tr>
 <tr class="separator:a7444ae3554bbef1f2f8742372dcbc160"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -249,17 +270,66 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph.png" border="0" usemap="#classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph" id="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,5,407,32"/>
-<area shape="rect" id="node4" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,57,397,98"/>
-<area shape="rect" id="node5" href="classSampleNodeProcess.html#a4f52e08a8212d639df1882ac5d5f5424" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="237,122,390,163"/>
-<area shape="rect" id="node3" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="455,5,585,32"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,71,407,98"/>
+<area shape="rect" id="node5" href="classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="234,123,393,164"/>
+<area shape="rect" id="node7" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,188,397,229"/>
+<area shape="rect" id="node8" href="classSampleNodeProcess.html#a4f52e08a8212d639df1882ac5d5f5424" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="237,253,390,295"/>
+<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="455,5,604,47"/>
+<area shape="rect" id="node4" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="464,71,595,98"/>
+<area shape="rect" id="node6" href="classSystemMonitorNode.html#a7ef65d62fd98f1e498a429ced6a0be1a" title="Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. " alt="" coords="455,123,604,164"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad4713076a8ac3c66fc3cfb5135cada39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4713076a8ac3c66fc3cfb5135cada39">&#9670;&nbsp;</a></span>convert_fromptr() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eros::heartbeat BaseNodeProcess::convert_fromptr </td>
+          <td>(</td>
+          <td class="paramtype">const eros::heartbeat::ConstPtr &amp;&#160;</td>
+          <td class="paramname"><em>t_ptr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convert eros::heartbeat message (as received via a ROS <a class="el" href="classNode.html" title="Node class. ">Node</a>) to the regular datatype. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t_ptr</td><td>The pointer to the object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The object </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph.png" border="0" usemap="#classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph" alt=""/></div>
+<map name="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph" id="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph">
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,42,423,69"/>
+<area shape="rect" id="node5" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="245,93,413,135"/>
+<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="471,5,620,47"/>
+<area shape="rect" id="node4" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="480,71,611,98"/>
 </map>
 </div>
 
 </div>
 </div>
 <a id="a7444ae3554bbef1f2f8742372dcbc160"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7444ae3554bbef1f2f8742372dcbc160">&#9670;&nbsp;</a></span>convert_fromptr() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7444ae3554bbef1f2f8742372dcbc160">&#9670;&nbsp;</a></span>convert_fromptr() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,21 +360,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The object </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classBaseNodeProcess_a7444ae3554bbef1f2f8742372dcbc160_icgraph.png" border="0" usemap="#classBaseNodeProcess_a7444ae3554bbef1f2f8742372dcbc160_icgraph" alt=""/></div>
-<map name="classBaseNodeProcess_a7444ae3554bbef1f2f8742372dcbc160_icgraph" id="classBaseNodeProcess_a7444ae3554bbef1f2f8742372dcbc160_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,5,423,32"/>
-<area shape="rect" id="node4" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="245,57,413,98"/>
-<area shape="rect" id="node3" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="471,5,601,32"/>
-</map>
-</div>
 
 </div>
 </div>
 <a id="a2197d97e92565461684e4aca3e4c628b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2197d97e92565461684e4aca3e4c628b">&#9670;&nbsp;</a></span>convert_fromptr() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2197d97e92565461684e4aca3e4c628b">&#9670;&nbsp;</a></span>convert_fromptr() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,8 +427,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph.png" border="0" usemap="#classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph" id="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,5,455,32"/>
-<area shape="rect" id="node3" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="503,5,633,32"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,42,455,69"/>
+<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="503,5,652,47"/>
+<area shape="rect" id="node4" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="512,71,643,98"/>
 </map>
 </div>
 
@@ -441,8 +502,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph.png" border="0" usemap="#classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph" id="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,5,407,32"/>
-<area shape="rect" id="node3" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="455,5,585,32"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,42,407,69"/>
+<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="455,5,604,47"/>
+<area shape="rect" id="node4" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="464,71,595,98"/>
 </map>
 </div>
 
@@ -477,9 +539,11 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph.png" border="0" usemap="#classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph" id="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,5,423,32"/>
-<area shape="rect" id="node3" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="471,31,601,57"/>
-<area shape="rect" id="node4" href="classSampleNode.html#a6a8fa995c9670422911d38069ff429e7" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="243,107,415,133"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,53,423,79"/>
+<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="471,5,620,47"/>
+<area shape="rect" id="node4" href="classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="480,82,611,109"/>
+<area shape="rect" id="node5" href="classSystemMonitorNode.html#abc13a09de5b967146d36f01487e8e0f2" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="255,155,404,196"/>
+<area shape="rect" id="node6" href="classSampleNode.html#a6a8fa995c9670422911d38069ff429e7" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="243,221,415,247"/>
 </map>
 </div>
 

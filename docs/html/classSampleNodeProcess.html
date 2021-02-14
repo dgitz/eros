@@ -127,6 +127,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_runtime</b> ()<
 <tr class="memitem:a8536bf1a905c820994f74ae849a4ae4e inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a8536bf1a905c820994f74ae849a4ae4e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_ready_to_arm</b> ()</td></tr>
 <tr class="separator:a8536bf1a905c820994f74ae849a4ae4e inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1c554ec10c53cd99a999a101f4bcdcc inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="ab1c554ec10c53cd99a999a101f4bcdcc"></a>
+<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_root_diagnostic</b> ()</td></tr>
+<tr class="separator:ab1c554ec10c53cd99a999a101f4bcdcc inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfe2d8e6e1c773ee7873d448bb768de6 inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="adfe2d8e6e1c773ee7873d448bb768de6"></a>
 std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_diagnostics</b> ()</td></tr>
 <tr class="separator:adfe2d8e6e1c773ee7873d448bb768de6 inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,10 +158,23 @@ std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.htm
 <tr class="memitem:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e">exec</a> (const char *cmd, bool wait_for_result)</td></tr>
 <tr class="memdesc:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a command.  <a href="classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e">More...</a><br /></td></tr>
 <tr class="separator:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2433f70837e43cdbe93ac494acc550d inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="af2433f70837e43cdbe93ac494acc550d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()=0</td></tr>
+<tr class="separator:af2433f70837e43cdbe93ac494acc550d inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a218554fade04a5f6a5967e6708c0f246 inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a218554fade04a5f6a5967e6708c0f246"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</td></tr>
+<tr class="separator:a218554fade04a5f6a5967e6708c0f246 inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classBaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classBaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classBaseNodeProcess.html">BaseNodeProcess</a></td></tr>
+<tr class="memitem:ad7c47083330fe422c0fcfdbc1494b860 inherit pub_static_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="ad7c47083330fe422c0fcfdbc1494b860"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isEqual</b> (double a, double b, double eps)</td></tr>
+<tr class="separator:ad7c47083330fe422c0fcfdbc1494b860 inherit pub_static_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classBaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classBaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classBaseNodeProcess.html">BaseNodeProcess</a></td></tr>
+<tr class="memitem:ad4713076a8ac3c66fc3cfb5135cada39 inherit pro_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top">eros::heartbeat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#ad4713076a8ac3c66fc3cfb5135cada39">convert_fromptr</a> (const eros::heartbeat::ConstPtr &amp;t_ptr)</td></tr>
+<tr class="memdesc:ad4713076a8ac3c66fc3cfb5135cada39 inherit pro_methods_classBaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert eros::heartbeat message (as received via a ROS <a class="el" href="classNode.html" title="Node class. ">Node</a>) to the regular datatype.  <a href="classBaseNodeProcess.html#ad4713076a8ac3c66fc3cfb5135cada39">More...</a><br /></td></tr>
+<tr class="separator:ad4713076a8ac3c66fc3cfb5135cada39 inherit pro_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7444ae3554bbef1f2f8742372dcbc160 inherit pro_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top">eros::command&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a7444ae3554bbef1f2f8742372dcbc160">convert_fromptr</a> (const eros::command::ConstPtr &amp;t_ptr)</td></tr>
 <tr class="memdesc:a7444ae3554bbef1f2f8742372dcbc160 inherit pro_methods_classBaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert eros::command message (as received via a ROS <a class="el" href="classNode.html" title="Node class. ">Node</a>) to the regular datatype.  <a href="classBaseNodeProcess.html#a7444ae3554bbef1f2f8742372dcbc160">More...</a><br /></td></tr>
 <tr class="separator:a7444ae3554bbef1f2f8742372dcbc160 inherit pro_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>

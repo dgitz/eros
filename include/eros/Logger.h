@@ -99,7 +99,12 @@ class Logger
       \brief Does not affect ROS Console Output
     */
     void disable_consoleprint() {
+        log_warn("Disabling Console Print");
         console_print = false;
+    }
+    void enable_consoleprint() {
+        log_notice("Enabling Console Print");
+        console_print = true;
     }
 
     //! Enable ROS Logger
