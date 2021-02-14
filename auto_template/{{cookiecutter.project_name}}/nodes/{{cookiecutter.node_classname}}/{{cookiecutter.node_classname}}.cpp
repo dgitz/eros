@@ -1,13 +1,13 @@
-#include <test_node/SampleNode.h>
+#include "{{cookiecutter.node_classname}}.h"
 bool kill_node = false;
-SampleNode::SampleNode() {
+{{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}() {
 }
-SampleNode::~SampleNode() {
+{{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
 }
-bool SampleNode::start(int argc, char **argv) {
+bool {{cookiecutter.node_classname}}::start(int argc, char **argv) {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
-    process = new SampleNodeProcess();
+    process = new {{cookiecutter.process_classname}}();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
@@ -56,67 +56,62 @@ bool SampleNode::start(int argc, char **argv) {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition SampleNode::read_launchparameters() {
+Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition SampleNode::finish_initialization() {
+Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     return diag;
 }
-bool SampleNode::run_loop1() {
-    logger->log_debug("Loop1");
+bool {{cookiecutter.node_classname}}::run_loop1() {
     return true;
 }
-bool SampleNode::run_loop2() {
-    logger->log_debug("Loop2");
+bool {{cookiecutter.node_classname}}::run_loop2() {
     return true;
 }
-bool SampleNode::run_loop3() {
-    logger->log_debug("Loop3");
+bool {{cookiecutter.node_classname}}::run_loop3() {
     return true;
 }
-bool SampleNode::run_001hz() {
-    logger->log_debug("Loop .001 Hz");
+bool {{cookiecutter.node_classname}}::run_001hz() {
     return true;
 }
-bool SampleNode::run_01hz() {
-    logger->log_debug("Loop .01 Hz");
-
+bool {{cookiecutter.node_classname}}::run_01hz() {
     return true;
 }
-bool SampleNode::run_01hz_noisy() {
-    logger->log_debug("Loop .01 Hz (Noisy)");
+bool {{cookiecutter.node_classname}}::run_01hz_noisy() {
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }
-bool SampleNode::run_1hz() {
+bool {{cookiecutter.node_classname}}::run_1hz() {
     logger->log_debug("Loop 1 Hz");
     return true;
 }
-bool SampleNode::run_10hz() {
+bool {{cookiecutter.node_classname}}::run_10hz() {
     logger->log_debug("Loop 10 Hz");
     return true;
 }
-void SampleNode::thread_loop() {
+void {{cookiecutter.node_classname}}::thread_loop() {
     while (kill_node == false) { ros::Duration(1.0).sleep(); }
 }
-void SampleNode::cleanup() {
+void {{cookiecutter.node_classname}}::cleanup() {
     process->request_statechange(Node::State::FINISHED);
+    process->cleanup();
     delete process;
+    base_cleanup();
 }
 void signalinterrupt_handler(int sig) {
-    printf("Killing SampleNode with Signal: %d", sig);
+    printf("Killing {{cookiecutter.node_classname}} with Signal: %d", sig);
     kill_node = true;
     exit(0);
 }
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
-    SampleNode *node = new SampleNode();
+    {{cookiecutter.node_classname}} *node = new {{cookiecutter.node_classname}}();
     bool status = node->start(argc, argv);
-    std::thread thread(&SampleNode::thread_loop, node);
+    std::thread thread(&{{cookiecutter.node_classname}}::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
     }

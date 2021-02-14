@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(test_node)
+project({{cookiecutter.project_name}})
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -23,9 +23,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 
 )
+add_subdirectory(nodes)
 
-add_library(sampleNodeProcess src/SampleNodeProcess.cpp)
-target_link_libraries(sampleNodeProcess ${catkin_LIBRARIES} baseNodeProcess)
-
-add_executable(sample_node src/SampleNode.cpp) 
-target_link_libraries(sample_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} sampleNodeProcess baseNode )
