@@ -7,6 +7,7 @@
 // ROS Base Functionality
 // ROS Messages
 // Project
+
 #include <eros/BaseNode.h>
 
 #include "SystemMonitorProcess.h"
@@ -45,6 +46,7 @@ class SystemMonitorNode : public BaseNode
         return process;
     }
     bool start(int argc, char** argv);
+    bool init_screen();
     Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
@@ -57,7 +59,12 @@ class SystemMonitorNode : public BaseNode
     void thread_loop();
     void cleanup();
 
+    Diagnostic::DiagnosticDefinition rescan_nodes();
+
+    void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
+
    private:
+    std::vector<ros::Subscriber> heartbeat_subs;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
 };

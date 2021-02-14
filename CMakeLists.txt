@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   actionlib_msgs
 )
+find_package(Curses)
 add_message_files(
   DIRECTORY msg
   FILES

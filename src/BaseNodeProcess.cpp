@@ -204,6 +204,15 @@ std::vector<Diagnostic::DiagnosticDefinition> BaseNodeProcess::run_unittest() {
     }
     return diaglist;
 }
+eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr &t_ptr) {
+    eros::heartbeat msg;
+    msg.stamp = t_ptr->stamp;
+    msg.HostName = t_ptr->HostName;
+    msg.BaseNodeName = t_ptr->BaseNodeName;
+    msg.NodeName = t_ptr->NodeName;
+    msg.NodeState = t_ptr->NodeState;
+    return msg;
+}
 eros::command BaseNodeProcess::convert_fromptr(const eros::command::ConstPtr &t_ptr) {
     eros::command cmd;
     cmd.Command = t_ptr->Command;
@@ -226,6 +235,15 @@ eros::diagnostic BaseNodeProcess::convert_fromptr(const eros::diagnostic::ConstP
     diag.SubSystem = t_ptr->SubSystem;
     diag.System = t_ptr->System;
     return diag;
+}
+bool BaseNodeProcess::isEqual(double a, double b, double eps) {
+    double dv = a - b;
+    if (fabs(dv) < eps) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
     char buffer[512];
@@ -264,4 +282,7 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
         logger->log_error(tempstr);
         return "";
     }
+}
+void BaseNodeProcess::base_cleanup() {
+    return;
 }

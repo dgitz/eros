@@ -30,10 +30,12 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     diagnostic.level = Level::Type::INFO;
     diagnostic.message = Diagnostic::Message::INITIALIZING;
     diagnostic.description = "Node Initializing.";
-    heartbeat.BaseNodeName = base_node_name;
-    heartbeat.NodeName = node_name;
+
     host_name[1023] = '\0';
     gethostname(host_name, 1023);
+    heartbeat.HostName = host_name;
+    heartbeat.BaseNodeName = base_node_name;
+    heartbeat.NodeName = node_name;
     rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
 
     diagnostic = read_baselaunchparameters();
@@ -227,7 +229,9 @@ void BaseNode::new_ppsmsg(const std_msgs::Bool::ConstPtr& t_msg) {
     }
 }
 void BaseNode::base_cleanup() {
-    heartbeat.NodeState = (uint8_t)Node::State::FINISHED;
-    heartbeat.stamp = ros::Time::now();
-    heartbeat_pub.publish(heartbeat);
+    for (int i = 0; i < 5; ++i) {
+        heartbeat.NodeState = (uint8_t)Node::State::FINISHED;
+        heartbeat.stamp = ros::Time::now();
+        heartbeat_pub.publish(heartbeat);
+    }
 }
