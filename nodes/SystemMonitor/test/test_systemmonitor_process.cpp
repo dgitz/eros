@@ -180,7 +180,6 @@ TEST(BasicTest, TestOperation) {
             tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
         logger->log_diagnostic(diag);
         std::map<std::string, SystemMonitorProcess::Task> task_list = tester->get_task_list();
-        std::map<std::string, SystemMonitorProcess::Task>::iterator task_it = task_list.begin();
         print(tester->get_task_list());
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         EXPECT_TRUE(new_heartbeat_topics_to_subscribe.size() == 1);

@@ -20,6 +20,9 @@ class BaseNodeProcessTester : public BaseNodeProcess
 
     void reset() {
     }
+    void cleanup() {
+        base_cleanup();
+    }
 
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time) {
         Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
