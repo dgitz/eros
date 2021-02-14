@@ -1,4 +1,5 @@
 <map id="BaseNodeProcess::convert_time" name="BaseNodeProcess::convert_time">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,5,455,32"/>
-<area shape="rect" id="node3" href="$classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="503,5,633,32"/>
+<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,42,455,69"/>
+<area shape="rect" id="node3" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="503,5,652,47"/>
+<area shape="rect" id="node4" href="$classSampleNode.html#ac9e44ba7e2e4ac29eb3dc003e36eb5f7" title="Start the Node. " alt="" coords="512,71,643,98"/>
 </map>

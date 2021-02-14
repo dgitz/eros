@@ -6,6 +6,8 @@
 #include <eros/BaseNodeProcess.h>
 #include <eros/heartbeat.h>
 WINDOW* create_newwin(int height, int width, int starty, int startx);
+/*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
+ *  \brief WindowManager handles the coordinates and reference to the WINDOW object. */
 class WindowManager
 {
    public:
@@ -72,9 +74,13 @@ class WindowManager
 class SystemMonitorProcess : public BaseNodeProcess
 {
    public:
+    /*! \brief How long in seconds before marking a Node as Timed Out.*/
     const double COMMTIMEOUT_THRESHOLD = 5.0f;
+    /*! \brief The minimum width in pixels of the Main Window.*/
     const uint16_t MINWINDOW_WIDTH = 140;
+    /*! \brief The minimum height in pixels of the Main Window.*/
     const uint16_t MINWINDOW_HEIGHT = 240;
+
     enum class Color {
         UNKNOWN = 0,
         NO_COLOR = 1,
@@ -160,41 +166,32 @@ class SystemMonitorProcess : public BaseNodeProcess
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::RX, TaskField(" Rx ", 6)));
     }
     ~SystemMonitorProcess();
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
+    bool initialize_windows();
+
+    // Update Functions
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    Diagnostic::DiagnosticDefinition update_taskwindow(
+        std::map<std::string, WindowManager>::iterator it);
+    Diagnostic::DiagnosticDefinition update_nodelist(
+        std::vector<std::string> node_list,
+        std::vector<std::string> heartbeat_list,
+        std::vector<std::string>& new_heartbeat_topics_to_subscribe);
+    std::map<std::string, Task> get_task_list() {
+        return task_list;
+    }
+
+    // Message Functions
     std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
         const eros::command::ConstPtr& t_msg);
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
-    bool initialize_windows();
-    bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
-        mainwindow_width = t_mainwindow_width;
-        mainwindow_height = t_mainwindow_height;
-        if (mainwindow_width < MINWINDOW_WIDTH) {
-            return false;
-        }
-        return true;
-    }
-    void cleanup() {
-        base_cleanup();
-        std::map<std::string, WindowManager>::iterator win_it = windows.begin();
-        while (win_it != windows.end()) {
-            delwin(win_it->second.get_window_reference());
-            ++win_it;
-        }
-        endwin();
-    }
-    static WindowManager::ScreenCoordinatePixel convertCoordinate(
-        WindowManager::ScreenCoordinatePerc coord_perc, uint16_t width_pix, uint16_t height_pix);
-    std::string pretty() {
-        std::string str = "";
-        std::map<std::string, WindowManager>::iterator it = windows.begin();
-        while (it != windows.end()) {
-            str += it->second.pretty();
-            ++it;
-        }
-        return str;
-    }
     Diagnostic::DiagnosticDefinition new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg) {
         eros::heartbeat msg = convert_fromptr(t_msg);
         Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
@@ -215,15 +212,41 @@ class SystemMonitorProcess : public BaseNodeProcess
         return diag;
     }
 
+    // Attribute Functions
+    bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
+        mainwindow_width = t_mainwindow_width;
+        mainwindow_height = t_mainwindow_height;
+        if (mainwindow_width < MINWINDOW_WIDTH) {
+            return false;
+        }
+        return true;
+    }
+
+    // Support Functions
+    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
+    static WindowManager::ScreenCoordinatePixel convertCoordinate(
+        WindowManager::ScreenCoordinatePerc coord_perc, uint16_t width_pix, uint16_t height_pix);
+    std::string pretty() {
+        std::string str = "";
+        std::map<std::string, WindowManager>::iterator it = windows.begin();
+        while (it != windows.end()) {
+            str += it->second.pretty();
+            ++it;
+        }
+        return str;
+    }
     std::string get_taskheader();
-    Diagnostic::DiagnosticDefinition update_taskwindow(
-        std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_nodelist(
-        std::vector<std::string> node_list,
-        std::vector<std::string> heartbeat_list,
-        std::vector<std::string>& new_heartbeat_topics_to_subscribe);
-    std::map<std::string, Task> get_task_list() {
-        return task_list;
+    // Printing Functions
+
+    // Destructors
+    void cleanup() {
+        base_cleanup();
+        std::map<std::string, WindowManager>::iterator win_it = windows.begin();
+        while (win_it != windows.end()) {
+            delwin(win_it->second.get_window_reference());
+            ++win_it;
+        }
+        endwin();
     }
 
    private:

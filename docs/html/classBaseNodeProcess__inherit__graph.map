@@ -1,4 +1,6 @@
 <map id="BaseNodeProcess" name="BaseNodeProcess">
 <area shape="rect" id="node2" href="$classBaseNodeProcessTester.html" title="BaseNodeProcessTester" alt="" coords="5,80,173,107"/>
 <area shape="rect" id="node3" href="$classSampleNodeProcess.html" title="This is a SampleNodeProcess class illustrating usage of the EROS BaseNodeProcess. ..." alt="" coords="198,80,343,107"/>
+<area shape="rect" id="node4" href="$classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="367,80,526,107"/>
+<area shape="rect" id="node5" href="$classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="349,155,544,181"/>
 </map>

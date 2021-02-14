@@ -1,7 +1,10 @@
 <map id="include/eros/Logger.h" name="include/eros/Logger.h">
-<area shape="rect" id="node2" href="$BaseNodeProcess_8h.html" title="include/eros/BaseNodeProcess.h" alt="" coords="84,80,300,107"/>
-<area shape="rect" id="node6" href="$test__diagnostics_8cpp.html" title="src/test/test_diagnostics.cpp" alt="" coords="325,80,515,107"/>
-<area shape="rect" id="node3" href="$BaseNode_8h.html" title="include/eros/BaseNode.h" alt="" coords="5,162,173,189"/>
-<area shape="rect" id="node5" href="$SampleNodeProcess_8h.html" title="template/include/test\l_node/SampleNodeProcess.h" alt="" coords="197,155,392,196"/>
-<area shape="rect" id="node4" href="$SampleNode_8h.html" title="template/include/test\l_node/SampleNode.h" alt="" coords="119,244,265,285"/>
+<area shape="rect" id="node2" href="$BaseNodeProcess_8h.html" title="include/eros/BaseNodeProcess.h" alt="" coords="179,80,395,107"/>
+<area shape="rect" id="node9" href="$test__diagnostics_8cpp.html" title="src/test/test_diagnostics.cpp" alt="" coords="419,80,610,107"/>
+<area shape="rect" id="node3" href="$BaseNode_8h.html" title="include/eros/BaseNode.h" alt="" coords="203,162,371,189"/>
+<area shape="rect" id="node6" href="$SystemMonitorProcess_8h.html" title="nodes/SystemMonitor\l/SystemMonitorProcess.h" alt="" coords="5,155,179,196"/>
+<area shape="rect" id="node8" href="$SampleNodeProcess_8h.html" title="template/include/test\l_node/SampleNodeProcess.h" alt="" coords="395,155,589,196"/>
+<area shape="rect" id="node4" href="$systemmonitor__node_8h.html" title="nodes/SystemMonitor\l/systemmonitor_node.h" alt="" coords="203,251,362,293"/>
+<area shape="rect" id="node5" href="$SampleNode_8h.html" title="template/include/test\l_node/SampleNode.h" alt="" coords="403,251,549,293"/>
+<area shape="rect" id="node7" href="$test__systemmonitor__process_8cpp.html" title="nodes/SystemMonitor\l/test/test_systemmonitor\l_process.cpp" alt="" coords="9,244,175,300"/>
 </map>
