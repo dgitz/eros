@@ -99,6 +99,7 @@ class BaseNode
     /*! \brief Main Node update section, will call all derived Node Loop Functions, and publish base
      * pubs such as firmware, heartbeat, etc. */
     bool update(Node::State node_state);
+
     /*! \brief Run code in Loop1 Function.  Loop1 Must be Implemented in Derived Node.*/
     virtual bool run_loop1() = 0;
     /*! \brief Run code in Loop2 Function.  Loop2 Must be Implemented in Derived Node.*/
@@ -149,11 +150,17 @@ class BaseNode
         double etime = t_timer_a.toSec() - t_timer_b.toSec();
         return etime;
     }
-
+    eros::diagnostic convert(Diagnostic::DiagnosticDefinition diag_def);
     // Message Functions
     /*! \brief Handles receiving the 1 PPS Msg. */
     void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg);
 
+    // Service Functions
+    bool firmware_service(eros::srv_firmware::Request &req, eros::srv_firmware::Response &res);
+    bool loggerlevel_service(eros::srv_logger_level::Request &req,
+                             eros::srv_logger_level::Response &res);
+    bool diagnostics_service(eros::srv_get_diagnostics::Request &req,
+                             eros::srv_get_diagnostics::Response &res);
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();
@@ -161,6 +168,9 @@ class BaseNode
    protected:
     /*! \brief Get Base Launch parameters, which includes loop rates, verbosity, etc. */
     Diagnostic::DiagnosticDefinition read_baselaunchparameters();
+    void update_diagnostics(std::vector<Diagnostic::DiagnosticDefinition> _diagnostics) {
+        current_diagnostics = _diagnostics;
+    }
     Diagnostic::DiagnosticDefinition diagnostic;
 
     boost::shared_ptr<ros::NodeHandle> n;
@@ -171,6 +181,9 @@ class BaseNode
     ros::Publisher state_pub;
     ros::Publisher heartbeat_pub;
     eros::heartbeat heartbeat;
+    ros::ServiceServer firmware_srv;
+    ros::ServiceServer logger_level_srv;
+    ros::ServiceServer diagnostics_srv;
     Logger *logger = nullptr;
     bool logger_initialized;
     double ros_rate;
@@ -197,6 +210,7 @@ class BaseNode
     bool require_pps_to_start;
     bool pps_received;
     double rand_delay_sec;
+    std::vector<Diagnostic::DiagnosticDefinition> current_diagnostics;
 
    private:
 };

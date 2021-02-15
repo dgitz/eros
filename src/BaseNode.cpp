@@ -44,6 +44,18 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     heartbeat.stamp = ros::Time::now();
     heartbeat.NodeState = (uint8_t)Node::State::INITIALIZING;
     heartbeat_pub.publish(heartbeat);
+
+    std::string srv_firmware_topic = "/" + node_name + "/srv_firmware";
+    firmware_srv = n->advertiseService(srv_firmware_topic, &BaseNode::firmware_service, this);
+
+    std::string srv_loggerlevel_topic = "/" + node_name + "/srv_loggerlevel";
+    logger_level_srv =
+        n->advertiseService(srv_loggerlevel_topic, &BaseNode::loggerlevel_service, this);
+
+    std::string srv_diagnostics_topic = "/" + node_name + "/srv_diagnostics";
+    diagnostics_srv =
+        n->advertiseService(srv_diagnostics_topic, &BaseNode::diagnostics_service, this);
+
     if (diagnostic.level > Level::Type::WARN) {
         if (logger_initialized == true) {
             logger->log_diagnostic(diagnostic);
@@ -223,10 +235,61 @@ bool BaseNode::update(Node::State node_state) {
     }
     return ros::ok();
 }
+
 void BaseNode::new_ppsmsg(const std_msgs::Bool::ConstPtr& t_msg) {
     if (t_msg->data == true) {
         pps_received = true;
     }
+}
+bool BaseNode::firmware_service(eros::srv_firmware::Request& req,
+                                eros::srv_firmware::Response& res) {
+    (void)req;  // No req information needed
+    res.BaseNodeName = base_node_name;
+    res.NodeName = node_name;
+    res.MajorRelease = firmware_version.MajorVersion;
+    res.MinorRelease = firmware_version.MinorVersion;
+    res.BuildNumber = firmware_version.BuildNumber;
+    res.Description = firmware_version.Description;
+    return true;
+}
+bool BaseNode::loggerlevel_service(eros::srv_logger_level::Request& req,
+                                   eros::srv_logger_level::Response& res) {
+    Level::Type newLevel = Level::LevelType(req.LoggerLevel);
+    if (newLevel == Level::Type::UNKNOWN) {
+        res.Response = "Unsupported Logger Level: " + req.LoggerLevel;
+        return false;
+    }
+    else if (logger == nullptr) {
+        res.Response = "Logger is uninitialized.";
+        return false;
+    }
+    else {
+        logger->set_logverbosity(newLevel);
+        res.Response = "Changed Logger Level to: " + req.LoggerLevel;
+        return true;
+    }
+}
+bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
+                                   eros::srv_get_diagnostics::Response& res) {
+    // Ignore req for now
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
+    for (std::size_t i = 0; i < diag_list.size(); ++i) {
+        eros::diagnostic diag = convert(diag_list.at(i));
+        bool add_me = false;
+        if ((req.MinLevel == 0) || (req.DiagnosticType == 0)) {
+            add_me = true;
+        }
+        else if ((diag.Level >= req.MinLevel)) {
+            add_me = true;
+        }
+        else if (diag.DiagnosticType == req.DiagnosticType) {
+            add_me = true;
+        }
+        if (add_me == true) {
+            res.diag_list.push_back(diag);
+        }
+    }
+    return true;
 }
 void BaseNode::base_cleanup() {
     for (int i = 0; i < 5; ++i) {
@@ -234,4 +297,17 @@ void BaseNode::base_cleanup() {
         heartbeat.stamp = ros::Time::now();
         heartbeat_pub.publish(heartbeat);
     }
+}
+eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
+    eros::diagnostic diag;
+    diag.DeviceName = diag_def.device_name;
+    diag.NodeName = diag_def.node_name;
+    diag.System = (uint8_t)diag_def.system;
+    diag.SubSystem = (uint8_t)diag_def.subsystem;
+    diag.Component = (uint8_t)diag_def.component;
+    diag.DiagnosticType = (uint8_t)diag_def.type;
+    diag.Level = (uint8_t)diag_def.level;
+    diag.DiagnosticMessage = (uint8_t)diag_def.message;
+    diag.Description = diag_def.description;
+    return diag;
 }

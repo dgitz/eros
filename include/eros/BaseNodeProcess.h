@@ -21,6 +21,11 @@
 #include <eros/heartbeat.h>
 #include <eros/resource.h>
 #include <eros/uptime.h>
+
+// ROS Services
+#include <eros/srv_firmware.h>
+#include <eros/srv_get_diagnostics.h>
+#include <eros/srv_logger_level.h>
 // Project
 #include "Diagnostic.h"
 #include "Logger.h"
