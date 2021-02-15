@@ -22,6 +22,9 @@ Logger::Logger(std::string level, std::string name) {
     use_ROS_logger = false;
     verbosity = Level::LevelType(level);
     line_counter = 0;
+    if (name.at(0) == '/') {
+        name.erase(name.begin());
+    }
     replace(name.begin(), name.end(), '/', '_');
     node_name = name;
     char buffer[100];
