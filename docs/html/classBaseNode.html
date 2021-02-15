@@ -187,10 +187,22 @@ boost::shared_ptr&lt; ros::NodeHandle &gt;&#160;</td><td class="memItemRight" va
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNode.html#aa8374e44eb82f202b4f776fc9e05ed80">measure_time_diff</a> (ros::Time t_timer_a, ros::Time t_timer_b)</td></tr>
 <tr class="memdesc:aa8374e44eb82f202b4f776fc9e05ed80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measures time delay between 2 ros::Time timestamps. Generally, if wanting to measure the time from now to a previous mark, the current timestamp should be the first parameter and the previous mark should be the 2nd parameter. <br /></td></tr>
 <tr class="separator:aa8374e44eb82f202b4f776fc9e05ed80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a9ed9ed0ca14c0f7c33aeaf3af22104"><td class="memItemLeft" align="right" valign="top"><a id="a0a9ed9ed0ca14c0f7c33aeaf3af22104"></a>
+eros::diagnostic&#160;</td><td class="memItemRight" valign="bottom"><b>convert</b> (<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diag_def)</td></tr>
+<tr class="separator:a0a9ed9ed0ca14c0f7c33aeaf3af22104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdbb7d9a121a529539f2d2c1b497335e"><td class="memItemLeft" align="right" valign="top"><a id="acdbb7d9a121a529539f2d2c1b497335e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNode.html#acdbb7d9a121a529539f2d2c1b497335e">new_ppsmsg</a> (const std_msgs::Bool::ConstPtr &amp;t_msg)</td></tr>
 <tr class="memdesc:acdbb7d9a121a529539f2d2c1b497335e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles receiving the 1 PPS Msg. <br /></td></tr>
 <tr class="separator:acdbb7d9a121a529539f2d2c1b497335e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a197abdf9b94651f529948f924eb2feea"><td class="memItemLeft" align="right" valign="top"><a id="a197abdf9b94651f529948f924eb2feea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_service</b> (eros::srv_firmware::Request &amp;req, eros::srv_firmware::Response &amp;res)</td></tr>
+<tr class="separator:a197abdf9b94651f529948f924eb2feea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf2518d82b516f1f877ab38dec098e96"><td class="memItemLeft" align="right" valign="top"><a id="aaf2518d82b516f1f877ab38dec098e96"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>loggerlevel_service</b> (eros::srv_logger_level::Request &amp;req, eros::srv_logger_level::Response &amp;res)</td></tr>
+<tr class="separator:aaf2518d82b516f1f877ab38dec098e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af888921803bc8a93d57bc78b4b2f3a3e"><td class="memItemLeft" align="right" valign="top"><a id="af888921803bc8a93d57bc78b4b2f3a3e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostics_service</b> (eros::srv_get_diagnostics::Request &amp;req, eros::srv_get_diagnostics::Response &amp;res)</td></tr>
+<tr class="separator:af888921803bc8a93d57bc78b4b2f3a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d0d6642261d6380662ef5f4601f1bd1"><td class="memItemLeft" align="right" valign="top"><a id="a0d0d6642261d6380662ef5f4601f1bd1"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()=0</td></tr>
 <tr class="separator:a0d0d6642261d6380662ef5f4601f1bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,6 +216,9 @@ Protected Member Functions</h2></td></tr>
 <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNode.html#a518913c23ca50d154bb45328720ec69b">read_baselaunchparameters</a> ()</td></tr>
 <tr class="memdesc:a518913c23ca50d154bb45328720ec69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Base Launch parameters, which includes loop rates, verbosity, etc. <br /></td></tr>
 <tr class="separator:a518913c23ca50d154bb45328720ec69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde53e3041958ec885b10139b0927a98"><td class="memItemLeft" align="right" valign="top"><a id="adde53e3041958ec885b10139b0927a98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostics</b> (std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt; _diagnostics)</td></tr>
+<tr class="separator:adde53e3041958ec885b10139b0927a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -234,6 +249,15 @@ ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>heartbeat_p
 <tr class="memitem:a6506f5b3af66d6b86441df6294c66ed4"><td class="memItemLeft" align="right" valign="top"><a id="a6506f5b3af66d6b86441df6294c66ed4"></a>
 eros::heartbeat&#160;</td><td class="memItemRight" valign="bottom"><b>heartbeat</b></td></tr>
 <tr class="separator:a6506f5b3af66d6b86441df6294c66ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ca6c5f5fbad09f5257bef98dd69e67"><td class="memItemLeft" align="right" valign="top"><a id="a73ca6c5f5fbad09f5257bef98dd69e67"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_srv</b></td></tr>
+<tr class="separator:a73ca6c5f5fbad09f5257bef98dd69e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf07e00c26fdb1fc9fdcb2beb61ba94"><td class="memItemLeft" align="right" valign="top"><a id="a1cf07e00c26fdb1fc9fdcb2beb61ba94"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>logger_level_srv</b></td></tr>
+<tr class="separator:a1cf07e00c26fdb1fc9fdcb2beb61ba94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85063ca05c21d78cff8e44cde024ece8"><td class="memItemLeft" align="right" valign="top"><a id="a85063ca05c21d78cff8e44cde024ece8"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostics_srv</b></td></tr>
+<tr class="separator:a85063ca05c21d78cff8e44cde024ece8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a315ca609a97e6035560c026b7261ec"><td class="memItemLeft" align="right" valign="top"><a id="a6a315ca609a97e6035560c026b7261ec"></a>
 <a class="el" href="classLogger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>logger</b> = nullptr</td></tr>
 <tr class="separator:a6a315ca609a97e6035560c026b7261ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,6 +324,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pps_received</b></td>
 <tr class="memitem:acc05ec8bcd2efb8384110bb258a43f85"><td class="memItemLeft" align="right" valign="top"><a id="acc05ec8bcd2efb8384110bb258a43f85"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>rand_delay_sec</b></td></tr>
 <tr class="separator:acc05ec8bcd2efb8384110bb258a43f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a567c1491777b623d3f950b697e55e3ac"><td class="memItemLeft" align="right" valign="top"><a id="a567c1491777b623d3f950b697e55e3ac"></a>
+std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>current_diagnostics</b></td></tr>
+<tr class="separator:a567c1491777b623d3f950b697e55e3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is a <a class="el" href="classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class. ">BaseNode</a> class. All Nodes should be a derived class from this Base Class. </p>

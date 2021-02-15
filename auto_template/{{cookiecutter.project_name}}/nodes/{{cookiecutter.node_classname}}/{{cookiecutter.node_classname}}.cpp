@@ -85,11 +85,10 @@ bool {{cookiecutter.node_classname}}::run_01hz_noisy() {
     return true;
 }
 bool {{cookiecutter.node_classname}}::run_1hz() {
-    logger->log_debug("Loop 1 Hz");
     return true;
 }
 bool {{cookiecutter.node_classname}}::run_10hz() {
-    logger->log_debug("Loop 10 Hz");
+    update_diagnostics(process->get_diagnostics());
     return true;
 }
 void {{cookiecutter.node_classname}}::thread_loop() {

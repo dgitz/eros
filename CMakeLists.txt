@@ -25,6 +25,8 @@ add_message_files(
 add_service_files(
   FILES
   srv_firmware.srv
+  srv_logger_level.srv
+  srv_get_diagnostics.srv
 )
 add_action_files(
   DIRECTORY action
