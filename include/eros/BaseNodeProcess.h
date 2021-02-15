@@ -84,6 +84,15 @@ class BaseNodeProcess
     /*! \brief Update function must be implemented in Derived Process.  This is used for all state
      * machine logic, etc. */
     virtual Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time) = 0;
+    Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticDefinition diag) {
+        return diagnostic_helper.update_diagnostic(diag);
+    }
+    Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,
+                                                       Level::Type level,
+                                                       Diagnostic::Message message,
+                                                       std::string description) {
+        return diagnostic_helper.update_diagnostic(diagnostic_type, level, message, description);
+    }
 
     // Attribute Functions
     Node::State get_nodestate() {

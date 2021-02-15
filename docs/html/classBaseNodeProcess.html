@@ -79,8 +79,10 @@ Inheritance diagram for BaseNodeProcess:</div>
 <div class="center"><img src="classBaseNodeProcess__inherit__graph.png" border="0" usemap="#BaseNodeProcess_inherit__map" alt="Inheritance graph"/></div>
 <map name="BaseNodeProcess_inherit__map" id="BaseNodeProcess_inherit__map">
 <area shape="rect" id="node2" href="classBaseNodeProcessTester.html" title="BaseNodeProcessTester" alt="" coords="5,80,173,107"/>
-<area shape="rect" id="node3" href="classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="198,80,357,107"/>
-<area shape="rect" id="node4" href="classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="180,155,375,181"/>
+<area shape="rect" id="node3" href="classDataLoggerProcess.html" title="DataLoggerProcess" alt="" coords="198,80,335,107"/>
+<area shape="rect" id="node5" href="classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="378,80,537,107"/>
+<area shape="rect" id="node4" href="classDataLoggerProcessTester.html" title="DataLoggerProcessTester" alt="" coords="170,155,345,181"/>
+<area shape="rect" id="node6" href="classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="369,155,564,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -114,6 +116,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a972894d0cd4d4e6c4b2b61469807e232">update</a> (double t_dt, double t_ros_time)=0</td></tr>
 <tr class="memdesc:a972894d0cd4d4e6c4b2b61469807e232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update function must be implemented in Derived Process. This is used for all state machine logic, etc. <br /></td></tr>
 <tr class="separator:a972894d0cd4d4e6c4b2b61469807e232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1797af77f359a3cfac16fc3e230b2f72"><td class="memItemLeft" align="right" valign="top"><a id="a1797af77f359a3cfac16fc3e230b2f72"></a>
+<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostic</b> (<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diag)</td></tr>
+<tr class="separator:a1797af77f359a3cfac16fc3e230b2f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6302c42937872926e2ed6fccc11001a5"><td class="memItemLeft" align="right" valign="top"><a id="a6302c42937872926e2ed6fccc11001a5"></a>
+<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostic</b> (<a class="el" href="classDiagnostic.html#a3099654b22790ede6b922bcb09804f1b">Diagnostic::DiagnosticType</a> diagnostic_type, <a class="el" href="classLevel.html#a5213bbab7358b0ef4fefc284cb7b5eff">Level::Type</a> level, <a class="el" href="classDiagnostic.html#ae36f9ff390ee983717bfb57c9038397a">Diagnostic::Message</a> message, std::string description)</td></tr>
+<tr class="separator:a6302c42937872926e2ed6fccc11001a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45fdb1b0adca86c4d0cca3634e40a719"><td class="memItemLeft" align="right" valign="top"><a id="a45fdb1b0adca86c4d0cca3634e40a719"></a>
 <a class="el" href="classNode.html#a73fe68750253aa5281f567c7334fe5c6">Node::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_nodestate</b> ()</td></tr>
 <tr class="separator:a45fdb1b0adca86c4d0cca3634e40a719"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -269,11 +277,12 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph.png" border="0" usemap="#classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph" id="classBaseNodeProcess_a2f5df5df0d086b45d3fe3402f2bd4698_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,15,407,42"/>
-<area shape="rect" id="node4" href="classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="234,69,393,111"/>
-<area shape="rect" id="node6" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,135,397,176"/>
-<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="455,5,604,47"/>
-<area shape="rect" id="node5" href="classSystemMonitorNode.html#a7ef65d62fd98f1e498a429ced6a0be1a" title="Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. " alt="" coords="455,71,604,112"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,64,407,91"/>
+<area shape="rect" id="node5" href="classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="234,119,393,161"/>
+<area shape="rect" id="node7" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,185,397,226"/>
+<area shape="rect" id="node3" href="classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="455,5,609,32"/>
+<area shape="rect" id="node4" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="457,57,607,98"/>
+<area shape="rect" id="node6" href="classSystemMonitorNode.html#a7ef65d62fd98f1e498a429ced6a0be1a" title="Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. " alt="" coords="457,122,607,163"/>
 </map>
 </div>
 
@@ -316,9 +325,10 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph.png" border="0" usemap="#classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph" id="classBaseNodeProcess_ad4713076a8ac3c66fc3cfb5135cada39_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,13,423,39"/>
-<area shape="rect" id="node4" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="245,64,413,105"/>
-<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="471,5,620,47"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,35,423,61"/>
+<area shape="rect" id="node5" href="classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="245,86,413,127"/>
+<area shape="rect" id="node3" href="classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="471,5,625,32"/>
+<area shape="rect" id="node4" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="473,57,623,98"/>
 </map>
 </div>
 
@@ -423,8 +433,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph.png" border="0" usemap="#classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph" id="classBaseNodeProcess_ac570485e7f6ed35d35f43ad595d11e35_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,13,455,39"/>
-<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="503,5,652,47"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="268,35,455,61"/>
+<area shape="rect" id="node3" href="classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="503,5,657,32"/>
+<area shape="rect" id="node4" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="505,57,655,98"/>
 </map>
 </div>
 
@@ -497,8 +508,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph.png" border="0" usemap="#classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph" id="classBaseNodeProcess_a5995efa47fa2d70ac5de384e94e90b3e_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,13,407,39"/>
-<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="455,5,604,47"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,35,407,61"/>
+<area shape="rect" id="node3" href="classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="455,5,609,32"/>
+<area shape="rect" id="node4" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="457,57,607,98"/>
 </map>
 </div>
 
@@ -533,9 +545,11 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph.png" border="0" usemap="#classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph" alt=""/></div>
 <map name="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph" id="classBaseNodeProcess_ac16b27bd5b0c722814ff94d03039545c_icgraph">
-<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="236,5,423,32"/>
-<area shape="rect" id="node3" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="471,23,620,65"/>
-<area shape="rect" id="node4" href="classSystemMonitorNode.html#abc13a09de5b967146d36f01487e8e0f2" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="255,107,404,149"/>
+<area shape="rect" id="node2" href="classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="240,45,427,72"/>
+<area shape="rect" id="node3" href="classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="479,5,633,32"/>
+<area shape="rect" id="node4" href="classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="481,67,631,109"/>
+<area shape="rect" id="node5" href="classDataLoggerNode.html#a97917d5ac0decfb5c3e38ac465e64755" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="236,147,431,173"/>
+<area shape="rect" id="node6" href="classSystemMonitorNode.html#abc13a09de5b967146d36f01487e8e0f2" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="259,198,408,239"/>
 </map>
 </div>
 

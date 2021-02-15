@@ -222,7 +222,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     return diag;
 }
 void signalinterrupt_handler(int sig) {
-    printf("Killing SystemMonitorNode with Signal: %d", sig);
+    printf("Killing SystemMonitorNode with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }

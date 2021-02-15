@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   genmsg
   actionlib_msgs
+  rosbag
 )
 find_package(Curses)
 add_message_files(

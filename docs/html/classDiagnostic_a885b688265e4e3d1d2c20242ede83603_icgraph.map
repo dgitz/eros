@@ -1,4 +1,5 @@
 <map id="Diagnostic::enable_diagnostics" name="Diagnostic::enable_diagnostics">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="184,13,371,39"/>
-<area shape="rect" id="node3" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="419,5,568,47"/>
+<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="184,35,371,61"/>
+<area shape="rect" id="node3" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="419,5,573,32"/>
+<area shape="rect" id="node4" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="421,57,571,98"/>
 </map>
