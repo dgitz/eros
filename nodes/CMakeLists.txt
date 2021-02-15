@@ -1,1 +1,2 @@
 add_subdirectory(SystemMonitor)
+add_subdirectory(DataLogger)

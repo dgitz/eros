@@ -1,7 +1,7 @@
 var searchData=
 [
   ['calibration',['CALIBRATION',['../classCommand.html#a4ca33b8d40e12deca5e7bb4190426ee1a70542fff955dafe953f0aa7ae3635d0c',1,'Command']]],
-  ['check_5fprogramvariables',['check_programvariables',['../classBaseNodeProcess.html#ab7139b722f8b6900e19997fe3f2b8f3e',1,'BaseNodeProcess::check_programvariables()'],['../classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff',1,'SystemMonitorProcess::check_programvariables()'],['../classBaseNodeProcessTester.html#acd21d7b2d3062395ddf26154d71ecc4c',1,'BaseNodeProcessTester::check_programvariables()']]],
+  ['check_5fprogramvariables',['check_programvariables',['../classBaseNodeProcess.html#ab7139b722f8b6900e19997fe3f2b8f3e',1,'BaseNodeProcess::check_programvariables()'],['../classDataLoggerProcess.html#a3cf50029012475c0fc28a3b5aff9092c',1,'DataLoggerProcess::check_programvariables()'],['../classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff',1,'SystemMonitorProcess::check_programvariables()'],['../classBaseNodeProcessTester.html#acd21d7b2d3062395ddf26154d71ecc4c',1,'BaseNodeProcessTester::check_programvariables()']]],
   ['command',['Command',['../classCommand.html',1,'']]],
   ['commandstring',['CommandString',['../classCommand.html#a89f70fc985addb9835644a4957ce4902',1,'Command']]],
   ['commtimeout_5fthreshold',['COMMTIMEOUT_THRESHOLD',['../classSystemMonitorProcess.html#ad4d4e808b9f793874f078b7b011d902d',1,'SystemMonitorProcess']]],

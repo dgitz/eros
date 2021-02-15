@@ -1,7 +1,8 @@
 <map id="BaseNodeProcess::base_update" name="BaseNodeProcess::base_update">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,15,407,42"/>
-<area shape="rect" id="node4" href="$classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="234,69,393,111"/>
-<area shape="rect" id="node6" href="$classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,135,397,176"/>
-<area shape="rect" id="node3" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="455,5,604,47"/>
-<area shape="rect" id="node5" href="$classSystemMonitorNode.html#a7ef65d62fd98f1e498a429ced6a0be1a" title="Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. " alt="" coords="455,71,604,112"/>
+<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="220,64,407,91"/>
+<area shape="rect" id="node5" href="$classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="234,119,393,161"/>
+<area shape="rect" id="node7" href="$classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="229,185,397,226"/>
+<area shape="rect" id="node3" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="455,5,609,32"/>
+<area shape="rect" id="node4" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="457,57,607,98"/>
+<area shape="rect" id="node6" href="$classSystemMonitorNode.html#a7ef65d62fd98f1e498a429ced6a0be1a" title="Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. " alt="" coords="457,122,607,163"/>
 </map>

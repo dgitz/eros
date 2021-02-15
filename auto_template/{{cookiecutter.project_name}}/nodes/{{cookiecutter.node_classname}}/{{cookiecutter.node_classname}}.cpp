@@ -101,7 +101,7 @@ void {{cookiecutter.node_classname}}::cleanup() {
     base_cleanup();
 }
 void signalinterrupt_handler(int sig) {
-    printf("Killing {{cookiecutter.node_classname}} with Signal: %d", sig);
+    printf("Killing {{cookiecutter.node_classname}} with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
