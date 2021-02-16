@@ -81,8 +81,6 @@ class SystemMonitorProcess : public BaseNodeProcess
     /*! \brief The minimum height in pixels of the Main Window.*/
     const uint16_t MINWINDOW_HEIGHT = 240;
 
-    const uint16_t TASKPAGE_COUNT = 5;
-
     // Keys
     static constexpr int KEY_q = 113;
     static constexpr int KEY_Q = 81;
@@ -171,7 +169,8 @@ class SystemMonitorProcess : public BaseNodeProcess
           mainwindow_height(0),
           select_task_mode(false),
           selected_task_index(-1),
-          start_node_index(0) {
+          start_node_index(0),
+          task_list_max_rows(5) {
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::MARKER, TaskField("", 3)));
         task_window_fields.insert(
@@ -308,5 +307,6 @@ class SystemMonitorProcess : public BaseNodeProcess
     bool select_task_mode;
     int16_t selected_task_index;
     uint16_t start_node_index;
+    uint16_t task_list_max_rows;
 };
 #endif  // SYSTEMMONITORPROCESS_h

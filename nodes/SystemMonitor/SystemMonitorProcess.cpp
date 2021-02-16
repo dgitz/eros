@@ -50,6 +50,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         wrefresh(win_it->second.get_window_reference());
         ++win_it;
     }
+    flushinp();
 
     return diag;
 }
@@ -175,13 +176,10 @@ bool SystemMonitorProcess::initialize_windows() {
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
-
-    // for (auto &window : windows) {
     std::map<std::string, WindowManager>::iterator it = windows.begin();
     while (it != windows.end()) {
         WindowManager::ScreenCoordinatePixel coord_pix = convertCoordinate(
             it->second.get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
-
         WINDOW *win = create_newwin(coord_pix.height_pix,
                                     coord_pix.width_pix,
                                     coord_pix.start_y_pix,
@@ -194,12 +192,17 @@ bool SystemMonitorProcess::initialize_windows() {
             keypad(it->second.get_window_reference(), TRUE);
         }
         else if (it->first == "task_window") {
+            task_list_max_rows = coord_pix.height_pix - 5;
+            if ((coord_pix.height_pix - 5) < 0) {
+                logger->log_warn("Screen Too Small. Closing.");
+                return false;
+            }
             keypad(it->second.get_window_reference(), TRUE);
             std::string header = get_taskheader();
             mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
             std::string dashed(header.size(), '-');
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
-            wtimeout(it->second.get_window_reference(), 10);
+            wtimeout(it->second.get_window_reference(), 0);
         }
         else {
             logger->log_warn("Window: " + it->first + " Not Supported.");
@@ -260,21 +263,24 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
                     --selected_task_index;
                 }
                 else {
-                    selected_task_index = (int16_t)(task_list.size()) - 1;
+                    selected_task_index = 0;
+                }
+                if (selected_task_index == 0) {
+                    start_node_index = 0;
                 }
             }
             break;
         case KEY_DOWN:
             if (select_task_mode == true) {
-                if (start_node_index < ((uint16_t)task_list.size() - TASKPAGE_COUNT)) {
-                    ++start_node_index;
-                }
-
                 if (selected_task_index < (((int16_t)task_list.size() - 1))) {
                     ++selected_task_index;
                 }
                 else {
                     selected_task_index = 0;
+                    start_node_index = 0;
+                }
+                if (selected_task_index >= task_list_max_rows) {
+                    start_node_index++;
                 }
             }
             break;
@@ -285,17 +291,18 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
     uint16_t tasks_shown = 0;
-    for (uint16_t index = start_node_index; index < (uint16_t)task_list.size(); ++index) {
-        if (tasks_shown >= TASKPAGE_COUNT) {
+    uint16_t index = 0;
+    for (uint16_t i = start_node_index; i < (uint16_t)task_list.size(); ++i) {
+        if (tasks_shown >= task_list_max_rows) {
             break;
         }
-        task_id_it = task_name_list.find(index);
+        task_id_it = task_name_list.find(i);
         if (task_id_it == task_name_list.end()) {
             diag = diagnostic_helper.update_diagnostic(
                 Diagnostic::DiagnosticType::DATA_STORAGE,
                 Level::Type::ERROR,
                 Diagnostic::Message::DIAGNOSTIC_FAILED,
-                "Task List does not contain ID: " + std::to_string(index));
+                "Task List does not contain ID: " + std::to_string(i));
             return diag;
         }
         std::string key = task_id_it->second;
@@ -322,8 +329,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         }
 
         wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
-        std::string str = get_task_info(task_it->second, (index == selected_task_index));
-        logger->log_notice(str);
+        std::string str = get_task_info(task_it->second, (i == selected_task_index));
         mvwprintw(window_it->second.get_window_reference(),
                   TASKSTART_COORD_Y + 3 + (int)index,
                   TASKSTART_COORD_X + 1,
@@ -331,6 +337,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         wclrtoeol(window_it->second.get_window_reference());
         wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
         tasks_shown++;
+        index++;
     }
     box(window_it->second.get_window_reference(), 0, 0);
     wrefresh(window_it->second.get_window_reference());
