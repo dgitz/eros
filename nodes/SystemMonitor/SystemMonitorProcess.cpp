@@ -45,7 +45,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
             }
         }
         else {
-            logger->log_warn("Window: " + win_it->first + " Not Supported.");
+            logger->log_debug("Window: " + win_it->first + " Not Supported.");
         }
         wrefresh(win_it->second.get_window_reference());
         ++win_it;
@@ -199,6 +199,7 @@ bool SystemMonitorProcess::initialize_windows() {
             mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
             std::string dashed(header.size(), '-');
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
+            wtimeout(it->second.get_window_reference(), 10);
         }
         else {
             logger->log_warn("Window: " + it->first + " Not Supported.");
@@ -242,12 +243,61 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
                                                    Diagnostic::Message::NOERROR,
                                                    "No Tasks Defined Yet.");
     }
+    select_task_mode = true;  //
+    if ((select_task_mode == true) and (selected_task_index == -1)) {
+        selected_task_index = 0;
+    }
+    int key_pressed = wgetch(window_it->second.get_window_reference());
+    switch (key_pressed) {
+        case KEY_q: kill_me = true; break;
+        case KEY_Q: kill_me = true; break;
+        case KEY_UP:
+            if (select_task_mode == true) {
+                if (start_node_index > 0) {
+                    --start_node_index;
+                }
+                if (selected_task_index > 0) {
+                    --selected_task_index;
+                }
+                else {
+                    selected_task_index = (int16_t)(task_list.size()) - 1;
+                }
+            }
+            break;
+        case KEY_DOWN:
+            if (select_task_mode == true) {
+                if (start_node_index < ((uint16_t)task_list.size() - TASKPAGE_COUNT)) {
+                    ++start_node_index;
+                }
+
+                if (selected_task_index < (((int16_t)task_list.size() - 1))) {
+                    ++selected_task_index;
+                }
+                else {
+                    selected_task_index = 0;
+                }
+            }
+            break;
+        default: break;
+    }
     std::map<std::string, Task>::iterator task_it;  // = task_list.begin();
-    std::map<uint16_t, std::string>::iterator task_id_it = task_name_list.begin();
-    int index = 0;
+    std::map<uint16_t, std::string>::iterator task_id_it;
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
-    while (task_id_it != task_name_list.end()) {
+    uint16_t tasks_shown = 0;
+    for (uint16_t index = start_node_index; index < (uint16_t)task_list.size(); ++index) {
+        if (tasks_shown >= TASKPAGE_COUNT) {
+            break;
+        }
+        task_id_it = task_name_list.find(index);
+        if (task_id_it == task_name_list.end()) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::DATA_STORAGE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DIAGNOSTIC_FAILED,
+                "Task List does not contain ID: " + std::to_string(index));
+            return diag;
+        }
         std::string key = task_id_it->second;
         task_it = task_list.find(key);
         if (task_it == task_list.end()) {
@@ -270,27 +320,35 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
             case Node::State::FINISHED: color = Color::YELLOW_COLOR; break;
             default: color = Color::RED_COLOR; break;
         }
+
         wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
-        std::string str = get_task_info(task_it->second);
+        std::string str = get_task_info(task_it->second, (index == selected_task_index));
+        logger->log_notice(str);
         mvwprintw(window_it->second.get_window_reference(),
                   TASKSTART_COORD_Y + 3 + (int)index,
                   TASKSTART_COORD_X + 1,
                   str.c_str());
         wclrtoeol(window_it->second.get_window_reference());
         wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
-        index++;
-        ++task_id_it;
+        tasks_shown++;
     }
     box(window_it->second.get_window_reference(), 0, 0);
     wrefresh(window_it->second.get_window_reference());
     return diag;
 }
-std::string SystemMonitorProcess::get_task_info(Task task) {
+std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     std::string str = "";
     std::size_t width = 0;
     {
         width = task_window_fields.find(TaskFieldColumn::MARKER)->second.width;
-        for (std::size_t i = 0; i < width; ++i) { str += " "; }
+        for (std::size_t i = 0; i < width; ++i) {
+            if (selected == true) {
+                str += "*";
+            }
+            else {
+                str += " ";
+            }
+        }
     }
     {
         width = task_window_fields.find(TaskFieldColumn::ID)->second.width;

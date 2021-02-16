@@ -111,6 +111,9 @@ bool SystemMonitorNode::run_1hz() {
     return true;
 }
 bool SystemMonitorNode::run_10hz() {
+    if (process->get_killme() == true) {
+        kill_node = true;
+    }
     return true;
 }
 void SystemMonitorNode::thread_loop() {
@@ -137,7 +140,7 @@ bool SystemMonitorNode::init_screen() {
     }
     curs_set(0);
     noecho();
-    cbreak();
+    raw();
 
     start_color();
     init_color(COLOR_BLACK, 0, 0, 0);

@@ -81,6 +81,28 @@ class SystemMonitorProcess : public BaseNodeProcess
     /*! \brief The minimum height in pixels of the Main Window.*/
     const uint16_t MINWINDOW_HEIGHT = 240;
 
+    const uint16_t TASKPAGE_COUNT = 5;
+
+    // Keys
+    static constexpr int KEY_q = 113;
+    static constexpr int KEY_Q = 81;
+    static constexpr int KEY_s = 83;
+    static constexpr int KEY_S = 115;
+    static constexpr int KEY_c = 99;
+    static constexpr int KEY_C = 67;
+    static constexpr int KEY_g = 103;
+    static constexpr int KEY_G = 71;
+    static constexpr int KEY_l = 108;
+    static constexpr int KEY_L = 76;
+    static constexpr int KEY_d = 100;
+    static constexpr int KEY_D = 68;
+    static constexpr int KEY_r = 114;
+    static constexpr int KEY_R = 82;
+    static constexpr int KEY_p = 112;
+    static constexpr int KEY_P = 80;
+    static constexpr int KEY_m = 109;
+    static constexpr int KEY_M = 77;
+
     enum class Color {
         UNKNOWN = 0,
         NO_COLOR = 1,
@@ -143,7 +165,13 @@ class SystemMonitorProcess : public BaseNodeProcess
         std::string text;
         std::size_t width;
     };
-    SystemMonitorProcess() : mainwindow_width(0), mainwindow_height(0) {
+    SystemMonitorProcess()
+        : kill_me(false),
+          mainwindow_width(0),
+          mainwindow_height(0),
+          select_task_mode(false),
+          selected_task_index(-1),
+          start_node_index(0) {
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::MARKER, TaskField("", 3)));
         task_window_fields.insert(
@@ -239,6 +267,9 @@ class SystemMonitorProcess : public BaseNodeProcess
     // Printing Functions
 
     // Destructors
+    bool get_killme() {
+        return kill_me;
+    }
     void cleanup() {
         base_cleanup();
         std::map<std::string, WindowManager>::iterator win_it = windows.begin();
@@ -250,7 +281,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
    private:
-    std::string get_task_info(Task task);
+    std::string get_task_info(Task task, bool task_selected);
     bool update_task_list(eros::heartbeat heartbeat) {
         std::string key = heartbeat.NodeName;
         std::map<std::string, Task>::iterator it;
@@ -266,6 +297,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         return true;
     }
+    bool kill_me;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
     std::map<TaskFieldColumn, TaskField> task_window_fields;
@@ -273,5 +305,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::map<std::string, Task> task_list;
     std::map<uint16_t, std::string> task_name_list;
     std::map<std::string, std::string> resource_topics;
+    bool select_task_mode;
+    int16_t selected_task_index;
+    uint16_t start_node_index;
 };
 #endif  // SYSTEMMONITORPROCESS_h
