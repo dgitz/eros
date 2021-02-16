@@ -33,6 +33,7 @@ class BaseNode
           firmware_version(),
           base_node_name(""),
           node_name(""),
+          no_launch_enabled(false),
           logger(nullptr),
           logger_initialized(false),
           ros_rate(-1.0),
@@ -56,6 +57,11 @@ class BaseNode
     // Structs
 
     // Initialization Functions
+    /*! \brief Set if no launch file should be used.  Will use default values only.
+     */
+    void set_no_launch_enabled(bool v) {
+        no_launch_enabled = v;
+    }
     /*! \brief Set Node Base Name.  This will be the same for every instance of the node, and is
      * independent on where the node is run. This value is equivelant to the "type" field in the
      * launch file.
@@ -184,6 +190,7 @@ class BaseNode
     ros::ServiceServer firmware_srv;
     ros::ServiceServer logger_level_srv;
     ros::ServiceServer diagnostics_srv;
+    bool no_launch_enabled;
     Logger *logger = nullptr;
     bool logger_initialized;
     double ros_rate;

@@ -4,6 +4,7 @@ var searchData=
   ['screencoordinatepixel',['ScreenCoordinatePixel',['../structWindowManager_1_1ScreenCoordinatePixel.html',1,'WindowManager']]],
   ['sensors',['SENSORS',['../classDiagnostic.html#a3099654b22790ede6b922bcb09804f1ba3f9d1c3652820e6c9716f628c6f0b5af',1,'Diagnostic']]],
   ['set_5fbasenodename',['set_basenodename',['../classBaseNode.html#a23851f77c70b9571b37a7de234d127b9',1,'BaseNode']]],
+  ['set_5fno_5flaunch_5fenabled',['set_no_launch_enabled',['../classBaseNode.html#a053a2480aedee46c5eee006cdb851a95',1,'BaseNode']]],
   ['setloglevel',['SETLOGLEVEL',['../classCommand.html#a4ca33b8d40e12deca5e7bb4190426ee1ad4d93a6cf19baa920a80d9c3b2ebc116',1,'Command']]],
   ['simrover',['SIMROVER',['../classSystem.html#a2a7648b88117f4560351739144753ce0a0ae1c4cb0b9be64eeffdadce7643a3e8',1,'System']]],
   ['software',['SOFTWARE',['../classDiagnostic.html#a3099654b22790ede6b922bcb09804f1baaea541d7f9574587656dc5125116e548',1,'Diagnostic']]],

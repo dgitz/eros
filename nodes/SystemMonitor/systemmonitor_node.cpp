@@ -6,6 +6,7 @@ SystemMonitorNode::SystemMonitorNode() {
 SystemMonitorNode::~SystemMonitorNode() {
 }
 bool SystemMonitorNode::start(int argc, char **argv) {
+    set_no_launch_enabled(true);
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
     process = new SystemMonitorProcess();
@@ -16,8 +17,6 @@ bool SystemMonitorNode::start(int argc, char **argv) {
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
-
-    diagnostic = read_launchparameters();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
@@ -82,6 +81,9 @@ bool SystemMonitorNode::run_loop1() {
     Diagnostic::DiagnosticDefinition diagnostic = process->update(.1, ros::Time::now().toSec());
     if (diagnostic.level > Level::Type::NOTICE) {
         logger->log_diagnostic(diagnostic);
+    }
+    if (diagnostic.level > Level::Type::WARN) {
+        return false;
     }
     return true;
 }
@@ -231,6 +233,9 @@ int main(int argc, char **argv) {
     signal(SIGTERM, signalinterrupt_handler);
     SystemMonitorNode *node = new SystemMonitorNode();
     bool status = node->start(argc, argv);
+    if (status == false) {
+        return EXIT_FAILURE;
+    }
     std::thread thread(&SystemMonitorNode::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());

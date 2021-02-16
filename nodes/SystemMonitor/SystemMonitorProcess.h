@@ -271,6 +271,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::map<TaskFieldColumn, TaskField> task_window_fields;
     std::map<std::string, WindowManager> windows;
     std::map<std::string, Task> task_list;
+    std::map<uint16_t, std::string> task_name_list;
     std::map<std::string, std::string> resource_topics;
 };
 #endif  // SYSTEMMONITORPROCESS_h

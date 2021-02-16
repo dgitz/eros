@@ -110,6 +110,9 @@ int main(int argc, char **argv) {
     signal(SIGTERM, signalinterrupt_handler);
     {{cookiecutter.node_classname}} *node = new {{cookiecutter.node_classname}}();
     bool status = node->start(argc, argv);
+    if (status == false) {
+        return EXIT_FAILURE;
+    }
     std::thread thread(&{{cookiecutter.node_classname}}::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
