@@ -78,14 +78,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {
-    Diagnostic::DiagnosticDefinition diagnostic = process->update(.1, ros::Time::now().toSec());
-    if (diagnostic.level > Level::Type::NOTICE) {
-        logger->log_diagnostic(diagnostic);
-    }
-    if (diagnostic.level > Level::Type::WARN) {
-        return false;
-    }
-    return true;
+        return true;
 }
 bool SystemMonitorNode::run_loop2() {
     Diagnostic::DiagnosticDefinition diag = rescan_nodes();
@@ -111,6 +104,16 @@ bool SystemMonitorNode::run_1hz() {
     return true;
 }
 bool SystemMonitorNode::run_10hz() {
+    if (process->get_killme() == true) {
+        kill_node = true;
+    }
+    Diagnostic::DiagnosticDefinition diagnostic = process->update(.1, ros::Time::now().toSec());
+    if (diagnostic.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diagnostic);
+    }
+    if (diagnostic.level > Level::Type::WARN) {
+        return false;
+    }
     return true;
 }
 void SystemMonitorNode::thread_loop() {
@@ -137,7 +140,7 @@ bool SystemMonitorNode::init_screen() {
     }
     curs_set(0);
     noecho();
-    cbreak();
+    raw();
 
     start_color();
     init_color(COLOR_BLACK, 0, 0, 0);
