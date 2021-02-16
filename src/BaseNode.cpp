@@ -39,6 +39,14 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
 
     diagnostic = read_baselaunchparameters();
+    if (diagnostic.level > Level::Type::WARN) {
+        if (logger_initialized == true) {
+            logger->log_diagnostic(diagnostic);
+        }
+        else {
+            printf("[%s ERROR]: %s\n", node_name.c_str(), diagnostic.description.c_str());
+        }
+    }
     std::string heartbeat_topic = "/" + node_name + "/heartbeat";
     heartbeat_pub = n->advertise<eros::heartbeat>(heartbeat_topic, 1);
     heartbeat.stamp = ros::Time::now();
@@ -72,80 +80,102 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
     loop1_enabled = false;
     loop2_enabled = false;
     loop3_enabled = false;
-    std::string param_verbosity_level = node_name + "/verbosity_level";
-    if (n->getParam(param_verbosity_level, verbosity_level) == false) {
-        diagnostic.type = Diagnostic::DiagnosticType::DATA_STORAGE;
-        diagnostic.level = Level::Type::ERROR;
-        diagnostic.message = Diagnostic::Message::INITIALIZING_ERROR;
-        diag.description = "Missing Parameter: verbosity_level. Exiting.";
-        diagnostic = diag;
-        return diag;
-    }
-    else {
-        logger = new Logger(verbosity_level, node_name);
+    if (no_launch_enabled == true) {
+        logger = new Logger("NOTICE", node_name);
         logger_initialized = true;
     }
-    std::string param_startup_delay = node_name + "/startup_delay";
-    double startup_delay = 0.0;
-    if (n->getParam(param_startup_delay, startup_delay) == false) {
-        logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
-    }
     else {
-        char tempstr[128];
-        sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
-        logger->log_notice(std::string(tempstr));
+        std::string param_verbosity_level = node_name + "/verbosity_level";
+        if (n->getParam(param_verbosity_level, verbosity_level) == false) {
+            diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+            diag.description = "Missing Parameter: verbosity_level. Exiting.";
+            diagnostic = diag;
+            return diag;
+        }
+        else {
+            logger = new Logger(verbosity_level, node_name);
+            logger->log_notice("Initialized.");
+            logger_initialized = true;
+        }
     }
-    ros::Duration(startup_delay).sleep();
-    std::string param_require_pps_to_start = node_name + "/require_pps_to_start";
-    if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
-        diagnostic.type = Diagnostic::DiagnosticType::DATA_STORAGE;
-        diagnostic.level = Level::Type::ERROR;
-        diagnostic.message = Diagnostic::Message::INITIALIZING_ERROR;
-        diag.description = "Missing Parameter: require_pps_to_start. Exiting.";
-        diagnostic = diag;
-        logger->log_diagnostic(diag);
+    if (no_launch_enabled == true) {
+        std::string param_startup_delay = node_name + "/startup_delay";
+        double startup_delay = 0.0;
+        if (n->getParam(param_startup_delay, startup_delay) == false) {
+            logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
+        }
+        else {
+            char tempstr[128];
+            sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
+            logger->log_notice(std::string(tempstr));
+        }
+        ros::Duration(startup_delay).sleep();
+    }
+    if (no_launch_enabled == true) {}
+    else {
+        std::string param_require_pps_to_start = node_name + "/require_pps_to_start";
+        if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
+            diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+            diag.description = "Missing Parameter: require_pps_to_start. Exiting.";
+            diagnostic = diag;
+            logger->log_diagnostic(diag);
+        }
     }
     double max_rate = 0.0;
-    last_01hz_timer = ros::Time::now();
-    last_01hz_noisy_timer = ros::Time::now();
-    last_1hz_timer = ros::Time::now();
-    last_10hz_timer = ros::Time::now();
-    std::string param_loop1_rate = node_name + "/loop1_rate";
-    if (n->getParam(param_loop1_rate, loop1_rate) == false) {
-        logger->log_warn("Missing parameter: loop1_rate.  Not running loop1 code.");
-        loop1_enabled = false;
-    }
-    else {
-        last_loop1_timer = ros::Time::now();
+    if (no_launch_enabled == true) {
         loop1_enabled = true;
-        if (loop1_rate > max_rate) {
-            max_rate = loop1_rate;
-        }
-    }
-
-    std::string param_loop2_rate = node_name + "/loop2_rate";
-    if (n->getParam(param_loop2_rate, loop2_rate) == false) {
-        logger->log_warn("Missing parameter: loop2_rate.  Not running loop2 code.");
-        loop2_enabled = false;
-    }
-    else {
-        last_loop2_timer = ros::Time::now();
+        loop1_rate = 1.0;
         loop2_enabled = true;
-        if (loop2_rate > max_rate) {
-            max_rate = loop2_rate;
-        }
-    }
-
-    std::string param_loop3_rate = node_name + "/loop3_rate";
-    if (n->getParam(param_loop3_rate, loop3_rate) == false) {
-        logger->log_warn("Missing parameter: loop3_rate.  Not running loop3 code.");
+        loop2_rate = 5.0;
         loop3_enabled = false;
+        max_rate = loop2_rate;
     }
     else {
-        last_loop3_timer = ros::Time::now();
-        loop3_enabled = true;
-        if (loop3_rate > max_rate) {
-            max_rate = loop3_rate;
+        last_01hz_timer = ros::Time::now();
+        last_01hz_noisy_timer = ros::Time::now();
+        last_1hz_timer = ros::Time::now();
+        last_10hz_timer = ros::Time::now();
+        std::string param_loop1_rate = node_name + "/loop1_rate";
+        if (n->getParam(param_loop1_rate, loop1_rate) == false) {
+            logger->log_warn("Missing parameter: loop1_rate.  Not running loop1 code.");
+            loop1_enabled = false;
+        }
+        else {
+            last_loop1_timer = ros::Time::now();
+            loop1_enabled = true;
+            if (loop1_rate > max_rate) {
+                max_rate = loop1_rate;
+            }
+        }
+
+        std::string param_loop2_rate = node_name + "/loop2_rate";
+        if (n->getParam(param_loop2_rate, loop2_rate) == false) {
+            logger->log_warn("Missing parameter: loop2_rate.  Not running loop2 code.");
+            loop2_enabled = false;
+        }
+        else {
+            last_loop2_timer = ros::Time::now();
+            loop2_enabled = true;
+            if (loop2_rate > max_rate) {
+                max_rate = loop2_rate;
+            }
+        }
+
+        std::string param_loop3_rate = node_name + "/loop3_rate";
+        if (n->getParam(param_loop3_rate, loop3_rate) == false) {
+            logger->log_warn("Missing parameter: loop3_rate.  Not running loop3 code.");
+            loop3_enabled = false;
+        }
+        else {
+            last_loop3_timer = ros::Time::now();
+            loop3_enabled = true;
+            if (loop3_rate > max_rate) {
+                max_rate = loop3_rate;
+            }
         }
     }
     ros_rate = max_rate * 4.0;

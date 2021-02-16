@@ -216,6 +216,9 @@ int main(int argc, char **argv) {
     signal(SIGTERM, signalinterrupt_handler);
     DataLoggerNode *node = new DataLoggerNode();
     bool status = node->start(argc, argv);
+    if (status == false) {
+        return EXIT_FAILURE;
+    }
     std::thread thread(&DataLoggerNode::thread_loop, node);
     std::thread thread2(&DataLoggerNode::run_logger, node, node);
     while ((status == true) and (kill_node == false)) {

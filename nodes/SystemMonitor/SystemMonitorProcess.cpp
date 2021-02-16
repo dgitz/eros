@@ -40,6 +40,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         if (win_it->first == "header") {}
         else if (win_it->first == "task_window") {
             diag = update_taskwindow(win_it);
+            if (diag.level > Level::Type::WARN) {
+                return diag;
+            }
         }
         else {
             logger->log_warn("Window: " + win_it->first + " Not Supported.");
@@ -66,6 +69,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_nodelist(
                 newTask.state = Node::State::RUNNING;
                 std::string key = newTask.node_name;
                 task_list.insert(std::pair<std::string, Task>(key, newTask));
+                task_name_list.insert(std::pair<uint16_t, std::string>(newTask.id, key));
             }
             else {
                 task_it->second.last_heartbeat_delta = 0.0;
@@ -90,6 +94,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_nodelist(
                 Task newTask(task_list.size(), TaskType::EROS, "Unknown", "Unknown", key);
                 std::string key = newTask.node_name;
                 task_list.insert(std::pair<std::string, Task>(key, newTask));
+                task_name_list.insert(std::pair<uint16_t, std::string>(newTask.id, key));
                 new_heartbeat_topics_to_subscribe.push_back(*it);
             }
             else if (task_it->second.type == TaskType::NON_EROS) {
@@ -237,11 +242,21 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
                                                    Diagnostic::Message::NOERROR,
                                                    "No Tasks Defined Yet.");
     }
-    std::map<std::string, Task>::iterator task_it = task_list.begin();
+    std::map<std::string, Task>::iterator task_it;  // = task_list.begin();
+    std::map<uint16_t, std::string>::iterator task_id_it = task_name_list.begin();
     int index = 0;
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
-    while (task_it != task_list.end()) {
+    while (task_id_it != task_name_list.end()) {
+        std::string key = task_id_it->second;
+        task_it = task_list.find(key);
+        if (task_it == task_list.end()) {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::ERROR,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Task List does not contain ID: " + key);
+            return diag;
+        }
         Color color = Color::UNKNOWN;
         switch (task_it->second.state) {
             case Node::State::UNKNOWN: color = Color::RED_COLOR; break;
@@ -264,7 +279,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         wclrtoeol(window_it->second.get_window_reference());
         wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
         index++;
-        ++task_it;
+        ++task_id_it;
     }
     box(window_it->second.get_window_reference(), 0, 0);
     wrefresh(window_it->second.get_window_reference());
