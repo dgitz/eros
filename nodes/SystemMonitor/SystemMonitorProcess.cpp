@@ -162,17 +162,17 @@ bool SystemMonitorProcess::initialize_windows() {
         windows.insert(newwin);
     }
     {
-        WindowManager window("status_window", 0, 72.0, 30.0, 25.0);
+        WindowManager window("status_window", 0, 75.0, 30.0, 25.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
     {
-        WindowManager window("instruction_window", 30, 72.0, 40.0, 25.0);
+        WindowManager window("instruction_window", 30, 75.0, 40.0, 25.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
     {
-        WindowManager window("device_window", 70, 72.0, 30.0, 25.0);
+        WindowManager window("device_window", 70, 75.0, 30.0, 25.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
