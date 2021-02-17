@@ -14,7 +14,7 @@ class DataLoggerProcessTester : public DataLoggerProcess
     }
 };
 TEST(BasicTest, TestOperation) {
-    Logger* logger = new Logger("DEBUG", "~/var/log/output", "UnitTestDataLoggerProcess");
+    Logger* logger = new Logger("DEBUG", "UnitTestDataLoggerProcess");
     DataLoggerProcessTester* tester = new DataLoggerProcessTester;
     tester->initialize("UnitTestDataLoggerProcess",
                        "UnitTestDataLoggerProcess",

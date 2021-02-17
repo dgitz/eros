@@ -13,8 +13,7 @@ class
         {{cookiecutter.process_classname}} Tester(){} ~{{cookiecutter.process_classname}} Tester(){}
 };
 TEST(BasicTest, TestOperation) {
-    Logger* logger =
-        new Logger("DEBUG", "~/var/log/output", "UnitTest{{cookiecutter.process_classname}}");
+    Logger* logger = new Logger("DEBUG", "UnitTest{{cookiecutter.process_classname}}");
     {
         { cookiecutter.process_classname }
     }
