@@ -5,6 +5,7 @@
 #include <curses.h>
 #include <eros/BaseNodeProcess.h>
 #include <eros/heartbeat.h>
+#include <ros/ros.h>
 WINDOW* create_newwin(int height, int width, int starty, int startx);
 /*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief WindowManager handles the coordinates and reference to the WINDOW object. */
@@ -36,6 +37,7 @@ class WindowManager
                   double height_perc)
         : name(_name),
           screen_coord_perc(start_x_perc, start_y_perc, width_perc, height_perc),
+          screen_coord_pixel(0, 0, 0, 0),
           window_reference(nullptr) {
     }
     ~WindowManager() {
@@ -43,19 +45,30 @@ class WindowManager
     std::string get_name() {
         return name;
     }
+    void set_screen_coordinates_pix(ScreenCoordinatePixel coord) {
+        screen_coord_pixel = coord;
+    }
     ScreenCoordinatePerc get_screen_coordinates_perc() {
         return screen_coord_perc;
     }
+    ScreenCoordinatePixel get_screen_coordinates_pixel() {
+        return screen_coord_pixel;
+    }
     std::string pretty() {
-        std::string str = "\nWindow: " + name + "\n";
-        str += "\tStart X: " + std::to_string(screen_coord_perc.start_x_perc) +
-               " Start Y: " + std::to_string(screen_coord_perc.start_y_perc) + "\n";
-        str += "\tWidth: " + std::to_string(screen_coord_perc.width_perc) +
-               " Height: " + std::to_string(screen_coord_perc.height_perc) + "\n";
         if (window_reference == nullptr) {
-            str += "\tWINDOW is Uninitialized Still.";
+            return name + " Is Uninitialized.";
         }
-        return str;
+        else {
+            char tempstr[128];
+            sprintf(tempstr,
+                    "%s (X:%d%%Y:%d%%W:%d%%H:%d%%)",
+                    name.c_str(),
+                    (uint16_t)screen_coord_perc.start_x_perc,
+                    (uint16_t)screen_coord_perc.start_y_perc,
+                    (uint16_t)screen_coord_perc.width_perc,
+                    (uint16_t)screen_coord_perc.height_perc);
+            return std::string(tempstr);
+        }
     }
     void set_window_reference(WINDOW* win) {
         window_reference = win;
@@ -67,6 +80,7 @@ class WindowManager
    private:
     std::string name;
     ScreenCoordinatePerc screen_coord_perc;
+    ScreenCoordinatePixel screen_coord_pixel;
     WINDOW* window_reference;
 };
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
@@ -74,12 +88,16 @@ class WindowManager
 class SystemMonitorProcess : public BaseNodeProcess
 {
    public:
+    const bool DEBUG_MODE = false;
     /*! \brief How long in seconds before marking a Node as Timed Out.*/
     const double COMMTIMEOUT_THRESHOLD = 5.0f;
     /*! \brief The minimum width in pixels of the Main Window.*/
     const uint16_t MINWINDOW_WIDTH = 140;
     /*! \brief The minimum height in pixels of the Main Window.*/
     const uint16_t MINWINDOW_HEIGHT = 240;
+
+    /*! \brief The amount of time to show text in the message window.*/
+    const double TIME_TO_SHOW_MESSAGES = 5.0f;  // Seconds
 
     // Keys
     static constexpr int KEY_q = 113;
@@ -88,6 +106,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     static constexpr int KEY_S = 115;
     static constexpr int KEY_c = 99;
     static constexpr int KEY_C = 67;
+    static constexpr int KEY_f = 102;
+    static constexpr int KEY_F = 70;
     static constexpr int KEY_g = 103;
     static constexpr int KEY_G = 71;
     static constexpr int KEY_l = 108;
@@ -165,12 +185,15 @@ class SystemMonitorProcess : public BaseNodeProcess
     };
     SystemMonitorProcess()
         : kill_me(false),
+          nodeHandle(nullptr),
           mainwindow_width(0),
           mainwindow_height(0),
           select_task_mode(false),
           selected_task_index(-1),
           start_node_index(0),
-          task_list_max_rows(5) {
+          task_list_max_rows(5),
+          timer_showing_message_in_window(0.0),
+          message_text("") {
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::MARKER, TaskField("", 3)));
         task_window_fields.insert(
@@ -203,11 +226,20 @@ class SystemMonitorProcess : public BaseNodeProcess
     Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
     bool initialize_windows();
+    bool set_nodeHandle(ros::NodeHandle* nh) {
+        nodeHandle = nh;
+        return true;
+    }
 
     // Update Functions
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
     Diagnostic::DiagnosticDefinition update_taskwindow(
         std::map<std::string, WindowManager>::iterator it);
+    Diagnostic::DiagnosticDefinition update_instructionwindow(
+        std::map<std::string, WindowManager>::iterator it);
+    Diagnostic::DiagnosticDefinition update_messagewindow(
+        std::map<std::string, WindowManager>::iterator it);
+
     Diagnostic::DiagnosticDefinition update_nodelist(
         std::vector<std::string> node_list,
         std::vector<std::string> heartbeat_list,
@@ -237,6 +269,10 @@ class SystemMonitorProcess : public BaseNodeProcess
             logger->log_diagnostic(diag);
         }
         return diag;
+    }
+    void set_message_text(std::string text) {
+        message_text = text;
+        timer_showing_message_in_window = 0.0;
     }
 
     // Attribute Functions
@@ -319,6 +355,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         return true;
     }
     bool kill_me;
+    ros::NodeHandle* nodeHandle;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
     std::map<TaskFieldColumn, TaskField> task_window_fields;
@@ -330,5 +367,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     int16_t selected_task_index;
     uint16_t start_node_index;
     uint16_t task_list_max_rows;
+    double timer_showing_message_in_window;
+    std::string message_text;
 };
 #endif  // SYSTEMMONITORPROCESS_h

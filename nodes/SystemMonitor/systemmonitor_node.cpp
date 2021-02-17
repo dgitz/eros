@@ -35,6 +35,7 @@ bool SystemMonitorNode::start(int argc, char **argv) {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
+    process->set_nodeHandle((n.get()));
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -78,7 +79,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {
-        return true;
+    return true;
 }
 bool SystemMonitorNode::run_loop2() {
     Diagnostic::DiagnosticDefinition diag = rescan_nodes();
