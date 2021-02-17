@@ -24,28 +24,46 @@ void SystemMonitorProcess::reset() {
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, double t_ros_time) {
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+    timer_showing_message_in_window += t_dt;
 
+    if (timer_showing_message_in_window > TIME_TO_SHOW_MESSAGES) {
+        message_text = "";
+    }
     std::map<std::string, Task>::iterator task_it = task_list.begin();
     while (task_it != task_list.end()) {
         task_it->second.last_heartbeat_delta += t_dt;
         if (task_it->second.last_heartbeat_delta >= COMMTIMEOUT_THRESHOLD) {
             task_it->second.state = Node::State::NODATA;
         }
-
         ++task_it;
     }
 
     std::map<std::string, WindowManager>::iterator win_it = windows.begin();
     while (win_it != windows.end()) {
         if (win_it->first == "header") {}
+        else if (win_it->first == "instruction_window") {
+            diag = update_instructionwindow(win_it);
+            if (diag.level > Level::Type::ERROR) {
+                return diag;
+            }
+        }
         else if (win_it->first == "task_window") {
             diag = update_taskwindow(win_it);
             if (diag.level > Level::Type::WARN) {
                 return diag;
             }
         }
+        else if (win_it->first == "message_window") {
+            diag = update_messagewindow(win_it);
+            if (diag.level > Level::Type::WARN) {
+                return diag;
+            }
+        }
         else {
             logger->log_debug("Window: " + win_it->first + " Not Supported.");
+        }
+        if (DEBUG_MODE == true) {
+            mvwprintw(win_it->second.get_window_reference(), 1, 1, win_it->second.pretty().c_str());
         }
         wrefresh(win_it->second.get_window_reference());
         ++win_it;
@@ -161,21 +179,30 @@ bool SystemMonitorProcess::initialize_windows() {
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
+
     {
-        WindowManager window("status_window", 0, 75.0, 30.0, 25.0);
+        WindowManager window("message_window", 0, 75.0, 100.0, 7.0);
+        std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
+        windows.insert(newwin);
+    }
+
+    {
+        WindowManager window("status_window", 0, 80.0, 30.0, 20.0);
+        std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
+        windows.insert(newwin);
+    }
+
+    {
+        WindowManager window("instruction_window", 30, 80.0, 40.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
     {
-        WindowManager window("instruction_window", 30, 75.0, 40.0, 25.0);
+        WindowManager window("device_window", 70, 80.0, 30.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
-    {
-        WindowManager window("device_window", 70, 75.0, 30.0, 25.0);
-        std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
-        windows.insert(newwin);
-    }
+
     std::map<std::string, WindowManager>::iterator it = windows.begin();
     while (it != windows.end()) {
         WindowManager::ScreenCoordinatePixel coord_pix = convertCoordinate(
@@ -184,12 +211,20 @@ bool SystemMonitorProcess::initialize_windows() {
                                     coord_pix.width_pix,
                                     coord_pix.start_y_pix,
                                     coord_pix.start_x_pix);
-
+        it->second.set_screen_coordinates_pix(coord_pix);
         it->second.set_window_reference(win);
 
         if (it->first == "header") {
             wbkgd(it->second.get_window_reference(), COLOR_PAIR(Color::NO_COLOR));
             keypad(it->second.get_window_reference(), TRUE);
+        }
+        else if (it->first == "instruction_window") {
+            std::string str = "Instructions:";
+            keypad(it->second.get_window_reference(), TRUE);
+            mvwprintw(it->second.get_window_reference(), 1, 1, str.c_str());
+            std::string dashed(coord_pix.width_pix - 2, '-');
+            mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
+            wtimeout(it->second.get_window_reference(), 0);
         }
         else if (it->first == "task_window") {
             task_list_max_rows = coord_pix.height_pix - 5;
@@ -236,6 +271,40 @@ std::string SystemMonitorProcess::get_taskheader() {
     }
     return str.c_str();
 }
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
+    std::map<std::string, WindowManager>::iterator window_it) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    if (select_task_mode == true) {
+        std::vector<std::string> instruction_string;
+        instruction_string.push_back("F/f: Get Node Firmware.");
+        // instruction_string.push_back("L/l: Change Log Level.");
+        for (std::size_t i = 0; i < instruction_string.size(); ++i) {
+            mvwprintw(window_it->second.get_window_reference(),
+                      i + 3,
+                      1,
+                      instruction_string.at(i).c_str());
+        }
+    }
+    return diag;
+}
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_messagewindow(
+    std::map<std::string, WindowManager>::iterator window_it) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    if (select_task_mode == true) {
+        std::size_t width = window_it->second.get_screen_coordinates_pixel().width_pix;
+        std::string str = message_text;
+        if (str.size() > (width - 4)) {
+            str = str.substr(0, width - 4) + "... ";
+        }
+        mvwprintw(window_it->second.get_window_reference(), 1, 1, str.c_str());
+        wclrtoeol(window_it->second.get_window_reference());
+        box(window_it->second.get_window_reference(), 0, 0);
+        wrefresh(window_it->second.get_window_reference());
+    }
+
+    return diag;
+}
+
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
@@ -251,41 +320,80 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         selected_task_index = 0;
     }
     int key_pressed = wgetch(window_it->second.get_window_reference());
-    switch (key_pressed) {
-        case KEY_q: kill_me = true; break;
-        case KEY_Q: kill_me = true; break;
-        case KEY_UP:
-            if (select_task_mode == true) {
-                if (start_node_index > 0) {
-                    --start_node_index;
-                }
-                if (selected_task_index > 0) {
-                    --selected_task_index;
-                }
-                else {
-                    selected_task_index = 0;
-                }
-                if (selected_task_index == 0) {
-                    start_node_index = 0;
-                }
-            }
-            break;
-        case KEY_DOWN:
-            if (select_task_mode == true) {
-                if (selected_task_index < (((int16_t)task_list.size() - 1))) {
-                    ++selected_task_index;
-                }
-                else {
-                    selected_task_index = 0;
-                    start_node_index = 0;
-                }
-                if (selected_task_index >= task_list_max_rows) {
-                    start_node_index++;
-                }
-            }
-            break;
-        default: break;
+
+    if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
+        kill_me = true;
     }
+    else if (key_pressed == KEY_UP) {
+        if (select_task_mode == true) {
+            if (start_node_index > 0) {
+                --start_node_index;
+            }
+            if (selected_task_index > 0) {
+                --selected_task_index;
+            }
+            else {
+                selected_task_index = 0;
+            }
+            if (selected_task_index == 0) {
+                start_node_index = 0;
+            }
+        }
+    }
+    else if (key_pressed == KEY_DOWN) {
+        if (select_task_mode == true) {
+            if (selected_task_index < (((int16_t)task_list.size() - 1))) {
+                ++selected_task_index;
+            }
+            else {
+                selected_task_index = 0;
+                start_node_index = 0;
+            }
+            if (selected_task_index >= task_list_max_rows) {
+                start_node_index++;
+            }
+        }
+    }
+    else if ((key_pressed == KEY_f) || (key_pressed == KEY_F)) {
+        if (select_task_mode == true) {
+            std::map<uint16_t, std::string>::iterator task_name_lookup =
+                task_name_list.find(selected_task_index);
+            if (task_name_lookup == task_name_list.end()) {
+                logger->log_warn("Unable to lookup Task: " + std::to_string(selected_task_index));
+            }
+            else {
+                std::map<std::string, Task>::iterator task_info_it =
+                    task_list.find(task_name_lookup->second);
+                if (task_info_it == task_list.end()) {
+                    logger->log_warn("Unable to lookup Task: " + task_name_lookup->second);
+                }
+                else {
+                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
+                        std::string firmware_topic =
+                            task_info_it->second.node_name + "/srv_firmware";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
+                        eros::srv_firmware srv;
+                        if (client.call(srv)) {
+                            set_message_text(
+                                "Firmware: Node: " + srv.response.NodeName +
+                                " Version: " + std::to_string(srv.response.MajorRelease) + "." +
+                                std::to_string(srv.response.MinorRelease) + "." +
+                                std::to_string(srv.response.BuildNumber) +
+                                " Desc: " + srv.response.Description);
+                        }
+                        else {
+                            logger->log_warn("Service Failed!");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     std::map<std::string, Task>::iterator task_it;  // = task_list.begin();
     std::map<uint16_t, std::string>::iterator task_id_it;
     const uint16_t TASKSTART_COORD_Y = 1;
