@@ -11,8 +11,7 @@ TEST(BasicTest, TestOperation) {
                            System::MainSystem::SIMROVER,
                            System::SubSystem::ENTIRE_SYSTEM,
                            System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger(
-        "INFO", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name);
+    Logger* logger = new Logger("INFO", diag_helper.get_root_diagnostic().node_name);
     EXPECT_TRUE(logger->enable_ROS_logger() == true);
     EXPECT_TRUE(logger->log_debug("A String that should debug") ==
                 Logger::LoggerStatus::LOG_SUPPRESSED);

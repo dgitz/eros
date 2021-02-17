@@ -14,8 +14,7 @@ class DataLoggerProcessTester : public DataLoggerProcess
     }
 };
 TEST(BasicTest, TestOperation) {
-    Logger* logger =
-        new Logger("DEBUG", "/home/robot/var/log/output", "UnitTestDataLoggerProcess");
+    Logger* logger = new Logger("DEBUG", "~/var/log/output", "UnitTestDataLoggerProcess");
     DataLoggerProcessTester* tester = new DataLoggerProcessTester;
     tester->initialize("UnitTestDataLoggerProcess",
                        "UnitTestDataLoggerProcess",
@@ -32,7 +31,7 @@ TEST(BasicTest, TestOperation) {
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
-  
+
     delete logger;
     delete tester;
 }

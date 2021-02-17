@@ -5,18 +5,23 @@
 
 #include "../{{cookiecutter.process_classname}}.h"
 
-class {{cookiecutter.process_classname}}Tester : public {{cookiecutter.process_classname}}
+class
 {
-   public:
-    {{cookiecutter.process_classname}}Tester() {
-    }
-    ~{{cookiecutter.process_classname}}Tester() {
-    }
+    { cookiecutter.process_classname }
+} Tester : public {{cookiecutter.process_classname}} {
+    public :
+        {{cookiecutter.process_classname}} Tester(){} ~{{cookiecutter.process_classname}} Tester(){}
 };
 TEST(BasicTest, TestOperation) {
     Logger* logger =
-        new Logger("DEBUG", "/home/robot/var/log/output", "UnitTest{{cookiecutter.process_classname}}");
-    {{cookiecutter.process_classname}}Tester* tester = new {{cookiecutter.process_classname}}Tester;
+        new Logger("DEBUG", "~/var/log/output", "UnitTest{{cookiecutter.process_classname}}");
+    {
+        { cookiecutter.process_classname }
+    }
+    Tester* tester = new {
+        { cookiecutter.process_classname }
+    }
+    Tester;
     tester->initialize("UnitTest{{cookiecutter.process_classname}}",
                        "UnitTest{{cookiecutter.process_classname}}",
                        "MyHost",
@@ -32,7 +37,7 @@ TEST(BasicTest, TestOperation) {
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
-  
+
     delete logger;
     delete tester;
 }

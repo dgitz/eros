@@ -15,6 +15,9 @@ Logger::Logger(std::string level, std::string directory, std::string name) {
     sprintf(file_path, "%s/%s", directory.c_str(), buffer);
     std::ofstream log_file;
     log_file.open(file_path);  // Overwrite file.
+    if (log_file.is_open() == false) {
+        printf("WARN: Unable to open file: %s\n", file_path);
+    }
     log_file.close();
 }
 Logger::Logger(std::string level, std::string name) {
@@ -29,8 +32,8 @@ Logger::Logger(std::string level, std::string name) {
     node_name = name;
     char buffer[100];
     sprintf(buffer, "%s.out", name.c_str());
-
-    sprintf(file_path, "/home/robot/var/log/output/%s", buffer);
+    std::string home_dir = std::string(getenv("HOME"));
+    sprintf(file_path, "%s/var/log/output/%s", home_dir.c_str(), buffer);
     std::ofstream log_file;
     log_file.open(file_path);  // Overwrite file.
     log_file.close();

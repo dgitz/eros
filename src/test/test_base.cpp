@@ -44,7 +44,7 @@ class BaseNodeProcessTester : public BaseNodeProcess
     }
 };
 TEST(BasicTest, TestOperation_BaseNodeProcess) {
-    Logger* logger = new Logger("DEBUG", "/home/robot/var/log/output", "UnitTestBaseNodeProcess");
+    Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");
     BaseNodeProcessTester* tester = new BaseNodeProcessTester;
     tester->initialize("UnitTestBaseNodeProcess",
                        "UnitTestBaseNodeProcessInstance",

@@ -22,8 +22,7 @@ TEST(BasicTest, DiagnosticHelper) {
                            System::MainSystem::SIMROVER,
                            System::SubSystem::ENTIRE_SYSTEM,
                            System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger(
-        "DEBUG", "/home/robot/var/log/output/", diag_helper.get_root_diagnostic().node_name);
+    Logger* logger = new Logger("DEBUG", diag_helper.get_root_diagnostic().node_name);
     {
         std::vector<Diagnostic::DiagnosticType> diag_types;
         diag_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
