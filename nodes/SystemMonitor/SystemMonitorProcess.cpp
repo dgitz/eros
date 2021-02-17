@@ -369,14 +369,19 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     {
         width = task_window_fields.find(TaskFieldColumn::HOSTNAME)->second.width;
         std::string tempstr = task.host_device;
-        if (tempstr.size() > (std::size_t)(width - 1)) {
-            tempstr = tempstr.substr(0, (width - 1));
-            tempstr += " ";
+        if (tempstr.size() > width) {
+            tempstr = tempstr.substr(0, width - 4) + "... ";
         }
         else {
-            std::size_t spaces = width - tempstr.size();
-            if (spaces > 0) {
-                tempstr += std::string(spaces, ' ');
+            if (tempstr.size() > (std::size_t)(width - 1)) {
+                tempstr = tempstr.substr(0, (width - 1));
+                tempstr += " ";
+            }
+            else {
+                std::size_t spaces = width - tempstr.size();
+                if (spaces > 0) {
+                    tempstr += std::string(spaces, ' ');
+                }
             }
         }
         str += tempstr;
@@ -384,9 +389,14 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     {
         width = task_window_fields.find(TaskFieldColumn::NODENAME)->second.width;
         std::string tempstr = task.node_name;
-        std::size_t spaces = width - tempstr.size();
-        if (spaces > 0) {
-            tempstr += std::string(spaces, ' ');
+        if (tempstr.size() > width) {
+            tempstr = tempstr.substr(0, width - 4) + "... ";
+        }
+        else {
+            std::size_t spaces = width - tempstr.size();
+            if (spaces > 0) {
+                tempstr += std::string(spaces, ' ');
+            }
         }
         str += tempstr;
     }
