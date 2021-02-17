@@ -264,7 +264,29 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
     std::string get_taskheader();
     // Printing Functions
-
+    static std::string pretty(std::map<std::string, SystemMonitorProcess::Task> task_list) {
+        std::string str = "--- Task List ---\n";
+        if (task_list.size() == 0) {
+            str += "\tNo Tasks Defined!\n";
+            return str;
+        }
+        std::map<std::string, SystemMonitorProcess::Task>::iterator it = task_list.begin();
+        int i = 0;
+        while (it != task_list.end()) {
+            char tempstr[512];
+            sprintf(tempstr,
+                    "\t[%d/%d] Type: %d Name: %s Rx: %4.2f\n",
+                    (uint16_t)i + 1,
+                    (uint16_t)task_list.size(),
+                    (uint8_t)it->second.type,
+                    it->second.node_name.c_str(),
+                    it->second.last_heartbeat_delta);
+            str += std::string(tempstr);
+            i++;
+            ++it;
+        }
+        return str;
+    }
     // Destructors
     bool get_killme() {
         return kill_me;

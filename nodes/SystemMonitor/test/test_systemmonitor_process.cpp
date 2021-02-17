@@ -13,25 +13,7 @@ class SystemMonitorProcessTester : public SystemMonitorProcess
     ~SystemMonitorProcessTester() {
     }
 };
-void print(std::map<std::string, SystemMonitorProcess::Task> task_list) {
-    printf("--- Task List ---\n");
-    if (task_list.size() == 0) {
-        printf("\tNo Tasks Defined!\n");
-        return;
-    }
-    std::map<std::string, SystemMonitorProcess::Task>::iterator it = task_list.begin();
-    int i = 0;
-    while (it != task_list.end()) {
-        printf("\t[%d/%d] Type: %d Name: %s Rx: %4.2f\n",
-               (uint16_t)i + 1,
-               (uint16_t)task_list.size(),
-               (uint8_t)it->second.type,
-               it->second.node_name.c_str(),
-               it->second.last_heartbeat_delta);
-        i++;
-        ++it;
-    }
-}
+
 TEST(BasicTest, Conversions) {
     Logger* logger = new Logger("INFO", "UnitTestSystemMonitorProcess");
     SystemMonitorProcessTester* tester = new SystemMonitorProcessTester;
@@ -50,7 +32,6 @@ TEST(BasicTest, Conversions) {
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
-    return;
     // Test Pixel Conversion
     uint16_t screen_width = 2000;
     uint16_t screen_height = 1000;
@@ -72,7 +53,6 @@ TEST(BasicTest, Conversions) {
     delete tester;
 }
 TEST(BasicTest, TestOperation) {
-    return;
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitorProcess");
     SystemMonitorProcessTester* tester = new SystemMonitorProcessTester;
     tester->initialize("UnitTestSystemMonitorProcess",
@@ -99,7 +79,7 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
         diag =
             tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
         logger->log_diagnostic(diag);
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         EXPECT_TRUE(new_heartbeat_topics_to_subscribe.size() == 0);
@@ -129,7 +109,7 @@ TEST(BasicTest, TestOperation) {
         }
         EXPECT_TRUE(eros_node_count == 1);
         diag = tester->update(0.1, system_time += dt);
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
         task_list = tester->get_task_list();
         task_it = task_list.begin();
         while (task_it != task_list.end()) {
@@ -155,7 +135,7 @@ TEST(BasicTest, TestOperation) {
                 SystemMonitorProcess::isEqual(task_it->second.last_heartbeat_delta, 0.0, 1e-6));
             ++task_it;
         }
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         EXPECT_TRUE(new_heartbeat_topics_to_subscribe.size() == 0);
         EXPECT_TRUE(tester->get_task_list().size() == 1);
@@ -179,13 +159,13 @@ TEST(BasicTest, TestOperation) {
             tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
         logger->log_diagnostic(diag);
         std::map<std::string, SystemMonitorProcess::Task> task_list = tester->get_task_list();
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         EXPECT_TRUE(new_heartbeat_topics_to_subscribe.size() == 1);
         EXPECT_TRUE(tester->get_task_list().size() == 2);
         diag = tester->update(0.1, system_time += dt);
         task_list = tester->get_task_list();
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
     }
 
     // Test: New node found with no heartbeat found (should add as NON-EROS)
@@ -212,7 +192,7 @@ TEST(BasicTest, TestOperation) {
         }
         EXPECT_TRUE(non_eros_node_count == 1);
         diag = tester->update(0.1, system_time += dt);
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
     }
     // Test: New heartbeat found with existing node (should change from NON-EROS to EROS)
     {
@@ -243,7 +223,7 @@ TEST(BasicTest, TestOperation) {
         EXPECT_TRUE(non_eros_node_count == 0);
         EXPECT_TRUE(eros_node_count == 3);
         diag = tester->update(0.1, system_time += dt);
-        print(tester->get_task_list());
+        printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
     }
     delete logger;
     delete tester;
