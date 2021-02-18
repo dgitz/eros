@@ -28,6 +28,7 @@ add_service_files(
   srv_firmware.srv
   srv_logger_level.srv
   srv_get_diagnostics.srv
+  srv_change_nodestate.srv
 )
 add_action_files(
   DIRECTORY action

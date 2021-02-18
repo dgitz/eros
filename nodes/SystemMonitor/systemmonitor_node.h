@@ -61,6 +61,8 @@ class SystemMonitorNode : public BaseNode
 
     Diagnostic::DiagnosticDefinition rescan_nodes();
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
+    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res);
 
    private:
     std::vector<ros::Subscriber> heartbeat_subs;

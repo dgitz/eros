@@ -5,6 +5,14 @@ SystemMonitorNode::SystemMonitorNode() {
 }
 SystemMonitorNode::~SystemMonitorNode() {
 }
+bool SystemMonitorNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res)
+{
+    Node::State req_state = Node::NodeState(req.RequestedNodeState);
+    process->request_statechange(req_state);
+    res.NodeState = Node::NodeStateString(process->get_nodestate());
+    return true;
+}
 bool SystemMonitorNode::start(int argc, char **argv) {
     set_no_launch_enabled(true);
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
@@ -76,6 +84,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::read_launchparameters() {
 }
 Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    nodestate_srv = n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
+   
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {

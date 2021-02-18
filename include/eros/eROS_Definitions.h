@@ -301,5 +301,36 @@ class Node
             default: return NodeStateString(Node::State::UNKNOWN); break;
         }
     }
+
+    static Node::State NodeState(std::string state) {
+        if (state == "START") {
+            return Node::State::START;
+        }
+        if (state == "INITIALIZING") {
+            return Node::State::INITIALIZING;
+        }
+        if (state == "INITIALIZED") {
+            return Node::State::INITIALIZED;
+        }
+        if (state == "RUNNING") {
+            return Node::State::RUNNING;
+        }
+        if (state == "PAUSED") {
+            return Node::State::PAUSED;
+        }
+        if (state == "RESET") {
+            return Node::State::RESET;
+        }
+        if (state == "NODATA") {
+            return Node::State::NODATA;
+        }
+        if (state == "FINISHED") {
+            return Node::State::FINISHED;
+        }
+        if (state == "CRASHED") {
+            return Node::State::CRASHED;
+        }
+        return Node::State::UNKNOWN;
+    }
 };
 #endif  // EROSDEFINITIONS_H

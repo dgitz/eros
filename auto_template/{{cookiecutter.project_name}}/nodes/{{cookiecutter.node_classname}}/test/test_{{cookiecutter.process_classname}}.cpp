@@ -6,21 +6,13 @@
 #include "../{{cookiecutter.process_classname}}.h"
 
 class
-{
-    { cookiecutter.process_classname }
-} Tester : public {{cookiecutter.process_classname}} {
+{{ cookiecutter.process_classname}}Tester : public {{cookiecutter.process_classname}} {
     public :
-        {{cookiecutter.process_classname}} Tester(){} ~{{cookiecutter.process_classname}} Tester(){}
+        {{cookiecutter.process_classname}} Tester(){} ~{{cookiecutter.process_classname}}Tester(){}
 };
 TEST(BasicTest, TestOperation) {
     Logger* logger = new Logger("DEBUG", "UnitTest{{cookiecutter.process_classname}}");
-    {
-        { cookiecutter.process_classname }
-    }
-    Tester* tester = new {
-        { cookiecutter.process_classname }
-    }
-    Tester;
+    {{ cookiecutter.process_classname}}Tester* tester = new {{cookiecutter.process_classname}}Tester;
     tester->initialize("UnitTest{{cookiecutter.process_classname}}",
                        "UnitTest{{cookiecutter.process_classname}}",
                        "MyHost",

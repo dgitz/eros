@@ -4,6 +4,14 @@ DataLoggerNode::DataLoggerNode() {
 }
 DataLoggerNode::~DataLoggerNode() {
 }
+bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res)
+{
+    Node::State req_state = Node::NodeState(req.RequestedNodeState);
+    process->request_statechange(req_state);
+    res.NodeState = Node::NodeStateString(process->get_nodestate());
+    return true;
+}
 bool DataLoggerNode::start(int argc, char **argv) {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
@@ -122,6 +130,8 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
             "SnapshotMode Enabled.  All logs stored in RAM until Snapshot is triggered.");
         logger->log_diagnostic(diag);
     }
+    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    nodestate_srv = n->advertiseService(srv_nodestate_topic, &DataLoggerNode::changenodestate_service, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }

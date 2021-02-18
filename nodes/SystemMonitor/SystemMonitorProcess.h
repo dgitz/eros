@@ -120,6 +120,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     static constexpr int KEY_P = 80;
     static constexpr int KEY_m = 109;
     static constexpr int KEY_M = 77;
+    static constexpr int KEY_n = 110;
+    static constexpr int KEY_N = 78;
 
     static constexpr int KEY_1 = 49;
     static constexpr int KEY_2 = 50;
@@ -127,6 +129,9 @@ class SystemMonitorProcess : public BaseNodeProcess
     static constexpr int KEY_4 = 52;
     static constexpr int KEY_5 = 53;
     static constexpr int KEY_6 = 54;
+    static constexpr int KEY_7 = 55;
+    static constexpr int KEY_8 = 56;
+    static constexpr int KEY_9 = 57;
 
     enum class Color {
         UNKNOWN = 0,
@@ -198,6 +203,7 @@ class SystemMonitorProcess : public BaseNodeProcess
           select_task_mode(false),
           change_log_level_mode(false),
           show_task_diagnostic_mode(false),
+          change_nodestate_mode(false),
           selected_task_index(-1),
           start_node_index(0),
           task_list_max_rows(5),
@@ -364,6 +370,7 @@ class SystemMonitorProcess : public BaseNodeProcess
             it->second.base_node_name = heartbeat.BaseNodeName;
             it->second.last_heartbeat_delta = 0.0;
             it->second.last_heartbeat = get_system_time();
+            it->second.state = (Node::State)heartbeat.NodeState;
         }
         return true;
     }
@@ -379,6 +386,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     bool select_task_mode;
     bool change_log_level_mode;
     bool show_task_diagnostic_mode;
+    bool change_nodestate_mode;
     int16_t selected_task_index;
     uint16_t start_node_index;
     uint16_t task_list_max_rows;

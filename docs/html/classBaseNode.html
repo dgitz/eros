@@ -208,6 +208,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>loggerlevel_service</
 <tr class="memitem:af888921803bc8a93d57bc78b4b2f3a3e"><td class="memItemLeft" align="right" valign="top"><a id="af888921803bc8a93d57bc78b4b2f3a3e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostics_service</b> (eros::srv_get_diagnostics::Request &amp;req, eros::srv_get_diagnostics::Response &amp;res)</td></tr>
 <tr class="separator:af888921803bc8a93d57bc78b4b2f3a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1782885720d0be218bb932a790676b3"><td class="memItemLeft" align="right" valign="top"><a id="ac1782885720d0be218bb932a790676b3"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>changenodestate_service</b> (eros::srv_change_nodestate::Request &amp;req, eros::srv_change_nodestate::Response &amp;res)=0</td></tr>
+<tr class="separator:ac1782885720d0be218bb932a790676b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d0d6642261d6380662ef5f4601f1bd1"><td class="memItemLeft" align="right" valign="top"><a id="a0d0d6642261d6380662ef5f4601f1bd1"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()=0</td></tr>
 <tr class="separator:a0d0d6642261d6380662ef5f4601f1bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -263,6 +266,9 @@ ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>logger_
 <tr class="memitem:a85063ca05c21d78cff8e44cde024ece8"><td class="memItemLeft" align="right" valign="top"><a id="a85063ca05c21d78cff8e44cde024ece8"></a>
 ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostics_srv</b></td></tr>
 <tr class="separator:a85063ca05c21d78cff8e44cde024ece8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af643fba06fac48a0024f75a98e3c6252"><td class="memItemLeft" align="right" valign="top"><a id="af643fba06fac48a0024f75a98e3c6252"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>nodestate_srv</b></td></tr>
+<tr class="separator:af643fba06fac48a0024f75a98e3c6252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a482b42b5e84d0d865e693896d065d133"><td class="memItemLeft" align="right" valign="top"><a id="a482b42b5e84d0d865e693896d065d133"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>no_launch_enabled</b></td></tr>
 <tr class="separator:a482b42b5e84d0d865e693896d065d133"><td class="memSeparator" colspan="2">&#160;</td></tr>

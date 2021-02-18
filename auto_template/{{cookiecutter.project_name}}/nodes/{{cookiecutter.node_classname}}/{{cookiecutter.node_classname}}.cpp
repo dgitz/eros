@@ -4,6 +4,14 @@ bool kill_node = false;
 }
 {{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
 }
+bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res)
+{
+    Node::State req_state = Node::NodeState(req.RequestedNodeState);
+    process->request_statechange(req_state);
+    res.NodeState = Node::NodeStateString(process->get_nodestate());
+    return true;
+}
 bool {{cookiecutter.node_classname}}::start(int argc, char **argv) {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
@@ -63,6 +71,8 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchpar
 }
 Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    nodestate_srv = n->advertiseService(srv_nodestate_topic, &{{cookiecutter.node_classname}}::changenodestate_service, this);
     return diag;
 }
 bool {{cookiecutter.node_classname}}::run_loop1() {
