@@ -23,10 +23,10 @@
 #include <eros/uptime.h>
 
 // ROS Services
+#include <eros/srv_change_nodestate.h>
 #include <eros/srv_firmware.h>
 #include <eros/srv_get_diagnostics.h>
 #include <eros/srv_logger_level.h>
-#include <eros/srv_change_nodestate.h>
 // Project
 #include "Diagnostic.h"
 #include "Logger.h"
@@ -111,6 +111,9 @@ class BaseNodeProcess
     std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics() {
         return diagnostic_helper.get_diagnostics();
     }
+    std::vector<Diagnostic::DiagnosticDefinition> get_latest_diagnostics() {
+        return diagnostic_helper.get_latest_diagnostics();
+    }
     double get_system_time() {
         return system_time;
     }
@@ -163,6 +166,9 @@ class BaseNodeProcess
     std::string exec(const char* cmd, bool wait_for_result);
 
     static bool isEqual(double a, double b, double eps);
+
+    eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
+    Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
 
     // Destructors
@@ -198,7 +204,6 @@ class BaseNodeProcess
       \return A Diagnostic reflecting the status of the function.
     */
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
-    Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
 
     Logger* logger;
     std::string base_node_name;

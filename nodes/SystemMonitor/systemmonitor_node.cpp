@@ -86,7 +86,14 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
     nodestate_srv = n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
-   
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "Running");
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "All Configuration Files Loaded.");    
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {
@@ -113,6 +120,12 @@ bool SystemMonitorNode::run_01hz_noisy() {
     return true;
 }
 bool SystemMonitorNode::run_1hz() {
+    std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
+        process->get_latest_diagnostics();
+    for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
+        logger->log_diagnostic(latest_diagnostics.at(i));
+        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+    }
     return true;
 }
 bool SystemMonitorNode::run_10hz() {

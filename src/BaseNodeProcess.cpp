@@ -249,6 +249,19 @@ Diagnostic::DiagnosticDefinition BaseNodeProcess::convert(const eros::diagnostic
     def.description = diag.Description;
     return def;
 }
+eros::diagnostic BaseNodeProcess::convert(const Diagnostic::DiagnosticDefinition def) {
+    eros::diagnostic diag;
+    diag.DeviceName = def.device_name;
+    diag.NodeName = def.node_name;
+    diag.System = (uint8_t)def.system;
+    diag.SubSystem = (uint8_t)def.subsystem;
+    diag.Component = (uint8_t)def.component;
+    diag.DiagnosticType = (uint8_t)def.type;
+    diag.DiagnosticMessage = (uint8_t)def.message;
+    diag.Level = (uint8_t)def.level;
+    diag.Description = def.description;
+    return diag;
+}
 bool BaseNodeProcess::isEqual(double a, double b, double eps) {
     double dv = a - b;
     if (fabs(dv) < eps) {

@@ -167,10 +167,10 @@ class BaseNode
                              eros::srv_logger_level::Response &res);
     bool diagnostics_service(eros::srv_get_diagnostics::Request &req,
                              eros::srv_get_diagnostics::Response &res);
-    
+
     virtual bool changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res) = 0;
-    
+                                         eros::srv_change_nodestate::Response &res) = 0;
+
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();
@@ -190,6 +190,7 @@ class BaseNode
     std::string node_name;
     ros::Publisher state_pub;
     ros::Publisher heartbeat_pub;
+    ros::Publisher diagnostic_pub;
     eros::heartbeat heartbeat;
     ros::ServiceServer firmware_srv;
     ros::ServiceServer logger_level_srv;

@@ -137,6 +137,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_ready_to_arm</b> 
 <tr class="memitem:adfe2d8e6e1c773ee7873d448bb768de6 inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="adfe2d8e6e1c773ee7873d448bb768de6"></a>
 std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_diagnostics</b> ()</td></tr>
 <tr class="separator:adfe2d8e6e1c773ee7873d448bb768de6 inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05541b4bc15dc76761e16d804adcc9a inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="af05541b4bc15dc76761e16d804adcc9a"></a>
+std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_latest_diagnostics</b> ()</td></tr>
+<tr class="separator:af05541b4bc15dc76761e16d804adcc9a inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd0932419f4eef04b07560295162f4a inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a7fd0932419f4eef04b07560295162f4a"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>get_system_time</b> ()</td></tr>
 <tr class="separator:a7fd0932419f4eef04b07560295162f4a inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +165,12 @@ std::vector&lt; <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.htm
 <tr class="memitem:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e">exec</a> (const char *cmd, bool wait_for_result)</td></tr>
 <tr class="memdesc:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a command.  <a href="classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e">More...</a><br /></td></tr>
 <tr class="separator:a5995efa47fa2d70ac5de384e94e90b3e inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4d7ded28adc109138c96f685ea8a82f inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="aa4d7ded28adc109138c96f685ea8a82f"></a>
+eros::diagnostic&#160;</td><td class="memItemRight" valign="bottom"><b>convert</b> (const <a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> def)</td></tr>
+<tr class="separator:aa4d7ded28adc109138c96f685ea8a82f inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f5df5df0d086b45d3fe3402f2bd4698 inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a2f5df5df0d086b45d3fe3402f2bd4698"></a>
+<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>base_update</b> (double t_dt, double t_system_time)</td></tr>
+<tr class="separator:a2f5df5df0d086b45d3fe3402f2bd4698 inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218554fade04a5f6a5967e6708c0f246 inherit pub_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a218554fade04a5f6a5967e6708c0f246"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</td></tr>
 <tr class="separator:a218554fade04a5f6a5967e6708c0f246 inherit pub_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,9 +194,6 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isEqual</b> (d
 <tr class="memitem:a48be5ac3b4428670428f1c3ed517e554 inherit pro_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNodeProcess.html#a48be5ac3b4428670428f1c3ed517e554">convert</a> (const eros::diagnostic diag)</td></tr>
 <tr class="memdesc:a48be5ac3b4428670428f1c3ed517e554 inherit pro_methods_classBaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base Update Function of all <a class="el" href="classNode.html" title="Node class. ">Node</a> Process Classes.  <a href="classBaseNodeProcess.html#a48be5ac3b4428670428f1c3ed517e554">More...</a><br /></td></tr>
 <tr class="separator:a48be5ac3b4428670428f1c3ed517e554 inherit pro_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f5df5df0d086b45d3fe3402f2bd4698 inherit pro_methods_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a2f5df5df0d086b45d3fe3402f2bd4698"></a>
-<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>base_update</b> (double t_dt, double t_system_time)</td></tr>
-<tr class="separator:a2f5df5df0d086b45d3fe3402f2bd4698 inherit pro_methods_classBaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classBaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classBaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classBaseNodeProcess.html">BaseNodeProcess</a></td></tr>
 <tr class="memitem:a3625ceeba6423ed366ad337d9eb73628 inherit pro_attribs_classBaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a3625ceeba6423ed366ad337d9eb73628"></a>
 <a class="el" href="classLogger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>logger</b></td></tr>
