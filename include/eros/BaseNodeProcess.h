@@ -196,6 +196,7 @@ class BaseNodeProcess
       \param t_system_time The current system time.
       \return A Diagnostic reflecting the status of the function.
     */
+    Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
 
     Logger* logger;
