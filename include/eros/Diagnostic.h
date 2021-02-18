@@ -104,6 +104,7 @@ class Diagnostic
         Diagnostic::Message message;
         Level::Type level;
         std::string description;
+        uint64_t update_count;
     };
     Diagnostic() : initialized(false) {
     }
@@ -175,6 +176,7 @@ class Diagnostic
         root_diagnostic.system = system;
         root_diagnostic.subsystem = subsystem;
         root_diagnostic.component = component;
+        root_diagnostic.update_count = 0;
         initialized = true;
     }
 
@@ -205,7 +207,15 @@ class Diagnostic
                 diag.message = Diagnostic::Message::INITIALIZING;
                 diag.description = "Initializing Diagnostic.";
             }
-            diagnostics.push_back(diag);
+            bool add_me = true;
+            for (std::size_t j = 0; j < diagnostics.size(); ++j) {
+                if (diagnostics.at(j).type == diagnostic_types.at(i)) {
+                    add_me = false;
+                }
+            }
+            if (add_me == true) {
+                diagnostics.push_back(diag);
+            }
         }
         return true;
     }
@@ -215,6 +225,18 @@ class Diagnostic
     }
     std::vector<DiagnosticDefinition> get_diagnostics() {
         return diagnostics;
+    }
+    std::vector<DiagnosticDefinition> get_latest_diagnostics() {
+        std::vector<DiagnosticDefinition> latest_diagnostics;
+        for (std::size_t i = 0; i < diagnostics.size(); ++i) {
+            {
+                if (diagnostics.at(i).update_count > 0) {
+                    latest_diagnostics.push_back(diagnostics.at(i));
+                }
+                diagnostics.at(i).update_count = 0;
+            }
+        }
+        return latest_diagnostics;
     }
 
     //! Update Diagnostic
@@ -261,6 +283,7 @@ class Diagnostic
                     diag.level = level;
                     diag.message = message;
                     diag.description = description;
+                    diag.update_count++;
                     diagnostics.at(i) = diag;
                 }
             }
@@ -272,6 +295,7 @@ class Diagnostic
             diag.level = level;
             diag.message = message;
             diag.description = description;
+            diag.update_count++;
             std::vector<DiagnosticDefinition>::iterator it;
             it = diagnostics.begin();
             diagnostics.insert(it + insert_index, diag);

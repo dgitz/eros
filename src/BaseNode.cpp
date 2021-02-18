@@ -53,6 +53,9 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     heartbeat.NodeState = (uint8_t)Node::State::INITIALIZING;
     heartbeat_pub.publish(heartbeat);
 
+    std::string diagnostic_topic = "/" + node_name + "/diagnostic";
+    diagnostic_pub = n->advertise<eros::diagnostic>(diagnostic_topic, 20);
+
     std::string srv_firmware_topic = "/" + node_name + "/srv_firmware";
     firmware_srv = n->advertiseService(srv_firmware_topic, &BaseNode::firmware_service, this);
 
@@ -301,7 +304,6 @@ bool BaseNode::loggerlevel_service(eros::srv_logger_level::Request& req,
 }
 bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
                                    eros::srv_get_diagnostics::Response& res) {
-    // Ignore req for now
     std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
     for (std::size_t i = 0; i < diag_list.size(); ++i) {
         eros::diagnostic diag = convert(diag_list.at(i));
@@ -319,6 +321,7 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
             res.diag_list.push_back(diag);
         }
         logger->log_diagnostic(diag_list.at(i));
+        diagnostic_pub.publish(diag);
     }
 
     return true;

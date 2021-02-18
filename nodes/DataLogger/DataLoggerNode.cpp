@@ -5,8 +5,7 @@ DataLoggerNode::DataLoggerNode() {
 DataLoggerNode::~DataLoggerNode() {
 }
 bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res)
-{
+                                             eros::srv_change_nodestate::Response &res) {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
@@ -39,7 +38,6 @@ bool DataLoggerNode::start(int argc, char **argv) {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();
@@ -131,7 +129,12 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
         logger->log_diagnostic(diag);
     }
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
-    nodestate_srv = n->advertiseService(srv_nodestate_topic, &DataLoggerNode::changenodestate_service, this);
+    nodestate_srv =
+        n->advertiseService(srv_nodestate_topic, &DataLoggerNode::changenodestate_service, this);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "Running.");
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -183,6 +186,12 @@ bool DataLoggerNode::run_01hz_noisy() {
     return true;
 }
 bool DataLoggerNode::run_1hz() {
+    std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
+        process->get_latest_diagnostics();
+    for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
+        logger->log_diagnostic(latest_diagnostics.at(i));
+        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+    }
     return true;
 }
 bool DataLoggerNode::run_10hz() {
