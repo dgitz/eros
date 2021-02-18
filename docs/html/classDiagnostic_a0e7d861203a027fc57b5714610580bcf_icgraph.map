@@ -1,13 +1,11 @@
 <map id="Diagnostic::update_diagnostic" name="Diagnostic::update_diagnostic">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="403,65,589,91"/>
-<area shape="rect" id="node5" href="$classDiagnostic.html#af9b7d35a8454ed1d682ce6c60801cf22" title="Update Diagnostic. " alt="" coords="204,291,335,332"/>
-<area shape="rect" id="node6" href="$classSystemMonitorProcess.html#ac5a88d630b9ab2ae5431b1fa4eae2d54" title="Derived Process Initialization. " alt="" coords="417,181,575,223"/>
-<area shape="rect" id="node7" href="$classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="417,247,575,288"/>
-<area shape="rect" id="node9" href="$classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff" title="Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of ..." alt="" coords="184,356,355,397"/>
-<area shape="rect" id="node10" href="$classBaseNodeProcess.html#a2f5df5df0d086b45d3fe3402f2bd4698" title="Base Update Function of all Node Process Classes. " alt="" coords="186,123,353,164"/>
-<area shape="rect" id="node12" href="$classBaseNodeProcess.html#ac746a745cdcafcd2ab2eabf032ef3e30" title="Runs Unit Test on Derived Process. " alt="" coords="191,5,348,47"/>
-<area shape="rect" id="node3" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="637,65,792,91"/>
-<area shape="rect" id="node4" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="640,148,789,189"/>
-<area shape="rect" id="node8" href="$classSystemMonitorNode.html#a84553ff36a6be5abd4cb013b554ff2b9" title="Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived Node. " alt="" coords="640,247,789,288"/>
-<area shape="rect" id="node11" href="$classBaseNodeProcessTester.html#a9d9a7c242551112ff8c09cf4728814d3" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="412,116,580,157"/>
+<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="403,119,589,146"/>
+<area shape="rect" id="node5" href="$classDiagnostic.html#af9b7d35a8454ed1d682ce6c60801cf22" title="Update Diagnostic. " alt="" coords="204,47,335,88"/>
+<area shape="rect" id="node6" href="$classSystemMonitorProcess.html#ac5a88d630b9ab2ae5431b1fa4eae2d54" title="Derived Process Initialization. " alt="" coords="417,5,575,47"/>
+<area shape="rect" id="node7" href="$classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="190,295,349,336"/>
+<area shape="rect" id="node9" href="$classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff" title="Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of ..." alt="" coords="184,229,355,271"/>
+<area shape="rect" id="node10" href="$classBaseNodeProcess.html#ac746a745cdcafcd2ab2eabf032ef3e30" title="Runs Unit Test on Derived Process. " alt="" coords="191,112,348,153"/>
+<area shape="rect" id="node3" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="637,119,792,146"/>
+<area shape="rect" id="node4" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="640,21,789,63"/>
+<area shape="rect" id="node8" href="$classSystemMonitorNode.html#a84553ff36a6be5abd4cb013b554ff2b9" title="Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived Node. " alt="" coords="421,295,571,336"/>
 </map>

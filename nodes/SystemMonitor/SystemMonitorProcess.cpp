@@ -60,6 +60,12 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
                 return diag;
             }
         }
+        else if (win_it->first == "diag_sidebar") {
+            diag = update_diagnosticwindow(win_it);
+            if (diag.level > Level::Type::WARN) {
+                return diag;
+            }
+        }
         else {
             logger->log_debug("Window: " + win_it->first + " Not Supported.");
         }
@@ -217,7 +223,6 @@ bool SystemMonitorProcess::initialize_windows() {
 
         if (it->first == "header") {
             wbkgd(it->second.get_window_reference(), COLOR_PAIR(Color::NO_COLOR));
-            keypad(it->second.get_window_reference(), TRUE);
         }
         else if (it->first == "instruction_window") {
             std::string str = "Instructions:";
@@ -239,6 +244,8 @@ bool SystemMonitorProcess::initialize_windows() {
             std::string dashed(header.size(), '-');
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
             wtimeout(it->second.get_window_reference(), 0);
+        }
+        else if (it->first == "diag_sidebar") {
         }
         else {
             logger->log_warn("Window: " + it->first + " Not Supported.");
@@ -282,6 +289,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
         if (change_log_level_mode == true) {
             instruction_string.push_back("  1,2,3,4,5,6: Select Log Level.");
         }
+        instruction_string.push_back("D/d: Show Task Diagnostics.");
         for (std::size_t i = 0; i < instruction_string.size(); ++i) {
             mvwprintw(window_it->second.get_window_reference(),
                       i + 3,
@@ -314,7 +322,55 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_messagewindow(
 
     return diag;
 }
-
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
+    std::map<std::string, WindowManager>::iterator window_it) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    Color color;
+    if (show_task_diagnostic_mode == true) {
+        mvwprintw(window_it->second.get_window_reference(), 1, 1, "Node Diagnostics:");
+        std::string dashed(window_it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
+        mvwprintw(window_it->second.get_window_reference(), 2, 1, dashed.c_str());
+        for (std::size_t i = 0; i < task_diagnostics_to_show.size(); ++i) {
+            std::string str =
+                "  " + Diagnostic::DiagnosticTypeString(task_diagnostics_to_show.at(i).type);
+            switch (task_diagnostics_to_show.at(i).level) {
+                case Level::Type::DEBUG: color = Color::NO_COLOR; break;
+                case Level::Type::INFO: color = Color::GREEN_COLOR; break;
+                case Level::Type::NOTICE: color = Color::GREEN_COLOR; break;
+                case Level::Type::WARN:
+                    color = Color::YELLOW_COLOR;
+                    str += ": " + task_diagnostics_to_show.at(i).description;
+                    break;
+                case Level::Type::ERROR:
+                    color = Color::RED_COLOR;
+                    str += ": " + task_diagnostics_to_show.at(i).description;
+                    break;
+                case Level::Type::FATAL:
+                    color = Color::RED_COLOR;
+                    str += ": " + task_diagnostics_to_show.at(i).description;
+                    break;
+                default: color = Color::RED_COLOR; break;
+            }
+            str += "  ";
+            if (str.size() >
+                (std::size_t)(window_it->second.get_screen_coordinates_pixel().width_pix - 4)) {
+                str = str.substr(
+                          0,
+                          (std::size_t)(window_it->second.get_screen_coordinates_pixel().width_pix -
+                                        4)) +
+                      "...";
+            }
+            wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
+            mvwprintw(window_it->second.get_window_reference(), i + 3, 1, str.c_str());
+            wclrtoeol(window_it->second.get_window_reference());
+            wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        }
+    }
+    wclrtobot(window_it->second.get_window_reference());
+    box(window_it->second.get_window_reference(), 0, 0);
+    wrefresh(window_it->second.get_window_reference());
+    return diag;
+}
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
@@ -418,6 +474,67 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     }
     else if ((key_pressed == KEY_l) || (key_pressed == KEY_L)) {
         change_log_level_mode = true;
+    }
+    else if ((key_pressed == KEY_d) || (key_pressed == KEY_D)) {
+        if (select_task_mode == true) {
+            show_task_diagnostic_mode = true;
+            std::map<uint16_t, std::string>::iterator task_name_lookup =
+                task_name_list.find(selected_task_index);
+            if (task_name_lookup == task_name_list.end()) {
+                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
+                logger->log_error(str);
+                set_message_text(str, Color::RED_COLOR);
+                task_diagnostics_to_show.clear();
+            }
+            else {
+                std::map<std::string, Task>::iterator task_info_it =
+                    task_list.find(task_name_lookup->second);
+                if (task_info_it == task_list.end()) {
+                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
+                    set_message_text(str, Color::RED_COLOR);
+                    logger->log_error(str);
+                    task_diagnostics_to_show.clear();
+                }
+                else {
+                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
+                        std::string diagnostics_topic =
+                            task_info_it->second.node_name + "/srv_diagnostics";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_get_diagnostics>(diagnostics_topic);
+                        eros::srv_get_diagnostics srv;
+                        srv.request.MinLevel = 0;
+                        srv.request.DiagnosticType = 0;
+                        if (client.call(srv)) {
+                            std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+                            for (std::size_t i = 0; i < srv.response.diag_list.size(); ++i) {
+                                diag_list.push_back(convert(srv.response.diag_list.at(i)));
+                            }
+                            task_diagnostics_to_show = diag_list;
+                            set_message_text("Diagnostics for Node: " +
+                                                 task_info_it->second.node_name + " Received.",
+                                             Color::NO_COLOR);
+                        }
+                        else {
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Diagnostics Retreival Failed!";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            task_diagnostics_to_show.clear();
+                        }
+                    }
+                    else {
+                        std::string str =
+                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
+                        set_message_text(str, Color::YELLOW_COLOR);
+                        logger->log_warn(str);
+                        task_diagnostics_to_show.clear();
+                    }
+                }
+            }
+        }
     }
     else if ((key_pressed == KEY_1) || (key_pressed == KEY_2) || (key_pressed == KEY_3) ||
              (key_pressed == KEY_4) || (key_pressed == KEY_5) || (key_pressed == KEY_6)) {

@@ -197,6 +197,7 @@ class SystemMonitorProcess : public BaseNodeProcess
           mainwindow_height(0),
           select_task_mode(false),
           change_log_level_mode(false),
+          show_task_diagnostic_mode(false),
           selected_task_index(-1),
           start_node_index(0),
           task_list_max_rows(5),
@@ -247,6 +248,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     Diagnostic::DiagnosticDefinition update_instructionwindow(
         std::map<std::string, WindowManager>::iterator it);
     Diagnostic::DiagnosticDefinition update_messagewindow(
+        std::map<std::string, WindowManager>::iterator it);
+    Diagnostic::DiagnosticDefinition update_diagnosticwindow(
         std::map<std::string, WindowManager>::iterator it);
 
     Diagnostic::DiagnosticDefinition update_nodelist(
@@ -375,11 +378,13 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::map<std::string, std::string> resource_topics;
     bool select_task_mode;
     bool change_log_level_mode;
+    bool show_task_diagnostic_mode;
     int16_t selected_task_index;
     uint16_t start_node_index;
     uint16_t task_list_max_rows;
     double timer_showing_message_in_window;
     std::string message_text;
     Color message_text_color;
+    std::vector<Diagnostic::DiagnosticDefinition> task_diagnostics_to_show;
 };
 #endif  // SYSTEMMONITORPROCESS_h

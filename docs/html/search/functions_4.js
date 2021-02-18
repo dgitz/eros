@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['enable_5fdiagnostics',['enable_diagnostics',['../classDiagnostic.html#a885b688265e4e3d1d2c20242ede83603',1,'Diagnostic']]],
-  ['enable_5fros_5flogger',['enable_ROS_logger',['../classLogger.html#afc75be609a67cb8914aadd3eab34a04e',1,'Logger']]],
-  ['exec',['exec',['../classBaseNodeProcess.html#a5995efa47fa2d70ac5de384e94e90b3e',1,'BaseNodeProcess']]]
+  ['finish_5finitialization',['finish_initialization',['../classBaseNodeProcess.html#a9b0af6ff7bba4c3e07b69ef6bf003225',1,'BaseNodeProcess::finish_initialization()'],['../classDataLoggerProcess.html#a4dee80b2cf719519829417d0fa86003a',1,'DataLoggerProcess::finish_initialization()'],['../classSystemMonitorProcess.html#ac5a88d630b9ab2ae5431b1fa4eae2d54',1,'SystemMonitorProcess::finish_initialization()'],['../classBaseNodeProcessTester.html#aec9a3a4a233e4a9fb858603654d251e3',1,'BaseNodeProcessTester::finish_initialization()']]]
 ];

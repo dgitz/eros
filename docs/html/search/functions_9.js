@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['new_5fppsmsg',['new_ppsmsg',['../classBaseNode.html#acdbb7d9a121a529539f2d2c1b497335e',1,'BaseNode']]],
-  ['nodestatestring',['NodeStateString',['../classNode.html#a529a14c02fabdc69f4dfbf350113a84f',1,'Node']]]
+  ['preinitialize_5fbasenode',['preinitialize_basenode',['../classBaseNode.html#af3abaab5aa67e132b1aeab2257b4f4e5',1,'BaseNode']]],
+  ['pretty',['pretty',['../classDiagnostic.html#ae3442c8a69e6c77f60f521edd992151a',1,'Diagnostic::pretty()'],['../classDiagnostic.html#a7690400ce80b420f459b889c9f778948',1,'Diagnostic::pretty(std::string pre, std::vector&lt; DiagnosticDefinition &gt; diagnostics)'],['../classDiagnostic.html#a9e6715059c6ff3fa05c39b8c66eac06b',1,'Diagnostic::pretty(std::string pre, DiagnosticDefinition diag)']]]
 ];
