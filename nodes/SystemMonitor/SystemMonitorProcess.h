@@ -121,6 +121,13 @@ class SystemMonitorProcess : public BaseNodeProcess
     static constexpr int KEY_m = 109;
     static constexpr int KEY_M = 77;
 
+    static constexpr int KEY_1 = 49;
+    static constexpr int KEY_2 = 50;
+    static constexpr int KEY_3 = 51;
+    static constexpr int KEY_4 = 52;
+    static constexpr int KEY_5 = 53;
+    static constexpr int KEY_6 = 54;
+
     enum class Color {
         UNKNOWN = 0,
         NO_COLOR = 1,
@@ -189,11 +196,13 @@ class SystemMonitorProcess : public BaseNodeProcess
           mainwindow_width(0),
           mainwindow_height(0),
           select_task_mode(false),
+          change_log_level_mode(false),
           selected_task_index(-1),
           start_node_index(0),
           task_list_max_rows(5),
           timer_showing_message_in_window(0.0),
-          message_text("") {
+          message_text(""),
+          message_text_color(Color::NO_COLOR) {
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::MARKER, TaskField("", 3)));
         task_window_fields.insert(
@@ -270,8 +279,9 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         return diag;
     }
-    void set_message_text(std::string text) {
+    void set_message_text(std::string text, Color color) {
         message_text = text;
+        message_text_color = color;
         timer_showing_message_in_window = 0.0;
     }
 
@@ -364,10 +374,12 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::map<uint16_t, std::string> task_name_list;
     std::map<std::string, std::string> resource_topics;
     bool select_task_mode;
+    bool change_log_level_mode;
     int16_t selected_task_index;
     uint16_t start_node_index;
     uint16_t task_list_max_rows;
     double timer_showing_message_in_window;
     std::string message_text;
+    Color message_text_color;
 };
 #endif  // SYSTEMMONITORPROCESS_h
