@@ -318,7 +318,9 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
         if (add_me == true) {
             res.diag_list.push_back(diag);
         }
+        logger->log_diagnostic(diag_list.at(i));
     }
+
     return true;
 }
 void BaseNode::base_cleanup() {

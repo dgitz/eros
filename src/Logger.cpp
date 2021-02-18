@@ -119,7 +119,7 @@ Logger::LoggerStatus Logger::LOG_DIAGNOSTIC(std::string filename,
 Logger::LoggerStatus Logger::print_log(std::string filename,
                                        uint64_t linenumber,
                                        Level::Type level,
-                                       std::string tempstr) {
+                                       std::string tempstr) {                    
     time_t rawtime;
     struct tm* timeinfo;
     char datebuffer[80];
@@ -130,11 +130,12 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
     strftime(datebuffer, 80, "%d/%m/%Y %I:%M:%S", timeinfo);
     std::string str(datebuffer);
     log_file.open(file_path, std::ios::out | std::ios::app | std::ios::binary | std::ios::ate);
+ 
     std::string swcode_info = "";
     if (linenumber > 0) {
         swcode_info = filename + "(" + std::to_string(linenumber) + ")";
     }
-    if (log_file.is_open() == true) {
+    if (log_file.is_open() == true) { 
         if (level >= verbosity) {
             line_counter++;
             switch (level) {
@@ -236,6 +237,7 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
             }
         }
         else {
+            log_file.close();
             return LoggerStatus::LOG_SUPPRESSED;
         }
     }
