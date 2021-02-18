@@ -57,6 +57,9 @@ class {{cookiecutter.node_classname}} : public BaseNode
     void thread_loop();
     void cleanup();
 
+    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res);
+
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
     {{cookiecutter.process_classname}}* process;

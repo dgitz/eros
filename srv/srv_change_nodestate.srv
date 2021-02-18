@@ -1,0 +1,4 @@
+#Change Node State
+string RequestedNodeState
+---
+string NodeState

@@ -63,6 +63,9 @@ class DataLoggerNode : public BaseNode
     void run_logger(DataLoggerNode* node);
     void cleanup();
 
+    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res);
+
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
     DataLoggerProcess* process;
