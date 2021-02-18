@@ -28,6 +28,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
 
     if (timer_showing_message_in_window > TIME_TO_SHOW_MESSAGES) {
         message_text = "";
+        message_text_color = Color::NO_COLOR;
     }
     std::map<std::string, Task>::iterator task_it = task_list.begin();
     while (task_it != task_list.end()) {
@@ -277,7 +278,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
     if (select_task_mode == true) {
         std::vector<std::string> instruction_string;
         instruction_string.push_back("F/f: Get Node Firmware.");
-        // instruction_string.push_back("L/l: Change Log Level.");
+        instruction_string.push_back("L/l: Change Log Level.");
+        if (change_log_level_mode == true) {
+            instruction_string.push_back("  1,2,3,4,5,6: Select Log Level.");
+        }
         for (std::size_t i = 0; i < instruction_string.size(); ++i) {
             mvwprintw(window_it->second.get_window_reference(),
                       i + 3,
@@ -285,19 +289,25 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
                       instruction_string.at(i).c_str());
         }
     }
+    wclrtobot(window_it->second.get_window_reference());
+    box(window_it->second.get_window_reference(), 0, 0);
+    wrefresh(window_it->second.get_window_reference());
     return diag;
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_messagewindow(
     std::map<std::string, WindowManager>::iterator window_it) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+
     if (select_task_mode == true) {
         std::size_t width = window_it->second.get_screen_coordinates_pixel().width_pix;
         std::string str = message_text;
         if (str.size() > (width - 4)) {
             str = str.substr(0, width - 4) + "... ";
         }
+        wattron(window_it->second.get_window_reference(), COLOR_PAIR(message_text_color));
         mvwprintw(window_it->second.get_window_reference(), 1, 1, str.c_str());
         wclrtoeol(window_it->second.get_window_reference());
+        wattroff(window_it->second.get_window_reference(), COLOR_PAIR(message_text_color));
         box(window_it->second.get_window_reference(), 0, 0);
         wrefresh(window_it->second.get_window_reference());
     }
@@ -320,7 +330,6 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         selected_task_index = 0;
     }
     int key_pressed = wgetch(window_it->second.get_window_reference());
-
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
     }
@@ -359,13 +368,17 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
             std::map<uint16_t, std::string>::iterator task_name_lookup =
                 task_name_list.find(selected_task_index);
             if (task_name_lookup == task_name_list.end()) {
-                logger->log_warn("Unable to lookup Task: " + std::to_string(selected_task_index));
+                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
+                logger->log_error(str);
+                set_message_text(str, Color::RED_COLOR);
             }
             else {
                 std::map<std::string, Task>::iterator task_info_it =
                     task_list.find(task_name_lookup->second);
                 if (task_info_it == task_list.end()) {
-                    logger->log_warn("Unable to lookup Task: " + task_name_lookup->second);
+                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
+                    set_message_text(str, Color::RED_COLOR);
+                    logger->log_error(str);
                 }
                 else {
                     if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
@@ -380,14 +393,83 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
                         if (client.call(srv)) {
                             set_message_text(
                                 "Firmware: Node: " + srv.response.NodeName +
-                                " Version: " + std::to_string(srv.response.MajorRelease) + "." +
-                                std::to_string(srv.response.MinorRelease) + "." +
-                                std::to_string(srv.response.BuildNumber) +
-                                " Desc: " + srv.response.Description);
+                                    " Version: " + std::to_string(srv.response.MajorRelease) + "." +
+                                    std::to_string(srv.response.MinorRelease) + "." +
+                                    std::to_string(srv.response.BuildNumber) +
+                                    " Desc: " + srv.response.Description,
+                                Color::NO_COLOR);
                         }
                         else {
-                            logger->log_warn("Service Failed!");
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Firmware Change Failed!";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
                         }
+                    }
+                    else {
+                        std::string str =
+                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
+                        set_message_text(str, Color::YELLOW_COLOR);
+                        logger->log_warn(str);
+                    }
+                }
+            }
+        }
+    }
+    else if ((key_pressed == KEY_l) || (key_pressed == KEY_L)) {
+        change_log_level_mode = true;
+    }
+    else if ((key_pressed == KEY_1) || (key_pressed == KEY_2) || (key_pressed == KEY_3) ||
+             (key_pressed == KEY_4) || (key_pressed == KEY_5) || (key_pressed == KEY_6)) {
+        if (change_log_level_mode == true) {
+            std::map<uint16_t, std::string>::iterator task_name_lookup =
+                task_name_list.find(selected_task_index);
+            if (task_name_lookup == task_name_list.end()) {
+                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
+                logger->log_error(str);
+                set_message_text(str, Color::RED_COLOR);
+            }
+            else {
+                std::map<std::string, Task>::iterator task_info_it =
+                    task_list.find(task_name_lookup->second);
+                if (task_info_it == task_list.end()) {
+                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
+                    set_message_text(str, Color::RED_COLOR);
+                    logger->log_error(str);
+                }
+                else {
+                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
+                        std::string logger_level_topic =
+                            task_info_it->second.node_name + "/srv_loggerlevel";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
+                        eros::srv_logger_level srv;
+                        uint16_t verbosity_value = key_pressed - (KEY_1) + 1;
+                        std::string verbosity_level =
+                            Level::LevelString((Level::Type)verbosity_value);
+                        srv.request.LoggerLevel = verbosity_level;
+                        if (client.call(srv)) {
+                            std::string str = "Node: " + task_info_it->second.node_name + " " +
+                                              srv.response.Response;
+                            set_message_text(str, Color::NO_COLOR);
+                            change_log_level_mode = false;
+                        }
+                        else {
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Logger Level Change Failed!";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            change_log_level_mode = false;
+                        }
+                    }
+                    else {
+                        std::string str =
+                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
+                        set_message_text(str, Color::YELLOW_COLOR);
+                        logger->log_warn(str);
                     }
                 }
             }
