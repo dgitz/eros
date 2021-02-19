@@ -33,6 +33,7 @@ class BaseNode
           firmware_version(),
           base_node_name(""),
           node_name(""),
+          deviceInfo(""),
           no_launch_enabled(false),
           logger(nullptr),
           logger_initialized(false),
@@ -43,6 +44,7 @@ class BaseNode
           loop2_rate(-1.0),
           loop3_enabled(false),
           loop3_rate(-1.0),
+          disable_device_client(false),
           verbosity_level("DEBUG"),
           require_pps_to_start(false),
           pps_received(false),
@@ -55,7 +57,12 @@ class BaseNode
     // Enums
 
     // Structs
-
+    struct DeviceInfo {
+        DeviceInfo(std::string _architecture) : received(false), Architecture(_architecture) {
+        }
+        bool received;
+        std::string Architecture;
+    };
     // Initialization Functions
     /*! \brief Set if no launch file should be used.  Will use default values only.
      */
@@ -188,6 +195,7 @@ class BaseNode
     Firmware firmware_version;
     std::string base_node_name;
     std::string node_name;
+    DeviceInfo deviceInfo;
     ros::Publisher state_pub;
     ros::Publisher heartbeat_pub;
     ros::Publisher diagnostic_pub;
@@ -218,6 +226,8 @@ class BaseNode
     bool loop3_enabled;
     double loop3_rate;
     ros::Time last_loop3_timer;
+
+    bool disable_device_client;
 
     std::string verbosity_level;
     bool require_pps_to_start;

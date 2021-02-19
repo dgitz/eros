@@ -25,6 +25,7 @@ add_message_files(
 )
 add_service_files(
   FILES
+  srv_device.srv
   srv_firmware.srv
   srv_logger_level.srv
   srv_get_diagnostics.srv

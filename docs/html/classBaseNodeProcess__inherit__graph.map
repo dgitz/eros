@@ -1,7 +1,9 @@
 <map id="BaseNodeProcess" name="BaseNodeProcess">
 <area shape="rect" id="node2" href="$classBaseNodeProcessTester.html" title="BaseNodeProcessTester" alt="" coords="5,80,173,107"/>
 <area shape="rect" id="node3" href="$classDataLoggerProcess.html" title="DataLoggerProcess" alt="" coords="198,80,335,107"/>
-<area shape="rect" id="node5" href="$classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="378,80,537,107"/>
-<area shape="rect" id="node4" href="$classDataLoggerProcessTester.html" title="DataLoggerProcessTester" alt="" coords="170,155,345,181"/>
-<area shape="rect" id="node6" href="$classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="369,155,564,181"/>
+<area shape="rect" id="node5" href="$classMasterNodeProcess.html" title="MasterNodeProcess" alt="" coords="360,80,501,107"/>
+<area shape="rect" id="node7" href="$classSystemMonitorProcess.html" title="SystemMonitorProcess" alt="" coords="545,80,703,107"/>
+<area shape="rect" id="node4" href="$classDataLoggerProcessTester.html" title="DataLoggerProcessTester" alt="" coords="142,155,317,181"/>
+<area shape="rect" id="node6" href="$classMasterNodeProcessTester.html" title="MasterNodeProcessTester" alt="" coords="341,155,520,181"/>
+<area shape="rect" id="node8" href="$classSystemMonitorProcessTester.html" title="SystemMonitorProcessTester" alt="" coords="544,155,739,181"/>
 </map>

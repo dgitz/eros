@@ -1,6 +1,6 @@
 <!--xml-->
 <launch>
-<node name="datalogger_node" pkg="eros" type="datalogger_node"  output="screen" clear_params="true">
+<node name="$(env ROS_HOSTNAME)_datalogger_node" pkg="eros" type="datalogger_node"  output="screen" clear_params="true">
         <param name="startup_delay"       value="0.0"/>
         <param name="verbosity_level"       value="DEBUG"/>
         <param name="require_pps_to_start"  value="false"/> 

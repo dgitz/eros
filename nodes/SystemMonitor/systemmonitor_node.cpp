@@ -6,8 +6,7 @@ SystemMonitorNode::SystemMonitorNode() {
 SystemMonitorNode::~SystemMonitorNode() {
 }
 bool SystemMonitorNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res)
-{
+                                                eros::srv_change_nodestate::Response &res) {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
@@ -85,7 +84,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::read_launchparameters() {
 Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
-    nodestate_srv = n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
+    nodestate_srv =
+        n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -93,7 +93,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
-                                      "All Configuration Files Loaded.");    
+                                      "All Configuration Files Loaded.");
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {
@@ -116,6 +116,29 @@ bool SystemMonitorNode::run_01hz() {
     return true;
 }
 bool SystemMonitorNode::run_01hz_noisy() {
+    Diagnostic::DiagnosticDefinition diag = diagnostic;
+    if ((deviceInfo.received == false) && (disable_device_client == false)) {
+        logger->log_notice("Requesting Device Info");
+        std::string device_topic = "/" + std::string(host_name) + "_master_node/srv_device";
+        ros::ServiceClient client = n->serviceClient<eros::srv_device>(device_topic);
+        eros::srv_device srv;
+        if (client.call(srv)) {
+            deviceInfo.Architecture = srv.response.Architecture;
+            deviceInfo.received = true;
+            diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                              Level::Type::INFO,
+                                              Diagnostic::Message::NOERROR,
+                                              "Device Info Received.");
+            logger->log_diagnostic(diag);
+        }
+        else {
+            diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                              Level::Type::WARN,
+                                              Diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                              "Device Info not received yet.");
+            logger->log_diagnostic(diag);
+        }
+    }
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }

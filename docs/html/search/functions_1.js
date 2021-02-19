@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['check_5fprogramvariables',['check_programvariables',['../classBaseNodeProcess.html#ab7139b722f8b6900e19997fe3f2b8f3e',1,'BaseNodeProcess::check_programvariables()'],['../classDataLoggerProcess.html#a3cf50029012475c0fc28a3b5aff9092c',1,'DataLoggerProcess::check_programvariables()'],['../classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff',1,'SystemMonitorProcess::check_programvariables()'],['../classBaseNodeProcessTester.html#acd21d7b2d3062395ddf26154d71ecc4c',1,'BaseNodeProcessTester::check_programvariables()']]],
+  ['check_5fprogramvariables',['check_programvariables',['../classBaseNodeProcess.html#ab7139b722f8b6900e19997fe3f2b8f3e',1,'BaseNodeProcess::check_programvariables()'],['../classDataLoggerProcess.html#a3cf50029012475c0fc28a3b5aff9092c',1,'DataLoggerProcess::check_programvariables()'],['../classMasterNodeProcess.html#aa4d644b7664bae360a6aca7badf4a988',1,'MasterNodeProcess::check_programvariables()'],['../classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff',1,'SystemMonitorProcess::check_programvariables()'],['../classBaseNodeProcessTester.html#acd21d7b2d3062395ddf26154d71ecc4c',1,'BaseNodeProcessTester::check_programvariables()']]],
   ['commandstring',['CommandString',['../classCommand.html#a89f70fc985addb9835644a4957ce4902',1,'Command']]],
   ['componentstring',['ComponentString',['../classSystem.html#a5ab066afefaeb4f22ffa50fef1fa9798',1,'System']]],
   ['convert',['convert',['../classBaseNodeProcess.html#a48be5ac3b4428670428f1c3ed517e554',1,'BaseNodeProcess']]],

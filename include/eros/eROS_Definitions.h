@@ -333,4 +333,33 @@ class Node
         return Node::State::UNKNOWN;
     }
 };
+class Architecture
+{
+   public:
+    enum class Type {
+        UNKNOWN = 0, /*!< Uninitialized value. */
+        X86_64 = 1,
+        END_OF_LIST = 2 /*!< Last item of list. Used for Range Checks. */
+    };
+
+    //! Convert Architecture::Type to human readable string
+    /*!
+      \param v Architecture::Type type
+      \return The converted string.
+    */
+    static std::string ArchitectureString(Architecture::Type v) {
+        switch (v) {
+            case Architecture::Type::UNKNOWN: return "UNKNOWN"; break;
+            case Architecture::Type::X86_64: return "X86_64"; break;
+            default: return ArchitectureString(Architecture::Type::UNKNOWN); break;
+        }
+    }
+
+    static Architecture::Type ArchitectureType(std::string type) {
+        if (type == "X86_64") {
+            return Architecture::Type::X86_64;
+        }
+        return Architecture::Type::UNKNOWN;
+    }
+};
 #endif  // EROSDEFINITIONS_H

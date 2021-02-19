@@ -84,10 +84,11 @@ Collaboration diagram for DataLoggerNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDataLoggerNode__coll__graph.png" border="0" usemap="#DataLoggerNode_coll__map" alt="Collaboration graph"/></div>
 <map name="DataLoggerNode_coll__map" id="DataLoggerNode_coll__map">
-<area shape="rect" id="node2" href="classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class. " alt="" coords="235,95,318,121"/>
-<area shape="rect" id="node3" href="structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="5,5,215,32"/>
-<area shape="rect" id="node4" href="structFirmware.html" title="Firmware" alt="" coords="239,5,315,32"/>
-<area shape="rect" id="node5" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="381,5,442,32"/>
+<area shape="rect" id="node2" href="classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class. " alt="" coords="320,95,403,121"/>
+<area shape="rect" id="node3" href="structBaseNode_1_1DeviceInfo.html" title="BaseNode::DeviceInfo" alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node4" href="structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="185,5,394,32"/>
+<area shape="rect" id="node5" href="structFirmware.html" title="Firmware" alt="" coords="418,5,494,32"/>
+<area shape="rect" id="node6" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="539,5,600,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -294,6 +295,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>base_node_name
 <tr class="memitem:a0e8550d6ef837a23b2356893e2d2e48c inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a0e8550d6ef837a23b2356893e2d2e48c"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>node_name</b></td></tr>
 <tr class="separator:a0e8550d6ef837a23b2356893e2d2e48c inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf12f62ab5b95b4c0188fbe3bd830421 inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="aaf12f62ab5b95b4c0188fbe3bd830421"></a>
+<a class="el" href="structBaseNode_1_1DeviceInfo.html">DeviceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>deviceInfo</b></td></tr>
+<tr class="separator:aaf12f62ab5b95b4c0188fbe3bd830421 inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6b14c2a8f6b3a679ab0b8a62425bd56 inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="af6b14c2a8f6b3a679ab0b8a62425bd56"></a>
 ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>state_pub</b></td></tr>
 <tr class="separator:af6b14c2a8f6b3a679ab0b8a62425bd56 inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -375,6 +379,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>loop3_rate</b></td>
 <tr class="memitem:acb271c8816b037f35735f4af3fb46c35 inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="acb271c8816b037f35735f4af3fb46c35"></a>
 ros::Time&#160;</td><td class="memItemRight" valign="bottom"><b>last_loop3_timer</b></td></tr>
 <tr class="separator:acb271c8816b037f35735f4af3fb46c35 inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b6fa52585ea7138dfaa776595e3739 inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a68b6fa52585ea7138dfaa776595e3739"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>disable_device_client</b></td></tr>
+<tr class="separator:a68b6fa52585ea7138dfaa776595e3739 inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c40eab6123886f61238e10699d416fb inherit pro_attribs_classBaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a3c40eab6123886f61238e10699d416fb"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>verbosity_level</b></td></tr>
 <tr class="separator:a3c40eab6123886f61238e10699d416fb inherit pro_attribs_classBaseNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
