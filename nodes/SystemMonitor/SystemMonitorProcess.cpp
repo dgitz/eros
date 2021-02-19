@@ -291,8 +291,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
         }
         instruction_string.push_back("D: Show Task Diagnostics.");
         instruction_string.push_back("N: Change Node State.");
-        if(change_nodestate_mode == true)
-        {
+        if (change_nodestate_mode == true) {
             instruction_string.push_back("  1-9: Select Node State.");
         }
         for (std::size_t i = 0; i < instruction_string.size(); ++i) {
@@ -481,8 +480,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         change_log_level_mode = true;
         change_nodestate_mode = false;
     }
-    else if((key_pressed == KEY_n) || (key_pressed == KEY_N))
-    {
+    else if ((key_pressed == KEY_n) || (key_pressed == KEY_N)) {
         change_log_level_mode = false;
         change_nodestate_mode = true;
     }
@@ -548,108 +546,106 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         }
     }
     else if ((key_pressed == KEY_1) || (key_pressed == KEY_2) || (key_pressed == KEY_3) ||
-             (key_pressed == KEY_4) || (key_pressed == KEY_5) || (key_pressed == KEY_6) || (key_pressed == KEY_7) || (key_pressed == KEY_8) || (key_pressed == 9)) {
-            std::map<uint16_t, std::string>::iterator task_name_lookup =
-                task_name_list.find(selected_task_index);
-            if (task_name_lookup == task_name_list.end()) {
-                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
-                logger->log_error(str);
+             (key_pressed == KEY_4) || (key_pressed == KEY_5) || (key_pressed == KEY_6) ||
+             (key_pressed == KEY_7) || (key_pressed == KEY_8) || (key_pressed == 9)) {
+        std::map<uint16_t, std::string>::iterator task_name_lookup =
+            task_name_list.find(selected_task_index);
+        if (task_name_lookup == task_name_list.end()) {
+            std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
+            logger->log_error(str);
+            set_message_text(str, Color::RED_COLOR);
+        }
+        else {
+            std::map<std::string, Task>::iterator task_info_it =
+                task_list.find(task_name_lookup->second);
+            if (task_info_it == task_list.end()) {
+                std::string str = "Unable to lookup Task: " + task_name_lookup->second;
                 set_message_text(str, Color::RED_COLOR);
+                logger->log_error(str);
             }
             else {
-                std::map<std::string, Task>::iterator task_info_it =
-                    task_list.find(task_name_lookup->second);
-                if (task_info_it == task_list.end()) {
-                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
-                    set_message_text(str, Color::RED_COLOR);
-                    logger->log_error(str);
+                if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
+                    if (change_log_level_mode == true) {
+                        std::string logger_level_topic =
+                            task_info_it->second.node_name + "/srv_loggerlevel";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
+                        eros::srv_logger_level srv;
+                        uint16_t verbosity_value = key_pressed - (KEY_1) + 1;
+                        std::string verbosity_level =
+                            Level::LevelString((Level::Type)verbosity_value);
+                        if (verbosity_level == "UNKNOWN") {
+                            std::string str = "Requested Log Level Not Supported.";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            change_log_level_mode = false;
+                        }
+                        srv.request.LoggerLevel = verbosity_level;
+                        if (client.call(srv)) {
+                            std::string str = "Node: " + task_info_it->second.node_name + " " +
+                                              srv.response.Response;
+                            set_message_text(str, Color::NO_COLOR);
+                            change_log_level_mode = false;
+                        }
+                        else {
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Logger Level Change Failed!";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            change_log_level_mode = false;
+                        }
+                    }
+                    else if (change_nodestate_mode == true) {
+                        std::string nodestate_topic =
+                            task_info_it->second.node_name + "/srv_nodestate_change";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
+                        eros::srv_change_nodestate srv;
+                        uint16_t state_value = key_pressed - (KEY_1) + 1;
+                        std::string req_state = Node::NodeStateString((Node::State)state_value);
+                        if (req_state == "UNKNOWN") {
+                            std::string str = "Requested Node State Not Supported.";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            change_nodestate_mode = false;
+                        }
+                        srv.request.RequestedNodeState = req_state;
+                        if (client.call(srv)) {
+                            if (req_state == srv.response.NodeState) {
+                                std::string str = "Node: " + task_info_it->second.node_name +
+                                                  " New Node State: " + srv.response.NodeState;
+                                set_message_text(str, Color::NO_COLOR);
+                            }
+                            else {
+                                std::string str = "Node: " + task_info_it->second.node_name +
+                                                  " Requested State: " + req_state + " Rejected! ";
+                                set_message_text(str, Color::YELLOW_COLOR);
+                            }
+                            change_nodestate_mode = false;
+                        }
+                        else {
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Node State Change Request Failed! ";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                            logger->log_warn(str);
+                            change_nodestate_mode = false;
+                        }
+                    }
                 }
                 else {
-                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
-                        if(change_log_level_mode == true)
-                        {
-                            std::string logger_level_topic =
-                                task_info_it->second.node_name + "/srv_loggerlevel";
-                            if (nodeHandle == nullptr) {
-                                logger->log_error("Node Handle has no memory!");
-                            }
-                            ros::ServiceClient client =
-                                nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
-                            eros::srv_logger_level srv;
-                            uint16_t verbosity_value = key_pressed - (KEY_1) + 1;
-                            std::string verbosity_level =
-                                Level::LevelString((Level::Type)verbosity_value);
-                            if(verbosity_level == "UNKNOWN") {
-                                std::string str = "Requested Log Level Not Supported.";
-                                set_message_text(str, Color::YELLOW_COLOR);
-                                logger->log_warn(str);
-                                change_log_level_mode = false;
-                            }
-                            srv.request.LoggerLevel = verbosity_level;
-                            if (client.call(srv)) {
-                                std::string str = "Node: " + task_info_it->second.node_name + " " +
-                                                srv.response.Response;
-                                set_message_text(str, Color::NO_COLOR);
-                                change_log_level_mode = false;
-                            }
-                            else {
-                                std::string str = "Node: " + task_info_it->second.node_name +
-                                                " Logger Level Change Failed!";
-                                set_message_text(str, Color::YELLOW_COLOR);
-                                logger->log_warn(str);
-                                change_log_level_mode = false;
-                            }
-                        }
-                        else if(change_nodestate_mode == true)
-                        {
-                            std::string nodestate_topic =
-                                task_info_it->second.node_name + "/srv_nodestate_change";
-                            if (nodeHandle == nullptr) {
-                                logger->log_error("Node Handle has no memory!");
-                            }
-                            ros::ServiceClient client =
-                                nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
-                            eros::srv_change_nodestate srv;
-                            uint16_t state_value = key_pressed - (KEY_1) + 1;
-                            std::string req_state = Node::NodeStateString((Node::State)state_value);
-                            if(req_state == "UNKNOWN") {
-                                std::string str = "Requested Node State Not Supported.";
-                                set_message_text(str, Color::YELLOW_COLOR);
-                                logger->log_warn(str);
-                                change_nodestate_mode = false;
-                            }
-                            srv.request.RequestedNodeState = req_state;
-                            if (client.call(srv)) {
-                                if(req_state == srv.response.NodeState)
-                                {
-                                    std::string str = "Node: " + task_info_it->second.node_name + " New Node State: " + srv.response.NodeState;
-                                    set_message_text(str, Color::NO_COLOR);
-                                }
-                                else
-                                {
-                                    std::string str = "Node: " + task_info_it->second.node_name + " Requested State: " + req_state + " Rejected! ";
-                                    set_message_text(str, Color::YELLOW_COLOR);
-                                }
-                                change_nodestate_mode = false;
-                            }
-                            else {
-                                std::string str = "Node: " + task_info_it->second.node_name +
-                                                " Node State Change Request Failed! ";
-                                set_message_text(str, Color::YELLOW_COLOR);
-                                logger->log_warn(str);
-                                logger->log_warn(str);
-                                change_nodestate_mode = false;
-                            }
-                        }
-                    }
-                    else {
-                        std::string str =
-                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
-                        set_message_text(str, Color::YELLOW_COLOR);
-                        logger->log_warn(str);
-                    }
+                    std::string str =
+                        "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
+                    set_message_text(str, Color::YELLOW_COLOR);
+                    logger->log_warn(str);
                 }
-            
+            }
         }
     }
 
@@ -756,6 +752,10 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     {
         width = task_window_fields.find(TaskFieldColumn::NODENAME)->second.width;
         std::string tempstr = task.node_name;
+        std::size_t found_hostname = task.node_name.find(task.host_device);
+        if (found_hostname != std::string::npos) {
+            tempstr.replace(found_hostname, task.host_device.length(), "");
+        }
         if (tempstr.size() > width) {
             tempstr = tempstr.substr(0, width - 4) + "... ";
         }

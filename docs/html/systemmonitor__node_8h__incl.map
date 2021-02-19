@@ -1,8 +1,8 @@
 <map id="nodes/SystemMonitor/systemmonitor_node.h" name="nodes/SystemMonitor/systemmonitor_node.h">
-<area shape="rect" id="node2" href="$BaseNode_8h.html" title="eros/BaseNode.h" alt="" coords="914,95,1037,121"/>
-<area shape="rect" id="node36" href="$SystemMonitorProcess_8h.html" title="SystemMonitorProcess.h" alt="" coords="1504,95,1673,121"/>
-<area shape="rect" id="node10" href="$BaseNodeProcess_8h.html" title="eros/BaseNodeProcess.h" alt="" coords="1357,169,1527,196"/>
-<area shape="rect" id="node26" href="$Diagnostic_8h.html" title="Diagnostic.h" alt="" coords="1959,333,2053,360"/>
-<area shape="rect" id="node27" href="$eROS__Definitions_8h.html" title="eros/eROS_Definitions.h" alt="" coords="1724,408,1891,435"/>
-<area shape="rect" id="node31" href="$Logger_8h.html" title="Logger.h" alt="" coords="1737,251,1809,278"/>
+<area shape="rect" id="node2" href="$BaseNode_8h.html" title="eros/BaseNode.h" alt="" coords="981,95,1103,121"/>
+<area shape="rect" id="node37" href="$SystemMonitorProcess_8h.html" title="SystemMonitorProcess.h" alt="" coords="1563,95,1732,121"/>
+<area shape="rect" id="node10" href="$BaseNodeProcess_8h.html" title="eros/BaseNodeProcess.h" alt="" coords="1415,169,1586,196"/>
+<area shape="rect" id="node27" href="$Diagnostic_8h.html" title="Diagnostic.h" alt="" coords="2109,333,2204,360"/>
+<area shape="rect" id="node28" href="$eROS__Definitions_8h.html" title="eros/eROS_Definitions.h" alt="" coords="1875,408,2041,435"/>
+<area shape="rect" id="node32" href="$Logger_8h.html" title="Logger.h" alt="" coords="1887,251,1959,278"/>
 </map>

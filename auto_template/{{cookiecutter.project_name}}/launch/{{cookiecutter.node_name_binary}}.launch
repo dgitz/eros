@@ -1,6 +1,6 @@
 <!--xml-->
 <launch>
-<node name="{{cookiecutter.node_name_binary}}" pkg="{{cookiecutter.project_name}}" type="{{cookiecutter.node_name_binary}}"  output="screen" clear_params="true">
+<node name="$(env ROS_HOSTNAME)_{{cookiecutter.node_name_binary}}" pkg="{{cookiecutter.project_name}}" type="{{cookiecutter.node_name_binary}}"  output="screen" clear_params="true">
         <param name="startup_delay"       value="0.0"/>
 	    <param name="verbosity_level"       value="INFO"/>
         <param name="require_pps_to_start"  value="false"/>    
