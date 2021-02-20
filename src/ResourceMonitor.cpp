@@ -93,6 +93,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     std::string res = exec(top_query.c_str(), true);
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
+    for (std::size_t i = 0; i < strs.size(); ++i) {
+        printf("%d/%d %s\n", i, strs.size(), strs.at(i).c_str());
+    }
     if (architecture == Architecture::Type::X86_64) {
         if (strs.size() != 12) {
             diag.level = Level::Type::ERROR;
@@ -113,7 +116,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             diag.update_count++;
             return diag;
         }
-        }
+    }
     else if (architecture == Architecture::Type::AARCH64) {
         if (strs.size() != 12) {
             diag.level = Level::Type::ERROR;
