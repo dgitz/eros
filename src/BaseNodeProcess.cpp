@@ -236,6 +236,17 @@ eros::diagnostic BaseNodeProcess::convert_fromptr(const eros::diagnostic::ConstP
     diag.System = t_ptr->System;
     return diag;
 }
+eros::resource BaseNodeProcess::convert_fromptr(const eros::resource::ConstPtr &t_ptr) {
+    eros::resource msg;
+    msg.stamp = t_ptr->stamp;
+    msg.NodeName = t_ptr->NodeName;
+    msg.ResourceAvailable = t_ptr->ResourceAvailable;
+    msg.PID = t_ptr->PID;
+    msg.CPU_Perc = t_ptr->CPU_Perc;
+    msg.RAM_Perc = t_ptr->RAM_Perc;
+    msg.DISK_Perc = t_ptr->DISK_Perc;
+    return msg;
+}
 Diagnostic::DiagnosticDefinition BaseNodeProcess::convert(const eros::diagnostic diag) {
     Diagnostic::DiagnosticDefinition def;
     def.device_name = diag.DeviceName;

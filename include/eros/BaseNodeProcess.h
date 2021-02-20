@@ -191,6 +191,13 @@ class BaseNodeProcess
     */
     eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
 
+    //! Convert eros::resource message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr);
+
     //! Convert eros::diagnostic message (as received via a ROS Node) to the regular datatype
     /*!
       \param t_ptr The pointer to the object
