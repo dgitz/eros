@@ -33,7 +33,7 @@ class BaseNode
           firmware_version(),
           base_node_name(""),
           node_name(""),
-          deviceInfo(""),
+          deviceInfo(),
           no_launch_enabled(false),
           logger(nullptr),
           logger_initialized(false),
@@ -58,10 +58,9 @@ class BaseNode
 
     // Structs
     struct DeviceInfo {
-        DeviceInfo(std::string _architecture) : received(false), Architecture(_architecture) {
+        DeviceInfo() : received(false) {
         }
         bool received;
-        std::string Architecture;
     };
     // Initialization Functions
     /*! \brief Set if no launch file should be used.  Will use default values only.
@@ -164,6 +163,8 @@ class BaseNode
         return etime;
     }
     eros::diagnostic convert(Diagnostic::DiagnosticDefinition diag_def);
+
+    eros::resource convert(ResourceMonitor::ResourceInfo res_info);
     // Message Functions
     /*! \brief Handles receiving the 1 PPS Msg. */
     void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg);
@@ -199,6 +200,7 @@ class BaseNode
     ros::Publisher state_pub;
     ros::Publisher heartbeat_pub;
     ros::Publisher diagnostic_pub;
+    ros::Publisher resource_used_pub;
     eros::heartbeat heartbeat;
     ros::ServiceServer firmware_srv;
     ros::ServiceServer logger_level_srv;
@@ -206,6 +208,7 @@ class BaseNode
     ros::ServiceServer nodestate_srv;
     bool no_launch_enabled;
     Logger *logger = nullptr;
+    ResourceMonitor *resource_monitor = nullptr;
     bool logger_initialized;
     double ros_rate;
 

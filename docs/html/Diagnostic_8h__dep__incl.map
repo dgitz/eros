@@ -1,17 +1,19 @@
 <map id="include/eros/Diagnostic.h" name="include/eros/Diagnostic.h">
-<area shape="rect" id="node2" href="$BaseNodeProcess_8h.html" title="include/eros/BaseNodeProcess.h" alt="" coords="680,155,896,181"/>
-<area shape="rect" id="node15" href="$Logger_8h.html" title="include/eros/Logger.h" alt="" coords="829,80,976,107"/>
-<area shape="rect" id="node16" href="$test__diagnostics_8cpp.html" title="src/test/test_diagnostics.cpp" alt="" coords="921,155,1111,181"/>
-<area shape="rect" id="node3" href="$_02_02cookiecutter_8process__classname_03_03_8h_source.html" title="auto_template/\{\{cookiecutter.project\l_name\}\}/nodes/\{\{cookiecutter.node\l_classname\}\}/\{\{cookiecutter.process\l_classname\}\}.h" alt="" coords="446,229,679,300"/>
-<area shape="rect" id="node5" href="$BaseNode_8h.html" title="include/eros/BaseNode.h" alt="" coords="704,251,872,278"/>
-<area shape="rect" id="node9" href="$DataLoggerProcess_8h.html" title="nodes/DataLogger/DataLogger\lProcess.h" alt="" coords="223,244,422,285"/>
-<area shape="rect" id="node11" href="$MasterNodeProcess_8h.html" title="nodes/MasterNode/MasterNode\lProcess.h" alt="" coords="897,244,1103,285"/>
-<area shape="rect" id="node13" href="$SystemMonitorProcess_8h.html" title="nodes/SystemMonitor\l/SystemMonitorProcess.h" alt="" coords="1128,244,1301,285"/>
-<area shape="rect" id="node4" href="$_02_02cookiecutter_8node__classname_03_03_8h_source.html" title="auto_template/\{\{cookiecutter.project\l_name\}\}/nodes/\{\{cookiecutter.node\l_classname\}\}/\{\{cookiecutter.node\l_classname\}\}.h" alt="" coords="447,348,678,419"/>
-<area shape="rect" id="node6" href="$DataLoggerNode_8h.html" title="nodes/DataLogger/DataLogger\lNode.h" alt="" coords="225,363,423,404"/>
-<area shape="rect" id="node7" href="$MasterNode_8h.html" title="nodes/MasterNode/MasterNode.h" alt="" coords="703,370,921,397"/>
-<area shape="rect" id="node8" href="$systemmonitor__node_8h.html" title="nodes/SystemMonitor\l/systemmonitor_node.h" alt="" coords="946,363,1105,404"/>
-<area shape="rect" id="node10" href="$test__DataLoggerProcess_8cpp.html" title="nodes/DataLogger/test\l/test_DataLoggerProcess.cpp" alt="" coords="5,363,200,404"/>
-<area shape="rect" id="node12" href="$test__MasterNodeProcess_8cpp.html" title="nodes/MasterNode/test\l/test_MasterNodeProcess.cpp" alt="" coords="1129,363,1327,404"/>
-<area shape="rect" id="node14" href="$test__systemmonitor__process_8cpp.html" title="nodes/SystemMonitor\l/test/test_systemmonitor\l_process.cpp" alt="" coords="1351,355,1518,411"/>
+<area shape="rect" id="node2" href="$BaseNodeProcess_8h.html" title="include/eros/BaseNodeProcess.h" alt="" coords="680,229,896,256"/>
+<area shape="rect" id="node15" href="$Logger_8h.html" title="include/eros/Logger.h" alt="" coords="905,80,1052,107"/>
+<area shape="rect" id="node16" href="$ResourceMonitor_8h.html" title="include/eros/ResourceMonitor.h" alt="" coords="734,155,941,181"/>
+<area shape="rect" id="node18" href="$test__diagnostics_8cpp.html" title="src/test/test_diagnostics.cpp" alt="" coords="1067,155,1258,181"/>
+<area shape="rect" id="node3" href="$_02_02cookiecutter_8process__classname_03_03_8h_source.html" title="auto_template/\{\{cookiecutter.project\l_name\}\}/nodes/\{\{cookiecutter.node\l_classname\}\}/\{\{cookiecutter.process\l_classname\}\}.h" alt="" coords="446,304,679,375"/>
+<area shape="rect" id="node5" href="$BaseNode_8h.html" title="include/eros/BaseNode.h" alt="" coords="704,326,872,353"/>
+<area shape="rect" id="node9" href="$DataLoggerProcess_8h.html" title="nodes/DataLogger/DataLogger\lProcess.h" alt="" coords="223,319,422,360"/>
+<area shape="rect" id="node11" href="$MasterNodeProcess_8h.html" title="nodes/MasterNode/MasterNode\lProcess.h" alt="" coords="897,319,1103,360"/>
+<area shape="rect" id="node13" href="$SystemMonitorProcess_8h.html" title="nodes/SystemMonitor\l/SystemMonitorProcess.h" alt="" coords="1128,319,1301,360"/>
+<area shape="rect" id="node4" href="$_02_02cookiecutter_8node__classname_03_03_8h_source.html" title="auto_template/\{\{cookiecutter.project\l_name\}\}/nodes/\{\{cookiecutter.node\l_classname\}\}/\{\{cookiecutter.node\l_classname\}\}.h" alt="" coords="447,423,678,493"/>
+<area shape="rect" id="node6" href="$DataLoggerNode_8h.html" title="nodes/DataLogger/DataLogger\lNode.h" alt="" coords="225,437,423,479"/>
+<area shape="rect" id="node7" href="$MasterNode_8h.html" title="nodes/MasterNode/MasterNode.h" alt="" coords="703,445,921,471"/>
+<area shape="rect" id="node8" href="$systemmonitor__node_8h.html" title="nodes/SystemMonitor\l/systemmonitor_node.h" alt="" coords="946,437,1105,479"/>
+<area shape="rect" id="node10" href="$test__DataLoggerProcess_8cpp.html" title="nodes/DataLogger/test\l/test_DataLoggerProcess.cpp" alt="" coords="5,437,200,479"/>
+<area shape="rect" id="node12" href="$test__MasterNodeProcess_8cpp.html" title="nodes/MasterNode/test\l/test_MasterNodeProcess.cpp" alt="" coords="1129,437,1327,479"/>
+<area shape="rect" id="node14" href="$test__systemmonitor__process_8cpp.html" title="nodes/SystemMonitor\l/test/test_systemmonitor\l_process.cpp" alt="" coords="1351,430,1518,486"/>
+<area shape="rect" id="node17" href="$test__resourcemonitor_8cpp.html" title="src/test/test_resourcemonitor.cpp" alt="" coords="921,229,1138,256"/>
 </map>

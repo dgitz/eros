@@ -88,10 +88,11 @@ Collaboration diagram for BaseNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBaseNode__coll__graph.png" border="0" usemap="#BaseNode_coll__map" alt="Collaboration graph"/></div>
 <map name="BaseNode_coll__map" id="BaseNode_coll__map">
-<area shape="rect" id="node2" href="structBaseNode_1_1DeviceInfo.html" title="BaseNode::DeviceInfo" alt="" coords="5,5,160,32"/>
-<area shape="rect" id="node3" href="structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="185,5,394,32"/>
-<area shape="rect" id="node4" href="structFirmware.html" title="Firmware" alt="" coords="418,5,494,32"/>
-<area shape="rect" id="node5" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="539,5,600,32"/>
+<area shape="rect" id="node2" href="structBaseNode_1_1DeviceInfo.html" title="BaseNode::DeviceInfo" alt="" coords="33,5,187,32"/>
+<area shape="rect" id="node3" href="structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="5,56,215,83"/>
+<area shape="rect" id="node4" href="structFirmware.html" title="Firmware" alt="" coords="72,107,148,133"/>
+<area shape="rect" id="node5" href="classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="79,157,141,184"/>
+<area shape="rect" id="node6" href="classResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="49,208,171,235"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -203,6 +204,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:a0a9ed9ed0ca14c0f7c33aeaf3af22104"><td class="memItemLeft" align="right" valign="top"><a id="a0a9ed9ed0ca14c0f7c33aeaf3af22104"></a>
 eros::diagnostic&#160;</td><td class="memItemRight" valign="bottom"><b>convert</b> (<a class="el" href="structDiagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diag_def)</td></tr>
 <tr class="separator:a0a9ed9ed0ca14c0f7c33aeaf3af22104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a516c71c5a2c9c9c586427e5c993b0890"><td class="memItemLeft" align="right" valign="top"><a id="a516c71c5a2c9c9c586427e5c993b0890"></a>
+eros::resource&#160;</td><td class="memItemRight" valign="bottom"><b>convert</b> (<a class="el" href="structResourceMonitor_1_1ResourceInfo.html">ResourceMonitor::ResourceInfo</a> res_info)</td></tr>
+<tr class="separator:a516c71c5a2c9c9c586427e5c993b0890"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdbb7d9a121a529539f2d2c1b497335e"><td class="memItemLeft" align="right" valign="top"><a id="acdbb7d9a121a529539f2d2c1b497335e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBaseNode.html#acdbb7d9a121a529539f2d2c1b497335e">new_ppsmsg</a> (const std_msgs::Bool::ConstPtr &amp;t_msg)</td></tr>
 <tr class="memdesc:acdbb7d9a121a529539f2d2c1b497335e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles receiving the 1 PPS Msg. <br /></td></tr>
@@ -268,6 +272,9 @@ ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>heartbeat_p
 <tr class="memitem:a4910fe793b6d32fbe08d2b0800316503"><td class="memItemLeft" align="right" valign="top"><a id="a4910fe793b6d32fbe08d2b0800316503"></a>
 ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_pub</b></td></tr>
 <tr class="separator:a4910fe793b6d32fbe08d2b0800316503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a411874f25c9ad00c2967595d58f15824"><td class="memItemLeft" align="right" valign="top"><a id="a411874f25c9ad00c2967595d58f15824"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>resource_used_pub</b></td></tr>
+<tr class="separator:a411874f25c9ad00c2967595d58f15824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6506f5b3af66d6b86441df6294c66ed4"><td class="memItemLeft" align="right" valign="top"><a id="a6506f5b3af66d6b86441df6294c66ed4"></a>
 eros::heartbeat&#160;</td><td class="memItemRight" valign="bottom"><b>heartbeat</b></td></tr>
 <tr class="separator:a6506f5b3af66d6b86441df6294c66ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,6 +296,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>no_launch_enabled</b>
 <tr class="memitem:a6a315ca609a97e6035560c026b7261ec"><td class="memItemLeft" align="right" valign="top"><a id="a6a315ca609a97e6035560c026b7261ec"></a>
 <a class="el" href="classLogger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>logger</b> = nullptr</td></tr>
 <tr class="separator:a6a315ca609a97e6035560c026b7261ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0a449e9940bae7eca93c1fe9e2b41eb"><td class="memItemLeft" align="right" valign="top"><a id="aa0a449e9940bae7eca93c1fe9e2b41eb"></a>
+<a class="el" href="classResourceMonitor.html">ResourceMonitor</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>resource_monitor</b> = nullptr</td></tr>
+<tr class="separator:aa0a449e9940bae7eca93c1fe9e2b41eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9614cfe5d63f11104222cec8bb61a5a4"><td class="memItemLeft" align="right" valign="top"><a id="a9614cfe5d63f11104222cec8bb61a5a4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>logger_initialized</b></td></tr>
 <tr class="separator:a9614cfe5d63f11104222cec8bb61a5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>

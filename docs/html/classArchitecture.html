@@ -69,9 +69,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a7ae6186419ae33e4d9019df7b18d883e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883e">Type</a> { <a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ea696b031073e74bf2cb98e5ef201d4aa3">Type::UNKNOWN</a> = 0, 
-<b>X86_64</b> = 1, 
-<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883eac2b0b4a580050a88a759ac7c20ce853c">Type::END_OF_LIST</a> = 2
+<tr class="memitem:a7ae6186419ae33e4d9019df7b18d883e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883e">Type</a> { <br />
+&#160;&#160;<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ea696b031073e74bf2cb98e5ef201d4aa3">Type::UNKNOWN</a> = 0, 
+<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ea840030b2e70cfe0155e29ee926dbd8ae">Type::X86_64</a> = 1, 
+<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ead0600557e19a3dbe302386034bbd6895">Type::ARMV7L</a> = 2, 
+<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ea036a8f756db6f6db7e1ed8f22a9f641e">Type::AARCH64</a> = 3, 
+<br />
+&#160;&#160;<a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883eac2b0b4a580050a88a759ac7c20ce853c">Type::END_OF_LIST</a> = 4
+<br />
  }</td></tr>
 <tr class="separator:a7ae6186419ae33e4d9019df7b18d883e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -106,6 +111,12 @@ static <a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d8
 </div><div class="memdoc">
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7ae6186419ae33e4d9019df7b18d883ea696b031073e74bf2cb98e5ef201d4aa3"></a>UNKNOWN&#160;</td><td class="fielddoc"><p>Uninitialized value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7ae6186419ae33e4d9019df7b18d883ea840030b2e70cfe0155e29ee926dbd8ae"></a>X86_64&#160;</td><td class="fielddoc"><p>x86 64-bit compatible </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7ae6186419ae33e4d9019df7b18d883ead0600557e19a3dbe302386034bbd6895"></a>ARMV7L&#160;</td><td class="fielddoc"><p>Raspberry Pi 2, 3 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7ae6186419ae33e4d9019df7b18d883ea036a8f756db6f6db7e1ed8f22a9f641e"></a>AARCH64&#160;</td><td class="fielddoc"><p>Arch Linux 64-bit </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a7ae6186419ae33e4d9019df7b18d883eac2b0b4a580050a88a759ac7c20ce853c"></a>END_OF_LIST&#160;</td><td class="fielddoc"><p>Last item of list. Used for Range Checks. </p>
 </td></tr>
@@ -146,14 +157,6 @@ static <a class="el" href="classArchitecture.html#a7ae6186419ae33e4d9019df7b18d8
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The converted string. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classArchitecture_aa14ad0a144f6321459622606ff644f60_icgraph.png" border="0" usemap="#classArchitecture_aa14ad0a144f6321459622606ff644f60_icgraph" alt=""/></div>
-<map name="classArchitecture_aa14ad0a144f6321459622606ff644f60_icgraph" id="classArchitecture_aa14ad0a144f6321459622606ff644f60_icgraph">
-<area shape="rect" id="node2" href="classMasterNode.html#ad48a14b4a5aa2f7c69512b17617da481" title="Start the Node. " alt="" coords="224,13,351,39"/>
-</map>
-</div>
 
 </div>
 </div>

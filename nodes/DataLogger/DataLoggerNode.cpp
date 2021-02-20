@@ -189,7 +189,6 @@ bool DataLoggerNode::run_01hz_noisy() {
         ros::ServiceClient client = n->serviceClient<eros::srv_device>(device_topic);
         eros::srv_device srv;
         if (client.call(srv)) {
-            deviceInfo.Architecture = srv.response.Architecture;
             deviceInfo.received = true;
             diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                               Level::Type::INFO,

@@ -14,7 +14,6 @@ bool MasterNode::changenodestate_service(eros::srv_change_nodestate::Request &re
 bool MasterNode::device_service(eros::srv_device::Request &req, eros::srv_device::Response &res) {
     (void)req;  // Currently Unused
     if (deviceInfo.received == true) {
-        res.Architecture = deviceInfo.Architecture;
         return true;
     }
     else {
@@ -51,21 +50,8 @@ bool MasterNode::start(int argc, char **argv) {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
+    deviceInfo.received = true;
 
-    Architecture::Type architecture = process->read_device_architecture();
-    if (architecture != Architecture::Type::UNKNOWN) {
-        deviceInfo.Architecture = Architecture::ArchitectureString(architecture);
-        deviceInfo.received = true;
-    }
-    else {
-        diagnostic = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                Level::Type::ERROR,
-                                                Diagnostic::Message::DEVICE_NOT_AVAILABLE,
-                                                "Not able to read Device Architecture.");
-        deviceInfo.received = false;
-        logger->log_diagnostic(diagnostic);
-        return false;
-    }
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
