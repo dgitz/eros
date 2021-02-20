@@ -19,6 +19,7 @@ add_message_files(
   command.msg
   diagnostic.msg
   heartbeat.msg
+  loadfactor.msg
   resource.msg
   subsystem_diagnostic.msg
   uptime.msg

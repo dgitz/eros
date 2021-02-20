@@ -42,9 +42,14 @@ class ResourceMonitor
 
     std::string exec(const char* cmd, bool wait_for_result);
 
+    std::vector<double> get_load_factor() {
+        return load_factor;
+    }
+
    private:
     Diagnostic::DiagnosticDefinition read_process_resource_usage();
     Diagnostic::DiagnosticDefinition read_device_resource_availability();
+    Diagnostic::DiagnosticDefinition read_device_loadfactor();
     Architecture::Type read_device_architecture();
 
     Mode mode;
@@ -55,5 +60,6 @@ class ResourceMonitor
     bool initialized;
     double run_time;
     uint16_t processor_count;
+    std::vector<double> load_factor;
 };
 #endif  // RESOURCEMONITOR_H

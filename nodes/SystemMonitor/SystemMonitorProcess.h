@@ -300,11 +300,10 @@ class SystemMonitorProcess : public BaseNodeProcess
                                                        "Updated Resource Used.");
         }
         else {
-            diag =
-                diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                    Level::Type::WARN,
-                                                    Diagnostic::Message::DROPPING_PACKETS,
-                                                    "Unable to update Resource: " + msg.NodeName);
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DROPPING_PACKETS,
+                                                       "Unable to update Resource: " + msg.Name);
             logger->log_diagnostic(diag);
         }
         return diag;
@@ -396,7 +395,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         return true;
     }
     bool update_task_list(eros::resource resource) {
-        std::string key = resource.NodeName;
+        std::string key = resource.Name;
         std::map<std::string, Task>::iterator it;
         it = task_list.find(key);
         if (it == task_list.end()) {
