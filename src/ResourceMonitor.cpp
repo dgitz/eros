@@ -61,6 +61,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        if (diag.level > Level::Type::WARN) {
+            return diag;
+        }
         diag = read_device_loadfactor();
     }
     if (diag.level <= Level::Type::NOTICE) {
@@ -86,6 +89,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        if (diag.level > Level::Type::WARN) {
+            return diag;
+        }
         diag = read_device_loadfactor();
     }
     return diag;
@@ -293,6 +299,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 std::string res = exec(df_query.c_str(), true);
                 std::vector<std::string> lines;
                 boost::split(lines, res, boost::is_any_of("\n"), boost::token_compress_on);
+                bool found_me = false;
                 for (std::size_t i = 0; i < lines.size(); ++i) {
                     std::vector<std::string> fields;
                     boost::split(
@@ -300,7 +307,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     std::string mount_point = fields.at(fields.size() - 1);
                     if (mount_point == "/") {
                         try {
+                            found_me = true;
                             std::string tempstr1 = fields.at(4);
+
                             tempstr1 =
                                 tempstr1.substr(0, tempstr1.size() - 1);  // Remove trailing % sign
                             resourceInfo.disk_perc = 100.0 - std::atof(tempstr1.c_str());
@@ -314,6 +323,13 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                             return diag;
                         }
                     }
+                }
+                if (found_me == false) {
+                    diag.level = Level::Type::ERROR;
+                    diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                    diag.description = "Unable to process string: " + res;
+                    diag.update_count++;
+                    return diag;
                 }
             }
             catch (const std::exception e) {

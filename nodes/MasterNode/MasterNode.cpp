@@ -88,6 +88,12 @@ Diagnostic::DiagnosticDefinition MasterNode::finish_initialization() {
     std::string srv_device_topic = "/" + node_name + "/srv_device";
     device_server_srv = n->advertiseService(srv_device_topic, &MasterNode::device_service, this);
 
+    std::string resource_available_topic = "/" + get_hostname() + "/resource_available";
+    resource_available_pub = n->advertise<eros::resource>(resource_available_topic, 1);
+
+    std::string device_loadfactor_topic = "/" + get_hostname() + "/loadfactor";
+    loadfactor_pub = n->advertise<eros::loadfactor>(device_loadfactor_topic, 5);
+
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -96,8 +102,9 @@ Diagnostic::DiagnosticDefinition MasterNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+
     resource_available_monitor = new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
-    diag = resource_available_monitor.init();
+    diag = resource_available_monitor->init();
     if (diag.level > Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;
@@ -121,6 +128,26 @@ bool MasterNode::run_01hz() {
 }
 bool MasterNode::run_01hz_noisy() {
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    Diagnostic::DiagnosticDefinition diag = resource_available_monitor->update(10.0);
+    logger->log_diagnostic(diag);
+    if (diag.level <= Level::Type::WARN) {
+        {
+            eros::resource msg = convert(resource_available_monitor->get_resourceinfo());
+            msg.Name = get_hostname();
+            msg.stamp = ros::Time::now();
+            resource_available_pub.publish(msg);
+        }
+        {
+            eros::loadfactor msg;
+            std::vector<double> load_factor = resource_available_monitor->get_load_factor();
+            msg.stamp = ros::Time::now();
+            msg.DeviceName = get_hostname();
+            msg.loadfactor.push_back(load_factor.at(0));
+            msg.loadfactor.push_back(load_factor.at(1));
+            msg.loadfactor.push_back(load_factor.at(2));
+            loadfactor_pub.publish(msg);
+        }
+    }
     return true;
 }
 bool MasterNode::run_1hz() {

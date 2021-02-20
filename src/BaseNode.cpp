@@ -235,6 +235,7 @@ bool BaseNode::update(Node::State node_state) {
         run_01hz_noisy();
         resource_monitor->update(mtime);
         eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+        resource_used.stamp = ros::Time::now();
         resource_used_pub.publish(resource_used);
         last_01hz_noisy_timer = ros::Time::now();
     }
@@ -362,10 +363,10 @@ eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
 }
 eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
     eros::resource res;
-    res.NodeName = node_name;
-    res.ResourceAvailable = false;
+    res.Name = node_name;
     res.PID = res_info.pid;
     res.CPU_Perc = res_info.cpu_perc;
     res.RAM_Perc = res_info.ram_perc;
+    res.DISK_Perc = res_info.disk_perc;
     return res;
 }

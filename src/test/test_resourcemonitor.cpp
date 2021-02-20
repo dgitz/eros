@@ -13,7 +13,6 @@ bool isEqual(double a, double b, double eps) {
     }
 }
 TEST(BasicTest, TestOperation_Process) {
-    return;
     const double TIME_TO_RUN = 30.0;
 
     Diagnostic::DiagnosticDefinition diag;

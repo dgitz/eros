@@ -77,8 +77,11 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> node_list;
         std::vector<std::string> heartbeat_list;
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
         logger->log_diagnostic(diag);
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
@@ -91,8 +94,11 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> heartbeat_list;
         heartbeat_list.push_back("/ABCNameSpace/Node1/heartbeat");
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         logger->log_diagnostic(diag);
 
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
@@ -125,8 +131,11 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> heartbeat_list;
         heartbeat_list.push_back("/ABCNameSpace/Node1/heartbeat");
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         logger->log_diagnostic(diag);
         std::map<std::string, SystemMonitorProcess::Task> task_list = tester->get_task_list();
         std::map<std::string, SystemMonitorProcess::Task>::iterator task_it = task_list.begin();
@@ -155,8 +164,11 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> heartbeat_list;
         heartbeat_list.push_back("/ABCNameSpace/Node2/heartbeat");
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         logger->log_diagnostic(diag);
         std::map<std::string, SystemMonitorProcess::Task> task_list = tester->get_task_list();
         printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
@@ -174,8 +186,11 @@ TEST(BasicTest, TestOperation) {
         node_list.push_back("/ABCNameSpace/Node3");
         std::vector<std::string> heartbeat_list;
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         logger->log_diagnostic(diag);
 
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
@@ -200,8 +215,11 @@ TEST(BasicTest, TestOperation) {
         std::vector<std::string> heartbeat_list;
         heartbeat_list.push_back("/ABCNameSpace/Node3/heartbeat");
         std::vector<std::string> new_heartbeat_topics_to_subscribe;
-        diag =
-            tester->update_nodelist(node_list, heartbeat_list, new_heartbeat_topics_to_subscribe);
+        std::vector<std::string> new_resource_topics_to_subscribe;
+        diag = tester->update_nodelist(node_list,
+                                       heartbeat_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resource_topics_to_subscribe);
         logger->log_diagnostic(diag);
 
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);

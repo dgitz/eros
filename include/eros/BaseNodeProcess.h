@@ -18,6 +18,7 @@
 #include <eros/command.h>
 #include <eros/diagnostic.h>
 #include <eros/heartbeat.h>
+#include <eros/loadfactor.h>
 #include <eros/resource.h>
 #include <eros/uptime.h>
 

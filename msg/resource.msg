@@ -1,7 +1,6 @@
 #resource
 time stamp
-string NodeName
-bool    ResourceAvailable
+string Name
 uint16   PID
 float32   CPU_Perc
 float32   RAM_Perc
