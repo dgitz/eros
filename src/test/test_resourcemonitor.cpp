@@ -13,7 +13,7 @@ bool isEqual(double a, double b, double eps) {
     }
 }
 TEST(BasicTest, TestOperation_Node) {
-    const double TIME_TO_RUN = 1000.0;
+    const double TIME_TO_RUN = 30.0;
 
     Diagnostic::DiagnosticDefinition diag;
     diag.node_name = "UnitTestResourceMonitor";

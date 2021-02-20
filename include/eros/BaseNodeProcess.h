@@ -30,6 +30,7 @@
 // Project
 #include "Diagnostic.h"
 #include "Logger.h"
+#include "ResourceMonitor.h"
 #include "eROS_Definitions.h"
 
 /*! \class BaseNodeProcess BaseNodeProcess.h "BaseNodeProcess.h"

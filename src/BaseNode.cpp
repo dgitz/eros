@@ -56,6 +56,9 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     std::string diagnostic_topic = "/" + node_name + "/diagnostic";
     diagnostic_pub = n->advertise<eros::diagnostic>(diagnostic_topic, 20);
 
+    std::string resource_used_topic = "/" + node_name + "/resource_used";
+    resource_used_pub = n->advertise<eros::resource>(resource_used_topic, 2);
+
     std::string srv_firmware_topic = "/" + node_name + "/srv_firmware";
     firmware_srv = n->advertiseService(srv_firmware_topic, &BaseNode::firmware_service, this);
 
@@ -102,6 +105,12 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
             logger->log_notice("Initialized.");
             logger_initialized = true;
         }
+    }
+    resource_monitor = new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
+    diag = resource_monitor->init();
+    if (diag.level >= Level::Type::ERROR) {
+        logger->log_diagnostic(diag);
+        return diag;
     }
     if (no_launch_enabled == true) {
         std::string param_startup_delay = node_name + "/startup_delay";
@@ -224,6 +233,9 @@ bool BaseNode::update(Node::State node_state) {
     if (mtime >= 10.0 + rand_delay_sec) {
         rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
         run_01hz_noisy();
+        resource_monitor->update(mtime);
+        eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+        resource_used_pub.publish(resource_used);
         last_01hz_noisy_timer = ros::Time::now();
     }
     mtime = measure_time_diff(ros::Time::now(), last_01hz_timer);
@@ -345,4 +357,14 @@ eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
     diag.DiagnosticMessage = (uint8_t)diag_def.message;
     diag.Description = diag_def.description;
     return diag;
+}
+eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info)
+{
+    eros::resource res;
+    res.NodeName = node_name;
+    res.ResourceAvailable = false;  
+    res.PID = res_info.pid;
+    res.CPU_Perc = res_info.cpu_perc;
+    res.RAM_Perc = res_info.ram_perc;
+    return res;
 }

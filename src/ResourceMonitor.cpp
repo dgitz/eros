@@ -43,7 +43,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     try {
         processor_count = std::atoi(exec("nproc", true).c_str());
     }
-    catch (std::exception e) {
+    catch (const std::exception e) {
         std::string tempstr = "Unable to determine number of processors: " + std::string(e.what());
 
         diag.level = Level::Type::ERROR;
@@ -93,9 +93,6 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     std::string res = exec(top_query.c_str(), true);
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
-    for (std::size_t i = 0; i < strs.size(); ++i) {
-        printf("%d/%d %s\n", i, strs.size(), strs.at(i).c_str());
-    }
     if (architecture == Architecture::Type::X86_64) {
         if (strs.size() != 12) {
             diag.level = Level::Type::ERROR;
@@ -108,7 +105,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
-        catch (std::exception e) {
+        catch (const std::exception e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -129,7 +126,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
-        catch (std::exception e) {
+        catch (const std::exception e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -150,7 +147,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(9).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(10).c_str());
         }
-        catch (std::exception e) {
+        catch (const std::exception e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -234,7 +231,7 @@ std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
                     result += buffer;
             }
         }
-        catch (std::exception e) {
+        catch (const std::exception e) {
             pclose(pipe);
             std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                                   " and exception: " + std::string(e.what());
@@ -244,7 +241,7 @@ std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
         pclose(pipe);
         return result;
     }
-    catch (std::exception e) {
+    catch (const std::exception e) {
         std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                               " and exception: " + std::string(e.what());
         logger->log_error(tempstr);

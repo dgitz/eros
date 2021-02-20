@@ -32,9 +32,6 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 
-    Architecture::Type host_architecture = tester->read_device_architecture();
-    EXPECT_TRUE(host_architecture != Architecture::Type::UNKNOWN);
-    logger->log_notice("Host Architecture: " + Architecture::ArchitectureString(host_architecture));
     delete logger;
     delete tester;
 }
