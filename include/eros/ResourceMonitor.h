@@ -7,6 +7,9 @@
 #include <eros/eROS_Definitions.h>
 #include <stdio.h>
 #include <unistd.h>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
 /*! \class ResourceMonitor
     \brief ResourceMonitor class
     ResourceMonitor class used to collect resource information on a process or device.
@@ -18,7 +21,7 @@ class ResourceMonitor
         std::string process_name;
         uint16_t pid;
         double cpu_perc;
-        double ram_mb;
+        double ram_perc;
         double disk_perc;
     };
 

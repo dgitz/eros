@@ -3,7 +3,15 @@
 #include <eros/Logger.h>
 #include <eros/ResourceMonitor.h>
 #include <gtest/gtest.h>
-
+bool isEqual(double a, double b, double eps) {
+    double dv = a - b;
+    if (fabs(dv) < eps) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 TEST(BasicTest, TestOperation_Node) {
     const double TIME_TO_RUN = 1000.0;
 
@@ -11,10 +19,12 @@ TEST(BasicTest, TestOperation_Node) {
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
+    logger->log_info("a");
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;
     diag.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+    diag.level = Level::Type::INFO;
     ResourceMonitor* resource_monitor =
         new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
     diag = resource_monitor->init();
@@ -22,6 +32,8 @@ TEST(BasicTest, TestOperation_Node) {
     logger->log_diagnostic(diag);
     printf("%s\n", resource_monitor->pretty(resource_monitor->get_resourceinfo()).c_str());
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+
+    ResourceMonitor::ResourceInfo resourceInfo = resource_monitor->get_resourceinfo();
 
     double run_time = 0.0;
     double dt = 1.0;

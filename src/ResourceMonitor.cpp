@@ -13,7 +13,7 @@ ResourceMonitor::ResourceMonitor(Mode _mode,
       processor_count(0) {
     resourceInfo.cpu_perc = -1.0;
     resourceInfo.disk_perc = -1.0;
-    resourceInfo.ram_mb = -1.0;
+    resourceInfo.ram_perc = -1.0;
     diagnostic.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diagnostic.update_count = 0;
 }
@@ -91,9 +91,81 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
 
     std::string res = exec(top_query.c_str(), true);
-    printf("top result:%s\n", res.c_str());
-    diag.message = Diagnostic::Message::INITIALIZING_ERROR;
-    diag.description = "Not Implemented Yet.";
+    std::vector<std::string> strs;
+    boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
+    if (architecture == Architecture::Type::X86_64) {
+        if (strs.size() != 12) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description = "Improper string to process (size != 12): " + res;
+            diag.update_count++;
+            return diag;
+        }
+        try {
+            resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
+            resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
+        }
+        catch (std::exception e) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description =
+                "Unable to process string: " + res + " with result: " + std::string(e.what());
+            diag.update_count++;
+            return diag;
+        }
+        }
+    else if (architecture == Architecture::Type::AARCH64) {
+        if (strs.size() != 12) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description = "Improper string to process: " + res;
+            diag.update_count++;
+            return diag;
+        }
+        try {
+            resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
+            resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
+        }
+        catch (std::exception e) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description =
+                "Unable to process string: " + res + " with result: " + std::string(e.what());
+            diag.update_count++;
+            return diag;
+        }
+    }
+    else if (architecture == Architecture::Type::ARMV7L) {
+        if (strs.size() != 12) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description = "Improper string to process: " + res;
+            diag.update_count++;
+            return diag;
+        }
+        try {
+            resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
+            resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
+        }
+        catch (std::exception e) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description =
+                "Unable to process string: " + res + " with result: " + std::string(e.what());
+            diag.update_count++;
+            return diag;
+        }
+    }
+    else {
+        diag.level = Level::Type::ERROR;
+        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.description =
+            "Architecture: " + Architecture::ArchitectureString(architecture) + " Not Supported.";
+        diag.update_count++;
+        return diag;
+    }
+    diag.message = Diagnostic::Message::NOERROR;
+    diag.description = "Updated.";
     diag.update_count++;
     return diag;
 }
@@ -133,7 +205,9 @@ std::string ResourceMonitor::pretty(ResourceInfo info) {
     std::string str = "--- Resource Monitor Info ---\n";
     str += "\tArchitecture: " + Architecture::ArchitectureString(architecture) +
            " Processor Count: " + std::to_string(processor_count) + "\n";
-    str += "\tPID: " + std::to_string(info.pid);
+    str += "\tPID: " + std::to_string(info.pid) + "\n";
+    str += "\tRAM: " + std::to_string(info.ram_perc) + "%\n";
+    str += "\tCPU: " + std::to_string(info.cpu_perc) + "%\n";
     return str;
 }
 std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
