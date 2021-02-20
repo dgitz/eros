@@ -29,9 +29,17 @@ Architecture::Type MasterNodeProcess::read_device_architecture() {
     {
         std::string cmd = "uname -m";
         std::string result = exec(cmd.c_str(), true);
-        std::size_t found = result.find("x86_64");
-        if (found != std::string::npos) {
+        std::size_t found_x86_64 = result.find("x86_64");
+        std::size_t found_armv7l = result.find("armv7l");
+        std::size_t found_aarch64 = result.find("aarch64");
+        if (found_x86_64 != std::string::npos) {
             return Architecture::Type::X86_64;
+        }
+        else if (found_armv7l != std::string::npos) {
+            return Architecture::Type::ARMV7L;
+        }
+        else if (found_aarch64 != std::string::npos) {
+            return Architecture::Type::AARCH64;
         }
         else {
             logger->log_warn("Unexpected result of command: " + cmd + " result: " + result);

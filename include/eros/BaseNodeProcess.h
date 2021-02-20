@@ -10,7 +10,6 @@
 // C++ System Files
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-#include <eigen3/Eigen/Dense>
 
 #include "boost/date_time/posix_time/posix_time.hpp"
 // ROS Base Functionality
