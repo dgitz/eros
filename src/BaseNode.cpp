@@ -344,6 +344,8 @@ void BaseNode::base_cleanup() {
         heartbeat.stamp = ros::Time::now();
         heartbeat_pub.publish(heartbeat);
     }
+    delete resource_monitor;
+    delete logger;
 }
 eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
     eros::diagnostic diag;
@@ -358,11 +360,10 @@ eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
     diag.Description = diag_def.description;
     return diag;
 }
-eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info)
-{
+eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
     eros::resource res;
     res.NodeName = node_name;
-    res.ResourceAvailable = false;  
+    res.ResourceAvailable = false;
     res.PID = res_info.pid;
     res.CPU_Perc = res_info.cpu_perc;
     res.RAM_Perc = res_info.ram_perc;

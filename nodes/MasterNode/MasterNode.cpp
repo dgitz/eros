@@ -96,6 +96,12 @@ Diagnostic::DiagnosticDefinition MasterNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+    resource_available_monitor = new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
+    diag = resource_available_monitor.init();
+    if (diag.level > Level::Type::WARN) {
+        logger->log_diagnostic(diag);
+        return diag;
+    }
     return diag;
 }
 bool MasterNode::run_loop1() {

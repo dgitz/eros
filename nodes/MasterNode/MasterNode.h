@@ -65,6 +65,7 @@ class MasterNode : public BaseNode
     Diagnostic::DiagnosticDefinition read_launchparameters();
     MasterNodeProcess* process;
     ros::ServiceServer device_server_srv;
+    ResourceMonitor* resource_available_monitor;
 };
 
 #endif  // MasterNode_H
