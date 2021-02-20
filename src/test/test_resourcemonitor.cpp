@@ -19,7 +19,6 @@ TEST(BasicTest, TestOperation_Node) {
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
-    logger->log_info("a");
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;

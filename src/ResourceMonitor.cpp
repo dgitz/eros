@@ -121,7 +121,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         if (strs.size() != 12) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
-            diag.description = "Improper string to process: " + res;
+            diag.description = "Improper string to process: (size != 12)" + res;
             diag.update_count++;
             return diag;
         }
@@ -139,16 +139,16 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         }
     }
     else if (architecture == Architecture::Type::ARMV7L) {
-        if (strs.size() != 12) {
+        if (strs.size() != 13) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
-            diag.description = "Improper string to process: " + res;
+            diag.description = "Improper string to process: (size != 13)" + res;
             diag.update_count++;
             return diag;
         }
         try {
-            resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
-            resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
+            resourceInfo.cpu_perc = std::atof(strs.at(9).c_str());
+            resourceInfo.ram_perc = std::atof(strs.at(10).c_str());
         }
         catch (std::exception e) {
             diag.level = Level::Type::ERROR;
