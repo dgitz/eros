@@ -231,8 +231,6 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
             (architecture == Architecture::Type::AARCH64) ||
             (architecture == Architecture::Type::ARMV7L)) {
             try {
-                // MiB Mem :    936.1 total,    705.9 free,     42.0 used,    188.3 buff/cache
-
                 std::string top_query = "top -bn1 | grep 'Mem'";
                 std::string res = exec(top_query.c_str(), true);
                 std::vector<std::string> strs;
@@ -279,11 +277,54 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 return diag;
             }
         }
-        diag.level = Level::Type::INFO;
-        diag.message = Diagnostic::Message::NOERROR;
-        diag.description = "Updated.";
-        diag.update_count++;
     }
+    {  // Read Free Disk Space
+        std::string res;
+        if ((architecture == Architecture::Type::X86_64) ||
+            (architecture == Architecture::Type::AARCH64) ||
+            (architecture == Architecture::Type::ARMV7L)) {
+            try {
+                std::string df_query = "df -h";
+                std::string res = exec(df_query.c_str(), true);
+                std::vector<std::string> lines;
+                boost::split(lines, res, boost::is_any_of("\n"), boost::token_compress_on);
+                for (std::size_t i = 0; i < lines.size(); ++i) {
+                    std::vector<std::string> fields;
+                    boost::split(
+                        fields, lines.at(i), boost::is_any_of(" "), boost::token_compress_on);
+                    std::string mount_point = fields.at(fields.size() - 1);
+                    if (mount_point == "/") {
+                        try {
+                            std::string tempstr1 = fields.at(4);
+                            tempstr1 =
+                                tempstr1.substr(0, tempstr1.size() - 1);  // Remove trailing % sign
+                            resourceInfo.disk_perc = 100.0 - std::atof(tempstr1.c_str());
+                        }
+                        catch (const std::exception e) {
+                            diag.level = Level::Type::ERROR;
+                            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                            diag.description = "Unable to process string: " + res +
+                                               " with result: " + std::string(e.what());
+                            diag.update_count++;
+                            return diag;
+                        }
+                    }
+                }
+            }
+            catch (const std::exception e) {
+                diag.level = Level::Type::ERROR;
+                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.description =
+                    "Unable to process string: " + res + " with result: " + std::string(e.what());
+                diag.update_count++;
+                return diag;
+            }
+        }
+    }
+    diag.level = Level::Type::INFO;
+    diag.message = Diagnostic::Message::NOERROR;
+    diag.description = "Updated.";
+    diag.update_count++;
     return diag;
 }
 Architecture::Type ResourceMonitor::read_device_architecture() {
@@ -316,6 +357,8 @@ std::string ResourceMonitor::pretty(ResourceInfo info) {
     str += "\tPID: " + std::to_string(info.pid) + "\n";
     str += "\tRAM: " + std::to_string(info.ram_perc) + "%\n";
     str += "\tCPU: " + std::to_string(info.cpu_perc) + "%\n";
+    str += "\tDisk: " + std::to_string(info.disk_perc) + "%\n";
+
     return str;
 }
 std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
