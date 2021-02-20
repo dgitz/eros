@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['screencoordinateperc',['ScreenCoordinatePerc',['../structWindowManager_1_1ScreenCoordinatePerc.html',1,'WindowManager']]],
-  ['screencoordinatepixel',['ScreenCoordinatePixel',['../structWindowManager_1_1ScreenCoordinatePixel.html',1,'WindowManager']]],
-  ['system',['System',['../classSystem.html',1,'']]],
-  ['systemmonitornode',['SystemMonitorNode',['../classSystemMonitorNode.html',1,'']]],
-  ['systemmonitorprocess',['SystemMonitorProcess',['../classSystemMonitorProcess.html',1,'']]],
-  ['systemmonitorprocesstester',['SystemMonitorProcessTester',['../classSystemMonitorProcessTester.html',1,'']]]
+  ['resourceinfo',['ResourceInfo',['../structResourceMonitor_1_1ResourceInfo.html',1,'ResourceMonitor']]],
+  ['resourcemonitor',['ResourceMonitor',['../classResourceMonitor.html',1,'']]]
 ];
