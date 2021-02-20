@@ -337,10 +337,11 @@ class Architecture
 {
    public:
     enum class Type {
-        UNKNOWN = 0, /*!< Uninitialized value. */
-        X86_64 = 1,
+        UNKNOWN = 0,    /*!< Uninitialized value. */
+        X86_64 = 1,     /*!< x86 64-bit compatible */
         ARMV7L = 2,     /*!< Raspberry Pi 2, 3 */
-        END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
+        AARCH64 = 3,    /*!< Arch Linux 64-bit */
+        END_OF_LIST = 4 /*!< Last item of list. Used for Range Checks. */
     };
 
     //! Convert Architecture::Type to human readable string
@@ -353,6 +354,7 @@ class Architecture
             case Architecture::Type::UNKNOWN: return "UNKNOWN"; break;
             case Architecture::Type::X86_64: return "X86_64"; break;
             case Architecture::Type::ARMV7L: return "ARMV7L"; break;
+            case Architecture::Type::AARCH64: return "AARCH64"; break;
             default: return ArchitectureString(Architecture::Type::UNKNOWN); break;
         }
     }
@@ -363,6 +365,9 @@ class Architecture
         }
         else if (type == "ARMV7L") {
             return Architecture::Type::ARMV7L;
+        }
+        else if (type == "AARCH64") {
+            return Architecture::Type::AARCH64;
         }
         return Architecture::Type::UNKNOWN;
     }
