@@ -168,8 +168,8 @@ class SystemMonitorProcess : public BaseNodeProcess
               host_device(_host_device),
               base_node_name(_base_node_name),
               node_name(_node_name),
-              cpu_used_perc(0),
-              mem_used_perc(0),
+              cpu_used_perc(0.0),
+              mem_used_perc(0.0),
               last_heartbeat(0.0),
               last_heartbeat_delta(0.0),
               restart_count(0) {
@@ -178,12 +178,12 @@ class SystemMonitorProcess : public BaseNodeProcess
         uint16_t id;
         Node::State state;
         TaskType type;
-        int32_t pid;
+        uint16_t pid;
         std::string host_device;
         std::string base_node_name;
         std::string node_name;
-        int16_t cpu_used_perc;
-        int32_t mem_used_perc;
+        double cpu_used_perc;
+        double mem_used_perc;
         double last_heartbeat;
         double last_heartbeat_delta;
         uint64_t restart_count;
@@ -226,8 +226,8 @@ class SystemMonitorProcess : public BaseNodeProcess
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::PID, TaskField(" PID ", 8)));
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::CPU, TaskField(" CPU(%) ", 10)));
-        task_window_fields.insert(std::pair<TaskFieldColumn, TaskField>(
-            TaskFieldColumn::RAM, TaskField(" RAM(Mb) ", 10)));
+        task_window_fields.insert(
+            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::RAM, TaskField(" RAM(%) ", 10)));
         task_window_fields.insert(
             std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::RX, TaskField(" Rx ", 6)));
     }
@@ -261,7 +261,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     Diagnostic::DiagnosticDefinition update_nodelist(
         std::vector<std::string> node_list,
         std::vector<std::string> heartbeat_list,
-        std::vector<std::string>& new_heartbeat_topics_to_subscribe);
+        std::vector<std::string>& new_heartbeat_topics_to_subscribe,
+        std::vector<std::string>& new_resourceused_topics_to_subscribe);
     std::map<std::string, Task> get_task_list() {
         return task_list;
     }
@@ -284,6 +285,26 @@ class SystemMonitorProcess : public BaseNodeProcess
                 Level::Type::WARN,
                 Diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Hearbeat: " + msg.HostName + " " + msg.NodeName);
+            logger->log_diagnostic(diag);
+        }
+        return diag;
+    }
+    Diagnostic::DiagnosticDefinition new_resourceusedmessage(
+        const eros::resource::ConstPtr& t_msg) {
+        eros::resource msg = convert_fromptr(t_msg);
+        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if (update_task_list(msg) == true) {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                       Level::Type::INFO,
+                                                       Diagnostic::Message::NOERROR,
+                                                       "Updated Resource Used.");
+        }
+        else {
+            diag =
+                diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                    Level::Type::WARN,
+                                                    Diagnostic::Message::DROPPING_PACKETS,
+                                                    "Unable to update Resource: " + msg.NodeName);
             logger->log_diagnostic(diag);
         }
         return diag;
@@ -374,6 +395,21 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         return true;
     }
+    bool update_task_list(eros::resource resource) {
+        std::string key = resource.NodeName;
+        std::map<std::string, Task>::iterator it;
+        it = task_list.find(key);
+        if (it == task_list.end()) {
+            return false;  // Should not do anything
+        }
+        else {
+            it->second.pid = resource.PID;
+            it->second.cpu_used_perc = resource.CPU_Perc;
+            it->second.mem_used_perc = resource.RAM_Perc;
+        }
+        return true;
+    }
+
     bool kill_me;
     ros::NodeHandle* nodeHandle;
     uint16_t mainwindow_width;

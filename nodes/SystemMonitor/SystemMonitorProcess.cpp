@@ -82,7 +82,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_nodelist(
     std::vector<std::string> node_list,
     std::vector<std::string> heartbeat_list,
-    std::vector<std::string> &new_heartbeat_topics_to_subscribe) {
+    std::vector<std::string> &new_heartbeat_topics_to_subscribe,
+    std::vector<std::string> &new_resourceused_topics_to_subscribe) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     // Iterate over Node List.  If NEW, add as non EROS.  Do nothing for heart beat sub list
     {
@@ -122,10 +123,14 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_nodelist(
                 task_list.insert(std::pair<std::string, Task>(key, newTask));
                 task_name_list.insert(std::pair<uint16_t, std::string>(newTask.id, key));
                 new_heartbeat_topics_to_subscribe.push_back(*it);
+                new_resourceused_topics_to_subscribe.push_back(newTask.node_name +
+                                                               "/resource_used");
             }
             else if (task_it->second.type == TaskType::NON_EROS) {
                 task_it->second.type = TaskType::EROS;
                 new_heartbeat_topics_to_subscribe.push_back(*it);
+                new_resourceused_topics_to_subscribe.push_back(task_it->second.node_name +
+                                                               "/resource_used");
             }
             ++it;
         }
@@ -796,7 +801,9 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     }
     {
         width = task_window_fields.find(TaskFieldColumn::CPU)->second.width;
-        std::string tempstr = std::to_string(task.cpu_used_perc);
+        char c_tempstr[8];
+        sprintf(c_tempstr, "%3.2f", task.cpu_used_perc);
+        std::string tempstr = std::string(c_tempstr);
         std::size_t spaces = width - tempstr.size();
         if (spaces > 0) {
             tempstr += std::string(spaces, ' ');
@@ -805,7 +812,9 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
     }
     {
         width = task_window_fields.find(TaskFieldColumn::RAM)->second.width;
-        std::string tempstr = std::to_string(task.mem_used_perc);
+        char c_tempstr[8];
+        sprintf(c_tempstr, "%3.2f", task.mem_used_perc);
+        std::string tempstr = std::string(c_tempstr);
         std::size_t spaces = width - tempstr.size();
         if (spaces > 0) {
             tempstr += std::string(spaces, ' ');

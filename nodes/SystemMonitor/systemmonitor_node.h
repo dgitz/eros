@@ -24,13 +24,13 @@ class SystemMonitorNode : public BaseNode
     const uint16_t MAJOR_RELEASE_VERSION = 0;
 
     /*! \brief The Minor Release Version of the Node.*/
-    const uint16_t MINOR_RELEASE_VERSION = 1;
+    const uint16_t MINOR_RELEASE_VERSION = 2;
 
     /*! \brief The Build Number of the Node.*/
     const uint16_t BUILD_NUMBER = 0;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 14-Feb-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 20-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
     const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::REMOTE_CONTROL;
@@ -61,11 +61,13 @@ class SystemMonitorNode : public BaseNode
 
     Diagnostic::DiagnosticDefinition rescan_nodes();
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
-    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res);
+    void resourceused_Callback(const eros::resource::ConstPtr& msg);
+    bool changenodestate_service(eros::srv_change_nodestate::Request& req,
+                                 eros::srv_change_nodestate::Response& res);
 
    private:
     std::vector<ros::Subscriber> heartbeat_subs;
+    std::vector<ros::Subscriber> resource_used_subs;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
 };

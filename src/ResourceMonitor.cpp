@@ -93,8 +93,14 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     std::string res = exec(top_query.c_str(), true);
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
+    if (strs.at(0) == "") {
+        strs.erase(strs.begin());
+    }
     if (architecture == Architecture::Type::X86_64) {
         if (strs.size() != 12) {
+            for (std::size_t i = 0; i < strs.size(); ++i) {
+                printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
+            }
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process (size != 12): " + res;
@@ -116,6 +122,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     }
     else if (architecture == Architecture::Type::AARCH64) {
         if (strs.size() != 12) {
+            for (std::size_t i = 0; i < strs.size(); ++i) {
+                printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
+            }
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process: (size != 12)" + res;
@@ -136,7 +145,10 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         }
     }
     else if (architecture == Architecture::Type::ARMV7L) {
-        if (strs.size() != 13) {
+        if (strs.size() != 12) {
+            for (std::size_t i = 0; i < strs.size(); ++i) {
+                printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
+            }
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process: (size != 13)" + res;
@@ -144,8 +156,8 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             return diag;
         }
         try {
-            resourceInfo.cpu_perc = std::atof(strs.at(9).c_str());
-            resourceInfo.ram_perc = std::atof(strs.at(10).c_str());
+            resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
+            resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
         catch (const std::exception e) {
             diag.level = Level::Type::ERROR;
