@@ -78,6 +78,12 @@ TEST(BasicTest, TestOperation_Device) {
     while (run_time <= TIME_TO_RUN) {
         diag = resource_monitor->update(dt);
         printf("%s\n", resource_monitor->pretty(resource_monitor->get_resourceinfo()).c_str());
+        std::vector<double> load_factor = resource_monitor->get_load_factor();
+        EXPECT_TRUE(load_factor.size() == 3);
+        printf("Load Factor: 1 Min: %4.2f 5 Min: %4.2f 15 Min: %4.2f\n",
+               load_factor.at(0),
+               load_factor.at(1),
+               load_factor.at(2));
         logger->log_diagnostic(diag);
         EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 

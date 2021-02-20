@@ -16,6 +16,9 @@ ResourceMonitor::ResourceMonitor(Mode _mode,
     resourceInfo.ram_perc = -1.0;
     diagnostic.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diagnostic.update_count = 0;
+    load_factor.push_back(0.0);
+    load_factor.push_back(0.0);
+    load_factor.push_back(0.0);
 }
 ResourceMonitor::~ResourceMonitor() {
 }
@@ -58,6 +61,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        diag = read_device_loadfactor();
     }
     if (diag.level <= Level::Type::NOTICE) {
         initialized = true;
@@ -82,6 +86,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        diag = read_device_loadfactor();
     }
     return diag;
 }
@@ -319,6 +324,55 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 diag.update_count++;
                 return diag;
             }
+        }
+    }
+    diag.level = Level::Type::INFO;
+    diag.message = Diagnostic::Message::NOERROR;
+    diag.description = "Updated.";
+    diag.update_count++;
+    return diag;
+}
+Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
+    Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string res;
+    if ((architecture == Architecture::Type::X86_64) ||
+        (architecture == Architecture::Type::AARCH64) ||
+        (architecture == Architecture::Type::ARMV7L)) {
+        try {
+            std::string top_query = "top -bn1 | grep 'load average:'";
+            std::string res = exec(top_query.c_str(), true);
+            std::vector<std::string> strs;
+            boost::algorithm::split(strs, res, boost::is_any_of(", "), boost::token_compress_on);
+            bool found_me = false;
+            for (std::size_t i = 0; i < strs.size(); ++i) {
+                if (strs.at(i).find("average") != std::string::npos) {
+                    if ((i + 3) <= strs.size()) {
+                        load_factor.at(0) =
+                            std::atof(strs.at(i + 1).c_str()) / (double)(processor_count);
+                        load_factor.at(1) =
+                            std::atof(strs.at(i + 2).c_str()) / (double)processor_count;
+                        load_factor.at(2) =
+                            std::atof(strs.at(i + 3).c_str()) / (double)processor_count;
+                        found_me = true;
+                        break;
+                    }
+                }
+            }
+            if (found_me == false) {
+                diag.level = Level::Type::ERROR;
+                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.description = "Unable to process string: " + res;
+                diag.update_count++;
+                return diag;
+            }
+        }
+        catch (const std::exception e) {
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.description =
+                "Unable to process string: " + res + " with result: " + std::string(e.what());
+            diag.update_count++;
+            return diag;
         }
     }
     diag.level = Level::Type::INFO;
