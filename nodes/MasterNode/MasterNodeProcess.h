@@ -21,8 +21,7 @@ class MasterNodeProcess : public BaseNodeProcess
         return;
     }
 
-    Architecture::Type read_device_architecture();
-
+   
    private:
 };
 #endif  // MasterNodeProcess_H

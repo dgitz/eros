@@ -11,7 +11,7 @@ target_link_libraries(test_diagnostics ${catkin_LIBRARIES} ${Boost_LIBRARIES} lo
 add_dependencies(test_diagnostics eros_generate_messages_cpp)
 
 catkin_add_gtest(test_resourcemonitor test_resourcemonitor.cpp)
-target_link_libraries(test_resourcemonitor ${catkin_LIBRARIES}  ${Boost_LIBRARIES} resourceMonitor logger masterNodeProcess)
+target_link_libraries(test_resourcemonitor ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger resourceMonitor)
 add_dependencies(test_resourcemonitor eros_generate_messages_cpp)
 
 catkin_add_gtest(test_base test_base.cpp)

@@ -1,14 +1,16 @@
 #include <eros/ResourceMonitor.h>
 ResourceMonitor::ResourceMonitor() {
 }
-ResourceMonitor::ResourceMonitor(Architecture::Type _architecture,
-                                 Mode _mode,
-                                 Diagnostic::DiagnosticDefinition _diag)
-    : architecture(_architecture),
-      mode(_mode),
+ResourceMonitor::ResourceMonitor(Mode _mode,
+                                 Diagnostic::DiagnosticDefinition _diag,
+                                 Logger *_logger)
+    : mode(_mode),
+      architecture(Architecture::Type::UNKNOWN),
       diagnostic(_diag),
+      logger(_logger),
       initialized(false),
-      run_time(0.0) {
+      run_time(0.0),
+      processor_count(0) {
     resourceInfo.cpu_perc = -1.0;
     resourceInfo.disk_perc = -1.0;
     resourceInfo.ram_mb = -1.0;
@@ -19,6 +21,7 @@ ResourceMonitor::~ResourceMonitor() {
 }
 Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    architecture = read_device_architecture();
     if (architecture == Architecture::Type::UNKNOWN) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
@@ -26,7 +29,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         diag.update_count++;
         initialized = false;
     }
-    if ((architecture != Architecture::Type::X86_64)) {
+    if ((architecture != Architecture::Type::X86_64) ||
+        (architecture != Architecture::Type::ARMV7L) ||
+        (architecture != Architecture::Type::AARCH64)) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
@@ -35,6 +40,19 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         initialized = false;
     }
     resourceInfo.pid = ::getpid();
+    try {
+        processor_count = std::atoi(exec("nproc", true).c_str());
+    }
+    catch (std::exception e) {
+        std::string tempstr = "Unable to determine number of processors: " + std::string(e.what());
+
+        diag.level = Level::Type::ERROR;
+        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.description = tempstr;
+        diag.update_count++;
+        logger->log_error(tempstr);
+        initialized = false;
+    }
     if (mode == Mode::PROCESS) {
         diag = read_process_resource_usage();
     }
@@ -43,6 +61,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     }
     if (diag.level <= Level::Type::NOTICE) {
         initialized = true;
+        logger->log_diagnostic(diag);
     }
     else {
         initialized = false;
@@ -68,8 +87,11 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
 }
 Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string top_query =
+        "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
 
-    diag.level = Level::Type::ERROR;
+    std::string res = exec(top_query.c_str(), true);
+    printf("top result:%s\n", res.c_str());
     diag.message = Diagnostic::Message::INITIALIZING_ERROR;
     diag.description = "Not Implemented Yet.";
     diag.update_count++;
@@ -84,8 +106,71 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
     diag.update_count++;
     return diag;
 }
+Architecture::Type ResourceMonitor::read_device_architecture() {
+    // Try 1: Read command: "uname -m"
+    {
+        std::string cmd = "uname -m";
+        std::string result = exec(cmd.c_str(), true);
+        std::size_t found_x86_64 = result.find("x86_64");
+        std::size_t found_armv7l = result.find("armv7l");
+        std::size_t found_aarch64 = result.find("aarch64");
+        if (found_x86_64 != std::string::npos) {
+            return Architecture::Type::X86_64;
+        }
+        else if (found_armv7l != std::string::npos) {
+            return Architecture::Type::ARMV7L;
+        }
+        else if (found_aarch64 != std::string::npos) {
+            return Architecture::Type::AARCH64;
+        }
+        else {
+            logger->log_warn("Unexpected result of command: " + cmd + " result: " + result);
+        }
+    }
+    return Architecture::Type::UNKNOWN;
+}
 std::string ResourceMonitor::pretty(ResourceInfo info) {
     std::string str = "--- Resource Monitor Info ---\n";
+    str += "\tArchitecture: " + Architecture::ArchitectureString(architecture) +
+           " Processor Count: " + std::to_string(processor_count) + "\n";
     str += "\tPID: " + std::to_string(info.pid);
     return str;
+}
+std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
+    char buffer[512];
+    std::string result = "";
+    try {
+        FILE *pipe = popen(cmd, "r");
+        if (wait_for_result == false) {
+            pclose(pipe);
+            return "";
+        }
+        if (!pipe) {
+            std::string tempstr = "popen() failed with command: " + std::string(cmd);
+            logger->log_error(tempstr);
+            pclose(pipe);
+            return "";
+        }
+        try {
+            while (!feof(pipe)) {
+                if (fgets(buffer, 512, pipe) != NULL)
+                    result += buffer;
+            }
+        }
+        catch (std::exception e) {
+            pclose(pipe);
+            std::string tempstr = "popen() failed with command: " + std::string(cmd) +
+                                  " and exception: " + std::string(e.what());
+            logger->log_error(tempstr);
+            return "";
+        }
+        pclose(pipe);
+        return result;
+    }
+    catch (std::exception e) {
+        std::string tempstr = "popen() failed with command: " + std::string(cmd) +
+                              " and exception: " + std::string(e.what());
+        logger->log_error(tempstr);
+        return "";
+    }
 }
