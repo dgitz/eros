@@ -214,6 +214,18 @@ bool DataLoggerNode::run_1hz() {
         logger->log_diagnostic(latest_diagnostics.at(i));
         diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
     }
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    if (process->get_nodestate() == Node::State::RESET) {
+        process->reset();
+        logger->log_notice("Node has Reset");
+        if (process->request_statechange(Node::State::RUNNING) == false) {
+            diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+                                              Level::Type::ERROR,
+                                              Diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                              "Not able to Change Node State to Running.");
+            logger->log_diagnostic(diag);
+        }
+    }
     return true;
 }
 bool DataLoggerNode::run_10hz() {
