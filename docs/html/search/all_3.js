@@ -7,6 +7,7 @@ var searchData=
   ['dataloggerprocess_2eh',['DataLoggerProcess.h',['../DataLoggerProcess_8h.html',1,'']]],
   ['dataloggerprocesstester',['DataLoggerProcessTester',['../classDataLoggerProcessTester.html',1,'']]],
   ['debug',['DEBUG',['../classLevel.html#a5213bbab7358b0ef4fefc284cb7b5effadc30ec20708ef7b0f641ef78b7880a15',1,'Level']]],
+  ['device',['Device',['../structSystemMonitorProcess_1_1Device.html',1,'SystemMonitorProcess']]],
   ['device_5fnot_5favailable',['DEVICE_NOT_AVAILABLE',['../classDiagnostic.html#ae36f9ff390ee983717bfb57c9038397aaf4724a191551c1036f76fdb39f4af9ee',1,'Diagnostic']]],
   ['deviceinfo',['DeviceInfo',['../structBaseNode_1_1DeviceInfo.html',1,'BaseNode']]],
   ['diagnostic',['Diagnostic',['../classDiagnostic.html',1,'Diagnostic'],['../classSystem.html#a7a2992377dce6edb4e58bf8bc443a24da1ba95aa8d735cc8ab55d670b1c957bec',1,'System::DIAGNOSTIC()']]],

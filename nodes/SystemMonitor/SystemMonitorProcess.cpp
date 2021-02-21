@@ -38,6 +38,14 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         }
         ++task_it;
     }
+    std::map<std::string, Device>::iterator device_it = device_list.begin();
+    while (device_it != device_list.end()) {
+        device_it->second.last_heartbeat_delta += t_dt;
+        if (device_it->second.last_heartbeat_delta >= 4.0 * COMMTIMEOUT_THRESHOLD) {
+            device_it->second.state = Node::State::NODATA;
+        }
+        ++device_it;
+    }
 
     std::map<std::string, WindowManager>::iterator win_it = windows.begin();
     while (win_it != windows.end()) {
@@ -154,73 +162,27 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicelist(
     std::vector<std::string> &new_resourceavailable_topics_to_subscribe,
     std::vector<std::string> &new_loadfactor_topics_to_subscribe) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    // std::map<std::string, Device> device_list;
-    // std::map<uint16_t, std::string> device_name_list;
+    std::map<std::string, Device>::iterator device_it;
+    std::map<uint16_t, std::string>::iterator device_name_it;
     std::vector<std::string>::iterator it = loadfactor_list.begin();
     while (it != loadfactor_list.end()) {
         std::string key = *it;
-        logger->log_error(key);
+        key = key.substr(1, key.find("loadfactor") - 2);
+
+        device_it = device_list.find(key);
+        if (device_it == device_list.end()) {
+            Device newDevice(device_list.size(), key);
+            device_list.insert(std::make_pair(newDevice.name, newDevice));
+            device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
+            new_resourceavailable_topics_to_subscribe.push_back("/" + key + "/resource_available");
+            new_loadfactor_topics_to_subscribe.push_back("/" + key + "/loadfactor");
+        }
         ++it;
     }
-    return diag;
-    /*
-    std::map<std::string, Device>::iterator device_it = device_list.
-    // Iterate over Node List.  If NEW, add as non EROS.  Do nothing for heart beat sub list
-    {
-        std::vector<std::string>::iterator it = node_list.begin();
-        while (it != node_list.end()) {
-            std::map<std::string, Task>::iterator task_it;
-            task_it = task_list.find(*it);
-            if (task_it == task_list.end()) {
-                Task newTask(task_list.size(), TaskType::NON_EROS, "Unknown", "Unknown", *it);
-                newTask.state = Node::State::RUNNING;
-                std::string key = newTask.node_name;
-                task_list.insert(std::pair<std::string, Task>(key, newTask));
-                task_name_list.insert(std::pair<uint16_t, std::string>(newTask.id, key));
-            }
-            else {
-                task_it->second.last_heartbeat_delta = 0.0;
-                task_it->second.last_heartbeat = get_system_time();
-            }
-            ++it;
-        }
-    }
-    // Iterate over Heartbeat List.  Determine Node Name from topic name.
-    // If Node does not exist, add as EROS (append sub).  If Node does exist but is NON-EROS,
-    // change to EROS. (append sub)
-    {
-        std::vector<std::string>::iterator it = heartbeat_list.begin();
-        while (it != heartbeat_list.end()) {
-            std::string key = *it;
-            std::size_t found = key.substr(1, key.size()).find_last_of("/");
-            if (found != std::string::npos) {
-                key = key.substr(0, found + 1);
-            }
-            std::map<std::string, Task>::iterator task_it = task_list.find(key);
-            if (task_it == task_list.end()) {
-                Task newTask(task_list.size(), TaskType::EROS, "Unknown", "Unknown", key);
-                std::string key = newTask.node_name;
-                task_list.insert(std::pair<std::string, Task>(key, newTask));
-                task_name_list.insert(std::pair<uint16_t, std::string>(newTask.id, key));
-                new_heartbeat_topics_to_subscribe.push_back(*it);
-                new_resourceused_topics_to_subscribe.push_back(newTask.node_name +
-                                                               "/resource_used");
-            }
-            else if (task_it->second.type == TaskType::NON_EROS) {
-                task_it->second.type = TaskType::EROS;
-                new_heartbeat_topics_to_subscribe.push_back(*it);
-                new_resourceused_topics_to_subscribe.push_back(task_it->second.node_name +
-                                                               "/resource_used");
-            }
-            ++it;
-        }
-    }
-
     diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                                Level::Type::INFO,
                                                Diagnostic::Message::NOERROR,
-                                               "Processed Update.");
-    */
+                                               "Updated Device List.");
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::new_commandmsg(
@@ -286,31 +248,16 @@ bool SystemMonitorProcess::initialize_windows() {
     }
 
     {
-        WindowManager window("instruction_window", 30, 80.0, 40.0, 20.0);
+        WindowManager window("instruction_window", 30, 80.0, 25.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
     {
-        WindowManager window("device_window", 70, 80.0, 30.0, 20.0);
+        WindowManager window("device_window", 55.0, 80.0, 45.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
-    // Add a couple Devices for debugging
-    {
-        Device newDevice(1, "Device1");
-        device_list.insert(std::make_pair(newDevice.name, newDevice));
-        device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
-    }
-    {
-        Device newDevice(2, "Device2");
-        device_list.insert(std::make_pair(newDevice.name, newDevice));
-        device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
-    }
-    {
-        Device newDevice(0, "Device3");
-        device_list.insert(std::make_pair(newDevice.name, newDevice));
-        device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
-    }
+
     std::map<std::string, WindowManager>::iterator it = windows.begin();
     while (it != windows.end()) {
         WindowManager::ScreenCoordinatePixel coord_pix = convertCoordinate(
@@ -536,12 +483,28 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicewindow(
                                                        "Device List does not contain ID: " + key);
             return diag;
         }
+
+        Color color = Color::UNKNOWN;
+        switch (device_it->second.state) {
+            case Node::State::UNKNOWN: color = Color::RED_COLOR; break;
+            case Node::State::START: color = Color::YELLOW_COLOR; break;
+            case Node::State::INITIALIZING: color = Color::YELLOW_COLOR; break;
+            case Node::State::INITIALIZED: color = Color::YELLOW_COLOR; break;
+            case Node::State::NODATA: color = Color::RED_COLOR; break;
+            case Node::State::RUNNING: color = Color::BLUE_COLOR; break;
+            case Node::State::PAUSED: color = Color::GREEN_COLOR; break;
+            case Node::State::RESET: color = Color::YELLOW_COLOR; break;
+            case Node::State::FINISHED: color = Color::YELLOW_COLOR; break;
+            default: color = Color::RED_COLOR; break;
+        }
         std::string str = get_device_info(device_it->second, false);
+        wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
         mvwprintw(window_it->second.get_window_reference(),
                   DEVICESTART_COORD_Y + 2 + (int)index,
                   DEVICESTART_COORD_X + 1,
                   str.c_str());
         wclrtoeol(window_it->second.get_window_reference());
+        wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
         devices_shown++;
         index++;
     }
@@ -1101,6 +1064,22 @@ std::string SystemMonitorProcess::get_device_info(Device device, bool selected) 
             tempstr += std::string(spaces, ' ');
         }
         str += tempstr;
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::RX)->second.width;
+        std::string max_number_str(width - 4, '9');
+        double max_num = std::atof(max_number_str.c_str()) + 0.99;
+        if (device.last_heartbeat_delta > max_num) {
+            device.last_heartbeat_delta = max_num;
+        }
+        char tempstr[2 * width];
+        sprintf(tempstr, "%2.2f", device.last_heartbeat_delta);
+        std::string tempstr_str = std::string(tempstr);
+        std::size_t spaces = width - tempstr_str.size();
+        if (spaces > 0) {
+            tempstr_str += std::string(spaces, ' ');
+        }
+        str += tempstr_str;
     }
 
     return str;

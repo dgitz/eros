@@ -62,12 +62,16 @@ class SystemMonitorNode : public BaseNode
     Diagnostic::DiagnosticDefinition rescan_nodes();
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
     void resourceused_Callback(const eros::resource::ConstPtr& msg);
+    void resourceavailable_Callback(const eros::resource::ConstPtr& msg);
+    void loadfactor_Callback(const eros::loadfactor::ConstPtr& msg);
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
 
    private:
     std::vector<ros::Subscriber> heartbeat_subs;
     std::vector<ros::Subscriber> resource_used_subs;
+    std::vector<ros::Subscriber> resource_available_subs;
+    std::vector<ros::Subscriber> loadfactor_subs;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
 };

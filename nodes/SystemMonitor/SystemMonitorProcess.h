@@ -162,7 +162,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         CPU = 3,
         RAM = 4,
         DISK = 5,
-        LOADFACTOR = 6
+        LOADFACTOR = 6,
+        RX = 7
     };
     struct Task {
         Task(uint16_t _id,
@@ -201,6 +202,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         Device(uint16_t _id, std::string _name)
             : id(_id),
               name(_name),
+              state(Node::State::INITIALIZING),
+              last_heartbeat_delta(0.0),
               cpu_av_perc(0.0),
               ram_av_perc(0.0),
               disk_av_perc(0.0),
@@ -209,6 +212,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         uint16_t id;
         bool initialized;
         std::string name;
+        Node::State state;
+        double last_heartbeat_delta;
         double cpu_av_perc;
         double ram_av_perc;
         double disk_av_perc;
@@ -263,7 +268,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         device_window_fields.insert(
             std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::ID, Field("ID", 3)));
         device_window_fields.insert(
-            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::NAME, Field(" Device ", 10)));
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::NAME, Field(" Device ", 25)));
         device_window_fields.insert(
             std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::CPU, Field(" CPU Av ", 8)));
         device_window_fields.insert(
@@ -272,6 +277,8 @@ class SystemMonitorProcess : public BaseNodeProcess
             std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::DISK, Field(" DISK Av ", 8)));
         device_window_fields.insert(std::pair<DeviceFieldColumn, Field>(
             DeviceFieldColumn::LOADFACTOR, Field(" LOAD FACTOR ", 18)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::RX, Field(" Rx ", 6)));
     }
     ~SystemMonitorProcess();
     // Constants
@@ -360,6 +367,45 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         return diag;
     }
+    Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
+        const eros::resource::ConstPtr& t_msg) {
+        eros::resource msg = convert_fromptr(t_msg);
+        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if (update_device_list(msg) == true) {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                       Level::Type::INFO,
+                                                       Diagnostic::Message::NOERROR,
+                                                       "Updated Resource Available.");
+        }
+        else {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DROPPING_PACKETS,
+                                                       "Unable to update Resource: " + msg.Name);
+            logger->log_diagnostic(diag);
+        }
+        return diag;
+    }
+    Diagnostic::DiagnosticDefinition new_loadfactormessage(
+        const eros::loadfactor::ConstPtr& t_msg) {
+        eros::loadfactor msg = convert_fromptr(t_msg);
+        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if (update_device_list(msg) == true) {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                       Level::Type::INFO,
+                                                       Diagnostic::Message::NOERROR,
+                                                       "Updated LoadFactor.");
+        }
+        else {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::COMMUNICATIONS,
+                Level::Type::WARN,
+                Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update LoadFactor: " + msg.DeviceName);
+            logger->log_diagnostic(diag);
+        }
+        return diag;
+    }
     void set_message_text(std::string text, Color color) {
         message_text = text;
         message_text_color = color;
@@ -415,6 +461,27 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         return str;
     }
+    static std::string pretty(std::map<std::string, SystemMonitorProcess::Device> device_list) {
+        std::string str = "--- Device List ---\n";
+        if (device_list.size() == 0) {
+            str += "\tNo Devices Defined!\n";
+            return str;
+        }
+        std::map<std::string, SystemMonitorProcess::Device>::iterator it = device_list.begin();
+        int i = 0;
+        while (it != device_list.end()) {
+            char tempstr[512];
+            sprintf(tempstr,
+                    "\t[%d/%d] Name: %s\n",
+                    (uint16_t)i + 1,
+                    (uint16_t)device_list.size(),
+                    it->second.name.c_str());
+            str += std::string(tempstr);
+            i++;
+            ++it;
+        }
+        return str;
+    }
     // Destructors
     bool get_killme() {
         return kill_me;
@@ -459,6 +526,38 @@ class SystemMonitorProcess : public BaseNodeProcess
             it->second.pid = resource.PID;
             it->second.cpu_used_perc = resource.CPU_Perc;
             it->second.mem_used_perc = resource.RAM_Perc;
+        }
+        return true;
+    }
+
+    bool update_device_list(eros::resource resource_available) {
+        std::string key = resource_available.Name;
+        std::map<std::string, Device>::iterator it = device_list.find(key);
+        if (it == device_list.end()) {
+            return false;
+        }
+        else {
+            it->second.cpu_av_perc = resource_available.CPU_Perc;
+            it->second.ram_av_perc = resource_available.RAM_Perc;
+            it->second.disk_av_perc = resource_available.DISK_Perc;
+            it->second.state = Node::State::RUNNING;
+            it->second.last_heartbeat_delta = 0.0;
+        }
+        return true;
+    }
+    bool update_device_list(eros::loadfactor loadfactor) {
+        std::string key = loadfactor.DeviceName;
+        std::map<std::string, Device>::iterator it = device_list.find(key);
+        if (it == device_list.end()) {
+            return false;
+        }
+        else {
+            if(loadfactor.loadfactor.size() != 3) { return false; }
+            it->second.load_factor.at(0) = loadfactor.loadfactor.at(0);
+            it->second.load_factor.at(1) = loadfactor.loadfactor.at(1);
+            it->second.load_factor.at(2) = loadfactor.loadfactor.at(2);
+            it->second.state = Node::State::RUNNING;
+            it->second.last_heartbeat_delta = 0.0;
         }
         return true;
     }

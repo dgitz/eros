@@ -231,6 +231,18 @@ void SystemMonitorNode::resourceused_Callback(const eros::resource::ConstPtr &t_
         logger->log_diagnostic(diag);
     }
 }
+void SystemMonitorNode::resourceavailable_Callback(const eros::resource::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_resourceavailablemessage(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
+void SystemMonitorNode::loadfactor_Callback(const eros::loadfactor::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_loadfactormessage(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
 Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     std::size_t found_new_subscribers = 0;
@@ -277,7 +289,6 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
         logger->log_diagnostic(diag);
         return diag;
     }
-    logger->log_error("rescan");
     diag = process->update_devicelist(loadfactor_list,
                                       new_resourceavailable_topics_to_subscribe,
                                       new_loadfactor_topics_to_subscribe);
@@ -297,12 +308,21 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
         resource_used_subs.push_back(sub);
     }
     for (std::size_t i = 0; i < new_loadfactor_topics_to_subscribe.size(); ++i) {
-        // ADD SUBSCRIBERS
+        ros::Subscriber sub =
+            n->subscribe<eros::loadfactor>(new_loadfactor_topics_to_subscribe.at(i),
+                                           50,
+                                           &SystemMonitorNode::loadfactor_Callback,
+                                           this);
+        loadfactor_subs.push_back(sub);
     }
     for (std::size_t i = 0; i < new_resourceavailable_topics_to_subscribe.size(); ++i) {
-        // ADD SUBSCRIBERS
+        ros::Subscriber sub =
+            n->subscribe<eros::resource>(new_resourceavailable_topics_to_subscribe.at(i),
+                                         50,
+                                         &SystemMonitorNode::resourceavailable_Callback,
+                                         this);
+        resource_available_subs.push_back(sub);
     }
-
     found_new_subscribers = new_heartbeat_topics_to_subscribe.size() +
                             new_resourceused_topics_to_subscribe.size() +
                             new_resourceavailable_topics_to_subscribe.size() +

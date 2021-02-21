@@ -206,6 +206,13 @@ class BaseNodeProcess
     */
     eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
 
+    //! Convert eros::loadfactor message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    eros::loadfactor convert_fromptr(const eros::loadfactor::ConstPtr& t_ptr);
+
     //! Base Update Function of all Node Process Classes.
     /*!
       \param t_dt The delta in the sample time.
