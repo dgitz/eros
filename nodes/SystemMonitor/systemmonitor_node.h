@@ -72,6 +72,7 @@ class SystemMonitorNode : public BaseNode
     std::vector<ros::Subscriber> resource_used_subs;
     std::vector<ros::Subscriber> resource_available_subs;
     std::vector<ros::Subscriber> loadfactor_subs;
+    std::map<std::string, bool> filter_list;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
 };

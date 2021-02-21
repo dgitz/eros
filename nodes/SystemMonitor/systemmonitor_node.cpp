@@ -2,6 +2,7 @@
 bool kill_node = false;
 
 SystemMonitorNode::SystemMonitorNode() {
+    filter_list.insert(std::make_pair("rostopic", true));
 }
 SystemMonitorNode::~SystemMonitorNode() {
 }
@@ -255,7 +256,19 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
         if (found != std::string::npos) {
             continue;
         }
-        node_list.push_back(node_name);
+        bool add_me = true;
+        std::map<std::string, bool>::iterator filter_it = filter_list.begin();
+        while (filter_it != filter_list.end()) {
+            if (filter_it->second == true) {
+                if (node_name.find(filter_it->first) != std::string::npos) {
+                    add_me = false;
+                }
+            }
+            filter_it++;
+        }
+        if (add_me == true) {
+            node_list.push_back(node_name);
+        }
     }
     ros::master::V_TopicInfo master_topics;
     ros::master::getTopics(master_topics);
