@@ -523,6 +523,10 @@ class SystemMonitorProcess : public BaseNodeProcess
             return false;  // Should not do anything
         }
         else {
+            uint16_t prev_pid = it->second.pid;
+            if ((prev_pid != 0) && (prev_pid != resource.PID)) {
+                it->second.restart_count++;
+            }
             it->second.pid = resource.PID;
             it->second.cpu_used_perc = resource.CPU_Perc;
             it->second.mem_used_perc = resource.RAM_Perc;
@@ -552,7 +556,9 @@ class SystemMonitorProcess : public BaseNodeProcess
             return false;
         }
         else {
-            if(loadfactor.loadfactor.size() != 3) { return false; }
+            if (loadfactor.loadfactor.size() != 3) {
+                return false;
+            }
             it->second.load_factor.at(0) = loadfactor.loadfactor.at(0);
             it->second.load_factor.at(1) = loadfactor.loadfactor.at(1);
             it->second.load_factor.at(2) = loadfactor.loadfactor.at(2);
