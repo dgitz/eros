@@ -246,6 +246,13 @@ eros::resource BaseNodeProcess::convert_fromptr(const eros::resource::ConstPtr &
     msg.DISK_Perc = t_ptr->DISK_Perc;
     return msg;
 }
+eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstPtr &t_ptr) {
+    eros::loadfactor msg;
+    msg.stamp = t_ptr->stamp;
+    msg.DeviceName = t_ptr->DeviceName;
+    msg.loadfactor = t_ptr->loadfactor;
+    return msg;
+}
 Diagnostic::DiagnosticDefinition BaseNodeProcess::convert(const eros::diagnostic diag) {
     Diagnostic::DiagnosticDefinition def;
     def.device_name = diag.DeviceName;

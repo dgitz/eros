@@ -38,6 +38,14 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         }
         ++task_it;
     }
+    std::map<std::string, Device>::iterator device_it = device_list.begin();
+    while (device_it != device_list.end()) {
+        device_it->second.last_heartbeat_delta += t_dt;
+        if (device_it->second.last_heartbeat_delta >= 4.0 * COMMTIMEOUT_THRESHOLD) {
+            device_it->second.state = Node::State::NODATA;
+        }
+        ++device_it;
+    }
 
     std::map<std::string, WindowManager>::iterator win_it = windows.begin();
     while (win_it != windows.end()) {
@@ -62,6 +70,12 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         }
         else if (win_it->first == "diag_sidebar") {
             diag = update_diagnosticwindow(win_it);
+            if (diag.level > Level::Type::WARN) {
+                return diag;
+            }
+        }
+        else if (win_it->first == "device_window") {
+            diag = update_devicewindow(win_it);
             if (diag.level > Level::Type::WARN) {
                 return diag;
             }
@@ -142,6 +156,35 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_nodelist(
                                                "Processed Update.");
     return diag;
 }
+
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicelist(
+    std::vector<std::string> loadfactor_list,
+    std::vector<std::string> &new_resourceavailable_topics_to_subscribe,
+    std::vector<std::string> &new_loadfactor_topics_to_subscribe) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    std::map<std::string, Device>::iterator device_it;
+    std::map<uint16_t, std::string>::iterator device_name_it;
+    std::vector<std::string>::iterator it = loadfactor_list.begin();
+    while (it != loadfactor_list.end()) {
+        std::string key = *it;
+        key = key.substr(1, key.find("loadfactor") - 2);
+
+        device_it = device_list.find(key);
+        if (device_it == device_list.end()) {
+            Device newDevice(device_list.size(), key);
+            device_list.insert(std::make_pair(newDevice.name, newDevice));
+            device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
+            new_resourceavailable_topics_to_subscribe.push_back("/" + key + "/resource_available");
+            new_loadfactor_topics_to_subscribe.push_back("/" + key + "/loadfactor");
+        }
+        ++it;
+    }
+    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+                                               Level::Type::INFO,
+                                               Diagnostic::Message::NOERROR,
+                                               "Updated Device List.");
+    return diag;
+}
 std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::new_commandmsg(
     const eros::command::ConstPtr &t_msg) {
     (void)t_msg;  // Not currently used.
@@ -205,12 +248,12 @@ bool SystemMonitorProcess::initialize_windows() {
     }
 
     {
-        WindowManager window("instruction_window", 30, 80.0, 40.0, 20.0);
+        WindowManager window("instruction_window", 30, 80.0, 25.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
     {
-        WindowManager window("device_window", 70, 80.0, 30.0, 20.0);
+        WindowManager window("device_window", 55.0, 80.0, 45.0, 20.0);
         std::pair<std::string, WindowManager> newwin = std::make_pair(window.get_name(), window);
         windows.insert(newwin);
     }
@@ -246,11 +289,18 @@ bool SystemMonitorProcess::initialize_windows() {
             keypad(it->second.get_window_reference(), TRUE);
             std::string header = get_taskheader();
             mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
-            std::string dashed(header.size(), '-');
+            std::string dashed(it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
             wtimeout(it->second.get_window_reference(), 0);
         }
         else if (it->first == "diag_sidebar") {
+        }
+        else if (it->first == "device_window") {
+            std::string header = get_deviceheader();
+            logger->log_error(header);
+            mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
+            std::string dashed(it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
+            mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
         }
         else {
             logger->log_warn("Window: " + it->first + " Not Supported.");
@@ -262,7 +312,7 @@ bool SystemMonitorProcess::initialize_windows() {
 }
 std::string SystemMonitorProcess::get_taskheader() {
     std::string str = "";
-    std::map<TaskFieldColumn, TaskField>::iterator it = task_window_fields.begin();
+    std::map<TaskFieldColumn, Field>::iterator it = task_window_fields.begin();
     while (it != task_window_fields.end()) {
         // Check if field name is too long:
         if (it->second.text.size() > it->second.width) {
@@ -282,7 +332,31 @@ std::string SystemMonitorProcess::get_taskheader() {
         logger->log_warn("Task Header too long for Window!.");
         return "";
     }
-    return str.c_str();
+    return str;
+}
+std::string SystemMonitorProcess::get_deviceheader() {
+    std::string str = "";
+    std::map<DeviceFieldColumn, Field>::iterator it = device_window_fields.begin();
+    while (it != device_window_fields.end()) {
+        // Check if field name is too long:
+        if (it->second.text.size() > it->second.width) {
+            str += it->second.text.substr(0, it->second.width);
+        }
+        else {
+            str += it->second.text;
+            // Figure out how many spaces to add
+            std::size_t spaces = it->second.width - it->second.text.size();
+            for (std::size_t j = 0; j < spaces; ++j) { str += " "; }
+        }
+        ++it;
+    }
+
+    if (str.size() > mainwindow_width) {
+        logger->enable_consoleprint();
+        logger->log_warn("Device Header too long for Window!.");
+        return "";
+    }
+    return str;
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
@@ -376,6 +450,64 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
         }
     }
     wclrtobot(window_it->second.get_window_reference());
+    box(window_it->second.get_window_reference(), 0, 0);
+    wrefresh(window_it->second.get_window_reference());
+    return diag;
+}
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicewindow(
+    std::map<std::string, WindowManager>::iterator window_it) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    std::map<std::string, Device>::iterator device_it;
+    std::map<uint16_t, std::string>::iterator device_id_it;
+    const uint16_t DEVICESTART_COORD_Y = 1;
+    const uint16_t DEVICESTART_COORD_X = 1;
+    uint16_t devices_shown = 0;
+    uint16_t index = 0;
+    uint16_t start_device_index = 0;
+    for (uint16_t i = start_device_index; i < (uint16_t)device_list.size(); ++i) {
+        device_id_it = device_name_list.find(i);
+        if (device_id_it == device_name_list.end()) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::DATA_STORAGE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DIAGNOSTIC_FAILED,
+                "Device List does not contain ID: " + std::to_string(i));
+            return diag;
+        }
+        std::string key = device_id_it->second;
+        device_it = device_list.find(key);
+        if (device_it == device_list.end()) {
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::ERROR,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Device List does not contain ID: " + key);
+            return diag;
+        }
+
+        Color color = Color::UNKNOWN;
+        switch (device_it->second.state) {
+            case Node::State::UNKNOWN: color = Color::RED_COLOR; break;
+            case Node::State::START: color = Color::YELLOW_COLOR; break;
+            case Node::State::INITIALIZING: color = Color::YELLOW_COLOR; break;
+            case Node::State::INITIALIZED: color = Color::YELLOW_COLOR; break;
+            case Node::State::NODATA: color = Color::RED_COLOR; break;
+            case Node::State::RUNNING: color = Color::BLUE_COLOR; break;
+            case Node::State::PAUSED: color = Color::GREEN_COLOR; break;
+            case Node::State::RESET: color = Color::YELLOW_COLOR; break;
+            case Node::State::FINISHED: color = Color::YELLOW_COLOR; break;
+            default: color = Color::RED_COLOR; break;
+        }
+        std::string str = get_device_info(device_it->second, false);
+        wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        mvwprintw(window_it->second.get_window_reference(),
+                  DEVICESTART_COORD_Y + 2 + (int)index,
+                  DEVICESTART_COORD_X + 1,
+                  str.c_str());
+        wclrtoeol(window_it->second.get_window_reference());
+        wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        devices_shown++;
+        index++;
+    }
     box(window_it->second.get_window_reference(), 0, 0);
     wrefresh(window_it->second.get_window_reference());
     return diag;
@@ -699,7 +831,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
         std::string str = get_task_info(task_it->second, (i == selected_task_index));
         mvwprintw(window_it->second.get_window_reference(),
-                  TASKSTART_COORD_Y + 3 + (int)index,
+                  TASKSTART_COORD_Y + 2 + (int)index,
                   TASKSTART_COORD_X + 1,
                   str.c_str());
         wclrtoeol(window_it->second.get_window_reference());
@@ -830,6 +962,118 @@ std::string SystemMonitorProcess::get_task_info(Task task, bool selected) {
         }
         char tempstr[2 * width];
         sprintf(tempstr, "%2.2f", task.last_heartbeat_delta);
+        std::string tempstr_str = std::string(tempstr);
+        std::size_t spaces = width - tempstr_str.size();
+        if (spaces > 0) {
+            tempstr_str += std::string(spaces, ' ');
+        }
+        str += tempstr_str;
+    }
+
+    return str;
+}
+std::string SystemMonitorProcess::get_device_info(Device device, bool selected) {
+    std::string str = "";
+    std::size_t width = 0;
+    {
+        width = device_window_fields.find(DeviceFieldColumn::MARKER)->second.width;
+        for (std::size_t i = 0; i < width; ++i) {
+            if (selected == true) {
+                str += "*";
+            }
+            else {
+                str += " ";
+            }
+        }
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::ID)->second.width;
+        std::string tempstr = std::to_string(device.id);
+        std::size_t spaces = width - tempstr.size();
+        if (spaces > 0) {
+            tempstr += std::string(spaces, ' ');
+        }
+        str += tempstr;
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::NAME)->second.width;
+        std::string tempstr = device.name;
+        if (tempstr.size() > width) {
+            tempstr = tempstr.substr(0, width - 4) + "... ";
+        }
+        else {
+            if (tempstr.size() > (std::size_t)(width - 1)) {
+                tempstr = tempstr.substr(0, (width - 1));
+                tempstr += " ";
+            }
+            else {
+                std::size_t spaces = width - tempstr.size();
+                if (spaces > 0) {
+                    tempstr += std::string(spaces, ' ');
+                }
+            }
+        }
+        str += tempstr;
+    }
+
+    {
+        width = device_window_fields.find(DeviceFieldColumn::CPU)->second.width;
+        char c_tempstr[8];
+        sprintf(c_tempstr, "%3.2f", device.cpu_av_perc);
+        std::string tempstr = std::string(c_tempstr);
+        std::size_t spaces = width - tempstr.size();
+        if (spaces > 0) {
+            tempstr += std::string(spaces, ' ');
+        }
+        str += tempstr;
+    }
+
+    {
+        width = device_window_fields.find(DeviceFieldColumn::RAM)->second.width;
+        char c_tempstr[8];
+        sprintf(c_tempstr, "%3.2f", device.ram_av_perc);
+        std::string tempstr = std::string(c_tempstr);
+        std::size_t spaces = width - tempstr.size();
+        if (spaces > 0) {
+            tempstr += std::string(spaces, ' ');
+        }
+        str += tempstr;
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::DISK)->second.width;
+        char c_tempstr[8];
+        sprintf(c_tempstr, "%3.2f", device.disk_av_perc);
+        std::string tempstr = std::string(c_tempstr);
+        std::size_t spaces = width - tempstr.size();
+        if (spaces > 0) {
+            tempstr += std::string(spaces, ' ');
+        }
+        str += tempstr;
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::LOADFACTOR)->second.width;
+        char c_tempstr[128];
+        sprintf(c_tempstr,
+                "[%3.2f,%3.2f,%3.2f]",
+                device.load_factor.at(0),
+                device.load_factor.at(1),
+                device.load_factor.at(2));
+        std::string tempstr = std::string(c_tempstr);
+        std::size_t spaces = width - tempstr.size();
+        if (spaces > 0) {
+            tempstr += std::string(spaces, ' ');
+        }
+        str += tempstr;
+    }
+    {
+        width = device_window_fields.find(DeviceFieldColumn::RX)->second.width;
+        std::string max_number_str(width - 4, '9');
+        double max_num = std::atof(max_number_str.c_str()) + 0.99;
+        if (device.last_heartbeat_delta > max_num) {
+            device.last_heartbeat_delta = max_num;
+        }
+        char tempstr[2 * width];
+        sprintf(tempstr, "%2.2f", device.last_heartbeat_delta);
         std::string tempstr_str = std::string(tempstr);
         std::size_t spaces = width - tempstr_str.size();
         if (spaces > 0) {

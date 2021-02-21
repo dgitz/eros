@@ -94,6 +94,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+    set_loop1_rate(1.0);
+    set_loop2_rate(0.2);
+    set_ros_rate(20.0);
     return diag;
 }
 bool SystemMonitorNode::run_loop1() {
@@ -228,6 +231,18 @@ void SystemMonitorNode::resourceused_Callback(const eros::resource::ConstPtr &t_
         logger->log_diagnostic(diag);
     }
 }
+void SystemMonitorNode::resourceavailable_Callback(const eros::resource::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_resourceavailablemessage(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
+void SystemMonitorNode::loadfactor_Callback(const eros::loadfactor::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_loadfactormessage(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
 Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     std::size_t found_new_subscribers = 0;
@@ -246,6 +261,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     ros::master::getTopics(master_topics);
     std::vector<std::string> heartbeat_list;
     std::vector<std::string> resource_used_list;
+    std::vector<std::string> loadfactor_list;
     for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
          it++) {
         const ros::master::TopicInfo &info = *it;
@@ -257,9 +273,14 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
         if (info.datatype == "eros/heartbeat") {
             heartbeat_list.push_back(info.name);
         }
+        if (info.datatype == "eros/loadfactor") {
+            loadfactor_list.push_back(info.name);
+        }
     }
     std::vector<std::string> new_heartbeat_topics_to_subscribe;
     std::vector<std::string> new_resourceused_topics_to_subscribe;
+    std::vector<std::string> new_loadfactor_topics_to_subscribe;
+    std::vector<std::string> new_resourceavailable_topics_to_subscribe;
     diag = process->update_nodelist(node_list,
                                     heartbeat_list,
                                     new_heartbeat_topics_to_subscribe,
@@ -268,6 +289,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
         logger->log_diagnostic(diag);
         return diag;
     }
+    diag = process->update_devicelist(loadfactor_list,
+                                      new_resourceavailable_topics_to_subscribe,
+                                      new_loadfactor_topics_to_subscribe);
     for (std::size_t i = 0; i < new_heartbeat_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub = n->subscribe<eros::heartbeat>(new_heartbeat_topics_to_subscribe.at(i),
                                                             50,
@@ -283,8 +307,26 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
                                          this);
         resource_used_subs.push_back(sub);
     }
-    found_new_subscribers =
-        new_heartbeat_topics_to_subscribe.size() + new_resourceused_topics_to_subscribe.size();
+    for (std::size_t i = 0; i < new_loadfactor_topics_to_subscribe.size(); ++i) {
+        ros::Subscriber sub =
+            n->subscribe<eros::loadfactor>(new_loadfactor_topics_to_subscribe.at(i),
+                                           50,
+                                           &SystemMonitorNode::loadfactor_Callback,
+                                           this);
+        loadfactor_subs.push_back(sub);
+    }
+    for (std::size_t i = 0; i < new_resourceavailable_topics_to_subscribe.size(); ++i) {
+        ros::Subscriber sub =
+            n->subscribe<eros::resource>(new_resourceavailable_topics_to_subscribe.at(i),
+                                         50,
+                                         &SystemMonitorNode::resourceavailable_Callback,
+                                         this);
+        resource_available_subs.push_back(sub);
+    }
+    found_new_subscribers = new_heartbeat_topics_to_subscribe.size() +
+                            new_resourceused_topics_to_subscribe.size() +
+                            new_resourceavailable_topics_to_subscribe.size() +
+                            new_loadfactor_topics_to_subscribe.size();
     if (found_new_subscribers > 0) {
         logger->log_info("Rescanned and found " + std::to_string(found_new_subscribers) +
                          " new things to subscribe to.");
