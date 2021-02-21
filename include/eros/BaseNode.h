@@ -107,6 +107,10 @@ class BaseNode
         loop3_enabled = true;
     }
 
+    void set_ros_rate(double t_rate) {
+        ros_rate = t_rate;
+    }
+
     // Update Functions
     /*! \brief Main Node update section, will call all derived Node Loop Functions, and publish base
      * pubs such as firmware, heartbeat, etc. */

@@ -142,7 +142,7 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         loop1_enabled = true;
         loop1_rate = 1.0;
         loop2_enabled = true;
-        loop2_rate = 5.0;
+        loop2_rate = 0.2;
         loop3_enabled = false;
         max_rate = loop2_rate;
     }

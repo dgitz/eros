@@ -155,6 +155,15 @@ class SystemMonitorProcess : public BaseNodeProcess
         RAM = 8,
         RX = 9
     };
+    enum class DeviceFieldColumn {
+        MARKER = 0,
+        ID = 1,
+        NAME = 2,
+        CPU = 3,
+        RAM = 4,
+        DISK = 5,
+        LOADFACTOR = 6
+    };
     struct Task {
         Task(uint16_t _id,
              TaskType _type,
@@ -188,9 +197,26 @@ class SystemMonitorProcess : public BaseNodeProcess
         double last_heartbeat_delta;
         uint64_t restart_count;
     };
+    struct Device {
+        Device(uint16_t _id, std::string _name)
+            : id(_id),
+              name(_name),
+              cpu_av_perc(0.0),
+              ram_av_perc(0.0),
+              disk_av_perc(0.0),
+              load_factor({0.0, 0.0, 0.0}) {
+        }
+        uint16_t id;
+        bool initialized;
+        std::string name;
+        double cpu_av_perc;
+        double ram_av_perc;
+        double disk_av_perc;
+        std::vector<double> load_factor;
+    };
 
-    struct TaskField {
-        TaskField(std::string _text, uint16_t _width) : text(_text), width(_width) {
+    struct Field {
+        Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
         }
         std::string text;
         std::size_t width;
@@ -204,6 +230,7 @@ class SystemMonitorProcess : public BaseNodeProcess
           change_log_level_mode(false),
           show_task_diagnostic_mode(false),
           change_nodestate_mode(false),
+          select_device_mode(false),
           selected_task_index(-1),
           start_node_index(0),
           task_list_max_rows(5),
@@ -211,25 +238,40 @@ class SystemMonitorProcess : public BaseNodeProcess
           message_text(""),
           message_text_color(Color::NO_COLOR) {
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::MARKER, TaskField("", 3)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::MARKER, Field("", 3)));
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::ID, TaskField("ID", 4)));
-        task_window_fields.insert(std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::HOSTNAME,
-                                                                        TaskField(" Host ", 20)));
-        task_window_fields.insert(std::pair<TaskFieldColumn, TaskField>(
-            TaskFieldColumn::NODENAME, TaskField(" NodeName ", 30)));
-        task_window_fields.insert(std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::STATUS,
-                                                                        TaskField(" Status ", 10)));
-        task_window_fields.insert(std::pair<TaskFieldColumn, TaskField>(
-            TaskFieldColumn::RESTARTS, TaskField(" Restarts ", 10)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::ID, Field("ID", 4)));
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::PID, TaskField(" PID ", 8)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::HOSTNAME, Field(" Host ", 20)));
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::CPU, TaskField(" CPU(%) ", 10)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::NODENAME, Field(" NodeName ", 30)));
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::RAM, TaskField(" RAM(%) ", 10)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::STATUS, Field(" Status ", 10)));
         task_window_fields.insert(
-            std::pair<TaskFieldColumn, TaskField>(TaskFieldColumn::RX, TaskField(" Rx ", 6)));
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::RESTARTS, Field(" Restarts ", 10)));
+        task_window_fields.insert(
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::PID, Field(" PID ", 8)));
+        task_window_fields.insert(
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::CPU, Field(" CPU(%) ", 10)));
+        task_window_fields.insert(
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::RAM, Field(" RAM(%) ", 10)));
+        task_window_fields.insert(
+            std::pair<TaskFieldColumn, Field>(TaskFieldColumn::RX, Field(" Rx ", 6)));
+
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::MARKER, Field("", 3)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::ID, Field("ID", 3)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::NAME, Field(" Device ", 10)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::CPU, Field(" CPU Av ", 8)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::RAM, Field(" RAM Av ", 8)));
+        device_window_fields.insert(
+            std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::DISK, Field(" DISK Av ", 8)));
+        device_window_fields.insert(std::pair<DeviceFieldColumn, Field>(
+            DeviceFieldColumn::LOADFACTOR, Field(" LOAD FACTOR ", 18)));
     }
     ~SystemMonitorProcess();
     // Constants
@@ -257,6 +299,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         std::map<std::string, WindowManager>::iterator it);
     Diagnostic::DiagnosticDefinition update_diagnosticwindow(
         std::map<std::string, WindowManager>::iterator it);
+    Diagnostic::DiagnosticDefinition update_devicewindow(
+        std::map<std::string, WindowManager>::iterator it);
 
     Diagnostic::DiagnosticDefinition update_nodelist(
         std::vector<std::string> node_list,
@@ -265,6 +309,14 @@ class SystemMonitorProcess : public BaseNodeProcess
         std::vector<std::string>& new_resourceused_topics_to_subscribe);
     std::map<std::string, Task> get_task_list() {
         return task_list;
+    }
+
+    Diagnostic::DiagnosticDefinition update_devicelist(
+        std::vector<std::string> loadfactor_list,
+        std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
+        std::vector<std::string>& new_loadfactor_topics_to_subscribe);
+    std::map<std::string, Device> get_device_list() {
+        return device_list;
     }
 
     // Message Functions
@@ -338,6 +390,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         return str;
     }
     std::string get_taskheader();
+    std::string get_deviceheader();
     // Printing Functions
     static std::string pretty(std::map<std::string, SystemMonitorProcess::Task> task_list) {
         std::string str = "--- Task List ---\n";
@@ -378,6 +431,7 @@ class SystemMonitorProcess : public BaseNodeProcess
 
    private:
     std::string get_task_info(Task task, bool task_selected);
+    std::string get_device_info(Device device, bool device_selected);
     bool update_task_list(eros::heartbeat heartbeat) {
         std::string key = heartbeat.NodeName;
         std::map<std::string, Task>::iterator it;
@@ -413,15 +467,19 @@ class SystemMonitorProcess : public BaseNodeProcess
     ros::NodeHandle* nodeHandle;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
-    std::map<TaskFieldColumn, TaskField> task_window_fields;
+    std::map<TaskFieldColumn, Field> task_window_fields;
     std::map<std::string, WindowManager> windows;
     std::map<std::string, Task> task_list;
     std::map<uint16_t, std::string> task_name_list;
     std::map<std::string, std::string> resource_topics;
+    std::map<DeviceFieldColumn, Field> device_window_fields;
+    std::map<std::string, Device> device_list;
+    std::map<uint16_t, std::string> device_name_list;
     bool select_task_mode;
     bool change_log_level_mode;
     bool show_task_diagnostic_mode;
     bool change_nodestate_mode;
+    bool select_device_mode;
     int16_t selected_task_index;
     uint16_t start_node_index;
     uint16_t task_list_max_rows;
