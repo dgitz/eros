@@ -21,7 +21,6 @@ class MasterNodeProcess : public BaseNodeProcess
         return;
     }
 
-   
    private:
 };
 #endif  // MasterNodeProcess_H

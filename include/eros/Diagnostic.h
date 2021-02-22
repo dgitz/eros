@@ -176,6 +176,7 @@ class Diagnostic
         root_diagnostic.system = system;
         root_diagnostic.subsystem = subsystem;
         root_diagnostic.component = component;
+        root_diagnostic.level = Level::Type::INFO;
         root_diagnostic.update_count = 0;
         initialized = true;
     }

@@ -11,8 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   actionlib_msgs
   rosbag
+  cmake_modules
 )
-find_package(Curses)
+find_package(TinyXML REQUIRED)
+find_package(Curses REQUIRED)
 add_message_files(
   DIRECTORY msg
   FILES
@@ -38,11 +40,13 @@ add_action_files(
   action_systemsnapshot.action
 )
 generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
-catkin_package(INCLUDE_DIRS include)
 
+catkin_package(INCLUDE_DIRS include DEPENDS
+      TinyXML)
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${TinyXML_INCLUDE_DIRS}
 )
 
 
