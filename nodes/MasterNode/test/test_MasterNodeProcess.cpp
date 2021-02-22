@@ -8,7 +8,7 @@
 class MasterNodeProcessTester : public MasterNodeProcess
 {
    public:
-    MasterNodeProcess Tester() {
+    MasterNodeProcessTester() {
     }
     ~MasterNodeProcessTester() {
     }

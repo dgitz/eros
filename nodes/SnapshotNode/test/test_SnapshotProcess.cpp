@@ -8,7 +8,7 @@
 class SnapshotProcessTester : public SnapshotProcess
 {
    public:
-    SnapshotProcess Tester() {
+    SnapshotProcessTester() {
     }
     ~SnapshotProcessTester() {
     }
@@ -42,9 +42,19 @@ TEST(BasicTest, TestOperation_Master) {
     logger->log_diagnostic(diag);
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
+    logger->log_notice("\n" + tester->pretty());
+
     diag = tester->finish_initialization();
 
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->createnew_snapshot();
+    EXPECT_TRUE(diag_list.size() > 0);
+    for (std::size_t i = 0; i < diag_list.size(); ++i) {
+        logger->log_diagnostic(diag_list.at(i));
+        EXPECT_TRUE(diag_list.at(i).level <= Level::Type::NOTICE);
+    }
+    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE);
     delete logger;
     delete tester;
 }

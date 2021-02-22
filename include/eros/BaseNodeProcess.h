@@ -70,6 +70,7 @@ class BaseNodeProcess
                     Logger* _logger) {
         base_node_name = t_base_node_name;
         node_state = Node::State::INITIALIZING;
+        hostname = t_hostname;
         diagnostic_helper.initialize(t_hostname, t_node_name, t_system, t_subsystem, t_component);
         logger = _logger;
     }
@@ -106,6 +107,10 @@ class BaseNodeProcess
     }
     bool get_ready_to_arm() {
         return ready_to_arm;
+    }
+
+    std::string get_hostname() {
+        return hostname;
     }
     Diagnostic::DiagnosticDefinition get_root_diagnostic() {
         return diagnostic_helper.get_root_diagnostic();
@@ -222,6 +227,7 @@ class BaseNodeProcess
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     Logger* logger;
+    std::string hostname;
     std::string base_node_name;
     Node::State node_state;
     Diagnostic diagnostic_helper;
