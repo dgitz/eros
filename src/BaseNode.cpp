@@ -22,8 +22,9 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char
     logger_initialized = false;
     require_pps_to_start = false;
     pps_received = false;
-    ros::init(argc, argv, base_node_name);
-    n.reset(new ros::NodeHandle);
+    // ros::init(argc, argv, base_node_name);
+    printf("xxx0\n");
+    // n.reset(new ros::NodeHandle);
     node_name = ros::this_node::getName();
     boot_time = ros::Time::now();
     diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;

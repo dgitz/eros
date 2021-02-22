@@ -13,6 +13,8 @@
 #include <thread>
 
 // ROS Base Functionality
+#include <actionlib/server/simple_action_server.h>
+
 #include "ros/ros.h"
 #include "ros/time.h"
 

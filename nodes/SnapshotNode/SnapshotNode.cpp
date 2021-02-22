@@ -1,8 +1,14 @@
 #include "SnapshotNode.h"
 bool kill_node = false;
-SnapshotNode::SnapshotNode() {
+SnapshotNode::SnapshotNode()
+    : system_command_action_server(
+          (*n), "snapshot_node", boost::bind(&SnapshotNode::executeCB, this, _1), false) {
+    system_command_action_server.start();
 }
 SnapshotNode::~SnapshotNode() {
+}
+void SnapshotNode::executeCB(const eros::system_commandGoalConstPtr &goal) {
+    logger->log_notice("got cmd");
 }
 bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                            eros::srv_change_nodestate::Response &res) {
@@ -197,6 +203,8 @@ void signalinterrupt_handler(int sig) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
+
+    ros::init(argc, argv, "snapshot_node");
     SnapshotNode *node = new SnapshotNode();
     bool status = node->start(argc, argv);
     if (status == false) {

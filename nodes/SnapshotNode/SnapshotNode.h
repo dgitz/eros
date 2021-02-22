@@ -57,12 +57,15 @@ class SnapshotNode : public BaseNode
     void thread_loop();
     void cleanup();
 
-    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res);
+    bool changenodestate_service(eros::srv_change_nodestate::Request& req,
+                                 eros::srv_change_nodestate::Response& res);
+    void executeCB(const eros::system_commandGoalConstPtr& goal);
 
    private:
+    ros::NodeHandle test_handle;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SnapshotProcess* process;
+    actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };
 
 #endif  // SnapshotNode_H

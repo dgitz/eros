@@ -28,6 +28,9 @@
 #include <eros/srv_firmware.h>
 #include <eros/srv_get_diagnostics.h>
 #include <eros/srv_logger_level.h>
+
+// ROS Actions
+#include <eros/system_commandAction.h>
 // Project
 #include "Diagnostic.h"
 #include "Logger.h"

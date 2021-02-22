@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 find_package(TinyXML REQUIRED)
 find_package(Curses REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib actionlib_msgs)
 add_message_files(
   DIRECTORY msg
   FILES
@@ -37,12 +38,14 @@ add_service_files(
 add_action_files(
   DIRECTORY action
   FILES
-  action_systemsnapshot.action
+  system_command.action
+  system_snapshot.action
 )
 generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
 
 catkin_package(INCLUDE_DIRS include DEPENDS
-      TinyXML)
+      TinyXML actionlib_msgs)
+
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
