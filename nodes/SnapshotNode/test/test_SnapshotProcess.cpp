@@ -39,8 +39,9 @@ TEST(BasicTest, TestOperation_Master) {
     EXPECT_TRUE(diag.level >= Level::Type::ERROR);
 
     diag = tester->load_config("/home/robot/config/SnapshotConfig.xml");
-    EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
     logger->log_diagnostic(diag);
+    EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+
     diag = tester->finish_initialization();
 
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);

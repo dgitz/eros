@@ -38,6 +38,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvari
     return diag_list;
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_path) {
+    logger->log_notice("Loading: " + file_path);
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     TiXmlDocument doc(file_path);
     bool configfile_loaded = doc.LoadFile();

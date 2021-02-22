@@ -39,6 +39,7 @@ bool SnapshotNode::start(int argc, char **argv) {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
     process->enable_diagnostics(diagnostic_types);
+    process->set_architecture(resource_monitor->get_architecture());
     diagnostic = process->finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -79,21 +80,7 @@ Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
         return diag;
     }
     process->set_mode(SnapshotProcess::ModeType(mode));
-    std::string param_config_dir = node_name + "/Config_Directory";
-    std::string config_dir;
-    if (n->getParam(param_config_dir, config_dir) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::ERROR,
-                                          Diagnostic::Message::INITIALIZING_ERROR,
-                                          "Config_Directory Not defined.");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
-    diag = process->load_config(config_dir + "SnapshotConfig.xml");
-    if (diag.level >= Level::Type::ERROR) {
-        logger->log_diagnostic(diag);
-        return diag;
-    }
+
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -106,6 +93,21 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "Running");
+    std::string param_config_dir = node_name + "/Config_Directory";
+    std::string config_dir;
+    if (n->getParam(param_config_dir, config_dir) == false) {
+        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                          Level::Type::ERROR,
+                                          Diagnostic::Message::INITIALIZING_ERROR,
+                                          "Config_Directory Not defined.");
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+    diag = process->load_config(config_dir + "/SnapshotConfig.xml");
+    if (diag.level >= Level::Type::ERROR) {
+        logger->log_diagnostic(diag);
+        return diag;
+    }
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
