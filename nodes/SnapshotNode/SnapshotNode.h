@@ -55,6 +55,7 @@ class SnapshotNode : public BaseNode
     bool run_1hz();
     bool run_10hz();
     void thread_loop();
+    void thread_snapshotcreation();
     void cleanup();
 
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,

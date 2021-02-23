@@ -144,8 +144,7 @@ class BaseNodeProcess
     bool request_statechange(Node::State newstate);
 
     // Message Functions
-    virtual std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
-        const eros::command::ConstPtr& t_msg) = 0;
+    virtual std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg) = 0;
 
     // Support Functions
     /*! \brief Must be implemented in Derived Process.  Used for diagnostic testing LEVEL2 and for
@@ -178,6 +177,13 @@ class BaseNodeProcess
 
     static bool isEqual(double a, double b, double eps);
 
+    //! Convert eros::command message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    static eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
+
     eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
@@ -193,13 +199,6 @@ class BaseNodeProcess
       \return The object
     */
     eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
-
-    //! Convert eros::command message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
 
     //! Convert eros::resource message (as received via a ROS Node) to the regular datatype
     /*!

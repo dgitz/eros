@@ -20,9 +20,8 @@ Diagnostic::DiagnosticDefinition DataLoggerProcess::update(double t_dt, double t
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> DataLoggerProcess::new_commandmsg(
-    const eros::command::ConstPtr& t_msg) {
-    (void)t_msg;  // Not used yet.
+std::vector<Diagnostic::DiagnosticDefinition> DataLoggerProcess::new_commandmsg(eros::command msg) {
+    (void)msg;  // Not used yet.
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     return diag_list;
 }

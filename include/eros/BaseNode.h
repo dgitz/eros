@@ -4,6 +4,8 @@
 #define EROS_BASENODE_H
 // Base class
 // C System Files
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include <csignal>

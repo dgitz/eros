@@ -29,12 +29,10 @@ class BaseNodeProcessTester : public BaseNodeProcess
         diag = base_update(t_dt, t_ros_time);
         return diag;
     }
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
-        const eros::command::ConstPtr& t_msg) {
+    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg) {
         Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
         std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-
-        eros::command cmd = convert_fromptr(t_msg);
+        (void)msg;
         return diag_list;
     }
     std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() {
