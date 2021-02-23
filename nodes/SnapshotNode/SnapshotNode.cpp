@@ -3,20 +3,19 @@ bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + SnapshotNode::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&SnapshotNode::system_command_Callback, this, _1),
+          "SystemCommandAction",
+          boost::bind(&SnapshotNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
 SnapshotNode::~SnapshotNode() {
 }
-void SnapshotNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
-    eros::system_commandResult result_;
-    if (goal->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+    if (t_msg->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
         std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
 
-        Level::Type max_level = Level::Type::INFO;
+        Level::Type max_level = Level::Type::DEBUG;
         for (std::size_t i = 0; i < diag_list.size(); ++i) {
             if (diag_list.at(i).level > max_level) {
                 max_level = diag_list.at(i).level;
@@ -24,23 +23,40 @@ void SnapshotNode::system_command_Callback(const eros::system_commandGoalConstPt
             }
         }
         if (max_level <= Level::Type::WARN) {
-            result_.State = 1;
-            system_command_action_server.setSucceeded(result_);
+            logger->log_notice("Snap Completed");
+            eros::command_state state;
+            state.stamp = ros::Time::now();
+            state.NodeName = node_name;
+            state.CurrentCommand = t_msg->Command;
+            state.State = 1;
+            state.PercentComplete = 100.0;
+            state.diag = convert(diag);
+            commandstate_pub.publish(state);
         }
         else {
-            result_.State = 0;
-            system_command_action_server.setAborted(result_);
+            logger->log_warn("Snap Failed");
+            eros::command_state state;
+            state.stamp = ros::Time::now();
+            state.NodeName = node_name;
+            state.CurrentCommand = t_msg->Command;
+            state.State = 0;
+            state.PercentComplete = 0.0;
+            state.diag = convert(diag);
+            commandstate_pub.publish(state);
         }
     }
     else {
-        system_command_action_server.setAborted(result_);
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                          Level::Type::WARN,
-                                          Diagnostic::Message::DROPPING_PACKETS,
-                                          "Received unsupported Command: " +
-                                              Command::CommandString((Command::Type)goal->Command));
+        diag =
+            process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                       Level::Type::WARN,
+                                       Diagnostic::Message::DROPPING_PACKETS,
+                                       "Received unsupported Command: " +
+                                           Command::CommandString((Command::Type)t_msg->Command));
     }
     logger->log_diagnostic(diag);
+}
+void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
+    (void)goal;
 }
 bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                            eros::srv_change_nodestate::Response &res) {
@@ -142,11 +158,19 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
+    command_sub =
+        n->subscribe<eros::command>("/SystemCommand", 10, &SnapshotNode::command_Callback, this);
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
         return diag;
     }
+    std::string commandstate_topic = "/SystemCommandState";
+    commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "Running");
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,

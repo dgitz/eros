@@ -54,7 +54,7 @@ TEST(BasicTest, TestOperation_Master) {
         logger->log_diagnostic(diag_list.at(i));
         EXPECT_TRUE(diag_list.at(i).level <= Level::Type::NOTICE);
     }
-    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE);
+    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::NOTRUNNING);
     delete logger;
     delete tester;
 }

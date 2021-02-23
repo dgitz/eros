@@ -63,9 +63,10 @@ class DataLoggerNode : public BaseNode
     void run_logger(DataLoggerNode* node);
     void cleanup();
 
-    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res);
-    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
+    bool changenodestate_service(eros::srv_change_nodestate::Request& req,
+                                 eros::srv_change_nodestate::Response& res);
+    void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
+    void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();

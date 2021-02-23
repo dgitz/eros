@@ -4,15 +4,19 @@ bool kill_node = false;
 SystemMonitorNode::SystemMonitorNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + SystemMonitorNode::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&SystemMonitorNode::system_command_Callback, this, _1),
+          "SystemCommandAction",
+          boost::bind(&SystemMonitorNode::system_commandAction_Callback, this, _1),
           false) {
     filter_list.insert(std::make_pair("rostopic", true));
     system_command_action_server.start();
 }
 SystemMonitorNode::~SystemMonitorNode() {
 }
-void SystemMonitorNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void SystemMonitorNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+    (void)t_msg;
+}
+void SystemMonitorNode::system_commandAction_Callback(
+    const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult result_;
     system_command_action_server.setAborted(result_);
@@ -104,6 +108,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
+    std::string commandstate_topic = "/SystemCommandState";
+    commandstate_sub = n->subscribe<eros::command_state>(
+        commandstate_topic, 50, &SystemMonitorNode::commandState_Callback, this);
+
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -112,6 +120,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+
     set_loop1_rate(1.0);
     set_loop2_rate(0.2);
     set_ros_rate(20.0);
@@ -254,7 +263,12 @@ void SystemMonitorNode::heartbeat_Callback(const eros::heartbeat::ConstPtr &t_ms
         logger->log_diagnostic(diag);
     }
 }
-
+void SystemMonitorNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_commandstate(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
 void SystemMonitorNode::resourceused_Callback(const eros::resource::ConstPtr &t_msg) {
     Diagnostic::DiagnosticDefinition diag = process->new_resourceusedmessage(t_msg);
     if (diag.level > Level::Type::NOTICE) {

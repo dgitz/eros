@@ -188,6 +188,8 @@ class BaseNode
     virtual bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                                          eros::srv_change_nodestate::Response &res) = 0;
 
+    virtual void command_Callback(const eros::command::ConstPtr &t_msg) = 0;
+
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();
@@ -210,6 +212,8 @@ class BaseNode
     ros::Publisher heartbeat_pub;
     ros::Publisher diagnostic_pub;
     ros::Publisher resource_used_pub;
+    ros::Subscriber command_sub;
+
     eros::heartbeat heartbeat;
     ros::ServiceServer firmware_srv;
     ros::ServiceServer logger_level_srv;

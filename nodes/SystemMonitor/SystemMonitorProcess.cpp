@@ -361,8 +361,10 @@ std::string SystemMonitorProcess::get_deviceheader() {
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+
     if (select_task_mode == true) {
         std::vector<std::string> instruction_string;
+        instruction_string.push_back("S: Generate System Snapshot.");
         instruction_string.push_back("F: Get Node Firmware.");
         instruction_string.push_back("L: Change Log Level.");
         if (change_log_level_mode == true) {
@@ -529,6 +531,13 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     int key_pressed = wgetch(window_it->second.get_window_reference());
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
+    }
+    else if ((key_pressed == KEY_s) || (key_pressed == KEY_S)) {
+        set_message_text("Requesting System Snapshot...", Level::Type::INFO);
+        eros::command command;
+        command.stamp = ros::Time::now();
+        command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+        command_pub.publish(command);
     }
     else if (key_pressed == KEY_UP) {
         if (select_task_mode == true) {

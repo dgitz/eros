@@ -3,14 +3,14 @@ bool kill_node = false;
 MasterNode::MasterNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + MasterNode::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&MasterNode::system_command_Callback, this, _1),
+          "SystemCommandAction",
+          boost::bind(&MasterNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
 MasterNode::~MasterNode() {
 }
-void MasterNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void MasterNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult result_;
     system_command_action_server.setAborted(result_);
@@ -21,6 +21,9 @@ void MasterNode::system_command_Callback(const eros::system_commandGoalConstPtr 
         "Received unsupported Command: " + Command::CommandString((Command::Type)goal->Command));
     logger->log_diagnostic(diag);
 }
+void MasterNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+    (void)t_msg;
+}
 bool MasterNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                          eros::srv_change_nodestate::Response &res) {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
@@ -30,6 +33,7 @@ bool MasterNode::changenodestate_service(eros::srv_change_nodestate::Request &re
 }
 bool MasterNode::device_service(eros::srv_device::Request &req, eros::srv_device::Response &res) {
     (void)req;  // Currently Unused
+    (void)res;
     if (deviceInfo.received == true) {
         return true;
     }
