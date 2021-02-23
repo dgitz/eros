@@ -1,8 +1,25 @@
 #include "DataLoggerNode.h"
 bool kill_node = false;
-DataLoggerNode::DataLoggerNode() {
+DataLoggerNode::DataLoggerNode()
+    : system_command_action_server(
+          *n.get(),
+          get_hostname() + "_" + DataLoggerNode::BASE_NODE_NAME + "_SystemCommand",
+          boost::bind(&DataLoggerNode::system_command_Callback, this, _1),
+          false) {
+    system_command_action_server.start();
 }
 DataLoggerNode::~DataLoggerNode() {
+}
+void DataLoggerNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros::system_commandResult result_;
+    system_command_action_server.setAborted(result_);
+    diag = process->update_diagnostic(
+        Diagnostic::DiagnosticType::COMMUNICATIONS,
+        Level::Type::WARN,
+        Diagnostic::Message::DROPPING_PACKETS,
+        "Received unsupported Command: " + Command::CommandString((Command::Type)goal->Command));
+    logger->log_diagnostic(diag);
 }
 bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                              eros::srv_change_nodestate::Response &res) {
@@ -11,14 +28,14 @@ bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool DataLoggerNode::start(int argc, char **argv) {
+bool DataLoggerNode::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
     process = new DataLoggerProcess();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
-    diagnostic = preinitialize_basenode(argc, argv);
+    diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
@@ -267,8 +284,9 @@ void signalinterrupt_handler(int sig) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
+    ros::init(argc, argv, "datalogger_node");
     DataLoggerNode *node = new DataLoggerNode();
-    bool status = node->start(argc, argv);
+    bool status = node->start();
     if (status == false) {
         return EXIT_FAILURE;
     }

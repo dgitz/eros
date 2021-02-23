@@ -87,7 +87,7 @@ class SnapshotProcess : public BaseNodeProcess
     void reset();
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
     std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
-        const eros::command::ConstPtr& t_msg);
+        const eros::command::ConstPtr &t_msg);
     std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
     void cleanup() {
         base_cleanup();

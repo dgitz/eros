@@ -27,10 +27,10 @@ class SystemMonitorNode : public BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 2;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 0;
+    const uint16_t BUILD_NUMBER = 1;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 20-Feb-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 22-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
     const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::REMOTE_CONTROL;
@@ -45,7 +45,7 @@ class SystemMonitorNode : public BaseNode
     SystemMonitorProcess* get_process() {
         return process;
     }
-    bool start(int argc, char** argv);
+    bool start();
     bool init_screen();
     Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
@@ -66,6 +66,7 @@ class SystemMonitorNode : public BaseNode
     void loadfactor_Callback(const eros::loadfactor::ConstPtr& msg);
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
+    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
 
    private:
     std::vector<ros::Subscriber> heartbeat_subs;
@@ -75,6 +76,7 @@ class SystemMonitorNode : public BaseNode
     std::map<std::string, bool> filter_list;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
+    actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };
 
 #endif  // SYSTEMMONITORNODE_H

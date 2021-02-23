@@ -48,7 +48,7 @@ class DataLoggerNode : public BaseNode
     DataLoggerProcess* get_process() {
         return process;
     }
-    bool start(int argc, char** argv);
+    bool start();
     Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
@@ -65,10 +65,12 @@ class DataLoggerNode : public BaseNode
 
     bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res);
+    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
     DataLoggerProcess* process;
+    actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Subscriber snapshot_trigger_sub;
 };
 

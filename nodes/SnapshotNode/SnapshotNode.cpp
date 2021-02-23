@@ -2,13 +2,45 @@
 bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(
-          (*n), "snapshot_node", boost::bind(&SnapshotNode::executeCB, this, _1), false) {
+          *n.get(),
+          get_hostname() + "_" + SnapshotNode::BASE_NODE_NAME + "_SystemCommand",
+          boost::bind(&SnapshotNode::system_command_Callback, this, _1),
+          false) {
     system_command_action_server.start();
 }
 SnapshotNode::~SnapshotNode() {
 }
-void SnapshotNode::executeCB(const eros::system_commandGoalConstPtr &goal) {
-    logger->log_notice("got cmd");
+void SnapshotNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros::system_commandResult result_;
+    if (goal->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+        std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
+
+        Level::Type max_level = Level::Type::INFO;
+        for (std::size_t i = 0; i < diag_list.size(); ++i) {
+            if (diag_list.at(i).level > max_level) {
+                max_level = diag_list.at(i).level;
+                diag = diag_list.at(i);
+            }
+        }
+        if (max_level <= Level::Type::WARN) {
+            result_.State = 1;
+            system_command_action_server.setSucceeded(result_);
+        }
+        else {
+            result_.State = 0;
+            system_command_action_server.setAborted(result_);
+        }
+    }
+    else {
+        system_command_action_server.setAborted(result_);
+        diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                          Level::Type::WARN,
+                                          Diagnostic::Message::DROPPING_PACKETS,
+                                          "Received unsupported Command: " +
+                                              Command::CommandString((Command::Type)goal->Command));
+    }
+    logger->log_diagnostic(diag);
 }
 bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                            eros::srv_change_nodestate::Response &res) {
@@ -17,14 +49,14 @@ bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool SnapshotNode::start(int argc, char **argv) {
+bool SnapshotNode::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
     process = new SnapshotProcess();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
-    diagnostic = preinitialize_basenode(argc, argv);
+    diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
@@ -44,6 +76,7 @@ bool SnapshotNode::start(int argc, char **argv) {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->set_architecture(resource_monitor->get_architecture());
     diagnostic = process->finish_initialization();
@@ -203,10 +236,9 @@ void signalinterrupt_handler(int sig) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
-
     ros::init(argc, argv, "snapshot_node");
     SnapshotNode *node = new SnapshotNode();
-    bool status = node->start(argc, argv);
+    bool status = node->start();
     if (status == false) {
         return EXIT_FAILURE;
     }

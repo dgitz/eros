@@ -89,8 +89,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             exec(rm_cmd.c_str(), true);
             std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory;
             exec(mkdir_cmd.c_str(), true);
-            rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/";
-            exec(rm_cmd.c_str(), true);
             mkdir_cmd = "mkdir -p " + snapshot_config.device_snapshot_path;
             exec(mkdir_cmd.c_str(), true);
         }
@@ -161,7 +159,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
         else {
-            devicesnapshot_state = SnapshotState::COMPLETE;
+            devicesnapshot_state =
+                SnapshotState::NOTRUNNING;  // Mark NOT RUNNING For now, may need to change when
+                                            // System Snapshot gets implemented.
             diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::INFO,
                                      Diagnostic::Message::NOERROR,

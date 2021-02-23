@@ -1,8 +1,19 @@
 #include "{{cookiecutter.node_classname}}.h"
 bool kill_node = false;
-{{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}() {
+{{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}()
+    : system_command_action_server(
+          *n.get(),
+          get_hostname() + "_" + {{cookiecutter.node_classname}}::BASE_NODE_NAME + "_SystemCommand",
+          boost::bind(&{{cookiecutter.node_classname}}::system_command_Callback, this, _1),
+          false) {
+    system_command_action_server.start();
 }
 {{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
+}
+void {{cookiecutter.node_classname}}::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+    (void)goal;
+    eros::system_commandResult system_commandResult_;
+    system_command_action_server.setAborted(system_commandResult_);
 }
 bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res)
@@ -12,14 +23,14 @@ bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_n
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool {{cookiecutter.node_classname}}::start(int argc, char **argv) {
+bool {{cookiecutter.node_classname}}::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
     process = new {{cookiecutter.process_classname}}();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
-    diagnostic = preinitialize_basenode(argc, argv);
+    diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
@@ -166,8 +177,9 @@ void signalinterrupt_handler(int sig) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
+    ros::init(argc, argv, "{{cookiecutter.node_name_binary}}");
     {{cookiecutter.node_classname}} *node = new {{cookiecutter.node_classname}}();
-    bool status = node->start(argc, argv);
+    bool status = node->start();
     if (status == false) {
         return EXIT_FAILURE;
     }

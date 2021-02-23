@@ -44,7 +44,7 @@ class SnapshotNode : public BaseNode
     SnapshotProcess* get_process() {
         return process;
     }
-    bool start(int argc, char** argv);
+    bool start();
     Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
@@ -59,10 +59,11 @@ class SnapshotNode : public BaseNode
 
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
-    void executeCB(const eros::system_commandGoalConstPtr& goal);
+    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
 
    private:
-    ros::NodeHandle test_handle;
+    boost::shared_ptr<ros::NodeHandle> test_sp_handle;
+    // ros::NodeHandle test_handle;
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SnapshotProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
