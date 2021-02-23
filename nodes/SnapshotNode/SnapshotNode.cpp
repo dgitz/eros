@@ -167,6 +167,10 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     }
     std::string commandstate_topic = "/SystemCommandState";
     commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "Running");
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
