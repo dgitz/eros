@@ -3,14 +3,14 @@ bool kill_node = false;
 DataLoggerNode::DataLoggerNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + DataLoggerNode::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&DataLoggerNode::system_command_Callback, this, _1),
+          "SystemCommandAction",
+          boost::bind(&DataLoggerNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
 DataLoggerNode::~DataLoggerNode() {
 }
-void DataLoggerNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void DataLoggerNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult result_;
     system_command_action_server.setAborted(result_);
@@ -20,6 +20,9 @@ void DataLoggerNode::system_command_Callback(const eros::system_commandGoalConst
         Diagnostic::Message::DROPPING_PACKETS,
         "Received unsupported Command: " + Command::CommandString((Command::Type)goal->Command));
     logger->log_diagnostic(diag);
+}
+void DataLoggerNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+    (void)t_msg;
 }
 bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                              eros::srv_change_nodestate::Response &res) {

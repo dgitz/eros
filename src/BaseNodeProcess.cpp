@@ -253,6 +253,16 @@ eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstP
     msg.loadfactor = t_ptr->loadfactor;
     return msg;
 }
+eros::command_state BaseNodeProcess::convert_fromptr(const eros::command_state::ConstPtr &t_ptr) {
+    eros::command_state msg;
+    msg.stamp = t_ptr->stamp;
+    msg.NodeName = t_ptr->NodeName;
+    msg.CurrentCommand = t_ptr->CurrentCommand;
+    msg.State = t_ptr->State;
+    msg.PercentComplete = t_ptr->PercentComplete;
+    msg.diag = t_ptr->diag;
+    return msg;
+}
 Diagnostic::DiagnosticDefinition BaseNodeProcess::convert(const eros::diagnostic diag) {
     Diagnostic::DiagnosticDefinition def;
     def.device_name = diag.DeviceName;

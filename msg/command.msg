@@ -1,4 +1,5 @@
 #command
+time stamp
 uint16 Command
 uint8 Option1
 uint8 Option2

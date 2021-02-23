@@ -20,6 +20,7 @@ add_message_files(
   DIRECTORY msg
   FILES
   command.msg
+  command_state.msg
   diagnostic.msg
   heartbeat.msg
   loadfactor.msg

@@ -16,6 +16,7 @@
 #include "ros/time.h"
 // ROS Messages
 #include <eros/command.h>
+#include <eros/command_state.h>
 #include <eros/diagnostic.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
@@ -227,6 +228,8 @@ class BaseNodeProcess
       \param t_system_time The current system time.
       \return A Diagnostic reflecting the status of the function.
     */
+
+    eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     Logger* logger;

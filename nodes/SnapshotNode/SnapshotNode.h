@@ -23,13 +23,13 @@ class SnapshotNode : public BaseNode
     const uint16_t MAJOR_RELEASE_VERSION = 0;
 
     /*! \brief The Minor Release Version of the Node.*/
-    const uint16_t MINOR_RELEASE_VERSION = 2;
+    const uint16_t MINOR_RELEASE_VERSION = 3;
 
     /*! \brief The Build Number of the Node.*/
     const uint16_t BUILD_NUMBER = 0;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 18-Feb-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 23-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
     const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::ROVER;
@@ -59,7 +59,8 @@ class SnapshotNode : public BaseNode
 
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
-    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
+    void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
+    void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;
@@ -67,6 +68,7 @@ class SnapshotNode : public BaseNode
     Diagnostic::DiagnosticDefinition read_launchparameters();
     SnapshotProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
+    ros::Publisher commandstate_pub;
 };
 
 #endif  // SnapshotNode_H

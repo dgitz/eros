@@ -60,7 +60,8 @@ class MasterNode : public BaseNode
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     bool device_service(eros::srv_device::Request& req, eros::srv_device::Response& res);
-    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
+    void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
+    void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();

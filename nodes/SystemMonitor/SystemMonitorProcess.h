@@ -2,6 +2,8 @@
  */
 #ifndef SYSTEMMONITORPROCESS_h
 #define SYSTEMMONITORPROCESS_h
+#include <actionlib/client/simple_action_client.h>
+#include <actionlib/client/terminal_state.h>
 #include <curses.h>
 #include <eros/BaseNodeProcess.h>
 #include <eros/heartbeat.h>
@@ -293,6 +295,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     bool initialize_windows();
     bool set_nodeHandle(ros::NodeHandle* nh) {
         nodeHandle = nh;
+        std::string systemcommand_topic = "/SystemCommand";
+        command_pub = nodeHandle->advertise<eros::command>(systemcommand_topic, 1);
         return true;
     }
 
@@ -329,6 +333,12 @@ class SystemMonitorProcess : public BaseNodeProcess
     // Message Functions
     std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
         const eros::command::ConstPtr& t_msg);
+    Diagnostic::DiagnosticDefinition new_commandstate(const eros::command_state::ConstPtr& t_msg) {
+        eros::command_state state = convert_fromptr(t_msg);
+        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        set_message_text(state.diag.Description, (Level::Type)state.diag.Level);
+        return diag;
+    }
     Diagnostic::DiagnosticDefinition new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg) {
         eros::heartbeat msg = convert_fromptr(t_msg);
         Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
@@ -405,6 +415,19 @@ class SystemMonitorProcess : public BaseNodeProcess
             logger->log_diagnostic(diag);
         }
         return diag;
+    }
+    void set_message_text(std::string text, Level::Type level) {
+        Color color;
+        switch (level) {
+            case Level::Type::DEBUG: color = Color::NO_COLOR; break;
+            case Level::Type::INFO: color = Color::NO_COLOR; break;
+            case Level::Type::NOTICE: color = Color::GREEN_COLOR; break;
+            case Level::Type::WARN: color = Color::YELLOW_COLOR; break;
+            case Level::Type::ERROR: color = Color::RED_COLOR; break;
+            case Level::Type::FATAL: color = Color::RED_COLOR; break;
+            default: color = Color::RED_COLOR; break;
+        }
+        set_message_text(text, color);
     }
     void set_message_text(std::string text, Color color) {
         message_text = text;
@@ -570,6 +593,7 @@ class SystemMonitorProcess : public BaseNodeProcess
 
     bool kill_me;
     ros::NodeHandle* nodeHandle;
+    ros::Publisher command_pub;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
     std::map<TaskFieldColumn, Field> task_window_fields;

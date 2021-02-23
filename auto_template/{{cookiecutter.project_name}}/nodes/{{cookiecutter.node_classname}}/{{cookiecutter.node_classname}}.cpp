@@ -4,16 +4,19 @@ bool kill_node = false;
     : system_command_action_server(
           *n.get(),
           get_hostname() + "_" + {{cookiecutter.node_classname}}::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&{{cookiecutter.node_classname}}::system_command_Callback, this, _1),
+          boost::bind(&{{cookiecutter.node_classname}}::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
 {{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
 }
-void {{cookiecutter.node_classname}}::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void {{cookiecutter.node_classname}}::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     (void)goal;
     eros::system_commandResult system_commandResult_;
     system_command_action_server.setAborted(system_commandResult_);
+}
+void {{cookiecutter.node_classname}}::command_Callback(const eros::command::ConstPtr &t_msg) {
+    (void)t_msg;
 }
 bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res)
