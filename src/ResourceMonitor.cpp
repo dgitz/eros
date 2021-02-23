@@ -46,7 +46,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     try {
         processor_count = std::atoi(exec("nproc", true).c_str());
     }
-    catch (const std::exception e) {
+    catch (const std::exception &e) {
         std::string tempstr = "Unable to determine number of processors: " + std::string(e.what());
 
         diag.level = Level::Type::ERROR;
@@ -122,7 +122,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
-        catch (const std::exception e) {
+        catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -146,7 +146,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
-        catch (const std::exception e) {
+        catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -170,7 +170,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
-        catch (const std::exception e) {
+        catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -222,7 +222,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     return diag;
                 }
             }
-            catch (const std::exception e) {
+            catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
@@ -279,7 +279,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                         100.0 - (100.0 * (double)(used_mem) / (double)(total_mem));
                 }
             }
-            catch (const std::exception e) {
+            catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
@@ -314,7 +314,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                                 tempstr1.substr(0, tempstr1.size() - 1);  // Remove trailing % sign
                             resourceInfo.disk_perc = 100.0 - std::atof(tempstr1.c_str());
                         }
-                        catch (const std::exception e) {
+                        catch (const std::exception &e) {
                             diag.level = Level::Type::ERROR;
                             diag.message = Diagnostic::Message::DROPPING_PACKETS;
                             diag.description = "Unable to process string: " + res +
@@ -332,7 +332,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     return diag;
                 }
             }
-            catch (const std::exception e) {
+            catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
@@ -382,7 +382,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
                 return diag;
             }
         }
-        catch (const std::exception e) {
+        catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
             diag.description =
@@ -452,7 +452,7 @@ std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
                     result += buffer;
             }
         }
-        catch (const std::exception e) {
+        catch (const std::exception &e) {
             pclose(pipe);
             std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                                   " and exception: " + std::string(e.what());
@@ -462,7 +462,7 @@ std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
         pclose(pipe);
         return result;
     }
-    catch (const std::exception e) {
+    catch (const std::exception &e) {
         std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                               " and exception: " + std::string(e.what());
         logger->log_error(tempstr);

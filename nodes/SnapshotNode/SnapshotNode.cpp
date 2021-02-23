@@ -12,48 +12,7 @@ SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
-    if (t_msg->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
-
-        Level::Type max_level = Level::Type::DEBUG;
-        for (std::size_t i = 0; i < diag_list.size(); ++i) {
-            if (diag_list.at(i).level > max_level) {
-                max_level = diag_list.at(i).level;
-                diag = diag_list.at(i);
-            }
-        }
-        if (max_level <= Level::Type::WARN) {
-            logger->log_notice("Snap Completed");
-            eros::command_state state;
-            state.stamp = ros::Time::now();
-            state.NodeName = node_name;
-            state.CurrentCommand = t_msg->Command;
-            state.State = 1;
-            state.PercentComplete = 100.0;
-            state.diag = convert(diag);
-            commandstate_pub.publish(state);
-        }
-        else {
-            logger->log_warn("Snap Failed");
-            eros::command_state state;
-            state.stamp = ros::Time::now();
-            state.NodeName = node_name;
-            state.CurrentCommand = t_msg->Command;
-            state.State = 0;
-            state.PercentComplete = 0.0;
-            state.diag = convert(diag);
-            commandstate_pub.publish(state);
-        }
-    }
-    else {
-        diag =
-            process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                       Level::Type::WARN,
-                                       Diagnostic::Message::DROPPING_PACKETS,
-                                       "Received unsupported Command: " +
-                                           Command::CommandString((Command::Type)t_msg->Command));
-    }
-    logger->log_diagnostic(diag);
+    process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
 void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     (void)goal;
@@ -241,10 +200,53 @@ bool SnapshotNode::run_1hz() {
 }
 bool SnapshotNode::run_10hz() {
     update_diagnostics(process->get_diagnostics());
+    process->update(0.1, ros::Time::now().toSec());
     return true;
 }
 void SnapshotNode::thread_loop() {
-    while (kill_node == false) { ros::Duration(1.0).sleep(); }
+    while (kill_node == false) {}
+}
+void SnapshotNode::thread_snapshotcreation() {
+    while (kill_node == false) {
+        if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED) {
+            process->set_devicesnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
+            logger->log_notice("Snap: " + SnapshotProcess::SnapshotStateString(
+                                              process->get_devicesnapshot_state()));
+            SnapshotProcess::SnapshotConfig config = process->get_snapshot_config();
+            Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+            std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
+            Level::Type max_level = Level::Type::DEBUG;
+            for (std::size_t i = 0; i < diag_list.size(); ++i) {
+                if (diag_list.at(i).level > max_level) {
+                    max_level = diag_list.at(i).level;
+                    diag = diag_list.at(i);
+                }
+            }
+            if (max_level <= Level::Type::WARN) {
+                logger->log_notice("Snap Completed");
+                eros::command_state state;
+                state.stamp = ros::Time::now();
+                state.NodeName = node_name;
+                state.CurrentCommand = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                state.State = 1;
+                state.PercentComplete = 100.0;
+                state.diag = convert(diag);
+                commandstate_pub.publish(state);
+            }
+            else {
+                logger->log_warn("Snap Failed");
+                eros::command_state state;
+                state.stamp = ros::Time::now();
+                state.NodeName = node_name;
+                state.CurrentCommand = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                state.State = 0;
+                state.PercentComplete = 0.0;
+                state.diag = convert(diag);
+                commandstate_pub.publish(state);
+            }
+        }
+        ros::Duration(1.0).sleep();
+    }
 }
 void SnapshotNode::cleanup() {
     process->request_statechange(Node::State::FINISHED);
@@ -267,11 +269,13 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     std::thread thread(&SnapshotNode::thread_loop, node);
+    std::thread thread2(&SnapshotNode::thread_snapshotcreation, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
     }
     node->cleanup();
     thread.detach();
+    thread2.detach();
     delete node;
     return 0;
 }

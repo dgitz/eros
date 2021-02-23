@@ -30,10 +30,27 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(
-    const eros::command::ConstPtr &t_msg) {
-    (void)t_msg;  // Not Used
+std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(eros::command t_msg) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+        if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
+            (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::WARN,
+                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     "Snapshot is still being generated.");
+            diag_list.push_back(diag);
+            return diag_list;
+        }
+        else {
+            devicesnapshot_state = SnapshotState::STARTED;
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::INFO,
+                                     Diagnostic::Message::NOERROR,
+                                     "Snapshot Started.");
+        }
+    }
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
@@ -63,23 +80,9 @@ std::string SnapshotProcess::pretty() {
     return str;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapshot() {
+    // logger->log_notice("starting");
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
-        (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
-        diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                 Level::Type::WARN,
-                                 Diagnostic::Message::DROPPING_PACKETS,
-                                 "Snapshot is still being generated.");
-        diag_list.push_back(diag);
-        return diag_list;
-    }
-    else {
-        diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                 Level::Type::INFO,
-                                 Diagnostic::Message::NOERROR,
-                                 "Snapshot Started.");
-    }
 
     devicesnapshot_state = SnapshotState::RUNNING;
     // Clean up Stage Directory
@@ -217,7 +220,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                         TiXmlElement *l_pCommand = l_pArchitecture->FirstChildElement("Command");
                         if (nullptr != l_pCommand) {
                             while (l_pCommand) {
-                                Command cmd;
+                                ExecCommand cmd;
                                 cmd.command = l_pCommand->GetText();
                                 cmd.output_file = l_pCommand->Attribute("file");
                                 snapshot_config.commands.push_back(cmd);

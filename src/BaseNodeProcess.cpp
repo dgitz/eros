@@ -319,7 +319,7 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
                     result += buffer;
             }
         }
-        catch (std::exception e) {
+        catch (const std::exception &e) {
             pclose(pipe);
             std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                                   " and exception: " + std::string(e.what());
@@ -329,7 +329,7 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
         pclose(pipe);
         return result;
     }
-    catch (std::exception e) {
+    catch (const std::exception &e) {
         std::string tempstr = "popen() failed with command: " + std::string(cmd) +
                               " and exception: " + std::string(e.what());
         logger->log_error(tempstr);

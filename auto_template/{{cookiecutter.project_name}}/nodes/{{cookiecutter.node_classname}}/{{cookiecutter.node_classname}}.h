@@ -60,7 +60,7 @@ class {{cookiecutter.node_classname}} : public BaseNode
     bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
-    void command_Callback(const eros::command::ConstPtr& t_msg);
+    void command_Callback(const eros::command::ConstPtr &t_msg);
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();

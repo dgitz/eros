@@ -186,8 +186,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicelist(
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::new_commandmsg(
-    const eros::command::ConstPtr &t_msg) {
-    (void)t_msg;  // Not currently used.
+    eros::command msg) {
+    (void)msg;  // Not currently used.
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,

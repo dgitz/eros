@@ -4,6 +4,9 @@
 #define SnapshotProcess_H
 #include <eros/BaseNodeProcess.h>
 #include <tinyxml.h>
+
+#include <boost/thread.hpp>
+#include <boost/thread/scoped_thread.hpp>
 /*! \class SnapshotProcess SnapshotProcess.h "SnapshotProcess.h"
  *  \brief */
 class SnapshotProcess : public BaseNodeProcess
@@ -15,16 +18,18 @@ class SnapshotProcess : public BaseNodeProcess
     enum class SnapshotState {
         UNKNOWN = 0,
         NOTRUNNING = 1,
-        RUNNING = 2,
-        READY = 3,
-        COMPLETE = 4,
-        INCOMPLETE = 5,
-        END_OF_LIST = 6
+        STARTED = 2,
+        RUNNING = 3,
+        READY = 4,
+        COMPLETE = 5,
+        INCOMPLETE = 6,
+        END_OF_LIST = 7
     };
     static std::string SnapshotStateString(SnapshotState v) {
         switch (v) {
             case SnapshotState::UNKNOWN: return "UNKNOWN";
             case SnapshotState::NOTRUNNING: return "NOT RUNNING";
+            case SnapshotState::STARTED: return "STARTED";
             case SnapshotState::RUNNING: return "RUNNING";
             case SnapshotState::READY: return "READY";
             case SnapshotState::COMPLETE: return "COMPLETE";
@@ -52,7 +57,7 @@ class SnapshotProcess : public BaseNodeProcess
             default: return ModeString(Mode::UNKNOWN); break;
         }
     }
-    struct Command {
+    struct ExecCommand {
         std::string command;
         std::string output_file;
     };
@@ -60,7 +65,7 @@ class SnapshotProcess : public BaseNodeProcess
         std::string stage_directory;
         std::vector<std::string> folders;
         std::vector<std::string> files;
-        std::vector<Command> commands;
+        std::vector<ExecCommand> commands;
         std::vector<std::string> scripts;
         std::string device_snapshot_path;
     };
@@ -80,16 +85,19 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState get_devicesnapshot_state() {
         return devicesnapshot_state;
     }
+    void set_devicesnapshot_state(SnapshotState v) {
+        devicesnapshot_state = v;
+    }
     SnapshotState get_systemsnapshot_state() {
         return systemsnapshot_state;
     }
     Diagnostic::DiagnosticDefinition load_config(std::string file_path);
     void reset();
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(
-        const eros::command::ConstPtr &t_msg);
+    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);
     std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
     void cleanup() {
+        thread_snapshot->join();
         base_cleanup();
         return;
     }
@@ -103,5 +111,6 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState devicesnapshot_state;
     SnapshotState systemsnapshot_state;
     SnapshotConfig snapshot_config;
+    boost::thread *thread_snapshot;
 };
 #endif  // SnapshotProcess_H

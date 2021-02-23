@@ -48,13 +48,10 @@ TEST(BasicTest, TestOperation_Master) {
 
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->createnew_snapshot();
-    EXPECT_TRUE(diag_list.size() > 0);
-    for (std::size_t i = 0; i < diag_list.size(); ++i) {
-        logger->log_diagnostic(diag_list.at(i));
-        EXPECT_TRUE(diag_list.at(i).level <= Level::Type::NOTICE);
-    }
-    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::NOTRUNNING);
+    eros::command command;
+    command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(command);
+    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED);
     delete logger;
     delete tester;
 }
