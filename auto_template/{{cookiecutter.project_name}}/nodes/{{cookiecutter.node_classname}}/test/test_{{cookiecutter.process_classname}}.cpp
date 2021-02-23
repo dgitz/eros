@@ -8,7 +8,8 @@
 class
 {{ cookiecutter.process_classname}}Tester : public {{cookiecutter.process_classname}} {
     public :
-        {{cookiecutter.process_classname}} Tester(){} ~{{cookiecutter.process_classname}}Tester(){}
+        {{cookiecutter.process_classname}}Tester(){}
+        ~{{cookiecutter.process_classname}}Tester(){}
 };
 TEST(BasicTest, TestOperation) {
     Logger* logger = new Logger("DEBUG", "UnitTest{{cookiecutter.process_classname}}");

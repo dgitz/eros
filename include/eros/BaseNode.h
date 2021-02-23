@@ -13,6 +13,8 @@
 #include <thread>
 
 // ROS Base Functionality
+#include <actionlib/server/simple_action_server.h>
+
 #include "ros/ros.h"
 #include "ros/time.h"
 
@@ -28,7 +30,7 @@ class BaseNode
    public:
     BaseNode()
         : diagnostic(),
-          n(),
+          n(new ros::NodeHandle),
           host_name(),
           firmware_version(),
           base_node_name(""),
@@ -89,11 +91,11 @@ class BaseNode
     }
 
     /*! \brief Start the Node. */
-    virtual bool start(int argc, char **argv) = 0;
+    virtual bool start() = 0;
 
     /*! \brief Pre-initialization of node.  This section will create the default pub/subs for the
      * node, along with the logger. */
-    Diagnostic::DiagnosticDefinition preinitialize_basenode(int argc, char **argv);
+    Diagnostic::DiagnosticDefinition preinitialize_basenode();
     void set_loop1_rate(double t_rate) {
         loop1_rate = t_rate;
         loop1_enabled = true;
@@ -146,8 +148,11 @@ class BaseNode
     std::string get_verbositylevel() {
         return verbosity_level;
     }
-    std::string get_hostname() {
-        return std::string(host_name);
+    static std::string get_hostname() {
+        char name[1024];
+        name[1023] = '\0';
+        gethostname(name, 1023);
+        return std::string(name);
     }
     boost::shared_ptr<ros::NodeHandle> get_nodehandle() {
         return n;
@@ -196,7 +201,7 @@ class BaseNode
     Diagnostic::DiagnosticDefinition diagnostic;
 
     boost::shared_ptr<ros::NodeHandle> n;
-    char host_name[1024];
+    std::string host_name;
     Firmware firmware_version;
     std::string base_node_name;
     std::string node_name;

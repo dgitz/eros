@@ -25,6 +25,8 @@
 
     <build_depend>rosbag</build_depend>
     <exec_depend>rosbag</exec_depend>
+    <build_depend>tinyxml</build_depend>
+    <exec_depend>tinyxml</exec_depend>
     
 <export>
     </export>

@@ -1,37 +1,58 @@
-#include "DataLoggerNode.h"
+#include "SnapshotNode.h"
 bool kill_node = false;
-DataLoggerNode::DataLoggerNode()
+SnapshotNode::SnapshotNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + DataLoggerNode::BASE_NODE_NAME + "_SystemCommand",
-          boost::bind(&DataLoggerNode::system_command_Callback, this, _1),
+          get_hostname() + "_" + SnapshotNode::BASE_NODE_NAME + "_SystemCommand",
+          boost::bind(&SnapshotNode::system_command_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
-DataLoggerNode::~DataLoggerNode() {
+SnapshotNode::~SnapshotNode() {
 }
-void DataLoggerNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
+void SnapshotNode::system_command_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult result_;
-    system_command_action_server.setAborted(result_);
-    diag = process->update_diagnostic(
-        Diagnostic::DiagnosticType::COMMUNICATIONS,
-        Level::Type::WARN,
-        Diagnostic::Message::DROPPING_PACKETS,
-        "Received unsupported Command: " + Command::CommandString((Command::Type)goal->Command));
+    if (goal->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+        std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
+
+        Level::Type max_level = Level::Type::INFO;
+        for (std::size_t i = 0; i < diag_list.size(); ++i) {
+            if (diag_list.at(i).level > max_level) {
+                max_level = diag_list.at(i).level;
+                diag = diag_list.at(i);
+            }
+        }
+        if (max_level <= Level::Type::WARN) {
+            result_.State = 1;
+            system_command_action_server.setSucceeded(result_);
+        }
+        else {
+            result_.State = 0;
+            system_command_action_server.setAborted(result_);
+        }
+    }
+    else {
+        system_command_action_server.setAborted(result_);
+        diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                          Level::Type::WARN,
+                                          Diagnostic::Message::DROPPING_PACKETS,
+                                          "Received unsupported Command: " +
+                                              Command::CommandString((Command::Type)goal->Command));
+    }
     logger->log_diagnostic(diag);
 }
-bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
-                                             eros::srv_change_nodestate::Response &res) {
+bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
+                                           eros::srv_change_nodestate::Response &res) {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool DataLoggerNode::start() {
+bool SnapshotNode::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
-    process = new DataLoggerProcess();
+    process = new SnapshotProcess();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
@@ -55,8 +76,13 @@ bool DataLoggerNode::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
-    process->finish_initialization();
+    process->set_architecture(resource_monitor->get_architecture());
+    diagnostic = process->finish_initialization();
+    if (diagnostic.level > Level::Type::WARN) {
+        return false;
+    }
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -80,125 +106,69 @@ bool DataLoggerNode::start() {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition DataLoggerNode::read_launchparameters() {
+Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string param_mode = node_name + "/Mode";
+    std::string mode;
+    if (n->getParam(param_mode, mode) == false) {
+        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                          Level::Type::ERROR,
+                                          Diagnostic::Message::INITIALIZING_ERROR,
+                                          "Mode Not defined.");
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+    process->set_mode(SnapshotProcess::ModeType(mode));
+
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
+Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string param_logfile_duration = "/" + node_name + "/LogFile_Duration";
-    double logfile_duration;
-    if (n->getParam(param_logfile_duration, logfile_duration) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::ERROR,
-                                          Diagnostic::Message::INITIALIZING_ERROR,
-                                          "Missing Parameter: LogFile_Duration.  Exiting.");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
-    std::string param_logfile_directory = "/" + node_name + "/LogFile_Directory";
-    std::string logfile_directory;
-    if (n->getParam(param_logfile_directory, logfile_directory) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::ERROR,
-                                          Diagnostic::Message::INITIALIZING_ERROR,
-                                          "Missing Parameter: LogFile_Directory.  Exiting.");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
-    process->set_logfileduration(logfile_duration);
-    bool available = process->set_logdirectory(logfile_directory);
-    if (available == false) {
-        diag = process->update_diagnostic(
-            Diagnostic::DiagnosticType::DATA_STORAGE,
-            Level::Type::ERROR,
-            Diagnostic::Message::DEVICE_NOT_AVAILABLE,
-            "LogFile_Directory: " + logfile_directory + " Does Not Exist. Exiting.");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
-    std::string param_snapshot_mode = "/" + node_name + "/SnapshotMode";
-    bool snapshot_mode = false;
-    if (n->getParam(param_snapshot_mode, snapshot_mode) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::WARN,
-                                          Diagnostic::Message::NOERROR,
-                                          "Missing Parameter: SnapshotMode.");
-        logger->log_diagnostic(diag);
-    }
-    process->setSnapshotMode(snapshot_mode);
-    if (snapshot_mode == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::WARN,
-                                          Diagnostic::Message::NOERROR,
-                                          "SnapshotMode Disabled.  Logging Everything.");
-        logger->log_diagnostic(diag);
-    }
-    else {
-        snapshot_trigger_sub = n->subscribe<std_msgs::Empty>(
-            "/snapshot_trigger", 1, &DataLoggerNode::snapshot_trigger_Callback, this);
-        diag = process->update_diagnostic(
-            Diagnostic::DiagnosticType::DATA_STORAGE,
-            Level::Type::WARN,
-            Diagnostic::Message::NOERROR,
-            "SnapshotMode Enabled.  All logs stored in RAM until Snapshot is triggered.");
-        logger->log_diagnostic(diag);
-    }
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
     nodestate_srv =
-        n->advertiseService(srv_nodestate_topic, &DataLoggerNode::changenodestate_service, this);
+        n->advertiseService(srv_nodestate_topic, &SnapshotNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
-                                      "Running.");
-    get_logger()->log_notice("Configuration Files Loaded.");
+                                      "Running");
+    std::string param_config_dir = node_name + "/Config_Directory";
+    std::string config_dir;
+    if (n->getParam(param_config_dir, config_dir) == false) {
+        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                          Level::Type::ERROR,
+                                          Diagnostic::Message::INITIALIZING_ERROR,
+                                          "Config_Directory Not defined.");
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+    diag = process->load_config(config_dir + "/SnapshotConfig.xml");
+    if (diag.level >= Level::Type::ERROR) {
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "All Configuration Files Loaded.");
     return diag;
 }
-void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &t_msg) {
-    (void)t_msg;
-    std::ofstream snapshot_file;
-    std::string snapshot_file_path = process->get_logdirectory() + "/Snapshots";
-    snapshot_file.open(snapshot_file_path, std::ios::out | std::ios::app);
-    if (snapshot_file.is_open() == true) {
-        time_t rawtime;
-        struct tm *timeinfo;
-        char datebuffer[80];
-        char bagFilebuffer[80];
-        time(&rawtime);
-        timeinfo = localtime(&rawtime);
-        strftime(datebuffer, 80, "%b-%d-%Y %I:%M:%S", timeinfo);
-        std::string time_str(datebuffer);
-        strftime(bagFilebuffer, 80, "BAG_%Y-%m-%d-%I-%M-%S_0.bag", timeinfo);
-        std::string probable_bag_file(bagFilebuffer);
-        snapshot_file << "-----------" << std::endl;
-        snapshot_file << "Snapshot Requested at: " << time_str << std::endl;
-        snapshot_file << "Time: " << std::to_string(ros::Time::now().toSec()) << " (Unix Time)"
-                      << std::endl;
-        snapshot_file << "Probable Bag File Name: " << probable_bag_file
-                      << " (Time may not be exactly right...)" << std::endl;
-        snapshot_file.close();
-    }
-    else {
-        logger->log_warn("Could not open file: " + snapshot_file_path);
-    }
-}
-bool DataLoggerNode::run_loop1() {
+bool SnapshotNode::run_loop1() {
     return true;
 }
-bool DataLoggerNode::run_loop2() {
+bool SnapshotNode::run_loop2() {
     return true;
 }
-bool DataLoggerNode::run_loop3() {
+bool SnapshotNode::run_loop3() {
     return true;
 }
-bool DataLoggerNode::run_001hz() {
+bool SnapshotNode::run_001hz() {
     return true;
 }
-bool DataLoggerNode::run_01hz() {
+bool SnapshotNode::run_01hz() {
     return true;
 }
-bool DataLoggerNode::run_01hz_noisy() {
+bool SnapshotNode::run_01hz_noisy() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     if ((deviceInfo.received == false) && (disable_device_client == false)) {
         logger->log_notice("Requesting Device Info");
@@ -224,7 +194,7 @@ bool DataLoggerNode::run_01hz_noisy() {
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }
-bool DataLoggerNode::run_1hz() {
+bool SnapshotNode::run_1hz() {
     std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
@@ -245,58 +215,38 @@ bool DataLoggerNode::run_1hz() {
     }
     return true;
 }
-bool DataLoggerNode::run_10hz() {
+bool SnapshotNode::run_10hz() {
     update_diagnostics(process->get_diagnostics());
     return true;
 }
-void DataLoggerNode::thread_loop() {
+void SnapshotNode::thread_loop() {
     while (kill_node == false) { ros::Duration(1.0).sleep(); }
 }
-void DataLoggerNode::run_logger(DataLoggerNode *node) {
-    if (node->get_process()->is_logging_enabled() == true) {
-        rosbag::RecorderOptions opts;
-        opts.record_all = true;
-        opts.quiet = true;
-        opts.verbose = false;
-        opts.prefix = node->get_process()->get_logdirectory() + "BAG";
-        opts.append_date = true;
-        opts.max_duration =
-            ros::Duration(node->get_process()->get_logfile_duration());  // 30 minutes
-        opts.split = true;
-        opts.snapshot = node->get_process()->getSnapshotMode();
-        rosbag::Recorder recorder(opts);
-        recorder.run();
-        node->get_logger()->log_info("Logger Finished.");
-    }
-    return;
-}
-void DataLoggerNode::cleanup() {
+void SnapshotNode::cleanup() {
     process->request_statechange(Node::State::FINISHED);
     process->cleanup();
     delete process;
     base_cleanup();
 }
 void signalinterrupt_handler(int sig) {
-    printf("Killing DataLoggerNode with Signal: %d\n", sig);
+    printf("Killing SnapshotNode with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
-    ros::init(argc, argv, "datalogger_node");
-    DataLoggerNode *node = new DataLoggerNode();
+    ros::init(argc, argv, "snapshot_node");
+    SnapshotNode *node = new SnapshotNode();
     bool status = node->start();
     if (status == false) {
         return EXIT_FAILURE;
     }
-    std::thread thread(&DataLoggerNode::thread_loop, node);
-    std::thread thread2(&DataLoggerNode::run_logger, node, node);
+    std::thread thread(&SnapshotNode::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
     }
     node->cleanup();
-    thread2.detach();
     thread.detach();
     delete node;
     return 0;

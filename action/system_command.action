@@ -1,0 +1,15 @@
+#System Command
+# Command
+uint16 Command
+uint8 Option1
+uint8 Option2
+uint8 Option3
+string CommandText
+string Description
+---
+# Result
+uint8 State
+---
+# Feedback
+float32 PercentComplete
+float32 TimeToCompletion # Seconds

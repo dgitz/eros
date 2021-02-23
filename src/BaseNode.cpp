@@ -18,21 +18,17 @@ void BaseNode::initialize_diagnostic(System::MainSystem t_system,
     diagnostic.subsystem = t_subsystem;
     diagnostic.component = t_component;
 }
-Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode(int argc, char** argv) {
+Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     logger_initialized = false;
     require_pps_to_start = false;
     pps_received = false;
-    ros::init(argc, argv, base_node_name);
-    n.reset(new ros::NodeHandle);
     node_name = ros::this_node::getName();
     boot_time = ros::Time::now();
     diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
     diagnostic.level = Level::Type::INFO;
     diagnostic.message = Diagnostic::Message::INITIALIZING;
     diagnostic.description = "Node Initializing.";
-
-    host_name[1023] = '\0';
-    gethostname(host_name, 1023);
+    host_name = get_hostname();
     heartbeat.HostName = host_name;
     heartbeat.BaseNodeName = base_node_name;
     heartbeat.NodeName = node_name;

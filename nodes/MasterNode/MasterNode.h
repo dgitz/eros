@@ -26,10 +26,10 @@ class MasterNode : public BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 1;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 0;
+    const uint16_t BUILD_NUMBER = 1;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 20-Feb-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 22-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
     const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::ROVER;
@@ -44,7 +44,7 @@ class MasterNode : public BaseNode
     MasterNodeProcess* get_process() {
         return process;
     }
-    bool start(int argc, char** argv);
+    bool start();
     Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
@@ -60,10 +60,12 @@ class MasterNode : public BaseNode
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     bool device_service(eros::srv_device::Request& req, eros::srv_device::Response& res);
+    void system_command_Callback(const eros::system_commandGoalConstPtr& goal);
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
     MasterNodeProcess* process;
+    actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::ServiceServer device_server_srv;
     ResourceMonitor* resource_available_monitor;
     ros::Publisher resource_available_pub;
