@@ -83,6 +83,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
                               " Not meant for me: " + std::to_string((uint8_t)mode));
         }
     }
+    logger->log_diagnostic(diag);
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
