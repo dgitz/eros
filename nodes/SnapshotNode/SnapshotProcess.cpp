@@ -51,8 +51,10 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(eros::command t_msg) {
+    logger->log_warn("xxx1\n");
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    logger->log_warn("xxx2 " + std::to_string((uint16_t)mode) + std::to_string(t_msg.Option1));
     if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
         if (((mode == Mode::MASTER) &&
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER)) ||
@@ -60,6 +62,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE))) {
             if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
                 (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
+                logger->log_warn("xxx5");
                 diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                          Level::Type::WARN,
                                          Diagnostic::Message::DROPPING_PACKETS,
@@ -68,6 +71,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
                 return diag_list;
             }
             else {
+                logger->log_warn("xxx6");
                 if (mode == Mode::MASTER) {
                     systemsnapshot_state = SnapshotState::STARTED;
                 }
@@ -79,11 +83,14 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
             }
         }
         else {
-            logger->log_debug("Command Option1: " + std::to_string(t_msg.Option1) +
-                              " Not meant for me: " + std::to_string((uint8_t)mode));
+            logger->log_warn("Command Option1: " + std::to_string(t_msg.Option1) +
+                             " Not meant for me: " + std::to_string((uint8_t)mode));
         }
     }
-    logger->log_diagnostic(diag);
+    else {
+        logger->log_warn("xxx8");
+    }
+    logger->log_warn("xxx9\n");
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {

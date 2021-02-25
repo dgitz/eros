@@ -11,6 +11,7 @@ SnapshotNode::SnapshotNode()
 SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+    logger->log_warn("xxx0\n");
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
@@ -229,7 +230,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 eros::command command;
                 command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
                 command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
-                for (std::size_t i = 0; i < 10; ++i) { command_pub.publish(command); }
+                for (std::size_t i = 0; i < 1; ++i) { command_pub.publish(command); }
             }
             std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
             Level::Type max_level = Level::Type::DEBUG;
