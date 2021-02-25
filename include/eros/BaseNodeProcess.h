@@ -184,6 +184,8 @@ class BaseNodeProcess
     */
     static eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
 
+    static eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
+
     eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
@@ -228,7 +230,6 @@ class BaseNodeProcess
       \return A Diagnostic reflecting the status of the function.
     */
 
-    eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     Logger* logger;

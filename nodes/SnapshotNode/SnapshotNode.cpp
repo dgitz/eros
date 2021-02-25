@@ -14,6 +14,10 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
+void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
+    logger->log_notice("command state: " + t_msg->NodeName);
+    process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
+}
 void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     (void)goal;
 }
@@ -119,6 +123,8 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     }
     command_sub =
         n->subscribe<eros::command>("/SystemCommand", 10, &SnapshotNode::command_Callback, this);
+    commandstate_sub = n->subscribe<eros::command_state>(
+        "/SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
@@ -126,6 +132,8 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     }
     std::string commandstate_topic = "/SystemCommandState";
     commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
+    std::string command_topic = "/SystemCommand";
+    command_pub = n->advertise<eros::command>(command_topic, 10);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -210,10 +218,19 @@ void SnapshotNode::thread_snapshotcreation() {
     while (kill_node == false) {
         if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED) {
             process->set_devicesnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
+
             logger->log_notice("Snap: " + SnapshotProcess::SnapshotStateString(
                                               process->get_devicesnapshot_state()));
             SnapshotProcess::SnapshotConfig config = process->get_snapshot_config();
             Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+            if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
+                // Send Command to Slaves to Start
+                eros::command command;
+                command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+                for (std::size_t i = 0; i < 10; ++i) { command_pub.publish(command); }
+            }
             std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
             Level::Type max_level = Level::Type::DEBUG;
             for (std::size_t i = 0; i < diag_list.size(); ++i) {
@@ -227,7 +244,15 @@ void SnapshotNode::thread_snapshotcreation() {
                 eros::command_state state;
                 state.stamp = ros::Time::now();
                 state.NodeName = node_name;
-                state.CurrentCommand = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                    state.CurrentCommand.Option1 =
+                        (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+                }
+                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+                    state.CurrentCommand.Option1 =
+                        (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+                }
                 state.State = 1;
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
@@ -238,7 +263,15 @@ void SnapshotNode::thread_snapshotcreation() {
                 eros::command_state state;
                 state.stamp = ros::Time::now();
                 state.NodeName = node_name;
-                state.CurrentCommand = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+                if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                    state.CurrentCommand.Option1 =
+                        (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+                }
+                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+                    state.CurrentCommand.Option1 =
+                        (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+                }
                 state.State = 0;
                 state.PercentComplete = 0.0;
                 state.diag = convert(diag);
