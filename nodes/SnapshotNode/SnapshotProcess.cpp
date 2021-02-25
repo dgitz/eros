@@ -34,8 +34,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
     eros::command_state t_msg) {
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     if (mode == Mode::MASTER) {
-        if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
-            if (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE) {
+        if (t_msg.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+            if (t_msg.CurrentCommand.Option1 ==
+                (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE) {
                 for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
                     if (snapshot_config.snapshot_devices.at(i).name == t_msg.NodeName) {
                         if (t_msg.State == 1) {
