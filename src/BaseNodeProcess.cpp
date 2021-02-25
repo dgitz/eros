@@ -4,7 +4,7 @@ Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, doubl
     system_time = t_system_time;
     Diagnostic::DiagnosticDefinition diag =
         diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                            Level::Type::INFO,
+                                            Level::Type::DEBUG,
                                             Diagnostic::Message::NOERROR,
                                             "Base Process Updated.");
     return diag;

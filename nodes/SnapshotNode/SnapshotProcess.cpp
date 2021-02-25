@@ -40,6 +40,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
                 for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
                     if (snapshot_config.snapshot_devices.at(i).name == t_msg.NodeName) {
                         if (t_msg.State == 1) {
+                            logger->log_notice("received: " + t_msg.NodeName);
                             snapshot_config.snapshot_devices.at(i).device_snapshot_generated = true;
                         }
                     }
@@ -122,7 +123,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     // logger->log_notice("starting");
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-
+    if (mode == Mode::MASTER) {
+        for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+            snapshot_config.snapshot_devices.at(i).device_snapshot_generated = false;
+        }
+    }
     devicesnapshot_state = SnapshotState::RUNNING;
     // Clean up Stage Directory
     {
