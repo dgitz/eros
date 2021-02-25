@@ -124,8 +124,10 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     }
     command_sub =
         n->subscribe<eros::command>("/SystemCommand", 10, &SnapshotNode::command_Callback, this);
-    commandstate_sub = n->subscribe<eros::command_state>(
-        "/SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
+    if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+        commandstate_sub = n->subscribe<eros::command_state>(
+            "/SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
+    }
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
