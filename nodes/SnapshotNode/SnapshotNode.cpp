@@ -211,6 +211,16 @@ bool SnapshotNode::run_1hz() {
 bool SnapshotNode::run_10hz() {
     update_diagnostics(process->get_diagnostics());
     process->update(0.1, ros::Time::now().toSec());
+    if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+        if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::RUNNING) {
+            eros::command_state state;
+            state.stamp = ros::Time::now();
+            state.Name = get_hostname();
+            state.State = (uint8_t)process->get_devicesnapshot_state();
+            state.PercentComplete = process->get_snapshotprogress_percentage();
+            commandstate_pub.publish(state);
+        }
+    }
     return true;
 }
 void SnapshotNode::thread_loop() {
@@ -258,7 +268,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 }
                 state.CurrentCommand.CommandText =
                     process->get_snapshot_config().active_device_snapshot_completepath;
-                state.State = 1;
+                state.State = (uint8_t)SnapshotProcess::SnapshotState::COMPLETE;
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
                 commandstate_pub.publish(state);
@@ -277,7 +287,7 @@ void SnapshotNode::thread_snapshotcreation() {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                 }
-                state.State = 0;
+                state.State = (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE;
                 state.PercentComplete = 0.0;
                 state.diag = convert(diag);
                 commandstate_pub.publish(state);

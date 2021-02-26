@@ -108,6 +108,9 @@ class SnapshotProcess : public BaseNodeProcess
     void set_systemsnapshot_state(SnapshotState v) {
         systemsnapshot_state = v;
     }
+    double get_snapshotprogress_percentage() {
+        return snapshot_progress_percent;
+    }
     Diagnostic::DiagnosticDefinition load_config(std::string file_path);
     void reset();
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
@@ -115,7 +118,6 @@ class SnapshotProcess : public BaseNodeProcess
     std::vector<Diagnostic::DiagnosticDefinition> new_commandstatemsg(eros::command_state t_msg);
     std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
     void cleanup() {
-        thread_snapshot->join();
         base_cleanup();
         return;
     }
@@ -129,6 +131,6 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState devicesnapshot_state;
     SnapshotState systemsnapshot_state;
     SnapshotConfig snapshot_config;
-    boost::thread *thread_snapshot;
+    double snapshot_progress_percent;
 };
 #endif  // SnapshotProcess_H
