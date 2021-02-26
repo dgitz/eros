@@ -63,20 +63,25 @@ class SnapshotProcess : public BaseNodeProcess
         std::string output_file;
     };
     struct SlaveDevice {
-        SlaveDevice(std::string _name) : name(_name), device_snapshot_generated(false), timer(0.0) {
+        SlaveDevice(std::string _name)
+            : name(_name), device_snapshot_generated(false), timer(0.0), devicesnapshot_path("") {
         }
         std::string name;
         bool device_snapshot_generated;
         double timer;
+        std::string devicesnapshot_path;
     };
     struct SnapshotConfig {
         std::string stage_directory;
+
         std::vector<SlaveDevice> snapshot_devices;
         std::vector<std::string> folders;
         std::vector<std::string> files;
         std::vector<ExecCommand> commands;
         std::vector<std::string> scripts;
+        std::string systemsnapshot_path;
         std::string device_snapshot_path;
+        std::string active_device_snapshot_completepath;
     };
     Diagnostic::DiagnosticDefinition finish_initialization();
     Mode get_mode() {

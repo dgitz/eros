@@ -256,6 +256,8 @@ void SnapshotNode::thread_snapshotcreation() {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                 }
+                state.CurrentCommand.CommandText =
+                    process->get_snapshot_config().active_device_snapshot_completepath;
                 state.State = 1;
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);

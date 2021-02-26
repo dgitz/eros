@@ -43,6 +43,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
                         if (t_msg.State == 1) {
                             logger->log_notice("xxx1 received: " + t_msg.Name);
                             snapshot_config.snapshot_devices.at(i).device_snapshot_generated = true;
+                            snapshot_config.snapshot_devices.at(i).devicesnapshot_path =
+                                t_msg.CurrentCommand.CommandText;
                         }
                     }
                 }
@@ -181,7 +183,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     strftime(buffer, sizeof(buffer), "Snapshot_%Y_%m_%d_%H_%M_%S", timeinfo);
     std::string str(buffer);
     std::string snapshot_name = get_hostname() + "_" + str;
-    std::string active_snapshot_completepath = "";
+    snapshot_config.active_device_snapshot_completepath = "";
     // Zip up Device Snapshot
     if (1) {
         char tempstr[1024];
@@ -190,7 +192,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.device_snapshot_path.c_str(),
                 snapshot_name.c_str());
-        active_snapshot_completepath =
+        snapshot_config.active_device_snapshot_completepath =
             snapshot_config.device_snapshot_path + snapshot_name + ".zip";
         logger->log_notice("Running: " + std::string(tempstr));
         exec(tempstr, true);
@@ -200,11 +202,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         int file_found =
             count_files_indirectory(snapshot_config.device_snapshot_path, snapshot_name + ".zip");
         if (file_found != 1) {
-            diag = update_diagnostic(
-                Diagnostic::DiagnosticType::DATA_STORAGE,
-                Level::Type::WARN,
-                Diagnostic::Message::DROPPING_PACKETS,
-                "Device Snapshot not created at: " + active_snapshot_completepath);
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::WARN,
+                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     "Device Snapshot not created at: " +
+                                         snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
             return diag_list;
         }
@@ -215,12 +217,13 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::INFO,
                                      Diagnostic::Message::NOERROR,
-                                     "Device Snapshot Created at: " + active_snapshot_completepath);
+                                     "Device Snapshot Created at: " +
+                                         snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
         }
     }
     if (mode == Mode::MASTER) {
-        double time_to_wait = 30.0;
+        double time_to_wait = 15.0 * (double)(snapshot_config.snapshot_devices.size());
         double timer = 0.0;
         double dt = 0.1;
         bool all_complete = false;
@@ -232,6 +235,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             }
             if (check == true) {
                 all_complete = true;
+                break;
             }
             timer += dt;
         }
@@ -245,6 +249,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                                      " Has not completed in time.");
                 }
             }
+        }
+        for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+            logger->log_warn("scp: " + snapshot_config.snapshot_devices.at(i).devicesnapshot_path);
         }
     }
     return diag_list;
@@ -298,6 +305,16 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
             }
             else {
                 missing_required_keys.push_back("StageDirectory");
+            }
+            TiXmlElement *l_pSystemSnapshotPath =
+                l_pSnapshotConfig->FirstChildElement("SystemSnapshotPath");
+            if (nullptr != l_pSystemSnapshotPath) {
+                snapshot_config.systemsnapshot_path = std::string(l_pSystemSnapshotPath->GetText());
+            }
+            else {
+                if (mode == Mode::MASTER) {
+                    missing_required_keys.push_back("SystemSnapshotPath");
+                }
             }
 
             TiXmlElement *l_pArchitecture = l_pSnapshotConfig->FirstChildElement("Architecture");
