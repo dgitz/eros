@@ -137,7 +137,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         try {
             std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory;
             exec(rm_cmd.c_str(), true);
-            std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory;
+            std::string mkdir_cmd =
+                "mkdir -p " + snapshot_config.stage_directory + "/DeviceSnapshot";
             exec(mkdir_cmd.c_str(), true);
             mkdir_cmd = "mkdir -p " + snapshot_config.device_snapshot_path;
             exec(mkdir_cmd.c_str(), true);
