@@ -32,7 +32,6 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
     eros::command_state t_msg) {
-    logger->log_notice("xxx0 received: " + t_msg.Name);
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     if (mode == Mode::MASTER) {
         if (t_msg.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
@@ -41,7 +40,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
                 for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
                     if (snapshot_config.snapshot_devices.at(i).name == t_msg.Name) {
                         if (t_msg.State == 1) {
-                            logger->log_notice("xxx1 received: " + t_msg.Name);
                             snapshot_config.snapshot_devices.at(i).device_snapshot_generated = true;
                             snapshot_config.snapshot_devices.at(i).devicesnapshot_path =
                                 t_msg.CurrentCommand.CommandText;
@@ -157,7 +155,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     for (std::size_t i = 0; i < snapshot_config.commands.size(); ++i) {
         char tempstr[1024];
         sprintf(tempstr,
-                "%s > %s/%s",
+                "%s > %s/DeviceSnapshot/%s",
                 snapshot_config.commands.at(i).command.c_str(),
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.commands.at(i).output_file.c_str());
@@ -188,7 +186,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     if (1) {
         char tempstr[1024];
         sprintf(tempstr,
-                "cd %s && zip -r %s/%s.zip .",
+                "cd %s && zip -r %s/DeviceSnapshot/%s.zip .",
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.device_snapshot_path.c_str(),
                 snapshot_name.c_str());
@@ -250,8 +248,20 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 }
             }
         }
+        // Move my own device snapshot to stage directory
+        std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory + "/SystemSnapshot";
+        exec(mkdir_cmd.c_str(), true);
+        std::string mv_cmd = "mv " + snapshot_config.active_device_snapshot_completepath + " " +
+                             snapshot_config.stage_directory + "/SystemSnapshot";
+        exec(mv_cmd.c_str(), true);
+
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
-            logger->log_warn("scp: " + snapshot_config.snapshot_devices.at(i).devicesnapshot_path);
+            std::string scp_cmd = "scp robot@" + snapshot_config.snapshot_devices.at(i).name + ":" +
+                                  snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
+                                  snapshot_config.stage_directory;
+
+            logger->log_warn(scp_cmd);
+            exec(scp_cmd.c_str(), true);
         }
     }
     return diag_list;
@@ -300,8 +310,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
             TiXmlElement *l_pStageDirectory =
                 l_pSnapshotConfig->FirstChildElement("StageDirectory");
             if (nullptr != l_pStageDirectory) {
-                snapshot_config.stage_directory =
-                    std::string(l_pStageDirectory->GetText()) + "/DeviceSnapshot";
+                snapshot_config.stage_directory = std::string(l_pStageDirectory->GetText());
             }
             else {
                 missing_required_keys.push_back("StageDirectory");
