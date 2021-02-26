@@ -11,12 +11,11 @@ SnapshotNode::SnapshotNode()
 SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    logger->log_warn("xxx0\n");
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
 void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
-    logger->log_notice("command state: " + t_msg->NodeName);
+    logger->log_notice("command state: " + t_msg->Name);
     process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
 void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
@@ -230,6 +229,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
                 // Send Command to Slaves to Start
                 eros::command command;
+                command.stamp = ros::Time::now();
                 command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
                 command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                 for (std::size_t i = 0; i < 1; ++i) { command_pub.publish(command); }
@@ -246,7 +246,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 logger->log_notice("Snap Completed");
                 eros::command_state state;
                 state.stamp = ros::Time::now();
-                state.NodeName = node_name;
+                state.Name = get_hostname();
                 state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
                 if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
                     state.CurrentCommand.Option1 =
@@ -265,7 +265,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 logger->log_warn("Snap Failed");
                 eros::command_state state;
                 state.stamp = ros::Time::now();
-                state.NodeName = node_name;
+                state.Name = get_hostname();
                 state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
                 if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
                     state.CurrentCommand.Option1 =

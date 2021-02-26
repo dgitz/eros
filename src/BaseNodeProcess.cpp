@@ -256,7 +256,7 @@ eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstP
 eros::command_state BaseNodeProcess::convert_fromptr(const eros::command_state::ConstPtr &t_ptr) {
     eros::command_state msg;
     msg.stamp = t_ptr->stamp;
-    msg.NodeName = t_ptr->NodeName;
+    msg.Name = t_ptr->Name;
     msg.CurrentCommand = t_ptr->CurrentCommand;
     msg.State = t_ptr->State;
     msg.PercentComplete = t_ptr->PercentComplete;

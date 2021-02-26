@@ -32,15 +32,16 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
     eros::command_state t_msg) {
+    logger->log_notice("xxx0 received: " + t_msg.Name);
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     if (mode == Mode::MASTER) {
         if (t_msg.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
             if (t_msg.CurrentCommand.Option1 ==
                 (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE) {
                 for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
-                    if (snapshot_config.snapshot_devices.at(i).name == t_msg.NodeName) {
+                    if (snapshot_config.snapshot_devices.at(i).name == t_msg.Name) {
                         if (t_msg.State == 1) {
-                            logger->log_notice("received: " + t_msg.NodeName);
+                            logger->log_notice("xxx1 received: " + t_msg.Name);
                             snapshot_config.snapshot_devices.at(i).device_snapshot_generated = true;
                         }
                     }
@@ -51,10 +52,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(eros::command t_msg) {
-    logger->log_warn("xxx1\n");
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-    logger->log_warn("xxx2 " + std::to_string((uint16_t)mode) + std::to_string(t_msg.Option1));
     if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
         if (((mode == Mode::MASTER) &&
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER)) ||
@@ -62,7 +61,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE))) {
             if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
                 (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
-                logger->log_warn("xxx5");
                 diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                          Level::Type::WARN,
                                          Diagnostic::Message::DROPPING_PACKETS,
@@ -71,7 +69,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
                 return diag_list;
             }
             else {
-                logger->log_warn("xxx6");
                 if (mode == Mode::MASTER) {
                     systemsnapshot_state = SnapshotState::STARTED;
                 }
@@ -88,9 +85,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
         }
     }
     else {
-        logger->log_warn("xxx8");
     }
-    logger->log_warn("xxx9\n");
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
@@ -222,6 +217,34 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                                      Diagnostic::Message::NOERROR,
                                      "Device Snapshot Created at: " + active_snapshot_completepath);
             diag_list.push_back(diag);
+        }
+    }
+    if (mode == Mode::MASTER) {
+        double time_to_wait = 30.0;
+        double timer = 0.0;
+        double dt = 0.1;
+        bool all_complete = false;
+        while (timer <= time_to_wait) {
+            usleep(dt * 1000000.0);
+            bool check = true;
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                check = check && snapshot_config.snapshot_devices.at(i).device_snapshot_generated;
+            }
+            if (check == true) {
+                all_complete = true;
+            }
+            timer += dt;
+        }
+        if (all_complete == true) {
+            logger->log_warn("All Device Snapshot Processes Have Finished.");
+        }
+        else {
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                if (snapshot_config.snapshot_devices.at(i).device_snapshot_generated == false) {
+                    logger->log_warn("Device: " + snapshot_config.snapshot_devices.at(i).name +
+                                     " Has not completed in time.");
+                }
+            }
         }
     }
     return diag_list;
