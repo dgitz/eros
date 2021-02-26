@@ -186,7 +186,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     if (1) {
         char tempstr[1024];
         sprintf(tempstr,
-                "cd %s && zip -r %s/DeviceSnapshot/%s.zip .",
+                "cd %s/DeviceSnapshot/ && zip -r %s/%s.zip .",
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.device_snapshot_path.c_str(),
                 snapshot_name.c_str());
