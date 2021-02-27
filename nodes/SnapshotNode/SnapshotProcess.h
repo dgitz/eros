@@ -82,6 +82,7 @@ class SnapshotProcess : public BaseNodeProcess
         std::vector<std::string> scripts;
         std::string systemsnapshot_path;
         std::string device_snapshot_path;
+        std::string bagfile_directory;
         std::string active_device_snapshot_completepath;
     };
     Diagnostic::DiagnosticDefinition finish_initialization();

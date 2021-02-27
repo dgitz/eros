@@ -126,6 +126,7 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
         commandstate_sub = n->subscribe<eros::command_state>(
             "/SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
     }
+    bagfile_snapshottrigger_pub = n->advertise<std_msgs::Empty>("/snapshot_trigger", 5);
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
@@ -249,6 +250,8 @@ void SnapshotNode::thread_snapshotcreation() {
             SnapshotProcess::SnapshotConfig config = process->get_snapshot_config();
             Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
             if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                std_msgs::Empty bagfile_snapshot_trigger;
+                bagfile_snapshottrigger_pub.publish(bagfile_snapshot_trigger);
                 process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
                 // Send Command to Slaves to Start
                 eros::command command;
@@ -282,7 +285,7 @@ void SnapshotNode::thread_snapshotcreation() {
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                     state.CurrentCommand.CommandText =
                         process->get_snapshot_config().active_device_snapshot_completepath;
-                    state.State = (uint8_t)SnapshotProcess::SnapshotState::COMPLETE;
+                    state.State = (uint8_t)process->get_devicesnapshot_state();
                 }
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
