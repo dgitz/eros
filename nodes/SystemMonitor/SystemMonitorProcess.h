@@ -342,7 +342,7 @@ class SystemMonitorProcess : public BaseNodeProcess
                 (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER) {
                 if (state.State == (uint8_t)SnapshotProcess::SnapshotState::RUNNING) {
                     char tempstr[512];
-                    sprintf(tempstr, "System Snap Percent Compete: %4.2f%%", state.PercentComplete);
+                    sprintf(tempstr, "System Snap Progress: %4.2f %%", state.PercentComplete);
                     set_message_text(std::string(tempstr), Level::Type::NOTICE);
                 }
                 else if (state.State == (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE) {

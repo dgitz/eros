@@ -305,6 +305,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                                      Diagnostic::Message::DROPPING_PACKETS,
                                      "Device Snapshots are missing.");
             diag_list.push_back(diag);
+            systemsnapshot_state = SnapshotState::INCOMPLETE;
         }
         snapshot_progress_percent = 95.0;
         // Final Zip
@@ -319,7 +320,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         logger->log_notice("Running: " + std::string(tempstr));
         exec(tempstr, true);
         snapshot_progress_percent = 100.0;
-        systemsnapshot_state = SnapshotState::COMPLETE;
+        if (systemsnapshot_state != SnapshotState::INCOMPLETE) {
+            systemsnapshot_state = SnapshotState::COMPLETE;
+        }
     }
     return diag_list;
 }
