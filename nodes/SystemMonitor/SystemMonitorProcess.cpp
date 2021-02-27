@@ -537,7 +537,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         eros::command command;
         command.stamp = ros::Time::now();
         command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
-        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
         command_pub.publish(command);
     }
     else if (key_pressed == KEY_UP) {

@@ -68,6 +68,7 @@ class SnapshotProcess : public BaseNodeProcess
         }
         std::string name;
         bool device_snapshot_generated;
+        bool device_snapshot_processed;
         double timer;
         std::string devicesnapshot_path;
     };

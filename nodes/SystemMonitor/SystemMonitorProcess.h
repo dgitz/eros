@@ -8,6 +8,8 @@
 #include <eros/BaseNodeProcess.h>
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
+
+#include "../nodes/SnapshotNode/SnapshotProcess.h"
 WINDOW* create_newwin(int height, int width, int starty, int startx);
 /*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief WindowManager handles the coordinates and reference to the WINDOW object. */
@@ -99,7 +101,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     const uint16_t MINWINDOW_HEIGHT = 240;
 
     /*! \brief The amount of time to show text in the message window.*/
-    const double TIME_TO_SHOW_MESSAGES = 5.0f;  // Seconds
+    const double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
 
     // Keys
     static constexpr int KEY_q = 113;
@@ -335,7 +337,26 @@ class SystemMonitorProcess : public BaseNodeProcess
     Diagnostic::DiagnosticDefinition new_commandstate(const eros::command_state::ConstPtr& t_msg) {
         eros::command_state state = convert_fromptr(t_msg);
         Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        set_message_text(state.diag.Description, (Level::Type)state.diag.Level);
+        if ((state.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT)) {
+            if (state.CurrentCommand.Option1 ==
+                (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER) {
+                if (state.State == (uint8_t)SnapshotProcess::SnapshotState::RUNNING) {
+                    char tempstr[512];
+                    sprintf(tempstr, "System Snap Percent Compete: %4.2f%%", state.PercentComplete);
+                    set_message_text(std::string(tempstr), Level::Type::NOTICE);
+                }
+                else if (state.State == (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE) {
+                    set_message_text("System Snapshot Incomplete", Level::Type::WARN);
+                }
+                else if (state.State == (uint8_t)SnapshotProcess::SnapshotState::COMPLETE) {
+                    set_message_text("System Snapshot Completed.", Level::Type::NOTICE);
+                }
+            }
+        }
+        else {
+            set_message_text(state.diag.Description, (Level::Type)state.diag.Level);
+        }
+
         return diag;
     }
     Diagnostic::DiagnosticDefinition new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg) {
@@ -416,6 +437,9 @@ class SystemMonitorProcess : public BaseNodeProcess
         return diag;
     }
     void set_message_text(std::string text, Level::Type level) {
+        if (text == "") {
+            return;
+        }
         Color color;
         switch (level) {
             case Level::Type::DEBUG: color = Color::NO_COLOR; break;

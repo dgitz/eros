@@ -154,7 +154,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
-    if (mode == Mode::SLAVE) {
+    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
         snapshot_progress_percent = 5.0;
     }
     // Run Snapshot "Commands"
@@ -177,7 +177,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
-    if (mode == Mode::SLAVE) {
+    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
         snapshot_progress_percent = 25.0;
     }
     time_t rawtime;
@@ -209,6 +209,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     }
     if (mode == Mode::SLAVE) {
         snapshot_progress_percent = 95.0;
+    }
+    else if (mode == Mode::MASTER) {
+        snapshot_progress_percent = 50.0;
     }
     // Make sure it's actually there
     {
@@ -243,6 +246,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     }
     if (mode == Mode::MASTER) {
         double time_to_wait = 15.0 * (double)(snapshot_config.snapshot_devices.size());
+        double perc_to_offset = 40.0 / (double)snapshot_config.snapshot_devices.size();
         double timer = 0.0;
         double dt = 0.1;
         bool all_complete = false;
@@ -251,6 +255,10 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             bool check = true;
             for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
                 check = check && snapshot_config.snapshot_devices.at(i).device_snapshot_generated;
+                if (snapshot_config.snapshot_devices.at(i).device_snapshot_processed == false) {
+                    snapshot_progress_percent += perc_to_offset;
+                    snapshot_config.snapshot_devices.at(i).device_snapshot_processed = true;
+                }
             }
             if (check == true) {
                 all_complete = true;
@@ -281,7 +289,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         std::string mv_cmd = "mv " + snapshot_config.active_device_snapshot_completepath + " " +
                              snapshot_config.stage_directory + "/SystemSnapshot";
         exec(mv_cmd.c_str(), true);
-
+        snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
             std::string scp_cmd = "scp robot@" + snapshot_config.snapshot_devices.at(i).name + ":" +
                                   snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
@@ -297,6 +305,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                                      "Device Snapshots are missing.");
             diag_list.push_back(diag);
         }
+        snapshot_progress_percent = 95.0;
         // Final Zip
 
         std::string systemsnap_name = "SystemSnap_" + time_str;
@@ -308,6 +317,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 systemsnap_name.c_str());
         logger->log_notice("Running: " + std::string(tempstr));
         exec(tempstr, true);
+        snapshot_progress_percent = 100.0;
+        systemsnapshot_state = SnapshotState::COMPLETE;
     }
     return diag_list;
 }

@@ -15,7 +15,6 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
 void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
-    logger->log_notice("command state: " + t_msg->Name);
     process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
 void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
@@ -206,20 +205,33 @@ bool SnapshotNode::run_1hz() {
             logger->log_diagnostic(diag);
         }
     }
+    if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+        if (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE) {
+            process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::NOTRUNNING);
+        }
+    }
     return true;
 }
 bool SnapshotNode::run_10hz() {
     update_diagnostics(process->get_diagnostics());
     process->update(0.1, ros::Time::now().toSec());
-    if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
-        if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::RUNNING) {
-            eros::command_state state;
-            state.stamp = ros::Time::now();
-            state.Name = get_hostname();
-            state.State = (uint8_t)process->get_devicesnapshot_state();
-            state.PercentComplete = process->get_snapshotprogress_percentage();
-            commandstate_pub.publish(state);
+    if ((process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::RUNNING) ||
+        (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::RUNNING)) {
+        eros::command_state state;
+        state.stamp = ros::Time::now();
+        state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+        if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+            state.CurrentCommand.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+            state.State = (uint8_t)process->get_systemsnapshot_state();
         }
+        else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+            state.CurrentCommand.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+            state.State = (uint8_t)process->get_devicesnapshot_state();
+        }
+        state.Name = get_hostname();
+
+        state.PercentComplete = process->get_snapshotprogress_percentage();
+        commandstate_pub.publish(state);
     }
     return true;
 }
@@ -261,13 +273,15 @@ void SnapshotNode::thread_snapshotcreation() {
                 if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+                    state.CurrentCommand.CommandText = "System Snap Completed.";
                 }
                 else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
+                    state.CurrentCommand.CommandText =
+                        process->get_snapshot_config().active_device_snapshot_completepath;
                 }
-                state.CurrentCommand.CommandText =
-                    process->get_snapshot_config().active_device_snapshot_completepath;
+
                 state.State = (uint8_t)SnapshotProcess::SnapshotState::COMPLETE;
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
