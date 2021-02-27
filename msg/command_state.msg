@@ -1,7 +1,7 @@
 #Command state
 time stamp
-string NodeName
-uint16 CurrentCommand
+string Name
+command CurrentCommand
 uint8 State
 float32 PercentComplete
 diagnostic diag

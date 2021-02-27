@@ -15,6 +15,7 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotProcess();
     ~SnapshotProcess();
     enum class Mode { UNKNOWN = 0, MASTER = 1, SLAVE = 2, END_OF_LIST = 3 };
+
     enum class SnapshotState {
         UNKNOWN = 0,
         NOTRUNNING = 1,
@@ -61,13 +62,27 @@ class SnapshotProcess : public BaseNodeProcess
         std::string command;
         std::string output_file;
     };
+    struct SlaveDevice {
+        SlaveDevice(std::string _name)
+            : name(_name), device_snapshot_generated(false), timer(0.0), devicesnapshot_path("") {
+        }
+        std::string name;
+        bool device_snapshot_generated;
+        bool device_snapshot_processed;
+        double timer;
+        std::string devicesnapshot_path;
+    };
     struct SnapshotConfig {
         std::string stage_directory;
+
+        std::vector<SlaveDevice> snapshot_devices;
         std::vector<std::string> folders;
         std::vector<std::string> files;
         std::vector<ExecCommand> commands;
         std::vector<std::string> scripts;
+        std::string systemsnapshot_path;
         std::string device_snapshot_path;
+        std::string active_device_snapshot_completepath;
     };
     Diagnostic::DiagnosticDefinition finish_initialization();
     Mode get_mode() {
@@ -91,13 +106,20 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState get_systemsnapshot_state() {
         return systemsnapshot_state;
     }
+    void set_systemsnapshot_state(SnapshotState v) {
+        systemsnapshot_state = v;
+    }
+    double get_snapshotprogress_percentage() {
+        return snapshot_progress_percent;
+    }
+    std::vector<Diagnostic::DiagnosticDefinition> clear_snapshots();
     Diagnostic::DiagnosticDefinition load_config(std::string file_path);
     void reset();
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
     std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);
+    std::vector<Diagnostic::DiagnosticDefinition> new_commandstatemsg(eros::command_state t_msg);
     std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
     void cleanup() {
-        thread_snapshot->join();
         base_cleanup();
         return;
     }
@@ -111,6 +133,6 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState devicesnapshot_state;
     SnapshotState systemsnapshot_state;
     SnapshotConfig snapshot_config;
-    boost::thread *thread_snapshot;
+    double snapshot_progress_percent;
 };
 #endif  // SnapshotProcess_H

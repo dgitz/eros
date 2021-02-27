@@ -234,6 +234,16 @@ class Command
         END_OF_LIST = 16        /*!< Last item of list. Used for Range Checks. */
     };
 
+    enum class GenerateSnapshot_Option1 {
+        UNKNOWN = 0,
+        RUN_MASTER = 1,
+        RUN_SLAVE = 2,
+        RESET_MASTER = 3,
+        RESET_SLAVE = 4,
+        CLEAR_SNAPSHOTS = 5,
+        END_OF_LIST = 6
+    };
+
     //! Convert System::Type to human readable string
     /*!
       \param v Command::Type type

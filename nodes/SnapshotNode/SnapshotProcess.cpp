@@ -4,7 +4,8 @@ SnapshotProcess::SnapshotProcess()
     : mode(Mode::UNKNOWN),
       architecture(Architecture::Type::UNKNOWN),
       devicesnapshot_state(SnapshotState::NOTRUNNING),
-      systemsnapshot_state(SnapshotState::NOTRUNNING) {
+      systemsnapshot_state(SnapshotState::NOTRUNNING),
+      snapshot_progress_percent(0.0) {
 }
 SnapshotProcess::~SnapshotProcess() {
 }
@@ -30,26 +31,62 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
     return diag;
 }
+std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
+    eros::command_state t_msg) {
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    if (mode == Mode::MASTER) {
+        if (t_msg.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+            if (t_msg.CurrentCommand.Option1 ==
+                (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE) {
+                for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                    if (snapshot_config.snapshot_devices.at(i).name == t_msg.Name) {
+                        if ((SnapshotState)t_msg.State == SnapshotState::COMPLETE) {
+                            snapshot_config.snapshot_devices.at(i).device_snapshot_generated = true;
+                            snapshot_config.snapshot_devices.at(i).devicesnapshot_path =
+                                t_msg.CurrentCommand.CommandText;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return diag_list;
+}
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(eros::command t_msg) {
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
-        if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
-            (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                     Level::Type::WARN,
-                                     Diagnostic::Message::DROPPING_PACKETS,
-                                     "Snapshot is still being generated.");
-            diag_list.push_back(diag);
-            return diag_list;
+        if (((mode == Mode::MASTER) &&
+             (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER)) ||
+            ((mode == Mode::SLAVE) &&
+             (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE))) {
+            if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
+                (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
+                diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                         Level::Type::WARN,
+                                         Diagnostic::Message::DROPPING_PACKETS,
+                                         "Snapshot is still being generated.");
+                diag_list.push_back(diag);
+                return diag_list;
+            }
+            else {
+                if (mode == Mode::MASTER) {
+                    systemsnapshot_state = SnapshotState::STARTED;
+                }
+                devicesnapshot_state = SnapshotState::STARTED;
+                diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                         Level::Type::INFO,
+                                         Diagnostic::Message::NOERROR,
+                                         "Snapshot Started.");
+            }
+        }
+        else if ((t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS)) {
+            diag_list = clear_snapshots();
         }
         else {
-            devicesnapshot_state = SnapshotState::STARTED;
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                     Level::Type::INFO,
-                                     Diagnostic::Message::NOERROR,
-                                     "Snapshot Started.");
         }
+    }
+    else {
     }
     return diag_list;
 }
@@ -62,6 +99,14 @@ std::string SnapshotProcess::pretty() {
     str += " Mode: " + ModeString(mode) + "\n";
     if (mode == Mode::MASTER) {
         str += " System Snapshot State: " + SnapshotStateString(systemsnapshot_state) + "\n";
+        if (snapshot_config.snapshot_devices.size() == 0) {
+            str += " NO Snapshot Devices Defined.\n";
+        }
+        else {
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                str += " Device: " + snapshot_config.snapshot_devices.at(i).name + "\n";
+            }
+        }
     }
     str += " Device Snapshot State: " + SnapshotStateString(devicesnapshot_state) + "\n";
     str += " Stage Directory: " + snapshot_config.stage_directory + "\n";
@@ -81,16 +126,22 @@ std::string SnapshotProcess::pretty() {
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapshot() {
     // logger->log_notice("starting");
+    snapshot_progress_percent = 0.0;
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-
+    if (mode == Mode::MASTER) {
+        for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+            snapshot_config.snapshot_devices.at(i).device_snapshot_generated = false;
+        }
+    }
     devicesnapshot_state = SnapshotState::RUNNING;
     // Clean up Stage Directory
     {
         try {
             std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory;
             exec(rm_cmd.c_str(), true);
-            std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory;
+            std::string mkdir_cmd =
+                "mkdir -p " + snapshot_config.stage_directory + "/DeviceSnapshot";
             exec(mkdir_cmd.c_str(), true);
             mkdir_cmd = "mkdir -p " + snapshot_config.device_snapshot_path;
             exec(mkdir_cmd.c_str(), true);
@@ -104,11 +155,14 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
+    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
+        snapshot_progress_percent = 5.0;
+    }
     // Run Snapshot "Commands"
     for (std::size_t i = 0; i < snapshot_config.commands.size(); ++i) {
         char tempstr[1024];
         sprintf(tempstr,
-                "%s > %s/%s",
+                "%s > %s/DeviceSnapshot/%s",
                 snapshot_config.commands.at(i).command.c_str(),
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.commands.at(i).output_file.c_str());
@@ -124,6 +178,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
+    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
+        snapshot_progress_percent = 25.0;
+    }
     time_t rawtime;
     struct tm *timeinfo;
     char buffer[80];
@@ -132,46 +189,159 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     timeinfo = localtime(&rawtime);
 
     strftime(buffer, sizeof(buffer), "Snapshot_%Y_%m_%d_%H_%M_%S", timeinfo);
-    std::string str(buffer);
-    std::string snapshot_name = get_hostname() + "_" + str;
-    std::string active_snapshot_completepath = "";
+    std::string time_str(buffer);
+    std::string snapshot_name = get_hostname() + "_" + time_str;
+    snapshot_config.active_device_snapshot_completepath = "";
+    if (mode == Mode::SLAVE) {
+        snapshot_progress_percent = 75.0;
+    }
     // Zip up Device Snapshot
     if (1) {
         char tempstr[1024];
         sprintf(tempstr,
-                "cd %s && zip -r %s/%s.zip .",
+                "cd %s/DeviceSnapshot/ && zip -r %s/%s.zip .",
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.device_snapshot_path.c_str(),
                 snapshot_name.c_str());
-        active_snapshot_completepath =
+        snapshot_config.active_device_snapshot_completepath =
             snapshot_config.device_snapshot_path + snapshot_name + ".zip";
         logger->log_notice("Running: " + std::string(tempstr));
         exec(tempstr, true);
+    }
+    if (mode == Mode::SLAVE) {
+        snapshot_progress_percent = 95.0;
+    }
+    else if (mode == Mode::MASTER) {
+        snapshot_progress_percent = 50.0;
     }
     // Make sure it's actually there
     {
         int file_found =
             count_files_indirectory(snapshot_config.device_snapshot_path, snapshot_name + ".zip");
         if (file_found != 1) {
-            diag = update_diagnostic(
-                Diagnostic::DiagnosticType::DATA_STORAGE,
-                Level::Type::WARN,
-                Diagnostic::Message::DROPPING_PACKETS,
-                "Device Snapshot not created at: " + active_snapshot_completepath);
+            if (mode == Mode::SLAVE) {
+                snapshot_progress_percent = 0.0;
+            }
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::WARN,
+                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     "Device Snapshot not created at: " +
+                                         snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
             return diag_list;
         }
         else {
+            if (mode == Mode::SLAVE) {
+                snapshot_progress_percent = 100.0;
+            }
             devicesnapshot_state =
                 SnapshotState::NOTRUNNING;  // Mark NOT RUNNING For now, may need to change when
                                             // System Snapshot gets implemented.
             diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::INFO,
                                      Diagnostic::Message::NOERROR,
-                                     "Device Snapshot Created at: " + active_snapshot_completepath);
+                                     "Device Snapshot Created at: " +
+                                         snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
         }
     }
+    if (mode == Mode::MASTER) {
+        double time_to_wait = 15.0 * (double)(snapshot_config.snapshot_devices.size());
+        double perc_to_offset = 40.0 / (double)snapshot_config.snapshot_devices.size();
+        double timer = 0.0;
+        double dt = 0.1;
+        bool all_complete = false;
+        while (timer <= time_to_wait) {
+            usleep(dt * 1000000.0);
+            bool check = true;
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                check = check && snapshot_config.snapshot_devices.at(i).device_snapshot_generated;
+                if (snapshot_config.snapshot_devices.at(i).device_snapshot_processed == false) {
+                    snapshot_progress_percent += perc_to_offset;
+                    snapshot_config.snapshot_devices.at(i).device_snapshot_processed = true;
+                }
+            }
+            if (check == true) {
+                all_complete = true;
+                break;
+            }
+            timer += dt;
+        }
+        if (all_complete == true) {
+            logger->log_warn("All Device Snapshot Processes Have Finished.");
+        }
+        else {
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                if (snapshot_config.snapshot_devices.at(i).device_snapshot_generated == false) {
+                    logger->log_warn("Device: " + snapshot_config.snapshot_devices.at(i).name +
+                                     " Has not completed in time.");
+                    diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                             Level::Type::WARN,
+                                             Diagnostic::Message::DROPPING_PACKETS,
+                                             "Device Snapshot was not generated in time: " +
+                                                 snapshot_config.snapshot_devices.at(i).name);
+                    diag_list.push_back(diag);
+                }
+            }
+        }
+        // Move my own device snapshot to stage directory
+        std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory + "/SystemSnapshot";
+        exec(mkdir_cmd.c_str(), true);
+        std::string mv_cmd = "mv " + snapshot_config.active_device_snapshot_completepath + " " +
+                             snapshot_config.stage_directory + "/SystemSnapshot";
+        exec(mv_cmd.c_str(), true);
+        snapshot_progress_percent = 92.0;
+        for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+            std::string scp_cmd = "scp robot@" + snapshot_config.snapshot_devices.at(i).name + ":" +
+                                  snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
+                                  snapshot_config.stage_directory + "/SystemSnapshot";
+            exec(scp_cmd.c_str(), true);
+        }
+        if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
+                                    "_Snapshot_") !=
+            ((int)snapshot_config.snapshot_devices.size() + 1)) {
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::WARN,
+                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     "Device Snapshots are missing.");
+            diag_list.push_back(diag);
+            systemsnapshot_state = SnapshotState::INCOMPLETE;
+        }
+        snapshot_progress_percent = 95.0;
+        // Final Zip
+
+        std::string systemsnap_name = "SystemSnap_" + time_str;
+        char tempstr[1024];
+        sprintf(tempstr,
+                "cd %s/SystemSnapshot/ && zip -r %s/%s.zip .",
+                snapshot_config.stage_directory.c_str(),
+                snapshot_config.systemsnapshot_path.c_str(),
+                systemsnap_name.c_str());
+        logger->log_notice("Running: " + std::string(tempstr));
+        exec(tempstr, true);
+        snapshot_progress_percent = 100.0;
+        if (systemsnapshot_state != SnapshotState::INCOMPLETE) {
+            systemsnapshot_state = SnapshotState::COMPLETE;
+        }
+    }
+    return diag_list;
+}
+std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots() {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.systemsnapshot_path + "/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                               Level::Type::NOTICE,
+                                               Diagnostic::Message::NOERROR,
+                                               "Cleared Snapshot Directories.");
+    diag_list.push_back(diag);
     return diag_list;
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_path) {
@@ -193,14 +363,45 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
     if (nullptr != l_pRootElement) {
         TiXmlElement *l_pSnapshotConfig = l_pRootElement->FirstChildElement("SnapshotConfig");
         if (nullptr != l_pSnapshotConfig) {
+            if (mode == Mode::MASTER) {
+                TiXmlElement *l_pSnapshotDevices =
+                    l_pSnapshotConfig->FirstChildElement("SnapshotDevices");
+                if (nullptr != l_pSnapshotDevices) {
+                    TiXmlElement *l_pSnapshotDevice =
+                        l_pSnapshotDevices->FirstChildElement("Device");
+                    while (l_pSnapshotDevice) {
+                        std::string device_name = l_pSnapshotDevice->GetText();
+                        if (device_name != get_hostname()) {
+                            SlaveDevice newSlave(device_name);
+                            snapshot_config.snapshot_devices.push_back(newSlave);
+                        }
+                        l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
+                    }
+                    if (snapshot_config.snapshot_devices.size() == 0) {
+                        missing_required_keys.push_back("SnapshotDevices/Device");
+                    }
+                }
+                else {
+                    missing_required_keys.push_back("SnapshotDevices");
+                }
+            }
             TiXmlElement *l_pStageDirectory =
                 l_pSnapshotConfig->FirstChildElement("StageDirectory");
             if (nullptr != l_pStageDirectory) {
-                snapshot_config.stage_directory =
-                    std::string(l_pStageDirectory->GetText()) + "/DeviceSnapshot";
+                snapshot_config.stage_directory = std::string(l_pStageDirectory->GetText());
             }
             else {
                 missing_required_keys.push_back("StageDirectory");
+            }
+            TiXmlElement *l_pSystemSnapshotPath =
+                l_pSnapshotConfig->FirstChildElement("SystemSnapshotPath");
+            if (nullptr != l_pSystemSnapshotPath) {
+                snapshot_config.systemsnapshot_path = std::string(l_pSystemSnapshotPath->GetText());
+            }
+            else {
+                if (mode == Mode::MASTER) {
+                    missing_required_keys.push_back("SystemSnapshotPath");
+                }
             }
 
             TiXmlElement *l_pArchitecture = l_pSnapshotConfig->FirstChildElement("Architecture");
@@ -279,7 +480,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
 int SnapshotProcess::count_files_indirectory(std::string directory, std::string filter) {
     try {
         char tempstr[1024];
-        sprintf(tempstr, "ls %s%s 2>/dev/null | wc -l", directory.c_str(), filter.c_str());
+        sprintf(tempstr, "ls %s*%s* 2>/dev/null | wc -l", directory.c_str(), filter.c_str());
+        logger->log_warn("exec: " + std::string(tempstr));
         std::string return_v = exec(tempstr, true);
         boost::trim_right(return_v);
         return std::atoi(return_v.c_str());

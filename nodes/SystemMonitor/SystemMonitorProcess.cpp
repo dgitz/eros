@@ -364,7 +364,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
 
     if (select_task_mode == true) {
         std::vector<std::string> instruction_string;
-        instruction_string.push_back("S: Generate System Snapshot.");
+        instruction_string.push_back("S: Generate System Snapshot. (C: Clear Snapshots)");
         instruction_string.push_back("F: Get Node Firmware.");
         instruction_string.push_back("L: Change Log Level.");
         if (change_log_level_mode == true) {
@@ -532,11 +532,20 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
     }
+    else if ((key_pressed == KEY_c) || (key_pressed == KEY_C)) {
+        set_message_text("Clearning All Snapshots...", Level::Type::WARN);
+        eros::command command;
+        command.stamp = ros::Time::now();
+        command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS;
+        command_pub.publish(command);
+    }
     else if ((key_pressed == KEY_s) || (key_pressed == KEY_S)) {
         set_message_text("Requesting System Snapshot...", Level::Type::INFO);
         eros::command command;
         command.stamp = ros::Time::now();
         command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
         command_pub.publish(command);
     }
     else if (key_pressed == KEY_UP) {

@@ -1,0 +1,13 @@
+<!--xml-->
+<launch>
+<node name="$(env ROS_HOSTNAME)_snapshot_node" pkg="eros" type="snapshot_node"  output="screen" clear_params="true">
+        <param name="startup_delay"       value="0.0"/>
+	    <param name="verbosity_level"       value="INFO"/>
+        <param name="require_pps_to_start"  value="false"/>    
+        <param name="loop1_rate"            value="1"/> 
+        <param name="loop2_rate"            value="10"/>
+        <param name="loop3_rate"            value="5"/>
+        <param name="Mode"              value="SLAVE"/> <!-- MASTER,SLAVE-->
+        <param name="Config_Directory" value="/home/robot/config"/> <!-- Where the Snapshot.xml file is located -->
+</node>
+</launch>
