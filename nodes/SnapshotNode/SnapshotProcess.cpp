@@ -229,15 +229,16 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             exec(tempstr, true);
         }
         catch (const std::exception &e) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                     Level::Type::ERROR,
-                                     Diagnostic::Message::DROPPING_PACKETS,
-                                     "File Copy Exec failed with error: " + std::string(e.what()));
+            diag =
+                update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                  Level::Type::ERROR,
+                                  Diagnostic::Message::DROPPING_PACKETS,
+                                  "Folder Copy Exec failed with error: " + std::string(e.what()));
             diag_list.push_back(diag);
             return diag_list;
         }
     }
-    snapshot_progress_percent = 35.0;
+    snapshot_progress_percent = 45.0;
 
     time_t rawtime;
     struct tm *timeinfo;
