@@ -122,6 +122,27 @@ std::string SnapshotProcess::pretty() {
                    "] Cmd: " + snapshot_config.commands.at(i).command + "\n";
         }
     }
+    if (snapshot_config.files.size() == 0) {
+        str += " No Files Defined.\n";
+    }
+    else {
+        str += " Files:\n";
+        for (std::size_t i = 0; i < snapshot_config.files.size(); ++i) {
+            str += "\t[" + std::to_string(i) + "/" + std::to_string(snapshot_config.files.size()) +
+                   "] Cmd: " + snapshot_config.files.at(i) + "\n";
+        }
+    }
+    if (snapshot_config.folders.size() == 0) {
+        str += " No Folders Defined.\n";
+    }
+    else {
+        str += " Folders:\n";
+        for (std::size_t i = 0; i < snapshot_config.folders.size(); ++i) {
+            str += "\t[" + std::to_string(i) + "/" +
+                   std::to_string(snapshot_config.folders.size()) +
+                   "] Cmd: " + snapshot_config.folders.at(i) + "\n";
+        }
+    }
     return str;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapshot() {
@@ -155,9 +176,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
-    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
-        snapshot_progress_percent = 5.0;
-    }
+    snapshot_progress_percent = 5.0;
     // Run Snapshot "Commands"
     for (std::size_t i = 0; i < snapshot_config.commands.size(); ++i) {
         char tempstr[1024];
@@ -178,9 +197,49 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             return diag_list;
         }
     }
-    if ((mode == Mode::SLAVE) || (mode == Mode::MASTER)) {
-        snapshot_progress_percent = 25.0;
+    snapshot_progress_percent = 25.0;
+    // Snapshot File Copy
+    for (std::size_t i = 0; i < snapshot_config.files.size(); ++i) {
+        char tempstr[1024];
+        sprintf(tempstr,
+                "cp %s %s/DeviceSnapshot/",
+                snapshot_config.files.at(i).c_str(),
+                snapshot_config.stage_directory.c_str());
+        try {
+            exec(tempstr, true);
+        }
+        catch (const std::exception &e) {
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::ERROR,
+                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     "File Copy Exec failed with error: " + std::string(e.what()));
+            diag_list.push_back(diag);
+            return diag_list;
+        }
     }
+    snapshot_progress_percent = 35.0;
+    // Snapshot Folder Copy
+    for (std::size_t i = 0; i < snapshot_config.folders.size(); ++i) {
+        char tempstr[1024];
+        sprintf(tempstr,
+                "cp -r %s %s/DeviceSnapshot/",
+                snapshot_config.folders.at(i).c_str(),
+                snapshot_config.stage_directory.c_str());
+        try {
+            exec(tempstr, true);
+        }
+        catch (const std::exception &e) {
+            diag =
+                update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                  Level::Type::ERROR,
+                                  Diagnostic::Message::DROPPING_PACKETS,
+                                  "Folder Copy Exec failed with error: " + std::string(e.what()));
+            diag_list.push_back(diag);
+            return diag_list;
+        }
+    }
+    snapshot_progress_percent = 45.0;
+
     time_t rawtime;
     struct tm *timeinfo;
     char buffer[80];
@@ -205,7 +264,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 snapshot_name.c_str());
         snapshot_config.active_device_snapshot_completepath =
             snapshot_config.device_snapshot_path + snapshot_name + ".zip";
-        logger->log_notice("Running: " + std::string(tempstr));
         exec(tempstr, true);
     }
     if (mode == Mode::SLAVE) {
@@ -337,6 +395,14 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
         std::string rm_cmd = "rm -r -f " + snapshot_config.systemsnapshot_path + "/*";
         exec(rm_cmd.c_str(), true);
     }
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/DeviceSnapshot/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/SystemSnapshot/*";
+        exec(rm_cmd.c_str(), true);
+    }
     diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                                Level::Type::NOTICE,
                                                Diagnostic::Message::NOERROR,
@@ -377,9 +443,11 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                         }
                         l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
                     }
+                    /*
                     if (snapshot_config.snapshot_devices.size() == 0) {
                         missing_required_keys.push_back("SnapshotDevices/Device");
                     }
+                    */
                 }
                 else {
                     missing_required_keys.push_back("SnapshotDevices");
@@ -417,6 +485,22 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                         }
                         else {
                             missing_required_keys.push_back("DeviceSnapshotPath");
+                        }
+                        TiXmlElement *l_pFolder = l_pArchitecture->FirstChildElement("Folder");
+                        if (nullptr != l_pFolder) {
+                            while (l_pFolder) {
+                                std::string folder = l_pFolder->GetText();
+                                snapshot_config.folders.push_back(
+                                    std::string(l_pFolder->GetText()));
+                                l_pFolder = l_pFolder->NextSiblingElement("Folder");
+                            }
+                        }
+                        TiXmlElement *l_pFile = l_pArchitecture->FirstChildElement("File");
+                        if (nullptr != l_pFile) {
+                            while (l_pFile) {
+                                snapshot_config.files.push_back(std::string(l_pFile->GetText()));
+                                l_pFile = l_pFile->NextSiblingElement("File");
+                            }
                         }
                         TiXmlElement *l_pCommand = l_pArchitecture->FirstChildElement("Command");
                         if (nullptr != l_pCommand) {
@@ -481,7 +565,6 @@ int SnapshotProcess::count_files_indirectory(std::string directory, std::string 
     try {
         char tempstr[1024];
         sprintf(tempstr, "ls %s*%s* 2>/dev/null | wc -l", directory.c_str(), filter.c_str());
-        logger->log_warn("exec: " + std::string(tempstr));
         std::string return_v = exec(tempstr, true);
         boost::trim_right(return_v);
         return std::atoi(return_v.c_str());
