@@ -236,7 +236,7 @@ bool SnapshotNode::run_10hz() {
     return true;
 }
 void SnapshotNode::thread_loop() {
-    while (kill_node == false) {}
+    while (kill_node == false) { ros::Duration(1.0).sleep(); }
 }
 void SnapshotNode::thread_snapshotcreation() {
     while (kill_node == false) {
