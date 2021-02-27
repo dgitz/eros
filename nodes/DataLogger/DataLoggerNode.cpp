@@ -160,8 +160,9 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
 }
 void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &t_msg) {
     (void)t_msg;
+    logger->log_notice("Bag File Snapshot Trigger Received.");
     std::ofstream snapshot_file;
-    std::string snapshot_file_path = process->get_logdirectory() + "/Snapshots";
+    std::string snapshot_file_path = process->get_logdirectory() + "/BagFile_Snapshots.txt";
     snapshot_file.open(snapshot_file_path, std::ios::out | std::ios::app);
     if (snapshot_file.is_open() == true) {
         time_t rawtime;
@@ -175,7 +176,7 @@ void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &
         strftime(bagFilebuffer, 80, "BAG_%Y-%m-%d-%I-%M-%S_0.bag", timeinfo);
         std::string probable_bag_file(bagFilebuffer);
         snapshot_file << "-----------" << std::endl;
-        snapshot_file << "Snapshot Requested at: " << time_str << std::endl;
+        snapshot_file << "BagFile Snapshot Requested at: " << time_str << std::endl;
         snapshot_file << "Time: " << std::to_string(ros::Time::now().toSec()) << " (Unix Time)"
                       << std::endl;
         snapshot_file << "Probable Bag File Name: " << probable_bag_file

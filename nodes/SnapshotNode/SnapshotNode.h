@@ -73,6 +73,7 @@ class SnapshotNode : public BaseNode
     ros::Publisher commandstate_pub;
     ros::Subscriber commandstate_sub;
     ros::Publisher command_pub;
+    ros::Publisher bagfile_snapshottrigger_pub;
 };
 
 #endif  // SnapshotNode_H

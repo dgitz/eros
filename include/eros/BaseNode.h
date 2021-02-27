@@ -22,6 +22,7 @@
 
 // ROS Messages
 #include <std_msgs/Bool.h>
+#include <std_msgs/Empty.h>
 // Project
 #include <eros/BaseNodeProcess.h>
 

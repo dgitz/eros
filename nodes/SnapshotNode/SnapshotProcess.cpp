@@ -366,6 +366,15 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             systemsnapshot_state = SnapshotState::INCOMPLETE;
         }
         snapshot_progress_percent = 95.0;
+
+        // Copy Bag Files
+        {
+            std::string cp_cmd = "cp -r " + snapshot_config.bagfile_directory + "/* " +
+                                 snapshot_config.stage_directory + "/SystemSnapshot/";
+            exec(cp_cmd.c_str(), true);
+        }
+        snapshot_progress_percent = 98.0;
+
         // Final Zip
 
         std::string systemsnap_name = "SystemSnap_" + time_str;
@@ -401,6 +410,10 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/SystemSnapshot/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.bagfile_directory + "/*";
         exec(rm_cmd.c_str(), true);
     }
     diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
@@ -460,6 +473,14 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
             }
             else {
                 missing_required_keys.push_back("StageDirectory");
+            }
+            TiXmlElement *l_pBagFileDirectory =
+                l_pSnapshotConfig->FirstChildElement("BagFileDirectory");
+            if (nullptr != l_pBagFileDirectory) {
+                snapshot_config.bagfile_directory = std::string(l_pBagFileDirectory->GetText());
+            }
+            else {
+                missing_required_keys.push_back("BagFileDirectory");
             }
             TiXmlElement *l_pSystemSnapshotPath =
                 l_pSnapshotConfig->FirstChildElement("SystemSnapshotPath");
