@@ -80,9 +80,10 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
                                          "Snapshot Started.");
             }
         }
+        else if ((t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS)) {
+            diag_list = clear_snapshots();
+        }
         else {
-            logger->log_warn("Command Option1: " + std::to_string(t_msg.Option1) +
-                             " Not meant for me: " + std::to_string((uint8_t)mode));
         }
     }
     else {
@@ -320,6 +321,24 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         snapshot_progress_percent = 100.0;
         systemsnapshot_state = SnapshotState::COMPLETE;
     }
+    return diag_list;
+}
+std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots() {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    {
+        std::string rm_cmd = "rm -r -f " + snapshot_config.systemsnapshot_path + "/*";
+        exec(rm_cmd.c_str(), true);
+    }
+    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                               Level::Type::NOTICE,
+                                               Diagnostic::Message::NOERROR,
+                                               "Cleared Snapshot Directories.");
+    diag_list.push_back(diag);
     return diag_list;
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_path) {

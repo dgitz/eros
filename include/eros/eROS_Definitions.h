@@ -240,7 +240,8 @@ class Command
         RUN_SLAVE = 2,
         RESET_MASTER = 3,
         RESET_SLAVE = 4,
-        END_OF_LIST = 5
+        CLEAR_SNAPSHOTS = 5,
+        END_OF_LIST = 6
     };
 
     //! Convert System::Type to human readable string

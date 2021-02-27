@@ -112,6 +112,7 @@ class SnapshotProcess : public BaseNodeProcess
     double get_snapshotprogress_percentage() {
         return snapshot_progress_percent;
     }
+    std::vector<Diagnostic::DiagnosticDefinition> clear_snapshots();
     Diagnostic::DiagnosticDefinition load_config(std::string file_path);
     void reset();
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
