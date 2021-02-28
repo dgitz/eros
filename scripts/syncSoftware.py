@@ -62,7 +62,7 @@ def sync_buildserver(device_name,build):
         for device in devices:
             if(device.Name == device_name):
                 print(CGREEN + "Building on Device: " + device.Name + "..." + CEND)
-                tempstr = "ssh robot@" + device.Name + " \"cd " + device.Catkin_Dir + "; source devel/setup.bash; catkin_make > /dev/null\""
+                tempstr = "ssh robot@" + device.Name + " \"cd " + device.Catkin_Dir + "; source devel/setup.bash; catkin_make -j1 > /dev/null\""
                 ret = subprocess.call(tempstr,shell=True)
                 if(ret != 0): 
                     print(CRED + "BUILD FAILED ON TARGET!!!" + CEND)
