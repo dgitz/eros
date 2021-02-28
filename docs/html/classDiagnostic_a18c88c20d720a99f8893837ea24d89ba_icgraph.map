@@ -1,6 +1,0 @@
-<map id="Diagnostic::DiagnosticTypeString" name="Diagnostic::DiagnosticTypeString">
-<area shape="rect" id="node2" href="$classDiagnostic.html#a9e6715059c6ff3fa05c39b8c66eac06b" title="Generate human readable string of a diagnostic. " alt="" coords="267,5,392,32"/>
-<area shape="rect" id="node3" href="$classDiagnostic.html#ab0ff2b7bb42231087bca65d9f9c8ca1d" title="Update Diagnostic. " alt="" coords="264,57,395,98"/>
-<area shape="rect" id="node4" href="$classLogger.html#a5bd868046b82aa6d6b7d2bf144d5fc09" title="Log a Diagnostic. Do not use, use: log_diagnostic. " alt="" coords="236,123,423,149"/>
-<area shape="rect" id="node5" href="$classLogger.html#afc75be609a67cb8914aadd3eab34a04e" title="Enable ROS Logger. " alt="" coords="471,115,613,157"/>
-</map>

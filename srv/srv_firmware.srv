@@ -1,9 +1,0 @@
-#Firmware
-# No Request needed
----
-string BaseNodeName
-string NodeName
-uint16 MajorRelease
-uint16 MinorRelease
-uint16 BuildNumber
-string Description

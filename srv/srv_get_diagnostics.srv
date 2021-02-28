@@ -1,5 +1,0 @@
-#Get Diagnostics
-uint8 MinLevel # Minimum Level to report. 0=All. 255=Ignore
-uint8 DiagnosticType # Diagnostic Type to report.  0=All. 255=Ignore
----
-diagnostic[] diag_list

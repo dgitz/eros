@@ -1,8 +1,0 @@
-<map id="Node::NodeStateString" name="Node::NodeStateString">
-<area shape="rect" id="node2" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="211,5,365,32"/>
-<area shape="rect" id="node3" href="$classDataLoggerNode.html#a2b7b93ecbc3eec2c378ab79a9f325449" title="Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the sa..." alt="" coords="215,57,361,98"/>
-<area shape="rect" id="node4" href="$classMasterNode.html#ad48a14b4a5aa2f7c69512b17617da481" title="Start the Node. " alt="" coords="225,123,351,149"/>
-<area shape="rect" id="node5" href="$classMasterNode.html#a34c08a767f95efe689e38ff1e0b8b0e1" title="Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the sa..." alt="" coords="211,174,365,215"/>
-<area shape="rect" id="node6" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="213,239,363,281"/>
-<area shape="rect" id="node7" href="$classSystemMonitorNode.html#a02e39cf31e52c8e79d2684a1b2d6a588" title="Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the sa..." alt="" coords="213,305,363,346"/>
-</map>

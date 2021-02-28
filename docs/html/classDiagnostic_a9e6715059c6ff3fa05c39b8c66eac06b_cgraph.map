@@ -1,8 +1,0 @@
-<map id="Diagnostic::pretty" name="Diagnostic::pretty">
-<area shape="rect" id="node2" href="$classLevel.html#a03c1063c724a8d4ef4d0bb4484bde8d6" title="Convert Level::Type to human readable string. " alt="" coords="219,5,345,32"/>
-<area shape="rect" id="node3" href="$classSystem.html#a19f46e9dc3c7c249028291cdde0979c7" title="Convert System::MainSystem to human readable string. " alt="" coords="191,56,373,83"/>
-<area shape="rect" id="node4" href="$classSystem.html#a8a0b6fa858cbbdfdc70b77c462347399" title="Convert System::SubSystem to human readable string. " alt="" coords="193,107,371,133"/>
-<area shape="rect" id="node5" href="$classSystem.html#a5ab066afefaeb4f22ffa50fef1fa9798" title="Convert System::Component to human readable string. " alt="" coords="194,157,370,184"/>
-<area shape="rect" id="node6" href="$classDiagnostic.html#a18c88c20d720a99f8893837ea24d89ba" title="Convert Diagnostic::DiagnosticType to human readable string. " alt="" coords="191,209,373,250"/>
-<area shape="rect" id="node7" href="$classDiagnostic.html#a20f23b220ae2b8100810e777271c9bb6" title="Convert Diagnostic::Message to human readable string. " alt="" coords="179,274,385,315"/>
-</map>

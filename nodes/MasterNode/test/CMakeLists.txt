@@ -1,3 +1,0 @@
-catkin_add_gtest(test_masterNodeProcess test_MasterNodeProcess.cpp)
-target_link_libraries(test_masterNodeProcess ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger masterNodeProcess)
-add_dependencies(test_masterNodeProcess eros_generate_messages_cpp)
