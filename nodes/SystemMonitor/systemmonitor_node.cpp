@@ -218,6 +218,7 @@ void SystemMonitorNode::cleanup() {
 }
 
 bool SystemMonitorNode::init_screen() {
+    setlocale(LC_ALL, "");
     mousemask(ALL_MOUSE_EVENTS, NULL);
     initscr();
     clear();

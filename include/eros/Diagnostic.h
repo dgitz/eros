@@ -181,6 +181,12 @@ class Diagnostic
         initialized = true;
     }
 
+    void initialize(Diagnostic::DiagnosticDefinition diag) {
+        root_diagnostic = diag;
+        root_diagnostic.update_count = 0;
+        initialized = true;
+    }
+
     //! Enable Diagnostic Types
     /*!
         \param diagnostic_types A vector of Diagnostic Types that should be enabled.
