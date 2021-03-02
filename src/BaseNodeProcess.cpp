@@ -339,3 +339,27 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
 void BaseNodeProcess::base_cleanup() {
     return;
 }
+json BaseNodeProcess::read_configuration(std::string device_name, bool include_self) {
+    json j_obj;
+    json empty;
+    std::ifstream fd("/home/robot/config/DeviceList.json");
+    if (fd.is_open() == false) {
+        logger->log_error("Unable to read file.");
+        return empty;
+    }
+    json j;
+    fd >> j_obj;
+    if (include_self == true) {
+        for (auto it = j_obj["DeviceList"].begin(); it != j_obj["DeviceList"].end(); ++it) {
+            if (it.key() == device_name) {
+                j[it.key()] = it.value();
+            }
+        }
+    }
+    for (auto it = j_obj["DeviceList"].begin(); it != j_obj["DeviceList"].end(); ++it) {
+        if (it.value()["Parent"] == device_name) {
+            j[it.key()] = it.value();
+        }
+    }
+    return j;
+}

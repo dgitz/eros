@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 find_package(TinyXML REQUIRED)
 find_package(Curses REQUIRED)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS roscpp actionlib actionlib_msgs)
 add_message_files(
   DIRECTORY msg
