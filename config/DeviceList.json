@@ -1,0 +1,62 @@
+ {
+ 	"DeviceList": {
+ 		"DevComputer1": {
+ 			"Parent": "",
+ 			"Type": "ComputeModule",
+ 			"Architecture": "x86_64",
+ 			"Capability": "ROS",
+ 			"CatkinWS": "/home/robot/catkin_ws",
+            "Jobs": -1
+ 		},
+        "BuildServer1": {
+ 			"Parent": "",
+ 			"Type": "BuildServer",
+ 			"Architecture": "armv7l",
+ 			"Capability": "ROS",
+ 			"CatkinWS": "/home/robot/catkin_ws",
+            "Jobs": 1
+ 		},
+ 		"ControlModule1": {
+ 			"Parent": "",
+ 			"Type": "ControlModule",
+ 			"Architecture": "armv7l",
+ 			"Capability": "ROS",
+ 			"CatkinWS": "/home/robot/catkin_ws",
+ 			"Jobs": 1
+ 		},
+ 		"ControlModule2": {
+ 			"Parent": "",
+ 			"Type": "ControlModule",
+ 			"Architecture": "armv7l",
+ 			"Capability": "ROS",
+ 			"CatkinWS": "/home/robot/catkin_ws",
+ 			"Jobs": 1
+ 		},
+ 		"GPUModule1": {
+ 			"Parent": "",
+ 			"Type": "GPUModule",
+ 			"Architecture": "aarch64",
+ 			"Capability": "ROS",
+ 			"CatkinWS": "/home/robot/catkin_ws",
+ 			"Jobs": 2
+ 		},
+ 		"RelayHat1": {
+ 			"Parent": "BuildServer1",
+ 			"Type": "RelayHat",
+ 			"Model": "RPi Relay Hat",
+ 			"Capability": "GPIO"
+ 		},
+ 		"ServoHat1": {
+ 			"Parent": "ControlModule2",
+ 			"Type": "PWMHat",
+ 			"Model": "Adafruit 16Ch Servo Hat",
+ 			"Capability": "GPIO"
+ 		},
+        "ArduinoHat1": {
+ 			"Parent": "ControlModule1",
+ 			"Type": "ArduinoHat",
+ 			"Model": "AStar",
+ 			"Capability": "GPIO"
+ 		}
+ 	}
+ }

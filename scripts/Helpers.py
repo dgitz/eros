@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import pdb
 import glob,os,shutil
+import json
 class Device():
     def __init__(self,Name='',Parent='',ID=0,PartNumber='',Capability='',CatkinWS = '',Architecture='',Jobs=0):
         self.Name = Name
@@ -43,35 +44,26 @@ def ReadSyncConfig(file_path):
 def ReadDeviceList(file_path,Capability):
     #global devicefile
     DeviceList = []
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-    for List in root:
-        #print DeviceList.tag#, child.text, child.attrib
-        for device in List:
-            #print Device.tag, Device.text, Device.attrib
-            newDevice = Device()
-            add_device = 0
-            for entry in device:
-                if (entry.tag == 'DeviceName'):
-                    newDevice.Name = entry.text
-                elif (entry.tag == 'Capability'):
-                    newDevice.Capability = entry.text
-                elif (entry.tag == 'ID'):
-                    newDevice.ID = int(entry.text)
-                elif (entry.tag == 'PartNumber'):
-                    newDevice.PartNumber = entry.text
-                elif (entry.tag == 'ParentDevice'):
-                    newDevice.Parent = entry.text
-                elif (entry.tag == 'CatkinWS'):
-                    newDevice.CatkinWS = entry.text
-                elif (entry.tag == 'Architecture'):
-                    newDevice.Architecture = entry.text 
-                elif (entry.tag == 'Jobs'):
-                    newDevice.Jobs = entry.text 
-                elif (entry.tag == 'DeviceType'):
-                    newDevice.DeviceType = entry.text
-            if(Capability == newDevice.Capability):
-                DeviceList.append(newDevice)
+    with open(file_path) as f:
+         data = json.load(f)
+         data = data['DeviceList']
+         for device_name in data:
+            obj = data[device_name]
+            try:
+                if(obj['Capability'] == 'ROS'):
+                    try:
+                        newDevice = Device()
+                        newDevice.Name = device_name
+                        newDevice.Capability = 'ROS'
+                        newDevice.CatkinWS = obj['CatkinWS']
+                        newDevice.Architecture = obj['Architecture']
+                        newDevice.Jobs = int(obj['Jobs'])
+                        newDevice.DeviceType = obj['Type']
+                        DeviceList.append(newDevice)
+                    except KeyError as err:
+                        print("Device: " + device_name + " Missing Key! with error: ",err)
+            except KeyError:
+                 a = 1 # Do Nothing
     return DeviceList
 
     

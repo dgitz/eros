@@ -33,11 +33,14 @@
 // ROS Actions
 #include <eros/system_commandAction.h>
 // Project
+#include <nlohmann/json.hpp>
+
 #include "Diagnostic.h"
 #include "Logger.h"
 #include "ResourceMonitor.h"
 #include "eROS_Definitions.h"
 
+using json = nlohmann::json;
 /*! \class BaseNodeProcess BaseNodeProcess.h "BaseNodeProcess.h"
  *  \brief This is a BaseNodeProcess class.  All NodeProcess should be a derived class from this
  * BaseNodeProcess Class. */
@@ -135,6 +138,8 @@ class BaseNodeProcess
     Logger* get_logger() {
         return logger;
     }
+
+    json read_configuration(std::string device_name, bool include_self = true);
 
     //! Request a Node State Change
     /*!

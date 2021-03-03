@@ -4,7 +4,12 @@
 #include <eros/BaseNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
+static std::string get_hostname() {
+    char name[1024];
+    name[1023] = '\0';
+    gethostname(name, 1023);
+    return std::string(name);
+}
 class BaseNodeProcessTester : public BaseNodeProcess
 {
    public:
@@ -46,7 +51,7 @@ TEST(BasicTest, TestOperation_BaseNodeProcess) {
     BaseNodeProcessTester* tester = new BaseNodeProcessTester;
     tester->initialize("UnitTestBaseNodeProcess",
                        "UnitTestBaseNodeProcessInstance",
-                       "MyHost",
+                       get_hostname(),
                        System::MainSystem::SIMROVER,
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
@@ -54,6 +59,10 @@ TEST(BasicTest, TestOperation_BaseNodeProcess) {
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 
+    json json_obj = tester->read_configuration(tester->get_hostname());
+    printf("host: %s\n", tester->get_hostname().c_str());
+    EXPECT_TRUE(json_obj.size() > 0);
+    printf("json:%s\n", json_obj.dump().c_str());
     delete logger;
     delete tester;
 }

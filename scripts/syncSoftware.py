@@ -34,11 +34,13 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
     print(CGREEN + "Sync Completed to: " + device_name  + CEND)
     devices = Helpers.ReadDeviceList(devicelist_file,'ROS')
     if(build == True):
+        if(len(devices) == 0):
+            print(CRED + "NO DEVICES FOUND!" + CEND)
         for device in devices:
             if(device.Name == device_name):
                 print(CGREEN + "Building on Device: " + device.Name + "..." + CEND)
                 tempstr = "ssh robot@" + device.Name + " \"cd " + device.CatkinWS + "; source devel/setup.bash; catkin_make"
-                if(device.Jobs == 0):
+                if(device.Jobs < 0):
                     tempstr = tempstr + " > /dev/null\""
                 else:
                     tempstr = tempstr + " -j" + str(device.Jobs) +" > /dev/null\""
@@ -70,7 +72,7 @@ def main():
             if response != 0:
                 print("ERROR: Build Server: " + device + " is Not Reachable.")
                 return        
-            sync_buildserver(opts.config_dir + "DeviceList.xml",opts.config_dir + "SyncConfig.xml",device,opts.build)
+            sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncConfig.xml",device,opts.build)
     elif(opts.syncmode == "buildserver_target"):
         devices = opts.devices.split(",")
         if(len(devices) < 2):
@@ -82,7 +84,7 @@ def main():
         if response != 0:
             print("ERROR: Build Server: " +build_server + " is Not Reachable.")
             return        
-        sync_buildserver(opts.config_dir + "DeviceList.xml",opts.config_dir + "SyncConfig.xml",build_server,opts.build)
+        sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncConfig.xml",build_server,opts.build)
 
         for device in remotes:
             sync_remote_to_remote(opts.config_dir + "SyncConfig.xml",build_server,device)
