@@ -139,7 +139,9 @@ class BaseNodeProcess
         return logger;
     }
 
-    json read_configuration(std::string device_name, bool include_self = true);
+    json read_configuration(std::string device_name,
+                            bool include_self = true,
+                            std::string file_path = "/home/robot/config/DeviceList.json");
 
     //! Request a Node State Change
     /*!

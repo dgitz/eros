@@ -339,10 +339,10 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
 void BaseNodeProcess::base_cleanup() {
     return;
 }
-json BaseNodeProcess::read_configuration(std::string device_name, bool include_self) {
+json BaseNodeProcess::read_configuration(std::string device_name, bool include_self,std::string file_path) {
     json j_obj;
     json empty;
-    std::ifstream fd("/home/robot/config/DeviceList.json");
+    std::ifstream fd(file_path);
     if (fd.is_open() == false) {
         logger->log_error("Unable to read file.");
         return empty;
