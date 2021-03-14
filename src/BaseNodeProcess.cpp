@@ -327,6 +327,7 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
             return "";
         }
         pclose(pipe);
+        boost::algorithm::trim(result);
         return result;
     }
     catch (const std::exception &e) {

@@ -9,6 +9,7 @@
 #include <sys/time.h>
 // C++ System Files
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "boost/date_time/posix_time/posix_time.hpp"
