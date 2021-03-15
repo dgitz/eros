@@ -5,7 +5,8 @@ SnapshotProcess::SnapshotProcess()
       architecture(Architecture::Type::UNKNOWN),
       devicesnapshot_state(SnapshotState::NOTRUNNING),
       systemsnapshot_state(SnapshotState::NOTRUNNING),
-      snapshot_progress_percent(0.0) {
+      snapshot_progress_percent(0.0),
+      holdcomplete_timer(0.0) {
 }
 SnapshotProcess::~SnapshotProcess() {
 }
@@ -29,6 +30,13 @@ void SnapshotProcess::reset() {
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_ros_time) {
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+    if (devicesnapshot_state == SnapshotState::COMPLETE) {
+        holdcomplete_timer += t_dt;
+        if (holdcomplete_timer > HOLDCOMPLETE_TIME) {
+            devicesnapshot_state = SnapshotState::NOTRUNNING;
+            holdcomplete_timer = 0.0;
+        }
+    }
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
@@ -293,8 +301,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 snapshot_progress_percent = 100.0;
             }
             devicesnapshot_state =
-                SnapshotState::NOTRUNNING;  // Mark NOT RUNNING For now, may need to change when
-                                            // System Snapshot gets implemented.
+                SnapshotState::COMPLETE;  // Mark NOT RUNNING For now, may need to change when
+                                          // System Snapshot gets implemented.
             diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::INFO,
                                      Diagnostic::Message::NOERROR,

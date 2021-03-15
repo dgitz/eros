@@ -14,6 +14,7 @@ class SnapshotProcess : public BaseNodeProcess
    public:
     SnapshotProcess();
     ~SnapshotProcess();
+    const double HOLDCOMPLETE_TIME = 5.0;
     enum class Mode { UNKNOWN = 0, MASTER = 1, SLAVE = 2, END_OF_LIST = 3 };
 
     enum class SnapshotState {
@@ -135,5 +136,6 @@ class SnapshotProcess : public BaseNodeProcess
     SnapshotState systemsnapshot_state;
     SnapshotConfig snapshot_config;
     double snapshot_progress_percent;
+    double holdcomplete_timer;
 };
 #endif  // SnapshotProcess_H
