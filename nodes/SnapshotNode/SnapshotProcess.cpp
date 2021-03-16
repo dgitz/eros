@@ -312,6 +312,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         }
     }
     if (mode == Mode::MASTER) {
+        std::string systemsnap_name = "SystemSnap_" + time_str;
         double time_to_wait = 15.0 * (double)(snapshot_config.snapshot_devices.size());
         double perc_to_offset = 40.0 / (double)snapshot_config.snapshot_devices.size();
         double timer = 0.0;
@@ -383,9 +384,60 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         }
         snapshot_progress_percent = 98.0;
 
+        // Create System Snap Text File
+        std::ofstream result_file(
+            snapshot_config.stage_directory + "/SystemSnapshot/SystemSnap.txt", std::ofstream::out);
+        if (result_file.is_open() == false) {
+            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                     Level::Type::WARN,
+                                     Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                     "Unable to create System Snap Text File.");
+            diag_list.push_back(diag);
+            systemsnapshot_state = SnapshotState::INCOMPLETE;
+        }
+        else {
+            result_file << "System Snap Name: " << systemsnap_name << std::endl;
+            std::vector<std::string> devices_complete;
+            std::vector<std::string> devices_incomplete;
+            for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+                if (snapshot_config.snapshot_devices.at(i).device_snapshot_generated == true) {
+                    devices_complete.push_back(snapshot_config.snapshot_devices.at(i).name);
+                }
+                else {
+                    devices_incomplete.push_back(snapshot_config.snapshot_devices.at(i).name);
+                }
+            }
+            if (devices_complete.size() == 0) {
+                result_file << "---" << std::endl << "NO Device Snapshots Available!" << std::endl;
+            }
+            else {
+                result_file << "---" << std::endl << "Device Snapshots Completed:" << std::endl;
+                int i = 0;
+                for (auto dev : devices_complete) {
+                    result_file << "\t[" << std::to_string(i + 1) << "/"
+                                << std::to_string(devices_complete.size()) + "] " + dev
+                                << std::endl;
+                    i++;
+                }
+            }
+            if (devices_incomplete.size() == 0) {
+                result_file << "---" << std::endl
+                            << "NO Device Snapshots were Incompleted." << std::endl;
+            }
+            else {
+                result_file << "---" << std::endl << "Device Snapshots Missing:" << std::endl;
+                int i = 0;
+                for (auto dev : devices_incomplete) {
+                    result_file << "\t[" << std::to_string(i + 1) << "/"
+                                << std::to_string(devices_incomplete.size()) + "] " + dev
+                                << std::endl;
+                    i++;
+                }
+            }
+            result_file.close();
+        }
         // Final Zip
 
-        std::string systemsnap_name = "SystemSnap_" + time_str;
         char tempstr[1024];
         sprintf(tempstr,
                 "cd %s/SystemSnapshot/ && zip -r %s/%s.zip .",

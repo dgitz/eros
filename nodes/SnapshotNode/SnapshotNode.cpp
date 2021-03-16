@@ -186,6 +186,7 @@ bool SnapshotNode::run_1hz() {
             logger->log_diagnostic(diag);
         }
     }
+
     if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
         if ((process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE) ||
             (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::INCOMPLETE)) {
