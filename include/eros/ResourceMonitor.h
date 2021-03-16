@@ -45,6 +45,7 @@ class ResourceMonitor
     std::vector<double> get_load_factor() {
         return load_factor;
     }
+    void reset();
 
    private:
     Diagnostic::DiagnosticDefinition read_process_resource_usage();

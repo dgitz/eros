@@ -193,6 +193,7 @@ class BaseNode
 
     virtual void command_Callback(const eros::command::ConstPtr &t_msg) = 0;
 
+    void base_reset();
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();

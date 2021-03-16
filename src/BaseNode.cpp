@@ -277,7 +277,12 @@ bool BaseNode::update(Node::State node_state) {
     }
     return ros::ok();
 }
-
+void BaseNode::base_reset() {
+    resource_monitor->reset();
+    eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+    resource_used.stamp = ros::Time::now();
+    resource_used_pub.publish(resource_used);
+}
 void BaseNode::new_ppsmsg(const std_msgs::Bool::ConstPtr& t_msg) {
     if (t_msg->data == true) {
         pps_received = true;

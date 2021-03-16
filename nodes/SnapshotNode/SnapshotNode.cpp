@@ -175,6 +175,7 @@ bool SnapshotNode::run_1hz() {
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {
+        base_reset();
         process->reset();
         logger->log_notice("Node has Reset");
         if (process->request_statechange(Node::State::RUNNING) == false) {

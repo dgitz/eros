@@ -75,6 +75,15 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     }
     return diag;
 }
+void ResourceMonitor::reset() {
+    ResourceInfo reset_info;
+    reset_info.process_name = resourceInfo.process_name;
+    reset_info.pid = resourceInfo.pid;
+    reset_info.cpu_perc = 0.0;
+    reset_info.ram_perc = 0.0;
+    reset_info.disk_perc = 0.0;
+    resourceInfo = reset_info;
+}
 Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     run_time += t_dt;
