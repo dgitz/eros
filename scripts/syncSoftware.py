@@ -33,11 +33,13 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
             subprocess.call("rsync -avrt " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory,shell=True)
     print(CGREEN + "Sync Completed to: " + device_name  + CEND)
     devices = Helpers.ReadDeviceList(devicelist_file,'ROS')
+    build_attempted = False
     if(build == True):
         if(len(devices) == 0):
             print(CRED + "NO DEVICES FOUND!" + CEND)
         for device in devices:
             if(device.Name == device_name):
+                build_attempted = True
                 print(CGREEN + "Building on Device: " + device.Name + "..." + CEND)
                 tempstr = "ssh robot@" + device.Name + " \"cd " + device.CatkinWS + "; source devel/setup.bash; catkin_make"
                 if(device.Jobs < 0):
@@ -50,6 +52,8 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
                     return
                 else:
                     print(CGREEN + "Build Completed on: " + device.Name + CEND)
+        if(build_attempted == False):
+            print(CYELLOW + "Build never attempted.  Check your configuration." + CEND)
     
         
 

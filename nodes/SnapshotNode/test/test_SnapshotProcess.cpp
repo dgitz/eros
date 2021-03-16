@@ -55,6 +55,8 @@ TEST(BasicTest, TestOperation_Slave) {
     EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED);
 
     diag_list = tester->createnew_snapshot();
+    EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE);
+    tester->update(tester->HOLDCOMPLETE_TIME + 0.1, tester->HOLDCOMPLETE_TIME + 0.1);
     EXPECT_TRUE(tester->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::NOTRUNNING);
     delete logger;
     delete tester;
