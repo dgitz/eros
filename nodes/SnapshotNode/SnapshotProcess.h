@@ -7,6 +7,7 @@
 
 #include <boost/thread.hpp>
 #include <boost/thread/scoped_thread.hpp>
+#include <fstream>
 /*! \class SnapshotProcess SnapshotProcess.h "SnapshotProcess.h"
  *  \brief */
 class SnapshotProcess : public BaseNodeProcess
