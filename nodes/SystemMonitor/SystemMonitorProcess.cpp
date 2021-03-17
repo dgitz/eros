@@ -370,7 +370,12 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
         if (change_log_level_mode == true) {
             instruction_string.push_back("  1,2,3,4,5,6: Select Log Level.");
         }
-        instruction_string.push_back("D: Show Task Diagnostics.");
+        if (show_task_diagnostic_mode == false) {
+            instruction_string.push_back("D: Show Task Diagnostics.");
+        }
+        else {
+            instruction_string.push_back("D: Show System Diagnostics.");
+        }
         instruction_string.push_back("N: Change Node State.");
         if (change_nodestate_mode == true) {
             instruction_string.push_back("  1-9: Select Node State.");
@@ -380,6 +385,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
                       i + 3,
                       1,
                       instruction_string.at(i).c_str());
+            wclrtoeol(window_it->second.get_window_reference());
         }
     }
     wclrtobot(window_it->second.get_window_reference());
@@ -411,8 +417,75 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     Color color;
-    if (show_task_diagnostic_mode == true) {
+
+    if (show_task_diagnostic_mode == false) {
+        mvwprintw(window_it->second.get_window_reference(), 1, 1, "System Diagnostics:");
+        wclrtoeol(window_it->second.get_window_reference());
+        std::string dashed(window_it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
+        mvwprintw(window_it->second.get_window_reference(), 2, 1, dashed.c_str());
+        std::string system_diagnostic_topic = "/srv_system_diagnostics";
+        ros::ServiceClient system_diag_client =
+            nodeHandle->serviceClient<eros::srv_get_diagnostics>(system_diagnostic_topic);
+        eros::srv_get_diagnostics srv;
+        srv.request.MinLevel = 0;
+        srv.request.DiagnosticType = 0;
+        if (system_diag_client.call(srv)) {
+            for (std::size_t i = 0; i < srv.response.diag_list.size(); ++i) {
+                Diagnostic::DiagnosticDefinition diag = convert(srv.response.diag_list.at(i));
+                std::string str = "  " + Diagnostic::DiagnosticTypeString(diag.type);
+                if (diag.message == Diagnostic::Message::NODATA) {
+                    color = Color::NO_COLOR;
+                }
+                else {
+                    switch (diag.level) {
+                        case Level::Type::DEBUG: color = Color::NO_COLOR; break;
+                        case Level::Type::INFO: color = Color::GREEN_COLOR; break;
+                        case Level::Type::NOTICE: color = Color::GREEN_COLOR; break;
+                        case Level::Type::WARN:
+                            color = Color::YELLOW_COLOR;
+                            str += ": " + diag.description;
+                            break;
+                        case Level::Type::ERROR:
+                            color = Color::RED_COLOR;
+                            str += ": " + diag.description;
+                            break;
+                        case Level::Type::FATAL:
+                            color = Color::RED_COLOR;
+                            str += ": " + diag.description;
+                            break;
+                        default: color = Color::RED_COLOR; break;
+                    }
+                }
+
+                str += "  ";
+                if (str.size() >
+                    (std::size_t)(window_it->second.get_screen_coordinates_pixel().width_pix - 4)) {
+                    str = str.substr(
+                              0,
+                              (std::size_t)(
+                                  window_it->second.get_screen_coordinates_pixel().width_pix - 4)) +
+                          "...";
+                }
+                wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
+                mvwprintw(window_it->second.get_window_reference(), i + 3, 1, str.c_str());
+                wclrtoeol(window_it->second.get_window_reference());
+                wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
+            }
+        }
+        else {
+            color = Color::YELLOW_COLOR;
+            wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
+            mvwprintw(window_it->second.get_window_reference(),
+                      3,
+                      1,
+                      "!!! No System Diagostics Available !!!");
+            wclrtoeol(window_it->second.get_window_reference());
+            wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        }
+    }
+    else {  // if (show_task_diagnostic_mode == true) {
         mvwprintw(window_it->second.get_window_reference(), 1, 1, "Node Diagnostics:");
+        wclrtoeol(window_it->second.get_window_reference());
         std::string dashed(window_it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
         mvwprintw(window_it->second.get_window_reference(), 2, 1, dashed.c_str());
         for (std::size_t i = 0; i < task_diagnostics_to_show.size(); ++i) {
@@ -641,7 +714,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
     }
     else if ((key_pressed == KEY_d) || (key_pressed == KEY_D)) {
         if (select_task_mode == true) {
-            show_task_diagnostic_mode = true;
+            show_task_diagnostic_mode = !show_task_diagnostic_mode;
             std::map<uint16_t, std::string>::iterator task_name_lookup =
                 task_name_list.find(selected_task_index);
             if (task_name_lookup == task_name_list.end()) {

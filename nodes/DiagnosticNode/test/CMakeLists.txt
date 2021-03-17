@@ -1,0 +1,3 @@
+catkin_add_gtest(test_diagnosticNodeProgress test_DiagnosticNodeProcess.cpp)
+target_link_libraries(test_diagnosticNodeProgress ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger diagnosticNodeProgress)
+add_dependencies(test_diagnosticNodeProgress eros_generate_messages_cpp)

@@ -233,6 +233,11 @@ bool BaseNode::update(Node::State node_state) {
         eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
         resource_used.stamp = ros::Time::now();
         resource_used_pub.publish(resource_used);
+        std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
+        for (std::size_t i = 0; i < diag_list.size(); ++i) {
+            eros::diagnostic diag = convert(diag_list.at(i));
+            diagnostic_pub.publish(diag);
+        }
         last_01hz_noisy_timer = ros::Time::now();
     }
     mtime = measure_time_diff(ros::Time::now(), last_01hz_timer);
@@ -318,8 +323,13 @@ bool BaseNode::loggerlevel_service(eros::srv_logger_level::Request& req,
 }
 bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
                                    eros::srv_get_diagnostics::Response& res) {
+    Diagnostic::DiagnosticDefinition worst_diag;
+    worst_diag.level = Level::Type::UNKNOWN;
     std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
     for (std::size_t i = 0; i < diag_list.size(); ++i) {
+        if (diag_list.at(i).level > worst_diag.level) {
+            worst_diag = diag_list.at(i);
+        }
         eros::diagnostic diag = convert(diag_list.at(i));
         bool add_me = false;
         if ((req.MinLevel == 0) || (req.DiagnosticType == 0)) {
@@ -337,6 +347,7 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request& req,
         logger->log_diagnostic(diag_list.at(i));
         diagnostic_pub.publish(diag);
     }
+    res.worst_diag = convert(worst_diag);
 
     return true;
 }
@@ -360,6 +371,19 @@ eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
     diag.Level = (uint8_t)diag_def.level;
     diag.DiagnosticMessage = (uint8_t)diag_def.message;
     diag.Description = diag_def.description;
+    return diag;
+}
+Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def) {
+    Diagnostic::DiagnosticDefinition diag;
+    diag.device_name = diag_def.DeviceName;
+    diag.node_name = diag_def.NodeName;
+    diag.system = (System::MainSystem)diag_def.System;
+    diag.subsystem = (System::SubSystem)diag_def.SubSystem;
+    diag.component = (System::Component)diag_def.Component;
+    diag.type = (Diagnostic::DiagnosticType)diag_def.DiagnosticType;
+    diag.level = (Level::Type)diag_def.Level;
+    diag.message = (Diagnostic::Message)diag_def.DiagnosticMessage;
+    diag.description = diag_def.Description;
     return diag;
 }
 eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {

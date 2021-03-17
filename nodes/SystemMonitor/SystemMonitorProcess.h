@@ -144,7 +144,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         YELLOW_COLOR = 3,
         GREEN_COLOR = 4,
         BLUE_COLOR = 5,
-        END_OF_LIST = 6
+        GRAY_COLOR = 6,
+        END_OF_LIST = 7
     };
     enum class TaskType { UNKNOWN = 0, EROS = 1, NON_EROS = 2 };
     enum class TaskFieldColumn {

@@ -194,7 +194,16 @@ class BaseNodeProcess
 
     static eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
 
+    //! Convert eros::diagnostic message (as received via a ROS Node) to the regular datatype
+    /*!
+      \param t_ptr The pointer to the object
+      \return The object
+    */
+    static eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
+
     eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
+
+    Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
 
@@ -217,13 +226,6 @@ class BaseNodeProcess
     */
     eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr);
 
-    //! Convert eros::diagnostic message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
-
     //! Convert eros::loadfactor message (as received via a ROS Node) to the regular datatype
     /*!
       \param t_ptr The pointer to the object
@@ -237,8 +239,6 @@ class BaseNodeProcess
       \param t_system_time The current system time.
       \return A Diagnostic reflecting the status of the function.
     */
-
-    Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     Logger* logger;
     std::string hostname;
