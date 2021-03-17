@@ -95,6 +95,28 @@ class Diagnostic
 
     */
     struct DiagnosticDefinition {
+        DiagnosticDefinition() {
+        }
+        DiagnosticDefinition(std::string _device_name,
+                             std::string _node_name,
+                             System::MainSystem _system,
+                             System::SubSystem _sub_system,
+                             System::Component _component,
+                             Diagnostic::DiagnosticType _type,
+                             Diagnostic::Message _message,
+                             Level::Type _level,
+                             std::string _description)
+            : device_name(_device_name),
+              node_name(_node_name),
+              system(_system),
+              subsystem(_sub_system),
+              component(_component),
+              type(_type),
+              message(_message),
+              level(_level),
+              description(_description),
+              update_count(1) {
+        }
         std::string device_name;
         std::string node_name;
         System::MainSystem system;
@@ -143,16 +165,26 @@ class Diagnostic
         \param diag A diagnostic.
         \return Human readable string of diagnostic.
     */
-    static std::string pretty(std::string pre, DiagnosticDefinition diag) {
+    static std::string pretty(std::string pre,
+                              DiagnosticDefinition diag,
+                              bool print_end_line = true) {
         std::string str = "";
-        str += pre + "Level: " + Level::LevelString(diag.level) + "\n";
-        str += pre + "Device: " + diag.device_name + "\n";
-        str += pre + "Node: " + diag.node_name + "\n";
-        str += pre + "System: " + System::MainSystemString(diag.system) + "\n";
-        str += pre + "Subsystem: " + System::SubSystemString(diag.subsystem) + "\n";
-        str += pre + "Component: " + System::ComponentString(diag.component) + "\n";
-        str += pre + "Diagnostic Type: " + Diagnostic::DiagnosticTypeString(diag.type) + "\n";
-        str += pre + "Message: " + Diagnostic::DiagnosticMessageString(diag.message) + "\n";
+        str += pre + "Level: " + Level::LevelString(diag.level);
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Device: " + diag.device_name;
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Node: " + diag.node_name;
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "System: " + System::MainSystemString(diag.system);
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Subsystem: " + System::SubSystemString(diag.subsystem);
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Component: " + System::ComponentString(diag.component);
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Diagnostic Type: " + Diagnostic::DiagnosticTypeString(diag.type);
+        print_end_line ? str += "\n" : str += " ";
+        str += pre + "Message: " + Diagnostic::DiagnosticMessageString(diag.message);
+        print_end_line ? str += "\n" : str += " ";
         str += pre + "Desc: " + diag.description;
         return str;
     }

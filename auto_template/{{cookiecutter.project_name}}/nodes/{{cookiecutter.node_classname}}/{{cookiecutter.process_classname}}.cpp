@@ -16,6 +16,7 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.process_classname}}::update(doub
 }
 std::vector<Diagnostic::DiagnosticDefinition> {{cookiecutter.process_classname}}::new_commandmsg(
     eros::command msg) {
+    (void)msg;
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     return diag_list;
 }
