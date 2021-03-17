@@ -54,18 +54,19 @@ class Diagnostic
     enum class Message {
         UNKNOWN = 0,              /*!< Uninitialized value. */
         NOERROR = 1,              /*!< No Error.*/
-        UNKNOWN_ERROR = 2,        /*!< Unknown Error Occurred/Error not defined. */
-        INITIALIZING = 3,         /*!< Initializing. */
-        INITIALIZING_ERROR = 4,   /*!< Error occured during initialization. */
-        DROPPING_PACKETS = 5,     /*!< Missing/Dropping Messages. */
-        MISSING_HEARTBEATS = 6,   /*!< Missing Heartbeat Messages. */
-        DEVICE_NOT_AVAILABLE = 7, /*!< Device is not currently Available. */
-        TEMPERATURE_HIGH = 8,     /*!< Temperature too High. */
-        TEMPERATURE_LOW = 9,      /*!< Diagnostic Failed. */
-        RESOURCE_LEAK = 10,       /*!< Resource Leakage occurred. */
-        HIGH_RESOURCE_USAGE = 11, /*!< High Resource Usage. */
-        DIAGNOSTIC_FAILED = 12,   /*! < Diagnostic Failed.*/
-        END_OF_LIST = 13          /*!< Last item of list. Used for Range Checks. */
+        NODATA = 2,               /*!< No Data.*/
+        UNKNOWN_ERROR = 3,        /*!< Unknown Error Occurred/Error not defined. */
+        INITIALIZING = 4,         /*!< Initializing. */
+        INITIALIZING_ERROR = 5,   /*!< Error occured during initialization. */
+        DROPPING_PACKETS = 6,     /*!< Missing/Dropping Messages. */
+        MISSING_HEARTBEATS = 7,   /*!< Missing Heartbeat Messages. */
+        DEVICE_NOT_AVAILABLE = 8, /*!< Device is not currently Available. */
+        TEMPERATURE_HIGH = 9,     /*!< Temperature too High. */
+        TEMPERATURE_LOW = 10,     /*!< Diagnostic Failed. */
+        RESOURCE_LEAK = 11,       /*!< Resource Leakage occurred. */
+        HIGH_RESOURCE_USAGE = 12, /*!< High Resource Usage. */
+        DIAGNOSTIC_FAILED = 13,   /*! < Diagnostic Failed.*/
+        END_OF_LIST = 14          /*!< Last item of list. Used for Range Checks. */
     };
     //! Convert Diagnostic::Message to human readable string
     /*!
@@ -76,6 +77,7 @@ class Diagnostic
         switch (v) {
             case Diagnostic::Message::UNKNOWN: return "UNKNOWN"; break;
             case Diagnostic::Message::NOERROR: return "NOERROR"; break;
+            case Diagnostic::Message::NODATA: return "NODATA"; break;
             case Diagnostic::Message::UNKNOWN_ERROR: return "UNKNOWN_ERROR"; break;
             case Diagnostic::Message::INITIALIZING: return "INITIALIZING"; break;
             case Diagnostic::Message::INITIALIZING_ERROR: return "INITIALIZING_ERROR"; break;

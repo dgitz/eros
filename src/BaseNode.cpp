@@ -373,6 +373,19 @@ eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
     diag.Description = diag_def.description;
     return diag;
 }
+Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def) {
+    Diagnostic::DiagnosticDefinition diag;
+    diag.device_name = diag_def.DeviceName;
+    diag.node_name = diag_def.NodeName;
+    diag.system = (System::MainSystem)diag_def.System;
+    diag.subsystem = (System::SubSystem)diag_def.SubSystem;
+    diag.component = (System::Component)diag_def.Component;
+    diag.type = (Diagnostic::DiagnosticType)diag_def.DiagnosticType;
+    diag.level = (Level::Type)diag_def.Level;
+    diag.message = (Diagnostic::Message)diag_def.DiagnosticMessage;
+    diag.description = diag_def.Description;
+    return diag;
+}
 eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
     eros::resource res;
     res.Name = node_name;

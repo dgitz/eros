@@ -22,7 +22,24 @@ void DiagnosticNode::diagnostic_Callback(const eros::diagnostic::ConstPtr &t_msg
     eros::diagnostic eros_diag = BaseNodeProcess::convert_fromptr(t_msg);
     Diagnostic::DiagnosticDefinition diag = process->convert(eros_diag);
     process->new_external_diagnostic(diag);
-    // printf("%s %s\n", t_msg->DeviceName.c_str(), t_msg->NodeName.c_str());
+}
+bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Request &req,
+                                                eros::srv_get_diagnostics::Response &res) {
+    if ((req.MinLevel == 0) && (req.DiagnosticType == 0)) {
+        for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
+            if ((Diagnostic::DiagnosticType)i == Diagnostic::DiagnosticType::UNKNOWN_TYPE) {
+                continue;
+            }
+            res.diag_list.push_back(
+                convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
+        }
+        return true;
+    }
+    else {
+        logger->log_warn("Unsupported Srv Query: " + std::to_string(req.MinLevel) + " " +
+                         std::to_string(req.DiagnosticType));
+        return false;
+    }
 }
 bool DiagnosticNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                              eros::srv_change_nodestate::Response &res) {
@@ -95,6 +112,9 @@ Diagnostic::DiagnosticDefinition DiagnosticNode::read_launchparameters() {
 }
 Diagnostic::DiagnosticDefinition DiagnosticNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    std::string srv_system_diagnostics_topic = "/srv_system_diagnostics";
+    system_diagnostics_srv = n->advertiseService(
+        srv_system_diagnostics_topic, &DiagnosticNode::system_diagnostics_service, this);
     std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &DiagnosticNode::changenodestate_service, this);

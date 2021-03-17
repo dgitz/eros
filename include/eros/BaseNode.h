@@ -175,6 +175,7 @@ class BaseNode
         return etime;
     }
     eros::diagnostic convert(Diagnostic::DiagnosticDefinition diag_def);
+    Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def);
 
     eros::resource convert(ResourceMonitor::ResourceInfo res_info);
     // Message Functions

@@ -61,6 +61,8 @@ class DiagnosticNode : public BaseNode
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
+    bool system_diagnostics_service(eros::srv_get_diagnostics::Request& req,
+                                    eros::srv_get_diagnostics::Response& res);
     void command_Callback(const eros::command::ConstPtr& t_msg);
     void diagnostic_Callback(const eros::diagnostic::ConstPtr& t_msg);
 
@@ -69,6 +71,7 @@ class DiagnosticNode : public BaseNode
     DiagnosticNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     std::vector<ros::Subscriber> diagnostic_subs;
+    ros::ServiceServer system_diagnostics_srv;
 };
 
 #endif  // DiagnosticNode_H

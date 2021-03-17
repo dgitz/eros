@@ -64,7 +64,7 @@ Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
                                                   System::SubSystem::ROBOT_CONTROLLER,
                                                   System::Component::DIAGNOSTIC,
                                                   type,
-                                                  Diagnostic::Message::DROPPING_PACKETS,
+                                                  Diagnostic::Message::NODATA,
                                                   Level::Type::INFO,
                                                   "No Diagnostics Received Yet.");
             return diag;
