@@ -1,9 +1,0 @@
-<map id="BaseNodeProcess::request_statechange" name="BaseNodeProcess::request_statechange">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="240,101,427,128"/>
-<area shape="rect" id="node3" href="$classDataLoggerNode.html#a6ec3db6950755199ada2a11ae29e11b5" title="Start the Node. " alt="" coords="479,5,633,32"/>
-<area shape="rect" id="node4" href="$classMasterNode.html#ad48a14b4a5aa2f7c69512b17617da481" title="Start the Node. " alt="" coords="493,61,619,88"/>
-<area shape="rect" id="node5" href="$classSystemMonitorNode.html#a90be3e98102f3865eb5aac7ade03e5cc" title="Start the Node. " alt="" coords="481,123,631,165"/>
-<area shape="rect" id="node6" href="$classDataLoggerNode.html#a97917d5ac0decfb5c3e38ac465e64755" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="236,203,431,229"/>
-<area shape="rect" id="node7" href="$classMasterNode.html#a49356b7834bf1ef01a3f645bae1c42d2" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="249,253,417,280"/>
-<area shape="rect" id="node8" href="$classSystemMonitorNode.html#abc13a09de5b967146d36f01487e8e0f2" title="Thread Loop Must be Implemented in Derived Node. " alt="" coords="259,305,408,346"/>
-</map>

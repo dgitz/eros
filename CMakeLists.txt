@@ -28,6 +28,8 @@ add_message_files(
   resource.msg
   subsystem_diagnostic.msg
   uptime.msg
+  armed_state.msg
+  mode_state.msg
 )
 add_service_files(
   FILES

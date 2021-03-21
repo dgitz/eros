@@ -191,6 +191,11 @@ class ArmDisarm
         ARMING = 5,             /*!< System is Arming. */
         END_OF_LIST = 6         /*!< Last item of list. Used for Range Checks. */
     };
+    struct State {
+        State() : state(Type::UNKNOWN) {
+        }
+        Type state;
+    };
 
     //! Convert ArmDisarm::Type to human readable string
     /*!

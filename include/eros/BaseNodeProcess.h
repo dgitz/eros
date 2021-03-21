@@ -16,11 +16,13 @@
 // ROS Base Functionality
 #include "ros/time.h"
 // ROS Messages
+#include <eros/armed_state.h>
 #include <eros/command.h>
 #include <eros/command_state.h>
 #include <eros/diagnostic.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
+#include <eros/mode_state.h>
 #include <eros/resource.h>
 #include <eros/uptime.h>
 
@@ -204,6 +206,8 @@ class BaseNodeProcess
     eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
 
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
+
+    eros::armed_state convert(ArmDisarm::State v);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
 

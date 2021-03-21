@@ -1,0 +1,2 @@
+Responsibilities
+- Publish /ArmedState
