@@ -18,6 +18,22 @@ void BaseNode::initialize_diagnostic(System::MainSystem t_system,
     diagnostic.subsystem = t_subsystem;
     diagnostic.component = t_component;
 }
+void BaseNode::armedstate_Callback(const eros::armed_state::ConstPtr& t_msg) {
+    armed_state = BaseNode::convert_fromptr(t_msg);
+}
+void BaseNode::modestate_Callback(const eros::mode_state::ConstPtr& t_msg) {
+    mode_state = BaseNode::convert_fromptr(t_msg);
+}
+eros::armed_state BaseNode::convert_fromptr(const eros::armed_state::ConstPtr& t_ptr) {
+    eros::armed_state msg;
+    msg.armed_state = t_ptr->armed_state;
+    return msg;
+}
+eros::mode_state BaseNode::convert_fromptr(const eros::mode_state::ConstPtr& t_ptr) {
+    eros::mode_state msg;
+    msg.mode_state = t_ptr->mode_state;
+    return msg;
+}
 Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     logger_initialized = false;
     require_pps_to_start = false;
@@ -66,6 +82,14 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     diagnostics_srv =
         n->advertiseService(srv_diagnostics_topic, &BaseNode::diagnostics_service, this);
 
+    if (armedstate_sub_disabled == false) {
+        armedstate_sub = n->subscribe<eros::armed_state>(
+            "/ArmedState", 10, &BaseNode::armedstate_Callback, this);
+    }
+    if (modestate_sub_disabled == false) {
+        modestate_sub =
+            n->subscribe<eros::mode_state>("/ModeState", 10, &BaseNode::modestate_Callback, this);
+    }
     if (diagnostic.level > Level::Type::WARN) {
         if (logger_initialized == true) {
             logger->log_diagnostic(diagnostic);

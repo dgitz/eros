@@ -1,0 +1,5 @@
+<map id="Level::LevelString" name="Level::LevelString">
+<area shape="rect" id="node2" href="$classDiagnostic.html#a6b99896d189da5156980d50ed2b83b50" title="Generate human readable string of a diagnostic. " alt="" coords="203,5,328,32"/>
+<area shape="rect" id="node3" href="$classDiagnosticNodeProcess.html#a28af4b49b27b56a4970d31fcae1f8f30" title="Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of ..." alt="" coords="180,57,351,98"/>
+<area shape="rect" id="node4" href="$classLogger.html#a2d188aaeb90800faacb8ec0722ede338" title="Instantiate a Logger. " alt="" coords="211,123,319,149"/>
+</map>

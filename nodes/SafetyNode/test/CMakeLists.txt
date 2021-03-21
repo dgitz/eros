@@ -1,0 +1,3 @@
+catkin_add_gtest(test_safetyNodeProcess test_SafetyNodeProcess.cpp)
+target_link_libraries(test_safetyNodeProcess ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger safetyNodeProcess)
+add_dependencies(test_safetyNodeProcess eros_generate_messages_cpp)

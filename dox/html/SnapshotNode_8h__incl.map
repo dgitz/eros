@@ -1,0 +1,9 @@
+<map id="nodes/SnapshotNode/SnapshotNode.h" name="nodes/SnapshotNode/SnapshotNode.h">
+<area shape="rect" id="node2" href="$BaseNode_8h.html" title="eros/BaseNode.h" alt="" coords="705,95,828,121"/>
+<area shape="rect" id="node47" href="$SnapshotProcess_8h.html" title="SnapshotProcess.h" alt="" coords="3539,95,3675,121"/>
+<area shape="rect" id="node16" href="$BaseNodeProcess_8h.html" title="eros/BaseNodeProcess.h" alt="" coords="2528,177,2699,203"/>
+<area shape="rect" id="node36" href="$Diagnostic_8h.html" title="Diagnostic.h" alt="" coords="3502,437,3597,464"/>
+<area shape="rect" id="node37" href="$eROS__Definitions_8h.html" title="eros/eROS_Definitions.h" alt="" coords="3675,512,3842,539"/>
+<area shape="rect" id="node41" href="$Logger_8h.html" title="Logger.h" alt="" coords="3780,355,3852,382"/>
+<area shape="rect" id="node45" href="$ResourceMonitor_8h.html" title="ResourceMonitor.h" alt="" coords="3817,266,3949,293"/>
+</map>

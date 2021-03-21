@@ -1,9 +1,0 @@
-<map id="nodes/MasterNode/MasterNode.h" name="nodes/MasterNode/MasterNode.h">
-<area shape="rect" id="node2" href="$BaseNode_8h.html" title="eros/BaseNode.h" alt="" coords="2747,80,2869,107"/>
-<area shape="rect" id="node39" href="$MasterNodeProcess_8h.html" title="MasterNodeProcess.h" alt="" coords="2008,80,2160,107"/>
-<area shape="rect" id="node10" href="$BaseNodeProcess_8h.html" title="eros/BaseNodeProcess.h" alt="" coords="1416,155,1587,181"/>
-<area shape="rect" id="node27" href="$Diagnostic_8h.html" title="Diagnostic.h" alt="" coords="1861,408,1955,435"/>
-<area shape="rect" id="node28" href="$eROS__Definitions_8h.html" title="eros/eROS_Definitions.h" alt="" coords="2126,483,2293,509"/>
-<area shape="rect" id="node32" href="$Logger_8h.html" title="Logger.h" alt="" coords="2095,326,2167,353"/>
-<area shape="rect" id="node37" href="$ResourceMonitor_8h.html" title="ResourceMonitor.h" alt="" coords="2370,237,2502,263"/>
-</map>

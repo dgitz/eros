@@ -21,6 +21,8 @@
 #include "ros/time.h"
 
 // ROS Messages
+#include <eros/armed_state.h>
+#include <eros/mode_state.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Empty.h>
 // Project
@@ -53,7 +55,9 @@ class BaseNode
           verbosity_level("DEBUG"),
           require_pps_to_start(false),
           pps_received(false),
-          rand_delay_sec(0.0) {
+          rand_delay_sec(0.0),
+          armedstate_sub_disabled(false),
+          modestate_sub_disabled(false) {
     }
     virtual ~BaseNode() {
     }
@@ -72,6 +76,13 @@ class BaseNode
      */
     void set_no_launch_enabled(bool v) {
         no_launch_enabled = v;
+    }
+
+    void disable_armedstate_sub() {
+        armedstate_sub_disabled = true;
+    }
+    void disable_modestate_sub() {
+        modestate_sub_disabled = true;
     }
     /*! \brief Set Node Base Name.  This will be the same for every instance of the node, and is
      * independent on where the node is run. This value is equivelant to the "type" field in the
@@ -178,6 +189,9 @@ class BaseNode
     Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def);
 
     eros::resource convert(ResourceMonitor::ResourceInfo res_info);
+
+    static eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr);
+    static eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr);
     // Message Functions
     /*! \brief Handles receiving the 1 PPS Msg. */
     void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg);
@@ -193,6 +207,8 @@ class BaseNode
                                          eros::srv_change_nodestate::Response &res) = 0;
 
     virtual void command_Callback(const eros::command::ConstPtr &t_msg) = 0;
+    void armedstate_Callback(const eros::armed_state::ConstPtr &t_msg);
+    void modestate_Callback(const eros::mode_state::ConstPtr &t_msg);
 
     void base_reset();
     // Destructors
@@ -255,6 +271,13 @@ class BaseNode
     bool pps_received;
     double rand_delay_sec;
     std::vector<Diagnostic::DiagnosticDefinition> current_diagnostics;
+
+    bool armedstate_sub_disabled;
+    ros::Subscriber armedstate_sub;
+    eros::armed_state armed_state;
+    bool modestate_sub_disabled;
+    ros::Subscriber modestate_sub;
+    eros::mode_state mode_state;
 
    private:
 };

@@ -204,6 +204,11 @@ std::vector<Diagnostic::DiagnosticDefinition> BaseNodeProcess::run_unittest() {
     }
     return diaglist;
 }
+eros::armed_state BaseNodeProcess::convert(ArmDisarm::State v) {
+    eros::armed_state msg;
+    msg.armed_state = (uint8_t)v.state;
+    return msg;
+}
 eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr &t_ptr) {
     eros::heartbeat msg;
     msg.stamp = t_ptr->stamp;
@@ -340,7 +345,9 @@ std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
 void BaseNodeProcess::base_cleanup() {
     return;
 }
-json BaseNodeProcess::read_configuration(std::string device_name, bool include_self,std::string file_path) {
+json BaseNodeProcess::read_configuration(std::string device_name,
+                                         bool include_self,
+                                         std::string file_path) {
     json j_obj;
     json empty;
     std::ifstream fd(file_path);
