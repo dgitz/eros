@@ -145,7 +145,8 @@ class SystemMonitorProcess : public BaseNodeProcess
         GREEN_COLOR = 4,
         BLUE_COLOR = 5,
         GRAY_COLOR = 6,
-        END_OF_LIST = 7
+        PURPLE_COLOR = 7,
+        END_OF_LIST = 8
     };
     enum class TaskType { UNKNOWN = 0, EROS = 1, NON_EROS = 2 };
     enum class TaskFieldColumn {
@@ -305,6 +306,8 @@ class SystemMonitorProcess : public BaseNodeProcess
 
     // Update Functions
     Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    Diagnostic::DiagnosticDefinition update_headerwindow(
+        std::map<std::string, WindowManager>::iterator it);
     Diagnostic::DiagnosticDefinition update_taskwindow(
         std::map<std::string, WindowManager>::iterator it);
     Diagnostic::DiagnosticDefinition update_instructionwindow(
@@ -460,6 +463,9 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
     // Attribute Functions
+    void update_armedstate(ArmDisarm::State v) {
+        armed_state = v;
+    }
     bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
         mainwindow_width = t_mainwindow_width;
         mainwindow_height = t_mainwindow_height;
@@ -640,5 +646,6 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::string message_text;
     Color message_text_color;
     std::vector<Diagnostic::DiagnosticDefinition> task_diagnostics_to_show;
+    ArmDisarm::State armed_state;
 };
 #endif  // SYSTEMMONITORPROCESS_h

@@ -208,6 +208,7 @@ class BaseNodeProcess
     Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     eros::armed_state convert(ArmDisarm::State v);
+    ArmDisarm::State convert(eros::armed_state v);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
     // Printing Functions
 
