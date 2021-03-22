@@ -1,4 +1,4 @@
-#include "systemmonitor_node.h"
+#include "SystemMonitorNode.h"
 bool kill_node = false;
 
 SystemMonitorNode::SystemMonitorNode()
@@ -176,6 +176,7 @@ bool SystemMonitorNode::run_10hz() {
     if (process->get_killme() == true) {
         kill_node = true;
     }
+    process->update_armedstate(process->convert(armed_state));
     Diagnostic::DiagnosticDefinition diagnostic = process->update(.1, ros::Time::now().toSec());
     if (diagnostic.level > Level::Type::NOTICE) {
         logger->log_diagnostic(diagnostic);
@@ -215,12 +216,13 @@ bool SystemMonitorNode::init_screen() {
     start_color();
     init_color(COLOR_BLACK, 0, 0, 0);
     init_color(COLOR_GREEN, 0, 600, 0);
-    init_color(COLOR_RED, 1000, 0, 150);
+    init_color(10, 500, 0, 500);
     init_pair((uint8_t)SystemMonitorProcess::Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
     init_pair((uint8_t)SystemMonitorProcess::Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
     init_pair((uint8_t)SystemMonitorProcess::Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
     init_pair((uint8_t)SystemMonitorProcess::Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
     init_pair((uint8_t)SystemMonitorProcess::Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
+    init_pair((uint8_t)SystemMonitorProcess::Color::PURPLE_COLOR, COLOR_WHITE, 10);
 
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);

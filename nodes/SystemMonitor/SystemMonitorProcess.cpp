@@ -49,13 +49,19 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
 
     std::map<std::string, WindowManager>::iterator win_it = windows.begin();
     while (win_it != windows.end()) {
-        if (win_it->first == "header") {}
+        if (win_it->first == "header") {
+            diag = update_headerwindow(win_it);
+            if (diag.level > Level::Type::ERROR) {
+                return diag;
+            }
+        }
         else if (win_it->first == "instruction_window") {
             diag = update_instructionwindow(win_it);
             if (diag.level > Level::Type::ERROR) {
                 return diag;
             }
         }
+
         else if (win_it->first == "task_window") {
             diag = update_taskwindow(win_it);
             if (diag.level > Level::Type::WARN) {
@@ -297,13 +303,12 @@ bool SystemMonitorProcess::initialize_windows() {
         }
         else if (it->first == "device_window") {
             std::string header = get_deviceheader();
-            logger->log_error(header);
             mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
             std::string dashed(it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
         }
         else {
-            logger->log_warn("Window: " + it->first + " Not Supported.");
+            logger->log_debug("Window: " + it->first + " Not Supported.");
         }
         wrefresh(it->second.get_window_reference());
         ++it;
@@ -357,6 +362,29 @@ std::string SystemMonitorProcess::get_deviceheader() {
         return "";
     }
     return str;
+}
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_headerwindow(
+    std::map<std::string, WindowManager>::iterator window_it) {
+    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    {  // Armed State
+        Color color;
+        std::string str = "Armed State: " + ArmDisarm::ArmDisarmString(armed_state.state);
+        switch (armed_state.state) {
+            case ArmDisarm::Type::ARMED:
+                color = Color::GREEN_COLOR;
+                break;  // Should be BLUE for RC Mode, GREEN for Manual, PURPLE for Auto
+            case ArmDisarm::Type::DISARMED_CANNOTARM: color = Color::RED_COLOR; break;
+            case ArmDisarm::Type::DISARMED: color = Color::GREEN_COLOR; break;
+            case ArmDisarm::Type::DISARMING: color = Color::GREEN_COLOR; break;
+            case ArmDisarm::Type::ARMING: color = Color::GREEN_COLOR; break;
+            default: color = Color::RED_COLOR; break;
+        }
+        wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        mvwprintw(window_it->second.get_window_reference(), 2, 1, str.c_str());
+        // wclrtoeol(window_it->second.get_window_reference());
+        wattroff(window_it->second.get_window_reference(), COLOR_PAIR(color));
+        return diag;
+    }
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_instructionwindow(
     std::map<std::string, WindowManager>::iterator window_it) {
