@@ -141,6 +141,7 @@ bool {{cookiecutter.node_classname}}::run_1hz() {
 }
 bool {{cookiecutter.node_classname}}::run_10hz() {
     update_diagnostics(process->get_diagnostics());
+    update_ready_to_arm(process->get_ready_to_arm());
     return true;
 }
 void {{cookiecutter.node_classname}}::thread_loop() {

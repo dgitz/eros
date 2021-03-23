@@ -7,5 +7,11 @@
         <param name="loop1_rate"            value="1"/> 
         <param name="loop2_rate"            value="10"/>
         <param name="loop3_rate"            value="5"/>
+        <param name="ReadyToArm_Topic_000"   value="/DevComputer1_diagnostic_node/ready_to_arm"/>
+        <param name="ReadyToArm_Topic_001"   value="/DevComputer1_snapshot_node/ready_to_arm"/>
+        <param name="ReadyToArm_Topic_002"   value="/DevComputer1_master_node/ready_to_arm"/>
+        <param name="ReadyToArm_Type_000"   value="DEFAULT"/>
+        <param name="ReadyToArm_Type_001"   value="DEFAULT"/>
+        <param name="ReadyToArm_Type_002"   value="DEFAULT"/>
 </node>
 </launch>

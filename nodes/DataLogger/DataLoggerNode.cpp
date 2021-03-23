@@ -38,6 +38,7 @@ bool DataLoggerNode::start() {
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
+    enable_ready_to_arm_pub(true);
     diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -230,7 +231,9 @@ bool DataLoggerNode::run_1hz() {
     return true;
 }
 bool DataLoggerNode::run_10hz() {
+    process->update(0.1, ros::Time::now().toSec());
     update_diagnostics(process->get_diagnostics());
+    update_ready_to_arm(process->get_ready_to_arm());
     return true;
 }
 void DataLoggerNode::thread_loop() {

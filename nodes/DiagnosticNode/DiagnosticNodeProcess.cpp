@@ -29,6 +29,8 @@ void DiagnosticNodeProcess::reset() {
 }
 Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::update(double t_dt, double t_ros_time) {
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+    ready_to_arm.ready_to_arm = true;
+    ready_to_arm.diag = convert(diag);
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> DiagnosticNodeProcess::new_commandmsg(

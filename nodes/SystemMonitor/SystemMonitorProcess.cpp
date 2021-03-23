@@ -369,6 +369,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_headerwindow(
     {  // Armed State
         Color color;
         std::string str = "Armed State: " + ArmDisarm::ArmDisarmString(armed_state.state);
+        str.insert(str.end(), 40 - str.size(), ' ');
         switch (armed_state.state) {
             case ArmDisarm::Type::ARMED:
                 color = Color::GREEN_COLOR;

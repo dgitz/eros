@@ -41,6 +41,7 @@ class BaseNode
           base_node_name(""),
           node_name(""),
           deviceInfo(),
+          pub_ready_to_arm(false),
           no_launch_enabled(false),
           logger(nullptr),
           logger_initialized(false),
@@ -57,7 +58,10 @@ class BaseNode
           pps_received(false),
           rand_delay_sec(0.0),
           armedstate_sub_disabled(false),
+          armedstate_sub_rxtime(0.0),
           modestate_sub_disabled(false) {
+        ready_to_arm.ready_to_arm = false;
+        ready_to_arm.diag.Description = "NOT INITIALIZED";
     }
     virtual ~BaseNode() {
     }
@@ -83,6 +87,9 @@ class BaseNode
     }
     void disable_modestate_sub() {
         modestate_sub_disabled = true;
+    }
+    void enable_ready_to_arm_pub(bool v) {
+        pub_ready_to_arm = v;
     }
     /*! \brief Set Node Base Name.  This will be the same for every instance of the node, and is
      * independent on where the node is run. This value is equivelant to the "type" field in the
@@ -175,6 +182,10 @@ class BaseNode
         return logger;
     }
 
+    void update_ready_to_arm(eros::ready_to_arm v) {
+        ready_to_arm = v;
+    }
+
     // Utility Functions
     /*! \brief Measures time delay between 2 ros::Time timestamps.
      *  Generally, if wanting to measure the time from now to a previous mark,
@@ -233,6 +244,10 @@ class BaseNode
     ros::Publisher heartbeat_pub;
     ros::Publisher diagnostic_pub;
     ros::Publisher resource_used_pub;
+
+    bool pub_ready_to_arm;
+    ros::Publisher readytoarm_pub;
+    eros::ready_to_arm ready_to_arm;
     ros::Subscriber command_sub;
 
     eros::heartbeat heartbeat;
@@ -274,6 +289,7 @@ class BaseNode
 
     bool armedstate_sub_disabled;
     ros::Subscriber armedstate_sub;
+    double armedstate_sub_rxtime;
     eros::armed_state armed_state;
     bool modestate_sub_disabled;
     ros::Subscriber modestate_sub;

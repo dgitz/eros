@@ -23,8 +23,10 @@
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/mode_state.h>
+#include <eros/ready_to_arm.h>
 #include <eros/resource.h>
 #include <eros/uptime.h>
+#include <std_msgs/Bool.h>
 
 // ROS Services
 #include <eros/srv_change_nodestate.h>
@@ -56,9 +58,10 @@ class BaseNodeProcess
           node_state(Node::State::UNKNOWN),
           diagnostic_helper(),
           unittest_running(false),
-          ready_to_arm(false),
           run_time(0.0),
           system_time(0.0) {
+        ready_to_arm.ready_to_arm = false;
+        ready_to_arm.diag.Description = "NOT INITIALIZED";
     }
     virtual ~BaseNodeProcess() {
     }
@@ -115,7 +118,7 @@ class BaseNodeProcess
     double get_runtime() {
         return run_time;
     }
-    bool get_ready_to_arm() {
+    eros::ready_to_arm get_ready_to_arm() {
         return ready_to_arm;
     }
 
@@ -193,6 +196,7 @@ class BaseNodeProcess
       \return The object
     */
     static eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
+    static eros::ready_to_arm convert_fromptr(const eros::ready_to_arm::ConstPtr& t_ptr);
 
     static eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
 
@@ -252,7 +256,7 @@ class BaseNodeProcess
     Diagnostic diagnostic_helper;
 
     bool unittest_running;
-    bool ready_to_arm;
+    eros::ready_to_arm ready_to_arm;
 
    private:
     double run_time, system_time;
