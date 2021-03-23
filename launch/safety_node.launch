@@ -7,5 +7,8 @@
         <param name="loop1_rate"            value="1"/> 
         <param name="loop2_rate"            value="10"/>
         <param name="loop3_rate"            value="5"/>
+        <param name="Default_ReadyToArmTopic_000"   value="/DevComputer1_diagnostic_node/ready_to_arm"/>
+        <param name="Default_ReadyToArmTopic_001"   value="/DevComputer1_snapshot_node/ready_to_arm"/>
+        <param name="Default_ReadyToArmTopic_002"   value="/DevComputer1_master_node/ready_to_arm"/>
 </node>
 </launch>

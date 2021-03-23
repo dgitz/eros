@@ -64,6 +64,7 @@ class SafetyNode : public BaseNode
 
    private:
     Diagnostic::DiagnosticDefinition read_launchparameters();
+    ros::Subscriber command_sub;
     SafetyNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Publisher armedstate_pub;

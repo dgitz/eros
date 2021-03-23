@@ -214,6 +214,12 @@ ArmDisarm::State BaseNodeProcess::convert(eros::armed_state v) {
     data.state = (ArmDisarm::Type)v.armed_state;
     return data;
 }
+eros::ready_to_arm BaseNodeProcess::convert_fromptr(const eros::ready_to_arm::ConstPtr &t_ptr) {
+    eros::ready_to_arm msg;
+    msg.ready_to_arm = t_ptr->ready_to_arm;
+    msg.diag = t_ptr->diag;
+    return msg;
+}
 eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr &t_ptr) {
     eros::heartbeat msg;
     msg.stamp = t_ptr->stamp;

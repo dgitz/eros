@@ -30,6 +30,7 @@ add_message_files(
   uptime.msg
   armed_state.msg
   mode_state.msg
+  ready_to_arm.msg
 )
 add_service_files(
   FILES

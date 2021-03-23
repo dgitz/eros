@@ -37,6 +37,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
             holdcomplete_timer = 0.0;
         }
     }
+    ready_to_arm.ready_to_arm = true;
+    ready_to_arm.diag = convert(diag);
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(

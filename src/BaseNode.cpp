@@ -20,6 +20,7 @@ void BaseNode::initialize_diagnostic(System::MainSystem t_system,
 }
 void BaseNode::armedstate_Callback(const eros::armed_state::ConstPtr& t_msg) {
     armed_state = BaseNode::convert_fromptr(t_msg);
+    armedstate_sub_rxtime = 0.0;
 }
 void BaseNode::modestate_Callback(const eros::mode_state::ConstPtr& t_msg) {
     mode_state = BaseNode::convert_fromptr(t_msg);
@@ -89,6 +90,10 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     if (modestate_sub_disabled == false) {
         modestate_sub =
             n->subscribe<eros::mode_state>("/ModeState", 10, &BaseNode::modestate_Callback, this);
+    }
+    if (pub_ready_to_arm == true) {
+        std::string readytoarm_topic = "/" + node_name + "/ready_to_arm";
+        readytoarm_pub = n->advertise<eros::ready_to_arm>(readytoarm_topic, 1);
     }
     if (diagnostic.level > Level::Type::WARN) {
         if (logger_initialized == true) {
@@ -280,6 +285,16 @@ bool BaseNode::update(Node::State node_state) {
         heartbeat.NodeState = (uint8_t)node_state;
         heartbeat.stamp = ros::Time::now();
         heartbeat_pub.publish(heartbeat);
+
+        if (pub_ready_to_arm == true) {
+            readytoarm_pub.publish(ready_to_arm);
+        }
+        if (armedstate_sub_disabled == false) {
+            armedstate_sub_rxtime += 0.1;
+            if (armedstate_sub_rxtime > 5.0) {
+                armed_state.armed_state = (uint8_t)ArmDisarm::Type::UNKNOWN;
+            }
+        }
         last_10hz_timer = ros::Time::now();
     }
 
