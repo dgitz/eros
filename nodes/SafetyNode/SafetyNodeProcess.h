@@ -16,6 +16,17 @@ class ArmDisarmMonitor
                            trigger is False (not ready to arm) */
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
+    static Type TypeEnum(std::string v) {
+        if (v == "DEFAULT") {
+            return Type::DEFAULT;
+        }
+        else if (v == "SIMPLE") {
+            return Type::SIMPLE;
+        }
+        else {
+            return Type::UNKNOWN;
+        }
+    }
     ArmDisarmMonitor(std::string _name, Type _type);
 
     ~ArmDisarmMonitor();

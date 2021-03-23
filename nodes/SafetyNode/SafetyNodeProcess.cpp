@@ -14,6 +14,10 @@ SafetyNodeProcess::~SafetyNodeProcess() {
 }
 Diagnostic::DiagnosticDefinition SafetyNodeProcess::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag;
+    diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
+                             Level::Type::INFO,
+                             Diagnostic::Message::NODATA,
+                             "No Remote Control Command Yet.");
     return diag;
 }
 void SafetyNodeProcess::reset() {
@@ -117,6 +121,10 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, eros::ready_to_
             it->second.ready_to_arm = ready_to_arm;
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
+            diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                Level::Type::DEBUG,
+                                                Diagnostic::Message::NOERROR,
+                                                "Received Default ReadyToArm Msg");
             return true;
         }
         else {
@@ -140,6 +148,10 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, bool v) {
             }
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
+            diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                Level::Type::DEBUG,
+                                                Diagnostic::Message::NOERROR,
+                                                "UpReceived Simple ReadyToArm Msgdated");
             return true;
         }
         else {

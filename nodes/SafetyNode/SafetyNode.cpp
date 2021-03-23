@@ -110,36 +110,33 @@ Diagnostic::DiagnosticDefinition SafetyNode::finish_initialization() {
     bool valid_arm_topic = true;
     while (valid_arm_topic == true) {
         char param_topic[512];
-        sprintf(param_topic, "%s/Default_ReadyToArmTopic_%03d", node_name.c_str(), counter);
+        sprintf(param_topic, "%s/ReadyToArm_Topic_%03d", node_name.c_str(), counter);
         std::string topic;
         if (n->getParam(param_topic, topic) == true) {
-            logger->log_notice("Subscribing to Default ReadyToArm Topic: " + topic);
+            logger->log_notice("Subscribing to ReadyToArm Topic: " + topic);
             topics.push_back(topic);
-            types.push_back(ArmDisarmMonitor::Type::DEFAULT);
         }
         else {
             valid_arm_topic = false;
             break;
         }
-        counter++;
-    }
-    valid_arm_topic = true;
-    counter = 0;
-    while (valid_arm_topic == true) {
-        char param_topic[512];
-        sprintf(param_topic, "%s/Simple_ReadyToArmTopic_%03d", node_name.c_str(), counter);
-        std::string topic;
-        if (n->getParam(param_topic, topic) == true) {
-            logger->log_notice("Subscribing to Simple ReadyToArm Topic: " + topic);
-            topics.push_back(topic);
-            types.push_back(ArmDisarmMonitor::Type::SIMPLE);
+        char param_type[512];
+        sprintf(param_type, "%s/ReadyToArm_Type_%03d", node_name.c_str(), counter);
+        std::string type_str;
+        if (n->getParam(param_type, type_str) == true) {
+            ArmDisarmMonitor::Type type = ArmDisarmMonitor::TypeEnum(type_str);
+            if (type != ArmDisarmMonitor::Type::UNKNOWN) {
+                types.push_back(type);
+            }
         }
         else {
             valid_arm_topic = false;
             break;
         }
+
         counter++;
     }
+
     if (process->initialize_readytoarm_monitors(topics, types) == false) {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
