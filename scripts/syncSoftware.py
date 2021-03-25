@@ -19,7 +19,7 @@ def sync_remote_to_remote(syncconfig_file,origin,remote):
     for folder in folders:
         if ((folder.Type == 'Binary') or (folder.Type == 'Config')):
             print("Syncing: " + folder.Name + " to Remote: " + remote)
-            tempstr = "rsync -avrt " + folder.Directory + "* robot@" + remote + ":" + folder.Directory + "\n"
+            tempstr = "rsync -iart " + folder.Directory + "* robot@" + remote + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'\n"
             sshProcess.stdin.write(tempstr)
     stdout,stderr = sshProcess.communicate()
     sshProcess.stdin.close()
@@ -28,11 +28,28 @@ def sync_remote_to_remote(syncconfig_file,origin,remote):
 def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
     print(CGREEN + "Sync Started to: " + device_name + CEND)
     folders = Helpers.ReadSyncConfig(syncconfig_file)
+    devices = Helpers.ReadDeviceList(devicelist_file,'ROS')
+    myDevice = [] 
+    found = False
+    for device in devices:
+        if device.Name == device_name:
+            found = True
+            myDevice = device
+    if(found == False):
+        print(CRED + "Could NOT Find Device in DeviceList." + CEND)
+        return
     for folder in folders:
         if((folder.Type == 'Source') or (folder.Type == 'Config')):
-            subprocess.call("rsync -avrt " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory,shell=True)
+            sync_this = False
+            for arch in folder.Architectures:
+                if arch == myDevice.Architecture:
+                    sync_this = True
+            if(sync_this == True):
+                subprocess.call("rsync -iart " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'",shell=True)
+            else:
+                print(CYELLOW + "Architecture Mismatch, Not Syncing this Folder: " + folder.Directory + CEND)
     print(CGREEN + "Sync Completed to: " + device_name  + CEND)
-    devices = Helpers.ReadDeviceList(devicelist_file,'ROS')
+    
     build_attempted = False
     if(build == True):
         if(len(devices) == 0):
@@ -61,7 +78,7 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
 # Main
 def main():
     parser = OptionParser("syncSoftware.py [options]")
-    parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,remote,buildserver,buildserver_target, [default: %default]")
+    parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,buildserver,buildserver_target, [default: %default]")
     parser.add_option("-b","--build",dest="build",default=0,help="1,0 [default: %default]",type="int")
     parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
     parser.add_option("-c","--config_dir",dest="config_dir",default="/home/robot/config/",help="Location where Config dir should be found. default=/home/robot/config")

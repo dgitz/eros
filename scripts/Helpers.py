@@ -13,10 +13,11 @@ class Device():
         self.Architecture = Architecture
         self.Jobs = Jobs
 class Folder(object):
-    def __init__(self,Name='',Type='',Path=''):
+    def __init__(self,Name='',Type='',Path='',Architectures=[]):
         self.Name = Name
         self.Type = Type
         self.Directory = Path
+        self.Architectures = Architectures
 def checkDeviceFileFormat():
     try:
         tree = ET.parse(devicefile)
@@ -32,6 +33,7 @@ def ReadSyncConfig(file_path):
     for List in root:
         for folder in List:
             newFolder = Folder()
+            Architectures = []
             for entry in folder:
                 if (entry.tag == 'Name'):
                     newFolder.Name = entry.text
@@ -39,6 +41,9 @@ def ReadSyncConfig(file_path):
                     newFolder.Type = entry.text
                 elif (entry.tag == 'Directory'):
                     newFolder.Directory = entry.text
+                elif (entry.tag == 'Architecture'):
+                    Architectures.append(entry.text)
+            newFolder.Architectures=Architectures
             FolderList.append(newFolder)
     return FolderList
 def ReadDeviceList(file_path,Capability):
