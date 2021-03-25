@@ -5,26 +5,33 @@
             <Name>eROS</Name>
             <Type>Source</Type>
             <Directory>/home/robot/catkin_ws/src/eROS/</Directory>
-        </Folder>
-        <Folder>
-            <Name>eROS_launch</Name>
-            <Type>Config</Type>
-            <Directory>/home/robot/catkin_ws/src/eROS/launch/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
         </Folder>
         <Folder>
             <Name>main_config</Name>
             <Type>Config</Type>
             <Directory>/home/robot/config/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
         </Folder>
         <Folder>
             <Name>main_devel</Name>
             <Type>Binary</Type>
             <Directory>/home/robot/catkin_ws/devel/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
         </Folder>
         <Folder>
             <Name>main_build</Name>
             <Type>Binary</Type>
             <Directory>/home/robot/catkin_ws/build/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
         </Folder>
     </Folders>
 </SyncConfigFile>
