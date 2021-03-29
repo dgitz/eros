@@ -47,7 +47,7 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
             if(sync_this == True):
                 subprocess.call("rsync -iart " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'",shell=True)
             else:
-                print(CYELLOW + "Architecture Mismatch, Not Syncing this Folder: " + folder.Directory + CEND)
+                print(CYELLOW + "Architecture Mismatch, Not Syncing " + folder.Type + " Folder: " + folder.Directory + CEND)
     print(CGREEN + "Sync Completed to: " + device_name  + CEND)
     
     build_attempted = False
