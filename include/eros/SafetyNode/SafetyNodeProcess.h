@@ -4,6 +4,9 @@
 #define SafetyNodeProcess_H
 #include <eros/BaseNodeProcess.h>
 #include <ros/ros.h>
+/*! \class ArmDisarmMonitor
+    \brief ArmDisarmMonitor class
+*/
 class ArmDisarmMonitor
 {
    public:
