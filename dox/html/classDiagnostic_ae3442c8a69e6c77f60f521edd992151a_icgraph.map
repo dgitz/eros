@@ -1,4 +1,0 @@
-<map id="Diagnostic::pretty" name="Diagnostic::pretty">
-<area shape="rect" id="node2" href="$classDiagnostic.html#a7690400ce80b420f459b889c9f778948" title="Generate human readable string of a vector of diagnostics. " alt="" coords="201,5,327,32"/>
-<area shape="rect" id="node3" href="$classDiagnosticNodeProcess.html#a28af4b49b27b56a4970d31fcae1f8f30" title="Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of ..." alt="" coords="179,57,349,98"/>
-</map>
