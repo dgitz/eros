@@ -1,9 +1,8 @@
 /*! \file test_MasterNodeProcess.cpp
  */
+#include <eros/MasterNode/MasterNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../MasterNodeProcess.h"
 
 class MasterNodeProcessTester : public MasterNodeProcess
 {

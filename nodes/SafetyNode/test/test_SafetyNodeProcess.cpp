@@ -1,9 +1,8 @@
 /*! \file test_SafetyNodeProcess.cpp
  */
+#include <eros/SafetyNode/SafetyNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../SafetyNodeProcess.h"
 
 class SafetyNodeProcessTester : public SafetyNodeProcess
 {

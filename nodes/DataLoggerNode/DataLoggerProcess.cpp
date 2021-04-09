@@ -1,4 +1,4 @@
-#include "DataLoggerProcess.h"
+#include <eros/DataLogger/DataLoggerProcess.h>
 
 DataLoggerProcess::DataLoggerProcess()
     : log_directory(""),

@@ -1,4 +1,4 @@
-#include "MasterNodeProcess.h"
+#include <eros/MasterNode/MasterNodeProcess.h>
 
 MasterNodeProcess::MasterNodeProcess() {
 }

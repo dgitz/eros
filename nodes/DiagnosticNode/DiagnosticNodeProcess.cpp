@@ -1,4 +1,4 @@
-#include "DiagnosticNodeProcess.h"
+#include <eros/DiagnosticNode/DiagnosticNodeProcess.h>
 
 DiagnosticNodeProcess::DiagnosticNodeProcess() {
 }

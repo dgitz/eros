@@ -6,10 +6,9 @@
 #include <actionlib/client/terminal_state.h>
 #include <curses.h>
 #include <eros/BaseNodeProcess.h>
+#include <eros/SnapshotNode/SnapshotProcess.h>
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
-
-#include "../nodes/SnapshotNode/SnapshotProcess.h"
 WINDOW* create_newwin(int height, int width, int starty, int startx);
 /*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief WindowManager handles the coordinates and reference to the WINDOW object. */

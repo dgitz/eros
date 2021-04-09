@@ -1,9 +1,8 @@
 /*! \file test_DiagnosticNodeProcess.cpp
  */
+#include <eros/DiagnosticNode/DiagnosticNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../DiagnosticNodeProcess.h"
 
 class DiagnosticNodeProcessTester : public DiagnosticNodeProcess
 {

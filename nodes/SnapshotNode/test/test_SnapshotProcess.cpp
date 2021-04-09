@@ -1,9 +1,8 @@
 /*! \file test_SnapshotProcess.cpp
  */
+#include <eros/SnapshotNode/SnapshotProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../SnapshotProcess.h"
 
 class SnapshotProcessTester : public SnapshotProcess
 {

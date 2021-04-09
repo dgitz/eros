@@ -1,9 +1,8 @@
 /*! \file test_DataLoggerProcess.cpp
  */
+#include <eros/DataLogger/DataLoggerProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../DataLoggerProcess.h"
 
 class DataLoggerProcessTester : public DataLoggerProcess
 {
