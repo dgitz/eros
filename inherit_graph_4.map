@@ -1,9 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="5,132,88,159"/>
-<area shape="rect" id="node2" href="$classDataLoggerNode.html" title="A Node that can be used to collect bag files. Configured as either always logging to disk,..." alt="" coords="146,5,266,32"/>
-<area shape="rect" id="node3" href="$classDiagnosticNode.html" title=" " alt="" coords="149,56,263,83"/>
-<area shape="rect" id="node4" href="$classMasterNode.html" title=" " alt="" coords="159,107,253,133"/>
-<area shape="rect" id="node5" href="$classSafetyNode.html" title=" " alt="" coords="161,157,251,184"/>
-<area shape="rect" id="node6" href="$classSnapshotNode.html" title=" " alt="" coords="152,208,260,235"/>
-<area shape="rect" id="node7" href="$classSystemMonitorNode.html" title=" " alt="" coords="136,259,276,285"/>
-</map>

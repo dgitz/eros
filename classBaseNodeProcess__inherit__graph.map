@@ -1,9 +1,0 @@
-<map id="BaseNodeProcess" name="BaseNodeProcess">
-<area shape="rect" id="node1" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="5,132,136,159"/>
-<area shape="rect" id="node2" href="$classDataLoggerProcess.html" title=" " alt="" coords="197,5,334,32"/>
-<area shape="rect" id="node3" href="$classDiagnosticNodeProcess.html" title=" " alt="" coords="184,56,347,83"/>
-<area shape="rect" id="node4" href="$classMasterNodeProcess.html" title=" " alt="" coords="195,107,336,133"/>
-<area shape="rect" id="node5" href="$classSafetyNodeProcess.html" title=" " alt="" coords="196,157,335,184"/>
-<area shape="rect" id="node6" href="$classSnapshotProcess.html" title=" " alt="" coords="203,208,328,235"/>
-<area shape="rect" id="node7" href="$classSystemMonitorProcess.html" title=" " alt="" coords="187,259,344,285"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="Diagnostic::initialize" name="Diagnostic::initialize">
-<area shape="rect" id="node1" title="Initialize Root Diagnostic. This should be called once per instance of Diagnostic." alt="" coords="236,5,371,32"/>
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable." alt="" coords="5,5,188,32"/>
-</map>

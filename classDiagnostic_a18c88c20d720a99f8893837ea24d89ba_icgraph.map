@@ -1,5 +1,0 @@
-<map id="Diagnostic::DiagnosticTypeString" name="Diagnostic::DiagnosticTypeString">
-<area shape="rect" id="node1" title="Convert Diagnostic::DiagnosticType to human readable string." alt="" coords="181,27,360,69"/>
-<area shape="rect" id="node2" href="$classDiagnostic.html#a6b99896d189da5156980d50ed2b83b50" title="Generate human readable string of a diagnostic." alt="" coords="9,5,130,32"/>
-<area shape="rect" id="node3" href="$classDiagnostic.html#ab0ff2b7bb42231087bca65d9f9c8ca1d" title="Update Diagnostic." alt="" coords="5,57,133,98"/>
-</map>
