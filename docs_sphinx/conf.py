@@ -25,6 +25,7 @@ subprocess.call('doxygen Doxyfile.in', shell=True)
 project = 'eROS'
 copyright = '2021, David Gitz'
 author = 'David Gitz'
+version = 'BLACK WIDOW'
 
 # -- General configuration ---------------------------------------------------
 
