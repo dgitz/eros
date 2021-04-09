@@ -1,4 +1,4 @@
-#include "SnapshotProcess.h"
+#include <eros/SnapshotNode/SnapshotProcess.h>
 
 SnapshotProcess::SnapshotProcess()
     : mode(Mode::UNKNOWN),

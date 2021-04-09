@@ -1,4 +1,4 @@
-#include "SystemMonitorNode.h"
+#include <eros/SystemMonitor/SystemMonitorNode.h>
 bool kill_node = false;
 
 SystemMonitorNode::SystemMonitorNode()

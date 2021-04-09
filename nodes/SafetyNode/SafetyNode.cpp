@@ -1,4 +1,4 @@
-#include "SafetyNode.h"
+#include <eros/SafetyNode/SafetyNode.h>
 bool kill_node = false;
 
 SafetyNode::SafetyNode()

@@ -1,4 +1,4 @@
-#include "DiagnosticNode.h"
+#include <eros/DiagnosticNode/DiagnosticNode.h>
 bool kill_node = false;
 DiagnosticNode::DiagnosticNode()
     : system_command_action_server(

@@ -1,9 +1,8 @@
 /*! \file test_systemmonitor_process.cpp
  */
+#include <eros/SystemMonitor/SystemMonitorProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include "../SystemMonitorProcess.h"
 
 class SystemMonitorProcessTester : public SystemMonitorProcess
 {

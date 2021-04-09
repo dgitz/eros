@@ -1,4 +1,4 @@
-#include "MasterNode.h"
+#include <eros/MasterNode/MasterNode.h>
 bool kill_node = false;
 MasterNode::MasterNode()
     : system_command_action_server(

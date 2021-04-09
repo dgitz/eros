@@ -1,4 +1,4 @@
-#include "SnapshotNode.h"
+#include <eros/SnapshotNode/SnapshotNode.h>
 bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(

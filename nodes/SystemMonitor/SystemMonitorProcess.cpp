@@ -1,4 +1,4 @@
-#include "SystemMonitorProcess.h"
+#include <eros/SystemMonitor/SystemMonitorProcess.h>
 WINDOW *create_newwin(int height, int width, int starty, int startx) {
     WINDOW *local_win;
 

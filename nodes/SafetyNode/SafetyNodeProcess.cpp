@@ -1,4 +1,4 @@
-#include "SafetyNodeProcess.h"
+#include <eros/SafetyNode/SafetyNodeProcess.h>
 ArmDisarmMonitor::ArmDisarmMonitor(std::string _name, Type _type) : name(_name), type(_type) {
     ready_to_arm.ready_to_arm = false;
     ready_to_arm.diag.Description = "Nothing Received";
