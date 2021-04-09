@@ -1,0 +1,4 @@
+<map id="Diagnostic::pretty" name="Diagnostic::pretty">
+<area shape="rect" id="node1" title="Generate human readable string of all enabled diagnostics." alt="" coords="175,5,296,32"/>
+<area shape="rect" id="node2" href="$classDiagnostic.html#a7690400ce80b420f459b889c9f778948" title="Generate human readable string of a vector of diagnostics." alt="" coords="5,5,127,32"/>
+</map>
