@@ -39,6 +39,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BaseNodeProcess" href="BaseNodeProcess.html" />
     <link rel="prev" title="API" href="index.html" /> 
 </head>
 
@@ -88,6 +89,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to eROS’s documentation!</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">BaseNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BaseNodeProcess.html">BaseNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Definitions.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Diagnostic.html">Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Logger.html">Logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ResourceMonitor.html">ResourceMonitor</a></li>
 </ul>
 </li>
 </ul>
@@ -201,13 +207,13 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode16set_basenodenameENSt6stringE">
 <span id="_CPPv3N8BaseNode16set_basenodenameENSt6stringE"></span><span id="_CPPv2N8BaseNode16set_basenodenameENSt6stringE"></span><span id="BaseNode::set_basenodename__ss"></span><span class="target" id="classBaseNode_1a23851f77c70b9571b37a7de234d127b9"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_basenodename</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">t_base_node_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode16set_basenodenameENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Set Node Base Name. This will be the same for every instance of the node, and is independent on where the node is run. This value is equivelant to the “type” field in the launch file. </p>
+<dd><p>Set <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> Base Name. This will be the same for every instance of the node, and is independent on where the node is run. This value is equivelant to the “type” field in the launch file. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE">
-<span id="_CPPv3N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="_CPPv2N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="BaseNode::initialize_diagnostic__System::MainSystem.System::SubSystem.System::Component"></span><span class="target" id="classBaseNode_1a94e92b9dfa6d33e89d089574101b8ced"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">initialize_diagnostic</span></code><span class="sig-paren">(</span><span class="pre">System</span><span class="pre">::</span><span class="pre">MainSystem</span> <em><span class="pre">t_system</span></em>, <span class="pre">System</span><span class="pre">::</span><span class="pre">SubSystem</span> <em><span class="pre">t_subsystem</span></em>, <span class="pre">System</span><span class="pre">::</span><span class="pre">Component</span> <em><span class="pre">t_component</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Initializes Node Root Diagnostic. </p>
+<span id="_CPPv3N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="_CPPv2N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="BaseNode::initialize_diagnostic__System::MainSystem.System::SubSystem.System::Component"></span><span class="target" id="classBaseNode_1a94e92b9dfa6d33e89d089574101b8ced"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">initialize_diagnostic</span></code><span class="sig-paren">(</span><a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <em><span class="pre">t_system</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <em><span class="pre">t_subsystem</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <em><span class="pre">t_component</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode21initialize_diagnosticEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initializes <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> Root <a class="reference internal" href="Diagnostic.html#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -224,12 +230,12 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode5startEv">
 <span id="_CPPv3N8BaseNode5startEv"></span><span id="_CPPv2N8BaseNode5startEv"></span><span id="BaseNode::start"></span><span class="target" id="classBaseNode_1ac93feeb5f9c5fa155cd54f02c0a0a20f"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode5startEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Start the Node. </p>
+<dd><p>Start the <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode22preinitialize_basenodeEv">
-<span id="_CPPv3N8BaseNode22preinitialize_basenodeEv"></span><span id="_CPPv2N8BaseNode22preinitialize_basenodeEv"></span><span id="BaseNode::preinitialize_basenode"></span><span class="target" id="classBaseNode_1a70f12ebcbd45693fdbb426a52b1a17bb"></span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span> <code class="sig-name descname"><span class="pre">preinitialize_basenode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode22preinitialize_basenodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode22preinitialize_basenodeEv"></span><span id="_CPPv2N8BaseNode22preinitialize_basenodeEv"></span><span id="BaseNode::preinitialize_basenode"></span><span class="target" id="classBaseNode_1a70f12ebcbd45693fdbb426a52b1a17bb"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">preinitialize_basenode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode22preinitialize_basenodeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Pre-initialization of node. This section will create the default pub/subs for the node, along with the logger. </p>
 </dd></dl>
 
@@ -255,62 +261,62 @@
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode6updateEN4Node5StateE">
-<span id="_CPPv3N8BaseNode6updateEN4Node5StateE"></span><span id="_CPPv2N8BaseNode6updateEN4Node5StateE"></span><span id="BaseNode::update__Node::State"></span><span class="target" id="classBaseNode_1a3bd41d58d0e807189572eda166db1953"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="pre">Node</span><span class="pre">::</span><span class="pre">State</span> <em><span class="pre">node_state</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode6updateEN4Node5StateE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Main Node update section, will call all derived Node Loop Functions, and publish base pubs such as firmware, heartbeat, etc. </p>
+<span id="_CPPv3N8BaseNode6updateEN4Node5StateE"></span><span id="_CPPv2N8BaseNode6updateEN4Node5StateE"></span><span id="BaseNode::update__Node::State"></span><span class="target" id="classBaseNode_1a3bd41d58d0e807189572eda166db1953"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><a class="reference internal" href="Definitions.html#_CPPv44Node" title="Node"><span class="pre">Node</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N4Node5StateE" title="Node::State"><span class="pre">State</span></a> <em><span class="pre">node_state</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode6updateEN4Node5StateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Main <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> update section, will call all derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> Loop Functions, and publish base pubs such as firmware, heartbeat, etc. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode9run_loop1Ev">
 <span id="_CPPv3N8BaseNode9run_loop1Ev"></span><span id="_CPPv2N8BaseNode9run_loop1Ev"></span><span id="BaseNode::run_loop1"></span><span class="target" id="classBaseNode_1a03e494dc15326fc20c8b4e0e1aa0a6fb"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode9run_loop1Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code in Loop1 Function. Loop1 Must be Implemented in Derived Node. </p>
+<dd><p>Run code in Loop1 Function. Loop1 Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode9run_loop2Ev">
 <span id="_CPPv3N8BaseNode9run_loop2Ev"></span><span id="_CPPv2N8BaseNode9run_loop2Ev"></span><span id="BaseNode::run_loop2"></span><span class="target" id="classBaseNode_1a1c92a9ec7c89b7d0ef09572d625efe46"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop2</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode9run_loop2Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code in Loop2 Function. Loop2 Must be Implemented in Derived Node. </p>
+<dd><p>Run code in Loop2 Function. Loop2 Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode9run_loop3Ev">
 <span id="_CPPv3N8BaseNode9run_loop3Ev"></span><span id="_CPPv2N8BaseNode9run_loop3Ev"></span><span id="BaseNode::run_loop3"></span><span class="target" id="classBaseNode_1a769375905184ca4375d1fa58e82eb5a4"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop3</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode9run_loop3Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code in Loop3 Function. Loop3 Must be Implemented in Derived Node. </p>
+<dd><p>Run code in Loop3 Function. Loop3 Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode9run_001hzEv">
 <span id="_CPPv3N8BaseNode9run_001hzEv"></span><span id="_CPPv2N8BaseNode9run_001hzEv"></span><span id="BaseNode::run_001hz"></span><span class="target" id="classBaseNode_1aa7926bc3d140f1fab3635262bd94955e"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_001hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode9run_001hzEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code at .01 Hz. Loop .01Hz Must be Implemented in Derived Node. </p>
+<dd><p>Run code at .01 Hz. Loop .01Hz Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode8run_01hzEv">
 <span id="_CPPv3N8BaseNode8run_01hzEv"></span><span id="_CPPv2N8BaseNode8run_01hzEv"></span><span id="BaseNode::run_01hz"></span><span class="target" id="classBaseNode_1abc431092fc75f5e9443af6656cdca651"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode8run_01hzEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code at .1 Hz Function. Loop .1Hz Must be Implemented in Derived Node. </p>
+<dd><p>Run code at .1 Hz Function. Loop .1Hz Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode14run_01hz_noisyEv">
 <span id="_CPPv3N8BaseNode14run_01hz_noisyEv"></span><span id="_CPPv2N8BaseNode14run_01hz_noisyEv"></span><span id="BaseNode::run_01hz_noisy"></span><span class="target" id="classBaseNode_1af58e7406d1265f3b5619e82f8260cf9c"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz_noisy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode14run_01hz_noisyEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the same time. .1Hz Noisy Must be Implemented in Derived Node. </p>
+<dd><p>Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the same time. .1Hz Noisy Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode7run_1hzEv">
 <span id="_CPPv3N8BaseNode7run_1hzEv"></span><span id="_CPPv2N8BaseNode7run_1hzEv"></span><span id="BaseNode::run_1hz"></span><span class="target" id="classBaseNode_1a0b1fb4149e302780d0188979f6625e32"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_1hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode7run_1hzEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code at .1 Hz. Loop 1Hz Must be Implemented in Derived Node. </p>
+<dd><p>Run code at .1 Hz. Loop 1Hz Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode8run_10hzEv">
 <span id="_CPPv3N8BaseNode8run_10hzEv"></span><span id="_CPPv2N8BaseNode8run_10hzEv"></span><span id="BaseNode::run_10hz"></span><span class="target" id="classBaseNode_1a2c905539a9cfd9890c11711ec2021261"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_10hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode8run_10hzEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived Node. </p>
+<dd><p>Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode11thread_loopEv">
 <span id="_CPPv3N8BaseNode11thread_loopEv"></span><span id="_CPPv2N8BaseNode11thread_loopEv"></span><span id="BaseNode::thread_loop"></span><span class="target" id="classBaseNode_1ac65bbe754eb0551f9a068cacbcbbf1c2"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">thread_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N8BaseNode11thread_loopEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Thread Loop Must be Implemented in Derived Node. </p>
+<dd><p>Thread Loop Must be Implemented in Derived <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -335,7 +341,7 @@
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode10get_loggerEv">
-<span id="_CPPv3N8BaseNode10get_loggerEv"></span><span id="_CPPv2N8BaseNode10get_loggerEv"></span><span id="BaseNode::get_logger"></span><span class="target" id="classBaseNode_1aea365cb1fbaffbdfbb6772e53051c31a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">Logger</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_logger</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode10get_loggerEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode10get_loggerEv"></span><span id="_CPPv2N8BaseNode10get_loggerEv"></span><span id="BaseNode::get_logger"></span><span class="target" id="classBaseNode_1aea365cb1fbaffbdfbb6772e53051c31a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Logger.html#_CPPv46Logger" title="Logger"><span class="pre">Logger</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_logger</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode10get_loggerEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
@@ -351,17 +357,17 @@
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE">
-<span id="_CPPv3N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE"></span><span id="BaseNode::convert__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classBaseNode_1a0a9ed9ed0ca14c0f7c33aeaf3af22104"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span> <em><span class="pre">diag_def</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE"></span><span id="BaseNode::convert__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classBaseNode_1a0a9ed9ed0ca14c0f7c33aeaf3af22104"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">diag_def</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode7convertEN4eros10diagnosticE">
-<span id="_CPPv3N8BaseNode7convertEN4eros10diagnosticE"></span><span id="_CPPv2N8BaseNode7convertEN4eros10diagnosticE"></span><span id="BaseNode::convert__eros::diagnostic"></span><span class="target" id="classBaseNode_1af55cfe80210b9945d2dde048ed7b61f9"></span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <em><span class="pre">diag_def</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN4eros10diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode7convertEN4eros10diagnosticE"></span><span id="_CPPv2N8BaseNode7convertEN4eros10diagnosticE"></span><span id="BaseNode::convert__eros::diagnostic"></span><span class="target" id="classBaseNode_1af55cfe80210b9945d2dde048ed7b61f9"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <em><span class="pre">diag_def</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN4eros10diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE">
-<span id="_CPPv3N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE"></span><span id="_CPPv2N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE"></span><span id="BaseNode::convert__ResourceMonitor::ResourceInfo"></span><span class="target" id="classBaseNode_1a516c71c5a2c9c9c586427e5c993b0890"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">resource</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="pre">ResourceMonitor</span><span class="pre">::</span><span class="pre">ResourceInfo</span> <em><span class="pre">res_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE"></span><span id="_CPPv2N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE"></span><span id="BaseNode::convert__ResourceMonitor::ResourceInfo"></span><span class="target" id="classBaseNode_1a516c71c5a2c9c9c586427e5c993b0890"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">resource</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><a class="reference internal" href="ResourceMonitor.html#_CPPv415ResourceMonitor" title="ResourceMonitor"><span class="pre">ResourceMonitor</span></a><span class="pre">::</span><a class="reference internal" href="ResourceMonitor.html#_CPPv4N15ResourceMonitor12ResourceInfoE" title="ResourceMonitor::ResourceInfo"><span class="pre">ResourceInfo</span></a> <em><span class="pre">res_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode7convertEN15ResourceMonitor12ResourceInfoE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
@@ -443,13 +449,13 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode25read_baselaunchparametersEv">
-<span id="_CPPv3N8BaseNode25read_baselaunchparametersEv"></span><span id="_CPPv2N8BaseNode25read_baselaunchparametersEv"></span><span id="BaseNode::read_baselaunchparameters"></span><span class="target" id="classBaseNode_1a518913c23ca50d154bb45328720ec69b"></span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span> <code class="sig-name descname"><span class="pre">read_baselaunchparameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode25read_baselaunchparametersEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode25read_baselaunchparametersEv"></span><span id="_CPPv2N8BaseNode25read_baselaunchparametersEv"></span><span id="BaseNode::read_baselaunchparameters"></span><span class="target" id="classBaseNode_1a518913c23ca50d154bb45328720ec69b"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">read_baselaunchparameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode25read_baselaunchparametersEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get Base Launch parameters, which includes loop rates, verbosity, etc. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE">
-<span id="_CPPv3N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE"></span><span id="_CPPv2N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE"></span><span id="BaseNode::update_diagnostics__std::vector:Diagnostic::DiagnosticDefinition:"></span><span class="target" id="classBaseNode_1adde53e3041958ec885b10139b0927a98"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">update_diagnostics</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span><span class="pre">&gt;</span> <em><span class="pre">_diagnostics</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE"></span><span id="_CPPv2N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE"></span><span id="BaseNode::update_diagnostics__std::vector:Diagnostic::DiagnosticDefinition:"></span><span class="target" id="classBaseNode_1adde53e3041958ec885b10139b0927a98"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">update_diagnostics</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <em><span class="pre">_diagnostics</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8BaseNode18update_diagnosticsENSt6vectorIN10Diagnostic20DiagnosticDefinitionEEE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -457,7 +463,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
 <dl class="cpp var">
 <dt id="_CPPv4N8BaseNode10diagnosticE">
-<span id="_CPPv3N8BaseNode10diagnosticE"></span><span id="_CPPv2N8BaseNode10diagnosticE"></span><span id="BaseNode::diagnostic__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classBaseNode_1a8f44f62cae60c8a9dc20ab393d204591"></span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span> <code class="sig-name descname"><span class="pre">diagnostic</span></code><a class="headerlink" href="#_CPPv4N8BaseNode10diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode10diagnosticE"></span><span id="_CPPv2N8BaseNode10diagnosticE"></span><span id="BaseNode::diagnostic__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classBaseNode_1a8f44f62cae60c8a9dc20ab393d204591"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">diagnostic</span></code><a class="headerlink" href="#_CPPv4N8BaseNode10diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
@@ -472,7 +478,7 @@
 
 <dl class="cpp var">
 <dt id="_CPPv4N8BaseNode16firmware_versionE">
-<span id="_CPPv3N8BaseNode16firmware_versionE"></span><span id="_CPPv2N8BaseNode16firmware_versionE"></span><span id="BaseNode::firmware_version__Firmware"></span><span class="target" id="classBaseNode_1a517902e942fd40158ae430724632e950"></span><span class="pre">Firmware</span> <code class="sig-name descname"><span class="pre">firmware_version</span></code><a class="headerlink" href="#_CPPv4N8BaseNode16firmware_versionE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode16firmware_versionE"></span><span id="_CPPv2N8BaseNode16firmware_versionE"></span><span id="BaseNode::firmware_version__Firmware"></span><span class="target" id="classBaseNode_1a517902e942fd40158ae430724632e950"></span><a class="reference internal" href="Definitions.html#_CPPv48Firmware" title="Firmware"><span class="pre">Firmware</span></a> <code class="sig-name descname"><span class="pre">firmware_version</span></code><a class="headerlink" href="#_CPPv4N8BaseNode16firmware_versionE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
@@ -562,12 +568,12 @@
 
 <dl class="cpp var">
 <dt id="_CPPv4N8BaseNode6loggerE">
-<span id="_CPPv3N8BaseNode6loggerE"></span><span id="_CPPv2N8BaseNode6loggerE"></span><span id="BaseNode::logger__LoggerP"></span><span class="target" id="classBaseNode_1a6a315ca609a97e6035560c026b7261ec"></span><span class="pre">Logger</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">logger</span></code> <span class="pre">=</span> <span class="pre">nullptr</span><a class="headerlink" href="#_CPPv4N8BaseNode6loggerE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode6loggerE"></span><span id="_CPPv2N8BaseNode6loggerE"></span><span id="BaseNode::logger__LoggerP"></span><span class="target" id="classBaseNode_1a6a315ca609a97e6035560c026b7261ec"></span><a class="reference internal" href="Logger.html#_CPPv46Logger" title="Logger"><span class="pre">Logger</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">logger</span></code> <span class="pre">=</span> <span class="pre">nullptr</span><a class="headerlink" href="#_CPPv4N8BaseNode6loggerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
 <dt id="_CPPv4N8BaseNode16resource_monitorE">
-<span id="_CPPv3N8BaseNode16resource_monitorE"></span><span id="_CPPv2N8BaseNode16resource_monitorE"></span><span id="BaseNode::resource_monitor__ResourceMonitorP"></span><span class="target" id="classBaseNode_1aa0a449e9940bae7eca93c1fe9e2b41eb"></span><span class="pre">ResourceMonitor</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">resource_monitor</span></code> <span class="pre">=</span> <span class="pre">nullptr</span><a class="headerlink" href="#_CPPv4N8BaseNode16resource_monitorE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode16resource_monitorE"></span><span id="_CPPv2N8BaseNode16resource_monitorE"></span><span id="BaseNode::resource_monitor__ResourceMonitorP"></span><span class="target" id="classBaseNode_1aa0a449e9940bae7eca93c1fe9e2b41eb"></span><a class="reference internal" href="ResourceMonitor.html#_CPPv415ResourceMonitor" title="ResourceMonitor"><span class="pre">ResourceMonitor</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">resource_monitor</span></code> <span class="pre">=</span> <span class="pre">nullptr</span><a class="headerlink" href="#_CPPv4N8BaseNode16resource_monitorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
@@ -682,7 +688,7 @@
 
 <dl class="cpp var">
 <dt id="_CPPv4N8BaseNode19current_diagnosticsE">
-<span id="_CPPv3N8BaseNode19current_diagnosticsE"></span><span id="_CPPv2N8BaseNode19current_diagnosticsE"></span><span id="BaseNode::current_diagnostics__std::vector:Diagnostic::DiagnosticDefinition:"></span><span class="target" id="classBaseNode_1a567c1491777b623d3f950b697e55e3ac"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><span class="pre">Diagnostic</span><span class="pre">::</span><span class="pre">DiagnosticDefinition</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">current_diagnostics</span></code><a class="headerlink" href="#_CPPv4N8BaseNode19current_diagnosticsE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8BaseNode19current_diagnosticsE"></span><span id="_CPPv2N8BaseNode19current_diagnosticsE"></span><span id="BaseNode::current_diagnostics__std::vector:Diagnostic::DiagnosticDefinition:"></span><span class="target" id="classBaseNode_1a567c1491777b623d3f950b697e55e3ac"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">current_diagnostics</span></code><a class="headerlink" href="#_CPPv4N8BaseNode19current_diagnosticsE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
@@ -752,6 +758,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="BaseNodeProcess.html" class="btn btn-neutral float-right" title="BaseNodeProcess" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

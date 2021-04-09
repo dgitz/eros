@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Diagnostic &mdash; eROS  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Logger" href="Logger.html" />
+    <link rel="prev" title="Definitions" href="Definitions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> eROS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to eROS’s documentation!</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BaseNode.html">BaseNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BaseNodeProcess.html">BaseNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Definitions.html">Definitions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Logger.html">Logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ResourceMonitor.html">ResourceMonitor</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">eROS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">API</a> &raquo;</li>
+        
+      <li>Diagnostic</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/Diagnostic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="diagnostic">
+<span id="api-diagnostic"></span><h1>Diagnostic<a class="headerlink" href="#diagnostic" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt id="_CPPv410Diagnostic">
+<span id="_CPPv310Diagnostic"></span><span id="_CPPv210Diagnostic"></span><span id="Diagnostic"></span><span class="target" id="classDiagnostic"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Diagnostic</span></code><a class="headerlink" href="#_CPPv410Diagnostic" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;Diagnostic.h&gt;</em><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> class <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> class used to create and update diagnostic information. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N10Diagnostic14DiagnosticTypeE">
+<span id="_CPPv3N10Diagnostic14DiagnosticTypeE"></span><span id="_CPPv2N10Diagnostic14DiagnosticTypeE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1b"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-name descname"><span class="pre">DiagnosticType</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType7UNKNOWNE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType7UNKNOWNE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType7UNKNOWNE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba696b031073e74bf2cb98e5ef201d4aa3"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType7UNKNOWNE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Uninitialized value. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType12UNKNOWN_TYPEE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType12UNKNOWN_TYPEE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType12UNKNOWN_TYPEE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba7280a7d8974164a48d863dee5e341f27"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN_TYPE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType12UNKNOWN_TYPEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A Type that is not defined yet. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType8SOFTWAREE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType8SOFTWAREE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType8SOFTWAREE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1baaea541d7f9574587656dc5125116e548"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">SOFTWARE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType8SOFTWAREE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Software. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType14COMMUNICATIONSE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType14COMMUNICATIONSE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType14COMMUNICATIONSE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba322025110415f74112e5388dab886066"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">COMMUNICATIONS</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType14COMMUNICATIONSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Communications. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType7SENSORSE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType7SENSORSE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType7SENSORSE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba3f9d1c3652820e6c9716f628c6f0b5af"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">SENSORS</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType7SENSORSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Sensors. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType9ACTUATORSE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType9ACTUATORSE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType9ACTUATORSE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba11355399d16908b5a0bab3de9201a39b"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">ACTUATORS</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType9ACTUATORSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Actuators. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType12DATA_STORAGEE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType12DATA_STORAGEE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType12DATA_STORAGEE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba604b973415a0841b1afac6d06b5dd73e"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">DATA_STORAGE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType12DATA_STORAGEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Data Storage. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType14REMOTE_CONTROLE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType14REMOTE_CONTROLE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType14REMOTE_CONTROLE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1babf93a2711fd75b37341df61a2325eb87"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">REMOTE_CONTROL</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType14REMOTE_CONTROLE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Remote Control. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType9TARGETINGE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType9TARGETINGE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType9TARGETINGE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba6de6738a0422708c30add05760705c65"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">TARGETING</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType9TARGETINGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Targeting. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType4POSEE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType4POSEE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType4POSEE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1bac04482f786dfe8f6d66d78ab6f79c40d"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">POSE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType4POSEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to Pose. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType6TIMINGE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType6TIMINGE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType6TIMINGE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1ba8f9e1889c89e42901ab7c0a033a3347c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">TIMING</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType6TIMINGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>*Diagnostic related to Timing. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType15SYSTEM_RESOURCEE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType15SYSTEM_RESOURCEE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType15SYSTEM_RESOURCEE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1bab91820d6a1a09b8da30c5cff64ec61d6"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">SYSTEM_RESOURCE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType15SYSTEM_RESOURCEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> related to <a class="reference internal" href="Definitions.html#classSystem"><span class="std std-ref">System</span></a> Resource Usage. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic14DiagnosticType11END_OF_LISTE">
+<span id="_CPPv3N10Diagnostic14DiagnosticType11END_OF_LISTE"></span><span id="_CPPv2N10Diagnostic14DiagnosticType11END_OF_LISTE"></span><span class="target" id="classDiagnostic_1a3099654b22790ede6b922bcb09804f1bac2b0b4a580050a88a759ac7c20ce853c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">END_OF_LIST</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic14DiagnosticType11END_OF_LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Last item of list. Used for Range Checks. </p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt id="_CPPv4N10Diagnostic7MessageE">
+<span id="_CPPv3N10Diagnostic7MessageE"></span><span id="_CPPv2N10Diagnostic7MessageE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397a"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-name descname"><span class="pre">Message</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7MessageE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message7UNKNOWNE">
+<span id="_CPPv3N10Diagnostic7Message7UNKNOWNE"></span><span id="_CPPv2N10Diagnostic7Message7UNKNOWNE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa696b031073e74bf2cb98e5ef201d4aa3"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message7UNKNOWNE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Uninitialized value. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message7NOERRORE">
+<span id="_CPPv3N10Diagnostic7Message7NOERRORE"></span><span id="_CPPv2N10Diagnostic7Message7NOERRORE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa2b7a5d9c6a3ccad249c1bb7ecc93a6ed"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">NOERROR</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message7NOERRORE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>No Error. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message6NODATAE">
+<span id="_CPPv3N10Diagnostic7Message6NODATAE"></span><span id="_CPPv2N10Diagnostic7Message6NODATAE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aae5c1b61d3810e29aebbc8fba3978d362"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">NODATA</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message6NODATAE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>No Data. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message13UNKNOWN_ERRORE">
+<span id="_CPPv3N10Diagnostic7Message13UNKNOWN_ERRORE"></span><span id="_CPPv2N10Diagnostic7Message13UNKNOWN_ERRORE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa9a10f345b0f755d461a8673a5e9ef6b4"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN_ERROR</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message13UNKNOWN_ERRORE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Unknown Error Occurred/Error not defined. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message12INITIALIZINGE">
+<span id="_CPPv3N10Diagnostic7Message12INITIALIZINGE"></span><span id="_CPPv2N10Diagnostic7Message12INITIALIZINGE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa86bf8c89d85949f8f45cde2f73fce113"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">INITIALIZING</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message12INITIALIZINGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initializing. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message18INITIALIZING_ERRORE">
+<span id="_CPPv3N10Diagnostic7Message18INITIALIZING_ERRORE"></span><span id="_CPPv2N10Diagnostic7Message18INITIALIZING_ERRORE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aaa2823858bf4f855b940194d2da81d711"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">INITIALIZING_ERROR</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message18INITIALIZING_ERRORE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Error occured during initialization. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message16DROPPING_PACKETSE">
+<span id="_CPPv3N10Diagnostic7Message16DROPPING_PACKETSE"></span><span id="_CPPv2N10Diagnostic7Message16DROPPING_PACKETSE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa129035a81b58f10f008ddc918499b4c8"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">DROPPING_PACKETS</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message16DROPPING_PACKETSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Missing/Dropping Messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message18MISSING_HEARTBEATSE">
+<span id="_CPPv3N10Diagnostic7Message18MISSING_HEARTBEATSE"></span><span id="_CPPv2N10Diagnostic7Message18MISSING_HEARTBEATSE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aae9e37d97f0295a2769728fca8080a1f9"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">MISSING_HEARTBEATS</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message18MISSING_HEARTBEATSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Missing Heartbeat Messages. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message20DEVICE_NOT_AVAILABLEE">
+<span id="_CPPv3N10Diagnostic7Message20DEVICE_NOT_AVAILABLEE"></span><span id="_CPPv2N10Diagnostic7Message20DEVICE_NOT_AVAILABLEE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aaf4724a191551c1036f76fdb39f4af9ee"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">DEVICE_NOT_AVAILABLE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message20DEVICE_NOT_AVAILABLEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Device is not currently Available. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message16TEMPERATURE_HIGHE">
+<span id="_CPPv3N10Diagnostic7Message16TEMPERATURE_HIGHE"></span><span id="_CPPv2N10Diagnostic7Message16TEMPERATURE_HIGHE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aadecfbda91cde2e00e1e04c4c97cb1b86"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">TEMPERATURE_HIGH</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message16TEMPERATURE_HIGHE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Temperature too High. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message15TEMPERATURE_LOWE">
+<span id="_CPPv3N10Diagnostic7Message15TEMPERATURE_LOWE"></span><span id="_CPPv2N10Diagnostic7Message15TEMPERATURE_LOWE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aab481b71f0b867383ee94fb2f3f90c27c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">TEMPERATURE_LOW</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message15TEMPERATURE_LOWE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> Failed. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message13RESOURCE_LEAKE">
+<span id="_CPPv3N10Diagnostic7Message13RESOURCE_LEAKE"></span><span id="_CPPv2N10Diagnostic7Message13RESOURCE_LEAKE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aa135cd5542a6b22f701aa0889b9a46995"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">RESOURCE_LEAK</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message13RESOURCE_LEAKE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resource Leakage occurred. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message19HIGH_RESOURCE_USAGEE">
+<span id="_CPPv3N10Diagnostic7Message19HIGH_RESOURCE_USAGEE"></span><span id="_CPPv2N10Diagnostic7Message19HIGH_RESOURCE_USAGEE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aaa2e6b2627277ff47af3dd0eb882b46d7"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">HIGH_RESOURCE_USAGE</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message19HIGH_RESOURCE_USAGEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>High Resource Usage. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message17DIAGNOSTIC_FAILEDE">
+<span id="_CPPv3N10Diagnostic7Message17DIAGNOSTIC_FAILEDE"></span><span id="_CPPv2N10Diagnostic7Message17DIAGNOSTIC_FAILEDE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aaca9bef2155977f3f91fac2b71bd91785"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">DIAGNOSTIC_FAILED</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message17DIAGNOSTIC_FAILEDE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N10Diagnostic7Message11END_OF_LISTE">
+<span id="_CPPv3N10Diagnostic7Message11END_OF_LISTE"></span><span id="_CPPv2N10Diagnostic7Message11END_OF_LISTE"></span><span class="target" id="classDiagnostic_1ae36f9ff390ee983717bfb57c9038397aac2b0b4a580050a88a759ac7c20ce853c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">END_OF_LIST</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic7Message11END_OF_LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>&lt; <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> Failed. Last item of list. Used for Range Checks. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic10DiagnosticEv">
+<span id="_CPPv3N10Diagnostic10DiagnosticEv"></span><span id="_CPPv2N10Diagnostic10DiagnosticEv"></span><span id="Diagnostic::Diagnostic"></span><span class="target" id="classDiagnostic_1a13109b3c8983d5c06f7a525cbb6c320c"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">Diagnostic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic10DiagnosticEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10DiagnosticD0Ev">
+<span id="_CPPv3N10DiagnosticD0Ev"></span><span id="_CPPv2N10DiagnosticD0Ev"></span><span id="Diagnostic::~Diagnostic"></span><span class="target" id="classDiagnostic_1aaa5f2599aca61192ac93cb416c4b2473"></span><em class="property"><span class="pre">inline</span></em> <em class="property"><span class="pre">virtual</span></em> <code class="sig-name descname"><span class="pre">~Diagnostic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10DiagnosticD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic6prettyEv">
+<span id="_CPPv3N10Diagnostic6prettyEv"></span><span id="_CPPv2N10Diagnostic6prettyEv"></span><span id="Diagnostic::pretty"></span><span class="target" id="classDiagnostic_1ae3442c8a69e6c77f60f521edd992151a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">pretty</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic6prettyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generate human readable string of all enabled diagnostics. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Human readable string of all enabled diagnostics. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic10initializeENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE">
+<span id="_CPPv3N10Diagnostic10initializeENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="_CPPv2N10Diagnostic10initializeENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE"></span><span id="Diagnostic::initialize__ss.ss.System::MainSystem.System::SubSystem.System::Component"></span><span class="target" id="classDiagnostic_1affab8964a61ddecbf69e8c48250625d9"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">initialize</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">device_name</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">node_name</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <em><span class="pre">system</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <em><span class="pre">subsystem</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <em><span class="pre">component</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic10initializeENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize Root <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. This should be called once per instance of <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">device_name</span></code>: The name of the Device. Can be hostname or any name that makes sense for the device. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">node_name</span></code>: The name of the node running that has an instance of this class. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">system</span></code>: The <a class="reference internal" href="Definitions.html#classSystem"><span class="std std-ref">System</span></a> identifier, uses enum: <a class="reference internal" href="Definitions.html#classSystem_1a2a7648b88117f4560351739144753ce0"><span class="std std-ref">System::MainSystem</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsystem</span></code>: The SubSystem identifier, uses enum: <a class="reference internal" href="Definitions.html#classSystem_1a44a651e63c9d6cd2e10a9ca6afd115f6"><span class="std std-ref">System::SubSystem</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">component</span></code>: The Component identifier, uses enum: <a class="reference internal" href="Definitions.html#classSystem_1a7a2992377dce6edb4e58bf8bc443a24d"><span class="std std-ref">System::Component</span></a> </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic10initializeEN10Diagnostic20DiagnosticDefinitionE">
+<span id="_CPPv3N10Diagnostic10initializeEN10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N10Diagnostic10initializeEN10Diagnostic20DiagnosticDefinitionE"></span><span id="Diagnostic::initialize__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classDiagnostic_1a65f658f99d3c55395c46efefc16383f7"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">initialize</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">diag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic10initializeEN10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE">
+<span id="_CPPv3N10Diagnostic18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE"></span><span id="_CPPv2N10Diagnostic18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE"></span><span id="Diagnostic::enable_diagnostics__std::vector:Diagnostic::DiagnosticType:"></span><span class="target" id="classDiagnostic_1a885b688265e4e3d1d2c20242ede83603"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">enable_diagnostics</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a><span class="pre">&gt;</span> <em><span class="pre">diagnostic_types</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enable <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> Types. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>If the diagnostics were enabled or not. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostic_types</span></code>: A vector of <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> Types that should be enabled. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic19get_root_diagnosticEv">
+<span id="_CPPv3N10Diagnostic19get_root_diagnosticEv"></span><span id="_CPPv2N10Diagnostic19get_root_diagnosticEv"></span><span id="Diagnostic::get_root_diagnostic"></span><span class="target" id="classDiagnostic_1ab74b8287eed72b600477e8da5417163a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">get_root_diagnostic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic19get_root_diagnosticEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic15get_diagnosticsEv">
+<span id="_CPPv3N10Diagnostic15get_diagnosticsEv"></span><span id="_CPPv2N10Diagnostic15get_diagnosticsEv"></span><span id="Diagnostic::get_diagnostics"></span><span class="target" id="classDiagnostic_1a721add2f8d63296046ea8a4629d8a651"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">get_diagnostics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic15get_diagnosticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic22get_latest_diagnosticsEv">
+<span id="_CPPv3N10Diagnostic22get_latest_diagnosticsEv"></span><span id="_CPPv2N10Diagnostic22get_latest_diagnosticsEv"></span><span id="Diagnostic::get_latest_diagnostics"></span><span class="target" id="classDiagnostic_1ae3fa49538f8bf64c19e225e90738a7f5"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">get_latest_diagnostics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic22get_latest_diagnosticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE">
+<span id="_CPPv3N10Diagnostic17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="_CPPv2N10Diagnostic17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="Diagnostic::update_diagnostic__Diagnostic::DiagnosticType.Level::Type.Diagnostic::Message.ss"></span><span class="target" id="classDiagnostic_1a0e7d861203a027fc57b5714610580bcf"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update_diagnostic</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <em><span class="pre">diagnostic_type</span></em>, <a class="reference internal" href="Definitions.html#_CPPv45Level" title="Level"><span class="pre">Level</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N5Level4TypeE" title="Level::Type"><span class="pre">Type</span></a> <em><span class="pre">level</span></em>, <a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <em><span class="pre">message</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. </p>
+<p>Updates an enabled diagnostic with the defined information. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic17update_diagnosticE20DiagnosticDefinition">
+<span id="_CPPv3N10Diagnostic17update_diagnosticE20DiagnosticDefinition"></span><span id="_CPPv2N10Diagnostic17update_diagnosticE20DiagnosticDefinition"></span><span id="Diagnostic::update_diagnostic__DiagnosticDefinition"></span><span class="target" id="classDiagnostic_1af9b7d35a8454ed1d682ce6c60801cf22"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update_diagnostic</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">diag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic17update_diagnosticE20DiagnosticDefinition" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. </p>
+<p>Updates an enabled diagnostic with the provided diagnostic. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic17update_diagnosticENSt6stringEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE">
+<span id="_CPPv3N10Diagnostic17update_diagnosticENSt6stringEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="_CPPv2N10Diagnostic17update_diagnosticENSt6stringEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="Diagnostic::update_diagnostic__ss.Diagnostic::DiagnosticType.Level::Type.Diagnostic::Message.ss"></span><span class="target" id="classDiagnostic_1ab0ff2b7bb42231087bca65d9f9c8ca1d"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update_diagnostic</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">device_name</span></em>, <a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <em><span class="pre">diagnostic_type</span></em>, <a class="reference internal" href="Definitions.html#_CPPv45Level" title="Level"><span class="pre">Level</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N5Level4TypeE" title="Level::Type"><span class="pre">Type</span></a> <em><span class="pre">level</span></em>, <a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <em><span class="pre">message</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic17update_diagnosticENSt6stringEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update <a class="reference internal" href="#classDiagnostic"><span class="std std-ref">Diagnostic</span></a>. </p>
+<p>Updates an enabled diagnostic with the fully defined diagnostic information. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic20DiagnosticTypeStringEN10Diagnostic14DiagnosticTypeE">
+<span id="_CPPv3N10Diagnostic20DiagnosticTypeStringEN10Diagnostic14DiagnosticTypeE"></span><span id="_CPPv2N10Diagnostic20DiagnosticTypeStringEN10Diagnostic14DiagnosticTypeE"></span><span id="Diagnostic::DiagnosticTypeString__Diagnostic::DiagnosticType"></span><span class="target" id="classDiagnostic_1a18c88c20d720a99f8893837ea24d89ba"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">DiagnosticTypeString</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticTypeStringEN10Diagnostic14DiagnosticTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert <a class="reference internal" href="#classDiagnostic_1a3099654b22790ede6b922bcb09804f1b"><span class="std std-ref">Diagnostic::DiagnosticType</span></a> to human readable string. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The converted string. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: <a class="reference internal" href="#classDiagnostic_1a3099654b22790ede6b922bcb09804f1b"><span class="std std-ref">Diagnostic::DiagnosticType</span></a> type </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic23DiagnosticMessageStringEN10Diagnostic7MessageE">
+<span id="_CPPv3N10Diagnostic23DiagnosticMessageStringEN10Diagnostic7MessageE"></span><span id="_CPPv2N10Diagnostic23DiagnosticMessageStringEN10Diagnostic7MessageE"></span><span id="Diagnostic::DiagnosticMessageString__Diagnostic::Message"></span><span class="target" id="classDiagnostic_1a20f23b220ae2b8100810e777271c9bb6"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">DiagnosticMessageString</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic23DiagnosticMessageStringEN10Diagnostic7MessageE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert <a class="reference internal" href="#classDiagnostic_1ae36f9ff390ee983717bfb57c9038397a"><span class="std std-ref">Diagnostic::Message</span></a> to human readable string. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The converted string. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: <a class="reference internal" href="#classDiagnostic_1ae36f9ff390ee983717bfb57c9038397a"><span class="std std-ref">Diagnostic::Message</span></a> type </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic6prettyENSt6stringENSt6vectorI20DiagnosticDefinitionEE">
+<span id="_CPPv3N10Diagnostic6prettyENSt6stringENSt6vectorI20DiagnosticDefinitionEE"></span><span id="_CPPv2N10Diagnostic6prettyENSt6stringENSt6vectorI20DiagnosticDefinitionEE"></span><span id="Diagnostic::pretty__ss.std::vector:DiagnosticDefinition:"></span><span class="target" id="classDiagnostic_1a7690400ce80b420f459b889c9f778948"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">pretty</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">pre</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <em><span class="pre">diagnostics</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic6prettyENSt6stringENSt6vectorI20DiagnosticDefinitionEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generate human readable string of a vector of diagnostics. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Human readable string of diagnostics. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pre</span></code>: A string to be pre-appended to the human readable string. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostics</span></code>: A vector of diagnostics. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic6prettyENSt6stringE20DiagnosticDefinitionb">
+<span id="_CPPv3N10Diagnostic6prettyENSt6stringE20DiagnosticDefinitionb"></span><span id="_CPPv2N10Diagnostic6prettyENSt6stringE20DiagnosticDefinitionb"></span><span id="Diagnostic::pretty__ss.DiagnosticDefinition.b"></span><span class="target" id="classDiagnostic_1a6b99896d189da5156980d50ed2b83b50"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">pretty</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">pre</span></em>, <a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">diag</span></em>, <span class="pre">bool</span> <em><span class="pre">print_end_line</span></em> <span class="pre">=</span> <span class="pre">true</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic6prettyENSt6stringE20DiagnosticDefinitionb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generate human readable string of a diagnostic. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Human readable string of diagnostic. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pre</span></code>: A string to be pre-appended to the human readable string. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diag</span></code>: A diagnostic. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic11initializedE">
+<span id="_CPPv3N10Diagnostic11initializedE"></span><span id="_CPPv2N10Diagnostic11initializedE"></span><span id="Diagnostic::initialized__b"></span><span class="target" id="classDiagnostic_1ac5843bab71ebcfc0e120929bba3d7ca2"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">initialized</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic11initializedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic15root_diagnosticE">
+<span id="_CPPv3N10Diagnostic15root_diagnosticE"></span><span id="_CPPv2N10Diagnostic15root_diagnosticE"></span><span id="Diagnostic::root_diagnostic__DiagnosticDefinition"></span><span class="target" id="classDiagnostic_1a3c1ad73465098ca15ae0cd88fef22b11"></span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">root_diagnostic</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic15root_diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic11diagnosticsE">
+<span id="_CPPv3N10Diagnostic11diagnosticsE"></span><span id="_CPPv2N10Diagnostic11diagnosticsE"></span><span id="Diagnostic::diagnostics__std::vector:DiagnosticDefinition:"></span><span class="target" id="classDiagnostic_1a4d81c29fad8100d2fc777a9684abee95"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">diagnostics</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic11diagnosticsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinitionE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinitionE"></span><span id="Diagnostic::DiagnosticDefinition"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">DiagnosticDefinition</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;Diagnostic.h&gt;</em><p>Contains the definition for the <a class="reference internal" href="#structDiagnostic_1_1DiagnosticDefinition"><span class="std std-ref">DiagnosticDefinition</span></a>. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionEv">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionEv"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionEv"></span><span id="Diagnostic::DiagnosticDefinition::DiagnosticDefinition"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a9533d85001ff08454029754fb24e6f15"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">DiagnosticDefinition</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEN10Diagnostic14DiagnosticTypeEN10Diagnostic7MessageEN5Level4TypeENSt6stringE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEN10Diagnostic14DiagnosticTypeEN10Diagnostic7MessageEN5Level4TypeENSt6stringE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEN10Diagnostic14DiagnosticTypeEN10Diagnostic7MessageEN5Level4TypeENSt6stringE"></span><span id="Diagnostic::DiagnosticDefinition::DiagnosticDefinition__ss.ss.System::MainSystem.System::SubSystem.System::Component.Diagnostic::DiagnosticType.Diagnostic::Message.Level::Type.ss"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a790bcff374e9fc66de6a4b5f386097ea"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">DiagnosticDefinition</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">_device_name</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">_node_name</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <em><span class="pre">_system</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <em><span class="pre">_sub_system</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <em><span class="pre">_component</span></em>, <a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <em><span class="pre">_type</span></em>, <a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <em><span class="pre">_message</span></em>, <a class="reference internal" href="Definitions.html#_CPPv45Level" title="Level"><span class="pre">Level</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N5Level4TypeE" title="Level::Type"><span class="pre">Type</span></a> <em><span class="pre">_level</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">_description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition20DiagnosticDefinitionENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEN10Diagnostic14DiagnosticTypeEN10Diagnostic7MessageEN5Level4TypeENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition11device_nameE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition11device_nameE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition11device_nameE"></span><span id="Diagnostic::DiagnosticDefinition::device_name__ss"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a6b52d71282711093c3fa8949430eefb6"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">device_name</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition11device_nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition9node_nameE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition9node_nameE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition9node_nameE"></span><span id="Diagnostic::DiagnosticDefinition::node_name__ss"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a98738c44086708d7440132179d3efba8"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">node_name</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition9node_nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition6systemE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition6systemE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition6systemE"></span><span id="Diagnostic::DiagnosticDefinition::system__System::MainSystem"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1ab3dc263ae436727664ff0183a72bdade"></span><a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <code class="sig-name descname"><span class="pre">system</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition6systemE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition9subsystemE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition9subsystemE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition9subsystemE"></span><span id="Diagnostic::DiagnosticDefinition::subsystem__System::SubSystem"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a5a7a9cac04466adb6173311422e48f01"></span><a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <code class="sig-name descname"><span class="pre">subsystem</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition9subsystemE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition9componentE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition9componentE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition9componentE"></span><span id="Diagnostic::DiagnosticDefinition::component__System::Component"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a6403d33f42890cce19e9fc511500658c"></span><a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <code class="sig-name descname"><span class="pre">component</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition9componentE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition4typeE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition4typeE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition4typeE"></span><span id="Diagnostic::DiagnosticDefinition::type__Diagnostic::DiagnosticType"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a5d6816c34627d575fb6a8270c2e37be9"></span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <code class="sig-name descname"><span class="pre">type</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition7messageE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition7messageE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition7messageE"></span><span id="Diagnostic::DiagnosticDefinition::message__Diagnostic::Message"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1aa935328e5e46815ed48779ae03ea736b"></span><a class="reference internal" href="#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <code class="sig-name descname"><span class="pre">message</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition7messageE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition5levelE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition5levelE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition5levelE"></span><span id="Diagnostic::DiagnosticDefinition::level__Level::Type"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1af2e6f9f71b8192faef01932ff9d1304d"></span><a class="reference internal" href="Definitions.html#_CPPv45Level" title="Level"><span class="pre">Level</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N5Level4TypeE" title="Level::Type"><span class="pre">Type</span></a> <code class="sig-name descname"><span class="pre">level</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition5levelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition11descriptionE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition11descriptionE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition11descriptionE"></span><span id="Diagnostic::DiagnosticDefinition::description__ss"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1a770f6468cb300a9c5a0de160021b435e"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">description</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition11descriptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10Diagnostic20DiagnosticDefinition12update_countE">
+<span id="_CPPv3N10Diagnostic20DiagnosticDefinition12update_countE"></span><span id="_CPPv2N10Diagnostic20DiagnosticDefinition12update_countE"></span><span id="Diagnostic::DiagnosticDefinition::update_count__uint64_t"></span><span class="target" id="structDiagnostic_1_1DiagnosticDefinition_1abcf98ad9b308c306e1d551690fead8a8"></span><span class="pre">uint64_t</span> <code class="sig-name descname"><span class="pre">update_count</span></code><a class="headerlink" href="#_CPPv4N10Diagnostic20DiagnosticDefinition12update_countE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Logger.html" class="btn btn-neutral float-right" title="Logger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Definitions.html" class="btn btn-neutral float-left" title="Definitions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, David Gitz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

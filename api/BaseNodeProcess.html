@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>BaseNodeProcess &mdash; eROS  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Definitions" href="Definitions.html" />
+    <link rel="prev" title="BaseNode" href="BaseNode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> eROS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to eROS’s documentation!</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BaseNode.html">BaseNode</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BaseNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Definitions.html">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Diagnostic.html">Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Logger.html">Logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ResourceMonitor.html">ResourceMonitor</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">eROS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">API</a> &raquo;</li>
+        
+      <li>BaseNodeProcess</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/BaseNodeProcess.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basenodeprocess">
+<span id="api-basenodeprocess"></span><h1>BaseNodeProcess<a class="headerlink" href="#basenodeprocess" title="Permalink to this headline">¶</a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt id="_CPPv44json">
+<span id="_CPPv34json"></span><span id="_CPPv24json"></span><span class="target" id="BaseNodeProcess_8h_1ab701e3ac61a85b337ec5c1abaad6742d"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">json</span></code> <span class="pre">=</span> <span class="pre">nlohmann</span><span class="pre">::</span><span class="pre">json</span><a class="headerlink" href="#_CPPv44json" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv415BaseNodeProcess">
+<span id="_CPPv315BaseNodeProcess"></span><span id="_CPPv215BaseNodeProcess"></span><span id="BaseNodeProcess"></span><span class="target" id="classBaseNodeProcess"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">BaseNodeProcess</span></code><a class="headerlink" href="#_CPPv415BaseNodeProcess" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include “BaseNodeProcess.h”</em><p>This is a <a class="reference internal" href="#classBaseNodeProcess"><span class="std std-ref">BaseNodeProcess</span></a> class. All NodeProcess should be a derived class from this <a class="reference internal" href="#classBaseNodeProcess"><span class="std std-ref">BaseNodeProcess</span></a> Class. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15BaseNodeProcessEv">
+<span id="_CPPv3N15BaseNodeProcess15BaseNodeProcessEv"></span><span id="_CPPv2N15BaseNodeProcess15BaseNodeProcessEv"></span><span id="BaseNodeProcess::BaseNodeProcess"></span><span class="target" id="classBaseNodeProcess_1a19c322eab42549f55a7fbc766a72f868"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">BaseNodeProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15BaseNodeProcessEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcessD0Ev">
+<span id="_CPPv3N15BaseNodeProcessD0Ev"></span><span id="_CPPv2N15BaseNodeProcessD0Ev"></span><span id="BaseNodeProcess::~BaseNodeProcess"></span><span class="target" id="classBaseNodeProcess_1ac1738e968d3d03fd1f8b3cf03c7cd4b3"></span><em class="property"><span class="pre">inline</span></em> <em class="property"><span class="pre">virtual</span></em> <code class="sig-name descname"><span class="pre">~BaseNodeProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcessD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess10initializeENSt6stringENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEP6Logger">
+<span id="_CPPv3N15BaseNodeProcess10initializeENSt6stringENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEP6Logger"></span><span id="_CPPv2N15BaseNodeProcess10initializeENSt6stringENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEP6Logger"></span><span id="BaseNodeProcess::initialize__ss.ss.ss.System::MainSystem.System::SubSystem.System::Component.LoggerP"></span><span class="target" id="classBaseNodeProcess_1af02b683c236dff0506852af2abd1f6e4"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">initialize</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">t_base_node_name</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">t_node_name</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">t_hostname</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <em><span class="pre">t_system</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <em><span class="pre">t_subsystem</span></em>, <a class="reference internal" href="Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <em><span class="pre">t_component</span></em>, <a class="reference internal" href="Logger.html#_CPPv46Logger" title="Logger"><span class="pre">Logger</span></a> <span class="pre">*</span><em><span class="pre">_logger</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess10initializeENSt6stringENSt6stringENSt6stringEN6System10MainSystemEN6System9SubSystemEN6System9ComponentEP6Logger" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initializes Process. Should be called right after instantiating variable. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE">
+<span id="_CPPv3N15BaseNodeProcess18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE"></span><span id="_CPPv2N15BaseNodeProcess18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE"></span><span id="BaseNodeProcess::enable_diagnostics__std::vector:Diagnostic::DiagnosticType:"></span><span class="target" id="classBaseNodeProcess_1a0202b1ec7a7e1afa688f18909da1f091"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">enable_diagnostics</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a><span class="pre">&gt;</span> <em><span class="pre">diagnostic_types</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess21finish_initializationEv">
+<span id="_CPPv3N15BaseNodeProcess21finish_initializationEv"></span><span id="_CPPv2N15BaseNodeProcess21finish_initializationEv"></span><span id="BaseNodeProcess::finish_initialization"></span><span class="target" id="classBaseNodeProcess_1a9b0af6ff7bba4c3e07b69ef6bf003225"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">finish_initialization</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess21finish_initializationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Derived Process Initialization. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess5resetEv">
+<span id="_CPPv3N15BaseNodeProcess5resetEv"></span><span id="_CPPv2N15BaseNodeProcess5resetEv"></span><span id="BaseNodeProcess::reset"></span><span class="target" id="classBaseNodeProcess_1a306916914f80cce5dbf770cecb27862d"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets Process. Used for counters, timers, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess6updateEdd">
+<span id="_CPPv3N15BaseNodeProcess6updateEdd"></span><span id="_CPPv2N15BaseNodeProcess6updateEdd"></span><span id="BaseNodeProcess::update__double.double"></span><span class="target" id="classBaseNodeProcess_1a972894d0cd4d4e6c4b2b61469807e232"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">t_dt</span></em>, <span class="pre">double</span> <em><span class="pre">t_ros_time</span></em><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess6updateEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update function must be implemented in Derived Process. This is used for all state machine logic, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess17update_diagnosticEN10Diagnostic20DiagnosticDefinitionE">
+<span id="_CPPv3N15BaseNodeProcess17update_diagnosticEN10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N15BaseNodeProcess17update_diagnosticEN10Diagnostic20DiagnosticDefinitionE"></span><span id="BaseNodeProcess::update_diagnostic__Diagnostic::DiagnosticDefinition"></span><span class="target" id="classBaseNodeProcess_1a1797af77f359a3cfac16fc3e230b2f72"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update_diagnostic</span></code><span class="sig-paren">(</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">diag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess17update_diagnosticEN10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE">
+<span id="_CPPv3N15BaseNodeProcess17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="_CPPv2N15BaseNodeProcess17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE"></span><span id="BaseNodeProcess::update_diagnostic__Diagnostic::DiagnosticType.Level::Type.Diagnostic::Message.ss"></span><span class="target" id="classBaseNodeProcess_1a6302c42937872926e2ed6fccc11001a5"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update_diagnostic</span></code><span class="sig-paren">(</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic14DiagnosticTypeE" title="Diagnostic::DiagnosticType"><span class="pre">DiagnosticType</span></a> <em><span class="pre">diagnostic_type</span></em>, <a class="reference internal" href="Definitions.html#_CPPv45Level" title="Level"><span class="pre">Level</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N5Level4TypeE" title="Level::Type"><span class="pre">Type</span></a> <em><span class="pre">level</span></em>, <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic7MessageE" title="Diagnostic::Message"><span class="pre">Message</span></a> <em><span class="pre">message</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess13get_nodestateEv">
+<span id="_CPPv3N15BaseNodeProcess13get_nodestateEv"></span><span id="_CPPv2N15BaseNodeProcess13get_nodestateEv"></span><span id="BaseNodeProcess::get_nodestate"></span><span class="target" id="classBaseNodeProcess_1a45fdb1b0adca86c4d0cca3634e40a719"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Definitions.html#_CPPv44Node" title="Node"><span class="pre">Node</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N4Node5StateE" title="Node::State"><span class="pre">State</span></a> <code class="sig-name descname"><span class="pre">get_nodestate</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess13get_nodestateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess11get_runtimeEv">
+<span id="_CPPv3N15BaseNodeProcess11get_runtimeEv"></span><span id="_CPPv2N15BaseNodeProcess11get_runtimeEv"></span><span id="BaseNodeProcess::get_runtime"></span><span class="target" id="classBaseNodeProcess_1af97ef5bff386891c13e63bf00b45aa48"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">double</span> <code class="sig-name descname"><span class="pre">get_runtime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess11get_runtimeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess16get_ready_to_armEv">
+<span id="_CPPv3N15BaseNodeProcess16get_ready_to_armEv"></span><span id="_CPPv2N15BaseNodeProcess16get_ready_to_armEv"></span><span id="BaseNodeProcess::get_ready_to_arm"></span><span class="target" id="classBaseNodeProcess_1ac04ebb821ab4517a2dc24d30f7b30c7b"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">ready_to_arm</span> <code class="sig-name descname"><span class="pre">get_ready_to_arm</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess16get_ready_to_armEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12get_hostnameEv">
+<span id="_CPPv3N15BaseNodeProcess12get_hostnameEv"></span><span id="_CPPv2N15BaseNodeProcess12get_hostnameEv"></span><span id="BaseNodeProcess::get_hostname"></span><span class="target" id="classBaseNodeProcess_1a054e9e8a13c1550e28a3966e1acdf95c"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">get_hostname</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12get_hostnameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess19get_root_diagnosticEv">
+<span id="_CPPv3N15BaseNodeProcess19get_root_diagnosticEv"></span><span id="_CPPv2N15BaseNodeProcess19get_root_diagnosticEv"></span><span id="BaseNodeProcess::get_root_diagnostic"></span><span class="target" id="classBaseNodeProcess_1ab1c554ec10c53cd99a999a101f4bcdcc"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">get_root_diagnostic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess19get_root_diagnosticEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15get_diagnosticsEv">
+<span id="_CPPv3N15BaseNodeProcess15get_diagnosticsEv"></span><span id="_CPPv2N15BaseNodeProcess15get_diagnosticsEv"></span><span id="BaseNodeProcess::get_diagnostics"></span><span class="target" id="classBaseNodeProcess_1adfe2d8e6e1c773ee7873d448bb768de6"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">get_diagnostics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15get_diagnosticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess22get_latest_diagnosticsEv">
+<span id="_CPPv3N15BaseNodeProcess22get_latest_diagnosticsEv"></span><span id="_CPPv2N15BaseNodeProcess22get_latest_diagnosticsEv"></span><span id="BaseNodeProcess::get_latest_diagnostics"></span><span class="target" id="classBaseNodeProcess_1af05541b4bc15dc76761e16d804adcc9a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">get_latest_diagnostics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess22get_latest_diagnosticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15get_system_timeEv">
+<span id="_CPPv3N15BaseNodeProcess15get_system_timeEv"></span><span id="_CPPv2N15BaseNodeProcess15get_system_timeEv"></span><span id="BaseNodeProcess::get_system_time"></span><span class="target" id="classBaseNodeProcess_1a7fd0932419f4eef04b07560295162f4a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">double</span> <code class="sig-name descname"><span class="pre">get_system_time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15get_system_timeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12get_run_timeEv">
+<span id="_CPPv3N15BaseNodeProcess12get_run_timeEv"></span><span id="_CPPv2N15BaseNodeProcess12get_run_timeEv"></span><span id="BaseNodeProcess::get_run_time"></span><span class="target" id="classBaseNodeProcess_1a7d39c922cfe5c137239ecf6b1e9ce2d0"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">double</span> <code class="sig-name descname"><span class="pre">get_run_time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12get_run_timeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess10get_loggerEv">
+<span id="_CPPv3N15BaseNodeProcess10get_loggerEv"></span><span id="_CPPv2N15BaseNodeProcess10get_loggerEv"></span><span id="BaseNodeProcess::get_logger"></span><span class="target" id="classBaseNodeProcess_1a655232a07126e9b87d611c6304f967c6"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="Logger.html#_CPPv46Logger" title="Logger"><span class="pre">Logger</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_logger</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess10get_loggerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess18read_configurationENSt6stringEbNSt6stringE">
+<span id="_CPPv3N15BaseNodeProcess18read_configurationENSt6stringEbNSt6stringE"></span><span id="_CPPv2N15BaseNodeProcess18read_configurationENSt6stringEbNSt6stringE"></span><span id="BaseNodeProcess::read_configuration__ss.b.ss"></span><span class="target" id="classBaseNodeProcess_1a265f95172587d0888045c8afc47b2eb1"></span><a class="reference internal" href="#_CPPv44json" title="json"><span class="pre">json</span></a> <code class="sig-name descname"><span class="pre">read_configuration</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">device_name</span></em>, <span class="pre">bool</span> <em><span class="pre">include_self</span></em> <span class="pre">=</span> <span class="pre">true</span>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">file_path</span></em> <span class="pre">=</span> <span class="pre">&quot;/home/robot/config/DeviceList.json&quot;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess18read_configurationENSt6stringEbNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess19request_statechangeEN4Node5StateE">
+<span id="_CPPv3N15BaseNodeProcess19request_statechangeEN4Node5StateE"></span><span id="_CPPv2N15BaseNodeProcess19request_statechangeEN4Node5StateE"></span><span id="BaseNodeProcess::request_statechange__Node::State"></span><span class="target" id="classBaseNodeProcess_1ac16b27bd5b0c722814ff94d03039545c"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">request_statechange</span></code><span class="sig-paren">(</span><a class="reference internal" href="Definitions.html#_CPPv44Node" title="Node"><span class="pre">Node</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N4Node5StateE" title="Node::State"><span class="pre">State</span></a> <em><span class="pre">newstate</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess19request_statechangeEN4Node5StateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Request a <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> State Change. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>If the state change was successful (true) or not (false) </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">newstate</span></code>: The state to be changed to. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess14new_commandmsgEN4eros7commandE">
+<span id="_CPPv3N15BaseNodeProcess14new_commandmsgEN4eros7commandE"></span><span id="_CPPv2N15BaseNodeProcess14new_commandmsgEN4eros7commandE"></span><span id="BaseNodeProcess::new_commandmsg__eros::command"></span><span class="target" id="classBaseNodeProcess_1aa13636307b45678f4d35e2fa142416fc"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">new_commandmsg</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span> <em><span class="pre">t_msg</span></em><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess14new_commandmsgEN4eros7commandE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess22check_programvariablesEv">
+<span id="_CPPv3N15BaseNodeProcess22check_programvariablesEv"></span><span id="_CPPv2N15BaseNodeProcess22check_programvariablesEv"></span><span id="BaseNodeProcess::check_programvariables"></span><span class="target" id="classBaseNodeProcess_1ab7139b722f8b6900e19997fe3f2b8f3e"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">check_programvariables</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess22check_programvariablesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12run_unittestEv">
+<span id="_CPPv3N15BaseNodeProcess12run_unittestEv"></span><span id="_CPPv2N15BaseNodeProcess12run_unittestEv"></span><span id="BaseNodeProcess::run_unittest"></span><span class="target" id="classBaseNodeProcess_1a00b1caf80eafaa73b40ebff28701f048"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">run_unittest</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12run_unittestEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Runs Unit Test on Derived Process. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12convert_timeE7timeval">
+<span id="_CPPv3N15BaseNodeProcess12convert_timeE7timeval"></span><span id="_CPPv2N15BaseNodeProcess12convert_timeE7timeval"></span><span id="BaseNodeProcess::convert_time__timeval"></span><span class="target" id="classBaseNodeProcess_1ac570485e7f6ed35d35f43ad595d11e35"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Time</span> <code class="sig-name descname"><span class="pre">convert_time</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">struct</span></em> <span class="pre">timeval</span> <em><span class="pre">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12convert_timeE7timeval" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert struct timeval to ros::Time. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Time converted to ros::Time </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: Standard timeval object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12convert_timeEd">
+<span id="_CPPv3N15BaseNodeProcess12convert_timeEd"></span><span id="_CPPv2N15BaseNodeProcess12convert_timeEd"></span><span id="BaseNodeProcess::convert_time__double"></span><span class="target" id="classBaseNodeProcess_1a7df83970b658bc6507121ca0ded9b3e0"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Time</span> <code class="sig-name descname"><span class="pre">convert_time</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12convert_timeEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert time as a float to ros::Time. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Time converted to ros::Time </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: timestamp in seconds. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess4execEPKcb">
+<span id="_CPPv3N15BaseNodeProcess4execEPKcb"></span><span id="_CPPv2N15BaseNodeProcess4execEPKcb"></span><span id="BaseNodeProcess::exec__cCP.b"></span><span class="target" id="classBaseNodeProcess_1a5995efa47fa2d70ac5de384e94e90b3e"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">exec</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">cmd</span></em>, <span class="pre">bool</span> <em><span class="pre">wait_for_result</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess4execEPKcb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Execute a command. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The result of the command </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd</span></code>: The command to execute </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wait_for_results</span></code>: If function should return results or not. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7convertEKN10Diagnostic20DiagnosticDefinitionE">
+<span id="_CPPv3N15BaseNodeProcess7convertEKN10Diagnostic20DiagnosticDefinitionE"></span><span id="_CPPv2N15BaseNodeProcess7convertEKN10Diagnostic20DiagnosticDefinitionE"></span><span id="BaseNodeProcess::convert__Diagnostic::DiagnosticDefinitionC"></span><span class="target" id="classBaseNodeProcess_1aa4d7ded28adc109138c96f685ea8a82f"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <em><span class="pre">def</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7convertEKN10Diagnostic20DiagnosticDefinitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7convertEKN4eros10diagnosticE">
+<span id="_CPPv3N15BaseNodeProcess7convertEKN4eros10diagnosticE"></span><span id="_CPPv2N15BaseNodeProcess7convertEKN4eros10diagnosticE"></span><span id="BaseNodeProcess::convert__eros::diagnosticC"></span><span class="target" id="classBaseNodeProcess_1a48be5ac3b4428670428f1c3ed517e554"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <em><span class="pre">diag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7convertEKN4eros10diagnosticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7convertEN9ArmDisarm5StateE">
+<span id="_CPPv3N15BaseNodeProcess7convertEN9ArmDisarm5StateE"></span><span id="_CPPv2N15BaseNodeProcess7convertEN9ArmDisarm5StateE"></span><span id="BaseNodeProcess::convert__ArmDisarm::State"></span><span class="target" id="classBaseNodeProcess_1a5d62a3a162ab9bb9a0a9c85c32670fb4"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">armed_state</span> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><a class="reference internal" href="Definitions.html#_CPPv49ArmDisarm" title="ArmDisarm"><span class="pre">ArmDisarm</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N9ArmDisarm5StateE" title="ArmDisarm::State"><span class="pre">State</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7convertEN9ArmDisarm5StateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7convertEN4eros11armed_stateE">
+<span id="_CPPv3N15BaseNodeProcess7convertEN4eros11armed_stateE"></span><span id="_CPPv2N15BaseNodeProcess7convertEN4eros11armed_stateE"></span><span id="BaseNodeProcess::convert__eros::armed_state"></span><span class="target" id="classBaseNodeProcess_1a092319d5ad16ce798c69b8f26d4e6b59"></span><a class="reference internal" href="Definitions.html#_CPPv49ArmDisarm" title="ArmDisarm"><span class="pre">ArmDisarm</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N9ArmDisarm5StateE" title="ArmDisarm::State"><span class="pre">State</span></a> <code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">armed_state</span> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7convertEN4eros11armed_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess11base_updateEdd">
+<span id="_CPPv3N15BaseNodeProcess11base_updateEdd"></span><span id="_CPPv2N15BaseNodeProcess11base_updateEdd"></span><span id="BaseNodeProcess::base_update__double.double"></span><span class="target" id="classBaseNodeProcess_1a2f5df5df0d086b45d3fe3402f2bd4698"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">base_update</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">t_dt</span></em>, <span class="pre">double</span> <em><span class="pre">t_system_time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess11base_updateEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7cleanupEv">
+<span id="_CPPv3N15BaseNodeProcess7cleanupEv"></span><span id="_CPPv2N15BaseNodeProcess7cleanupEv"></span><span id="BaseNodeProcess::cleanup"></span><span class="target" id="classBaseNodeProcess_1af2433f70837e43cdbe93ac494acc550d"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess12base_cleanupEv">
+<span id="_CPPv3N15BaseNodeProcess12base_cleanupEv"></span><span id="_CPPv2N15BaseNodeProcess12base_cleanupEv"></span><span id="BaseNodeProcess::base_cleanup"></span><span class="target" id="classBaseNodeProcess_1a218554fade04a5f6a5967e6708c0f246"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">base_cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12base_cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess7isEqualEddd">
+<span id="_CPPv3N15BaseNodeProcess7isEqualEddd"></span><span id="_CPPv2N15BaseNodeProcess7isEqualEddd"></span><span id="BaseNodeProcess::isEqual__double.double.double"></span><span class="target" id="classBaseNodeProcess_1aa7d56a3c7c8f9310997af166d7a854fd"></span><em class="property"><span class="pre">static</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">isEqual</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">a</span></em>, <span class="pre">double</span> <em><span class="pre">b</span></em>, <span class="pre">double</span> <em><span class="pre">eps</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess7isEqualEddd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros7command8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros7command8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros7command8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::command::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1a291fbc8ec0f6e3bfa2b8e8976f60677d"></span><em class="property"><span class="pre">static</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros7command8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert eros::command message (as received via a ROS <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>) to the regular datatype. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The object </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ptr</span></code>: The pointer to the object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros12ready_to_arm8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros12ready_to_arm8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros12ready_to_arm8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::ready_to_arm::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1a2e3eea31ad492bc91cd0eb1c83b0008c"></span><em class="property"><span class="pre">static</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">ready_to_arm</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">ready_to_arm</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros12ready_to_arm8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros13command_state8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros13command_state8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros13command_state8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::command_state::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1ac7271c9d8be270c7bf7624a1e8082744"></span><em class="property"><span class="pre">static</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command_state</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command_state</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros13command_state8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros10diagnostic8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros10diagnostic8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros10diagnostic8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::diagnostic::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1a135105583760e3e16b22b8e7b2cae8f7"></span><em class="property"><span class="pre">static</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">diagnostic</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros10diagnostic8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert eros::diagnostic message (as received via a ROS <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>) to the regular datatype. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The object </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ptr</span></code>: The pointer to the object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros9heartbeat8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros9heartbeat8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros9heartbeat8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::heartbeat::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1ad4713076a8ac3c66fc3cfb5135cada39"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">heartbeat</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">heartbeat</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros9heartbeat8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert eros::heartbeat message (as received via a ROS <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>) to the regular datatype. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The object </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ptr</span></code>: The pointer to the object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros8resource8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros8resource8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros8resource8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::resource::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1ac582980bbd1ea6239c3b8860c9cb1ec7"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">resource</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">resource</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros8resource8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert eros::resource message (as received via a ROS <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>) to the regular datatype. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The object </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ptr</span></code>: The pointer to the object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros10loadfactor8ConstPtrE">
+<span id="_CPPv3N15BaseNodeProcess15convert_fromptrERKN4eros10loadfactor8ConstPtrE"></span><span id="_CPPv2N15BaseNodeProcess15convert_fromptrERKN4eros10loadfactor8ConstPtrE"></span><span id="BaseNodeProcess::convert_fromptr__eros::loadfactor::ConstPtrCR"></span><span class="target" id="classBaseNodeProcess_1ab4c799ce48fa5bb9626716ed2ac2046f"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">loadfactor</span> <code class="sig-name descname"><span class="pre">convert_fromptr</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">loadfactor</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_ptr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15BaseNodeProcess15convert_fromptrERKN4eros10loadfactor8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert eros::loadfactor message (as received via a ROS <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a>) to the regular datatype. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The object </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ptr</span></code>: The pointer to the object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess6loggerE">
+<span id="_CPPv3N15BaseNodeProcess6loggerE"></span><span id="_CPPv2N15BaseNodeProcess6loggerE"></span><span id="BaseNodeProcess::logger__LoggerP"></span><span class="target" id="classBaseNodeProcess_1a3625ceeba6423ed366ad337d9eb73628"></span><a class="reference internal" href="Logger.html#_CPPv46Logger" title="Logger"><span class="pre">Logger</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">logger</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess6loggerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base Update Function of all <a class="reference internal" href="Definitions.html#classNode"><span class="std std-ref">Node</span></a> Process Classes. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>A <a class="reference internal" href="Diagnostic.html#classDiagnostic"><span class="std std-ref">Diagnostic</span></a> reflecting the status of the function. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t_dt</span></code>: The delta in the sample time. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_system_time</span></code>: The current system time. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess8hostnameE">
+<span id="_CPPv3N15BaseNodeProcess8hostnameE"></span><span id="_CPPv2N15BaseNodeProcess8hostnameE"></span><span id="BaseNodeProcess::hostname__ss"></span><span class="target" id="classBaseNodeProcess_1abac9d5e6d6fd5f308006ab8098c839f8"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">hostname</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess8hostnameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess14base_node_nameE">
+<span id="_CPPv3N15BaseNodeProcess14base_node_nameE"></span><span id="_CPPv2N15BaseNodeProcess14base_node_nameE"></span><span id="BaseNodeProcess::base_node_name__ss"></span><span class="target" id="classBaseNodeProcess_1a6e9626cae97591c08bb133022f773b2b"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">base_node_name</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess14base_node_nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess10node_stateE">
+<span id="_CPPv3N15BaseNodeProcess10node_stateE"></span><span id="_CPPv2N15BaseNodeProcess10node_stateE"></span><span id="BaseNodeProcess::node_state__Node::State"></span><span class="target" id="classBaseNodeProcess_1a4407a10afae65e947936df872d76f5d1"></span><a class="reference internal" href="Definitions.html#_CPPv44Node" title="Node"><span class="pre">Node</span></a><span class="pre">::</span><a class="reference internal" href="Definitions.html#_CPPv4N4Node5StateE" title="Node::State"><span class="pre">State</span></a> <code class="sig-name descname"><span class="pre">node_state</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess10node_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess17diagnostic_helperE">
+<span id="_CPPv3N15BaseNodeProcess17diagnostic_helperE"></span><span id="_CPPv2N15BaseNodeProcess17diagnostic_helperE"></span><span id="BaseNodeProcess::diagnostic_helper__Diagnostic"></span><span class="target" id="classBaseNodeProcess_1ae0cb2931d435e4185e4de055bd0a27db"></span><a class="reference internal" href="Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a> <code class="sig-name descname"><span class="pre">diagnostic_helper</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess17diagnostic_helperE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess16unittest_runningE">
+<span id="_CPPv3N15BaseNodeProcess16unittest_runningE"></span><span id="_CPPv2N15BaseNodeProcess16unittest_runningE"></span><span id="BaseNodeProcess::unittest_running__b"></span><span class="target" id="classBaseNodeProcess_1ac8a61b1ff2c1c1e535940c73d081878c"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">unittest_running</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess16unittest_runningE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess12ready_to_armE">
+<span id="_CPPv3N15BaseNodeProcess12ready_to_armE"></span><span id="_CPPv2N15BaseNodeProcess12ready_to_armE"></span><span id="BaseNodeProcess::ready_to_arm__eros::ready_to_arm"></span><span class="target" id="classBaseNodeProcess_1af08bbf5d99afc623748bd69c8a88bd86"></span><span class="pre">eros</span><span class="pre">::</span><span class="pre">ready_to_arm</span> <code class="sig-name descname"><span class="pre">ready_to_arm</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess12ready_to_armE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess8run_timeE">
+<span id="_CPPv3N15BaseNodeProcess8run_timeE"></span><span id="_CPPv2N15BaseNodeProcess8run_timeE"></span><span id="BaseNodeProcess::run_time__double"></span><span class="target" id="classBaseNodeProcess_1aff52ad92c29fd205b8ca122488293d14"></span><span class="pre">double</span> <code class="sig-name descname"><span class="pre">run_time</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess8run_timeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15BaseNodeProcess11system_timeE">
+<span id="_CPPv3N15BaseNodeProcess11system_timeE"></span><span id="_CPPv2N15BaseNodeProcess11system_timeE"></span><span id="BaseNodeProcess::system_time__double"></span><span class="target" id="classBaseNodeProcess_1af6a6e3f8d5e56524244fb621da4d785f"></span><span class="pre">double</span> <code class="sig-name descname"><span class="pre">system_time</span></code><a class="headerlink" href="#_CPPv4N15BaseNodeProcess11system_timeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Definitions.html" class="btn btn-neutral float-right" title="Definitions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="BaseNode.html" class="btn btn-neutral float-left" title="BaseNode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, David Gitz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
