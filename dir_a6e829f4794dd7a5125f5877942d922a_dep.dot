@@ -1,0 +1,9 @@
+digraph "/Users/runner/work/eROS/eROS/include/eros/DataLogger" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_51c9ec86b365bf851debf00262ff713e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="eros" fontname="Helvetica", fontsize="10", URL="dir_51c9ec86b365bf851debf00262ff713e.html"]
+  dir_a6e829f4794dd7a5125f5877942d922a [shape=box, label="DataLogger", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a6e829f4794dd7a5125f5877942d922a.html"];
+  }
+}

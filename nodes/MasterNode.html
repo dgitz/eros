@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>MasterNodeProcess &mdash; eROS  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SafetyNodeProcess" href="SafetyNode.html" />
+    <link rel="prev" title="DiagnosticNodeProcess" href="DiagnosticNode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> eROS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to eROS’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DataLoggerNode.html">DataLoggerProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataLoggerNode.html#dataloggernode">DataLoggerNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiagnosticNode.html">DiagnosticNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiagnosticNode.html#diagnosticnode">DiagnosticNode</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MasterNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#masterode">Masterode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SafetyNode.html">SafetyNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SafetyNode.html#safetynode">SafetyNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SnapshotNode.html">SnapshotNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SnapshotNode.html#snapshotnode">SnapshotNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SystemMonitor.html">SystemMonitorProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SystemMonitor.html#systemmonitornode">SystemMonitorNode</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">eROS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Nodes</a> &raquo;</li>
+        
+      <li>MasterNodeProcess</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/nodes/MasterNode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="masternodeprocess">
+<span id="nodes-master-node"></span><h1>MasterNodeProcess<a class="headerlink" href="#masternodeprocess" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt id="_CPPv417MasterNodeProcess">
+<span id="_CPPv317MasterNodeProcess"></span><span id="_CPPv217MasterNodeProcess"></span><span id="MasterNodeProcess"></span><span class="target" id="classMasterNodeProcess"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">MasterNodeProcess</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <a class="reference internal" href="../api/BaseNodeProcess.html#_CPPv415BaseNodeProcess" title="BaseNodeProcess"><span class="pre">BaseNodeProcess</span></a><a class="headerlink" href="#_CPPv417MasterNodeProcess" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess17MasterNodeProcessEv">
+<span id="_CPPv3N17MasterNodeProcess17MasterNodeProcessEv"></span><span id="_CPPv2N17MasterNodeProcess17MasterNodeProcessEv"></span><span id="MasterNodeProcess::MasterNodeProcess"></span><span class="target" id="classMasterNodeProcess_1a446ffd79210772790ed78fd3998dc66c"></span><code class="sig-name descname"><span class="pre">MasterNodeProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess17MasterNodeProcessEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcessD0Ev">
+<span id="_CPPv3N17MasterNodeProcessD0Ev"></span><span id="_CPPv2N17MasterNodeProcessD0Ev"></span><span id="MasterNodeProcess::~MasterNodeProcess"></span><span class="target" id="classMasterNodeProcess_1a356fd20537e9750f1ec19117eac8fbb4"></span><code class="sig-name descname"><span class="pre">~MasterNodeProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcessD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess21finish_initializationEv">
+<span id="_CPPv3N17MasterNodeProcess21finish_initializationEv"></span><span id="_CPPv2N17MasterNodeProcess21finish_initializationEv"></span><span id="MasterNodeProcess::finish_initialization"></span><span class="target" id="classMasterNodeProcess_1a76889d4f56ae2c4c98ffa7bd6a73e25e"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">finish_initialization</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess21finish_initializationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Derived Process Initialization. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess5resetEv">
+<span id="_CPPv3N17MasterNodeProcess5resetEv"></span><span id="_CPPv2N17MasterNodeProcess5resetEv"></span><span id="MasterNodeProcess::reset"></span><span class="target" id="classMasterNodeProcess_1a3c167ecf95f8bf91559fd91fe9c800a8"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets Process. Used for counters, timers, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess6updateEdd">
+<span id="_CPPv3N17MasterNodeProcess6updateEdd"></span><span id="_CPPv2N17MasterNodeProcess6updateEdd"></span><span id="MasterNodeProcess::update__double.double"></span><span class="target" id="classMasterNodeProcess_1aa34f9cf658c6820a23dea7e72b682ad7"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">t_dt</span></em>, <span class="pre">double</span> <em><span class="pre">t_ros_time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess6updateEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update function must be implemented in Derived Process. This is used for all state machine logic, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess14new_commandmsgEN4eros7commandE">
+<span id="_CPPv3N17MasterNodeProcess14new_commandmsgEN4eros7commandE"></span><span id="_CPPv2N17MasterNodeProcess14new_commandmsgEN4eros7commandE"></span><span id="MasterNodeProcess::new_commandmsg__eros::command"></span><span class="target" id="classMasterNodeProcess_1aa85d77df934ff9ff28af75a003badb10"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">new_commandmsg</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span> <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess14new_commandmsgEN4eros7commandE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess22check_programvariablesEv">
+<span id="_CPPv3N17MasterNodeProcess22check_programvariablesEv"></span><span id="_CPPv2N17MasterNodeProcess22check_programvariablesEv"></span><span id="MasterNodeProcess::check_programvariables"></span><span class="target" id="classMasterNodeProcess_1a1c47ca71e85f64147ba8f5a3ba62149d"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">check_programvariables</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess22check_programvariablesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N17MasterNodeProcess7cleanupEv">
+<span id="_CPPv3N17MasterNodeProcess7cleanupEv"></span><span id="_CPPv2N17MasterNodeProcess7cleanupEv"></span><span id="MasterNodeProcess::cleanup"></span><span class="target" id="classMasterNodeProcess_1a575bfb00c4fdc2c91732f8c7de299985"></span><em class="property"><span class="pre">inline</span></em> <em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17MasterNodeProcess7cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="masterode">
+<h1>Masterode<a class="headerlink" href="#masterode" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt id="_CPPv410MasterNode">
+<span id="_CPPv310MasterNode"></span><span id="_CPPv210MasterNode"></span><span id="MasterNode"></span><span class="target" id="classMasterNode"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">MasterNode</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <a class="reference internal" href="../api/BaseNode.html#_CPPv48BaseNode" title="BaseNode"><span class="pre">BaseNode</span></a><a class="headerlink" href="#_CPPv410MasterNode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode10MasterNodeEv">
+<span id="_CPPv3N10MasterNode10MasterNodeEv"></span><span id="_CPPv2N10MasterNode10MasterNodeEv"></span><span id="MasterNode::MasterNode"></span><span class="target" id="classMasterNode_1af41e33d20e915d7ba1b14a64555da69d"></span><code class="sig-name descname"><span class="pre">MasterNode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode10MasterNodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNodeD0Ev">
+<span id="_CPPv3N10MasterNodeD0Ev"></span><span id="_CPPv2N10MasterNodeD0Ev"></span><span id="MasterNode::~MasterNode"></span><span class="target" id="classMasterNode_1a12c2b680b5b8e399e741873a5beb501a"></span><code class="sig-name descname"><span class="pre">~MasterNode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNodeD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode11get_processEv">
+<span id="_CPPv3N10MasterNode11get_processEv"></span><span id="_CPPv2N10MasterNode11get_processEv"></span><span id="MasterNode::get_process"></span><span class="target" id="classMasterNode_1a1f41ff99801ba25bcaebc4f33e2a5522"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv417MasterNodeProcess" title="MasterNodeProcess"><span class="pre">MasterNodeProcess</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_process</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode11get_processEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode5startEv">
+<span id="_CPPv3N10MasterNode5startEv"></span><span id="_CPPv2N10MasterNode5startEv"></span><span id="MasterNode::start"></span><span class="target" id="classMasterNode_1a89103b8d074f2862e7e0669330c7e7a7"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode5startEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Start the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode21finish_initializationEv">
+<span id="_CPPv3N10MasterNode21finish_initializationEv"></span><span id="_CPPv2N10MasterNode21finish_initializationEv"></span><span id="MasterNode::finish_initialization"></span><span class="target" id="classMasterNode_1a842660827fdf90a5e8cb04398a873bff"></span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">finish_initialization</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode21finish_initializationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode9run_loop1Ev">
+<span id="_CPPv3N10MasterNode9run_loop1Ev"></span><span id="_CPPv2N10MasterNode9run_loop1Ev"></span><span id="MasterNode::run_loop1"></span><span class="target" id="classMasterNode_1acf9b316f318eba7e32e1b9a03f756879"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode9run_loop1Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop1 Function. Loop1 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode9run_loop2Ev">
+<span id="_CPPv3N10MasterNode9run_loop2Ev"></span><span id="_CPPv2N10MasterNode9run_loop2Ev"></span><span id="MasterNode::run_loop2"></span><span class="target" id="classMasterNode_1acf57a1e84e8b20ffcb1fb401ff9b99ac"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop2</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode9run_loop2Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop2 Function. Loop2 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode9run_loop3Ev">
+<span id="_CPPv3N10MasterNode9run_loop3Ev"></span><span id="_CPPv2N10MasterNode9run_loop3Ev"></span><span id="MasterNode::run_loop3"></span><span class="target" id="classMasterNode_1aeb18db34b736963a0f6e49d22ceded4e"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop3</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode9run_loop3Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop3 Function. Loop3 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode9run_001hzEv">
+<span id="_CPPv3N10MasterNode9run_001hzEv"></span><span id="_CPPv2N10MasterNode9run_001hzEv"></span><span id="MasterNode::run_001hz"></span><span class="target" id="classMasterNode_1a592a8ea471cb273e6c81cdd89ac0064b"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_001hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode9run_001hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .01 Hz. Loop .01Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode8run_01hzEv">
+<span id="_CPPv3N10MasterNode8run_01hzEv"></span><span id="_CPPv2N10MasterNode8run_01hzEv"></span><span id="MasterNode::run_01hz"></span><span class="target" id="classMasterNode_1acf4e1b688bfe969a1d29491363a4e83d"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode8run_01hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz Function. Loop .1Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode14run_01hz_noisyEv">
+<span id="_CPPv3N10MasterNode14run_01hz_noisyEv"></span><span id="_CPPv2N10MasterNode14run_01hz_noisyEv"></span><span id="MasterNode::run_01hz_noisy"></span><span class="target" id="classMasterNode_1a34c08a767f95efe689e38ff1e0b8b0e1"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz_noisy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode14run_01hz_noisyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the same time. .1Hz Noisy Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode7run_1hzEv">
+<span id="_CPPv3N10MasterNode7run_1hzEv"></span><span id="_CPPv2N10MasterNode7run_1hzEv"></span><span id="MasterNode::run_1hz"></span><span class="target" id="classMasterNode_1ad1fb5746349dae7337bf72139258d26c"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_1hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode7run_1hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz. Loop 1Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode8run_10hzEv">
+<span id="_CPPv3N10MasterNode8run_10hzEv"></span><span id="_CPPv2N10MasterNode8run_10hzEv"></span><span id="MasterNode::run_10hz"></span><span class="target" id="classMasterNode_1a99fa7a458df9e6061c4bf1befea95fb1"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_10hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode8run_10hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode11thread_loopEv">
+<span id="_CPPv3N10MasterNode11thread_loopEv"></span><span id="_CPPv2N10MasterNode11thread_loopEv"></span><span id="MasterNode::thread_loop"></span><span class="target" id="classMasterNode_1a49356b7834bf1ef01a3f645bae1c42d2"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">thread_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode11thread_loopEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Thread Loop Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode7cleanupEv">
+<span id="_CPPv3N10MasterNode7cleanupEv"></span><span id="_CPPv2N10MasterNode7cleanupEv"></span><span id="MasterNode::cleanup"></span><span class="target" id="classMasterNode_1ad7476a5d6732a7f7c46fbcbfda0ce4d0"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode7cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">
+<span id="_CPPv3N10MasterNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE"></span><span id="_CPPv2N10MasterNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE"></span><span id="MasterNode::changenodestate_service__eros::srv_change_nodestate::RequestR.eros::srv_change_nodestate::ResponseR"></span><span class="target" id="classMasterNode_1ae365a6bbc15329adadd278bcd2e5aa78"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">changenodestate_service</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_change_nodestate</span><span class="pre">::</span><span class="pre">Request</span> <span class="pre">&amp;</span><em><span class="pre">req</span></em>, <span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_change_nodestate</span><span class="pre">::</span><span class="pre">Response</span> <span class="pre">&amp;</span><em><span class="pre">res</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode14device_serviceERN4eros10srv_device7RequestERN4eros10srv_device8ResponseE">
+<span id="_CPPv3N10MasterNode14device_serviceERN4eros10srv_device7RequestERN4eros10srv_device8ResponseE"></span><span id="_CPPv2N10MasterNode14device_serviceERN4eros10srv_device7RequestERN4eros10srv_device8ResponseE"></span><span id="MasterNode::device_service__eros::srv_device::RequestR.eros::srv_device::ResponseR"></span><span class="target" id="classMasterNode_1a5f6cd0462094126faec17e3a0950a642"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">device_service</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_device</span><span class="pre">::</span><span class="pre">Request</span> <span class="pre">&amp;</span><em><span class="pre">req</span></em>, <span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_device</span><span class="pre">::</span><span class="pre">Response</span> <span class="pre">&amp;</span><em><span class="pre">res</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode14device_serviceERN4eros10srv_device7RequestERN4eros10srv_device8ResponseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">
+<span id="_CPPv3N10MasterNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE"></span><span id="_CPPv2N10MasterNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE"></span><span id="MasterNode::system_commandAction_Callback__eros::system_commandGoalConstPtrCR"></span><span class="target" id="classMasterNode_1a2f86d2a8e28189d02b9d3e333aed2adc"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">system_commandAction_Callback</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">system_commandGoalConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">goal</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode16command_CallbackERKN4eros7command8ConstPtrE">
+<span id="_CPPv3N10MasterNode16command_CallbackERKN4eros7command8ConstPtrE"></span><span id="_CPPv2N10MasterNode16command_CallbackERKN4eros7command8ConstPtrE"></span><span id="MasterNode::command_Callback__eros::command::ConstPtrCR"></span><span class="target" id="classMasterNode_1aad4767d37cfd9a481a5943a3ab2619cc"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">command_Callback</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode16command_CallbackERKN4eros7command8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode14BASE_NODE_NAMEE">
+<span id="_CPPv3N10MasterNode14BASE_NODE_NAMEE"></span><span id="_CPPv2N10MasterNode14BASE_NODE_NAMEE"></span><span id="MasterNode::BASE_NODE_NAME__ssC"></span><span class="target" id="classMasterNode_1a65a62f3a6d84a6afb207a8e18d494a50"></span><em class="property"><span class="pre">const</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">BASE_NODE_NAME</span></code> <span class="pre">=</span> <span class="pre">&quot;master_node&quot;</span><a class="headerlink" href="#_CPPv4N10MasterNode14BASE_NODE_NAMEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The base name of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode21MAJOR_RELEASE_VERSIONE">
+<span id="_CPPv3N10MasterNode21MAJOR_RELEASE_VERSIONE"></span><span id="_CPPv2N10MasterNode21MAJOR_RELEASE_VERSIONE"></span><span id="MasterNode::MAJOR_RELEASE_VERSION__uint16_tC"></span><span class="target" id="classMasterNode_1aeb5774f4ad37a089ace6b7ce6b39b04f"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">MAJOR_RELEASE_VERSION</span></code> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N10MasterNode21MAJOR_RELEASE_VERSIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Major Release Version of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode21MINOR_RELEASE_VERSIONE">
+<span id="_CPPv3N10MasterNode21MINOR_RELEASE_VERSIONE"></span><span id="_CPPv2N10MasterNode21MINOR_RELEASE_VERSIONE"></span><span id="MasterNode::MINOR_RELEASE_VERSION__uint16_tC"></span><span class="target" id="classMasterNode_1a87747006b68b1a028c537cf931bc850c"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">MINOR_RELEASE_VERSION</span></code> <span class="pre">=</span> <span class="pre">1</span><a class="headerlink" href="#_CPPv4N10MasterNode21MINOR_RELEASE_VERSIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Minor Release Version of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode12BUILD_NUMBERE">
+<span id="_CPPv3N10MasterNode12BUILD_NUMBERE"></span><span id="_CPPv2N10MasterNode12BUILD_NUMBERE"></span><span id="MasterNode::BUILD_NUMBER__uint16_tC"></span><span class="target" id="classMasterNode_1a311f4e5119eee46b896854e4cb01ccfa"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">BUILD_NUMBER</span></code> <span class="pre">=</span> <span class="pre">1</span><a class="headerlink" href="#_CPPv4N10MasterNode12BUILD_NUMBERE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Build Number of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode20FIRMWARE_DESCRIPTIONE">
+<span id="_CPPv3N10MasterNode20FIRMWARE_DESCRIPTIONE"></span><span id="_CPPv2N10MasterNode20FIRMWARE_DESCRIPTIONE"></span><span id="MasterNode::FIRMWARE_DESCRIPTION__ssC"></span><span class="target" id="classMasterNode_1a7b4bb0daf76426df848adf52dbc4a23f"></span><em class="property"><span class="pre">const</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">FIRMWARE_DESCRIPTION</span></code> <span class="pre">=</span> <span class="pre">&quot;Latest</span> <span class="pre">Rev:</span> <span class="pre">22-Feb-2021&quot;</span><a class="headerlink" href="#_CPPv4N10MasterNode20FIRMWARE_DESCRIPTIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A Description of the <a class="reference internal" href="../api/Definitions.html#structFirmware"><span class="std std-ref">Firmware</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode17DIAGNOSTIC_SYSTEME">
+<span id="_CPPv3N10MasterNode17DIAGNOSTIC_SYSTEME"></span><span id="_CPPv2N10MasterNode17DIAGNOSTIC_SYSTEME"></span><span id="MasterNode::DIAGNOSTIC_SYSTEM__System::MainSystemC"></span><span class="target" id="classMasterNode_1a0f323c9526fb1a0debd89b04fd0f7280"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_SYSTEM</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystem5ROVERE" title="System::MainSystem::ROVER"><span class="pre">ROVER</span></a><a class="headerlink" href="#_CPPv4N10MasterNode17DIAGNOSTIC_SYSTEME" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What <a class="reference internal" href="../api/Definitions.html#classSystem"><span class="std std-ref">System</span></a> this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode20DIAGNOSTIC_SUBSYSTEME">
+<span id="_CPPv3N10MasterNode20DIAGNOSTIC_SUBSYSTEME"></span><span id="_CPPv2N10MasterNode20DIAGNOSTIC_SUBSYSTEME"></span><span id="MasterNode::DIAGNOSTIC_SUBSYSTEM__System::SubSystemC"></span><span class="target" id="classMasterNode_1acbb35772b211af44db747b420248f8f1"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_SUBSYSTEM</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystem13ENTIRE_SYSTEME" title="System::SubSystem::ENTIRE_SYSTEM"><span class="pre">ENTIRE_SYSTEM</span></a><a class="headerlink" href="#_CPPv4N10MasterNode20DIAGNOSTIC_SUBSYSTEME" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What Subsystem this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode20DIAGNOSTIC_COMPONENTE">
+<span id="_CPPv3N10MasterNode20DIAGNOSTIC_COMPONENTE"></span><span id="_CPPv2N10MasterNode20DIAGNOSTIC_COMPONENTE"></span><span id="MasterNode::DIAGNOSTIC_COMPONENT__System::ComponentC"></span><span class="target" id="classMasterNode_1afc4b56c062507441a048f6d2ea407cf3"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_COMPONENT</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9Component10CONTROLLERE" title="System::Component::CONTROLLER"><span class="pre">CONTROLLER</span></a><a class="headerlink" href="#_CPPv4N10MasterNode20DIAGNOSTIC_COMPONENTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What Component this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N10MasterNode21read_launchparametersEv">
+<span id="_CPPv3N10MasterNode21read_launchparametersEv"></span><span id="_CPPv2N10MasterNode21read_launchparametersEv"></span><span id="MasterNode::read_launchparameters"></span><span class="target" id="classMasterNode_1a44b63e2f739dce98c03c60013bfd7931"></span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">read_launchparameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10MasterNode21read_launchparametersEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode7processE">
+<span id="_CPPv3N10MasterNode7processE"></span><span id="_CPPv2N10MasterNode7processE"></span><span id="MasterNode::process__MasterNodeProcessP"></span><span class="target" id="classMasterNode_1a9650247ce7320df98a15da2f666c2350"></span><a class="reference internal" href="#_CPPv417MasterNodeProcess" title="MasterNodeProcess"><span class="pre">MasterNodeProcess</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">process</span></code><a class="headerlink" href="#_CPPv4N10MasterNode7processE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode28system_command_action_serverE">
+<span id="_CPPv3N10MasterNode28system_command_action_serverE"></span><span id="_CPPv2N10MasterNode28system_command_action_serverE"></span><span id="MasterNode::system_command_action_server__actionlib::SimpleActionServer:eros::system_commandAction:"></span><span class="target" id="classMasterNode_1a7dc6f32ac9561dbaeedc7d0caf4abf55"></span><span class="pre">actionlib</span><span class="pre">::</span><span class="pre">SimpleActionServer</span><span class="pre">&lt;</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">system_commandAction</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">system_command_action_server</span></code><a class="headerlink" href="#_CPPv4N10MasterNode28system_command_action_serverE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode17device_server_srvE">
+<span id="_CPPv3N10MasterNode17device_server_srvE"></span><span id="_CPPv2N10MasterNode17device_server_srvE"></span><span id="MasterNode::device_server_srv__ros::ServiceServer"></span><span class="target" id="classMasterNode_1ab1a394ee6266f2a5c0b5777ed2fc593d"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">ServiceServer</span> <code class="sig-name descname"><span class="pre">device_server_srv</span></code><a class="headerlink" href="#_CPPv4N10MasterNode17device_server_srvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode26resource_available_monitorE">
+<span id="_CPPv3N10MasterNode26resource_available_monitorE"></span><span id="_CPPv2N10MasterNode26resource_available_monitorE"></span><span id="MasterNode::resource_available_monitor__ResourceMonitorP"></span><span class="target" id="classMasterNode_1acb6dc54e2bf8d855d274ced3ecb82a62"></span><a class="reference internal" href="../api/ResourceMonitor.html#_CPPv415ResourceMonitor" title="ResourceMonitor"><span class="pre">ResourceMonitor</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">resource_available_monitor</span></code><a class="headerlink" href="#_CPPv4N10MasterNode26resource_available_monitorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode22resource_available_pubE">
+<span id="_CPPv3N10MasterNode22resource_available_pubE"></span><span id="_CPPv2N10MasterNode22resource_available_pubE"></span><span id="MasterNode::resource_available_pub__ros::Publisher"></span><span class="target" id="classMasterNode_1a0f368f45bcdda10a3104c5639ae038d9"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Publisher</span> <code class="sig-name descname"><span class="pre">resource_available_pub</span></code><a class="headerlink" href="#_CPPv4N10MasterNode22resource_available_pubE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N10MasterNode14loadfactor_pubE">
+<span id="_CPPv3N10MasterNode14loadfactor_pubE"></span><span id="_CPPv2N10MasterNode14loadfactor_pubE"></span><span id="MasterNode::loadfactor_pub__ros::Publisher"></span><span class="target" id="classMasterNode_1a725629f59dc9f5725392c64a6ab7db3a"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Publisher</span> <code class="sig-name descname"><span class="pre">loadfactor_pub</span></code><a class="headerlink" href="#_CPPv4N10MasterNode14loadfactor_pubE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="SafetyNode.html" class="btn btn-neutral float-right" title="SafetyNodeProcess" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="DiagnosticNode.html" class="btn btn-neutral float-left" title="DiagnosticNodeProcess" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, David Gitz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

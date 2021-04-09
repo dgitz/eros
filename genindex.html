@@ -86,6 +86,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to eROS’s documentation!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/index.html">Nodes</a></li>
 </ul>
 
             
@@ -162,9 +163,11 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -192,8 +195,6 @@
 </li>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm15ArmDisarmStringEN9ArmDisarm4TypeE">ArmDisarm::ArmDisarmString (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm5StateE">ArmDisarm::State (C++ struct)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm5State5StateEv">ArmDisarm::State::State (C++ function)</a>
@@ -208,6 +209,8 @@
 </li>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm4Type8DISARMEDE">ArmDisarm::Type::DISARMED (C++ enumerator)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm4Type18DISARMED_CANNOTARME">ArmDisarm::Type::DISARMED_CANNOTARM (C++ enumerator)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm4Type9DISARMINGE">ArmDisarm::Type::DISARMING (C++ enumerator)</a>
@@ -215,6 +218,36 @@
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm4Type11END_OF_LISTE">ArmDisarm::Type::END_OF_LIST (C++ enumerator)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N9ArmDisarm4Type7UNKNOWNE">ArmDisarm::Type::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv416ArmDisarmMonitor">ArmDisarmMonitor (C++ class)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor16ArmDisarmMonitorENSt6stringE4Type">ArmDisarmMonitor::ArmDisarmMonitor (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor22last_delta_update_timeE">ArmDisarmMonitor::last_delta_update_time (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4nameE">ArmDisarmMonitor::name (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor12ready_to_armE">ArmDisarmMonitor::ready_to_arm (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor18READYTOARM_TIMEOUTE">ArmDisarmMonitor::READYTOARM_TIMEOUT (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4TypeE">ArmDisarmMonitor::Type (C++ enum)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4typeE">ArmDisarmMonitor::type (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4Type7DEFAULTE">ArmDisarmMonitor::Type::DEFAULT (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4Type11END_OF_LISTE">ArmDisarmMonitor::Type::END_OF_LIST (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4Type6SIMPLEE">ArmDisarmMonitor::Type::SIMPLE (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor4Type7UNKNOWNE">ArmDisarmMonitor::Type::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor8TypeEnumENSt6stringE">ArmDisarmMonitor::TypeEnum (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitor12update_countE">ArmDisarmMonitor::update_count (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N16ArmDisarmMonitorD0Ev">ArmDisarmMonitor::~ArmDisarmMonitor (C++ function)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -582,12 +615,122 @@
 </li>
       <li><a href="api/Definitions.html#_CPPv4N7Command4Type4WAITE">Command::Type::WAIT (C++ enumerator)</a>
 </li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv413create_newwiniiii">create_newwin (C++ function)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv414DataLoggerNode">DataLoggerNode (C++ class)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode14BASE_NODE_NAMEE">DataLoggerNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode12BUILD_NUMBERE">DataLoggerNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">DataLoggerNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode7cleanupEv">DataLoggerNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode16command_CallbackERKN4eros7command8ConstPtrE">DataLoggerNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode14DataLoggerNodeEv">DataLoggerNode::DataLoggerNode (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode20DIAGNOSTIC_COMPONENTE">DataLoggerNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode20DIAGNOSTIC_SUBSYSTEME">DataLoggerNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode17DIAGNOSTIC_SYSTEME">DataLoggerNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode21finish_initializationEv">DataLoggerNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode20FIRMWARE_DESCRIPTIONE">DataLoggerNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode11get_processEv">DataLoggerNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode21MAJOR_RELEASE_VERSIONE">DataLoggerNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode21MINOR_RELEASE_VERSIONE">DataLoggerNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode7processE">DataLoggerNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode21read_launchparametersEv">DataLoggerNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode9run_001hzEv">DataLoggerNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode8run_01hzEv">DataLoggerNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode14run_01hz_noisyEv">DataLoggerNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode8run_10hzEv">DataLoggerNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode7run_1hzEv">DataLoggerNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode10run_loggerEP14DataLoggerNode">DataLoggerNode::run_logger (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode9run_loop1Ev">DataLoggerNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode9run_loop2Ev">DataLoggerNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode9run_loop3Ev">DataLoggerNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode25snapshot_trigger_CallbackERKN8std_msgs5Empty8ConstPtrE">DataLoggerNode::snapshot_trigger_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode20snapshot_trigger_subE">DataLoggerNode::snapshot_trigger_sub (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode5startEv">DataLoggerNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode28system_command_action_serverE">DataLoggerNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">DataLoggerNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNode11thread_loopEv">DataLoggerNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N14DataLoggerNodeD0Ev">DataLoggerNode::~DataLoggerNode (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv417DataLoggerProcess">DataLoggerProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess22check_programvariablesEv">DataLoggerProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess7cleanupEv">DataLoggerProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess17DataLoggerProcessEv">DataLoggerProcess::DataLoggerProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess21finish_initializationEv">DataLoggerProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess16get_logdirectoryEv">DataLoggerProcess::get_logdirectory (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess20get_logfile_durationEv">DataLoggerProcess::get_logfile_duration (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess15getSnapshotModeEv">DataLoggerProcess::getSnapshotMode (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess18is_logging_enabledEv">DataLoggerProcess::is_logging_enabled (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess13log_directoryE">DataLoggerProcess::log_directory (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess23log_directory_availableE">DataLoggerProcess::log_directory_available (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess16logfile_durationE">DataLoggerProcess::logfile_duration (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess15logging_enabledE">DataLoggerProcess::logging_enabled (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess14new_commandmsgEN4eros7commandE">DataLoggerProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess5resetEv">DataLoggerProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess16set_logdirectoryENSt6stringE">DataLoggerProcess::set_logdirectory (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess19set_logfiledurationEd">DataLoggerProcess::set_logfileduration (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess15setSnapshotModeEb">DataLoggerProcess::setSnapshotMode (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess13snapshot_modeE">DataLoggerProcess::snapshot_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcess6updateEdd">DataLoggerProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/DataLoggerNode.html#_CPPv4N17DataLoggerProcessD0Ev">DataLoggerProcess::~DataLoggerProcess (C++ function)</a>
+</li>
       <li><a href="api/Diagnostic.html#_CPPv410Diagnostic">Diagnostic (C++ class)</a>
 </li>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic10DiagnosticEv">Diagnostic::Diagnostic (C++ function)</a>
@@ -644,12 +787,12 @@
 </li>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic14DiagnosticType6TIMINGE">Diagnostic::DiagnosticType::TIMING (C++ enumerator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic14DiagnosticType7UNKNOWNE">Diagnostic::DiagnosticType::UNKNOWN (C++ enumerator)</a>
 </li>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic14DiagnosticType12UNKNOWN_TYPEE">Diagnostic::DiagnosticType::UNKNOWN_TYPE (C++ enumerator)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticTypeStringEN10Diagnostic14DiagnosticTypeE">Diagnostic::DiagnosticTypeString (C++ function)</a>
 </li>
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic18enable_diagnosticsENSt6vectorIN10Diagnostic14DiagnosticTypeEEE">Diagnostic::enable_diagnostics (C++ function)</a>
@@ -703,6 +846,120 @@
       <li><a href="api/Diagnostic.html#_CPPv4N10Diagnostic17update_diagnosticE20DiagnosticDefinition">Diagnostic::update_diagnostic (C++ function)</a>, <a href="api/Diagnostic.html#_CPPv4N10Diagnostic17update_diagnosticEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE">[1]</a>, <a href="api/Diagnostic.html#_CPPv4N10Diagnostic17update_diagnosticENSt6stringEN10Diagnostic14DiagnosticTypeEN5Level4TypeEN10Diagnostic7MessageENSt6stringE">[2]</a>
 </li>
       <li><a href="api/Diagnostic.html#_CPPv4N10DiagnosticD0Ev">Diagnostic::~Diagnostic (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv414DiagnosticNode">DiagnosticNode (C++ class)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode14BASE_NODE_NAMEE">DiagnosticNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode12BUILD_NUMBERE">DiagnosticNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">DiagnosticNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode7cleanupEv">DiagnosticNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode16command_CallbackERKN4eros7command8ConstPtrE">DiagnosticNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode19diagnostic_CallbackERKN4eros10diagnostic8ConstPtrE">DiagnosticNode::diagnostic_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode20DIAGNOSTIC_COMPONENTE">DiagnosticNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode15diagnostic_subsE">DiagnosticNode::diagnostic_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode20DIAGNOSTIC_SUBSYSTEME">DiagnosticNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode17DIAGNOSTIC_SYSTEME">DiagnosticNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode14DiagnosticNodeEv">DiagnosticNode::DiagnosticNode (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode21finish_initializationEv">DiagnosticNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode20FIRMWARE_DESCRIPTIONE">DiagnosticNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode11get_processEv">DiagnosticNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode21MAJOR_RELEASE_VERSIONE">DiagnosticNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode21MINOR_RELEASE_VERSIONE">DiagnosticNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode7processE">DiagnosticNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode21read_launchparametersEv">DiagnosticNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode12rescan_nodesEv">DiagnosticNode::rescan_nodes (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode9run_001hzEv">DiagnosticNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode8run_01hzEv">DiagnosticNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode14run_01hz_noisyEv">DiagnosticNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode8run_10hzEv">DiagnosticNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode7run_1hzEv">DiagnosticNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode9run_loop1Ev">DiagnosticNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode9run_loop2Ev">DiagnosticNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode9run_loop3Ev">DiagnosticNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode5startEv">DiagnosticNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode28system_command_action_serverE">DiagnosticNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">DiagnosticNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode26system_diagnostics_serviceERN4eros19srv_get_diagnostics7RequestERN4eros19srv_get_diagnostics8ResponseE">DiagnosticNode::system_diagnostics_service (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode22system_diagnostics_srvE">DiagnosticNode::system_diagnostics_srv (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNode11thread_loopEv">DiagnosticNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N14DiagnosticNodeD0Ev">DiagnosticNode::~DiagnosticNode (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv421DiagnosticNodeProcess">DiagnosticNodeProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess9build_keyEN10Diagnostic20DiagnosticDefinitionE">DiagnosticNodeProcess::build_key (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess22check_programvariablesEv">DiagnosticNodeProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess7cleanupEv">DiagnosticNodeProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess21diagnostic_aggregatorE">DiagnosticNodeProcess::diagnostic_aggregator (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess36diagnostic_topics_already_monitoringE">DiagnosticNodeProcess::diagnostic_topics_already_monitoring (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess21DiagnosticNodeProcessEv">DiagnosticNodeProcess::DiagnosticNodeProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregateE">DiagnosticNodeProcess::DiagnosticTypeAggregate (C++ struct)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregate9diag_listE">DiagnosticNodeProcess::DiagnosticTypeAggregate::diag_list (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregate23DiagnosticTypeAggregateEv">DiagnosticNodeProcess::DiagnosticTypeAggregate::DiagnosticTypeAggregate (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregate12update_countE">DiagnosticNodeProcess::DiagnosticTypeAggregate::update_count (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregate10worst_diagE">DiagnosticNodeProcess::DiagnosticTypeAggregate::worst_diag (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23DiagnosticTypeAggregate14worst_diag_keyE">DiagnosticNodeProcess::DiagnosticTypeAggregate::worst_diag_key (C++ member)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess21finish_initializationEv">DiagnosticNodeProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess20get_worst_diagnosticEN10Diagnostic14DiagnosticTypeE">DiagnosticNodeProcess::get_worst_diagnostic (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess14new_commandmsgEN4eros7commandE">DiagnosticNodeProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess23new_external_diagnosticEN10Diagnostic20DiagnosticDefinitionE">DiagnosticNodeProcess::new_external_diagnostic (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess6prettyEv">DiagnosticNodeProcess::pretty (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess5resetEv">DiagnosticNodeProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess6updateEdd">DiagnosticNodeProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcess16update_topiclistERNSt6vectorINSt6stringEEE">DiagnosticNodeProcess::update_topiclist (C++ function)</a>
+</li>
+      <li><a href="nodes/DiagnosticNode.html#_CPPv4N21DiagnosticNodeProcessD0Ev">DiagnosticNodeProcess::~DiagnosticNodeProcess (C++ function)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -849,6 +1106,102 @@
   </ul></td>
 </tr></table>
 
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/MasterNode.html#_CPPv410MasterNode">MasterNode (C++ class)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode14BASE_NODE_NAMEE">MasterNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode12BUILD_NUMBERE">MasterNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">MasterNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode7cleanupEv">MasterNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode16command_CallbackERKN4eros7command8ConstPtrE">MasterNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode17device_server_srvE">MasterNode::device_server_srv (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode14device_serviceERN4eros10srv_device7RequestERN4eros10srv_device8ResponseE">MasterNode::device_service (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode20DIAGNOSTIC_COMPONENTE">MasterNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode20DIAGNOSTIC_SUBSYSTEME">MasterNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode17DIAGNOSTIC_SYSTEME">MasterNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode21finish_initializationEv">MasterNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode20FIRMWARE_DESCRIPTIONE">MasterNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode11get_processEv">MasterNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode14loadfactor_pubE">MasterNode::loadfactor_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode21MAJOR_RELEASE_VERSIONE">MasterNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode10MasterNodeEv">MasterNode::MasterNode (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode21MINOR_RELEASE_VERSIONE">MasterNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode7processE">MasterNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode21read_launchparametersEv">MasterNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode26resource_available_monitorE">MasterNode::resource_available_monitor (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode22resource_available_pubE">MasterNode::resource_available_pub (C++ member)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode9run_001hzEv">MasterNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode8run_01hzEv">MasterNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode14run_01hz_noisyEv">MasterNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode8run_10hzEv">MasterNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode7run_1hzEv">MasterNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode9run_loop1Ev">MasterNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode9run_loop2Ev">MasterNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode9run_loop3Ev">MasterNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode5startEv">MasterNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode28system_command_action_serverE">MasterNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">MasterNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNode11thread_loopEv">MasterNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N10MasterNodeD0Ev">MasterNode::~MasterNode (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv417MasterNodeProcess">MasterNodeProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess22check_programvariablesEv">MasterNodeProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess7cleanupEv">MasterNodeProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess21finish_initializationEv">MasterNodeProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess17MasterNodeProcessEv">MasterNodeProcess::MasterNodeProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess14new_commandmsgEN4eros7commandE">MasterNodeProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess5resetEv">MasterNodeProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcess6updateEdd">MasterNodeProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/MasterNode.html#_CPPv4N17MasterNodeProcessD0Ev">MasterNodeProcess::~MasterNodeProcess (C++ function)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -972,6 +1325,326 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/SafetyNode.html#_CPPv410SafetyNode">SafetyNode (C++ class)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode14armedstate_pubE">SafetyNode::armedstate_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode14BASE_NODE_NAMEE">SafetyNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode12BUILD_NUMBERE">SafetyNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">SafetyNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode7cleanupEv">SafetyNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode16command_CallbackERKN4eros7command8ConstPtrE">SafetyNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode11command_subE">SafetyNode::command_sub (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode20DIAGNOSTIC_COMPONENTE">SafetyNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode20DIAGNOSTIC_SUBSYSTEME">SafetyNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode17DIAGNOSTIC_SYSTEME">SafetyNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode21finish_initializationEv">SafetyNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode20FIRMWARE_DESCRIPTIONE">SafetyNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode11get_processEv">SafetyNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode21MAJOR_RELEASE_VERSIONE">SafetyNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode21MINOR_RELEASE_VERSIONE">SafetyNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode7processE">SafetyNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode21read_launchparametersEv">SafetyNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode9run_001hzEv">SafetyNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode8run_01hzEv">SafetyNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode14run_01hz_noisyEv">SafetyNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode8run_10hzEv">SafetyNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode7run_1hzEv">SafetyNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode9run_loop1Ev">SafetyNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode9run_loop2Ev">SafetyNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode9run_loop3Ev">SafetyNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode10SafetyNodeEv">SafetyNode::SafetyNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode5startEv">SafetyNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode28system_command_action_serverE">SafetyNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">SafetyNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNode11thread_loopEv">SafetyNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N10SafetyNodeD0Ev">SafetyNode::~SafetyNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv417SafetyNodeProcess">SafetyNodeProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess16arm_monitor_subsE">SafetyNodeProcess::arm_monitor_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess11armed_stateE">SafetyNodeProcess::armed_state (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess17cannotarm_reasonsE">SafetyNodeProcess::cannotarm_reasons (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess22check_programvariablesEv">SafetyNodeProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess7cleanupEv">SafetyNodeProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess21finish_initializationEv">SafetyNodeProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess15get_armed_stateEv">SafetyNodeProcess::get_armed_state (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess21get_cannotarm_reasonsEv">SafetyNodeProcess::get_cannotarm_reasons (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess8init_rosEN5boost10shared_ptrIN3ros10NodeHandleEEE">SafetyNodeProcess::init_ros (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess30initialize_readytoarm_monitorsENSt6vectorINSt6stringEEENSt6vectorIN16ArmDisarmMonitor4TypeEEE">SafetyNodeProcess::initialize_readytoarm_monitors (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess14new_commandmsgEN4eros7commandE">SafetyNodeProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess22new_message_readytoarmENSt6stringEN4eros12ready_to_armE">SafetyNodeProcess::new_message_readytoarm (C++ function)</a>, <a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess22new_message_readytoarmENSt6stringEb">[1]</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess10nodeHandleE">SafetyNodeProcess::nodeHandle (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess21ready_to_arm_monitorsE">SafetyNodeProcess::ready_to_arm_monitors (C++ member)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess25ReadyToArmDefaultCallbackERKN4eros12ready_to_arm8ConstPtrERKNSt6stringE">SafetyNodeProcess::ReadyToArmDefaultCallback (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess24ReadyToArmSimpleCallbackERKN8std_msgs4Bool8ConstPtrERKNSt6stringE">SafetyNodeProcess::ReadyToArmSimpleCallback (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess5resetEv">SafetyNodeProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess17SafetyNodeProcessEv">SafetyNodeProcess::SafetyNodeProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcess6updateEdd">SafetyNodeProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/SafetyNode.html#_CPPv4N17SafetyNodeProcessD0Ev">SafetyNodeProcess::~SafetyNodeProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv412SnapshotNode">SnapshotNode (C++ class)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode27bagfile_snapshottrigger_pubE">SnapshotNode::bagfile_snapshottrigger_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode14BASE_NODE_NAMEE">SnapshotNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode12BUILD_NUMBERE">SnapshotNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">SnapshotNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode7cleanupEv">SnapshotNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode16command_CallbackERKN4eros7command8ConstPtrE">SnapshotNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode11command_pubE">SnapshotNode::command_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode21commandState_CallbackERKN4eros13command_state8ConstPtrE">SnapshotNode::commandState_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode16commandstate_pubE">SnapshotNode::commandstate_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode16commandstate_subE">SnapshotNode::commandstate_sub (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode20DIAGNOSTIC_COMPONENTE">SnapshotNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode20DIAGNOSTIC_SUBSYSTEME">SnapshotNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode17DIAGNOSTIC_SYSTEME">SnapshotNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode21finish_initializationEv">SnapshotNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode20FIRMWARE_DESCRIPTIONE">SnapshotNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode11get_processEv">SnapshotNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode21MAJOR_RELEASE_VERSIONE">SnapshotNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode21MINOR_RELEASE_VERSIONE">SnapshotNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode7processE">SnapshotNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode21read_launchparametersEv">SnapshotNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode9run_001hzEv">SnapshotNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode8run_01hzEv">SnapshotNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode14run_01hz_noisyEv">SnapshotNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode8run_10hzEv">SnapshotNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode7run_1hzEv">SnapshotNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode9run_loop1Ev">SnapshotNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode9run_loop2Ev">SnapshotNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode9run_loop3Ev">SnapshotNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode12SnapshotNodeEv">SnapshotNode::SnapshotNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode5startEv">SnapshotNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode28system_command_action_serverE">SnapshotNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">SnapshotNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode14test_sp_handleE">SnapshotNode::test_sp_handle (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode11thread_loopEv">SnapshotNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNode23thread_snapshotcreationEv">SnapshotNode::thread_snapshotcreation (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N12SnapshotNodeD0Ev">SnapshotNode::~SnapshotNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv415SnapshotProcess">SnapshotProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess12architectureE">SnapshotProcess::architecture (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess22check_programvariablesEv">SnapshotProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess7cleanupEv">SnapshotProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess15clear_snapshotsEv">SnapshotProcess::clear_snapshots (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess23count_files_indirectoryENSt6stringENSt6stringE">SnapshotProcess::count_files_indirectory (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess18createnew_snapshotEv">SnapshotProcess::createnew_snapshot (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess20devicesnapshot_stateE">SnapshotProcess::devicesnapshot_state (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11ExecCommandE">SnapshotProcess::ExecCommand (C++ struct)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11ExecCommand7commandE">SnapshotProcess::ExecCommand::command (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11ExecCommand11output_fileE">SnapshotProcess::ExecCommand::output_file (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess21finish_initializationEv">SnapshotProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess24get_devicesnapshot_stateEv">SnapshotProcess::get_devicesnapshot_state (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess8get_modeEv">SnapshotProcess::get_mode (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess19get_snapshot_configEv">SnapshotProcess::get_snapshot_config (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess31get_snapshotprogress_percentageEv">SnapshotProcess::get_snapshotprogress_percentage (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess24get_systemsnapshot_stateEv">SnapshotProcess::get_systemsnapshot_state (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess17HOLDCOMPLETE_TIMEE">SnapshotProcess::HOLDCOMPLETE_TIME (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess18holdcomplete_timerE">SnapshotProcess::holdcomplete_timer (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11load_configENSt6stringE">SnapshotProcess::load_config (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4ModeE">SnapshotProcess::Mode (C++ enum)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4modeE">SnapshotProcess::mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4Mode11END_OF_LISTE">SnapshotProcess::Mode::END_OF_LIST (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4Mode6MASTERE">SnapshotProcess::Mode::MASTER (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4Mode5SLAVEE">SnapshotProcess::Mode::SLAVE (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess4Mode7UNKNOWNE">SnapshotProcess::Mode::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess10ModeStringE4Mode">SnapshotProcess::ModeString (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess8ModeTypeENSt6stringE">SnapshotProcess::ModeType (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14new_commandmsgEN4eros7commandE">SnapshotProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess19new_commandstatemsgEN4eros13command_stateE">SnapshotProcess::new_commandstatemsg (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess6prettyEv">SnapshotProcess::pretty (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess5resetEv">SnapshotProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess16set_architectureEN12Architecture4TypeE">SnapshotProcess::set_architecture (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess24set_devicesnapshot_stateE13SnapshotState">SnapshotProcess::set_devicesnapshot_state (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess8set_modeE4Mode">SnapshotProcess::set_mode (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess24set_systemsnapshot_stateE13SnapshotState">SnapshotProcess::set_systemsnapshot_state (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDeviceE">SnapshotProcess::SlaveDevice (C++ struct)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_generatedE">SnapshotProcess::SlaveDevice::device_snapshot_generated (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_processedE">SnapshotProcess::SlaveDevice::device_snapshot_processed (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice19devicesnapshot_pathE">SnapshotProcess::SlaveDevice::devicesnapshot_path (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice4nameE">SnapshotProcess::SlaveDevice::name (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice11SlaveDeviceENSt6stringE">SnapshotProcess::SlaveDevice::SlaveDevice (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess11SlaveDevice5timerE">SnapshotProcess::SlaveDevice::timer (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess15snapshot_configE">SnapshotProcess::snapshot_config (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess25snapshot_progress_percentE">SnapshotProcess::snapshot_progress_percent (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfigE">SnapshotProcess::SnapshotConfig (C++ struct)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig35active_device_snapshot_completepathE">SnapshotProcess::SnapshotConfig::active_device_snapshot_completepath (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig17bagfile_directoryE">SnapshotProcess::SnapshotConfig::bagfile_directory (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig8commandsE">SnapshotProcess::SnapshotConfig::commands (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig20device_snapshot_pathE">SnapshotProcess::SnapshotConfig::device_snapshot_path (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig5filesE">SnapshotProcess::SnapshotConfig::files (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig7foldersE">SnapshotProcess::SnapshotConfig::folders (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig7scriptsE">SnapshotProcess::SnapshotConfig::scripts (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig16snapshot_devicesE">SnapshotProcess::SnapshotConfig::snapshot_devices (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig15stage_directoryE">SnapshotProcess::SnapshotConfig::stage_directory (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess14SnapshotConfig19systemsnapshot_pathE">SnapshotProcess::SnapshotConfig::systemsnapshot_path (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess15SnapshotProcessEv">SnapshotProcess::SnapshotProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotStateE">SnapshotProcess::SnapshotState (C++ enum)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState8COMPLETEE">SnapshotProcess::SnapshotState::COMPLETE (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState11END_OF_LISTE">SnapshotProcess::SnapshotState::END_OF_LIST (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState10INCOMPLETEE">SnapshotProcess::SnapshotState::INCOMPLETE (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState10NOTRUNNINGE">SnapshotProcess::SnapshotState::NOTRUNNING (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState5READYE">SnapshotProcess::SnapshotState::READY (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState7RUNNINGE">SnapshotProcess::SnapshotState::RUNNING (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState7STARTEDE">SnapshotProcess::SnapshotState::STARTED (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess13SnapshotState7UNKNOWNE">SnapshotProcess::SnapshotState::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess19SnapshotStateStringE13SnapshotState">SnapshotProcess::SnapshotStateString (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess20systemsnapshot_stateE">SnapshotProcess::systemsnapshot_state (C++ member)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcess6updateEdd">SnapshotProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/SnapshotNode.html#_CPPv4N15SnapshotProcessD0Ev">SnapshotProcess::~SnapshotProcess (C++ function)</a>
+</li>
       <li><a href="api/Definitions.html#_CPPv46System">System (C++ class)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N6System9ComponentE">System::Component (C++ enum)</a>
@@ -1004,8 +1677,6 @@
 </li>
       <li><a href="api/Definitions.html#_CPPv4N6System9Component6TIMINGE">System::Component::TIMING (C++ enumerator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/Definitions.html#_CPPv4N6System9Component7UNKNOWNE">System::Component::UNKNOWN (C++ enumerator)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N6System9Component6VISIONE">System::Component::VISION (C++ enumerator)</a>
@@ -1039,6 +1710,482 @@
       <li><a href="api/Definitions.html#_CPPv4N6System9SubSystem7UNKNOWNE">System::SubSystem::UNKNOWN (C++ enumerator)</a>
 </li>
       <li><a href="api/Definitions.html#_CPPv4N6System15SubSystemStringEN6System9SubSystemE">System::SubSystemString (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv417SystemMonitorNode">SystemMonitorNode (C++ class)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode14BASE_NODE_NAMEE">SystemMonitorNode::BASE_NODE_NAME (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode12BUILD_NUMBERE">SystemMonitorNode::BUILD_NUMBER (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">SystemMonitorNode::changenodestate_service (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode7cleanupEv">SystemMonitorNode::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode16command_CallbackERKN4eros7command8ConstPtrE">SystemMonitorNode::command_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21commandState_CallbackERKN4eros13command_state8ConstPtrE">SystemMonitorNode::commandState_Callback (C++ function)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode16commandstate_subE">SystemMonitorNode::commandstate_sub (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode20DIAGNOSTIC_COMPONENTE">SystemMonitorNode::DIAGNOSTIC_COMPONENT (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode20DIAGNOSTIC_SUBSYSTEME">SystemMonitorNode::DIAGNOSTIC_SUBSYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode17DIAGNOSTIC_SYSTEME">SystemMonitorNode::DIAGNOSTIC_SYSTEM (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode11filter_listE">SystemMonitorNode::filter_list (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21finish_initializationEv">SystemMonitorNode::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode20FIRMWARE_DESCRIPTIONE">SystemMonitorNode::FIRMWARE_DESCRIPTION (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode11get_processEv">SystemMonitorNode::get_process (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode18heartbeat_CallbackERKN4eros9heartbeat8ConstPtrE">SystemMonitorNode::heartbeat_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode14heartbeat_subsE">SystemMonitorNode::heartbeat_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode11init_screenEv">SystemMonitorNode::init_screen (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode19loadfactor_CallbackERKN4eros10loadfactor8ConstPtrE">SystemMonitorNode::loadfactor_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode15loadfactor_subsE">SystemMonitorNode::loadfactor_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21MAJOR_RELEASE_VERSIONE">SystemMonitorNode::MAJOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21MINOR_RELEASE_VERSIONE">SystemMonitorNode::MINOR_RELEASE_VERSION (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode7processE">SystemMonitorNode::process (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21read_launchparametersEv">SystemMonitorNode::read_launchparameters (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode12rescan_nodesEv">SystemMonitorNode::rescan_nodes (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode23resource_available_subsE">SystemMonitorNode::resource_available_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode18resource_used_subsE">SystemMonitorNode::resource_used_subs (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode26resourceavailable_CallbackERKN4eros8resource8ConstPtrE">SystemMonitorNode::resourceavailable_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode21resourceused_CallbackERKN4eros8resource8ConstPtrE">SystemMonitorNode::resourceused_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode9run_001hzEv">SystemMonitorNode::run_001hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode8run_01hzEv">SystemMonitorNode::run_01hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode14run_01hz_noisyEv">SystemMonitorNode::run_01hz_noisy (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode8run_10hzEv">SystemMonitorNode::run_10hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode7run_1hzEv">SystemMonitorNode::run_1hz (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode9run_loop1Ev">SystemMonitorNode::run_loop1 (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode9run_loop2Ev">SystemMonitorNode::run_loop2 (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode9run_loop3Ev">SystemMonitorNode::run_loop3 (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode5startEv">SystemMonitorNode::start (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode28system_command_action_serverE">SystemMonitorNode::system_command_action_server (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">SystemMonitorNode::system_commandAction_Callback (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode17SystemMonitorNodeEv">SystemMonitorNode::SystemMonitorNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNode11thread_loopEv">SystemMonitorNode::thread_loop (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N17SystemMonitorNodeD0Ev">SystemMonitorNode::~SystemMonitorNode (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv420SystemMonitorProcess">SystemMonitorProcess (C++ class)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess11armed_stateE">SystemMonitorProcess::armed_state (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21change_log_level_modeE">SystemMonitorProcess::change_log_level_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21change_nodestate_modeE">SystemMonitorProcess::change_nodestate_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess22check_programvariablesEv">SystemMonitorProcess::check_programvariables (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess7cleanupEv">SystemMonitorProcess::cleanup (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5ColorE">SystemMonitorProcess::Color (C++ enum)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color10BLUE_COLORE">SystemMonitorProcess::Color::BLUE_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color11END_OF_LISTE">SystemMonitorProcess::Color::END_OF_LIST (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color10GRAY_COLORE">SystemMonitorProcess::Color::GRAY_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color11GREEN_COLORE">SystemMonitorProcess::Color::GREEN_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color8NO_COLORE">SystemMonitorProcess::Color::NO_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color12PURPLE_COLORE">SystemMonitorProcess::Color::PURPLE_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color9RED_COLORE">SystemMonitorProcess::Color::RED_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color7UNKNOWNE">SystemMonitorProcess::Color::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Color12YELLOW_COLORE">SystemMonitorProcess::Color::YELLOW_COLOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess11command_pubE">SystemMonitorProcess::command_pub (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21COMMTIMEOUT_THRESHOLDE">SystemMonitorProcess::COMMTIMEOUT_THRESHOLD (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17convertCoordinateEN13WindowManager20ScreenCoordinatePercE8uint16_t8uint16_t">SystemMonitorProcess::convertCoordinate (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess10DEBUG_MODEE">SystemMonitorProcess::DEBUG_MODE (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6DeviceE">SystemMonitorProcess::Device (C++ struct)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device11cpu_av_percE">SystemMonitorProcess::Device::cpu_av_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device6DeviceE8uint16_tNSt6stringE">SystemMonitorProcess::Device::Device (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device12disk_av_percE">SystemMonitorProcess::Device::disk_av_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device2idE">SystemMonitorProcess::Device::id (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device11initializedE">SystemMonitorProcess::Device::initialized (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device20last_heartbeat_deltaE">SystemMonitorProcess::Device::last_heartbeat_delta (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device11load_factorE">SystemMonitorProcess::Device::load_factor (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device4nameE">SystemMonitorProcess::Device::name (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device11ram_av_percE">SystemMonitorProcess::Device::ram_av_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6Device5stateE">SystemMonitorProcess::Device::state (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess11device_listE">SystemMonitorProcess::device_list (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16device_name_listE">SystemMonitorProcess::device_name_list (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess20device_window_fieldsE">SystemMonitorProcess::device_window_fields (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumnE">SystemMonitorProcess::DeviceFieldColumn (C++ enum)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn3CPUE">SystemMonitorProcess::DeviceFieldColumn::CPU (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn4DISKE">SystemMonitorProcess::DeviceFieldColumn::DISK (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn2IDE">SystemMonitorProcess::DeviceFieldColumn::ID (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn10LOADFACTORE">SystemMonitorProcess::DeviceFieldColumn::LOADFACTOR (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn6MARKERE">SystemMonitorProcess::DeviceFieldColumn::MARKER (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn4NAMEE">SystemMonitorProcess::DeviceFieldColumn::NAME (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn3RAME">SystemMonitorProcess::DeviceFieldColumn::RAM (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17DeviceFieldColumn2RXE">SystemMonitorProcess::DeviceFieldColumn::RX (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5FieldE">SystemMonitorProcess::Field (C++ struct)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Field5FieldENSt6stringE8uint16_t">SystemMonitorProcess::Field::Field (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Field4textE">SystemMonitorProcess::Field::text (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5Field5widthE">SystemMonitorProcess::Field::width (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21finish_initializationEv">SystemMonitorProcess::finish_initialization (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15get_device_infoE6Deviceb">SystemMonitorProcess::get_device_info (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15get_device_listEv">SystemMonitorProcess::get_device_list (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16get_deviceheaderEv">SystemMonitorProcess::get_deviceheader (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess10get_killmeEv">SystemMonitorProcess::get_killme (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess13get_task_infoE4Taskb">SystemMonitorProcess::get_task_info (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess13get_task_listEv">SystemMonitorProcess::get_task_list (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess14get_taskheaderEv">SystemMonitorProcess::get_taskheader (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18initialize_windowsEv">SystemMonitorProcess::initialize_windows (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_1E">SystemMonitorProcess::KEY_1 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_2E">SystemMonitorProcess::KEY_2 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_3E">SystemMonitorProcess::KEY_3 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_4E">SystemMonitorProcess::KEY_4 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_5E">SystemMonitorProcess::KEY_5 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_6E">SystemMonitorProcess::KEY_6 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_7E">SystemMonitorProcess::KEY_7 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_8E">SystemMonitorProcess::KEY_8 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_9E">SystemMonitorProcess::KEY_9 (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_CE">SystemMonitorProcess::KEY_C (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_cE">SystemMonitorProcess::KEY_c (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_DE">SystemMonitorProcess::KEY_D (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_dE">SystemMonitorProcess::KEY_d (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_FE">SystemMonitorProcess::KEY_F (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_fE">SystemMonitorProcess::KEY_f (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_GE">SystemMonitorProcess::KEY_G (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_gE">SystemMonitorProcess::KEY_g (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_LE">SystemMonitorProcess::KEY_L (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_lE">SystemMonitorProcess::KEY_l (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_ME">SystemMonitorProcess::KEY_M (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_mE">SystemMonitorProcess::KEY_m (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_NE">SystemMonitorProcess::KEY_N (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_nE">SystemMonitorProcess::KEY_n (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_PE">SystemMonitorProcess::KEY_P (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_pE">SystemMonitorProcess::KEY_p (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_QE">SystemMonitorProcess::KEY_Q (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_qE">SystemMonitorProcess::KEY_q (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_RE">SystemMonitorProcess::KEY_R (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_rE">SystemMonitorProcess::KEY_r (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_SE">SystemMonitorProcess::KEY_S (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5KEY_sE">SystemMonitorProcess::KEY_s (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess7kill_meE">SystemMonitorProcess::kill_me (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17mainwindow_heightE">SystemMonitorProcess::mainwindow_height (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16mainwindow_widthE">SystemMonitorProcess::mainwindow_width (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess12message_textE">SystemMonitorProcess::message_text (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18message_text_colorE">SystemMonitorProcess::message_text_color (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16MINWINDOW_HEIGHTE">SystemMonitorProcess::MINWINDOW_HEIGHT (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15MINWINDOW_WIDTHE">SystemMonitorProcess::MINWINDOW_WIDTH (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess14new_commandmsgEN4eros7commandE">SystemMonitorProcess::new_commandmsg (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16new_commandstateERKN4eros13command_state8ConstPtrE">SystemMonitorProcess::new_commandstate (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess20new_heartbeatmessageERKN4eros9heartbeat8ConstPtrE">SystemMonitorProcess::new_heartbeatmessage (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21new_loadfactormessageERKN4eros10loadfactor8ConstPtrE">SystemMonitorProcess::new_loadfactormessage (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess28new_resourceavailablemessageERKN4eros8resource8ConstPtrE">SystemMonitorProcess::new_resourceavailablemessage (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess23new_resourceusedmessageERKN4eros8resource8ConstPtrE">SystemMonitorProcess::new_resourceusedmessage (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess10nodeHandleE">SystemMonitorProcess::nodeHandle (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6prettyENSt3mapINSt6stringEN20SystemMonitorProcess4TaskEEE">SystemMonitorProcess::pretty (C++ function)</a>, <a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6prettyENSt3mapINSt6stringEN20SystemMonitorProcess6DeviceEEE">[1]</a>, <a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6prettyEv">[2]</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess5resetEv">SystemMonitorProcess::reset (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15resource_topicsE">SystemMonitorProcess::resource_topics (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18select_device_modeE">SystemMonitorProcess::select_device_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16select_task_modeE">SystemMonitorProcess::select_task_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess19selected_task_indexE">SystemMonitorProcess::selected_task_index (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess14set_mainwindowE8uint16_t8uint16_t">SystemMonitorProcess::set_mainwindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16set_message_textENSt6stringE5Color">SystemMonitorProcess::set_message_text (C++ function)</a>, <a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16set_message_textENSt6stringEN5Level4TypeE">[1]</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess14set_nodeHandleEPN3ros10NodeHandleE">SystemMonitorProcess::set_nodeHandle (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess25show_task_diagnostic_modeE">SystemMonitorProcess::show_task_diagnostic_mode (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16start_node_indexE">SystemMonitorProcess::start_node_index (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess20SystemMonitorProcessEv">SystemMonitorProcess::SystemMonitorProcess (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4TaskE">SystemMonitorProcess::Task (C++ struct)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task14base_node_nameE">SystemMonitorProcess::Task::base_node_name (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task13cpu_used_percE">SystemMonitorProcess::Task::cpu_used_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task11host_deviceE">SystemMonitorProcess::Task::host_device (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task2idE">SystemMonitorProcess::Task::id (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task11initializedE">SystemMonitorProcess::Task::initialized (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task14last_heartbeatE">SystemMonitorProcess::Task::last_heartbeat (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task20last_heartbeat_deltaE">SystemMonitorProcess::Task::last_heartbeat_delta (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task13mem_used_percE">SystemMonitorProcess::Task::mem_used_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task9node_nameE">SystemMonitorProcess::Task::node_name (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task3pidE">SystemMonitorProcess::Task::pid (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task13restart_countE">SystemMonitorProcess::Task::restart_count (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task5stateE">SystemMonitorProcess::Task::state (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task4TaskE8uint16_t8TaskTypeNSt6stringENSt6stringENSt6stringE">SystemMonitorProcess::Task::Task (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess4Task4typeE">SystemMonitorProcess::Task::type (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess24task_diagnostics_to_showE">SystemMonitorProcess::task_diagnostics_to_show (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess9task_listE">SystemMonitorProcess::task_list (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18task_list_max_rowsE">SystemMonitorProcess::task_list_max_rows (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess14task_name_listE">SystemMonitorProcess::task_name_list (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18task_window_fieldsE">SystemMonitorProcess::task_window_fields (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumnE">SystemMonitorProcess::TaskFieldColumn (C++ enum)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn3CPUE">SystemMonitorProcess::TaskFieldColumn::CPU (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn8HOSTNAMEE">SystemMonitorProcess::TaskFieldColumn::HOSTNAME (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn2IDE">SystemMonitorProcess::TaskFieldColumn::ID (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn6MARKERE">SystemMonitorProcess::TaskFieldColumn::MARKER (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn8NODENAMEE">SystemMonitorProcess::TaskFieldColumn::NODENAME (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn3PIDE">SystemMonitorProcess::TaskFieldColumn::PID (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn3RAME">SystemMonitorProcess::TaskFieldColumn::RAM (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn8RESTARTSE">SystemMonitorProcess::TaskFieldColumn::RESTARTS (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn2RXE">SystemMonitorProcess::TaskFieldColumn::RX (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15TaskFieldColumn6STATUSE">SystemMonitorProcess::TaskFieldColumn::STATUS (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess8TaskTypeE">SystemMonitorProcess::TaskType (C++ enum)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess8TaskType4EROSE">SystemMonitorProcess::TaskType::EROS (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess8TaskType8NON_EROSE">SystemMonitorProcess::TaskType::NON_EROS (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess8TaskType7UNKNOWNE">SystemMonitorProcess::TaskType::UNKNOWN (C++ enumerator)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess21TIME_TO_SHOW_MESSAGESE">SystemMonitorProcess::TIME_TO_SHOW_MESSAGES (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess31timer_showing_message_in_windowE">SystemMonitorProcess::timer_showing_message_in_window (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess6updateEdd">SystemMonitorProcess::update (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17update_armedstateEN9ArmDisarm5StateE">SystemMonitorProcess::update_armedstate (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18update_device_listEN4eros10loadfactorE">SystemMonitorProcess::update_device_list (C++ function)</a>, <a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess18update_device_listEN4eros8resourceE">[1]</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17update_devicelistENSt6vectorINSt6stringEEERNSt6vectorINSt6stringEEERNSt6vectorINSt6stringEEE">SystemMonitorProcess::update_devicelist (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess19update_devicewindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_devicewindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess23update_diagnosticwindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_diagnosticwindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess19update_headerwindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_headerwindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess24update_instructionwindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_instructionwindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess20update_messagewindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_messagewindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess15update_nodelistENSt6vectorINSt6stringEEENSt6vectorINSt6stringEEERNSt6vectorINSt6stringEEERNSt6vectorINSt6stringEEE">SystemMonitorProcess::update_nodelist (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16update_task_listEN4eros8resourceE">SystemMonitorProcess::update_task_list (C++ function)</a>, <a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess16update_task_listEN4eros9heartbeatE">[1]</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess17update_taskwindowENSt3mapINSt6stringE13WindowManagerE8iteratorE">SystemMonitorProcess::update_taskwindow (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcess7windowsE">SystemMonitorProcess::windows (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N20SystemMonitorProcessD0Ev">SystemMonitorProcess::~SystemMonitorProcess (C++ function)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/SystemMonitor.html#_CPPv413WindowManager">WindowManager (C++ class)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager8get_nameEv">WindowManager::get_name (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager27get_screen_coordinates_percEv">WindowManager::get_screen_coordinates_perc (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager28get_screen_coordinates_pixelEv">WindowManager::get_screen_coordinates_pixel (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20get_window_referenceEv">WindowManager::get_window_reference (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager4nameE">WindowManager::name (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager6prettyEv">WindowManager::pretty (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager17screen_coord_percE">WindowManager::screen_coord_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager18screen_coord_pixelE">WindowManager::screen_coord_pixel (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePercE">WindowManager::ScreenCoordinatePerc (C++ struct)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePerc11height_percE">WindowManager::ScreenCoordinatePerc::height_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePerc20ScreenCoordinatePercEdddd">WindowManager::ScreenCoordinatePerc::ScreenCoordinatePerc (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePerc12start_x_percE">WindowManager::ScreenCoordinatePerc::start_x_perc (C++ member)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePerc12start_y_percE">WindowManager::ScreenCoordinatePerc::start_y_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20ScreenCoordinatePerc10width_percE">WindowManager::ScreenCoordinatePerc::width_perc (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixelE">WindowManager::ScreenCoordinatePixel (C++ struct)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixel10height_pixE">WindowManager::ScreenCoordinatePixel::height_pix (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixel21ScreenCoordinatePixelEdddd">WindowManager::ScreenCoordinatePixel::ScreenCoordinatePixel (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixel11start_x_pixE">WindowManager::ScreenCoordinatePixel::start_x_pix (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixel11start_y_pixE">WindowManager::ScreenCoordinatePixel::start_y_pix (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager21ScreenCoordinatePixel9width_pixE">WindowManager::ScreenCoordinatePixel::width_pix (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager26set_screen_coordinates_pixE21ScreenCoordinatePixel">WindowManager::set_screen_coordinates_pix (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager20set_window_referenceEP6WINDOW">WindowManager::set_window_reference (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager16window_referenceE">WindowManager::window_reference (C++ member)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManager13WindowManagerEKNSt6stringEdddd">WindowManager::WindowManager (C++ function)</a>
+</li>
+      <li><a href="nodes/SystemMonitor.html#_CPPv4N13WindowManagerD0Ev">WindowManager::~WindowManager (C++ function)</a>
 </li>
   </ul></td>
 </tr></table>

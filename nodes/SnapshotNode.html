@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>SnapshotNodeProcess &mdash; eROS  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SystemMonitorProcess" href="SystemMonitor.html" />
+    <link rel="prev" title="SafetyNodeProcess" href="SafetyNode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> eROS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to eROS’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DataLoggerNode.html">DataLoggerProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataLoggerNode.html#dataloggernode">DataLoggerNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiagnosticNode.html">DiagnosticNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiagnosticNode.html#diagnosticnode">DiagnosticNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MasterNode.html">MasterNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MasterNode.html#masterode">Masterode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SafetyNode.html">SafetyNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SafetyNode.html#safetynode">SafetyNode</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SnapshotNodeProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#snapshotnode">SnapshotNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SystemMonitor.html">SystemMonitorProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SystemMonitor.html#systemmonitornode">SystemMonitorNode</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">eROS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Nodes</a> &raquo;</li>
+        
+      <li>SnapshotNodeProcess</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/nodes/SnapshotNode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="snapshotnodeprocess">
+<span id="nodes-snapshot-node"></span><h1>SnapshotNodeProcess<a class="headerlink" href="#snapshotnodeprocess" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt id="_CPPv415SnapshotProcess">
+<span id="_CPPv315SnapshotProcess"></span><span id="_CPPv215SnapshotProcess"></span><span id="SnapshotProcess"></span><span class="target" id="classSnapshotProcess"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">SnapshotProcess</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <a class="reference internal" href="../api/BaseNodeProcess.html#_CPPv415BaseNodeProcess" title="BaseNodeProcess"><span class="pre">BaseNodeProcess</span></a><a class="headerlink" href="#_CPPv415SnapshotProcess" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N15SnapshotProcess4ModeE">
+<span id="_CPPv3N15SnapshotProcess4ModeE"></span><span id="_CPPv2N15SnapshotProcess4ModeE"></span><span class="target" id="classSnapshotProcess_1a9cc39bc85a8b7a5c5d4a2a5f6fb1c7ac"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-name descname"><span class="pre">Mode</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4ModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess4Mode7UNKNOWNE">
+<span id="_CPPv3N15SnapshotProcess4Mode7UNKNOWNE"></span><span id="_CPPv2N15SnapshotProcess4Mode7UNKNOWNE"></span><span class="target" id="classSnapshotProcess_1a9cc39bc85a8b7a5c5d4a2a5f6fb1c7aca696b031073e74bf2cb98e5ef201d4aa3"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4Mode7UNKNOWNE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess4Mode6MASTERE">
+<span id="_CPPv3N15SnapshotProcess4Mode6MASTERE"></span><span id="_CPPv2N15SnapshotProcess4Mode6MASTERE"></span><span class="target" id="classSnapshotProcess_1a9cc39bc85a8b7a5c5d4a2a5f6fb1c7aca89a1533c37ec9254f22b5e0f29c9c0ff"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">MASTER</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4Mode6MASTERE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess4Mode5SLAVEE">
+<span id="_CPPv3N15SnapshotProcess4Mode5SLAVEE"></span><span id="_CPPv2N15SnapshotProcess4Mode5SLAVEE"></span><span class="target" id="classSnapshotProcess_1a9cc39bc85a8b7a5c5d4a2a5f6fb1c7aca79e19bc2ac33d6c81272024561992f37"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">SLAVE</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4Mode5SLAVEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess4Mode11END_OF_LISTE">
+<span id="_CPPv3N15SnapshotProcess4Mode11END_OF_LISTE"></span><span id="_CPPv2N15SnapshotProcess4Mode11END_OF_LISTE"></span><span class="target" id="classSnapshotProcess_1a9cc39bc85a8b7a5c5d4a2a5f6fb1c7acac2b0b4a580050a88a759ac7c20ce853c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">END_OF_LIST</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4Mode11END_OF_LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotStateE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotStateE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotStateE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcf"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-name descname"><span class="pre">SnapshotState</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState7UNKNOWNE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState7UNKNOWNE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState7UNKNOWNE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa696b031073e74bf2cb98e5ef201d4aa3"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">UNKNOWN</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState7UNKNOWNE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState10NOTRUNNINGE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState10NOTRUNNINGE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState10NOTRUNNINGE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa3d6fb80d3c9227f95be71c7e4ea2a8f8"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">NOTRUNNING</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState10NOTRUNNINGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState7STARTEDE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState7STARTEDE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState7STARTEDE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa17130e6c806885e23770df1519b18eb7"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">STARTED</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState7STARTEDE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState7RUNNINGE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState7RUNNINGE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState7RUNNINGE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa43491564ebcfd38568918efbd6e840fd"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">RUNNING</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState7RUNNINGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState5READYE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState5READYE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState5READYE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa2baa69eafc7204f3bd8648eba580c489"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">READY</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState5READYE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState8COMPLETEE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState8COMPLETEE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState8COMPLETEE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa3de44296982e58199afc513a715b12ba"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">COMPLETE</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState8COMPLETEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState10INCOMPLETEE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState10INCOMPLETEE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState10INCOMPLETEE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfa2e47f45b8584e07c8ebd4f693d8cfe10"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">INCOMPLETE</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState10INCOMPLETEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N15SnapshotProcess13SnapshotState11END_OF_LISTE">
+<span id="_CPPv3N15SnapshotProcess13SnapshotState11END_OF_LISTE"></span><span id="_CPPv2N15SnapshotProcess13SnapshotState11END_OF_LISTE"></span><span class="target" id="classSnapshotProcess_1afa13b6756e106a8429daca3e000dafcfac2b0b4a580050a88a759ac7c20ce853c"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">END_OF_LIST</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess13SnapshotState11END_OF_LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess15SnapshotProcessEv">
+<span id="_CPPv3N15SnapshotProcess15SnapshotProcessEv"></span><span id="_CPPv2N15SnapshotProcess15SnapshotProcessEv"></span><span id="SnapshotProcess::SnapshotProcess"></span><span class="target" id="classSnapshotProcess_1a70fd9ebcf84c21b46fd25acff96db4d4"></span><code class="sig-name descname"><span class="pre">SnapshotProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess15SnapshotProcessEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcessD0Ev">
+<span id="_CPPv3N15SnapshotProcessD0Ev"></span><span id="_CPPv2N15SnapshotProcessD0Ev"></span><span id="SnapshotProcess::~SnapshotProcess"></span><span class="target" id="classSnapshotProcess_1ac67982b30d926de4a52ccda0ad580e89"></span><code class="sig-name descname"><span class="pre">~SnapshotProcess</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcessD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess21finish_initializationEv">
+<span id="_CPPv3N15SnapshotProcess21finish_initializationEv"></span><span id="_CPPv2N15SnapshotProcess21finish_initializationEv"></span><span id="SnapshotProcess::finish_initialization"></span><span class="target" id="classSnapshotProcess_1ac17fe3bf258a147a9205f90ae6f4ba28"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">finish_initialization</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess21finish_initializationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Derived Process Initialization. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess8get_modeEv">
+<span id="_CPPv3N15SnapshotProcess8get_modeEv"></span><span id="_CPPv2N15SnapshotProcess8get_modeEv"></span><span id="SnapshotProcess::get_mode"></span><span class="target" id="classSnapshotProcess_1a24595c37c6ecf7b731e8f6e378824ecb"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N15SnapshotProcess4ModeE" title="SnapshotProcess::Mode"><span class="pre">Mode</span></a> <code class="sig-name descname"><span class="pre">get_mode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess8get_modeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess8set_modeE4Mode">
+<span id="_CPPv3N15SnapshotProcess8set_modeE4Mode"></span><span id="_CPPv2N15SnapshotProcess8set_modeE4Mode"></span><span id="SnapshotProcess::set_mode__Mode"></span><span class="target" id="classSnapshotProcess_1a2b644aaadb947861830162c2c8ea0c90"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_mode</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess4ModeE" title="SnapshotProcess::Mode"><span class="pre">Mode</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess8set_modeE4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess16set_architectureEN12Architecture4TypeE">
+<span id="_CPPv3N15SnapshotProcess16set_architectureEN12Architecture4TypeE"></span><span id="_CPPv2N15SnapshotProcess16set_architectureEN12Architecture4TypeE"></span><span id="SnapshotProcess::set_architecture__Architecture::Type"></span><span class="target" id="classSnapshotProcess_1a002d34fe1729f6ee11ad78fd4fc41d7d"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_architecture</span></code><span class="sig-paren">(</span><a class="reference internal" href="../api/Definitions.html#_CPPv412Architecture" title="Architecture"><span class="pre">Architecture</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N12Architecture4TypeE" title="Architecture::Type"><span class="pre">Type</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess16set_architectureEN12Architecture4TypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess19get_snapshot_configEv">
+<span id="_CPPv3N15SnapshotProcess19get_snapshot_configEv"></span><span id="_CPPv2N15SnapshotProcess19get_snapshot_configEv"></span><span id="SnapshotProcess::get_snapshot_config"></span><span class="target" id="classSnapshotProcess_1a7fe4f0f5b54f68e5c56e4be34a4286b1"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N15SnapshotProcess14SnapshotConfigE" title="SnapshotProcess::SnapshotConfig"><span class="pre">SnapshotConfig</span></a> <code class="sig-name descname"><span class="pre">get_snapshot_config</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess19get_snapshot_configEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess24get_devicesnapshot_stateEv">
+<span id="_CPPv3N15SnapshotProcess24get_devicesnapshot_stateEv"></span><span id="_CPPv2N15SnapshotProcess24get_devicesnapshot_stateEv"></span><span id="SnapshotProcess::get_devicesnapshot_state"></span><span class="target" id="classSnapshotProcess_1addb5658a69f526aa253b283857fb505a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <code class="sig-name descname"><span class="pre">get_devicesnapshot_state</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess24get_devicesnapshot_stateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess24set_devicesnapshot_stateE13SnapshotState">
+<span id="_CPPv3N15SnapshotProcess24set_devicesnapshot_stateE13SnapshotState"></span><span id="_CPPv2N15SnapshotProcess24set_devicesnapshot_stateE13SnapshotState"></span><span id="SnapshotProcess::set_devicesnapshot_state__SnapshotState"></span><span class="target" id="classSnapshotProcess_1a4b3cca55466c13bc9388a4eb06c94333"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_devicesnapshot_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess24set_devicesnapshot_stateE13SnapshotState" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess24get_systemsnapshot_stateEv">
+<span id="_CPPv3N15SnapshotProcess24get_systemsnapshot_stateEv"></span><span id="_CPPv2N15SnapshotProcess24get_systemsnapshot_stateEv"></span><span id="SnapshotProcess::get_systemsnapshot_state"></span><span class="target" id="classSnapshotProcess_1a4ad8e225cf61bbec1d2ec118b367656a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <code class="sig-name descname"><span class="pre">get_systemsnapshot_state</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess24get_systemsnapshot_stateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess24set_systemsnapshot_stateE13SnapshotState">
+<span id="_CPPv3N15SnapshotProcess24set_systemsnapshot_stateE13SnapshotState"></span><span id="_CPPv2N15SnapshotProcess24set_systemsnapshot_stateE13SnapshotState"></span><span id="SnapshotProcess::set_systemsnapshot_state__SnapshotState"></span><span class="target" id="classSnapshotProcess_1a4d39ce98573f144d1561e7ee558cca50"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_systemsnapshot_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess24set_systemsnapshot_stateE13SnapshotState" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess31get_snapshotprogress_percentageEv">
+<span id="_CPPv3N15SnapshotProcess31get_snapshotprogress_percentageEv"></span><span id="_CPPv2N15SnapshotProcess31get_snapshotprogress_percentageEv"></span><span id="SnapshotProcess::get_snapshotprogress_percentage"></span><span class="target" id="classSnapshotProcess_1a464d8d19b482837b0b2239302b38dc37"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">double</span> <code class="sig-name descname"><span class="pre">get_snapshotprogress_percentage</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess31get_snapshotprogress_percentageEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess15clear_snapshotsEv">
+<span id="_CPPv3N15SnapshotProcess15clear_snapshotsEv"></span><span id="_CPPv2N15SnapshotProcess15clear_snapshotsEv"></span><span id="SnapshotProcess::clear_snapshots"></span><span class="target" id="classSnapshotProcess_1ae2d9b10e1fd4f2a7eb5146edb3f69e88"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">clear_snapshots</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess15clear_snapshotsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess11load_configENSt6stringE">
+<span id="_CPPv3N15SnapshotProcess11load_configENSt6stringE"></span><span id="_CPPv2N15SnapshotProcess11load_configENSt6stringE"></span><span id="SnapshotProcess::load_config__ss"></span><span class="target" id="classSnapshotProcess_1a4cdb6db9ff69793eed922796a737bce4"></span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">load_config</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">file_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess11load_configENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess5resetEv">
+<span id="_CPPv3N15SnapshotProcess5resetEv"></span><span id="_CPPv2N15SnapshotProcess5resetEv"></span><span id="SnapshotProcess::reset"></span><span class="target" id="classSnapshotProcess_1a9ebf088d55562d9eda7dd05e7c648386"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets Process. Used for counters, timers, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess6updateEdd">
+<span id="_CPPv3N15SnapshotProcess6updateEdd"></span><span id="_CPPv2N15SnapshotProcess6updateEdd"></span><span id="SnapshotProcess::update__double.double"></span><span class="target" id="classSnapshotProcess_1ab166fcff53f55c82206ba6c482c59183"></span><em class="property"><span class="pre">virtual</span></em> <a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="pre">double</span> <em><span class="pre">t_dt</span></em>, <span class="pre">double</span> <em><span class="pre">t_ros_time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess6updateEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Update function must be implemented in Derived Process. This is used for all state machine logic, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess14new_commandmsgEN4eros7commandE">
+<span id="_CPPv3N15SnapshotProcess14new_commandmsgEN4eros7commandE"></span><span id="_CPPv2N15SnapshotProcess14new_commandmsgEN4eros7commandE"></span><span id="SnapshotProcess::new_commandmsg__eros::command"></span><span class="target" id="classSnapshotProcess_1a78e47684475265d5fe65952e6d584c73"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">new_commandmsg</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span> <em><span class="pre">t_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess14new_commandmsgEN4eros7commandE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess19new_commandstatemsgEN4eros13command_stateE">
+<span id="_CPPv3N15SnapshotProcess19new_commandstatemsgEN4eros13command_stateE"></span><span id="_CPPv2N15SnapshotProcess19new_commandstatemsgEN4eros13command_stateE"></span><span id="SnapshotProcess::new_commandstatemsg__eros::command_state"></span><span class="target" id="classSnapshotProcess_1ac3bd3cca7ef5e57e1c3e909fe190765c"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">new_commandstatemsg</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">command_state</span> <em><span class="pre">t_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess19new_commandstatemsgEN4eros13command_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess22check_programvariablesEv">
+<span id="_CPPv3N15SnapshotProcess22check_programvariablesEv"></span><span id="_CPPv2N15SnapshotProcess22check_programvariablesEv"></span><span id="SnapshotProcess::check_programvariables"></span><span class="target" id="classSnapshotProcess_1a7f01bb3c5d424de46118839f8fc114ec"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">check_programvariables</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess22check_programvariablesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess7cleanupEv">
+<span id="_CPPv3N15SnapshotProcess7cleanupEv"></span><span id="_CPPv2N15SnapshotProcess7cleanupEv"></span><span id="SnapshotProcess::cleanup"></span><span class="target" id="classSnapshotProcess_1a67ac70206b10a0d4f60085e8f39904c8"></span><em class="property"><span class="pre">inline</span></em> <em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess7cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess6prettyEv">
+<span id="_CPPv3N15SnapshotProcess6prettyEv"></span><span id="_CPPv2N15SnapshotProcess6prettyEv"></span><span id="SnapshotProcess::pretty"></span><span class="target" id="classSnapshotProcess_1a34c1bf5b9f8aa91295e980aec7176697"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">pretty</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess6prettyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess18createnew_snapshotEv">
+<span id="_CPPv3N15SnapshotProcess18createnew_snapshotEv"></span><span id="_CPPv2N15SnapshotProcess18createnew_snapshotEv"></span><span id="SnapshotProcess::createnew_snapshot"></span><span class="target" id="classSnapshotProcess_1a9278dbdba3007236257322241fbb62b8"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">createnew_snapshot</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess18createnew_snapshotEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess17HOLDCOMPLETE_TIMEE">
+<span id="_CPPv3N15SnapshotProcess17HOLDCOMPLETE_TIMEE"></span><span id="_CPPv2N15SnapshotProcess17HOLDCOMPLETE_TIMEE"></span><span id="SnapshotProcess::HOLDCOMPLETE_TIME__doubleC"></span><span class="target" id="classSnapshotProcess_1a01400812efb403584a7a9532b386cd7c"></span><em class="property"><span class="pre">const</span></em> <span class="pre">double</span> <code class="sig-name descname"><span class="pre">HOLDCOMPLETE_TIME</span></code> <span class="pre">=</span> <span class="pre">5.0</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess17HOLDCOMPLETE_TIMEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess19SnapshotStateStringE13SnapshotState">
+<span id="_CPPv3N15SnapshotProcess19SnapshotStateStringE13SnapshotState"></span><span id="_CPPv2N15SnapshotProcess19SnapshotStateStringE13SnapshotState"></span><span id="SnapshotProcess::SnapshotStateString__SnapshotState"></span><span class="target" id="classSnapshotProcess_1a76f827ae0a4393642544ee53501e0024"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">SnapshotStateString</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess19SnapshotStateStringE13SnapshotState" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess8ModeTypeENSt6stringE">
+<span id="_CPPv3N15SnapshotProcess8ModeTypeENSt6stringE"></span><span id="_CPPv2N15SnapshotProcess8ModeTypeENSt6stringE"></span><span id="SnapshotProcess::ModeType__ss"></span><span class="target" id="classSnapshotProcess_1a3e1226e31ff247a3f458684aaafe2ae4"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N15SnapshotProcess4ModeE" title="SnapshotProcess::Mode"><span class="pre">Mode</span></a> <code class="sig-name descname"><span class="pre">ModeType</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess8ModeTypeENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess10ModeStringE4Mode">
+<span id="_CPPv3N15SnapshotProcess10ModeStringE4Mode"></span><span id="_CPPv2N15SnapshotProcess10ModeStringE4Mode"></span><span id="SnapshotProcess::ModeString__Mode"></span><span class="target" id="classSnapshotProcess_1a933e613add7831dff62348cb8e436eb4"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">ModeString</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess4ModeE" title="SnapshotProcess::Mode"><span class="pre">Mode</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess10ModeStringE4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess23count_files_indirectoryENSt6stringENSt6stringE">
+<span id="_CPPv3N15SnapshotProcess23count_files_indirectoryENSt6stringENSt6stringE"></span><span id="_CPPv2N15SnapshotProcess23count_files_indirectoryENSt6stringENSt6stringE"></span><span id="SnapshotProcess::count_files_indirectory__ss.ss"></span><span class="target" id="classSnapshotProcess_1a98862b44ecacedfadb6f7734c3b5a612"></span><span class="pre">int</span> <code class="sig-name descname"><span class="pre">count_files_indirectory</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">directory</span></em>, <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">filter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess23count_files_indirectoryENSt6stringENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess4modeE">
+<span id="_CPPv3N15SnapshotProcess4modeE"></span><span id="_CPPv2N15SnapshotProcess4modeE"></span><span id="SnapshotProcess::mode__Mode"></span><span class="target" id="classSnapshotProcess_1a64e2fd638a85fc1f8910bec93c0f911a"></span><a class="reference internal" href="#_CPPv4N15SnapshotProcess4ModeE" title="SnapshotProcess::Mode"><span class="pre">Mode</span></a> <code class="sig-name descname"><span class="pre">mode</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess4modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess12architectureE">
+<span id="_CPPv3N15SnapshotProcess12architectureE"></span><span id="_CPPv2N15SnapshotProcess12architectureE"></span><span id="SnapshotProcess::architecture__Architecture::Type"></span><span class="target" id="classSnapshotProcess_1a1384829fab3ca5ac0590aee35433c357"></span><a class="reference internal" href="../api/Definitions.html#_CPPv412Architecture" title="Architecture"><span class="pre">Architecture</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N12Architecture4TypeE" title="Architecture::Type"><span class="pre">Type</span></a> <code class="sig-name descname"><span class="pre">architecture</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess12architectureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess20devicesnapshot_stateE">
+<span id="_CPPv3N15SnapshotProcess20devicesnapshot_stateE"></span><span id="_CPPv2N15SnapshotProcess20devicesnapshot_stateE"></span><span id="SnapshotProcess::devicesnapshot_state__SnapshotState"></span><span class="target" id="classSnapshotProcess_1a4e93046d85b6564e144e6cbd766ba103"></span><a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <code class="sig-name descname"><span class="pre">devicesnapshot_state</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess20devicesnapshot_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess20systemsnapshot_stateE">
+<span id="_CPPv3N15SnapshotProcess20systemsnapshot_stateE"></span><span id="_CPPv2N15SnapshotProcess20systemsnapshot_stateE"></span><span id="SnapshotProcess::systemsnapshot_state__SnapshotState"></span><span class="target" id="classSnapshotProcess_1a718cb3d8870f1e015104f9010e6bad6f"></span><a class="reference internal" href="#_CPPv4N15SnapshotProcess13SnapshotStateE" title="SnapshotProcess::SnapshotState"><span class="pre">SnapshotState</span></a> <code class="sig-name descname"><span class="pre">systemsnapshot_state</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess20systemsnapshot_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess15snapshot_configE">
+<span id="_CPPv3N15SnapshotProcess15snapshot_configE"></span><span id="_CPPv2N15SnapshotProcess15snapshot_configE"></span><span id="SnapshotProcess::snapshot_config__SnapshotConfig"></span><span class="target" id="classSnapshotProcess_1af4dfb0ff6144b9d2b203bbfb99ed4e78"></span><a class="reference internal" href="#_CPPv4N15SnapshotProcess14SnapshotConfigE" title="SnapshotProcess::SnapshotConfig"><span class="pre">SnapshotConfig</span></a> <code class="sig-name descname"><span class="pre">snapshot_config</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess15snapshot_configE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess25snapshot_progress_percentE">
+<span id="_CPPv3N15SnapshotProcess25snapshot_progress_percentE"></span><span id="_CPPv2N15SnapshotProcess25snapshot_progress_percentE"></span><span id="SnapshotProcess::snapshot_progress_percent__double"></span><span class="target" id="classSnapshotProcess_1ac44b799ed475632f9e214b9739c53354"></span><span class="pre">double</span> <code class="sig-name descname"><span class="pre">snapshot_progress_percent</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess25snapshot_progress_percentE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess18holdcomplete_timerE">
+<span id="_CPPv3N15SnapshotProcess18holdcomplete_timerE"></span><span id="_CPPv2N15SnapshotProcess18holdcomplete_timerE"></span><span id="SnapshotProcess::holdcomplete_timer__double"></span><span class="target" id="classSnapshotProcess_1a5881c96cc052a5ecc883954a1dc17cc8"></span><span class="pre">double</span> <code class="sig-name descname"><span class="pre">holdcomplete_timer</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess18holdcomplete_timerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N15SnapshotProcess11ExecCommandE">
+<span id="_CPPv3N15SnapshotProcess11ExecCommandE"></span><span id="_CPPv2N15SnapshotProcess11ExecCommandE"></span><span id="SnapshotProcess::ExecCommand"></span><span class="target" id="structSnapshotProcess_1_1ExecCommand"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">ExecCommand</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11ExecCommandE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11ExecCommand7commandE">
+<span id="_CPPv3N15SnapshotProcess11ExecCommand7commandE"></span><span id="_CPPv2N15SnapshotProcess11ExecCommand7commandE"></span><span id="SnapshotProcess::ExecCommand::command__ss"></span><span class="target" id="structSnapshotProcess_1_1ExecCommand_1ac89878c783fd8a3bda964e4767d4a2f8"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">command</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11ExecCommand7commandE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11ExecCommand11output_fileE">
+<span id="_CPPv3N15SnapshotProcess11ExecCommand11output_fileE"></span><span id="_CPPv2N15SnapshotProcess11ExecCommand11output_fileE"></span><span id="SnapshotProcess::ExecCommand::output_file__ss"></span><span class="target" id="structSnapshotProcess_1_1ExecCommand_1a5d3549dc3e07a251da0863bcbdaa35d7"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">output_file</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11ExecCommand11output_fileE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDeviceE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDeviceE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDeviceE"></span><span id="SnapshotProcess::SlaveDevice"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">SlaveDevice</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDeviceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice11SlaveDeviceENSt6stringE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice11SlaveDeviceENSt6stringE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice11SlaveDeviceENSt6stringE"></span><span id="SnapshotProcess::SlaveDevice::SlaveDevice__ss"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1a74a8776f9480cc8fc2c8ed4f8a80cd50"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">SlaveDevice</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice11SlaveDeviceENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice4nameE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice4nameE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice4nameE"></span><span id="SnapshotProcess::SlaveDevice::name__ss"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1a1d614d2022f74b589123d13728c931a6"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice4nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_generatedE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice25device_snapshot_generatedE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice25device_snapshot_generatedE"></span><span id="SnapshotProcess::SlaveDevice::device_snapshot_generated__b"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1aa721277c6ff6404e3877e2cd02aee223"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">device_snapshot_generated</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_generatedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_processedE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice25device_snapshot_processedE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice25device_snapshot_processedE"></span><span id="SnapshotProcess::SlaveDevice::device_snapshot_processed__b"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1a4d7b47e2ff9d6b04305e69e0fb189f05"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">device_snapshot_processed</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice25device_snapshot_processedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice5timerE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice5timerE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice5timerE"></span><span id="SnapshotProcess::SlaveDevice::timer__double"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1afce75b334bc29d359ffe2d528661d3bf"></span><span class="pre">double</span> <code class="sig-name descname"><span class="pre">timer</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice5timerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess11SlaveDevice19devicesnapshot_pathE">
+<span id="_CPPv3N15SnapshotProcess11SlaveDevice19devicesnapshot_pathE"></span><span id="_CPPv2N15SnapshotProcess11SlaveDevice19devicesnapshot_pathE"></span><span id="SnapshotProcess::SlaveDevice::devicesnapshot_path__ss"></span><span class="target" id="structSnapshotProcess_1_1SlaveDevice_1a80d11cfa29101b82590a6e28261e43ba"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">devicesnapshot_path</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess11SlaveDevice19devicesnapshot_pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfigE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfigE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfigE"></span><span id="SnapshotProcess::SnapshotConfig"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">SnapshotConfig</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfigE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig15stage_directoryE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig15stage_directoryE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig15stage_directoryE"></span><span id="SnapshotProcess::SnapshotConfig::stage_directory__ss"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a722cfafcd6a9d7b0a618ce0e180cc549"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">stage_directory</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig15stage_directoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig16snapshot_devicesE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig16snapshot_devicesE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig16snapshot_devicesE"></span><span id="SnapshotProcess::SnapshotConfig::snapshot_devices__std::vector:SlaveDevice:"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a5da9d9e8b01dac98e9a25b194ca2df04"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess11SlaveDeviceE" title="SnapshotProcess::SlaveDevice"><span class="pre">SlaveDevice</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">snapshot_devices</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig16snapshot_devicesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig7foldersE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig7foldersE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig7foldersE"></span><span id="SnapshotProcess::SnapshotConfig::folders__std::vector:ss:"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a662a27b2fb49e70e55d2e5b8afe315de"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">folders</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig7foldersE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig5filesE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig5filesE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig5filesE"></span><span id="SnapshotProcess::SnapshotConfig::files__std::vector:ss:"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a7ee781a3588915749c3ec8a14a7fe440"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">files</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig5filesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig8commandsE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig8commandsE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig8commandsE"></span><span id="SnapshotProcess::SnapshotConfig::commands__std::vector:ExecCommand:"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a853df9ff428b651c5d783ef408ca2b3e"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N15SnapshotProcess11ExecCommandE" title="SnapshotProcess::ExecCommand"><span class="pre">ExecCommand</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">commands</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig8commandsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig7scriptsE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig7scriptsE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig7scriptsE"></span><span id="SnapshotProcess::SnapshotConfig::scripts__std::vector:ss:"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1aa1789320160ec947f47171065566587b"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">scripts</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig7scriptsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig19systemsnapshot_pathE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig19systemsnapshot_pathE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig19systemsnapshot_pathE"></span><span id="SnapshotProcess::SnapshotConfig::systemsnapshot_path__ss"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a471222bd2bf6a0b908dd72169134981a"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">systemsnapshot_path</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig19systemsnapshot_pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig20device_snapshot_pathE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig20device_snapshot_pathE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig20device_snapshot_pathE"></span><span id="SnapshotProcess::SnapshotConfig::device_snapshot_path__ss"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a2710052a1afa3c7a84c3e28678db3a44"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">device_snapshot_path</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig20device_snapshot_pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig17bagfile_directoryE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig17bagfile_directoryE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig17bagfile_directoryE"></span><span id="SnapshotProcess::SnapshotConfig::bagfile_directory__ss"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a452802186bb669ffe5ca822119f4d482"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">bagfile_directory</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig17bagfile_directoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N15SnapshotProcess14SnapshotConfig35active_device_snapshot_completepathE">
+<span id="_CPPv3N15SnapshotProcess14SnapshotConfig35active_device_snapshot_completepathE"></span><span id="_CPPv2N15SnapshotProcess14SnapshotConfig35active_device_snapshot_completepathE"></span><span id="SnapshotProcess::SnapshotConfig::active_device_snapshot_completepath__ss"></span><span class="target" id="structSnapshotProcess_1_1SnapshotConfig_1a7767c5adda29342a31c93ba87db2bfd9"></span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">active_device_snapshot_completepath</span></code><a class="headerlink" href="#_CPPv4N15SnapshotProcess14SnapshotConfig35active_device_snapshot_completepathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="snapshotnode">
+<h1>SnapshotNode<a class="headerlink" href="#snapshotnode" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt id="_CPPv412SnapshotNode">
+<span id="_CPPv312SnapshotNode"></span><span id="_CPPv212SnapshotNode"></span><span id="SnapshotNode"></span><span class="target" id="classSnapshotNode"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">SnapshotNode</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <a class="reference internal" href="../api/BaseNode.html#_CPPv48BaseNode" title="BaseNode"><span class="pre">BaseNode</span></a><a class="headerlink" href="#_CPPv412SnapshotNode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode12SnapshotNodeEv">
+<span id="_CPPv3N12SnapshotNode12SnapshotNodeEv"></span><span id="_CPPv2N12SnapshotNode12SnapshotNodeEv"></span><span id="SnapshotNode::SnapshotNode"></span><span class="target" id="classSnapshotNode_1a474ca1754d7d2f1c30de41cea2487e62"></span><code class="sig-name descname"><span class="pre">SnapshotNode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode12SnapshotNodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNodeD0Ev">
+<span id="_CPPv3N12SnapshotNodeD0Ev"></span><span id="_CPPv2N12SnapshotNodeD0Ev"></span><span id="SnapshotNode::~SnapshotNode"></span><span class="target" id="classSnapshotNode_1ac45725e5e3f18aab2db2b56d691f0d33"></span><code class="sig-name descname"><span class="pre">~SnapshotNode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNodeD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode11get_processEv">
+<span id="_CPPv3N12SnapshotNode11get_processEv"></span><span id="_CPPv2N12SnapshotNode11get_processEv"></span><span id="SnapshotNode::get_process"></span><span class="target" id="classSnapshotNode_1a1543441c927b4e97e8727044c8663f8c"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv415SnapshotProcess" title="SnapshotProcess"><span class="pre">SnapshotProcess</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_process</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode11get_processEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode5startEv">
+<span id="_CPPv3N12SnapshotNode5startEv"></span><span id="_CPPv2N12SnapshotNode5startEv"></span><span id="SnapshotNode::start"></span><span class="target" id="classSnapshotNode_1ad44f16fde7d217a7df0d8eb2a920d4e0"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode5startEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Start the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode21finish_initializationEv">
+<span id="_CPPv3N12SnapshotNode21finish_initializationEv"></span><span id="_CPPv2N12SnapshotNode21finish_initializationEv"></span><span id="SnapshotNode::finish_initialization"></span><span class="target" id="classSnapshotNode_1a38b0fa6f4c68ccd2a1c800b13e8ea147"></span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">finish_initialization</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode21finish_initializationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode9run_loop1Ev">
+<span id="_CPPv3N12SnapshotNode9run_loop1Ev"></span><span id="_CPPv2N12SnapshotNode9run_loop1Ev"></span><span id="SnapshotNode::run_loop1"></span><span class="target" id="classSnapshotNode_1a828677ab92121cccc3fafe2a0fe1596a"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode9run_loop1Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop1 Function. Loop1 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode9run_loop2Ev">
+<span id="_CPPv3N12SnapshotNode9run_loop2Ev"></span><span id="_CPPv2N12SnapshotNode9run_loop2Ev"></span><span id="SnapshotNode::run_loop2"></span><span class="target" id="classSnapshotNode_1a8df4cb3044a12196d8d6a481dd7d7c12"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop2</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode9run_loop2Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop2 Function. Loop2 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode9run_loop3Ev">
+<span id="_CPPv3N12SnapshotNode9run_loop3Ev"></span><span id="_CPPv2N12SnapshotNode9run_loop3Ev"></span><span id="SnapshotNode::run_loop3"></span><span class="target" id="classSnapshotNode_1a42cfbbe57959a9049dda74173c4bc15b"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_loop3</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode9run_loop3Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code in Loop3 Function. Loop3 Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode9run_001hzEv">
+<span id="_CPPv3N12SnapshotNode9run_001hzEv"></span><span id="_CPPv2N12SnapshotNode9run_001hzEv"></span><span id="SnapshotNode::run_001hz"></span><span class="target" id="classSnapshotNode_1a5759049f71e33800540386d9ec4603b0"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_001hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode9run_001hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .01 Hz. Loop .01Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode8run_01hzEv">
+<span id="_CPPv3N12SnapshotNode8run_01hzEv"></span><span id="_CPPv2N12SnapshotNode8run_01hzEv"></span><span id="SnapshotNode::run_01hz"></span><span class="target" id="classSnapshotNode_1ac42736f4b9faa0bee74830e23325cc88"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode8run_01hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz Function. Loop .1Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode14run_01hz_noisyEv">
+<span id="_CPPv3N12SnapshotNode14run_01hz_noisyEv"></span><span id="_CPPv2N12SnapshotNode14run_01hz_noisyEv"></span><span id="SnapshotNode::run_01hz_noisy"></span><span class="target" id="classSnapshotNode_1abf3fe973d5ace6906dc427e159fb3aae"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_01hz_noisy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode14run_01hz_noisyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz Function with a small random delay to prevent multiple things running all at the same time. .1Hz Noisy Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode7run_1hzEv">
+<span id="_CPPv3N12SnapshotNode7run_1hzEv"></span><span id="_CPPv2N12SnapshotNode7run_1hzEv"></span><span id="SnapshotNode::run_1hz"></span><span class="target" id="classSnapshotNode_1aa772e232ae54ceb1465f3b726665d460"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_1hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode7run_1hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at .1 Hz. Loop 1Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode8run_10hzEv">
+<span id="_CPPv3N12SnapshotNode8run_10hzEv"></span><span id="_CPPv2N12SnapshotNode8run_10hzEv"></span><span id="SnapshotNode::run_10hz"></span><span class="target" id="classSnapshotNode_1a818f13e91e1d320ed874dc972f257c5f"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">run_10hz</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode8run_10hzEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run code at 10 Hz. Loop 10Hz Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode11thread_loopEv">
+<span id="_CPPv3N12SnapshotNode11thread_loopEv"></span><span id="_CPPv2N12SnapshotNode11thread_loopEv"></span><span id="SnapshotNode::thread_loop"></span><span class="target" id="classSnapshotNode_1ac7693446085b5b707c30099376c40a84"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">thread_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode11thread_loopEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Thread Loop Must be Implemented in Derived <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode23thread_snapshotcreationEv">
+<span id="_CPPv3N12SnapshotNode23thread_snapshotcreationEv"></span><span id="_CPPv2N12SnapshotNode23thread_snapshotcreationEv"></span><span id="SnapshotNode::thread_snapshotcreation"></span><span class="target" id="classSnapshotNode_1a4c5919b2ff3e530cfe7bb9c84411ce73"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">thread_snapshotcreation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode23thread_snapshotcreationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode7cleanupEv">
+<span id="_CPPv3N12SnapshotNode7cleanupEv"></span><span id="_CPPv2N12SnapshotNode7cleanupEv"></span><span id="SnapshotNode::cleanup"></span><span class="target" id="classSnapshotNode_1a27b97c111bf6d6d7318f80cd63fed4a9"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode7cleanupEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE">
+<span id="_CPPv3N12SnapshotNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE"></span><span id="_CPPv2N12SnapshotNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE"></span><span id="SnapshotNode::changenodestate_service__eros::srv_change_nodestate::RequestR.eros::srv_change_nodestate::ResponseR"></span><span class="target" id="classSnapshotNode_1afb15c88c50a3f167967e5c920b9ba580"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">changenodestate_service</span></code><span class="sig-paren">(</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_change_nodestate</span><span class="pre">::</span><span class="pre">Request</span> <span class="pre">&amp;</span><em><span class="pre">req</span></em>, <span class="pre">eros</span><span class="pre">::</span><span class="pre">srv_change_nodestate</span><span class="pre">::</span><span class="pre">Response</span> <span class="pre">&amp;</span><em><span class="pre">res</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode23changenodestate_serviceERN4eros20srv_change_nodestate7RequestERN4eros20srv_change_nodestate8ResponseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE">
+<span id="_CPPv3N12SnapshotNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE"></span><span id="_CPPv2N12SnapshotNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE"></span><span id="SnapshotNode::system_commandAction_Callback__eros::system_commandGoalConstPtrCR"></span><span class="target" id="classSnapshotNode_1a45c9e7b83b9bef0642e8a5d3992a563d"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">system_commandAction_Callback</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">system_commandGoalConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">goal</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode29system_commandAction_CallbackERKN4eros26system_commandGoalConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode16command_CallbackERKN4eros7command8ConstPtrE">
+<span id="_CPPv3N12SnapshotNode16command_CallbackERKN4eros7command8ConstPtrE"></span><span id="_CPPv2N12SnapshotNode16command_CallbackERKN4eros7command8ConstPtrE"></span><span id="SnapshotNode::command_Callback__eros::command::ConstPtrCR"></span><span class="target" id="classSnapshotNode_1acda7e71709bbdca58f77b7190ea30bcc"></span><em class="property"><span class="pre">virtual</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">command_Callback</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode16command_CallbackERKN4eros7command8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode21commandState_CallbackERKN4eros13command_state8ConstPtrE">
+<span id="_CPPv3N12SnapshotNode21commandState_CallbackERKN4eros13command_state8ConstPtrE"></span><span id="_CPPv2N12SnapshotNode21commandState_CallbackERKN4eros13command_state8ConstPtrE"></span><span id="SnapshotNode::commandState_Callback__eros::command_state::ConstPtrCR"></span><span class="target" id="classSnapshotNode_1a12e8500623e5c072888ad03dc2596565"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">commandState_Callback</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">eros</span><span class="pre">::</span><span class="pre">command_state</span><span class="pre">::</span><span class="pre">ConstPtr</span> <span class="pre">&amp;</span><em><span class="pre">t_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode21commandState_CallbackERKN4eros13command_state8ConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode14BASE_NODE_NAMEE">
+<span id="_CPPv3N12SnapshotNode14BASE_NODE_NAMEE"></span><span id="_CPPv2N12SnapshotNode14BASE_NODE_NAMEE"></span><span id="SnapshotNode::BASE_NODE_NAME__ssC"></span><span class="target" id="classSnapshotNode_1ac29f96e8626fd89118841ca363c0b3e9"></span><em class="property"><span class="pre">const</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">BASE_NODE_NAME</span></code> <span class="pre">=</span> <span class="pre">&quot;snapshot_node&quot;</span><a class="headerlink" href="#_CPPv4N12SnapshotNode14BASE_NODE_NAMEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The base name of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode21MAJOR_RELEASE_VERSIONE">
+<span id="_CPPv3N12SnapshotNode21MAJOR_RELEASE_VERSIONE"></span><span id="_CPPv2N12SnapshotNode21MAJOR_RELEASE_VERSIONE"></span><span id="SnapshotNode::MAJOR_RELEASE_VERSION__uint16_tC"></span><span class="target" id="classSnapshotNode_1a4b165cff648582c07981ced7d3b73592"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">MAJOR_RELEASE_VERSION</span></code> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N12SnapshotNode21MAJOR_RELEASE_VERSIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Major Release Version of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode21MINOR_RELEASE_VERSIONE">
+<span id="_CPPv3N12SnapshotNode21MINOR_RELEASE_VERSIONE"></span><span id="_CPPv2N12SnapshotNode21MINOR_RELEASE_VERSIONE"></span><span id="SnapshotNode::MINOR_RELEASE_VERSION__uint16_tC"></span><span class="target" id="classSnapshotNode_1ac9a261245e0c397738de87fd572bbea6"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">MINOR_RELEASE_VERSION</span></code> <span class="pre">=</span> <span class="pre">3</span><a class="headerlink" href="#_CPPv4N12SnapshotNode21MINOR_RELEASE_VERSIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Minor Release Version of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode12BUILD_NUMBERE">
+<span id="_CPPv3N12SnapshotNode12BUILD_NUMBERE"></span><span id="_CPPv2N12SnapshotNode12BUILD_NUMBERE"></span><span id="SnapshotNode::BUILD_NUMBER__uint16_tC"></span><span class="target" id="classSnapshotNode_1a3d4fd81d5afdfe00add5b8b7d5f55217"></span><em class="property"><span class="pre">const</span></em> <span class="pre">uint16_t</span> <code class="sig-name descname"><span class="pre">BUILD_NUMBER</span></code> <span class="pre">=</span> <span class="pre">0</span><a class="headerlink" href="#_CPPv4N12SnapshotNode12BUILD_NUMBERE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Build Number of the <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode20FIRMWARE_DESCRIPTIONE">
+<span id="_CPPv3N12SnapshotNode20FIRMWARE_DESCRIPTIONE"></span><span id="_CPPv2N12SnapshotNode20FIRMWARE_DESCRIPTIONE"></span><span id="SnapshotNode::FIRMWARE_DESCRIPTION__ssC"></span><span class="target" id="classSnapshotNode_1aaed3fa80c91e3deb8b924ac6f0336ece"></span><em class="property"><span class="pre">const</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <code class="sig-name descname"><span class="pre">FIRMWARE_DESCRIPTION</span></code> <span class="pre">=</span> <span class="pre">&quot;Latest</span> <span class="pre">Rev:</span> <span class="pre">23-Feb-2021&quot;</span><a class="headerlink" href="#_CPPv4N12SnapshotNode20FIRMWARE_DESCRIPTIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A Description of the <a class="reference internal" href="../api/Definitions.html#structFirmware"><span class="std std-ref">Firmware</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode17DIAGNOSTIC_SYSTEME">
+<span id="_CPPv3N12SnapshotNode17DIAGNOSTIC_SYSTEME"></span><span id="_CPPv2N12SnapshotNode17DIAGNOSTIC_SYSTEME"></span><span id="SnapshotNode::DIAGNOSTIC_SYSTEM__System::MainSystemC"></span><span class="target" id="classSnapshotNode_1ade87eafc1fbb0474cc31dea3cfab0e4c"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_SYSTEM</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystemE" title="System::MainSystem"><span class="pre">MainSystem</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System10MainSystem5ROVERE" title="System::MainSystem::ROVER"><span class="pre">ROVER</span></a><a class="headerlink" href="#_CPPv4N12SnapshotNode17DIAGNOSTIC_SYSTEME" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What <a class="reference internal" href="../api/Definitions.html#classSystem"><span class="std std-ref">System</span></a> this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode20DIAGNOSTIC_SUBSYSTEME">
+<span id="_CPPv3N12SnapshotNode20DIAGNOSTIC_SUBSYSTEME"></span><span id="_CPPv2N12SnapshotNode20DIAGNOSTIC_SUBSYSTEME"></span><span id="SnapshotNode::DIAGNOSTIC_SUBSYSTEM__System::SubSystemC"></span><span class="target" id="classSnapshotNode_1a22a8d3884245e744ca62c75068d57fe9"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_SUBSYSTEM</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystemE" title="System::SubSystem"><span class="pre">SubSystem</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9SubSystem13ENTIRE_SYSTEME" title="System::SubSystem::ENTIRE_SYSTEM"><span class="pre">ENTIRE_SYSTEM</span></a><a class="headerlink" href="#_CPPv4N12SnapshotNode20DIAGNOSTIC_SUBSYSTEME" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What Subsystem this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode20DIAGNOSTIC_COMPONENTE">
+<span id="_CPPv3N12SnapshotNode20DIAGNOSTIC_COMPONENTE"></span><span id="_CPPv2N12SnapshotNode20DIAGNOSTIC_COMPONENTE"></span><span id="SnapshotNode::DIAGNOSTIC_COMPONENT__System::ComponentC"></span><span class="target" id="classSnapshotNode_1a3ce1f7c0f856cc519fc429a5a0a89a56"></span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a> <code class="sig-name descname"><span class="pre">DIAGNOSTIC_COMPONENT</span></code> <span class="pre">=</span> <a class="reference internal" href="../api/Definitions.html#_CPPv46System" title="System"><span class="pre">System</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9ComponentE" title="System::Component"><span class="pre">Component</span></a><span class="pre">::</span><a class="reference internal" href="../api/Definitions.html#_CPPv4N6System9Component10DIAGNOSTICE" title="System::Component::DIAGNOSTIC"><span class="pre">DIAGNOSTIC</span></a><a class="headerlink" href="#_CPPv4N12SnapshotNode20DIAGNOSTIC_COMPONENTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>What Component this <a class="reference internal" href="../api/Definitions.html#classNode"><span class="std std-ref">Node</span></a> falls under. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N12SnapshotNode21read_launchparametersEv">
+<span id="_CPPv3N12SnapshotNode21read_launchparametersEv"></span><span id="_CPPv2N12SnapshotNode21read_launchparametersEv"></span><span id="SnapshotNode::read_launchparameters"></span><span class="target" id="classSnapshotNode_1a08c63b5d55dacc1fa7a9416989d04fb1"></span><a class="reference internal" href="../api/Diagnostic.html#_CPPv410Diagnostic" title="Diagnostic"><span class="pre">Diagnostic</span></a><span class="pre">::</span><a class="reference internal" href="../api/Diagnostic.html#_CPPv4N10Diagnostic20DiagnosticDefinitionE" title="Diagnostic::DiagnosticDefinition"><span class="pre">DiagnosticDefinition</span></a> <code class="sig-name descname"><span class="pre">read_launchparameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12SnapshotNode21read_launchparametersEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode14test_sp_handleE">
+<span id="_CPPv3N12SnapshotNode14test_sp_handleE"></span><span id="_CPPv2N12SnapshotNode14test_sp_handleE"></span><span id="SnapshotNode::test_sp_handle__boost::shared_ptr:ros::NodeHandle:"></span><span class="target" id="classSnapshotNode_1a9adefc51f055e999991ed2cbab435a2d"></span><span class="pre">boost</span><span class="pre">::</span><span class="pre">shared_ptr</span><span class="pre">&lt;</span><span class="pre">ros</span><span class="pre">::</span><span class="pre">NodeHandle</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">test_sp_handle</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode14test_sp_handleE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode7processE">
+<span id="_CPPv3N12SnapshotNode7processE"></span><span id="_CPPv2N12SnapshotNode7processE"></span><span id="SnapshotNode::process__SnapshotProcessP"></span><span class="target" id="classSnapshotNode_1a136d879fd5b2e251dd3950fd4dbb1756"></span><a class="reference internal" href="#_CPPv415SnapshotProcess" title="SnapshotProcess"><span class="pre">SnapshotProcess</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">process</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode7processE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode28system_command_action_serverE">
+<span id="_CPPv3N12SnapshotNode28system_command_action_serverE"></span><span id="_CPPv2N12SnapshotNode28system_command_action_serverE"></span><span id="SnapshotNode::system_command_action_server__actionlib::SimpleActionServer:eros::system_commandAction:"></span><span class="target" id="classSnapshotNode_1ad47b23929207c5d05456385b2672373c"></span><span class="pre">actionlib</span><span class="pre">::</span><span class="pre">SimpleActionServer</span><span class="pre">&lt;</span><span class="pre">eros</span><span class="pre">::</span><span class="pre">system_commandAction</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">system_command_action_server</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode28system_command_action_serverE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode16commandstate_pubE">
+<span id="_CPPv3N12SnapshotNode16commandstate_pubE"></span><span id="_CPPv2N12SnapshotNode16commandstate_pubE"></span><span id="SnapshotNode::commandstate_pub__ros::Publisher"></span><span class="target" id="classSnapshotNode_1aeab75d6440380fda8ce77175a76e110d"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Publisher</span> <code class="sig-name descname"><span class="pre">commandstate_pub</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode16commandstate_pubE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode16commandstate_subE">
+<span id="_CPPv3N12SnapshotNode16commandstate_subE"></span><span id="_CPPv2N12SnapshotNode16commandstate_subE"></span><span id="SnapshotNode::commandstate_sub__ros::Subscriber"></span><span class="target" id="classSnapshotNode_1a76d0c4e57dddca630c43a5f9c492032a"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Subscriber</span> <code class="sig-name descname"><span class="pre">commandstate_sub</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode16commandstate_subE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode11command_pubE">
+<span id="_CPPv3N12SnapshotNode11command_pubE"></span><span id="_CPPv2N12SnapshotNode11command_pubE"></span><span id="SnapshotNode::command_pub__ros::Publisher"></span><span class="target" id="classSnapshotNode_1a3a97c6d31a875aa1760ecf7f5d94a1b1"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Publisher</span> <code class="sig-name descname"><span class="pre">command_pub</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode11command_pubE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N12SnapshotNode27bagfile_snapshottrigger_pubE">
+<span id="_CPPv3N12SnapshotNode27bagfile_snapshottrigger_pubE"></span><span id="_CPPv2N12SnapshotNode27bagfile_snapshottrigger_pubE"></span><span id="SnapshotNode::bagfile_snapshottrigger_pub__ros::Publisher"></span><span class="target" id="classSnapshotNode_1a888b6eff07db88aa0b6f644b6ad830c0"></span><span class="pre">ros</span><span class="pre">::</span><span class="pre">Publisher</span> <code class="sig-name descname"><span class="pre">bagfile_snapshottrigger_pub</span></code><a class="headerlink" href="#_CPPv4N12SnapshotNode27bagfile_snapshottrigger_pubE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="SystemMonitor.html" class="btn btn-neutral float-right" title="SystemMonitorProcess" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="SafetyNode.html" class="btn btn-neutral float-left" title="SafetyNodeProcess" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, David Gitz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

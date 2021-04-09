@@ -1,0 +1,13 @@
+digraph "SystemMonitorProcess"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="SystemMonitorProcess",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="BaseNodeProcess",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBaseNodeProcess.html",tooltip="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..."];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" diagnostic_helper" ,fontname="Helvetica"];
+  Node3 [label="Diagnostic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classDiagnostic.html",tooltip="Diagnostic class Diagnostic class used to create and update diagnostic information."];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" logger" ,fontname="Helvetica"];
+  Node4 [label="Logger",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classLogger.html",tooltip="Logger class Logger class used to write log outputs for strings and diagnostic information to console..."];
+}

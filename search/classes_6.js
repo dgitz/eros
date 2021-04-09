@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['node_178',['Node',['../classNode.html',1,'']]]
+  ['level_234',['Level',['../classLevel.html',1,'']]],
+  ['logger_235',['Logger',['../classLogger.html',1,'']]]
 ];

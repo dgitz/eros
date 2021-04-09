@@ -1,0 +1,20 @@
+digraph "DataLoggerNode"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="DataLoggerNode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="A Node that can be used to collect bag files. Configured as either always logging to disk,..."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="BaseNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBaseNode.html",tooltip="This is a BaseNode class. All Nodes should be a derived class from this Base Class."];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" deviceInfo" ,fontname="Helvetica"];
+  Node3 [label="BaseNode::DeviceInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structBaseNode_1_1DeviceInfo.html",tooltip=" "];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" diagnostic" ,fontname="Helvetica"];
+  Node4 [label="Diagnostic::DiagnosticDefinition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structDiagnostic_1_1DiagnosticDefinition.html",tooltip="Contains the definition for the DiagnosticDefinition."];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" firmware_version" ,fontname="Helvetica"];
+  Node5 [label="Firmware",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structFirmware.html",tooltip="Firmware struct."];
+  Node6 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" logger" ,fontname="Helvetica"];
+  Node6 [label="Logger",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classLogger.html",tooltip="Logger class Logger class used to write log outputs for strings and diagnostic information to console..."];
+  Node7 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" resource_monitor" ,fontname="Helvetica"];
+  Node7 [label="ResourceMonitor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classResourceMonitor.html",tooltip="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..."];
+}

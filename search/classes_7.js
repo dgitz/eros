@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['resourceinfo_179',['ResourceInfo',['../structResourceMonitor_1_1ResourceInfo.html',1,'ResourceMonitor']]],
-  ['resourcemonitor_180',['ResourceMonitor',['../classResourceMonitor.html',1,'']]]
+  ['masternode_236',['MasterNode',['../classMasterNode.html',1,'']]],
+  ['masternodeprocess_237',['MasterNodeProcess',['../classMasterNodeProcess.html',1,'']]]
 ];
