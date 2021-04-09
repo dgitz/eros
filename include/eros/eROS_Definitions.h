@@ -7,7 +7,9 @@
 //! Define if ROS is Installed or Not.
 #define ROS_INSTALLED
 #include <string>
-
+/*! \struct Firmware
+    \brief Firmware struct
+*/
 struct Firmware {
     uint16_t MajorVersion;
     uint16_t MinorVersion;
