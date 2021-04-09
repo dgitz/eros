@@ -26,7 +26,6 @@ project = 'eROS'
 copyright = '2021, David Gitz'
 author = 'David Gitz'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
