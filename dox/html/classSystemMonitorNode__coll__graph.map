@@ -1,8 +1,0 @@
-<map id="SystemMonitorNode" name="SystemMonitorNode">
-<area shape="rect" id="node2" href="$classBaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class. " alt="" coords="368,107,451,133"/>
-<area shape="rect" id="node3" href="$structBaseNode_1_1DeviceInfo.html" title="BaseNode::DeviceInfo" alt="" coords="33,5,187,32"/>
-<area shape="rect" id="node4" href="$structDiagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition. " alt="" coords="5,56,215,83"/>
-<area shape="rect" id="node5" href="$structFirmware.html" title="Firmware" alt="" coords="72,107,148,133"/>
-<area shape="rect" id="node6" href="$classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="79,157,141,184"/>
-<area shape="rect" id="node7" href="$classResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="49,208,171,235"/>
-</map>

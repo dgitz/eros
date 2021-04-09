@@ -1,8 +1,0 @@
-<map id="Diagnostic::update_diagnostic" name="Diagnostic::update_diagnostic">
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4" title="Initializes Process. Should be called right after instantiating variable. " alt="" coords="403,149,589,176"/>
-<area shape="rect" id="node3" href="$classDiagnostic.html#af9b7d35a8454ed1d682ce6c60801cf22" title="Update Diagnostic. " alt="" coords="204,41,335,82"/>
-<area shape="rect" id="node4" href="$classSystemMonitorProcess.html#ac5a88d630b9ab2ae5431b1fa4eae2d54" title="Derived Process Initialization. " alt="" coords="190,106,349,147"/>
-<area shape="rect" id="node5" href="$classSystemMonitorProcess.html#af92e7cdd51392b69bae1e2cd14fba91e" title="Update function must be implemented in Derived Process. This is used for all state machine logic..." alt="" coords="190,171,349,213"/>
-<area shape="rect" id="node6" href="$classSystemMonitorProcess.html#a500b063d3d4b6a71812654ff8c53cbff" title="Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of ..." alt="" coords="184,237,355,278"/>
-<area shape="rect" id="node7" href="$classBaseNodeProcess.html#ac746a745cdcafcd2ab2eabf032ef3e30" title="Runs Unit Test on Derived Process. " alt="" coords="191,302,348,343"/>
-</map>
