@@ -1,0 +1,9 @@
+<map id="BaseNode" name="BaseNode">
+<area shape="rect" id="node1" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="351,5,433,32"/>
+<area shape="rect" id="node2" href="$classDataLoggerNode.html" title="A Node that can be used to collect bag files. Configured as either always logging to disk,..." alt="" coords="5,80,125,107"/>
+<area shape="rect" id="node3" href="$classDiagnosticNode.html" title=" " alt="" coords="149,80,264,107"/>
+<area shape="rect" id="node4" href="$classMasterNode.html" title=" " alt="" coords="288,80,381,107"/>
+<area shape="rect" id="node5" href="$classSafetyNode.html" title=" " alt="" coords="405,80,496,107"/>
+<area shape="rect" id="node6" href="$classSnapshotNode.html" title=" " alt="" coords="521,80,629,107"/>
+<area shape="rect" id="node7" href="$classSystemMonitorNode.html" title=" " alt="" coords="653,80,793,107"/>
+</map>
