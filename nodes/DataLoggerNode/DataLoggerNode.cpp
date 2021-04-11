@@ -1,4 +1,6 @@
 #include <eros/DataLogger/DataLoggerNode.h>
+using namespace eros;
+using namespace eros_nodes;
 bool kill_node = false;
 DataLoggerNode::DataLoggerNode()
     : system_command_action_server(

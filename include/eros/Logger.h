@@ -15,6 +15,7 @@
 #ifdef ROS_INSTALLED
 #include <ros/console.h>
 #endif
+namespace eros {
 
 //! Log a Debug Line
 /*!
@@ -157,4 +158,5 @@ class Logger
     bool console_print;
     bool use_ROS_logger;
 };
-#endif
+}  // namespace eros
+#endif  // LOGGER_H

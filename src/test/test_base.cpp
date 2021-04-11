@@ -4,6 +4,7 @@
 #include <eros/BaseNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
+using namespace eros;
 static std::string get_hostname() {
     char name[1024];
     name[1023] = '\0';

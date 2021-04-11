@@ -1,4 +1,6 @@
 #include <eros/MasterNode/MasterNode.h>
+using namespace eros;
+using namespace eros_nodes;
 bool kill_node = false;
 MasterNode::MasterNode()
     : system_command_action_server(

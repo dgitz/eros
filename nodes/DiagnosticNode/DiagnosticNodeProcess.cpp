@@ -1,5 +1,6 @@
 #include <eros/DiagnosticNode/DiagnosticNodeProcess.h>
-
+using namespace eros;
+using namespace eros_nodes;
 DiagnosticNodeProcess::DiagnosticNodeProcess() {
 }
 DiagnosticNodeProcess::~DiagnosticNodeProcess() {

@@ -1,4 +1,6 @@
 #include <eros/SnapshotNode/SnapshotNode.h>
+using namespace eros;
+using namespace eros_nodes;
 bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(

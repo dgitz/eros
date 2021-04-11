@@ -1,9 +1,11 @@
 /*! \file test_DataLoggerProcess.cpp
  */
+
 #include <eros/DataLogger/DataLoggerProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
+using namespace eros;
+using namespace eros_nodes;
 class DataLoggerProcessTester : public DataLoggerProcess
 {
    public:

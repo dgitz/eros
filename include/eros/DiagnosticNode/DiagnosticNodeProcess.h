@@ -3,6 +3,8 @@
 #ifndef DiagnosticNodeProcess_H
 #define DiagnosticNodeProcess_H
 #include <eros/BaseNodeProcess.h>
+using namespace eros;
+namespace eros_nodes {
 /*! \class DiagnosticNodeProcess DiagnosticNodeProcess.h "DiagnosticNodeProcess.h"
  *  \brief */
 class DiagnosticNodeProcess : public BaseNodeProcess
@@ -38,4 +40,5 @@ class DiagnosticNodeProcess : public BaseNodeProcess
     std::vector<std::string> diagnostic_topics_already_monitoring;
     std::map<Diagnostic::DiagnosticType, DiagnosticTypeAggregate> diagnostic_aggregator;
 };
+}  // namespace eros_nodes
 #endif  // DiagnosticNodeProcess_H

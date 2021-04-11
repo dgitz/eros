@@ -3,6 +3,7 @@
 #include <eros/Logger.h>
 #include <eros/ResourceMonitor.h>
 #include <gtest/gtest.h>
+using namespace eros;
 bool isEqual(double a, double b, double eps) {
     double dv = a - b;
     if (fabs(dv) < eps) {

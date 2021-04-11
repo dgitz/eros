@@ -46,6 +46,7 @@
 #include "eROS_Definitions.h"
 
 using json = nlohmann::json;
+namespace eros {
 /*! \class BaseNodeProcess BaseNodeProcess.h "BaseNodeProcess.h"
  *  \brief This is a BaseNodeProcess class.  All NodeProcess should be a derived class from this
  * BaseNodeProcess Class. */
@@ -261,5 +262,5 @@ class BaseNodeProcess
    private:
     double run_time, system_time;
 };
-
+}  // namespace eros
 #endif  // EROS_BASENODEPROCESS_H

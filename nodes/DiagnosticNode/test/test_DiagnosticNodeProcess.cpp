@@ -3,7 +3,8 @@
 #include <eros/DiagnosticNode/DiagnosticNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
+using namespace eros;
+using namespace eros_nodes;
 class DiagnosticNodeProcessTester : public DiagnosticNodeProcess
 {
    public:

@@ -1,4 +1,5 @@
 #include <eros/BaseNode.h>
+using namespace eros;
 void BaseNode::set_basenodename(std::string t_base_node_name) {
     base_node_name = t_base_node_name;
 }

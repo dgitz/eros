@@ -10,7 +10,8 @@
 #include <eros/BaseNode.h>
 
 #include "DiagnosticNodeProcess.h"
-
+using namespace eros;
+namespace eros_nodes {
 /*! \class DiagnosticNode DiagnosticNode.h "DiagnosticNode.h"
  *  \brief */
 class DiagnosticNode : public BaseNode
@@ -73,5 +74,5 @@ class DiagnosticNode : public BaseNode
     std::vector<ros::Subscriber> diagnostic_subs;
     ros::ServiceServer system_diagnostics_srv;
 };
-
+}  // namespace eros_nodes
 #endif  // DiagnosticNode_H

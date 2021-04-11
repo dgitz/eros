@@ -4,6 +4,8 @@
 #define SafetyNodeProcess_H
 #include <eros/BaseNodeProcess.h>
 #include <ros/ros.h>
+using namespace eros;
+namespace eros_nodes {
 /*! \class ArmDisarmMonitor
     \brief ArmDisarmMonitor class
 */
@@ -81,4 +83,5 @@ class SafetyNodeProcess : public BaseNodeProcess
     std::vector<std::string> cannotarm_reasons;
     std::vector<ros::Subscriber> arm_monitor_subs;
 };
+}  // namespace eros_nodes
 #endif  // SafetyNodeProcess_H

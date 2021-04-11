@@ -4,6 +4,7 @@
 #include <eros/Logger.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
+using namespace eros;
 TEST(BasicTest, TestOperation) {
     Diagnostic diag_helper;
     diag_helper.initialize("UnitTestDevice",

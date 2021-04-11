@@ -4,6 +4,7 @@
 #include <eros/Logger.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
+using namespace eros;
 TEST(BasicTest, TestDefintions) {
     // Test Type: DiagnosticType
     for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {

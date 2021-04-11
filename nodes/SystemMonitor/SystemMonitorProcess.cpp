@@ -1,4 +1,5 @@
 #include <eros/SystemMonitor/SystemMonitorProcess.h>
+
 WINDOW *create_newwin(int height, int width, int starty, int startx) {
     WINDOW *local_win;
 
@@ -10,6 +11,8 @@ WINDOW *create_newwin(int height, int width, int starty, int startx) {
 
     return local_win;
 }
+using namespace eros;
+using namespace eros_nodes;
 SystemMonitorProcess::~SystemMonitorProcess() {
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::finish_initialization() {

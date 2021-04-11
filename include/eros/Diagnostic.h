@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+namespace eros {
 /*! \class Diagnostic
     \brief Diagnostic class
     Diagnostic class used to create and update diagnostic information.
@@ -364,5 +365,5 @@ class Diagnostic
     DiagnosticDefinition root_diagnostic;
     std::vector<DiagnosticDefinition> diagnostics;
 };
-
+}  // namespace eros
 #endif  // EROSDIAGNOSTIC_H

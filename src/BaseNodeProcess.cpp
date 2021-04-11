@@ -1,4 +1,5 @@
 #include <eros/BaseNodeProcess.h>
+using namespace eros;
 Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, double t_system_time) {
     run_time += t_dt;
     system_time = t_system_time;

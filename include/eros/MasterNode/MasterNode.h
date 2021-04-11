@@ -10,7 +10,8 @@
 #include <eros/BaseNode.h>
 
 #include "MasterNodeProcess.h"
-
+using namespace eros;
+namespace eros_nodes {
 /*! \class MasterNode MasterNode.h "MasterNode.h"
  *  \brief */
 class MasterNode : public BaseNode
@@ -72,5 +73,5 @@ class MasterNode : public BaseNode
     ros::Publisher resource_available_pub;
     ros::Publisher loadfactor_pub;
 };
-
+}  // namespace eros_nodes
 #endif  // MasterNode_H

@@ -3,6 +3,7 @@
 #include <eros/eROS_Definitions.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
+using namespace eros;
 TEST(BasicTest, TestDefintions) {
     // Test Class: System
     {
