@@ -3,7 +3,8 @@
 #include <eros/MasterNode/MasterNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
+using namespace eros;
+using namespace eros_nodes;
 class MasterNodeProcessTester : public MasterNodeProcess
 {
    public:

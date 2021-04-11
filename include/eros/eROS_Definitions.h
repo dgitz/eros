@@ -7,18 +7,22 @@
 //! Define if ROS is Installed or Not.
 #define ROS_INSTALLED
 #include <string>
+namespace eros {
 /*! \struct Firmware
-    \brief Firmware struct
+    \brief Firmware Information:
+    Holds information about Firmware Version.
 */
 struct Firmware {
-    uint16_t MajorVersion;
-    uint16_t MinorVersion;
-    uint16_t BuildNumber;
-    std::string Description;
+    /*@{*/
+    uint16_t MajorVersion;   /**< Incremented when a change IS NOT Backwards Compatible. */
+    uint16_t MinorVersion;   /**< Incremented when a change IS Backwards Compatible. */
+    uint16_t BuildNumber;    /**< Incremented during development.  */
+    std::string Description; /**< User defined.  */
+    /*@}*/
 };
 
 /*! \class System
-    \brief System class
+    \brief System Information:
     Holds System and lower level definitions based on the Hierarchy:
    System <- System::SubSystem <- System::Component
 */
@@ -118,7 +122,9 @@ class System
     }
 };
 /*! \class Level
-    \brief Level class
+    \brief Level for Information and Diagnostics:
+    A numerically ordered level of information.  1 is considered the least, END_OF_LIST-1 is
+   considered the highest.
 
 */
 class Level
@@ -179,7 +185,8 @@ class Level
     }
 };
 /*! \class ArmDisarm
-    \brief ArmDisarm class
+    \brief ArmDisarm:
+    Used to Arm and Disarm Robot.
 */
 class ArmDisarm
 {
@@ -193,6 +200,10 @@ class ArmDisarm
         ARMING = 5,             /*!< System is Arming. */
         END_OF_LIST = 6         /*!< Last item of list. Used for Range Checks. */
     };
+    /*! \struct State
+        \brief ArmDisarm Container
+        Holds information about ArmDisarm.
+    */
     struct State {
         State() : state(Type::UNKNOWN) {
         }
@@ -217,7 +228,8 @@ class ArmDisarm
     }
 };
 /*! \class Command
-    \brief Command class
+    \brief Command:
+    A Command is a general purpose order from the highest level of softare on the robot.
 */
 class Command
 {
@@ -280,7 +292,8 @@ class Command
     }
 };
 /*! \class Node
-    \brief Node class
+    \brief Node:
+    A Node contains information about the process being ran.
 */
 class Node
 {
@@ -351,6 +364,10 @@ class Node
         return Node::State::UNKNOWN;
     }
 };
+/*! \class Architecture
+    \brief Hardware Architecture Container:
+    Stores information and provides relevant helper functions related to Hardware Architecture.
+*/
 class Architecture
 {
    public:
@@ -390,4 +407,5 @@ class Architecture
         return Architecture::Type::UNKNOWN;
     }
 };
+}  // namespace eros
 #endif  // EROSDEFINITIONS_H

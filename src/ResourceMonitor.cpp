@@ -1,4 +1,5 @@
 #include <eros/ResourceMonitor.h>
+using namespace eros;
 ResourceMonitor::ResourceMonitor() {
 }
 ResourceMonitor::ResourceMonitor(Mode _mode,

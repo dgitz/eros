@@ -1,5 +1,6 @@
 #include <eros/SnapshotNode/SnapshotProcess.h>
-
+using namespace eros;
+using namespace eros_nodes;
 SnapshotProcess::SnapshotProcess()
     : mode(Mode::UNKNOWN),
       architecture(Architecture::Type::UNKNOWN),

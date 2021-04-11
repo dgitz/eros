@@ -1,5 +1,6 @@
 #include <eros/DataLogger/DataLoggerProcess.h>
-
+using namespace eros;
+using namespace eros_nodes;
 DataLoggerProcess::DataLoggerProcess()
     : log_directory(""),
       log_directory_available(false),

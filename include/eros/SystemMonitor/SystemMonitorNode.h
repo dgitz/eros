@@ -11,7 +11,8 @@
 #include <eros/BaseNode.h>
 
 #include "SystemMonitorProcess.h"
-
+using namespace eros;
+namespace eros_nodes {
 /*! \class SystemMonitorNode SystemMonitorNode.h "SystemMonitorNode.h"
  *  \brief */
 class SystemMonitorNode : public BaseNode
@@ -81,5 +82,5 @@ class SystemMonitorNode : public BaseNode
     SystemMonitorProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };
-
+}  // namespace eros_nodes
 #endif  // SYSTEMMONITORNODE_H

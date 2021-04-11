@@ -10,6 +10,9 @@
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
 WINDOW* create_newwin(int height, int width, int starty, int startx);
+using namespace eros;
+namespace eros_nodes {
+
 /*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief WindowManager handles the coordinates and reference to the WINDOW object. */
 class WindowManager
@@ -647,4 +650,5 @@ class SystemMonitorProcess : public BaseNodeProcess
     std::vector<Diagnostic::DiagnosticDefinition> task_diagnostics_to_show;
     ArmDisarm::State armed_state;
 };
+}  // namespace eros_nodes
 #endif  // SYSTEMMONITORPROCESS_h

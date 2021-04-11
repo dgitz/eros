@@ -1,4 +1,6 @@
 #include <eros/DiagnosticNode/DiagnosticNode.h>
+using namespace eros;
+using namespace eros_nodes;
 bool kill_node = false;
 DiagnosticNode::DiagnosticNode()
     : system_command_action_server(

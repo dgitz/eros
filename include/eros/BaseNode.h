@@ -27,6 +27,7 @@
 #include <std_msgs/Empty.h>
 // Project
 #include <eros/BaseNodeProcess.h>
+namespace eros {
 
 /*! \class BaseNode BaseNode.h "BaseNode.h"
  *  \brief This is a BaseNode class.  All Nodes should be a derived class from this Base Class.*/
@@ -70,6 +71,10 @@ class BaseNode
     // Enums
 
     // Structs
+    /*! \struct DeviceInfo
+        \brief DeviceInfo Logic
+        Container and logic for DeviceInfo processing.
+    */
     struct DeviceInfo {
         DeviceInfo() : received(false) {
         }
@@ -81,13 +86,18 @@ class BaseNode
     void set_no_launch_enabled(bool v) {
         no_launch_enabled = v;
     }
-
+    /*! \brief Set if Node should NOT Subscribe to ArmedState message.
+     */
     void disable_armedstate_sub() {
         armedstate_sub_disabled = true;
     }
+    /*! \brief Set if Node should NOT Subscribe to ModeState message.
+     */
     void disable_modestate_sub() {
         modestate_sub_disabled = true;
     }
+    /*! \brief Set if Node SHOULD Publish ArmedState message.
+     */
     void enable_ready_to_arm_pub(bool v) {
         pub_ready_to_arm = v;
     }
@@ -107,6 +117,7 @@ class BaseNode
                              uint16_t t_build_number,
                              std::string t_description);
 
+    /*! \brief Set the name of the Node. */
     void set_nodename(std::string t_node_name) {
         node_name = t_node_name;
     }
@@ -117,19 +128,26 @@ class BaseNode
     /*! \brief Pre-initialization of node.  This section will create the default pub/subs for the
      * node, along with the logger. */
     Diagnostic::DiagnosticDefinition preinitialize_basenode();
+
+    /*! \brief Set Loop1 Rate in Hz. */
     void set_loop1_rate(double t_rate) {
         loop1_rate = t_rate;
         loop1_enabled = true;
     }
+    /*! \brief Set Loop2 Rate in Hz. */
     void set_loop2_rate(double t_rate) {
         loop2_rate = t_rate;
         loop2_enabled = true;
     }
+
+    /*! \brief Set Loop3 Rate in Hz. */
     void set_loop3_rate(double t_rate) {
         loop3_rate = t_rate;
         loop3_enabled = true;
     }
 
+    /*! \brief Set the spin rate of the Node. This should be higher than the combined rates of
+     * Loop1-Loop3 (if they are used.*/
     void set_ros_rate(double t_rate) {
         ros_rate = t_rate;
     }
@@ -166,6 +184,7 @@ class BaseNode
     std::string get_nodename() {
         return node_name;
     }
+    /*! \brief Get the current logger verbosity level. */
     std::string get_verbositylevel() {
         return verbosity_level;
     }
@@ -182,6 +201,8 @@ class BaseNode
         return logger;
     }
 
+    /*! \brief Update the node's ready to arm information.  This should be updated at least at 10Hz.
+     */
     void update_ready_to_arm(eros::ready_to_arm v) {
         ready_to_arm = v;
     }
@@ -196,31 +217,41 @@ class BaseNode
         double etime = t_timer_a.toSec() - t_timer_b.toSec();
         return etime;
     }
+
     eros::diagnostic convert(Diagnostic::DiagnosticDefinition diag_def);
     Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def);
-
     eros::resource convert(ResourceMonitor::ResourceInfo res_info);
-
     static eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr);
     static eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr);
+
     // Message Functions
     /*! \brief Handles receiving the 1 PPS Msg. */
     void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg);
 
     // Service Functions
+    /*! \brief A firmware service, used to get a Node's current firmware. */
     bool firmware_service(eros::srv_firmware::Request &req, eros::srv_firmware::Response &res);
+
+    /*! \brief A logger level service, used to change the Node's logger level. */
     bool loggerlevel_service(eros::srv_logger_level::Request &req,
                              eros::srv_logger_level::Response &res);
+
+    /*! \brief A Diagnostics Service, used to get the node's current diagnostics. */
     bool diagnostics_service(eros::srv_get_diagnostics::Request &req,
                              eros::srv_get_diagnostics::Response &res);
 
+    /*! \brief A Node State service, used to change the Node's state. */
     virtual bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                                          eros::srv_change_nodestate::Response &res) = 0;
 
+    /*! \brief Process an eros::command. */
     virtual void command_Callback(const eros::command::ConstPtr &t_msg) = 0;
+    /*! \brief Process an eros::armed_state. */
     void armedstate_Callback(const eros::armed_state::ConstPtr &t_msg);
+    /*! \brief Process an eros::mode_state. */
     void modestate_Callback(const eros::mode_state::ConstPtr &t_msg);
 
+    /*! \brief Reset the Base Node */
     void base_reset();
     // Destructors
     virtual void cleanup() = 0;
@@ -297,5 +328,5 @@ class BaseNode
 
    private:
 };
-
+}  // namespace eros
 #endif  // EROS_BASENODE_H

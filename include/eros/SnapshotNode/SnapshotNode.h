@@ -10,7 +10,8 @@
 #include <eros/BaseNode.h>
 
 #include "SnapshotProcess.h"
-
+using namespace eros;
+namespace eros_nodes {
 /*! \class SnapshotNode SnapshotNode.h "SnapshotNode.h"
  *  \brief */
 class SnapshotNode : public BaseNode
@@ -75,5 +76,5 @@ class SnapshotNode : public BaseNode
     ros::Publisher command_pub;
     ros::Publisher bagfile_snapshottrigger_pub;
 };
-
+}  // namespace eros_nodes
 #endif  // SnapshotNode_H

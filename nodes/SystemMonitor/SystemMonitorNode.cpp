@@ -1,4 +1,6 @@
 #include <eros/SystemMonitor/SystemMonitorNode.h>
+using namespace eros;
+using namespace eros_nodes;
 bool kill_node = false;
 
 SystemMonitorNode::SystemMonitorNode()

@@ -3,7 +3,8 @@
 #include <eros/SnapshotNode/SnapshotProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
+using namespace eros;
+using namespace eros_nodes;
 class SnapshotProcessTester : public SnapshotProcess
 {
    public:

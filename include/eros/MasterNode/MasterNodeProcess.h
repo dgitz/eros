@@ -3,6 +3,8 @@
 #ifndef MasterNodeProcess_H
 #define MasterNodeProcess_H
 #include <eros/BaseNodeProcess.h>
+using namespace eros;
+namespace eros_nodes {
 /*! \class MasterNodeProcess MasterNodeProcess.h "MasterNodeProcess.h"
  *  \brief */
 class MasterNodeProcess : public BaseNodeProcess
@@ -22,4 +24,5 @@ class MasterNodeProcess : public BaseNodeProcess
 
    private:
 };
+}  // namespace eros_nodes
 #endif  // MasterNodeProcess_H

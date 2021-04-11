@@ -10,7 +10,8 @@
 #include <eros/BaseNode.h>
 
 #include "SafetyNodeProcess.h"
-
+using namespace eros;
+namespace eros_nodes {
 /*! \class SafetyNode SafetyNode.h "SafetyNode.h"
  *  \brief */
 class SafetyNode : public BaseNode
@@ -69,5 +70,5 @@ class SafetyNode : public BaseNode
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Publisher armedstate_pub;
 };
-
+}  // namespace eros_nodes
 #endif  // SafetyNode_H

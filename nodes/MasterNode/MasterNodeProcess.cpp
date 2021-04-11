@@ -1,5 +1,6 @@
 #include <eros/MasterNode/MasterNodeProcess.h>
-
+using namespace eros;
+using namespace eros_nodes;
 MasterNodeProcess::MasterNodeProcess() {
 }
 MasterNodeProcess::~MasterNodeProcess() {

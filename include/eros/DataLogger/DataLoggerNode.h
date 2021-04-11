@@ -12,7 +12,7 @@
 #include <eros/BaseNode.h>
 
 #include "DataLoggerProcess.h"
-
+namespace eros_nodes {
 /*! \class DataLoggerNode DataLoggerNode.h "DataLoggerNode.h"
  *  \brief A Node that can be used to collect bag files.  Configured as either always logging to
  * disk, or snapshot mode where it will log to ram and write to disk when a snapshot trigger is
@@ -74,5 +74,5 @@ class DataLoggerNode : public BaseNode
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Subscriber snapshot_trigger_sub;
 };
-
+}  // namespace eros_nodes
 #endif  // DataLoggerNode_H

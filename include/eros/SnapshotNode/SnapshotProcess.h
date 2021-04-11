@@ -8,6 +8,8 @@
 #include <boost/thread.hpp>
 #include <boost/thread/scoped_thread.hpp>
 #include <fstream>
+using namespace eros;
+namespace eros_nodes {
 /*! \class SnapshotProcess SnapshotProcess.h "SnapshotProcess.h"
  *  \brief */
 class SnapshotProcess : public BaseNodeProcess
@@ -139,4 +141,5 @@ class SnapshotProcess : public BaseNodeProcess
     double snapshot_progress_percent;
     double holdcomplete_timer;
 };
+}  // namespace eros_nodes
 #endif  // SnapshotProcess_H

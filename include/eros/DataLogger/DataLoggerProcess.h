@@ -4,6 +4,8 @@
 #define DataLoggerProcess_H
 #include <eros/BaseNodeProcess.h>
 #include <sys/stat.h>
+using namespace eros;
+namespace eros_nodes {
 /*! \class DataLoggerProcess DataLoggerProcess.h "DataLoggerProcess.h"
  *  \brief */
 class DataLoggerProcess : public BaseNodeProcess
@@ -58,4 +60,5 @@ class DataLoggerProcess : public BaseNodeProcess
     bool logging_enabled;
     bool snapshot_mode;
 };
+}  // namespace eros_nodes
 #endif  // DataLoggerProcess_H
