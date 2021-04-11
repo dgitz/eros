@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['preinitialize_5fbasenode_304',['preinitialize_basenode',['../classBaseNode.html#a70f12ebcbd45693fdbb426a52b1a17bb',1,'BaseNode']]],
-  ['pretty_305',['pretty',['../classDiagnostic.html#ae3442c8a69e6c77f60f521edd992151a',1,'Diagnostic::pretty()'],['../classDiagnostic.html#a7690400ce80b420f459b889c9f778948',1,'Diagnostic::pretty(std::string pre, std::vector&lt; DiagnosticDefinition &gt; diagnostics)'],['../classDiagnostic.html#a6b99896d189da5156980d50ed2b83b50',1,'Diagnostic::pretty(std::string pre, DiagnosticDefinition diag, bool print_end_line=true)']]]
+  ['mainsystemstring_340',['MainSystemString',['../classeros_1_1System.html#a091efde2945185fc21f5be5a86943c92',1,'eros::System']]],
+  ['measure_5ftime_5fdiff_341',['measure_time_diff',['../classeros_1_1BaseNode.html#ae9663723f7854be315f09ed1773175b6',1,'eros::BaseNode']]],
+  ['modestate_5fcallback_342',['modestate_Callback',['../classeros_1_1BaseNode.html#a78f6ff44df347c32ced77de913c03261',1,'eros::BaseNode']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['resourceinfo_241',['ResourceInfo',['../structResourceMonitor_1_1ResourceInfo.html',1,'ResourceMonitor']]],
-  ['resourcemonitor_242',['ResourceMonitor',['../classResourceMonitor.html',1,'']]]
+  ['resourceinfo_270',['ResourceInfo',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html',1,'eros::ResourceMonitor']]],
+  ['resourcemonitor_271',['ResourceMonitor',['../classeros_1_1ResourceMonitor.html',1,'eros']]]
 ];

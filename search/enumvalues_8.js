@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['learning_385',['LEARNING',['../classSystem.html#a7a2992377dce6edb4e58bf8bc443a24dac4f6b1a2cc8345c11892ca0f6312b55d',1,'System']]],
-  ['log_5fsuppressed_386',['LOG_SUPPRESSED',['../classLogger.html#a577e9790d89f93ee725d68d627341048a0d1e4ebcd817bc8d584aff6c4315614f',1,'Logger']]],
-  ['log_5fwritten_387',['LOG_WRITTEN',['../classLogger.html#a577e9790d89f93ee725d68d627341048a79c4701ee0b3df9f9fa6e570d24ae605',1,'Logger']]]
+  ['learning_443',['LEARNING',['../classeros_1_1System.html#a34a61840c9cd6ede13ed123e6facf338ac4f6b1a2cc8345c11892ca0f6312b55d',1,'eros::System']]],
+  ['log_5fsuppressed_444',['LOG_SUPPRESSED',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572a0d1e4ebcd817bc8d584aff6c4315614f',1,'eros::Logger']]],
+  ['log_5fwritten_445',['LOG_WRITTEN',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572a79c4701ee0b3df9f9fa6e570d24ae605',1,'eros::Logger']]]
 ];

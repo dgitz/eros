@@ -1,0 +1,4 @@
+<map id="eros::Diagnostic::pretty" name="eros::Diagnostic::pretty">
+<area shape="rect" id="node1" title="Generate human readable string of all enabled diagnostics." alt="" coords="205,5,357,32"/>
+<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#ad0598a59d615bb8f626c62082a7efe12" title="Generate human readable string of a vector of diagnostics." alt="" coords="5,5,157,32"/>
+</map>

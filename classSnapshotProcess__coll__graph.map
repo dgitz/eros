@@ -1,6 +1,0 @@
-<map id="SnapshotProcess" name="SnapshotProcess">
-<area shape="rect" id="node1" title=" " alt="" coords="52,171,177,197"/>
-<area shape="rect" id="node2" href="$classBaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="49,95,180,121"/>
-<area shape="rect" id="node3" href="$classDiagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information." alt="" coords="5,5,88,32"/>
-<area shape="rect" id="node4" href="$classLogger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="151,5,214,32"/>
-</map>

@@ -1,15 +1,16 @@
 var searchData=
 [
-  ['aarch64_0',['AARCH64',['../classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ea036a8f756db6f6db7e1ed8f22a9f641e',1,'Architecture']]],
-  ['acquire_5ftarget_1',['ACQUIRE_TARGET',['../classCommand.html#a4ca33b8d40e12deca5e7bb4190426ee1a6837680e20e8c4466bf8bf5133f6a48a',1,'Command']]],
-  ['actuators_2',['ACTUATORS',['../classDiagnostic.html#a3099654b22790ede6b922bcb09804f1ba11355399d16908b5a0bab3de9201a39b',1,'Diagnostic']]],
-  ['architecture_3',['Architecture',['../classArchitecture.html',1,'']]],
-  ['architecturestring_4',['ArchitectureString',['../classArchitecture.html#aa14ad0a144f6321459622606ff644f60',1,'Architecture']]],
-  ['arm_5',['ARM',['../classCommand.html#a4ca33b8d40e12deca5e7bb4190426ee1a47f45e65244c17ec9fa8771a5c6d60e1',1,'Command']]],
-  ['armdisarm_6',['ArmDisarm',['../classArmDisarm.html',1,'']]],
-  ['armdisarmmonitor_7',['ArmDisarmMonitor',['../classArmDisarmMonitor.html',1,'']]],
-  ['armdisarmstring_8',['ArmDisarmString',['../classArmDisarm.html#aff6f2f552fecbada09fe65a1b663c42b',1,'ArmDisarm']]],
-  ['armed_9',['ARMED',['../classArmDisarm.html#aed8d59cfd9d5e5ca405ad7eaa7a9ea62af40e2850f4c07c01444b5f2393f6eb4c',1,'ArmDisarm']]],
-  ['arming_10',['ARMING',['../classArmDisarm.html#aed8d59cfd9d5e5ca405ad7eaa7a9ea62ae32577107fe76fbf64bed546c9bdb94b',1,'ArmDisarm']]],
-  ['armv7l_11',['ARMV7L',['../classArchitecture.html#a7ae6186419ae33e4d9019df7b18d883ead0600557e19a3dbe302386034bbd6895',1,'Architecture']]]
+  ['aarch64_0',['AARCH64',['../classeros_1_1Architecture.html#a4de8a31a2dd45d3d9559e76109a23e1fa036a8f756db6f6db7e1ed8f22a9f641e',1,'eros::Architecture']]],
+  ['acquire_5ftarget_1',['ACQUIRE_TARGET',['../classeros_1_1Command.html#a7498dad170d5c5801621fa3a7f55aad4a6837680e20e8c4466bf8bf5133f6a48a',1,'eros::Command']]],
+  ['actuators_2',['ACTUATORS',['../classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65dfa11355399d16908b5a0bab3de9201a39b',1,'eros::Diagnostic']]],
+  ['architecture_3',['Architecture',['../classeros_1_1Architecture.html',1,'eros']]],
+  ['architecturestring_4',['ArchitectureString',['../classeros_1_1Architecture.html#a492b7a7dd8ee76c360361f287fbd9f6c',1,'eros::Architecture']]],
+  ['arm_5',['ARM',['../classeros_1_1Command.html#a7498dad170d5c5801621fa3a7f55aad4a47f45e65244c17ec9fa8771a5c6d60e1',1,'eros::Command']]],
+  ['armdisarm_6',['ArmDisarm',['../classeros_1_1ArmDisarm.html',1,'eros']]],
+  ['armdisarmmonitor_7',['ArmDisarmMonitor',['../classeros__nodes_1_1ArmDisarmMonitor.html',1,'eros_nodes']]],
+  ['armdisarmstring_8',['ArmDisarmString',['../classeros_1_1ArmDisarm.html#adac504266936ea5fba28634df6019a65',1,'eros::ArmDisarm']]],
+  ['armed_9',['ARMED',['../classeros_1_1ArmDisarm.html#a3116e94db74f0768d8f19c908836972eaf40e2850f4c07c01444b5f2393f6eb4c',1,'eros::ArmDisarm']]],
+  ['armedstate_5fcallback_10',['armedstate_Callback',['../classeros_1_1BaseNode.html#ad7698ae0f8fc347eeb810a2fa629da01',1,'eros::BaseNode']]],
+  ['arming_11',['ARMING',['../classeros_1_1ArmDisarm.html#a3116e94db74f0768d8f19c908836972eae32577107fe76fbf64bed546c9bdb94b',1,'eros::ArmDisarm']]],
+  ['armv7l_12',['ARMV7L',['../classeros_1_1Architecture.html#a4de8a31a2dd45d3d9559e76109a23e1fad0600557e19a3dbe302386034bbd6895',1,'eros::Architecture']]]
 ];

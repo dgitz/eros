@@ -1,9 +1,0 @@
-<map id="Diagnostic::pretty" name="Diagnostic::pretty">
-<area shape="rect" id="node1" title="Generate human readable string of a diagnostic." alt="" coords="5,159,127,185"/>
-<area shape="rect" id="node2" href="$classSystem.html#a5ab066afefaeb4f22ffa50fef1fa9798" title="Convert System::Component to human readable string." alt="" coords="190,5,362,32"/>
-<area shape="rect" id="node3" href="$classDiagnostic.html#a20f23b220ae2b8100810e777271c9bb6" title="Convert Diagnostic::Message to human readable string." alt="" coords="175,57,377,98"/>
-<area shape="rect" id="node4" href="$classDiagnostic.html#a18c88c20d720a99f8893837ea24d89ba" title="Convert Diagnostic::DiagnosticType to human readable string." alt="" coords="187,122,365,163"/>
-<area shape="rect" id="node5" href="$classLevel.html#a03c1063c724a8d4ef4d0bb4484bde8d6" title="Convert Level::Type to human readable string." alt="" coords="213,188,339,215"/>
-<area shape="rect" id="node6" href="$classSystem.html#a19f46e9dc3c7c249028291cdde0979c7" title="Convert System::MainSystem to human readable string." alt="" coords="187,239,365,265"/>
-<area shape="rect" id="node7" href="$classSystem.html#a8a0b6fa858cbbdfdc70b77c462347399" title="Convert System::SubSystem to human readable string." alt="" coords="189,289,363,316"/>
-</map>

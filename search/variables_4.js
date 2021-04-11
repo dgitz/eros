@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_332',['logger',['../classBaseNodeProcess.html#a3625ceeba6423ed366ad337d9eb73628',1,'BaseNodeProcess']]]
+  ['logger_383',['logger',['../classeros_1_1BaseNodeProcess.html#af0dcefbd8a95037c869933bac97be362',1,'eros::BaseNodeProcess']]]
 ];

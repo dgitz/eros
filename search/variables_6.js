@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['time_5fto_5fshow_5fmessages_337',['TIME_TO_SHOW_MESSAGES',['../classSystemMonitorProcess.html#aee9a9605bf7ae2fd791f720f0c631551',1,'SystemMonitorProcess']]]
+  ['pid_390',['pid',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html#a1f89e8acfdce0bcfd50fa7afbd931726',1,'eros::ResourceMonitor::ResourceInfo']]],
+  ['process_5fname_391',['process_name',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html#a669de58486ecbefd1abafa0559f6eadf',1,'eros::ResourceMonitor::ResourceInfo']]]
 ];

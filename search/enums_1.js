@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['diagnostictype_339',['DiagnosticType',['../classDiagnostic.html#a3099654b22790ede6b922bcb09804f1b',1,'Diagnostic']]]
+  ['diagnostictype_395',['DiagnosticType',['../classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df',1,'eros::Diagnostic']]]
 ];

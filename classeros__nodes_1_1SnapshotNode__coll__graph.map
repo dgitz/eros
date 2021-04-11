@@ -1,0 +1,9 @@
+<map id="eros_nodes::SnapshotNode" name="eros_nodes::SnapshotNode">
+<area shape="rect" id="node1" title=" " alt="" coords="504,107,685,133"/>
+<area shape="rect" id="node2" href="$classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="340,107,455,133"/>
+<area shape="rect" id="node3" href="$classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="21,5,172,32"/>
+<area shape="rect" id="node4" href="$classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="50,56,143,83"/>
+<area shape="rect" id="node5" href="$structeros_1_1Firmware.html" title="Firmware Information: Holds information about Firmware Version." alt="" coords="43,107,150,133"/>
+<area shape="rect" id="node6" href="$structeros_1_1Diagnostic_1_1DiagnosticDefinition.html" title="Contains the definition for the DiagnosticDefinition." alt="" coords="6,158,187,199"/>
+<area shape="rect" id="node7" href="$structeros_1_1BaseNode_1_1DeviceInfo.html" title="DeviceInfo Logic Container and logic for DeviceInfo processing." alt="" coords="5,224,188,251"/>
+</map>

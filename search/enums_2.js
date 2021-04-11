@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loggerstatus_340',['LoggerStatus',['../classLogger.html#a577e9790d89f93ee725d68d627341048',1,'Logger']]]
+  ['loggerstatus_396',['LoggerStatus',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572',1,'eros::Logger']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['initialize_288',['initialize',['../classBaseNodeProcess.html#af02b683c236dff0506852af2abd1f6e4',1,'BaseNodeProcess::initialize()'],['../classDiagnostic.html#affab8964a61ddecbf69e8c48250625d9',1,'Diagnostic::initialize()']]],
-  ['initialize_5fdiagnostic_289',['initialize_diagnostic',['../classBaseNode.html#a94e92b9dfa6d33e89d089574101b8ced',1,'BaseNode']]],
-  ['initialize_5ffirmware_290',['initialize_firmware',['../classBaseNode.html#ac50d534809c5ea315a586b09ad4ebf45',1,'BaseNode']]]
+  ['finish_5finitialization_324',['finish_initialization',['../classeros_1_1BaseNodeProcess.html#aa5a9a30986aa6f5e7606925319e6d510',1,'eros::BaseNodeProcess::finish_initialization()'],['../classeros__nodes_1_1DataLoggerProcess.html#a67f6fdb4cc1320184ae1b0e5d1cff84d',1,'eros_nodes::DataLoggerProcess::finish_initialization()'],['../classeros__nodes_1_1DiagnosticNodeProcess.html#ae403d279027e4be3e83acb6306cb516a',1,'eros_nodes::DiagnosticNodeProcess::finish_initialization()'],['../classeros__nodes_1_1MasterNodeProcess.html#ab02eee0ec77d717ddc9d033d54889644',1,'eros_nodes::MasterNodeProcess::finish_initialization()'],['../classeros__nodes_1_1SafetyNodeProcess.html#abcfa63880da9cc9fd1f372e83b4a65c4',1,'eros_nodes::SafetyNodeProcess::finish_initialization()'],['../classeros__nodes_1_1SnapshotProcess.html#a3a76e65cc77c01bef1124e27aef65379',1,'eros_nodes::SnapshotProcess::finish_initialization()'],['../classeros__nodes_1_1SystemMonitorProcess.html#a76a6f183a6e0dd97bf550367506e3440',1,'eros_nodes::SystemMonitorProcess::finish_initialization()']]],
+  ['firmware_5fservice_325',['firmware_service',['../classeros_1_1BaseNode.html#a37695f913ed1ae2366f3b00699ae6f11',1,'eros::BaseNode']]]
 ];
