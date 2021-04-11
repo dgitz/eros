@@ -11,11 +11,10 @@
 #include <eros/BaseNode.h>
 
 #include "SystemMonitorProcess.h"
-using namespace eros;
 namespace eros_nodes {
 /*! \class SystemMonitorNode SystemMonitorNode.h "SystemMonitorNode.h"
  *  \brief */
-class SystemMonitorNode : public BaseNode
+class SystemMonitorNode : public eros::BaseNode
 {
    public:
     /*! \brief The base name of the Node.*/
@@ -34,13 +33,13 @@ class SystemMonitorNode : public BaseNode
     const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 22-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
-    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::REMOTE_CONTROL;
+    const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::REMOTE_CONTROL;
 
     /*! \brief What Subsystem this Node falls under.*/
-    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::ROBOT_MONITOR;
+    const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM = eros::System::SubSystem::ROBOT_MONITOR;
 
     /*! \brief What Component this Node falls under.*/
-    const System::Component DIAGNOSTIC_COMPONENT = System::Component::DIAGNOSTIC;
+    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
     SystemMonitorNode();
     ~SystemMonitorNode();
     SystemMonitorProcess* get_process() {
@@ -48,7 +47,7 @@ class SystemMonitorNode : public BaseNode
     }
     bool start();
     bool init_screen();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -60,7 +59,7 @@ class SystemMonitorNode : public BaseNode
     void thread_loop();
     void cleanup();
 
-    Diagnostic::DiagnosticDefinition rescan_nodes();
+    eros::Diagnostic::DiagnosticDefinition rescan_nodes();
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
     void resourceused_Callback(const eros::resource::ConstPtr& msg);
     void resourceavailable_Callback(const eros::resource::ConstPtr& msg);
@@ -78,7 +77,7 @@ class SystemMonitorNode : public BaseNode
     std::vector<ros::Subscriber> loadfactor_subs;
     ros::Subscriber commandstate_sub;
     std::map<std::string, bool> filter_list;
-    Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };

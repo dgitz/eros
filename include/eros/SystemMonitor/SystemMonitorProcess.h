@@ -10,7 +10,6 @@
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
 WINDOW* create_newwin(int height, int width, int starty, int startx);
-using namespace eros;
 namespace eros_nodes {
 
 /*! \class WindowManager SystemMonitorProcess.h "SystemMonitorProcess.h"
@@ -91,7 +90,7 @@ class WindowManager
 };
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief  */
-class SystemMonitorProcess : public BaseNodeProcess
+class SystemMonitorProcess : public eros::BaseNodeProcess
 {
    public:
     const bool DEBUG_MODE = false;
@@ -180,7 +179,7 @@ class SystemMonitorProcess : public BaseNodeProcess
              std::string _base_node_name,
              std::string _node_name)
             : id(_id),
-              state(Node::State::START),
+              state(eros::Node::State::START),
               type(_type),
               pid(0),
               host_device(_host_device),
@@ -194,7 +193,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         }
         bool initialized;
         uint16_t id;
-        Node::State state;
+        eros::Node::State state;
         TaskType type;
         uint16_t pid;
         std::string host_device;
@@ -210,7 +209,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         Device(uint16_t _id, std::string _name)
             : id(_id),
               name(_name),
-              state(Node::State::INITIALIZING),
+              state(eros::Node::State::INITIALIZING),
               last_heartbeat_delta(0.0),
               cpu_av_perc(0.0),
               ram_av_perc(0.0),
@@ -220,7 +219,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         uint16_t id;
         bool initialized;
         std::string name;
-        Node::State state;
+        eros::Node::State state;
         double last_heartbeat_delta;
         double cpu_av_perc;
         double ram_av_perc;
@@ -296,7 +295,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     // Structs
 
     // Initialization Functions
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
     bool initialize_windows();
     bool set_nodeHandle(ros::NodeHandle* nh) {
@@ -307,21 +306,21 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
     // Update Functions
-    Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    Diagnostic::DiagnosticDefinition update_headerwindow(
+    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    eros::Diagnostic::DiagnosticDefinition update_headerwindow(
         std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_taskwindow(
+    eros::Diagnostic::DiagnosticDefinition update_taskwindow(
         std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_instructionwindow(
+    eros::Diagnostic::DiagnosticDefinition update_instructionwindow(
         std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_messagewindow(
+    eros::Diagnostic::DiagnosticDefinition update_messagewindow(
         std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_diagnosticwindow(
+    eros::Diagnostic::DiagnosticDefinition update_diagnosticwindow(
         std::map<std::string, WindowManager>::iterator it);
-    Diagnostic::DiagnosticDefinition update_devicewindow(
+    eros::Diagnostic::DiagnosticDefinition update_devicewindow(
         std::map<std::string, WindowManager>::iterator it);
 
-    Diagnostic::DiagnosticDefinition update_nodelist(
+    eros::Diagnostic::DiagnosticDefinition update_nodelist(
         std::vector<std::string> node_list,
         std::vector<std::string> heartbeat_list,
         std::vector<std::string>& new_heartbeat_topics_to_subscribe,
@@ -330,7 +329,7 @@ class SystemMonitorProcess : public BaseNodeProcess
         return task_list;
     }
 
-    Diagnostic::DiagnosticDefinition update_devicelist(
+    eros::Diagnostic::DiagnosticDefinition update_devicelist(
         std::vector<std::string> loadfactor_list,
         std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
         std::vector<std::string>& new_loadfactor_topics_to_subscribe);
@@ -339,121 +338,129 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
     // Message Functions
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
-    Diagnostic::DiagnosticDefinition new_commandstate(const eros::command_state::ConstPtr& t_msg) {
+    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
+    eros::Diagnostic::DiagnosticDefinition new_commandstate(
+        const eros::command_state::ConstPtr& t_msg) {
         eros::command_state state = convert_fromptr(t_msg);
-        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        if ((state.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT)) {
+        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if ((state.CurrentCommand.Command == (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT)) {
             if (state.CurrentCommand.Option1 ==
-                (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER) {
+                (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER) {
                 if (state.State == (uint8_t)SnapshotProcess::SnapshotState::RUNNING) {
                     char tempstr[512];
                     sprintf(tempstr, "System Snap Progress: %4.2f %%", state.PercentComplete);
-                    set_message_text(std::string(tempstr), Level::Type::NOTICE);
+                    set_message_text(std::string(tempstr), eros::Level::Type::NOTICE);
                 }
                 else if (state.State == (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE) {
-                    set_message_text("System Snapshot Incomplete", Level::Type::WARN);
+                    set_message_text("System Snapshot Incomplete", eros::Level::Type::WARN);
                 }
                 else if (state.State == (uint8_t)SnapshotProcess::SnapshotState::COMPLETE) {
-                    set_message_text("System Snapshot Completed.", Level::Type::NOTICE);
+                    set_message_text("System Snapshot Completed.", eros::Level::Type::NOTICE);
                 }
             }
         }
         else {
-            set_message_text(state.diag.Description, (Level::Type)state.diag.Level);
+            set_message_text(state.diag.Description, (eros::Level::Type)state.diag.Level);
         }
 
         return diag;
     }
-    Diagnostic::DiagnosticDefinition new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg) {
+    eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
+        const eros::heartbeat::ConstPtr& t_msg) {
         eros::heartbeat msg = convert_fromptr(t_msg);
-        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
         if (update_task_list(msg) == true) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::INFO,
-                                                       Diagnostic::Message::NOERROR,
-                                                       "Updated Hearbeat.");
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::INFO,
+                eros::Diagnostic::Message::NOERROR,
+                "Updated Hearbeat.");
         }
         else {
             diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::COMMUNICATIONS,
-                Level::Type::WARN,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::WARN,
+                eros::Diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Hearbeat: " + msg.HostName + " " + msg.NodeName);
             logger->log_diagnostic(diag);
         }
         return diag;
     }
-    Diagnostic::DiagnosticDefinition new_resourceusedmessage(
+    eros::Diagnostic::DiagnosticDefinition new_resourceusedmessage(
         const eros::resource::ConstPtr& t_msg) {
         eros::resource msg = convert_fromptr(t_msg);
-        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
         if (update_task_list(msg) == true) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::INFO,
-                                                       Diagnostic::Message::NOERROR,
-                                                       "Updated Resource Used.");
-        }
-        else {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DROPPING_PACKETS,
-                                                       "Unable to update Resource: " + msg.Name);
-            logger->log_diagnostic(diag);
-        }
-        return diag;
-    }
-    Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
-        const eros::resource::ConstPtr& t_msg) {
-        eros::resource msg = convert_fromptr(t_msg);
-        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        if (update_device_list(msg) == true) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::INFO,
-                                                       Diagnostic::Message::NOERROR,
-                                                       "Updated Resource Available.");
-        }
-        else {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DROPPING_PACKETS,
-                                                       "Unable to update Resource: " + msg.Name);
-            logger->log_diagnostic(diag);
-        }
-        return diag;
-    }
-    Diagnostic::DiagnosticDefinition new_loadfactormessage(
-        const eros::loadfactor::ConstPtr& t_msg) {
-        eros::loadfactor msg = convert_fromptr(t_msg);
-        Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        if (update_device_list(msg) == true) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                       Level::Type::INFO,
-                                                       Diagnostic::Message::NOERROR,
-                                                       "Updated LoadFactor.");
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::INFO,
+                eros::Diagnostic::Message::NOERROR,
+                "Updated Resource Used.");
         }
         else {
             diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::COMMUNICATIONS,
-                Level::Type::WARN,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::WARN,
+                eros::Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Resource: " + msg.Name);
+            logger->log_diagnostic(diag);
+        }
+        return diag;
+    }
+    eros::Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
+        const eros::resource::ConstPtr& t_msg) {
+        eros::resource msg = convert_fromptr(t_msg);
+        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if (update_device_list(msg) == true) {
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::INFO,
+                eros::Diagnostic::Message::NOERROR,
+                "Updated Resource Available.");
+        }
+        else {
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::WARN,
+                eros::Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Resource: " + msg.Name);
+            logger->log_diagnostic(diag);
+        }
+        return diag;
+    }
+    eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(
+        const eros::loadfactor::ConstPtr& t_msg) {
+        eros::loadfactor msg = convert_fromptr(t_msg);
+        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+        if (update_device_list(msg) == true) {
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::INFO,
+                eros::Diagnostic::Message::NOERROR,
+                "Updated LoadFactor.");
+        }
+        else {
+            diag = diagnostic_helper.update_diagnostic(
+                eros::Diagnostic::DiagnosticType::COMMUNICATIONS,
+                eros::Level::Type::WARN,
+                eros::Diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update LoadFactor: " + msg.DeviceName);
             logger->log_diagnostic(diag);
         }
         return diag;
     }
-    void set_message_text(std::string text, Level::Type level) {
+    void set_message_text(std::string text, eros::Level::Type level) {
         if (text == "") {
             return;
         }
         Color color;
         switch (level) {
-            case Level::Type::DEBUG: color = Color::NO_COLOR; break;
-            case Level::Type::INFO: color = Color::NO_COLOR; break;
-            case Level::Type::NOTICE: color = Color::GREEN_COLOR; break;
-            case Level::Type::WARN: color = Color::YELLOW_COLOR; break;
-            case Level::Type::ERROR: color = Color::RED_COLOR; break;
-            case Level::Type::FATAL: color = Color::RED_COLOR; break;
+            case eros::Level::Type::DEBUG: color = Color::NO_COLOR; break;
+            case eros::Level::Type::INFO: color = Color::NO_COLOR; break;
+            case eros::Level::Type::NOTICE: color = Color::GREEN_COLOR; break;
+            case eros::Level::Type::WARN: color = Color::YELLOW_COLOR; break;
+            case eros::Level::Type::ERROR: color = Color::RED_COLOR; break;
+            case eros::Level::Type::FATAL: color = Color::RED_COLOR; break;
             default: color = Color::RED_COLOR; break;
         }
         set_message_text(text, color);
@@ -465,7 +472,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
     // Attribute Functions
-    void update_armedstate(ArmDisarm::State v) {
+    void update_armedstate(eros::ArmDisarm::State v) {
         armed_state = v;
     }
     bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
@@ -478,7 +485,7 @@ class SystemMonitorProcess : public BaseNodeProcess
     }
 
     // Support Functions
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
+    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
     static WindowManager::ScreenCoordinatePixel convertCoordinate(
         WindowManager::ScreenCoordinatePerc coord_perc, uint16_t width_pix, uint16_t height_pix);
     std::string pretty() {
@@ -566,7 +573,7 @@ class SystemMonitorProcess : public BaseNodeProcess
             it->second.base_node_name = heartbeat.BaseNodeName;
             it->second.last_heartbeat_delta = 0.0;
             it->second.last_heartbeat = get_system_time();
-            it->second.state = (Node::State)heartbeat.NodeState;
+            it->second.state = (eros::Node::State)heartbeat.NodeState;
         }
         return true;
     }
@@ -599,7 +606,7 @@ class SystemMonitorProcess : public BaseNodeProcess
             it->second.cpu_av_perc = resource_available.CPU_Perc;
             it->second.ram_av_perc = resource_available.RAM_Perc;
             it->second.disk_av_perc = resource_available.DISK_Perc;
-            it->second.state = Node::State::RUNNING;
+            it->second.state = eros::Node::State::RUNNING;
             it->second.last_heartbeat_delta = 0.0;
         }
         return true;
@@ -617,7 +624,7 @@ class SystemMonitorProcess : public BaseNodeProcess
             it->second.load_factor.at(0) = loadfactor.loadfactor.at(0);
             it->second.load_factor.at(1) = loadfactor.loadfactor.at(1);
             it->second.load_factor.at(2) = loadfactor.loadfactor.at(2);
-            it->second.state = Node::State::RUNNING;
+            it->second.state = eros::Node::State::RUNNING;
             it->second.last_heartbeat_delta = 0.0;
         }
         return true;
@@ -647,8 +654,8 @@ class SystemMonitorProcess : public BaseNodeProcess
     double timer_showing_message_in_window;
     std::string message_text;
     Color message_text_color;
-    std::vector<Diagnostic::DiagnosticDefinition> task_diagnostics_to_show;
-    ArmDisarm::State armed_state;
+    std::vector<eros::Diagnostic::DiagnosticDefinition> task_diagnostics_to_show;
+    eros::ArmDisarm::State armed_state;
 };
 }  // namespace eros_nodes
 #endif  // SYSTEMMONITORPROCESS_h

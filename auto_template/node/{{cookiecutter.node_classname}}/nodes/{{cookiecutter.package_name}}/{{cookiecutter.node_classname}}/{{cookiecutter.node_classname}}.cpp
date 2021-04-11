@@ -1,4 +1,5 @@
-#include "{{cookiecutter.node_classname}}.h"
+#include <{{cookiecutter.package_name}}/{{cookiecutter.node_classname}}/{{cookiecutter.node_classname}}.h>
+using namespace eros;
 bool kill_node = false;
 {{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}()
     : system_command_action_server(

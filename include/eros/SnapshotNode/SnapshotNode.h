@@ -10,11 +10,10 @@
 #include <eros/BaseNode.h>
 
 #include "SnapshotProcess.h"
-using namespace eros;
 namespace eros_nodes {
 /*! \class SnapshotNode SnapshotNode.h "SnapshotNode.h"
  *  \brief */
-class SnapshotNode : public BaseNode
+class SnapshotNode : public eros::BaseNode
 {
    public:
     /*! \brief The base name of the Node.*/
@@ -33,20 +32,20 @@ class SnapshotNode : public BaseNode
     const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 23-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
-    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::ROVER;
+    const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
 
     /*! \brief What Subsystem this Node falls under.*/
-    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::ENTIRE_SYSTEM;
+    const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM = eros::System::SubSystem::ENTIRE_SYSTEM;
 
     /*! \brief What Component this Node falls under.*/
-    const System::Component DIAGNOSTIC_COMPONENT = System::Component::DIAGNOSTIC;
+    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
     SnapshotNode();
     ~SnapshotNode();
     SnapshotProcess* get_process() {
         return process;
     }
     bool start();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -68,7 +67,7 @@ class SnapshotNode : public BaseNode
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;
     // ros::NodeHandle test_handle;
-    Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     SnapshotProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Publisher commandstate_pub;

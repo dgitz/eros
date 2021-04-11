@@ -17,7 +17,7 @@ namespace eros_nodes {
  *  \brief A Node that can be used to collect bag files.  Configured as either always logging to
  * disk, or snapshot mode where it will log to ram and write to disk when a snapshot trigger is
  * received.*/
-class DataLoggerNode : public BaseNode
+class DataLoggerNode : public eros::BaseNode
 {
    public:
     /*! \brief The base name of the Node.*/
@@ -36,20 +36,20 @@ class DataLoggerNode : public BaseNode
     const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 15-Feb-2021";
 
     /*! \brief What System this Node falls under.*/
-    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::ROVER;
+    const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
 
     /*! \brief What Subsystem this Node falls under.*/
-    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::ENTIRE_SYSTEM;
+    const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM = eros::System::SubSystem::ENTIRE_SYSTEM;
 
     /*! \brief What Component this Node falls under.*/
-    const System::Component DIAGNOSTIC_COMPONENT = System::Component::DIAGNOSTIC;
+    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
     DataLoggerNode();
     ~DataLoggerNode();
     DataLoggerProcess* get_process() {
         return process;
     }
     bool start();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -69,7 +69,7 @@ class DataLoggerNode : public BaseNode
     void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
-    Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     DataLoggerProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Subscriber snapshot_trigger_sub;

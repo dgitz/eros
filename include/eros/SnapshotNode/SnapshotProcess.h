@@ -8,11 +8,10 @@
 #include <boost/thread.hpp>
 #include <boost/thread/scoped_thread.hpp>
 #include <fstream>
-using namespace eros;
 namespace eros_nodes {
 /*! \class SnapshotProcess SnapshotProcess.h "SnapshotProcess.h"
  *  \brief */
-class SnapshotProcess : public BaseNodeProcess
+class SnapshotProcess : public eros::BaseNodeProcess
 {
    public:
     SnapshotProcess();
@@ -89,14 +88,14 @@ class SnapshotProcess : public BaseNodeProcess
         std::string bagfile_directory;
         std::string active_device_snapshot_completepath;
     };
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     Mode get_mode() {
         return mode;
     }
     void set_mode(Mode v) {
         mode = v;
     }
-    void set_architecture(Architecture::Type v) {
+    void set_architecture(eros::Architecture::Type v) {
         architecture = v;
     }
     SnapshotConfig get_snapshot_config() {
@@ -117,24 +116,25 @@ class SnapshotProcess : public BaseNodeProcess
     double get_snapshotprogress_percentage() {
         return snapshot_progress_percent;
     }
-    std::vector<Diagnostic::DiagnosticDefinition> clear_snapshots();
-    Diagnostic::DiagnosticDefinition load_config(std::string file_path);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> clear_snapshots();
+    eros::Diagnostic::DiagnosticDefinition load_config(std::string file_path);
     void reset();
-    Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandstatemsg(eros::command_state t_msg);
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
+    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandstatemsg(
+        eros::command_state t_msg);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
     void cleanup() {
         base_cleanup();
         return;
     }
     std::string pretty();
-    std::vector<Diagnostic::DiagnosticDefinition> createnew_snapshot();
+    std::vector<eros::Diagnostic::DiagnosticDefinition> createnew_snapshot();
 
    private:
     int count_files_indirectory(std::string directory, std::string filter);
     Mode mode;
-    Architecture::Type architecture;
+    eros::Architecture::Type architecture;
     SnapshotState devicesnapshot_state;
     SnapshotState systemsnapshot_state;
     SnapshotConfig snapshot_config;
