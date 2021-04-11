@@ -4,7 +4,6 @@
 #define SafetyNodeProcess_H
 #include <eros/BaseNodeProcess.h>
 #include <ros/ros.h>
-using namespace eros;
 namespace eros_nodes {
 /*! \class ArmDisarmMonitor
     \brief ArmDisarmMonitor class
@@ -46,16 +45,16 @@ class ArmDisarmMonitor
 };
 /*! \class SafetyNodeProcess SafetyNodeProcess.h "SafetyNodeProcess.h"
  *  \brief */
-class SafetyNodeProcess : public BaseNodeProcess
+class SafetyNodeProcess : public eros::BaseNodeProcess
 {
    public:
     SafetyNodeProcess();
     ~SafetyNodeProcess();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
-    Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
+    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
     bool initialize_readytoarm_monitors(std::vector<std::string> topics,
                                         std::vector<ArmDisarmMonitor::Type> types);
     bool init_ros(boost::shared_ptr<ros::NodeHandle> _n);
@@ -72,13 +71,13 @@ class SafetyNodeProcess : public BaseNodeProcess
         base_cleanup();
         return;
     }
-    ArmDisarm::State get_armed_state() {
+    eros::ArmDisarm::State get_armed_state() {
         return armed_state;
     }
 
    private:
     boost::shared_ptr<ros::NodeHandle> nodeHandle;
-    ArmDisarm::State armed_state;
+    eros::ArmDisarm::State armed_state;
     std::map<std::string, ArmDisarmMonitor> ready_to_arm_monitors;
     std::vector<std::string> cannotarm_reasons;
     std::vector<ros::Subscriber> arm_monitor_subs;

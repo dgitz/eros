@@ -3,32 +3,32 @@
 #ifndef DiagnosticNodeProcess_H
 #define DiagnosticNodeProcess_H
 #include <eros/BaseNodeProcess.h>
-using namespace eros;
 namespace eros_nodes {
 /*! \class DiagnosticNodeProcess DiagnosticNodeProcess.h "DiagnosticNodeProcess.h"
  *  \brief */
-class DiagnosticNodeProcess : public BaseNodeProcess
+class DiagnosticNodeProcess : public eros::BaseNodeProcess
 {
    public:
     struct DiagnosticTypeAggregate {
         DiagnosticTypeAggregate() : update_count(0) {
         }
-        Diagnostic::DiagnosticDefinition worst_diag;
+        eros::Diagnostic::DiagnosticDefinition worst_diag;
         std::string worst_diag_key;
         uint64_t update_count;
-        std::map<std::string, Diagnostic::DiagnosticDefinition> diag_list;
+        std::map<std::string, eros::Diagnostic::DiagnosticDefinition> diag_list;
     };
     DiagnosticNodeProcess();
     ~DiagnosticNodeProcess();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
-    Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    bool new_external_diagnostic(Diagnostic::DiagnosticDefinition diag);
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables();
-    Diagnostic::DiagnosticDefinition update_topiclist(
+    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    bool new_external_diagnostic(eros::Diagnostic::DiagnosticDefinition diag);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
+    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
+    eros::Diagnostic::DiagnosticDefinition update_topiclist(
         std::vector<std::string>& new_diagnostic_topics_to_subscribe);
-    Diagnostic::DiagnosticDefinition get_worst_diagnostic(Diagnostic::DiagnosticType type);
+    eros::Diagnostic::DiagnosticDefinition get_worst_diagnostic(
+        eros::Diagnostic::DiagnosticType type);
     void cleanup() {
         base_cleanup();
         return;
@@ -36,9 +36,9 @@ class DiagnosticNodeProcess : public BaseNodeProcess
     std::string pretty();
 
    private:
-    std::string build_key(Diagnostic::DiagnosticDefinition);
+    std::string build_key(eros::Diagnostic::DiagnosticDefinition);
     std::vector<std::string> diagnostic_topics_already_monitoring;
-    std::map<Diagnostic::DiagnosticType, DiagnosticTypeAggregate> diagnostic_aggregator;
+    std::map<eros::Diagnostic::DiagnosticType, DiagnosticTypeAggregate> diagnostic_aggregator;
 };
 }  // namespace eros_nodes
 #endif  // DiagnosticNodeProcess_H

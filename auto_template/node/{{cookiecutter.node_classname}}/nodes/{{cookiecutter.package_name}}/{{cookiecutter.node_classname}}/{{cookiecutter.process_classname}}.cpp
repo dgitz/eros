@@ -1,5 +1,5 @@
-#include "{{cookiecutter.process_classname}}.h"
-
+#include <{{cookiecutter.package_name}}/{{cookiecutter.node_classname}}/{{cookiecutter.process_classname}}.h>
+using namespace eros;
 {{cookiecutter.process_classname}}::{{cookiecutter.process_classname}}() {
 }
 {{cookiecutter.process_classname}}::~{{cookiecutter.process_classname}}() {

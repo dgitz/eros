@@ -1,8 +1,5 @@
 {
-    "author_name": "My Name",
-    "author_email": "MyEmail@Email.com",
-    "license": "MIT",    
-    "project_name": "test_node",
+    "package_name":"Package",
     "process_name_binary": "sampleNodeProcess",
     "process_classname": "SampleNodeProcess",
     "node_name_binary": "sample_node",

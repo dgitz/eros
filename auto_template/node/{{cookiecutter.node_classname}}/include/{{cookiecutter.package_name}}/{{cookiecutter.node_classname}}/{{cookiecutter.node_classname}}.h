@@ -8,12 +8,11 @@
 // ROS Messages
 // Project
 #include <eros/BaseNode.h>
-
 #include "{{cookiecutter.process_classname}}.h"
 
 /*! \class {{cookiecutter.node_classname}} {{cookiecutter.node_classname}}.h "{{cookiecutter.node_classname}}.h"
  *  \brief */
-class {{cookiecutter.node_classname}} : public BaseNode
+class {{cookiecutter.node_classname}} : public eros::BaseNode
 {
    public:
     /*! \brief The base name of the Node.*/
@@ -23,29 +22,29 @@ class {{cookiecutter.node_classname}} : public BaseNode
     const uint16_t MAJOR_RELEASE_VERSION = 0;
 
     /*! \brief The Minor Release Version of the Node.*/
-    const uint16_t MINOR_RELEASE_VERSION = 3;
+    const uint16_t MINOR_RELEASE_VERSION = 4;
 
     /*! \brief The Build Number of the Node.*/
     const uint16_t BUILD_NUMBER = 0;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 16-March-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 11-April-2021";
 
     /*! \brief What System this Node falls under.*/
-    const System::MainSystem DIAGNOSTIC_SYSTEM = System::MainSystem::{{cookiecutter.system}};
+    const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::{{cookiecutter.system}};
 
     /*! \brief What Subsystem this Node falls under.*/
-    const System::SubSystem DIAGNOSTIC_SUBSYSTEM = System::SubSystem::{{cookiecutter.subsystem}};
+    const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM = eros::System::SubSystem::{{cookiecutter.subsystem}};
 
     /*! \brief What Component this Node falls under.*/
-    const System::Component DIAGNOSTIC_COMPONENT = System::Component::{{cookiecutter.component}};
+    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::{{cookiecutter.component}};
     {{cookiecutter.node_classname}}();
     ~{{cookiecutter.node_classname}}();
     {{cookiecutter.process_classname}}* get_process() {
         return process;
     }
     bool start();
-    Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::Diagnostic::DiagnosticDefinition finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -63,7 +62,7 @@ class {{cookiecutter.node_classname}} : public BaseNode
     void command_Callback(const eros::command::ConstPtr &t_msg);
 
    private:
-    Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     {{cookiecutter.process_classname}}* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };
