@@ -4,7 +4,7 @@
 boot_file="/home/robot/var/log/output/"$(hostname)"_log.txt"
 mkdir -p /home/robot/var/log/output/
 touch $boot_file
-sudo chown robot:robot $boot_file
+chown robot:robot $boot_file
 rm $boot_file
 touch $boot_file
 get_TimeStamp () { Time="["$(date +%d-%b-%Y)" "$(date +%H:%M:%S)"/"`awk '{print $1}' /proc/uptime`"]" ; }
