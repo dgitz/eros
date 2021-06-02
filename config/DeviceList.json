@@ -5,7 +5,7 @@
 			"Type": "ComputeModule",
 			"Architecture": "x86_64",
 			"Capability": "ROS",
-			"CatkinWS": "/home/robot/catkin_ws",
+			"CatkinWS": "~/catkin_ws",
 			"Jobs": -1
 		},
 		"BuildServer1": {
@@ -13,7 +13,7 @@
 			"Type": "BuildServer",
 			"Architecture": "armv7l",
 			"Capability": "ROS",
-			"CatkinWS": "/home/robot/catkin_ws",
+			"CatkinWS": "~/catkin_ws",
 			"Jobs": 1
 		},
 		"ControlModule1": {
@@ -21,7 +21,7 @@
 			"Type": "ControlModule",
 			"Architecture": "armv7l",
 			"Capability": "ROS",
-			"CatkinWS": "/home/robot/catkin_ws",
+			"CatkinWS": "~/catkin_ws",
 			"Jobs": 1
 		},
 		"ControlModule2": {
@@ -29,7 +29,7 @@
 			"Type": "ControlModule",
 			"Architecture": "armv7l",
 			"Capability": "ROS",
-			"CatkinWS": "/home/robot/catkin_ws",
+			"CatkinWS": "~/catkin_ws",
 			"Jobs": 1
 		},
 		"GPUModule1": {
@@ -37,7 +37,7 @@
 			"Type": "GPUModule",
 			"Architecture": "aarch64",
 			"Capability": "ROS",
-			"CatkinWS": "/home/robot/catkin_ws",
+			"CatkinWS": "~/catkin_ws",
 			"Jobs": 2
 		},
 		"RelayHat1": {

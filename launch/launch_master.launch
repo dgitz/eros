@@ -13,7 +13,7 @@
         <param name="verbosity_level"       value="NOTICE"/>
         <param name="require_pps_to_start"  value="false"/> 
         <param name="LogFile_Duration"      value="600.0"/>
-        <param name="LogFile_Directory"     value="/home/robot/storage/DATALOGS/"/> 
+        <param name="LogFile_Directory"     value="~/storage/DATALOGS/"/> 
         <param name="SnapshotMode"          value="true"/>
     </node>
     <node name="$(env ROS_HOSTNAME)_snapshot_node" pkg="eros" type="snapshot_node"  output="screen" clear_params="true">
@@ -24,7 +24,7 @@
         <param name="loop2_rate"            value="10"/>
         <param name="loop3_rate"            value="5"/>
         <param name="Mode"              value="MASTER"/> <!-- MASTER,SLAVE-->
-        <param name="Config_Directory" value="/home/robot/config"/> <!-- Where the Snapshot.xml file is located -->
+        <param name="Config_Directory" value="~/config"/> <!-- Where the Snapshot.xml file is located -->
     </node>
     <node name="$(env ROS_HOSTNAME)_diagnostic_node" pkg="eros" type="diagnostic_node"  output="screen" clear_params="true">
         <param name="startup_delay"       value="0.0"/>

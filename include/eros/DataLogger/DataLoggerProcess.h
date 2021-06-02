@@ -29,6 +29,7 @@ class DataLoggerProcess : public eros::BaseNodeProcess
     }
     bool set_logdirectory(std::string v) {
         log_directory = v;
+        log_directory = sanitize_path(log_directory);
         log_directory_available = false;
         logging_enabled = false;
         struct stat status;

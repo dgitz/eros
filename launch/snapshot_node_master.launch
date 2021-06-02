@@ -8,6 +8,6 @@
         <param name="loop2_rate"            value="10"/>
         <param name="loop3_rate"            value="5"/>
         <param name="Mode"              value="MASTER"/> <!-- MASTER,SLAVE-->
-        <param name="Config_Directory" value="/home/robot/config"/> <!-- Where the Snapshot.xml file is located -->
+        <param name="Config_Directory" value="~/config"/> <!-- Where the Snapshot.xml file is located -->
 </node>
 </launch>

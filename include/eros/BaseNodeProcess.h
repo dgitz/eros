@@ -61,6 +61,7 @@ class BaseNodeProcess
           unittest_running(false),
           run_time(0.0),
           system_time(0.0) {
+        homeDir = getenv("HOME");
         ready_to_arm.ready_to_arm = false;
         ready_to_arm.diag.Description = "NOT INITIALIZED";
     }
@@ -148,7 +149,7 @@ class BaseNodeProcess
 
     json read_configuration(std::string device_name,
                             bool include_self = true,
-                            std::string file_path = "/home/robot/config/DeviceList.json");
+                            std::string file_path = "~/config/DeviceList.json");
 
     //! Request a Node State Change
     /*!
@@ -215,6 +216,8 @@ class BaseNodeProcess
     eros::armed_state convert(ArmDisarm::State v);
     ArmDisarm::State convert(eros::armed_state v);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
+
+    std::string sanitize_path(std::string path);
     // Printing Functions
 
     // Destructors
@@ -261,6 +264,7 @@ class BaseNodeProcess
 
    private:
     double run_time, system_time;
+    std::string homeDir;
 };
 }  // namespace eros
 #endif  // EROS_BASENODEPROCESS_H
