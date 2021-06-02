@@ -4,7 +4,7 @@
         <Folder>
             <Name>eROS</Name>
             <Type>Source</Type>
-            <Directory>/home/robot/catkin_ws/src/eROS/</Directory>
+            <Directory>~/catkin_ws/src/eROS/</Directory>
             <Architecture>x86_64</Architecture>
             <Architecture>armv7l</Architecture>
             <Architecture>aarch64</Architecture>
@@ -12,7 +12,7 @@
         <Folder>
             <Name>main_config</Name>
             <Type>Config</Type>
-            <Directory>/home/robot/config/</Directory>
+            <Directory>~/config/</Directory>
             <Architecture>x86_64</Architecture>
             <Architecture>armv7l</Architecture>
             <Architecture>aarch64</Architecture>
@@ -20,7 +20,7 @@
         <Folder>
             <Name>main_devel</Name>
             <Type>Binary</Type>
-            <Directory>/home/robot/catkin_ws/devel/</Directory>
+            <Directory>~/catkin_ws/devel/</Directory>
             <Architecture>x86_64</Architecture>
             <Architecture>armv7l</Architecture>
             <Architecture>aarch64</Architecture>
@@ -28,7 +28,7 @@
         <Folder>
             <Name>main_build</Name>
             <Type>Binary</Type>
-            <Directory>/home/robot/catkin_ws/build/</Directory>
+            <Directory>~/catkin_ws/build/</Directory>
             <Architecture>x86_64</Architecture>
             <Architecture>armv7l</Architecture>
             <Architecture>aarch64</Architecture>

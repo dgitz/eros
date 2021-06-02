@@ -1,8 +1,8 @@
 #!/bin/bash
 #Usage: log_message "Some Text"
 #Usage: echo "a command" | log_message
-boot_file="/home/robot/var/log/output/"$(hostname)"_log.txt"
-mkdir -p /home/robot/var/log/output/
+boot_file="~/var/log/output/"$(hostname)"_log.txt"
+mkdir -p ~/var/log/output/
 touch $boot_file
 chown robot:robot $boot_file
 rm $boot_file

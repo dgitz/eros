@@ -81,7 +81,7 @@ def main():
     parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,buildserver,buildserver_target, [default: %default]")
     parser.add_option("-b","--build",dest="build",default=0,help="1,0 [default: %default]",type="int")
     parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
-    parser.add_option("-c","--config_dir",dest="config_dir",default="/home/robot/config/",help="Location where Config dir should be found. default=/home/robot/config")
+    parser.add_option("-c","--config_dir",dest="config_dir",default="~/config/",help="Location where Config dir should be found. default=~/config")
     (opts,args) = parser.parse_args()
     if (opts.syncmode=="buildserver"):
         devices = opts.devices.split(",")
@@ -93,7 +93,7 @@ def main():
             if response != 0:
                 print("ERROR: Build Server: " + device + " is Not Reachable.")
                 return        
-            sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncConfig.xml",device,opts.build)
+            sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncArtifactConfig.xml",device,opts.build)
     elif(opts.syncmode == "buildserver_target"):
         devices = opts.devices.split(",")
         if(len(devices) < 2):
@@ -105,7 +105,7 @@ def main():
         if response != 0:
             print("ERROR: Build Server: " +build_server + " is Not Reachable.")
             return        
-        sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncConfig.xml",build_server,opts.build)
+        sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncArtifactConfig.xml",build_server,opts.build)
 
         for device in remotes:
             sync_remote_to_remote(opts.config_dir + "SyncConfig.xml",build_server,device)

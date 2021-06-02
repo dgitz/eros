@@ -104,10 +104,10 @@ std::vector<Diagnostic::DiagnosticDefinition> BaseNodeProcess::run_unittest() {
             "bash devel/setup.bash && catkin_make run_tests_icarus_rover_v2_gtest_test_" +
             base_node_name +
             "_process >/dev/null 2>&1 && "
-            "mv /home/robot/catkin_ws/build/test_results/icarus_rover_v2/gtest-test_" +
+            "mv ~/catkin_ws/build/test_results/icarus_rover_v2/gtest-test_" +
             base_node_name +
             "_process.xml "
-            "/home/robot/catkin_ws/build/test_results/icarus_rover_v2/" +
+            "~/catkin_ws/build/test_results/icarus_rover_v2/" +
             base_node_name + "/ >/dev/null 2>&1";
         // system(cmd.c_str());
         cmd =
@@ -362,6 +362,12 @@ json BaseNodeProcess::read_configuration(std::string device_name,
                                          std::string file_path) {
     json j_obj;
     json empty;
+    if (file_path.size() == 0) {
+        logger->log_error("No file path defined.");
+        return empty;
+    }
+    file_path = sanitize_path(file_path);
+
     std::ifstream fd(file_path);
     if (fd.is_open() == false) {
         logger->log_error("Unable to read file.");
@@ -382,4 +388,11 @@ json BaseNodeProcess::read_configuration(std::string device_name,
         }
     }
     return j;
+}
+std::string BaseNodeProcess::sanitize_path(std::string path) {
+    if (path.at(0) == '~') {
+        path.erase(path.begin() + 0);
+        path = std::string(homeDir) + path;
+    }
+    return path;
 }
