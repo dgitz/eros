@@ -5,13 +5,8 @@ import subprocess
 import pdb
 import shutil
 from cookiecutter.main import cookiecutter
+from Helpers import *
 
-# Defines
-CRED = '\33[31m'
-CYELLOW = '\33[33m'
-CGREEN = '\33[32m'
-CBLUE = '\33[34m'
-CEND = '\033[0m'
 
 def generate(output_folder,template_path):
     print(CGREEN + "Generating From Template:"  + template_path  + " and storing at: " + output_folder + CEND)
