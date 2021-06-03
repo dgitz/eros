@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<SnapshotConfigFile>
+    <SnapshotConfig>
+        <SnapshotDevices>
+            <Device><HOSTNAME></Device>
+        </SnapshotDevices>
+        <BagFileDirectory>~/storage/DATALOGS/</BagFileDirectory>
+        <StageDirectory>~/storage/stage/</StageDirectory> <!-- Snapshot Node will create sub folders here freely! -->
+        <SystemSnapshotPath>~/storage/SNAPSHOT/SYSTEMSNAPSHOT/</SystemSnapshotPath>
+        <Architecture type="X86_64">
+            <DeviceSnapshotPath>~/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <Command file="ps_log">ps aux</Command>
+            <Command file="ifconfig_log">ifconfig</Command>
+            <Command file="rosnode_list">rosnode list</Command>
+            <Command file="rostopic_list">rostopic list</Command>
+            <Command file="top_log">top -bn1</Command>
+            <Command file="diskfree">df -h</Command>
+            <Command file="free_ram">free -m</Command>
+            <Command file="dev_scan">ls -l /dev/</Command>
+            <Command file="systemctl_status">systemctl -al</Command>
+            <Command file="uname">uname -a</Command>
+            <Command file="uptime">uptime</Command>
+            <Command file="ntp_status">ntpq -p</Command>
+            <Command file="lsmod">lsmod</Command>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
+            <File>/var/log/syslog</File>
+            <File>/var/log/kern.log</File>
+        </Architecture>
+        <Architecture type="ARMV7L">
+            <DeviceSnapshotPath>~/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <Command file="ps_log">ps aux</Command>
+            <Command file="ifconfig_log">ifconfig</Command>
+            <Command file="rosnode_list">rosnode list</Command>
+            <Command file="rostopic_list">rostopic list</Command>
+            <Command file="top_log">top -bn1</Command>
+            <Command file="diskfree">df -T</Command>
+            <Command file="free_ram">free -m</Command>
+            <Command file="i2c_scan">i2cdetect -y 1</Command>
+            <Command file="dev_scan">ls -l /dev/</Command>
+            <Command file="systemctl_status">systemctl -al</Command>
+            <Command file="uname">uname -a</Command>
+            <Command file="uptime">uptime</Command>
+            <Command file="ntp_status">ntpq -p</Command>
+            <Command file="lsmod">lsmod</Command>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
+            <File>/var/log/bootstrap.log</File>
+            <File>/boot/config.txt</File>
+        </Architecture>
+        <Architecture type="AARCH64">
+            <DeviceSnapshotPath>~/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <Command file="ps_log">ps aux</Command>
+            <Command file="ifconfig_log">ifconfig</Command>
+            <Command file="rosnode_list">rosnode list</Command>
+            <Command file="rostopic_list">rostopic list</Command>
+            <Command file="top_log">top -bn1</Command>
+            <Command file="diskfree">df -T</Command>
+            <Command file="free_ram">free -m</Command>
+            <Command file="dev_scan">ls -l /dev/</Command>
+            <Command file="systemctl_status">systemctl -al</Command>
+            <Command file="uname">uname -a</Command>
+            <Command file="uptime">uptime</Command>
+            <Command file="ntp_status">ntpq -p</Command>
+            <Command file="lsmod">lsmod</Command>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
+            <File>/var/log/syslog</File>
+        </Architecture>
+    </SnapshotConfig>
+</SnapshotConfigFile>
