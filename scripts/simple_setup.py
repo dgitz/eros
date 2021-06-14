@@ -20,11 +20,8 @@ folder_list = [ '~/config/',
 dependency_list = [ 'libncurses5-dev',
                     'libncursesw5-dev',
                     'libtinyxml-dev',
-                    'gpsd',
-                    'libgps-dev',
-                    'gpsd-clients',
-                    'python-gps',
                     'zip',
+                    'caffeine',
                     'ntp']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
@@ -41,7 +38,7 @@ def run_setup():
         os.system("mkdir -p " + folder_list[i])
     print(CGREEN + "Installing Dependencies via apt..." + CEND)
     for i in range(0,len(dependency_list)):
-        os.system("sudo apt install " + dependency_list[i] + " > /dev/null")
+        os.system("sudo apt --yes --force-yes install " + dependency_list[i])
     print(CGREEN + "Installing other dependencies from source..." + CEND)
     home = expanduser("~")
     hostname = socket.gethostname()
