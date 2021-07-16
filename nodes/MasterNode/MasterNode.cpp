@@ -5,7 +5,7 @@ bool kill_node = false;
 MasterNode::MasterNode()
     : system_command_action_server(
           *n.get(),
-          get_robotnamespace() + "SystemCommandAction",
+          "/" + read_robotnamespace() + "/SystemCommandAction",
           boost::bind(&MasterNode::system_commandAction_Callback, this, _1),
           false)
 {
@@ -14,6 +14,7 @@ MasterNode::MasterNode()
 MasterNode::~MasterNode()
 {
 }
+
 void MasterNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal)
 {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
@@ -261,6 +262,7 @@ int main(int argc, char **argv)
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
     ros::init(argc, argv, "master_node");
+
     MasterNode *node = new MasterNode();
     bool status = node->start();
     if (status == false)

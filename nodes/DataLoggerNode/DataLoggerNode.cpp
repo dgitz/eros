@@ -5,7 +5,7 @@ bool kill_node = false;
 DataLoggerNode::DataLoggerNode()
     : system_command_action_server(
           *n.get(),
-          "SystemCommandAction",
+          "/" + read_robotnamespace() + "/SystemCommandAction",
           boost::bind(&DataLoggerNode::system_commandAction_Callback, this, _1),
           false)
 {

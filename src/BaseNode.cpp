@@ -152,12 +152,13 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters()
             logger->log_notice("Initialized.");
             logger_initialized = true;
         }
+        std::string param_robot_namespace = node_name + "/robot_namespace";
+        if (n->getParam(param_robot_namespace, robot_namespace) == false)
+        {
+            robot_namespace = "/";
+        }
     }
-    std::string param_robot_namespace = node_name + "/robot_namespace";
-    if (n->getParam(param_robot_namespace, robot_namespace) == false)
-    {
-        robot_namespace = "/";
-    }
+
     resource_monitor = new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
     diag = resource_monitor->init();
     if (diag.level >= Level::Type::ERROR)

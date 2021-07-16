@@ -5,7 +5,7 @@ bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(
           *n.get(),
-          "SystemCommandAction",
+          "/" + read_robotnamespace() + "/SystemCommandAction",
           boost::bind(&SnapshotNode::system_commandAction_Callback, this, _1),
           false)
 {
