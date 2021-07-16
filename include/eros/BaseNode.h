@@ -207,11 +207,8 @@ namespace eros
             std::string param_robot_namespace = n->getUnresolvedNamespace() + "/robot_namespace";
             if (n->getParam(param_robot_namespace, _robot_namespace) == false)
             {
-                printf("nope\n");
                 _robot_namespace = "/";
             }
-
-            printf("v: %s\n", _robot_namespace.c_str());
             return _robot_namespace;
         }
         void set_robotnamespace(std::string _robot_namespace) { robot_namespace = _robot_namespace; }

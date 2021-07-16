@@ -168,6 +168,12 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters()
     }
     if (no_launch_enabled == true)
     {
+        std::vector<std::string> keys;
+        n->getParamNames(keys);
+        for (std::size_t i = 0; i < keys.size(); ++i)
+        {
+            printf("xxx1: %d %s\n", i, keys.at(i).c_str());
+        }
         std::string param_startup_delay = node_name + "/startup_delay";
         double startup_delay = 0.0;
         if (n->getParam(param_startup_delay, startup_delay) == false)

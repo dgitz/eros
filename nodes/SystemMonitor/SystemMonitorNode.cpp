@@ -6,7 +6,7 @@ bool kill_node = false;
 SystemMonitorNode::SystemMonitorNode()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          extract_robotnamespace(n->getUnresolvedNamespace()) + "/SystemCommandAction",
           boost::bind(&SystemMonitorNode::system_commandAction_Callback, this, _1),
           false)
 {
@@ -40,6 +40,12 @@ bool SystemMonitorNode::changenodestate_service(eros::srv_change_nodestate::Requ
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
+}
+std::string SystemMonitorNode::extract_robotnamespace(std::string str)
+{
+    std::string _robot_namespace;
+    _robot_namespace = str.substr(0, str.find(BASE_NODE_NAME));
+    return _robot_namespace;
 }
 bool SystemMonitorNode::start()
 {
