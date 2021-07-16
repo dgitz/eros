@@ -127,7 +127,7 @@ Diagnostic::DiagnosticDefinition MasterNode::finish_initialization()
     std::string srv_nodestate_topic = "srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &MasterNode::changenodestate_service, this);
-    std::string srv_device_topic = "/srv_device";
+    std::string srv_device_topic = "srv_device";
     device_server_srv = n->advertiseService(srv_device_topic, &MasterNode::device_service, this);
 
     std::string resource_available_topic = "resource_available";
