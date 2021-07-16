@@ -4,7 +4,6 @@ from optparse import OptionParser
 import subprocess
 import pdb
 import shutil
-from cookiecutter.main import cookiecutter
 from Helpers import *
 import os.path
 from os import path
@@ -22,7 +21,8 @@ dependency_list = [ 'libncurses5-dev',
                     'libtinyxml-dev',
                     'zip',
                     'caffeine',
-                    'ntp']
+                    'ntp',
+		    'net-tools']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']

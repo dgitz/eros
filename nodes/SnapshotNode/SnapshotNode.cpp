@@ -5,31 +5,38 @@ bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(
           *n.get(),
-          "SystemCommandAction",
+          "/" + read_robotnamespace() + "/SystemCommandAction",
           boost::bind(&SnapshotNode::system_commandAction_Callback, this, _1),
-          false) {
+          false)
+{
     system_command_action_server.start();
 }
-SnapshotNode::~SnapshotNode() {
+SnapshotNode::~SnapshotNode()
+{
 }
-void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg)
+{
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
-void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
+void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg)
+{
     process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
 }
-void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
+void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal)
+{
     (void)goal;
 }
 bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
-                                           eros::srv_change_nodestate::Response &res) {
+                                           eros::srv_change_nodestate::Response &res)
+{
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool SnapshotNode::start() {
+bool SnapshotNode::start()
+{
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
     process = new SnapshotProcess();
@@ -38,11 +45,13 @@ bool SnapshotNode::start() {
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
     enable_ready_to_arm_pub(true);
     diagnostic = preinitialize_basenode();
-    if (diagnostic.level > Level::Type::WARN) {
+    if (diagnostic.level > Level::Type::WARN)
+    {
         return false;
     }
     diagnostic = read_launchparameters();
-    if (diagnostic.level > Level::Type::WARN) {
+    if (diagnostic.level > Level::Type::WARN)
+    {
         return false;
     }
 
@@ -61,25 +70,30 @@ bool SnapshotNode::start() {
     process->enable_diagnostics(diagnostic_types);
     process->set_architecture(resource_monitor->get_architecture());
     diagnostic = process->finish_initialization();
-    if (diagnostic.level > Level::Type::WARN) {
+    if (diagnostic.level > Level::Type::WARN)
+    {
         return false;
     }
     diagnostic = finish_initialization();
-    if (diagnostic.level > Level::Type::WARN) {
+    if (diagnostic.level > Level::Type::WARN)
+    {
         return false;
     }
-    if (diagnostic.level < Level::Type::WARN) {
+    if (diagnostic.level < Level::Type::WARN)
+    {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
         diagnostic.level = Level::Type::INFO;
         diagnostic.message = Diagnostic::Message::NOERROR;
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
+    if (process->request_statechange(Node::State::INITIALIZED) == false)
+    {
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZED));
     }
-    if (process->request_statechange(Node::State::RUNNING) == false) {
+    if (process->request_statechange(Node::State::RUNNING) == false)
+    {
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
     }
@@ -87,11 +101,13 @@ bool SnapshotNode::start() {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
+Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters()
+{
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string param_mode = node_name + "/Mode";
     std::string mode;
-    if (n->getParam(param_mode, mode) == false) {
+    if (n->getParam(param_mode, mode) == false)
+    {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
                                           Diagnostic::Message::INITIALIZING_ERROR,
@@ -104,9 +120,10 @@ Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
+Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization()
+{
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &SnapshotNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
@@ -115,7 +132,8 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
                                       "Running");
     std::string param_config_dir = node_name + "/Config_Directory";
     std::string config_dir;
-    if (n->getParam(param_config_dir, config_dir) == false) {
+    if (n->getParam(param_config_dir, config_dir) == false)
+    {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
                                           Diagnostic::Message::INITIALIZING_ERROR,
@@ -124,20 +142,22 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
         return diag;
     }
     command_sub =
-        n->subscribe<eros::command>("/SystemCommand", 10, &SnapshotNode::command_Callback, this);
-    if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+        n->subscribe<eros::command>("SystemCommand", 10, &SnapshotNode::command_Callback, this);
+    if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+    {
         commandstate_sub = n->subscribe<eros::command_state>(
-            "/SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
+            "SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
     }
-    bagfile_snapshottrigger_pub = n->advertise<std_msgs::Empty>("/snapshot_trigger", 5);
+    bagfile_snapshottrigger_pub = n->advertise<std_msgs::Empty>("/" + get_robotnamespace() + "/snapshot_trigger", 5);
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
-    if (diag.level >= Level::Type::ERROR) {
+    if (diag.level >= Level::Type::ERROR)
+    {
         logger->log_diagnostic(diag);
         return diag;
     }
-    std::string commandstate_topic = "/SystemCommandState";
+    std::string commandstate_topic = "SystemCommandState";
     commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
-    std::string command_topic = "/SystemCommand";
+    std::string command_topic = "SystemCommand";
     command_pub = n->advertise<eros::command>(command_topic, 10);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
@@ -149,39 +169,49 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
                                       "All Configuration Files Loaded.");
     return diag;
 }
-bool SnapshotNode::run_loop1() {
+bool SnapshotNode::run_loop1()
+{
     return true;
 }
-bool SnapshotNode::run_loop2() {
+bool SnapshotNode::run_loop2()
+{
     return true;
 }
-bool SnapshotNode::run_loop3() {
+bool SnapshotNode::run_loop3()
+{
     return true;
 }
-bool SnapshotNode::run_001hz() {
+bool SnapshotNode::run_001hz()
+{
     return true;
 }
-bool SnapshotNode::run_01hz() {
+bool SnapshotNode::run_01hz()
+{
     return true;
 }
-bool SnapshotNode::run_01hz_noisy() {
+bool SnapshotNode::run_01hz_noisy()
+{
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }
-bool SnapshotNode::run_1hz() {
+bool SnapshotNode::run_1hz()
+{
     std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
         process->get_latest_diagnostics();
-    for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
+    for (std::size_t i = 0; i < latest_diagnostics.size(); ++i)
+    {
         logger->log_diagnostic(latest_diagnostics.at(i));
         diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
-    if (process->get_nodestate() == Node::State::RESET) {
+    if (process->get_nodestate() == Node::State::RESET)
+    {
         base_reset();
         process->reset();
         logger->log_notice("Node has Reset");
-        if (process->request_statechange(Node::State::RUNNING) == false) {
+        if (process->request_statechange(Node::State::RUNNING) == false)
+        {
             diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
                                               Diagnostic::Message::DEVICE_NOT_AVAILABLE,
@@ -190,31 +220,38 @@ bool SnapshotNode::run_1hz() {
         }
     }
 
-    if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+    if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+    {
         if ((process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::COMPLETE) ||
-            (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::INCOMPLETE)) {
+            (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::INCOMPLETE))
+        {
             process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::NOTRUNNING);
         }
     }
     return true;
 }
-bool SnapshotNode::run_10hz() {
+bool SnapshotNode::run_10hz()
+{
     Diagnostic::DiagnosticDefinition diag = process->update(0.1, ros::Time::now().toSec());
-    if (diag.level >= Level::Type::NOTICE) {
+    if (diag.level >= Level::Type::NOTICE)
+    {
         logger->log_diagnostic(diag);
     }
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
     if ((process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::RUNNING) ||
-        (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::RUNNING)) {
+        (process->get_systemsnapshot_state() == SnapshotProcess::SnapshotState::RUNNING))
+    {
         eros::command_state state;
         state.stamp = ros::Time::now();
         state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
-        if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+        if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+        {
             state.CurrentCommand.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
             state.State = (uint8_t)process->get_systemsnapshot_state();
         }
-        else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+        else if (process->get_mode() == SnapshotProcess::Mode::SLAVE)
+        {
             state.CurrentCommand.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
             state.State = (uint8_t)process->get_devicesnapshot_state();
         }
@@ -225,19 +262,27 @@ bool SnapshotNode::run_10hz() {
     }
     return true;
 }
-void SnapshotNode::thread_loop() {
-    while (kill_node == false) { ros::Duration(1.0).sleep(); }
+void SnapshotNode::thread_loop()
+{
+    while (kill_node == false)
+    {
+        ros::Duration(1.0).sleep();
+    }
 }
-void SnapshotNode::thread_snapshotcreation() {
-    while (kill_node == false) {
-        if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED) {
+void SnapshotNode::thread_snapshotcreation()
+{
+    while (kill_node == false)
+    {
+        if (process->get_devicesnapshot_state() == SnapshotProcess::SnapshotState::STARTED)
+        {
             process->set_devicesnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
 
             logger->log_notice("Snap: " + SnapshotProcess::SnapshotStateString(
                                               process->get_devicesnapshot_state()));
             SnapshotProcess::SnapshotConfig config = process->get_snapshot_config();
             Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
-            if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+            if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+            {
                 std_msgs::Empty bagfile_snapshot_trigger;
                 bagfile_snapshottrigger_pub.publish(bagfile_snapshot_trigger);
                 process->set_systemsnapshot_state(SnapshotProcess::SnapshotState::RUNNING);
@@ -246,29 +291,37 @@ void SnapshotNode::thread_snapshotcreation() {
                 command.stamp = ros::Time::now();
                 command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
                 command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
-                for (std::size_t i = 0; i < 1; ++i) { command_pub.publish(command); }
+                for (std::size_t i = 0; i < 1; ++i)
+                {
+                    command_pub.publish(command);
+                }
             }
             std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
             Level::Type max_level = Level::Type::DEBUG;
-            for (std::size_t i = 0; i < diag_list.size(); ++i) {
-                if (diag_list.at(i).level > max_level) {
+            for (std::size_t i = 0; i < diag_list.size(); ++i)
+            {
+                if (diag_list.at(i).level > max_level)
+                {
                     max_level = diag_list.at(i).level;
                     diag = diag_list.at(i);
                 }
             }
-            if (max_level <= Level::Type::WARN) {
+            if (max_level <= Level::Type::WARN)
+            {
                 logger->log_notice("Snap Completed");
                 eros::command_state state;
                 state.stamp = ros::Time::now();
                 state.Name = get_hostname();
                 state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
-                if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+                {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
                     state.CurrentCommand.CommandText = "System Snap Completed.";
                     state.State = (uint8_t)process->get_systemsnapshot_state();
                 }
-                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE)
+                {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                     state.CurrentCommand.CommandText =
@@ -279,17 +332,20 @@ void SnapshotNode::thread_snapshotcreation() {
                 state.diag = convert(diag);
                 commandstate_pub.publish(state);
             }
-            else {
+            else
+            {
                 logger->log_warn("Snap Failed");
                 eros::command_state state;
                 state.stamp = ros::Time::now();
                 state.Name = get_hostname();
                 state.CurrentCommand.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
-                if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
+                if (process->get_mode() == SnapshotProcess::Mode::MASTER)
+                {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
                 }
-                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE) {
+                else if (process->get_mode() == SnapshotProcess::Mode::SLAVE)
+                {
                     state.CurrentCommand.Option1 =
                         (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                 }
@@ -302,29 +358,34 @@ void SnapshotNode::thread_snapshotcreation() {
         ros::Duration(1.0).sleep();
     }
 }
-void SnapshotNode::cleanup() {
+void SnapshotNode::cleanup()
+{
     process->request_statechange(Node::State::FINISHED);
     process->cleanup();
     delete process;
     base_cleanup();
 }
-void signalinterrupt_handler(int sig) {
+void signalinterrupt_handler(int sig)
+{
     printf("Killing SnapshotNode with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
     ros::init(argc, argv, "snapshot_node");
     SnapshotNode *node = new SnapshotNode();
     bool status = node->start();
-    if (status == false) {
+    if (status == false)
+    {
         return EXIT_FAILURE;
     }
     std::thread thread(&SnapshotNode::thread_loop, node);
     std::thread thread2(&SnapshotNode::thread_snapshotcreation, node);
-    while ((status == true) and (kill_node == false)) {
+    while ((status == true) and (kill_node == false))
+    {
         status = node->update(node->get_process()->get_nodestate());
     }
     node->cleanup();

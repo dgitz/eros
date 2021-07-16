@@ -4,7 +4,7 @@ bool kill_node = false;
 {{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + {{cookiecutter.node_classname}}::BASE_NODE_NAME + "_SystemCommand",
+          "/" + read_robotnamespace() + "/SystemCommandAction",
           boost::bind(&{{cookiecutter.node_classname}}::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
@@ -86,7 +86,7 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchpar
 }
 Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    std::string srv_nodestate_topic = "srv_nodestate_change";
     nodestate_srv = n->advertiseService(srv_nodestate_topic, &{{cookiecutter.node_classname}}::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,

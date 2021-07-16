@@ -1,6 +1,6 @@
-<!--xml-->
+<?xml version="1.0"?>
 <launch>
-<node name="$(env ROS_HOSTNAME)_safety_node" pkg="eros" type="safety_node"  output="screen" clear_params="true">
+<node name="safety_node" pkg="eros" type="safety_node"  output="screen" clear_params="true">
         <param name="startup_delay"       value="0.0"/>
 	    <param name="verbosity_level"       value="INFO"/>
         <param name="require_pps_to_start"  value="false"/>    
