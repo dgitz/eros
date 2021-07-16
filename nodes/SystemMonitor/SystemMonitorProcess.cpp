@@ -183,8 +183,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicelist(
             Device newDevice(device_list.size(), key);
             device_list.insert(std::make_pair(newDevice.name, newDevice));
             device_name_list.insert(std::make_pair(newDevice.id, newDevice.name));
-            new_resourceavailable_topics_to_subscribe.push_back("/" + key + "/resource_available");
-            new_loadfactor_topics_to_subscribe.push_back("/" + key + "/loadfactor");
+            new_resourceavailable_topics_to_subscribe.push_back(key + "/resource_available");
+            new_loadfactor_topics_to_subscribe.push_back(key + "/loadfactor");
         }
         ++it;
     }

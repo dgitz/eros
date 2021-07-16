@@ -107,10 +107,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::read_launchparameters() {
 }
 Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &SystemMonitorNode::changenodestate_service, this);
-    std::string commandstate_topic = "/SystemCommandState";
+    std::string commandstate_topic = "SystemCommandState";
     commandstate_sub = n->subscribe<eros::command_state>(
         commandstate_topic, 50, &SystemMonitorNode::commandState_Callback, this);
 

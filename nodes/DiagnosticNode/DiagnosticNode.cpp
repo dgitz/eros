@@ -118,7 +118,7 @@ Diagnostic::DiagnosticDefinition DiagnosticNode::finish_initialization() {
     std::string srv_system_diagnostics_topic = "/srv_system_diagnostics";
     system_diagnostics_srv = n->advertiseService(
         srv_system_diagnostics_topic, &DiagnosticNode::system_diagnostics_service, this);
-    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &DiagnosticNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,

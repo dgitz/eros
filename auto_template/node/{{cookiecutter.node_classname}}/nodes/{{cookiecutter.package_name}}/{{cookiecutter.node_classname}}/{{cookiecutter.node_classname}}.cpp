@@ -86,7 +86,7 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchpar
 }
 Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string srv_nodestate_topic = "/" + node_name + "/srv_nodestate_change";
+    std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv = n->advertiseService(srv_nodestate_topic, &{{cookiecutter.node_classname}}::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,

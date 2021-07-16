@@ -300,7 +300,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     bool initialize_windows();
     bool set_nodeHandle(ros::NodeHandle* nh) {
         nodeHandle = nh;
-        std::string systemcommand_topic = "/SystemCommand";
+        std::string systemcommand_topic = "SystemCommand";
         command_pub = nodeHandle->advertise<eros::command>(systemcommand_topic, 1);
         return true;
     }
