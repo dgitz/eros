@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <test test-name="test_baseNode" pkg="eros" type="test_baseNode">
+          <param name="verbosity_level"       value="DEBUG"/>
+    </test>
+</launch>

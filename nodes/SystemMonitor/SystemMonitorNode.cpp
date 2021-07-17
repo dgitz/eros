@@ -370,7 +370,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     }
     for (std::size_t i = 0; i < new_loadfactor_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub =
-            n->subscribe<eros::loadfactor>("/" + new_loadfactor_topics_to_subscribe.at(i),
+            n->subscribe<eros::loadfactor>(new_loadfactor_topics_to_subscribe.at(i),
                                            50,
                                            &SystemMonitorNode::loadfactor_Callback,
                                            this);
@@ -378,7 +378,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     }
     for (std::size_t i = 0; i < new_resourceavailable_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub =
-            n->subscribe<eros::resource>("/" + new_resourceavailable_topics_to_subscribe.at(i),
+            n->subscribe<eros::resource>(new_resourceavailable_topics_to_subscribe.at(i),
                                          50,
                                          &SystemMonitorNode::resourceavailable_Callback,
                                          this);

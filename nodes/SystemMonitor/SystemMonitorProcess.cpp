@@ -176,9 +176,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicelist(
     std::vector<std::string>::iterator it = loadfactor_list.begin();
     while (it != loadfactor_list.end()) {
         std::string key = *it;
-        key = key.substr(1, key.find("loadfactor") - 2);
-
+        key = key.substr(0, key.find("loadfactor") - 1);
         device_it = device_list.find(key);
+
         if (device_it == device_list.end()) {
             Device newDevice(device_list.size(), key);
             device_list.insert(std::make_pair(newDevice.name, newDevice));
@@ -492,10 +492,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
                 str += "  ";
                 if (str.size() >
                     (std::size_t)(window_it->second.get_screen_coordinates_pixel().width_pix - 4)) {
-                    str = str.substr(
-                              0,
-                              (std::size_t)(
-                                  window_it->second.get_screen_coordinates_pixel().width_pix - 4)) +
+                    str = str.substr(0,
+                                     (std::size_t)(window_it->second.get_screen_coordinates_pixel()
+                                                       .width_pix -
+                                                   4)) +
                           "...";
                 }
                 wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));

@@ -27,6 +27,7 @@
     <exec_depend>rosbag</exec_depend>
     <build_depend>tinyxml</build_depend>
     <exec_depend>tinyxml</exec_depend>
+    <test_depend>rosunit</test_depend>
     
 <export>
     </export>

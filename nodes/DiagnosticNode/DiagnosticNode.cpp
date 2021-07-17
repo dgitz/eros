@@ -5,7 +5,7 @@ bool kill_node = false;
 DiagnosticNode::DiagnosticNode()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&DiagnosticNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();

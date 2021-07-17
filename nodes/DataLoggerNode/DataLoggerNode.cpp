@@ -5,7 +5,7 @@ bool kill_node = false;
 DataLoggerNode::DataLoggerNode()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&DataLoggerNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
@@ -143,7 +143,7 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
     }
     else {
         snapshot_trigger_sub =
-            n->subscribe<std_msgs::Empty>("/" + get_robotnamespace() + "/snapshot_trigger",
+            n->subscribe<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger",
                                           1,
                                           &DataLoggerNode::snapshot_trigger_Callback,
                                           this);
@@ -263,7 +263,7 @@ void DataLoggerNode::run_logger(DataLoggerNode *node) {
             if (get_robotnamespace() == "/") {
                 opts.topics.push_back(master_topics.at(i).name);
             }
-            else if (master_topics.at(i).name.rfind("/" + get_robotnamespace(), 0) == 0) {
+            else if (master_topics.at(i).name.rfind(get_robotnamespace(), 0) == 0) {
                 opts.topics.push_back(master_topics.at(i).name);
             }
         }

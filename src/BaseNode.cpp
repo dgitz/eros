@@ -1,5 +1,41 @@
 #include <eros/BaseNode.h>
 using namespace eros;
+std::string BaseNode::validate_robotnamespace(std::string str) {
+    if (str == "") {
+        str = "/";
+    }
+    if (str.at(0) != '/') {
+        str.insert(str.begin(), '/');
+    }
+    if (str.at(str.length() - 1) != '/') {
+        str.insert(str.length(), "/");
+    }
+    int max_count = str.size();
+    bool search_duplicates = true;
+    int counter = 0;
+    while (search_duplicates == true) {
+        bool duplicate_found = false;
+        int index = 0;
+        for (std::size_t i = 1; i < str.size(); ++i) {
+            if ((str.at(i) == str.at(i - 1)) && (str.at(i) == '/')) {
+                duplicate_found = true;
+                index = i;
+            }
+        }
+        if (duplicate_found == true) {
+            str.erase(str.begin() + index);
+        }
+        else {  //(duplicate_found == false) {
+            search_duplicates = false;
+        }
+        counter++;
+        if (counter == max_count) {
+            search_duplicates = false;
+        }
+    }
+
+    return str;
+}
 void BaseNode::set_basenodename(std::string t_base_node_name) {
     base_node_name = t_base_node_name;
 }
@@ -86,11 +122,11 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
 
     if (armedstate_sub_disabled == false) {
         armedstate_sub = n->subscribe<eros::armed_state>(
-            "/" + get_robotnamespace() + "/ArmedState", 10, &BaseNode::armedstate_Callback, this);
+            get_robotnamespace() + "ArmedState", 10, &BaseNode::armedstate_Callback, this);
     }
     if (modestate_sub_disabled == false) {
         modestate_sub = n->subscribe<eros::mode_state>(
-            "/" + get_robotnamespace() + "/ModeState", 10, &BaseNode::modestate_Callback, this);
+            get_robotnamespace() + "ModeState", 10, &BaseNode::modestate_Callback, this);
     }
     if (pub_ready_to_arm == true) {
         std::string readytoarm_topic = node_name + "/ready_to_arm";
@@ -134,6 +170,7 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         if (n->getParam(param_robot_namespace, robot_namespace) == false) {
             robot_namespace = "/";
         }
+        robot_namespace = validate_robotnamespace(robot_namespace);
     }
 
     resource_monitor = new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
