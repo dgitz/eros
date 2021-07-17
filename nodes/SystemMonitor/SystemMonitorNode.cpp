@@ -73,7 +73,7 @@ bool SystemMonitorNode::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
-    process->set_nodeHandle((n.get()));
+    process->set_nodeHandle((n.get()), get_robotnamespace());
     diagnostic = finish_initialization();
 
     if (diagnostic.level > Level::Type::WARN) {

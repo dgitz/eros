@@ -6,7 +6,7 @@ bool kill_node = false;
 SafetyNode::SafetyNode()
     : system_command_action_server(
           *n.get(),
-          get_hostname() + "_" + SafetyNode::BASE_NODE_NAME + "_SystemCommand",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&SafetyNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
@@ -94,8 +94,8 @@ Diagnostic::DiagnosticDefinition SafetyNode::finish_initialization() {
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &SafetyNode::changenodestate_service, this);
     armedstate_pub = n->advertise<eros::armed_state>(get_robotnamespace() + "/ArmedState", 2);
-    command_sub =
-        n->subscribe<eros::command>("SystemCommand", 10, &SafetyNode::command_Callback, this);
+    command_sub = n->subscribe<eros::command>(
+        get_robotnamespace() + "SystemCommand", 10, &SafetyNode::command_Callback, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,

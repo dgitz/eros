@@ -22,7 +22,8 @@ dependency_list = [ 'libncurses5-dev',
                     'zip',
                     'caffeine',
                     'ntp',
-		    'net-tools']
+		    'net-tools',
+            'openssh-server']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']

@@ -638,7 +638,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
         kill_me = true;
     }
     else if ((key_pressed == KEY_c) || (key_pressed == KEY_C)) {
-        set_message_text("Clearning All Snapshots...", Level::Type::WARN);
+        set_message_text("Clearing All Snapshots...", Level::Type::WARN);
         eros::command command;
         command.stamp = ros::Time::now();
         command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;

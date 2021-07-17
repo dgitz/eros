@@ -298,9 +298,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     eros::Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
     bool initialize_windows();
-    bool set_nodeHandle(ros::NodeHandle* nh) {
+    bool set_nodeHandle(ros::NodeHandle* nh, std::string robot_namespace) {
         nodeHandle = nh;
-        std::string systemcommand_topic = "SystemCommand";
+        std::string systemcommand_topic = robot_namespace + "SystemCommand";
         command_pub = nodeHandle->advertise<eros::command>(systemcommand_topic, 1);
         return true;
     }

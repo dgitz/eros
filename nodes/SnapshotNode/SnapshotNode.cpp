@@ -14,7 +14,36 @@ SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
-    process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
+    eros::command command = BaseNodeProcess::convert_fromptr(t_msg);
+    std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->new_commandmsg(command);
+    bool any_error = false;
+    for (std::size_t i = 0; i < diag_list.size(); ++i) {
+        if (diag_list.at(i).level >= Level::Type::WARN) {
+            any_error = true;
+            diag = diag_list.at(i);
+        }
+    }
+    if (any_error == false) {
+        diag.level = Level::Type::INFO;
+        diag.message = Diagnostic::Message::NOERROR;
+        diag.description = "No Error";
+    }
+    bool send_reply = false;
+    if (t_msg->Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
+        if (t_msg->Option1 == (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS) {
+            send_reply = true;
+        }
+    }
+    if (send_reply == true) {
+        eros::command_state state;
+        state.stamp = ros::Time::now();
+        state.Name = get_hostname();
+        state.CurrentCommand = command;
+        state.State = 0;
+        state.PercentComplete = 0.0;
+        state.diag = convert(diag);
+        commandstate_pub.publish(state);
+    }
 }
 void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
     process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
@@ -123,11 +152,14 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
-    command_sub =
-        n->subscribe<eros::command>("SystemCommand", 10, &SnapshotNode::command_Callback, this);
+    command_sub = n->subscribe<eros::command>(
+        get_robotnamespace() + "SystemCommand", 10, &SnapshotNode::command_Callback, this);
     if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
-        commandstate_sub = n->subscribe<eros::command_state>(
-            "SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
+        commandstate_sub =
+            n->subscribe<eros::command_state>(get_robotnamespace() + "SystemCommandState",
+                                              10,
+                                              &SnapshotNode::commandState_Callback,
+                                              this);
     }
     bagfile_snapshottrigger_pub =
         n->advertise<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger", 5);
@@ -136,9 +168,9 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
-    std::string commandstate_topic = "SystemCommandState";
+    std::string commandstate_topic = get_robotnamespace() + "SystemCommandState";
     commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
-    std::string command_topic = "SystemCommand";
+    std::string command_topic = get_robotnamespace() + "SystemCommand";
     command_pub = n->advertise<eros::command>(command_topic, 10);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
