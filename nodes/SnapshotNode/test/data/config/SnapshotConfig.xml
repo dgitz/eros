@@ -2,7 +2,7 @@
 <SnapshotConfigFile>
     <SnapshotConfig>
         <SnapshotDevices>
-            <Device>DevComputer1</Device>
+            <Device id="test">DevComputer1</Device>
         </SnapshotDevices>
         <BagFileDirectory>/home/robot/test/storage/DATALOGS/</BagFileDirectory>
         <StageDirectory>/home/robot/test/storage/stage/</StageDirectory> <!-- Snapshot Node will create sub folders here freely! -->
