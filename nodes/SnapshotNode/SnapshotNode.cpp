@@ -5,7 +5,7 @@ bool kill_node = false;
 SnapshotNode::SnapshotNode()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&SnapshotNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
@@ -130,7 +130,7 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
             "SystemCommandState", 10, &SnapshotNode::commandState_Callback, this);
     }
     bagfile_snapshottrigger_pub =
-        n->advertise<std_msgs::Empty>("/" + get_robotnamespace() + "/snapshot_trigger", 5);
+        n->advertise<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger", 5);
     diag = process->load_config(config_dir + "/SnapshotConfig.xml");
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);

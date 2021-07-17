@@ -5,7 +5,7 @@ bool kill_node = false;
 MasterNode::MasterNode()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&MasterNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
@@ -113,10 +113,11 @@ Diagnostic::DiagnosticDefinition MasterNode::finish_initialization() {
     std::string srv_device_topic = "srv_device";
     device_server_srv = n->advertiseService(srv_device_topic, &MasterNode::device_service, this);
 
-    std::string resource_available_topic = "resource_available";
+    std::string resource_available_topic =
+        get_robotnamespace() + get_hostname() + "/resource_available";
     resource_available_pub = n->advertise<eros::resource>(resource_available_topic, 1);
 
-    std::string device_loadfactor_topic = "loadfactor";
+    std::string device_loadfactor_topic = get_robotnamespace() + get_hostname() + "/loadfactor";
     loadfactor_pub = n->advertise<eros::loadfactor>(device_loadfactor_topic, 5);
 
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
@@ -158,7 +159,7 @@ bool MasterNode::run_01hz_noisy() {
     if (diag.level <= Level::Type::WARN) {
         {
             eros::resource msg = convert(resource_available_monitor->get_resourceinfo());
-            msg.Name = get_hostname();
+            msg.Name = get_robotnamespace() + get_hostname();
             msg.stamp = ros::Time::now();
             resource_available_pub.publish(msg);
         }
@@ -166,7 +167,7 @@ bool MasterNode::run_01hz_noisy() {
             eros::loadfactor msg;
             std::vector<double> load_factor = resource_available_monitor->get_load_factor();
             msg.stamp = ros::Time::now();
-            msg.DeviceName = get_hostname();
+            msg.DeviceName = get_robotnamespace() + get_hostname();
             msg.loadfactor.push_back(load_factor.at(0));
             msg.loadfactor.push_back(load_factor.at(1));
             msg.loadfactor.push_back(load_factor.at(2));

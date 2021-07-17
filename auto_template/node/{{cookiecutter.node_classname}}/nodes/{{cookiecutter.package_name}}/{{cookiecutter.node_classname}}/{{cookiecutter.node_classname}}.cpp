@@ -4,7 +4,7 @@ bool kill_node = false;
 {{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}()
     : system_command_action_server(
           *n.get(),
-          "/" + read_robotnamespace() + "/SystemCommandAction",
+          read_robotnamespace() + "SystemCommandAction",
           boost::bind(&{{cookiecutter.node_classname}}::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();

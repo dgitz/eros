@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   rosbag
   cmake_modules
 )
+find_package(GTest REQUIRED)
+find_package(rostest REQUIRED)
 find_package(TinyXML REQUIRED)
 find_package(Curses REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)

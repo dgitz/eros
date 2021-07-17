@@ -17,3 +17,10 @@ add_dependencies(test_resourcemonitor eros_generate_messages_cpp)
 catkin_add_gtest(test_base test_base.cpp)
 target_link_libraries(test_base ${catkin_LIBRARIES}  ${Boost_LIBRARIES} baseNodeProcess)
 add_dependencies(test_base eros_generate_messages_cpp)
+
+add_rostest_gtest(test_baseNode
+    test_baseNode.test
+    test_baseNode.cpp
+)
+add_dependencies(test_baseNode baseNode)
+target_link_libraries(test_baseNode ${catkin_LIBRARIES}  ${Boost_LIBRARIES} ${GTEST_LIBRARIES} logger baseNode)
