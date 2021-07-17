@@ -7,16 +7,20 @@
             <include file="$(find eros)/launch/nodes/master_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include>     
+            <!--
             <include file="$(find eros)/launch/nodes/snapshot_node_master.launch"> 
                  <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include> 
+            -->
             <include file="$(find eros)/launch/nodes/datalogger_node.launch"> 
                  <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include>
         </group>
+        <!--
         <include file="$(find eros)/launch/nodes/diagnostic_node.launch">
             <arg name="robot_namespace" value="$(arg robot_namespace)"/>
         </include>
+        -->
 
     </group>
 </launch>
