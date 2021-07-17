@@ -7,8 +7,8 @@ uint64_t heartbeat_count = 0;
 uint64_t commandstate_count = 0;
 eros::command_state commandstate_msg;
 void heartbeat_Callback(const eros::heartbeat& msg) {
+    (void)msg;
     heartbeat_count++;
-    printf("beat\n");
 }
 void commandstate_Callback(const eros::command_state& msg) {
     commandstate_count++;
@@ -18,8 +18,9 @@ TEST(SnapshotNode, TestMaster) {
     ros::NodeHandle nh("~");
     Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
 
-    std::string heartbeat_topic = "/snapshot_node/heartbeat";
+    std::string heartbeat_topic = "/test/snapshot_node/heartbeat";
     ros::Subscriber sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
+    logger->log_warn("topic: " + sub.getTopic());
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
     EXPECT_EQ(1, sub.getNumPublishers());
