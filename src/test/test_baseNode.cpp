@@ -66,7 +66,7 @@ class BaseNodeTester : public eros::BaseNode
             get_logger()->log_diagnostic(diagnostic);
         }
         status = true;
-        return true;
+        return status;
     }
     bool run_loop1() {
         return true;
