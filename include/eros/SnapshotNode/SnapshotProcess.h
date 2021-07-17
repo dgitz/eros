@@ -66,10 +66,15 @@ class SnapshotProcess : public eros::BaseNodeProcess
         std::string output_file;
     };
     struct SlaveDevice {
-        SlaveDevice(std::string _name)
-            : name(_name), device_snapshot_generated(false), timer(0.0), devicesnapshot_path("") {
+        SlaveDevice(std::string _name, std::string _id)
+            : name(_name),
+              id(_id),
+              device_snapshot_generated(false),
+              timer(0.0),
+              devicesnapshot_path("") {
         }
         std::string name;
+        std::string id;
         bool device_snapshot_generated;
         bool device_snapshot_processed;
         double timer;

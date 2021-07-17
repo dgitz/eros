@@ -362,9 +362,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         exec(mv_cmd.c_str(), true);
         snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
-            std::string scp_cmd = "scp robot@" + snapshot_config.snapshot_devices.at(i).name + ":" +
+            std::string scp_cmd = "scp " + snapshot_config.snapshot_devices.at(i).id + "@" +
+                                  snapshot_config.snapshot_devices.at(i).name + ":" +
                                   snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
                                   snapshot_config.stage_directory + "/SystemSnapshot";
+            logger->log_debug(scp_cmd);
             exec(scp_cmd.c_str(), true);
         }
         if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
@@ -515,10 +517,12 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                 if (nullptr != l_pSnapshotDevices) {
                     TiXmlElement *l_pSnapshotDevice =
                         l_pSnapshotDevices->FirstChildElement("Device");
+
                     while (l_pSnapshotDevice) {
                         std::string device_name = l_pSnapshotDevice->GetText();
+                        std::string id_account = l_pSnapshotDevice->Attribute("id");
                         if (device_name != get_hostname()) {
-                            SlaveDevice newSlave(device_name);
+                            SlaveDevice newSlave(device_name, id_account);
                             snapshot_config.snapshot_devices.push_back(newSlave);
                         }
                         l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
