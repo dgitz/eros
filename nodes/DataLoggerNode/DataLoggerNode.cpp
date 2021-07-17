@@ -138,7 +138,7 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::WARN,
                                           Diagnostic::Message::NOERROR,
-                                          "SnapshotMode Disabled.  Logging Everything.");
+                                          "SnapshotMode Disabled.  Logging to File Storage.");
         logger->log_diagnostic(diag);
     }
     else {
@@ -248,7 +248,7 @@ void DataLoggerNode::thread_loop() {
 void DataLoggerNode::run_logger(DataLoggerNode *node) {
     if (node->get_process()->is_logging_enabled() == true) {
         rosbag::RecorderOptions opts;
-        opts.record_all = true;
+        opts.record_all = false;
         opts.quiet = true;
         opts.verbose = false;
         opts.prefix = node->get_process()->get_logdirectory() + "BAG";
@@ -257,10 +257,20 @@ void DataLoggerNode::run_logger(DataLoggerNode *node) {
             ros::Duration(node->get_process()->get_logfile_duration());  // 30 minutes
         opts.split = true;
         opts.snapshot = node->get_process()->getSnapshotMode();
+        ros::master::V_TopicInfo master_topics;
+        ros::master::getTopics(master_topics);
+        for (std::size_t i = 0; i < master_topics.size(); ++i) {
+            if (get_robotnamespace() == "/") {
+                opts.topics.push_back(master_topics.at(i).name);
+            }
+            else if (master_topics.at(i).name.rfind("/" + get_robotnamespace(), 0) == 0) {
+                opts.topics.push_back(master_topics.at(i).name);
+            }
+        }
         rosbag::Recorder recorder(opts);
         logger->log_warn("Data Logger Running.");
         recorder.run();
-        node->get_logger()->log_info("Logger Finished.");
+        node->get_logger()->log_notice("Logger Finished.");
     }
     return;
 }
@@ -289,9 +299,10 @@ int main(int argc, char **argv) {
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
     }
-    node->cleanup();
-    thread2.detach();
+
+    thread2.join();
     thread.detach();
+    node->cleanup();
     delete node;
     return 0;
 }

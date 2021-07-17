@@ -142,16 +142,19 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         logger->log_diagnostic(diag);
         return diag;
     }
-    if (no_launch_enabled == true) {
+    if (no_launch_enabled == true) {}
+    else {
         std::string param_startup_delay = node_name + "/startup_delay";
         double startup_delay = 0.0;
         if (n->getParam(param_startup_delay, startup_delay) == false) {
             logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
         }
         else {
-            char tempstr[128];
-            sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
-            logger->log_notice(std::string(tempstr));
+            if (startup_delay > 0.1) {
+                char tempstr[128];
+                sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
+                logger->log_warn(std::string(tempstr));
+            }
         }
         ros::Duration(startup_delay).sleep();
     }
