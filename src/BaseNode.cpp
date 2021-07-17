@@ -142,31 +142,34 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         logger->log_diagnostic(diag);
         return diag;
     }
-    // if (no_launch_enabled == true) {
-    std::string param_startup_delay = node_name + "/startup_delay";
-    double startup_delay = 0.0;
-    if (n->getParam(param_startup_delay, startup_delay) == false) {
-        logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
-    }
+    if (no_launch_enabled == true) {}
     else {
-        char tempstr[128];
-        sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
-        logger->log_warn(std::string(tempstr));
+        std::string param_startup_delay = node_name + "/startup_delay";
+        double startup_delay = 0.0;
+        if (n->getParam(param_startup_delay, startup_delay) == false) {
+            logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
+        }
+        else {
+            if (startup_delay > 0.1) {
+                char tempstr[128];
+                sprintf(tempstr, "Using Parameter: startup_delay = %4.2f sec.", startup_delay);
+                logger->log_warn(std::string(tempstr));
+            }
+        }
+        ros::Duration(startup_delay).sleep();
     }
-    ros::Duration(startup_delay).sleep();
-    //  }
-    // if (no_launch_enabled == true) {}
-    //  else {
-    std::string param_require_pps_to_start = node_name + "/require_pps_to_start";
-    if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
-        diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
-        diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
-        diag.description = "Missing Parameter: require_pps_to_start. Exiting.";
-        diagnostic = diag;
-        logger->log_diagnostic(diag);
+    if (no_launch_enabled == true) {}
+    else {
+        std::string param_require_pps_to_start = node_name + "/require_pps_to_start";
+        if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
+            diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
+            diag.level = Level::Type::ERROR;
+            diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+            diag.description = "Missing Parameter: require_pps_to_start. Exiting.";
+            diagnostic = diag;
+            logger->log_diagnostic(diag);
+        }
     }
-    // }
     double max_rate = 0.0;
     if (no_launch_enabled == true) {
         loop1_enabled = true;
