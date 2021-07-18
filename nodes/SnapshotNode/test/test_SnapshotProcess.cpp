@@ -13,6 +13,7 @@ class SnapshotProcessTester : public SnapshotProcess
     ~SnapshotProcessTester() {
     }
 };
+
 TEST(BasicTest, TestOperation_Slave) {
     Logger* logger = new Logger("DEBUG", "UnitTestSnapshotProcess");
     SnapshotProcessTester* tester = new SnapshotProcessTester;

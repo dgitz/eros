@@ -10,7 +10,7 @@
             <param name="loop2_rate"            value="10"/>
             <param name="loop3_rate"            value="5"/>
             <param name="Mode"              value="MASTER"/> <!-- MASTER,SLAVE-->
-            <param name="Config_Directory" value="~/test/config"/> <!-- Where the Snapshot.xml file is located -->
+            <param name="Config_Directory" value="$(env PWD)/config"/> <!-- Where the Snapshot.xml file is located -->
         </node>
 
         <test test-name="test_snapshotNode" pkg="eros" type="test_snapshotNode"/>
