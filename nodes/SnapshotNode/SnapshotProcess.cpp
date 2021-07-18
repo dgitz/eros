@@ -493,7 +493,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
     diag_list.push_back(diag);
     return diag_list;
 }
-Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_path) {
+Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
+    std::string file_path, std::vector<std::string> override_devicenames) {
     logger->log_notice("Loading: " + file_path);
     file_path = sanitize_path(file_path);
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
@@ -514,29 +515,39 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
         TiXmlElement *l_pSnapshotConfig = l_pRootElement->FirstChildElement("SnapshotConfig");
         if (nullptr != l_pSnapshotConfig) {
             if (mode == Mode::MASTER) {
-                TiXmlElement *l_pSnapshotDevices =
-                    l_pSnapshotConfig->FirstChildElement("SnapshotDevices");
-                if (nullptr != l_pSnapshotDevices) {
-                    TiXmlElement *l_pSnapshotDevice =
-                        l_pSnapshotDevices->FirstChildElement("Device");
+                if (override_devicenames.size() == 0) {
+                    TiXmlElement *l_pSnapshotDevices =
+                        l_pSnapshotConfig->FirstChildElement("SnapshotDevices");
+                    if (nullptr != l_pSnapshotDevices) {
+                        TiXmlElement *l_pSnapshotDevice =
+                            l_pSnapshotDevices->FirstChildElement("Device");
 
-                    while (l_pSnapshotDevice) {
-                        std::string device_name = l_pSnapshotDevice->GetText();
-                        std::string id_account = l_pSnapshotDevice->Attribute("id");
-                        if (device_name != get_hostname()) {
-                            SlaveDevice newSlave(device_name, id_account);
-                            snapshot_config.snapshot_devices.push_back(newSlave);
+                        while (l_pSnapshotDevice) {
+                            std::string device_name = l_pSnapshotDevice->GetText();
+                            std::string id_account = l_pSnapshotDevice->Attribute("id");
+                            if (device_name != get_hostname()) {
+                                SlaveDevice newSlave(device_name, id_account);
+                                snapshot_config.snapshot_devices.push_back(newSlave);
+                            }
+                            l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
                         }
-                        l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
+                        /*
+                        if (snapshot_config.snapshot_devices.size() == 0) {
+                            missing_required_keys.push_back("SnapshotDevices/Device");
+                        }
+                        */
                     }
-                    /*
-                    if (snapshot_config.snapshot_devices.size() == 0) {
-                        missing_required_keys.push_back("SnapshotDevices/Device");
+                    else {
+                        missing_required_keys.push_back("SnapshotDevices");
                     }
-                    */
                 }
                 else {
-                    missing_required_keys.push_back("SnapshotDevices");
+                    for (std::size_t i = 0; i < override_devicenames.size(); ++i) {
+                        if (override_devicenames.at(i) != get_hostname()) {
+                            SlaveDevice newSlave(override_devicenames.at(i), "");
+                            snapshot_config.snapshot_devices.push_back(newSlave);
+                        }
+                    }
                 }
             }
             TiXmlElement *l_pStageDirectory =

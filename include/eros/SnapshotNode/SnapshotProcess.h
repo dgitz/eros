@@ -122,7 +122,8 @@ class SnapshotProcess : public eros::BaseNodeProcess
         return snapshot_progress_percent;
     }
     std::vector<eros::Diagnostic::DiagnosticDefinition> clear_snapshots();
-    eros::Diagnostic::DiagnosticDefinition load_config(std::string file_path);
+    eros::Diagnostic::DiagnosticDefinition load_config(
+        std::string file_path, std::vector<std::string> override_devicenames);
     void reset();
     eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
     std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);

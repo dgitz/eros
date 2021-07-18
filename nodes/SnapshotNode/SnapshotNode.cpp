@@ -142,6 +142,15 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "Running");
+    std::string param_override_devicenames = node_name + "/Override_DeviceNames";
+    std::string override_devicename;
+    std::vector<std::string> override_devicenames;
+    if (n->getParam(param_override_devicenames, override_devicename) == false) {
+        override_devicename = "";
+    }
+    else {
+        override_devicenames.push_back(override_devicename);
+    }
     std::string param_config_dir = node_name + "/Config_Directory";
     std::string config_dir;
     if (n->getParam(param_config_dir, config_dir) == false) {
@@ -163,7 +172,7 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     }
     bagfile_snapshottrigger_pub =
         n->advertise<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger", 5);
-    diag = process->load_config(config_dir + "/SnapshotConfig.xml");
+    diag = process->load_config(config_dir + "/SnapshotConfig.xml", override_devicenames);
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
         return diag;

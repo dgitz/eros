@@ -11,6 +11,7 @@
             <param name="loop3_rate"            value="5"/>
             <param name="Mode"              value="MASTER"/> <!-- MASTER,SLAVE-->
             <param name="Config_Directory" value="$(env PWD)/config"/> <!-- Where the Snapshot.xml file is located -->
+            <param name="Override_DeviceNames" value="$(env ROS_HOSTNAME)"/> <!-- Override for unit tests. -->
         </node>
 
         <test test-name="test_snapshotNode" pkg="eros" type="test_snapshotNode"/>

@@ -2,7 +2,6 @@
 <SnapshotConfigFile>
     <SnapshotConfig>
         <SnapshotDevices>
-            <Device id="test">DevComputer1</Device>
         </SnapshotDevices>
         <BagFileDirectory>~/test/storage/DATALOGS/</BagFileDirectory>
         <StageDirectory>~/test/storage/stage/</StageDirectory> <!-- Snapshot Node will create sub folders here freely! -->
@@ -22,7 +21,7 @@
             <Command file="uptime">uptime</Command>
             <Command file="ntp_status">ntpq -p</Command>
             <Command file="lsmod">lsmod</Command>
-            <Folder>/~/var/log/output/</Folder>
+            <Folder>~/var/log/output/</Folder>
             <Folder>~/config/</Folder>
             <File>/var/log/syslog</File>
             <File>/var/log/kern.log</File>
