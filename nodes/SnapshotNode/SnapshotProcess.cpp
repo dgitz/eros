@@ -392,6 +392,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         // Create System Snap Text File
         std::string result_file =
             snapshot_config.stage_directory + "/SystemSnapshot/SystemSnap.txt";
+
         logger->log_info("Creating System Snap Text File: " + result_file);
         std::ofstream result_file_fd(result_file.c_str(), std::ofstream::out);
         if (result_file_fd.is_open() == false) {
@@ -445,7 +446,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             result_file_fd.close();
         }
         // Final Zip
-
+        mkdir_cmd = "mkdir -p " + snapshot_config.systemsnapshot_path;
+        exec(mkdir_cmd.c_str(), true);
         char tempstr[1024];
         sprintf(tempstr,
                 "cd %s/SystemSnapshot/ && zip -r %s/%s.zip .",
@@ -491,7 +493,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
     diag_list.push_back(diag);
     return diag_list;
 }
-Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_path) {
+Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
+    std::string file_path, std::vector<std::string> override_devicenames) {
     logger->log_notice("Loading: " + file_path);
     file_path = sanitize_path(file_path);
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
@@ -512,35 +515,46 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
         TiXmlElement *l_pSnapshotConfig = l_pRootElement->FirstChildElement("SnapshotConfig");
         if (nullptr != l_pSnapshotConfig) {
             if (mode == Mode::MASTER) {
-                TiXmlElement *l_pSnapshotDevices =
-                    l_pSnapshotConfig->FirstChildElement("SnapshotDevices");
-                if (nullptr != l_pSnapshotDevices) {
-                    TiXmlElement *l_pSnapshotDevice =
-                        l_pSnapshotDevices->FirstChildElement("Device");
+                if (override_devicenames.size() == 0) {
+                    TiXmlElement *l_pSnapshotDevices =
+                        l_pSnapshotConfig->FirstChildElement("SnapshotDevices");
+                    if (nullptr != l_pSnapshotDevices) {
+                        TiXmlElement *l_pSnapshotDevice =
+                            l_pSnapshotDevices->FirstChildElement("Device");
 
-                    while (l_pSnapshotDevice) {
-                        std::string device_name = l_pSnapshotDevice->GetText();
-                        std::string id_account = l_pSnapshotDevice->Attribute("id");
-                        if (device_name != get_hostname()) {
-                            SlaveDevice newSlave(device_name, id_account);
-                            snapshot_config.snapshot_devices.push_back(newSlave);
+                        while (l_pSnapshotDevice) {
+                            std::string device_name = l_pSnapshotDevice->GetText();
+                            std::string id_account = l_pSnapshotDevice->Attribute("id");
+                            if (device_name != get_hostname()) {
+                                SlaveDevice newSlave(device_name, id_account);
+                                snapshot_config.snapshot_devices.push_back(newSlave);
+                            }
+                            l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
                         }
-                        l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
+                        /*
+                        if (snapshot_config.snapshot_devices.size() == 0) {
+                            missing_required_keys.push_back("SnapshotDevices/Device");
+                        }
+                        */
                     }
-                    /*
-                    if (snapshot_config.snapshot_devices.size() == 0) {
-                        missing_required_keys.push_back("SnapshotDevices/Device");
+                    else {
+                        missing_required_keys.push_back("SnapshotDevices");
                     }
-                    */
                 }
                 else {
-                    missing_required_keys.push_back("SnapshotDevices");
+                    for (std::size_t i = 0; i < override_devicenames.size(); ++i) {
+                        if (override_devicenames.at(i) != get_hostname()) {
+                            SlaveDevice newSlave(override_devicenames.at(i), "");
+                            snapshot_config.snapshot_devices.push_back(newSlave);
+                        }
+                    }
                 }
             }
             TiXmlElement *l_pStageDirectory =
                 l_pSnapshotConfig->FirstChildElement("StageDirectory");
             if (nullptr != l_pStageDirectory) {
-                snapshot_config.stage_directory = std::string(l_pStageDirectory->GetText());
+                snapshot_config.stage_directory =
+                    sanitize_path(std::string(l_pStageDirectory->GetText()));
             }
             else {
                 missing_required_keys.push_back("StageDirectory");
@@ -548,7 +562,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
             TiXmlElement *l_pBagFileDirectory =
                 l_pSnapshotConfig->FirstChildElement("BagFileDirectory");
             if (nullptr != l_pBagFileDirectory) {
-                snapshot_config.bagfile_directory = std::string(l_pBagFileDirectory->GetText());
+                snapshot_config.bagfile_directory =
+                    sanitize_path(std::string(l_pBagFileDirectory->GetText()));
             }
             else {
                 missing_required_keys.push_back("BagFileDirectory");
@@ -556,7 +571,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
             TiXmlElement *l_pSystemSnapshotPath =
                 l_pSnapshotConfig->FirstChildElement("SystemSnapshotPath");
             if (nullptr != l_pSystemSnapshotPath) {
-                snapshot_config.systemsnapshot_path = std::string(l_pSystemSnapshotPath->GetText());
+                snapshot_config.systemsnapshot_path =
+                    sanitize_path(std::string(l_pSystemSnapshotPath->GetText()));
             }
             else {
                 if (mode == Mode::MASTER) {
@@ -573,7 +589,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                         TiXmlElement *l_pDeviceSnapshotPath =
                             l_pArchitecture->FirstChildElement("DeviceSnapshotPath");
                         if (nullptr != l_pDeviceSnapshotPath) {
-                            snapshot_config.device_snapshot_path = l_pDeviceSnapshotPath->GetText();
+                            snapshot_config.device_snapshot_path =
+                                sanitize_path(l_pDeviceSnapshotPath->GetText());
                         }
                         else {
                             missing_required_keys.push_back("DeviceSnapshotPath");
@@ -583,14 +600,15 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                             while (l_pFolder) {
                                 std::string folder = l_pFolder->GetText();
                                 snapshot_config.folders.push_back(
-                                    std::string(l_pFolder->GetText()));
+                                    sanitize_path(std::string(l_pFolder->GetText())));
                                 l_pFolder = l_pFolder->NextSiblingElement("Folder");
                             }
                         }
                         TiXmlElement *l_pFile = l_pArchitecture->FirstChildElement("File");
                         if (nullptr != l_pFile) {
                             while (l_pFile) {
-                                snapshot_config.files.push_back(std::string(l_pFile->GetText()));
+                                snapshot_config.files.push_back(
+                                    sanitize_path(std::string(l_pFile->GetText())));
                                 l_pFile = l_pFile->NextSiblingElement("File");
                             }
                         }
@@ -599,7 +617,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(std::string file_p
                             while (l_pCommand) {
                                 ExecCommand cmd;
                                 cmd.command = l_pCommand->GetText();
-                                cmd.output_file = l_pCommand->Attribute("file");
+                                cmd.output_file = sanitize_path(l_pCommand->Attribute("file"));
                                 snapshot_config.commands.push_back(cmd);
                                 l_pCommand = l_pCommand->NextSiblingElement("Command");
                             }

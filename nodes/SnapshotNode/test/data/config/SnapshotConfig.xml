@@ -2,13 +2,12 @@
 <SnapshotConfigFile>
     <SnapshotConfig>
         <SnapshotDevices>
-            <Device id="test">DevComputer1</Device>
         </SnapshotDevices>
-        <BagFileDirectory>/home/robot/test/storage/DATALOGS/</BagFileDirectory>
-        <StageDirectory>/home/robot/test/storage/stage/</StageDirectory> <!-- Snapshot Node will create sub folders here freely! -->
-        <SystemSnapshotPath>/home/robot/test/storage/SNAPSHOT/SYSTEMSNAPSHOT/</SystemSnapshotPath>
+        <BagFileDirectory>~/test/storage/DATALOGS/</BagFileDirectory>
+        <StageDirectory>~/test/storage/stage/</StageDirectory> <!-- Snapshot Node will create sub folders here freely! -->
+        <SystemSnapshotPath>~/test/storage/SNAPSHOT/SYSTEMSNAPSHOT/</SystemSnapshotPath>
         <Architecture type="X86_64">
-            <DeviceSnapshotPath>/home/robot/test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <DeviceSnapshotPath>~/test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
             <Command file="ps_log">ps aux</Command>
             <Command file="ifconfig_log">ifconfig</Command>
             <Command file="rosnode_list">rosnode list</Command>
@@ -22,13 +21,13 @@
             <Command file="uptime">uptime</Command>
             <Command file="ntp_status">ntpq -p</Command>
             <Command file="lsmod">lsmod</Command>
-            <Folder>/home/robot/var/log/output/</Folder>
-            <Folder>/home/robot/config/</Folder>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
             <File>/var/log/syslog</File>
             <File>/var/log/kern.log</File>
         </Architecture>
         <Architecture type="ARMV7L">
-            <DeviceSnapshotPath>/home/robot/test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <DeviceSnapshotPath>~/test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
             <Command file="ps_log">ps aux</Command>
             <Command file="ifconfig_log">ifconfig</Command>
             <Command file="rosnode_list">rosnode list</Command>
@@ -43,13 +42,13 @@
             <Command file="uptime">uptime</Command>
             <Command file="ntp_status">ntpq -p</Command>
             <Command file="lsmod">lsmod</Command>
-            <Folder>/home/robot/var/log/output/</Folder>
-            <Folder>/home/robot/config/</Folder>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
             <File>/var/log/bootstrap.log</File>
             <File>/boot/config.txt</File>
         </Architecture>
         <Architecture type="AARCH64">
-            <DeviceSnapshotPath>/home/robot/test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
+            <DeviceSnapshotPath>~test/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
             <Command file="ps_log">ps aux</Command>
             <Command file="ifconfig_log">ifconfig</Command>
             <Command file="rosnode_list">rosnode list</Command>
@@ -63,8 +62,8 @@
             <Command file="uptime">uptime</Command>
             <Command file="ntp_status">ntpq -p</Command>
             <Command file="lsmod">lsmod</Command>
-            <Folder>/home/robot/var/log/output/</Folder>
-            <Folder>/home/robot/config/</Folder>
+            <Folder>~/var/log/output/</Folder>
+            <Folder>~/config/</Folder>
             <File>/var/log/syslog</File>
         </Architecture>
     </SnapshotConfig>
