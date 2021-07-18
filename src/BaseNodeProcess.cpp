@@ -392,7 +392,76 @@ json BaseNodeProcess::read_configuration(std::string device_name,
 std::string BaseNodeProcess::sanitize_path(std::string path) {
     if (path.at(0) == '~') {
         path.erase(path.begin() + 0);
-        path = std::string(homeDir) + path;
+        path = std::string(getenv("HOME")) + path;
     }
     return path;
+}
+FileHelper::FileInfo BaseNodeProcess::read_file(std::string file_path) {
+    FileHelper::FileInfo fileInfo;
+    file_path = sanitize_path(file_path);
+    file_path = boost::filesystem::absolute(file_path).string();
+    fileInfo.full_path = file_path;
+    std::string extension = boost::filesystem::extension(file_path);
+    if (extension == ".zip") {
+        fileInfo.fileType = FileHelper::FileType::ZIP;
+    }
+    else {
+        fileInfo.fileType = FileHelper::FileType::UNKNOWN;
+        fileInfo.fileStatus = FileHelper::FileStatus::ERROR;
+        return fileInfo;
+    }
+    auto p = boost::filesystem::path(file_path);
+    fileInfo.folder = p.parent_path().string() + "/";
+    fileInfo.file_name = p.filename().string();
+    std::ifstream fl(file_path);
+    if (fl.is_open() == false) {
+        fileInfo.fileStatus = FileHelper::FileStatus::ERROR;
+        return fileInfo;
+    }
+    fl.seekg(0, std::ios::end);
+    std::size_t len = fl.tellg();
+    char *ret = new char[len];
+    fl.seekg(0, std::ios::beg);
+    fl.read(ret, len);
+    fl.close();
+    fileInfo.data = ret;
+    fileInfo.byte_size = (uint64_t)len;
+    if (fileInfo.byte_size > 0) {
+        fileInfo.fileStatus = FileHelper::FileStatus::OK;
+    }
+    else {
+        fileInfo.fileStatus = FileHelper::FileStatus::ERROR;
+    }
+    return fileInfo;
+}
+FileHelper::FileInfo BaseNodeProcess::write_file(std::string full_path,
+                                                 char *bytes,
+                                                 uint64_t byte_count) {
+    FileHelper::FileInfo fileInfo;
+    full_path = sanitize_path(full_path);
+    full_path = boost::filesystem::absolute(full_path).string();
+    fileInfo.full_path = full_path;
+    std::string extension = boost::filesystem::extension(full_path);
+    if (extension == ".zip") {
+        fileInfo.fileType = FileHelper::FileType::ZIP;
+    }
+    else {
+        fileInfo.fileType = FileHelper::FileType::UNKNOWN;
+        fileInfo.fileStatus = FileHelper::FileStatus::ERROR;
+        return fileInfo;
+    }
+    auto p = boost::filesystem::path(full_path);
+    fileInfo.folder = p.parent_path().string() + "/";
+    fileInfo.file_name = p.filename().string();
+    std::ofstream file(full_path.c_str(), std::ios::binary);
+    if (file.is_open() == false) {
+        fileInfo.fileStatus = FileHelper::FileStatus::ERROR;
+        return fileInfo;
+    }
+    file.write(bytes, byte_count);
+    file.close();
+    fileInfo.data = bytes;
+    fileInfo.byte_size = byte_count;
+    fileInfo.fileStatus = FileHelper::FileStatus::OK;
+    return fileInfo;
 }

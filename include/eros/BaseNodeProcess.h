@@ -11,6 +11,7 @@
 // C++ System Files
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "boost/date_time/posix_time/posix_time.hpp"
@@ -218,7 +219,11 @@ class BaseNodeProcess
     ArmDisarm::State convert(eros::armed_state v);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
 
-    std::string sanitize_path(std::string path);
+    static std::string sanitize_path(std::string path);
+
+    static FileHelper::FileInfo read_file(std::string file_path);
+    static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
+
     // Printing Functions
 
     // Destructors

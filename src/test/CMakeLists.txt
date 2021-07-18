@@ -1,3 +1,7 @@
+#// clang-format off
+project(eros_BaseTest)
+add_definitions(-DZIPFILETESTDATA_DIR="${PROJECT_SOURCE_DIR}/data")
+                
 catkin_add_gtest(test_definitions test_definitions.cpp)
 target_link_libraries(test_definitions ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(test_definitions eros_generate_messages_cpp)
