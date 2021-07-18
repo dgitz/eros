@@ -355,9 +355,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
             // Request file
-            logger->log_fatal("xxx: Get Robot Namespace");
             ros::ServiceClient client = nodeHandle->serviceClient<eros::srv_filetransfer>(
-                "/MACH1/" + snapshot_config.snapshot_devices.at(i).name +
+                robot_namespace + snapshot_config.snapshot_devices.at(i).name +
                 "/snapshot_node/srv_filetransfer");
             eros::srv_filetransfer req;
             req.request.path = snapshot_config.snapshot_devices.at(i).devicesnapshot_path;
@@ -367,8 +366,22 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 logger->log_error("Did not work");
             }
             else {
-                logger->log_warn("worked!");
-                logger->log_fatal("xxx todo need to write to file now.");
+                for (std::size_t i = 0; i < req.response.files.size(); ++i) {
+                    char arr[req.response.files.at(i).data_length];
+                    std::copy(req.response.files.at(i).data.begin(),
+                              req.response.files.at(i).data.end(),
+                              arr);
+                    logger->log_error("xxx todo get filename from req: " +
+                                      req.response.files.at(i).file_name);
+                    FileHelper::FileInfo fileInfo = BaseNodeProcess::write_file(
+                        snapshot_config.stage_directory + "/SystemSnapshot/" +
+                            req.response.files.at(i).file_name,
+                        arr,
+                        req.response.files.at(i).data_length);
+                    if (fileInfo.fileStatus != FileHelper::FileStatus::FILE_OK) {
+                        logger->log_error("An error!");
+                    }
+                }
             }
             /*
             std::string scp_cmd = "scp " + snapshot_config.snapshot_devices.at(i).id + "@" +
