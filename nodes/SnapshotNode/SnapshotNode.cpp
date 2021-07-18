@@ -97,6 +97,7 @@ bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
         if (info.fileStatus == FileHelper::FileStatus::FILE_OK) {
             std::vector<uint8_t> vec(info.data, info.data + info.byte_size);
             f.data = vec;
+            f.file_name = info.file_name;
             f.status = (uint8_t)FileHelper::FileStatus::FILE_OK;
             f.extension_type = (uint8_t)info.fileType;
             f.data_length = info.byte_size;
