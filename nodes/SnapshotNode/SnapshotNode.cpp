@@ -91,7 +91,22 @@ bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
     }
     else  // Single file
     {
-        logger->log_warn("not supported yet");
+        file f;
+        FileHelper::FileInfo info = BaseNodeProcess::read_file(req.path);
+        if (info.fileStatus == FileHelper::FileStatus::FILE_OK) {
+            std::vector<uint8_t> vec(info.data, info.data + info.byte_size);
+            f.data = vec;
+            f.status = (uint8_t)FileHelper::FileStatus::FILE_OK;
+            f.extension_type = (uint8_t)info.fileType;
+            f.data_length = info.byte_size;
+            res.files.push_back(f);
+            logger->log_fatal("xxx Do I need to clear out???");
+        }
+        else {
+            f.status = (uint8_t)FileHelper::FileStatus::FILE_ERROR;
+            res.files.push_back(f);
+            logger->log_error("an error");
+        }
     }
     return true;
 }
