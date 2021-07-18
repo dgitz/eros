@@ -1,14 +1,6 @@
 #include <eros/SnapshotNode/SnapshotProcess.h>
 using namespace eros;
 using namespace eros_nodes;
-SnapshotProcess::SnapshotProcess()
-    : mode(Mode::UNKNOWN),
-      architecture(Architecture::Type::UNKNOWN),
-      devicesnapshot_state(SnapshotState::NOTRUNNING),
-      systemsnapshot_state(SnapshotState::NOTRUNNING),
-      snapshot_progress_percent(0.0),
-      holdcomplete_timer(0.0) {
-}
 SnapshotProcess::~SnapshotProcess() {
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::finish_initialization() {
@@ -362,12 +354,30 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         exec(mv_cmd.c_str(), true);
         snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
+            // Request file
+            logger->log_fatal("xxx: Get Robot Namespace");
+            ros::ServiceClient client = nodeHandle->serviceClient<eros::srv_filetransfer>(
+                "/MACH1/" + snapshot_config.snapshot_devices.at(i).name +
+                "/snapshot_node/srv_filetransfer");
+            eros::srv_filetransfer req;
+            req.request.path = snapshot_config.snapshot_devices.at(i).devicesnapshot_path;
+            req.request.request_clear = true;
+            req.response.files.clear();
+            if (client.call(req) == false) {
+                logger->log_error("Did not work");
+            }
+            else {
+                logger->log_warn("worked!");
+                logger->log_fatal("xxx todo need to write to file now.");
+            }
+            /*
             std::string scp_cmd = "scp " + snapshot_config.snapshot_devices.at(i).id + "@" +
                                   snapshot_config.snapshot_devices.at(i).name + ":" +
                                   snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
                                   snapshot_config.stage_directory + "/SystemSnapshot";
             logger->log_debug(scp_cmd);
             exec(scp_cmd.c_str(), true);
+            */
         }
         if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
                                     "_Snapshot_") !=

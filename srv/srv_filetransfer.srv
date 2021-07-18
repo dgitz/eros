@@ -1,8 +1,6 @@
 #File Transfer
-string hostname
-string full_file_path
+string path
+bool request_clear
 ---
-uint8[] data
-uint64 data_length
-uint8 extension_type
-uint8 status
+eros/file[] files
+

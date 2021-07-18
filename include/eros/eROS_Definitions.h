@@ -31,8 +31,8 @@ class FileHelper
 
     enum class FileStatus {
         UNKNOWN = 0,    /*!< Uninitialized value. */
-        OK = 1,         /*!< File Ok. */
-        ERROR = 2,      /*!< Error. */
+        FILE_OK = 1,    /*!< File Ok. */
+        FILE_ERROR = 2, /*!< File Error. */
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
 
@@ -64,7 +64,6 @@ class FileHelper
 
    private:
 };
-
 /*! \class System
     \brief System Information:
     Holds System and lower level definitions based on the Hierarchy:

@@ -34,6 +34,7 @@ add_message_files(
   armed_state.msg
   mode_state.msg
   ready_to_arm.msg
+  file.msg
 )
 add_service_files(
   FILES

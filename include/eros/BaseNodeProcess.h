@@ -16,12 +16,14 @@
 
 #include "boost/date_time/posix_time/posix_time.hpp"
 // ROS Base Functionality
+#include "ros/ros.h"
 #include "ros/time.h"
 // ROS Messages
 #include <eros/armed_state.h>
 #include <eros/command.h>
 #include <eros/command_state.h>
 #include <eros/diagnostic.h>
+#include <eros/file.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/mode_state.h>
@@ -33,6 +35,7 @@
 // ROS Services
 #include <eros/srv_change_nodestate.h>
 #include <eros/srv_device.h>
+#include <eros/srv_filetransfer.h>
 #include <eros/srv_firmware.h>
 #include <eros/srv_get_diagnostics.h>
 #include <eros/srv_logger_level.h>
@@ -223,6 +226,8 @@ class BaseNodeProcess
 
     static FileHelper::FileInfo read_file(std::string file_path);
     static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
+    std::vector<std::string> get_files_indir(std::string dir);
+    // byte_count);
 
     // Printing Functions
 

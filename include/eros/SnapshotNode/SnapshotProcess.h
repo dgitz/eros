@@ -14,7 +14,15 @@ namespace eros_nodes {
 class SnapshotProcess : public eros::BaseNodeProcess
 {
    public:
-    SnapshotProcess();
+    SnapshotProcess()
+        : nodeHandle(nullptr),
+          robot_namespace(""),
+          mode(Mode::UNKNOWN),
+          architecture(eros::Architecture::Type::UNKNOWN),
+          devicesnapshot_state(SnapshotState::NOTRUNNING),
+          systemsnapshot_state(SnapshotState::NOTRUNNING),
+          snapshot_progress_percent(0.0),
+          holdcomplete_timer(0.0){};
     ~SnapshotProcess();
     const double HOLDCOMPLETE_TIME = 5.0;
     enum class Mode { UNKNOWN = 0, MASTER = 1, SLAVE = 2, END_OF_LIST = 3 };
@@ -122,6 +130,11 @@ class SnapshotProcess : public eros::BaseNodeProcess
         return snapshot_progress_percent;
     }
     std::vector<eros::Diagnostic::DiagnosticDefinition> clear_snapshots();
+    bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
+        nodeHandle = nh;
+        robot_namespace = _robot_namespace;
+        return true;
+    }
     eros::Diagnostic::DiagnosticDefinition load_config(
         std::string file_path, std::vector<std::string> override_devicenames);
     void reset();
@@ -139,6 +152,8 @@ class SnapshotProcess : public eros::BaseNodeProcess
 
    private:
     int count_files_indirectory(std::string directory, std::string filter);
+    ros::NodeHandle* nodeHandle;
+    std::string robot_namespace;
     Mode mode;
     eros::Architecture::Type architecture;
     SnapshotState devicesnapshot_state;
