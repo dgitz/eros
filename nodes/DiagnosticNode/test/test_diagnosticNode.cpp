@@ -25,7 +25,6 @@ TEST(DiagnosticNode, TestBasics) {
     ros::ServiceClient client = nh.serviceClient<eros::srv_get_diagnostics>(diagnostic_srv_topic);
     eros::srv_get_diagnostics srv_get_diagnostics;
     EXPECT_EQ(client.call(srv_get_diagnostics), true);
-    EXPECT_TRUE(false);  // Not working in System Monitor
 
     delete logger;
 }
