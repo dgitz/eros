@@ -9,7 +9,7 @@ add_rostest_gtest(test_snapshotNode
     test_snapshotNode.cpp
 )
 add_custom_command(
-        TARGET test_snapshotNode POST_BUILD
+        TARGET test_snapshotNode PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
                 ${PROJECT_SOURCE_DIR}/data/config/SnapshotConfig.xml
                 ${CMAKE_CURRENT_BINARY_DIR}/config/SnapshotConfig.xml)
