@@ -35,6 +35,7 @@ bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Reque
             res.diag_list.push_back(
                 convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
         }
+        logger->log_debug("Fulfilled System Diagnostics Service.");
         return true;
     }
     else {
@@ -115,7 +116,7 @@ Diagnostic::DiagnosticDefinition DiagnosticNode::read_launchparameters() {
 }
 Diagnostic::DiagnosticDefinition DiagnosticNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    std::string srv_system_diagnostics_topic = "/srv_system_diagnostics";
+    std::string srv_system_diagnostics_topic = get_robotnamespace() + "/srv_system_diagnostics";
     system_diagnostics_srv = n->advertiseService(
         srv_system_diagnostics_topic, &DiagnosticNode::system_diagnostics_service, this);
     std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";

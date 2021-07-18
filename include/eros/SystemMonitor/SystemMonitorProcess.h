@@ -236,6 +236,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     SystemMonitorProcess()
         : kill_me(false),
           nodeHandle(nullptr),
+          robot_namespace("/"),
           mainwindow_width(0),
           mainwindow_height(0),
           select_task_mode(false),
@@ -298,8 +299,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     eros::Diagnostic::DiagnosticDefinition finish_initialization();
     void reset();
     bool initialize_windows();
-    bool set_nodeHandle(ros::NodeHandle* nh, std::string robot_namespace) {
+    bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
         nodeHandle = nh;
+        robot_namespace = _robot_namespace;
         std::string systemcommand_topic = robot_namespace + "SystemCommand";
         command_pub = nodeHandle->advertise<eros::command>(systemcommand_topic, 1);
         return true;
@@ -632,6 +634,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
 
     bool kill_me;
     ros::NodeHandle* nodeHandle;
+    std::string robot_namespace;
     ros::Publisher command_pub;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;

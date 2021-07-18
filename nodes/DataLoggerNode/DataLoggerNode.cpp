@@ -148,7 +148,7 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
                                           &DataLoggerNode::snapshot_trigger_Callback,
                                           this);
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::WARN,
+                                          Level::Type::NOTICE,
                                           Diagnostic::Message::NOERROR,
                                           "SnapshotMode Enabled.  All logs stored in RAM until "
                                           "Snapshot is triggered.");

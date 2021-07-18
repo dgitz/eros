@@ -455,7 +455,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
         wclrtoeol(window_it->second.get_window_reference());
         std::string dashed(window_it->second.get_screen_coordinates_pixel().width_pix - 2, '-');
         mvwprintw(window_it->second.get_window_reference(), 2, 1, dashed.c_str());
-        std::string system_diagnostic_topic = "/srv_system_diagnostics";
+        std::string system_diagnostic_topic = robot_namespace + "srv_system_diagnostics";
         ros::ServiceClient system_diag_client =
             nodeHandle->serviceClient<eros::srv_get_diagnostics>(system_diagnostic_topic);
         eros::srv_get_diagnostics srv;

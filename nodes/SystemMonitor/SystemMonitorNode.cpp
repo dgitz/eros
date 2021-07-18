@@ -114,8 +114,6 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::read_launchparameters() {
     return diag;
 }
 Diagnostic::DiagnosticDefinition SystemMonitorNode::finish_initialization() {
-    logger->log_warn("ns: " + get_robotnamespace());
-
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
