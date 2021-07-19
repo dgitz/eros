@@ -64,6 +64,11 @@ BUG: 868 Snapshot Node not working as expected after namespace changes
   Date: 19-July-2021
   * Added Level2 Unit Testing for Snapshot Node.
   * Fixed topic namespace issues.
+
+BUG: 901 ROS Bag Recorder not triggering off snapshot_trigger
+  Author: David Gitz
+  Date: 19-July-2021
+  * Fixed error in snapshot_trigger remap, default namespace for test launch files.
   
 BUG: 903 Updates make unit tests fail due to missing ~/tests/ folder
   Author: David Gitz

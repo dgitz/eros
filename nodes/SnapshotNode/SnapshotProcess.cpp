@@ -362,7 +362,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             req.request.path = snapshot_config.snapshot_devices.at(i).devicesnapshot_path;
             req.response.files.clear();
             if (client.call(req) == false) {
-                logger->log_error("Did not work");
+                logger->log_error("File Transfer Request from: " +
+                                  snapshot_config.snapshot_devices.at(i).name + " Failed!");
             }
             else {
                 for (std::size_t i = 0; i < req.response.files.size(); ++i) {
