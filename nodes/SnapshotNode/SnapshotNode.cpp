@@ -58,6 +58,57 @@ bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
+bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
+                                        eros::srv_filetransfer::Response &res) {
+    res.files.clear();
+    if (req.path == "") {
+        return true;
+    }
+    else if ((req.path.at(req.path.length() - 1) == '/') ||
+             (req.path.at(req.path.length() - 1) == '*'))  // Add a bunch of files
+    {
+        std::string path = BaseNodeProcess::sanitize_path(req.path);
+
+        std::vector<std::string> files = process->get_files_indir(path);
+        for (std::size_t i = 0; i < files.size(); ++i) {
+            file f;
+            FileHelper::FileInfo info = BaseNodeProcess::read_file(req.path + files.at(i));
+            if (info.fileStatus == FileHelper::FileStatus::FILE_OK) {
+                std::vector<uint8_t> vec(info.data, info.data + info.byte_size);
+                f.file_name = info.file_name;
+                f.data = vec;
+                f.status = (uint8_t)FileHelper::FileStatus::FILE_OK;
+                f.extension_type = (uint8_t)info.fileType;
+                f.data_length = info.byte_size;
+                res.files.push_back(f);
+            }
+            else {
+                f.status = (uint8_t)FileHelper::FileStatus::FILE_ERROR;
+                res.files.push_back(f);
+            }
+        }
+    }
+    else  // Single file
+    {
+        file f;
+        FileHelper::FileInfo info = BaseNodeProcess::read_file(req.path);
+        if (info.fileStatus == FileHelper::FileStatus::FILE_OK) {
+            std::vector<uint8_t> vec(info.data, info.data + info.byte_size);
+            f.data = vec;
+            f.file_name = info.file_name;
+            f.status = (uint8_t)FileHelper::FileStatus::FILE_OK;
+            f.extension_type = (uint8_t)info.fileType;
+            f.data_length = info.byte_size;
+            res.files.push_back(f);
+        }
+        else {
+            f.status = (uint8_t)FileHelper::FileStatus::FILE_ERROR;
+            res.files.push_back(f);
+            logger->log_error("Not able to read file at path: " + req.path);
+        }
+    }
+    return true;
+}
 bool SnapshotNode::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
@@ -93,6 +144,7 @@ bool SnapshotNode::start() {
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
+    process->set_nodeHandle((n.get()), get_robotnamespace());
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -129,7 +181,7 @@ Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
         return diag;
     }
     process->set_mode(SnapshotProcess::ModeType(mode));
-
+    get_logger()->log_notice("Snapshot Mode: " + SnapshotProcess::ModeString(process->get_mode()));
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -169,6 +221,11 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
                                               10,
                                               &SnapshotNode::commandState_Callback,
                                               this);
+    }
+    else {
+        std::string srv_filetransfer_topic = node_name + "/srv_filetransfer";
+        filetransfer_srv =
+            n->advertiseService(srv_filetransfer_topic, &SnapshotNode::filetransfer_service, this);
     }
     bagfile_snapshottrigger_pub =
         n->advertise<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger", 5);

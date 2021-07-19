@@ -1,14 +1,6 @@
 #include <eros/SnapshotNode/SnapshotProcess.h>
 using namespace eros;
 using namespace eros_nodes;
-SnapshotProcess::SnapshotProcess()
-    : mode(Mode::UNKNOWN),
-      architecture(Architecture::Type::UNKNOWN),
-      devicesnapshot_state(SnapshotState::NOTRUNNING),
-      systemsnapshot_state(SnapshotState::NOTRUNNING),
-      snapshot_progress_percent(0.0),
-      holdcomplete_timer(0.0) {
-}
 SnapshotProcess::~SnapshotProcess() {
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::finish_initialization() {
@@ -362,12 +354,34 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         exec(mv_cmd.c_str(), true);
         snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
-            std::string scp_cmd = "scp " + snapshot_config.snapshot_devices.at(i).id + "@" +
-                                  snapshot_config.snapshot_devices.at(i).name + ":" +
-                                  snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
-                                  snapshot_config.stage_directory + "/SystemSnapshot";
-            logger->log_debug(scp_cmd);
-            exec(scp_cmd.c_str(), true);
+            // Request file
+            ros::ServiceClient client = nodeHandle->serviceClient<eros::srv_filetransfer>(
+                robot_namespace + snapshot_config.snapshot_devices.at(i).name +
+                "/snapshot_node/srv_filetransfer");
+            eros::srv_filetransfer req;
+            req.request.path = snapshot_config.snapshot_devices.at(i).devicesnapshot_path;
+            req.response.files.clear();
+            if (client.call(req) == false) {
+                logger->log_error("Did not work");
+            }
+            else {
+                for (std::size_t i = 0; i < req.response.files.size(); ++i) {
+                    char arr[req.response.files.at(i).data_length];
+                    std::copy(req.response.files.at(i).data.begin(),
+                              req.response.files.at(i).data.end(),
+                              arr);
+                    FileHelper::FileInfo fileInfo = BaseNodeProcess::write_file(
+                        snapshot_config.stage_directory + "/SystemSnapshot/" +
+                            req.response.files.at(i).file_name,
+                        arr,
+                        req.response.files.at(i).data_length);
+                    if (fileInfo.fileStatus != FileHelper::FileStatus::FILE_OK) {
+                        logger->log_error(
+                            "Not able to write file to path: " + snapshot_config.stage_directory +
+                            "/SystemSnapshot/" + req.response.files.at(i).file_name);
+                    }
+                }
+            }
         }
         if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
                                     "_Snapshot_") !=
@@ -524,9 +538,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
 
                         while (l_pSnapshotDevice) {
                             std::string device_name = l_pSnapshotDevice->GetText();
-                            std::string id_account = l_pSnapshotDevice->Attribute("id");
                             if (device_name != get_hostname()) {
-                                SlaveDevice newSlave(device_name, id_account);
+                                SlaveDevice newSlave(device_name);
                                 snapshot_config.snapshot_devices.push_back(newSlave);
                             }
                             l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
@@ -544,7 +557,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
                 else {
                     for (std::size_t i = 0; i < override_devicenames.size(); ++i) {
                         if (override_devicenames.at(i) != get_hostname()) {
-                            SlaveDevice newSlave(override_devicenames.at(i), "");
+                            SlaveDevice newSlave(override_devicenames.at(i));
                             snapshot_config.snapshot_devices.push_back(newSlave);
                         }
                     }

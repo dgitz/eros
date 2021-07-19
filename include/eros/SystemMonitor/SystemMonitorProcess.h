@@ -304,6 +304,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         robot_namespace = _robot_namespace;
         std::string systemcommand_topic = robot_namespace + "SystemCommand";
         command_pub = nodeHandle->advertise<eros::command>(systemcommand_topic, 1);
+
         return true;
     }
 

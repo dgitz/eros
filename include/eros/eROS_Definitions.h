@@ -20,7 +20,50 @@ struct Firmware {
     std::string Description; /**< User defined.  */
     /*@}*/
 };
+class FileHelper
+{
+   public:
+    enum class FileType {
+        UNKNOWN = 0,    /*!< Uninitialized value. */
+        ZIP = 1,        /*!< A Zip File */
+        END_OF_LIST = 2 /*!< Last item of list. Used for Range Checks. */
+    };
 
+    enum class FileStatus {
+        UNKNOWN = 0,    /*!< Uninitialized value. */
+        FILE_OK = 1,    /*!< File Ok. */
+        FILE_ERROR = 2, /*!< File Error. */
+        END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
+    };
+
+    struct FileInfo {
+        FileInfo()
+            : fileType(FileType::UNKNOWN),
+              fileStatus(FileStatus::UNKNOWN),
+              file_name(""),
+              folder(""),
+              full_path(""),
+              byte_size(0),
+              data(nullptr){};
+
+        FileType fileType;
+        FileStatus fileStatus;
+        std::string file_name;
+        std::string folder;
+        std::string full_path;
+        uint64_t byte_size;
+        char* data;
+    };
+    static std::string pretty(FileInfo info) {
+        std::string str;
+        str = "Full Path: " + info.full_path + "\n";
+        str += "File Name: " + info.file_name + "\n";
+        str += "Folder: " + info.folder + "\n";
+        return str;
+    }
+
+   private:
+};
 /*! \class System
     \brief System Information:
     Holds System and lower level definitions based on the Hierarchy:

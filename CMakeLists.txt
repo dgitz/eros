@@ -1,3 +1,4 @@
+#// clang-format off
 cmake_minimum_required(VERSION 2.8.3)
 project(eros)
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -33,6 +34,7 @@ add_message_files(
   armed_state.msg
   mode_state.msg
   ready_to_arm.msg
+  file.msg
 )
 add_service_files(
   FILES
@@ -41,6 +43,7 @@ add_service_files(
   srv_logger_level.srv
   srv_get_diagnostics.srv
   srv_change_nodestate.srv
+  srv_filetransfer.srv
 )
 add_action_files(
   DIRECTORY action

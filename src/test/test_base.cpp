@@ -67,6 +67,27 @@ TEST(BasicTest, TestOperation_BaseNodeProcess) {
     delete logger;
     delete tester;
 }
+TEST(BasicTest, SupportFunctions) {
+    {  // Test File Packaging
+        FileHelper::FileInfo fileInfo;
+        fileInfo = BaseNodeProcess::read_file("AFilethatwillNeverExist.zip");
+        EXPECT_TRUE(fileInfo.byte_size == 0);
+        EXPECT_TRUE(fileInfo.fileType == FileHelper::FileType::ZIP);
+        EXPECT_TRUE(fileInfo.fileStatus == FileHelper::FileStatus::FILE_ERROR);
+
+        fileInfo = BaseNodeProcess::read_file(std::string(ZIPFILETESTDATA_DIR) + "/zip/Zip1.zip");
+        EXPECT_TRUE(fileInfo.byte_size > 0);
+        EXPECT_TRUE(fileInfo.fileType == FileHelper::FileType::ZIP);
+        EXPECT_TRUE(fileInfo.fileStatus == FileHelper::FileStatus::FILE_OK);
+        EXPECT_TRUE(fileInfo.file_name.size() > 0);
+        EXPECT_TRUE(fileInfo.folder.size() > 0);
+        EXPECT_TRUE(fileInfo.full_path.size() > 0);
+
+        fileInfo =
+            BaseNodeProcess::write_file("~/test/Zip2.zip", fileInfo.data, fileInfo.byte_size);
+        EXPECT_TRUE(fileInfo.fileStatus == FileHelper::FileStatus::FILE_OK);
+    }
+}
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -63,6 +63,8 @@ class SnapshotNode : public eros::BaseNode
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
     void commandState_Callback(const eros::command_state::ConstPtr& t_msg);
+    bool filetransfer_service(eros::srv_filetransfer::Request& req,
+                              eros::srv_filetransfer::Response& res);
 
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;
@@ -70,6 +72,7 @@ class SnapshotNode : public eros::BaseNode
     eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     SnapshotProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
+    ros::ServiceServer filetransfer_srv;
     ros::Publisher commandstate_pub;
     ros::Subscriber commandstate_sub;
     ros::Publisher command_pub;
