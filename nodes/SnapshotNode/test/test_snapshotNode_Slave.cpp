@@ -45,6 +45,7 @@ TEST(SnapshotNode, TestMaster) {
     EXPECT_TRUE(commandstate_msg.CurrentCommand.Option1 ==
                 (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS);
     EXPECT_TRUE(commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR);
+    usleep(2.0 * 1000000.0);
 
     eros::srv_filetransfer req;
     req.request.path = "~/test/storage/SNAPSHOT/DEVICESNAPSHOT/";
