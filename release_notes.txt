@@ -1,0 +1,69 @@
+// clang-format off
+****
+
+Release: CAPTAINMARVEL
+SW Tag: CAPTAINMARVEL01
+Author: TBD
+Date: TBD
+
+--- User Stories
+US: 856 Prototype config/launch Process
+  Author: David Gitz
+  Date: 22-Apr-2021
+  * Created prototype of launch process.  Not implemented fully yet.
+
+US: 862 Create simple setup script for default config
+  Author: David Gitz
+  Date: 3-June-2021
+  * Prototyped default config.  Not much implemented yet.
+
+US: 865 Nodes should start in a relative namespace
+  Author: David Gitz
+  Date: 16-July-2021
+  * Updated nodes to use groups and added a parameter "robot_namespace".
+  * Requires "robot_namespace" to now be set at run-time (defaults to "/")
+
+US: 889 Add Level2 Unit Tests for Diagnostic Node
+  Author: David Gitz
+  Date: 18-July-2021
+  * Added Level2 Unit Tests
+  * Fixed a bug with the system diagnostics service
+
+US: 891 Add Level2 Unit Tests for Snapshot Node
+  Author: David Gitz
+  Date: 18-July-2021
+  * Added Level2 Unit Tests for Node.
+
+US: 898 Transfer Device Snapshot file over ROS Message
+  Author: David Gitz
+  Date:
+  * Created new messages/services for file transfer.
+  * Created library for reading/writing files via file globs.
+  * Updated Snapshot Node to use file transfer mechanism.
+  * Removes dependency on "scp" at run-time
+
+--- Bugs
+BUG: 864 Simple setup script hangs during dependency install
+  Author: David Gitz
+  Date: 14-June-2021
+  * Updated script to not ask permission to install dependencies
+
+BUG: 866 DataLogger Node not working with namespace changes
+  Author: David Gitz
+  Date: 17-July-2021
+  * Fixed threading on ROS Bag recorder.
+  * Data Logger now only logs topics under its provided robot_namespace.
+
+BUG: 867 LoadFactor/ResourceAvailable Monitor not working anymore with namespace updates
+  Author: David Gitz
+  Date: 17-July-2021
+  * Fixed topic namespace issues.
+
+BUG: 868 Snapshot Node not working as expected after namespace changes
+  Author: David Gitz
+  Date: 
+  * Added Level2 Unit Testing for Snapshot Node.
+  * Fixed topic namespace issues.
+  
+
+--- Other Comments
