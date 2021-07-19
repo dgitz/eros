@@ -3,9 +3,7 @@
 <arg name="robot_namespace"/> 
 <remap from="snapshot_trigger" to="$(arg robot_namespace)/snapshot_trigger"/> 
 <node name="datalogger_node" pkg="eros" type="datalogger_node"  output="screen" clear_params="true">
-       
         <param name="robot_namespace" value="$(arg robot_namespace)"/>
-
         <param name="startup_delay"       value="5.0"/>
         <param name="verbosity_level"       value="NOTICE"/>
         <param name="require_pps_to_start"  value="false"/> 
