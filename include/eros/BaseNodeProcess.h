@@ -227,7 +227,6 @@ class BaseNodeProcess
     static FileHelper::FileInfo read_file(std::string file_path);
     static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
     std::vector<std::string> get_files_indir(std::string dir);
-    // byte_count);
 
     // Printing Functions
 
