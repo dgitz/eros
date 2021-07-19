@@ -61,9 +61,13 @@ BUG: 867 LoadFactor/ResourceAvailable Monitor not working anymore with namespace
 
 BUG: 868 Snapshot Node not working as expected after namespace changes
   Author: David Gitz
-  Date: 
+  Date: 19-July-2021
   * Added Level2 Unit Testing for Snapshot Node.
   * Fixed topic namespace issues.
   
+BUG: 903 Updates make unit tests fail due to missing ~/tests/ folder
+  Author: David Gitz
+  Date: 19-July-2021
+  * Added missing folder to simple_setup script.
 
 --- Other Comments

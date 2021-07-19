@@ -15,7 +15,8 @@ folder_list = [ '~/config/',
                 '~/storage/stage/',
                 '~/storage/DATALOGS/',
                 '~/storage/SNAPSHOT/DEVICESNAPSHOT/',
-                '~/storage/SNAPSHOT/SYSTEMSNAPSHOT/']
+                '~/storage/SNAPSHOT/SYSTEMSNAPSHOT/',
+                '~/test/']
 dependency_list = [ 'libncurses5-dev',
                     'libncursesw5-dev',
                     'libtinyxml-dev',
