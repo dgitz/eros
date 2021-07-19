@@ -60,7 +60,6 @@ bool SnapshotNode::changenodestate_service(eros::srv_change_nodestate::Request &
 }
 bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
                                         eros::srv_filetransfer::Response &res) {
-    logger->log_warn("xxx started");
     res.files.clear();
     if (req.path == "") {
         return true;
@@ -82,7 +81,6 @@ bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
                 f.extension_type = (uint8_t)info.fileType;
                 f.data_length = info.byte_size;
                 res.files.push_back(f);
-                logger->log_fatal("xxx Do I need to clear out???");
             }
             else {
                 f.status = (uint8_t)FileHelper::FileStatus::FILE_ERROR;
@@ -102,12 +100,11 @@ bool SnapshotNode::filetransfer_service(eros::srv_filetransfer::Request &req,
             f.extension_type = (uint8_t)info.fileType;
             f.data_length = info.byte_size;
             res.files.push_back(f);
-            logger->log_fatal("xxx Do I need to clear out???");
         }
         else {
             f.status = (uint8_t)FileHelper::FileStatus::FILE_ERROR;
             res.files.push_back(f);
-            logger->log_error("an error");
+            logger->log_error("Not able to read file at path: " + req.path);
         }
     }
     return true;

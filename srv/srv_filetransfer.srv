@@ -1,6 +1,5 @@
 #File Transfer
 string path
-bool request_clear
 ---
 eros/file[] files
 

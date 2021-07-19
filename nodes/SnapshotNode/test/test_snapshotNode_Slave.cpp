@@ -48,10 +48,8 @@ TEST(SnapshotNode, TestMaster) {
 
     eros::srv_filetransfer req;
     req.request.path = "~/test/storage/SNAPSHOT/DEVICESNAPSHOT/";
-    req.request.request_clear = true;
     req.response.files.clear();
     EXPECT_EQ(client.call(req), true);
-    logger->log_warn("xxx sz: " + std::to_string(req.response.files.size()));
     EXPECT_TRUE(req.response.files.size() == 0);
     commandstate_count = 0;
 
@@ -75,6 +73,7 @@ TEST(SnapshotNode, TestMaster) {
         EXPECT_TRUE(req.response.files.at(i).status == (uint8_t)FileHelper::FileStatus::FILE_OK);
         EXPECT_TRUE(req.response.files.at(i).data_length > 0);
         /*
+        Don't unit test, but keep this for future examples.
         char arr[req.response.files.at(i).data_length];
         std::copy(req.response.files.at(i).data.begin(), req.response.files.at(i).data.end(), arr);
         FileHelper::FileInfo fileInfo = BaseNodeProcess::write_file(

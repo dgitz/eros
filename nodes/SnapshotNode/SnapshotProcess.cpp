@@ -360,7 +360,6 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 "/snapshot_node/srv_filetransfer");
             eros::srv_filetransfer req;
             req.request.path = snapshot_config.snapshot_devices.at(i).devicesnapshot_path;
-            req.request.request_clear = true;
             req.response.files.clear();
             if (client.call(req) == false) {
                 logger->log_error("Did not work");
@@ -371,26 +370,18 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                     std::copy(req.response.files.at(i).data.begin(),
                               req.response.files.at(i).data.end(),
                               arr);
-                    logger->log_error("xxx todo get filename from req: " +
-                                      req.response.files.at(i).file_name);
                     FileHelper::FileInfo fileInfo = BaseNodeProcess::write_file(
                         snapshot_config.stage_directory + "/SystemSnapshot/" +
                             req.response.files.at(i).file_name,
                         arr,
                         req.response.files.at(i).data_length);
                     if (fileInfo.fileStatus != FileHelper::FileStatus::FILE_OK) {
-                        logger->log_error("An error!");
+                        logger->log_error(
+                            "Not able to write file to path: " + snapshot_config.stage_directory +
+                            "/SystemSnapshot/" + req.response.files.at(i).file_name);
                     }
                 }
             }
-            /*
-            std::string scp_cmd = "scp " + snapshot_config.snapshot_devices.at(i).id + "@" +
-                                  snapshot_config.snapshot_devices.at(i).name + ":" +
-                                  snapshot_config.snapshot_devices.at(i).devicesnapshot_path + " " +
-                                  snapshot_config.stage_directory + "/SystemSnapshot";
-            logger->log_debug(scp_cmd);
-            exec(scp_cmd.c_str(), true);
-            */
         }
         if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
                                     "_Snapshot_") !=
@@ -547,9 +538,8 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
 
                         while (l_pSnapshotDevice) {
                             std::string device_name = l_pSnapshotDevice->GetText();
-                            std::string id_account = l_pSnapshotDevice->Attribute("id");
                             if (device_name != get_hostname()) {
-                                SlaveDevice newSlave(device_name, id_account);
+                                SlaveDevice newSlave(device_name);
                                 snapshot_config.snapshot_devices.push_back(newSlave);
                             }
                             l_pSnapshotDevice = l_pSnapshotDevice->NextSiblingElement("Device");
@@ -567,7 +557,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
                 else {
                     for (std::size_t i = 0; i < override_devicenames.size(); ++i) {
                         if (override_devicenames.at(i) != get_hostname()) {
-                            SlaveDevice newSlave(override_devicenames.at(i), "");
+                            SlaveDevice newSlave(override_devicenames.at(i));
                             snapshot_config.snapshot_devices.push_back(newSlave);
                         }
                     }
