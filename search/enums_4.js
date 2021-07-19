@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['state_400',['State',['../classeros_1_1Node.html#acdaf97604bbb90b853f095781557754a',1,'eros::Node']]],
-  ['subsystem_401',['SubSystem',['../classeros_1_1System.html#a3adcdfcbabd1045cf45829dff620b1ab',1,'eros::System']]]
+  ['mainsystem_409',['MainSystem',['../classeros_1_1System.html#a7c607a1224b68fbf12782f6969aa5c4b',1,'eros::System']]],
+  ['message_410',['Message',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024',1,'eros::Diagnostic']]],
+  ['mode_411',['Mode',['../classeros_1_1ResourceMonitor.html#a164922763a56f5e72435889853120bf6',1,'eros::ResourceMonitor']]]
 ];
