@@ -65,6 +65,7 @@ include_directories(
 
 add_subdirectory(src)
 add_subdirectory(nodes)
+add_subdirectory(scripts)
 install(
   DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
