@@ -3,7 +3,8 @@ import sys
 import pdb
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__))  + "/../")
-from ArchitectureUtility import Architecture,ArchitectureType
+from Architecture import Architecture
+from ArchitectureType import ArchitectureType
 
 class TestStringMethods(unittest.TestCase):
     def test_initialization(self):
