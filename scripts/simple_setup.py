@@ -57,6 +57,7 @@ def run_setup():
         os.system("cmake ..")
         os.system("make")
         os.system("sudo make install")
+        os.chdir(cwd)
     print(CGREEN + "Generating Default Config Files..." + CEND)
     for i in range(0,len(config_file_list)):
         with open("config/" + config_file_list[i], 'r') as in_file:
