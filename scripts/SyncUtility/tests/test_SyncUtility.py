@@ -3,7 +3,7 @@ import sys
 import pdb
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__))  + "/../")
-from ContentSyncType import ContentSyncType
+from ContentSyncDefinition import ContentSyncType
 from ContentSync import ContentSync
 
 class TestStringMethods(unittest.TestCase):
