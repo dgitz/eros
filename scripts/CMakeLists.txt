@@ -1,1 +1,2 @@
 add_subdirectory(ArchitectureUtility)
+add_subdirectory(SyncUtility)
