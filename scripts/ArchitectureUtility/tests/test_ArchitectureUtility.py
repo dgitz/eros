@@ -7,6 +7,7 @@ from Architecture import Architecture
 from ArchitectureType import ArchitectureType
 
 class TestStringMethods(unittest.TestCase):
+   
     def test_initialization(self):
         v = Architecture()
         self.assertTrue(v.is_initialized())
@@ -15,11 +16,15 @@ class TestStringMethods(unittest.TestCase):
         arch = v.get_architecture('localhost')
         self.assertFalse(arch==ArchitectureType.UNKNOWN)
     def test_remote(self):
-        v = Architecture()
-        arch = v.get_architecture('DevModule1','robot')
-        self.assertFalse(arch==ArchitectureType.UNKNOWN)
-        arch = v.get_architecture('GPUModule1','robot')
-        self.assertFalse(arch==ArchitectureType.UNKNOWN)
+        __ENABLE_REMOTE_TESTS=False
+        if(__ENABLE_REMOTE_TESTS == True):
+            v = Architecture()
+            arch = v.get_architecture('DevModule1','robot')
+            self.assertFalse(arch==ArchitectureType.UNKNOWN)
+            arch = v.get_architecture('GPUModule1','robot')
+            self.assertFalse(arch==ArchitectureType.UNKNOWN)
+        else:
+            print "WARN: Not running Remote Tests..."
     def test_noexistdevice(self):
         print "The following should print an Error Message about not being able to connect to a device."
         v = Architecture()

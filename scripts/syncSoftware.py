@@ -24,11 +24,6 @@ def main():
     parser.add_option("-t","--foldertype",dest="folder_type_list",action="append",type="str",help="Folder Types.  Default is GENERIC.  Input multiple values with option preceeding each one.  If no option is set, Generic will be assumed.")
     parser.add_option("-d","--device",dest="device",help="Device to sync to.")
     parser.add_option("-u","--user",dest="user",default="robot",help="User account on Target. Default=robot")
-    #parser.add_option("-f","--folderlist",dest="folder_list",default="",action="append",help="folder list to sync.",type="string")
-    #parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,buildserver,buildserver_target, [default: %default]")
-    #parser.add_option("-b","--build",dest="build",default=0,help="1,0 [default: %default]",type="int")
-    #parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
-    #parser.add_option("-c","--config_dir",dest="config_dir",default="~/config/",help="Location where Config dir should be found. default=~/config")
     (opts,args) = parser.parse_args()
     verbose = Verbosity.convert(opts.verbose)
     content_mode = ContentSync.convert_ContentMode(opts.content_mode)
@@ -56,9 +51,9 @@ def main():
     # Validate any input arguments
     if(content_mode == ContentSyncType.UNKNOWN):
         return
-    
+    sync = ContentSync()
     print COLOR_GREEN + " Sync Beginning to: " + opts.device + "..." + COLOR_END
-    if ContentSync.sync(opts.user,opts.device,folder_type_list,folder_list,opts.clean,opts.dryrun,verbose) == False:
+    if sync.manual_sync(opts.user,opts.device,folder_type_list,folder_list,opts.clean,opts.dryrun,verbose) == False:
         print COLOR_RED + " Sync Failed!" + COLOR_END
 if __name__ == "__main__":
     main()
