@@ -80,4 +80,10 @@ BUG: 903 Updates make unit tests fail due to missing ~/tests/ folder
   Date: 19-July-2021
   * Added missing folder to simple_setup script.
 
+BUG: 922 Snapshot Node fails Unit Tests
+  Author: David Gitz
+  Date: 25-July-2021
+  * Attempted to replicate, added more unit tests.
+  * Could not find a soure of the problem or consistently replicate to fix the issue.  Closing for now, will likely re-open in the future.
+
 --- Other Comments

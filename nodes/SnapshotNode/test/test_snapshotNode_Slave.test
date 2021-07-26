@@ -15,6 +15,6 @@
             <param name="Override_DeviceNames" value="$(env ROS_HOSTNAME)"/> <!-- Override for unit tests. -->
         </node>
 
-        <test test-name="test_snapshotNode" pkg="eros" type="test_snapshotNode_Slave"/>
+        <test test-name="test_snapshotNode" pkg="eros" type="test_snapshotNode_Slave" time-limit="6000.0"/>
     </group>
 </launch>

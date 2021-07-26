@@ -481,31 +481,82 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots() {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    bool any_error = false;
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/*";
         exec(rm_cmd.c_str(), true);
+        int file_count = count_files_indirectory(snapshot_config.device_snapshot_path + "/");
+        if (file_count > 0) {
+            any_error = true;
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Command Failed: " + rm_cmd);
+            diag_list.push_back(diag);
+        }
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.systemsnapshot_path + "/*";
         exec(rm_cmd.c_str(), true);
+        int file_count = count_files_indirectory(snapshot_config.systemsnapshot_path + "/");
+        if (file_count > 0) {
+            any_error = true;
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Command Failed: " + rm_cmd);
+            diag_list.push_back(diag);
+        }
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/DeviceSnapshot/*";
         exec(rm_cmd.c_str(), true);
+        int file_count =
+            count_files_indirectory(snapshot_config.stage_directory + "/DeviceSnapshot/");
+        if (file_count > 0) {
+            any_error = true;
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Command Failed: " + rm_cmd);
+            diag_list.push_back(diag);
+        }
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/SystemSnapshot/*";
         exec(rm_cmd.c_str(), true);
+        int file_count =
+            count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/");
+        if (file_count > 0) {
+            any_error = true;
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Command Failed: " + rm_cmd);
+            diag_list.push_back(diag);
+        }
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.bagfile_directory + "/*";
         exec(rm_cmd.c_str(), true);
+        int file_count = count_files_indirectory(snapshot_config.bagfile_directory + "/");
+        if (file_count > 0) {
+            any_error = true;
+            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                       Level::Type::WARN,
+                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                       "Command Failed: " + rm_cmd);
+            diag_list.push_back(diag);
+        }
     }
-    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                               Level::Type::NOTICE,
-                                               Diagnostic::Message::NOERROR,
-                                               "Cleared Snapshot Directories.");
-    diag_list.push_back(diag);
+    if (any_error == false) {
+        diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                                                   Level::Type::NOTICE,
+                                                   Diagnostic::Message::NOERROR,
+                                                   "Cleared Snapshot Directories.");
+
+        diag_list.push_back(diag);
+    }
     return diag_list;
 }
 Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
