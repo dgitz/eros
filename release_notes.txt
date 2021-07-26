@@ -36,11 +36,16 @@ US: 891 Add Level2 Unit Tests for Snapshot Node
 
 US: 898 Transfer Device Snapshot file over ROS Message
   Author: David Gitz
-  Date:
+  Date: 19-July-2021
   * Created new messages/services for file transfer.
   * Created library for reading/writing files via file globs.
   * Updated Snapshot Node to use file transfer mechanism.
   * Removes dependency on "scp" at run-time
+
+US: 839 Cleanup Documentation Tags
+  Author: David Gitz
+  Date: 25-July-2021
+  * Added missing doxygen tags.
 
 --- Bugs
 BUG: 864 Simple setup script hangs during dependency install
