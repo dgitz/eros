@@ -3,8 +3,8 @@
 
 Release: CAPTAINMARVEL
 SW Tag: CAPTAINMARVEL01
-Author: TBD
-Date: TBD
+Author: David Gitz
+Date: 25-July-2021
 
 --- User Stories
 US: 856 Prototype config/launch Process
