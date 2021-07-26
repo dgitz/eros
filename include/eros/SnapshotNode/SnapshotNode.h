@@ -12,7 +12,8 @@
 #include "SnapshotProcess.h"
 namespace eros_nodes {
 /*! \class SnapshotNode SnapshotNode.h "SnapshotNode.h"
- *  \brief */
+ *  \brief The SnapshotNode is used to collect diagnostic information about a device for future
+ * analysis. */
 class SnapshotNode : public eros::BaseNode
 {
    public:

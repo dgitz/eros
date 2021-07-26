@@ -7,6 +7,13 @@
 //! Define if ROS is Installed or Not.
 #define ROS_INSTALLED
 #include <string>
+
+/*!
+ *  \addtogroup eros
+ *  @{
+ */
+
+//! Enhanced-ROS Namespace
 namespace eros {
 /*! \struct Firmware
     \brief Firmware Information:
@@ -20,6 +27,10 @@ struct Firmware {
     std::string Description; /**< User defined.  */
     /*@}*/
 };
+/*! \class FileHelper
+    \brief FileHelper Information:
+    Holds definiitions and and support functions for dealing with Files.
+*/
 class FileHelper
 {
    public:
@@ -36,6 +47,10 @@ class FileHelper
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
 
+    /*! \struct FileInfo
+        \brief FileInfo Container
+        Holds information about Files.
+    */
     struct FileInfo {
         FileInfo()
             : fileType(FileType::UNKNOWN),

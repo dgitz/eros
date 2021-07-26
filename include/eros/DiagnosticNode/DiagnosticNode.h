@@ -12,7 +12,8 @@
 #include "DiagnosticNodeProcess.h"
 namespace eros_nodes {
 /*! \class DiagnosticNode DiagnosticNode.h "DiagnosticNode.h"
- *  \brief */
+ *  \brief A node used to collect diagnostic information.
+ */
 class DiagnosticNode : public eros::BaseNode
 {
    public:

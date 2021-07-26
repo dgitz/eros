@@ -44,7 +44,7 @@ class ArmDisarmMonitor
    private:
 };
 /*! \class SafetyNodeProcess SafetyNodeProcess.h "SafetyNodeProcess.h"
- *  \brief */
+ *  \brief The process utility for the Safety Node. */
 class SafetyNodeProcess : public eros::BaseNodeProcess
 {
    public:

@@ -6,7 +6,9 @@
 #include <sys/stat.h>
 namespace eros_nodes {
 /*! \class DataLoggerProcess DataLoggerProcess.h "DataLoggerProcess.h"
- *  \brief */
+ *  \brief
+    The process utility for the DataLogger
+ */
 class DataLoggerProcess : public eros::BaseNodeProcess
 {
    public:
