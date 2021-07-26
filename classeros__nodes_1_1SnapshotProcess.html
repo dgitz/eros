@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>eros_nodes</b></li><li class="navelem"><a class="el" href="classeros__nodes_1_1SnapshotProcess.html">SnapshotProcess</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceeros__nodes.html">eros_nodes</a></li><li class="navelem"><a class="el" href="classeros__nodes_1_1SnapshotProcess.html">SnapshotProcess</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,12 +76,17 @@ $(function() {
 <div class="title">eros_nodes::SnapshotProcess Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The process utility for the Snapshot Node.  
+ <a href="classeros__nodes_1_1SnapshotProcess.html#details">More...</a></p>
+
+<p><code>#include &quot;SnapshotProcess.h&quot;</code></p>
 <div class="dynheader">
 Inheritance diagram for eros_nodes::SnapshotProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SnapshotProcess__inherit__graph.png" border="0" usemap="#aeros__nodes_1_1SnapshotProcess_inherit__map" alt="Inheritance graph"/></div>
 <map name="aeros__nodes_1_1SnapshotProcess_inherit__map" id="aeros__nodes_1_1SnapshotProcess_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,204,107"/>
+<area shape="rect" title="The process utility for the Snapshot Node." alt="" coords="5,80,204,107"/>
 <area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="23,5,186,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
@@ -90,7 +95,7 @@ Collaboration diagram for eros_nodes::SnapshotProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SnapshotProcess__coll__graph.png" border="0" usemap="#aeros__nodes_1_1SnapshotProcess_coll__map" alt="Collaboration graph"/></div>
 <map name="aeros__nodes_1_1SnapshotProcess_coll__map" id="aeros__nodes_1_1SnapshotProcess_coll__map">
-<area shape="rect" title=" " alt="" coords="31,171,230,197"/>
+<area shape="rect" title="The process utility for the Snapshot Node." alt="" coords="31,171,230,197"/>
 <area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="49,95,212,121"/>
 <area shape="rect" href="classeros_1_1Diagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information." alt="" coords="5,5,120,32"/>
 <area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="152,5,245,32"/>
@@ -100,30 +105,33 @@ Collaboration diagram for eros_nodes::SnapshotProcess:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1ExecCommand.html">ExecCommand</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1ExecCommand.html" title="ExecCommand container. Holds executable commands and where there output goes for a Snapshot.">ExecCommand</a> container. Holds executable commands and where there output goes for a Snapshot.  <a href="structeros__nodes_1_1SnapshotProcess_1_1ExecCommand.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SlaveDevice.html">SlaveDevice</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SlaveDevice.html" title="SlaveDevice container, used for tracking Snapshot information and logic.">SlaveDevice</a> container, used for tracking Snapshot information and logic.  <a href="structeros__nodes_1_1SnapshotProcess_1_1SlaveDevice.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html">SnapshotConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html" title="SnapshotConfig container, used for holding Snapshot Configuration parameters.">SnapshotConfig</a> container, used for holding Snapshot Configuration parameters.  <a href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a87c7ff829a75ae218c271cbe554fb257"><td class="memItemLeft" align="right" valign="top"><a id="a87c7ff829a75ae218c271cbe554fb257"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Mode</b> { <b>UNKNOWN</b> = 0
-, <b>MASTER</b> = 1
-, <b>SLAVE</b> = 2
-, <b>END_OF_LIST</b> = 3
+<tr class="memitem:a87c7ff829a75ae218c271cbe554fb257"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a> { <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257a696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</a> = 0
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257a89a1533c37ec9254f22b5e0f29c9c0ff">MASTER</a> = 1
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257a79e19bc2ac33d6c81272024561992f37">SLAVE</a> = 2
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257ac2b0b4a580050a88a759ac7c20ce853c">END_OF_LIST</a> = 3
  }</td></tr>
 <tr class="separator:a87c7ff829a75ae218c271cbe554fb257"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4238b247d4bd5fcb6dd5d951ddccd4dc"><td class="memItemLeft" align="right" valign="top"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dc"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>SnapshotState</b> { <br />
-&#160;&#160;<b>UNKNOWN</b> = 0
-, <b>NOTRUNNING</b> = 1
-, <b>STARTED</b> = 2
-, <b>RUNNING</b> = 3
+<tr class="memitem:a4238b247d4bd5fcb6dd5d951ddccd4dc"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a> { <br />
+&#160;&#160;<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</a> = 0
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca3d6fb80d3c9227f95be71c7e4ea2a8f8">NOTRUNNING</a> = 1
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca17130e6c806885e23770df1519b18eb7">STARTED</a> = 2
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca43491564ebcfd38568918efbd6e840fd">RUNNING</a> = 3
 , <br />
-&#160;&#160;<b>READY</b> = 4
-, <b>COMPLETE</b> = 5
-, <b>INCOMPLETE</b> = 6
-, <b>END_OF_LIST</b> = 7
+&#160;&#160;<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca2baa69eafc7204f3bd8648eba580c489">READY</a> = 4
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca3de44296982e58199afc513a715b12ba">COMPLETE</a> = 5
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca2e47f45b8584e07c8ebd4f693d8cfe10">INCOMPLETE</a> = 6
+, <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dcac2b0b4a580050a88a759ac7c20ce853c">END_OF_LIST</a> = 7
 <br />
  }</td></tr>
 <tr class="separator:a4238b247d4bd5fcb6dd5d951ddccd4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,28 +143,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6d361e40f45ef5ad9577de0ea782f45f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derived Process Initialization. <br /></td></tr>
 <tr class="separator:a6d361e40f45ef5ad9577de0ea782f45f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa618e409f7bb5d5bd46062c8b8549bd5"><td class="memItemLeft" align="right" valign="top"><a id="aa618e409f7bb5d5bd46062c8b8549bd5"></a>
-Mode&#160;</td><td class="memItemRight" valign="bottom"><b>get_mode</b> ()</td></tr>
+<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_mode</b> ()</td></tr>
 <tr class="separator:aa618e409f7bb5d5bd46062c8b8549bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0db45280f72763ec25df21737c1fdcbc"><td class="memItemLeft" align="right" valign="top"><a id="a0db45280f72763ec25df21737c1fdcbc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mode</b> (Mode v)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mode</b> (<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a> v)</td></tr>
 <tr class="separator:a0db45280f72763ec25df21737c1fdcbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97d4c6ac871a4fdb8fc9d00a20344c49"><td class="memItemLeft" align="right" valign="top"><a id="a97d4c6ac871a4fdb8fc9d00a20344c49"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_architecture</b> (<a class="el" href="classeros_1_1Architecture.html#a4de8a31a2dd45d3d9559e76109a23e1f">eros::Architecture::Type</a> v)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_architecture</b> (<a class="el" href="group__eros.html#ga4de8a31a2dd45d3d9559e76109a23e1f">eros::Architecture::Type</a> v)</td></tr>
 <tr class="separator:a97d4c6ac871a4fdb8fc9d00a20344c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc08d8ac1beeec27866fe24dbc945fa2"><td class="memItemLeft" align="right" valign="top"><a id="acc08d8ac1beeec27866fe24dbc945fa2"></a>
 <a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html">SnapshotConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_snapshot_config</b> ()</td></tr>
 <tr class="separator:acc08d8ac1beeec27866fe24dbc945fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27995d05c13eb8f56e0500984b62e9cf"><td class="memItemLeft" align="right" valign="top"><a id="a27995d05c13eb8f56e0500984b62e9cf"></a>
-SnapshotState&#160;</td><td class="memItemRight" valign="bottom"><b>get_devicesnapshot_state</b> ()</td></tr>
+<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_devicesnapshot_state</b> ()</td></tr>
 <tr class="separator:a27995d05c13eb8f56e0500984b62e9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab25d00bec059f81d5faa82b3f892abd7"><td class="memItemLeft" align="right" valign="top"><a id="ab25d00bec059f81d5faa82b3f892abd7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_devicesnapshot_state</b> (SnapshotState v)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_devicesnapshot_state</b> (<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a> v)</td></tr>
 <tr class="separator:ab25d00bec059f81d5faa82b3f892abd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8df29761aac44e662c6d3b593d60fed"><td class="memItemLeft" align="right" valign="top"><a id="ac8df29761aac44e662c6d3b593d60fed"></a>
-SnapshotState&#160;</td><td class="memItemRight" valign="bottom"><b>get_systemsnapshot_state</b> ()</td></tr>
+<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_systemsnapshot_state</b> ()</td></tr>
 <tr class="separator:ac8df29761aac44e662c6d3b593d60fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bdb84fdf6080103c5d97c22cd570920"><td class="memItemLeft" align="right" valign="top"><a id="a1bdb84fdf6080103c5d97c22cd570920"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_systemsnapshot_state</b> (SnapshotState v)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_systemsnapshot_state</b> (<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a> v)</td></tr>
 <tr class="separator:a1bdb84fdf6080103c5d97c22cd570920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae654b78618436d9eb28054b842f27cd5"><td class="memItemLeft" align="right" valign="top"><a id="ae654b78618436d9eb28054b842f27cd5"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>get_snapshotprogress_percentage</b> ()</td></tr>
@@ -199,7 +207,7 @@ std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefini
 <tr class="separator:a81829a4f15bf7a27483c83c346037e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros_1_1BaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros_1_1BaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNodeProcess.html">eros::BaseNodeProcess</a></td></tr>
 <tr class="memitem:ae7e106ebe0ddb39709c7f8ecef9407e6 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="ae7e106ebe0ddb39709c7f8ecef9407e6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#ae7e106ebe0ddb39709c7f8ecef9407e6">initialize</a> (std::string t_base_node_name, std::string t_node_name, std::string t_hostname, <a class="el" href="classeros_1_1System.html#a7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a> t_system, <a class="el" href="classeros_1_1System.html#a3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a> t_subsystem, <a class="el" href="classeros_1_1System.html#a34a61840c9cd6ede13ed123e6facf338">System::Component</a> t_component, <a class="el" href="classeros_1_1Logger.html">Logger</a> *_logger)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#ae7e106ebe0ddb39709c7f8ecef9407e6">initialize</a> (std::string t_base_node_name, std::string t_node_name, std::string t_hostname, <a class="el" href="group__eros.html#ga7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a> t_system, <a class="el" href="group__eros.html#ga3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a> t_subsystem, <a class="el" href="group__eros.html#ga34a61840c9cd6ede13ed123e6facf338">System::Component</a> t_component, <a class="el" href="classeros_1_1Logger.html">Logger</a> *_logger)</td></tr>
 <tr class="memdesc:ae7e106ebe0ddb39709c7f8ecef9407e6 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes Process. Should be called right after instantiating variable. <br /></td></tr>
 <tr class="separator:ae7e106ebe0ddb39709c7f8ecef9407e6 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d2ff1a6f7248aaa0b802da74491b2fd inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a1d2ff1a6f7248aaa0b802da74491b2fd"></a>
@@ -209,10 +217,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enable_diagnostics</b
 <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostic</b> (<a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diag)</td></tr>
 <tr class="separator:a09b02c8f86263a8a3c384aed8baf0e34 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66d71a667d0bbebccbce17d8fdbf26ac inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a66d71a667d0bbebccbce17d8fdbf26ac"></a>
-<a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostic</b> (<a class="el" href="classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df">Diagnostic::DiagnosticType</a> diagnostic_type, <a class="el" href="classeros_1_1Level.html#adf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level, <a class="el" href="classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024">Diagnostic::Message</a> message, std::string description)</td></tr>
+<a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_diagnostic</b> (<a class="el" href="classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df">Diagnostic::DiagnosticType</a> diagnostic_type, <a class="el" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level, <a class="el" href="classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024">Diagnostic::Message</a> message, std::string description)</td></tr>
 <tr class="separator:a66d71a667d0bbebccbce17d8fdbf26ac inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af62e207e1cce05ac2e5222e28109b2f7 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="af62e207e1cce05ac2e5222e28109b2f7"></a>
-<a class="el" href="classeros_1_1Node.html#acdaf97604bbb90b853f095781557754a">Node::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_nodestate</b> ()</td></tr>
+<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_nodestate</b> ()</td></tr>
 <tr class="separator:af62e207e1cce05ac2e5222e28109b2f7 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef1dd730280fa4aa02a34e37121638a3 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="aef1dd730280fa4aa02a34e37121638a3"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>get_runtime</b> ()</td></tr>
@@ -244,7 +252,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_run_time</b> ()
 <tr class="memitem:a31a66915ecf5d7003f6b388353e6c96f inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a31a66915ecf5d7003f6b388353e6c96f"></a>
 json&#160;</td><td class="memItemRight" valign="bottom"><b>read_configuration</b> (std::string device_name, bool include_self=true, std::string file_path=&quot;~/config/DeviceList.json&quot;)</td></tr>
 <tr class="separator:a31a66915ecf5d7003f6b388353e6c96f inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21bfe48ddb5b72d379094f03970c0f17 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a21bfe48ddb5b72d379094f03970c0f17">request_statechange</a> (<a class="el" href="classeros_1_1Node.html#acdaf97604bbb90b853f095781557754a">Node::State</a> newstate)</td></tr>
+<tr class="memitem:a21bfe48ddb5b72d379094f03970c0f17 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a21bfe48ddb5b72d379094f03970c0f17">request_statechange</a> (<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a> newstate)</td></tr>
 <tr class="memdesc:a21bfe48ddb5b72d379094f03970c0f17 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> State Change.  <a href="classeros_1_1BaseNodeProcess.html#a21bfe48ddb5b72d379094f03970c0f17">More...</a><br /></td></tr>
 <tr class="separator:a21bfe48ddb5b72d379094f03970c0f17 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ab291249d7f607eada5489e73d3ad1d inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a5ab291249d7f607eada5489e73d3ad1d"></a>
@@ -285,13 +293,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acb5debea47a8981a2738da9878a1e75a"><td class="memItemLeft" align="right" valign="top"><a id="acb5debea47a8981a2738da9878a1e75a"></a>
-static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>SnapshotStateString</b> (SnapshotState v)</td></tr>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>SnapshotStateString</b> (<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">SnapshotState</a> v)</td></tr>
 <tr class="separator:acb5debea47a8981a2738da9878a1e75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bfae823a6d65ac07a80b5d047826a38"><td class="memItemLeft" align="right" valign="top"><a id="a9bfae823a6d65ac07a80b5d047826a38"></a>
-static Mode&#160;</td><td class="memItemRight" valign="bottom"><b>ModeType</b> (std::string v)</td></tr>
+static <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ModeType</b> (std::string v)</td></tr>
 <tr class="separator:a9bfae823a6d65ac07a80b5d047826a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a219723fe5d4a0ad45593d55bf8b76efb"><td class="memItemLeft" align="right" valign="top"><a id="a219723fe5d4a0ad45593d55bf8b76efb"></a>
-static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ModeString</b> (Mode v)</td></tr>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ModeString</b> (<a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a> v)</td></tr>
 <tr class="separator:a219723fe5d4a0ad45593d55bf8b76efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classeros_1_1BaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classeros_1_1BaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNodeProcess.html">eros::BaseNodeProcess</a></td></tr>
 <tr class="memitem:a0a586fd5363ebd661a410ab64e900782 inherit pub_static_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a0a586fd5363ebd661a410ab64e900782"></a>
@@ -348,7 +356,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>hostname</b></
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>base_node_name</b></td></tr>
 <tr class="separator:a735cf9365c6da4665d91b6ae4cfc0abf inherit pro_attribs_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af227a49accd4943f14d26d71ea66ed99 inherit pro_attribs_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="af227a49accd4943f14d26d71ea66ed99"></a>
-<a class="el" href="classeros_1_1Node.html#acdaf97604bbb90b853f095781557754a">Node::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>node_state</b></td></tr>
+<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>node_state</b></td></tr>
 <tr class="separator:af227a49accd4943f14d26d71ea66ed99 inherit pro_attribs_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a323d80df449063980adf8e82bcd99f6d inherit pro_attribs_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a323d80df449063980adf8e82bcd99f6d"></a>
 <a class="el" href="classeros_1_1Diagnostic.html">Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_helper</b></td></tr>
@@ -360,6 +368,81 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>unittest_running</b><
 eros::ready_to_arm&#160;</td><td class="memItemRight" valign="bottom"><b>ready_to_arm</b></td></tr>
 <tr class="separator:a1fdad2eeff3a6631d89bec444a449731 inherit pro_attribs_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The process utility for the Snapshot Node. </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a87c7ff829a75ae218c271cbe554fb257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87c7ff829a75ae218c271cbe554fb257">&#9670;&nbsp;</a></span>Mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a87c7ff829a75ae218c271cbe554fb257">eros_nodes::SnapshotProcess::Mode</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a87c7ff829a75ae218c271cbe554fb257a696b031073e74bf2cb98e5ef201d4aa3"></a>UNKNOWN&#160;</td><td class="fielddoc"><p>Uninitialized value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a87c7ff829a75ae218c271cbe554fb257a89a1533c37ec9254f22b5e0f29c9c0ff"></a>MASTER&#160;</td><td class="fielddoc"><p>The <a class="el" href="classeros__nodes_1_1SnapshotNode.html" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis.">SnapshotNode</a> is running as a Master. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a87c7ff829a75ae218c271cbe554fb257a79e19bc2ac33d6c81272024561992f37"></a>SLAVE&#160;</td><td class="fielddoc"><p>The <a class="el" href="classeros__nodes_1_1SnapshotNode.html" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis.">SnapshotNode</a> is running as a Slave. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a87c7ff829a75ae218c271cbe554fb257ac2b0b4a580050a88a759ac7c20ce853c"></a>END_OF_LIST&#160;</td><td class="fielddoc"><p>Last item of list. Used for Range Checks. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a4238b247d4bd5fcb6dd5d951ddccd4dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4238b247d4bd5fcb6dd5d951ddccd4dc">&#9670;&nbsp;</a></span>SnapshotState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dc">eros_nodes::SnapshotProcess::SnapshotState</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca696b031073e74bf2cb98e5ef201d4aa3"></a>UNKNOWN&#160;</td><td class="fielddoc"><p>Uninitialized value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca3d6fb80d3c9227f95be71c7e4ea2a8f8"></a>NOTRUNNING&#160;</td><td class="fielddoc"><p>Snapshot is not Running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca17130e6c806885e23770df1519b18eb7"></a>STARTED&#160;</td><td class="fielddoc"><p>Snapshot was Started. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca43491564ebcfd38568918efbd6e840fd"></a>RUNNING&#160;</td><td class="fielddoc"><p>Snapshot is Running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca2baa69eafc7204f3bd8648eba580c489"></a>READY&#160;</td><td class="fielddoc"><p>Snapshot is ready for retreival. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca3de44296982e58199afc513a715b12ba"></a>COMPLETE&#160;</td><td class="fielddoc"><p>Snapshot was Completed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dca2e47f45b8584e07c8ebd4f693d8cfe10"></a>INCOMPLETE&#160;</td><td class="fielddoc"><p>Snapshot was unable to Complete. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4238b247d4bd5fcb6dd5d951ddccd4dcac2b0b4a580050a88a759ac7c20ce853c"></a>END_OF_LIST&#160;</td><td class="fielddoc"><p>Last item of list. Used for Range Checks. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/eros/SnapshotNode/<a class="el" href="SnapshotProcess_8h.html">SnapshotProcess.h</a></li>
 </ul>

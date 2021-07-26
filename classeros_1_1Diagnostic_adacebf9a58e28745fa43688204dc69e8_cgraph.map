@@ -1,9 +1,9 @@
 <map id="eros::Diagnostic::pretty" name="eros::Diagnostic::pretty">
 <area shape="rect" id="node1" title="Generate human readable string of a diagnostic." alt="" coords="5,159,157,185"/>
-<area shape="rect" id="node2" href="$classeros_1_1System.html#ae3f124e8e92a41d5313647e61bda5b64" title="Convert System::Component to human readable string." alt="" coords="206,5,409,32"/>
+<area shape="rect" id="node2" href="$group__eros.html#gae3f124e8e92a41d5313647e61bda5b64" title="Convert System::Component to human readable string." alt="" coords="206,5,409,32"/>
 <area shape="rect" id="node3" href="$classeros_1_1Diagnostic.html#a7d1400e926a0a0d777450b472f9acd18" title="Convert Diagnostic::Message to human readable string." alt="" coords="217,57,398,98"/>
 <area shape="rect" id="node4" href="$classeros_1_1Diagnostic.html#a0ae27a2f5d04a1e903ded082cca25de2" title="Convert Diagnostic::DiagnosticType to human readable string." alt="" coords="217,122,398,163"/>
-<area shape="rect" id="node5" href="$classeros_1_1Level.html#af0b1e5cafda35e4defd205e5dac44b04" title="Convert Level::Type to human readable string." alt="" coords="229,188,386,215"/>
-<area shape="rect" id="node6" href="$classeros_1_1System.html#a091efde2945185fc21f5be5a86943c92" title="Convert System::MainSystem to human readable string." alt="" coords="220,239,395,281"/>
-<area shape="rect" id="node7" href="$classeros_1_1System.html#ae8acad357e22e8742b74ea7026aff323" title="Convert System::SubSystem to human readable string." alt="" coords="205,305,409,332"/>
+<area shape="rect" id="node5" href="$group__eros.html#gaf0b1e5cafda35e4defd205e5dac44b04" title="Convert Level::Type to human readable string." alt="" coords="229,188,386,215"/>
+<area shape="rect" id="node6" href="$group__eros.html#ga091efde2945185fc21f5be5a86943c92" title="Convert System::MainSystem to human readable string." alt="" coords="220,239,395,281"/>
+<area shape="rect" id="node7" href="$group__eros.html#gae8acad357e22e8742b74ea7026aff323" title="Convert System::SubSystem to human readable string." alt="" coords="205,305,409,332"/>
 </map>

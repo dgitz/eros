@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>eros</b></li><li class="navelem"><a class="el" href="classeros_1_1BaseNode.html">BaseNode</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceeros.html">eros</a></li><li class="navelem"><a class="el" href="classeros_1_1BaseNode.html">BaseNode</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -88,11 +88,11 @@ Inheritance diagram for eros::BaseNode:</div>
 <map name="aeros_1_1BaseNode_inherit__map" id="aeros_1_1BaseNode_inherit__map">
 <area shape="rect" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="5,132,120,159"/>
 <area shape="rect" href="classeros__nodes_1_1DataLoggerNode.html" title="A Node that can be used to collect bag files. Configured as either always logging to disk,..." alt="" coords="178,5,371,32"/>
-<area shape="rect" href="classeros__nodes_1_1DiagnosticNode.html" title=" " alt="" coords="181,56,368,83"/>
-<area shape="rect" href="classeros__nodes_1_1MasterNode.html" title=" " alt="" coords="191,107,358,133"/>
-<area shape="rect" href="classeros__nodes_1_1SafetyNode.html" title=" " alt="" coords="193,157,356,184"/>
-<area shape="rect" href="classeros__nodes_1_1SnapshotNode.html" title=" " alt="" coords="184,208,365,235"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitorNode.html" title=" " alt="" coords="168,259,381,285"/>
+<area shape="rect" href="classeros__nodes_1_1DiagnosticNode.html" title="A node used to collect diagnostic information." alt="" coords="181,56,368,83"/>
+<area shape="rect" href="classeros__nodes_1_1MasterNode.html" title="MasterNode is used to provide information about a host device." alt="" coords="191,107,358,133"/>
+<area shape="rect" href="classeros__nodes_1_1SafetyNode.html" title="The SafetyNode is used to control a system Safely." alt="" coords="193,157,356,184"/>
+<area shape="rect" href="classeros__nodes_1_1SnapshotNode.html" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis." alt="" coords="184,208,365,235"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitorNode.html" title="The SystemMonitorNode is used to monitor the state of the System." alt="" coords="168,259,381,285"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -138,7 +138,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:aae9b7665bb8f5da83f36b0a33a763118"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> Base Name. This will be the same for every instance of the node, and is independent on where the node is run. This value is equivelant to the "type" field in the launch file. <br /></td></tr>
 <tr class="separator:aae9b7665bb8f5da83f36b0a33a763118"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0f41892d8c715d8416c4d237bee3f4e"><td class="memItemLeft" align="right" valign="top"><a id="ad0f41892d8c715d8416c4d237bee3f4e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#ad0f41892d8c715d8416c4d237bee3f4e">initialize_diagnostic</a> (<a class="el" href="classeros_1_1System.html#a7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a> t_system, <a class="el" href="classeros_1_1System.html#a3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a> t_subsystem, <a class="el" href="classeros_1_1System.html#a34a61840c9cd6ede13ed123e6facf338">System::Component</a> t_component)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#ad0f41892d8c715d8416c4d237bee3f4e">initialize_diagnostic</a> (<a class="el" href="group__eros.html#ga7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a> t_system, <a class="el" href="group__eros.html#ga3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a> t_subsystem, <a class="el" href="group__eros.html#ga34a61840c9cd6ede13ed123e6facf338">System::Component</a> t_component)</td></tr>
 <tr class="memdesc:ad0f41892d8c715d8416c4d237bee3f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> Root <a class="el" href="classeros_1_1Diagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information.">Diagnostic</a>. <br /></td></tr>
 <tr class="separator:ad0f41892d8c715d8416c4d237bee3f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c517500380e429ec727db4656de165a"><td class="memItemLeft" align="right" valign="top"><a id="a7c517500380e429ec727db4656de165a"></a>
@@ -174,7 +174,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:ad1e04ddd18910de71d0ab47e0c23904d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the spin rate of the <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a>. This should be higher than the combined rates of Loop1-Loop3 (if they are used. <br /></td></tr>
 <tr class="separator:ad1e04ddd18910de71d0ab47e0c23904d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0128f28eb60982b31620b72962d5904"><td class="memItemLeft" align="right" valign="top"><a id="ae0128f28eb60982b31620b72962d5904"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#ae0128f28eb60982b31620b72962d5904">update</a> (<a class="el" href="classeros_1_1Node.html#acdaf97604bbb90b853f095781557754a">Node::State</a> node_state)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#ae0128f28eb60982b31620b72962d5904">update</a> (<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a> node_state)</td></tr>
 <tr class="memdesc:ae0128f28eb60982b31620b72962d5904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> update section, will call all derived <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> Loop Functions, and publish base pubs such as firmware, heartbeat, etc. <br /></td></tr>
 <tr class="separator:ae0128f28eb60982b31620b72962d5904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6be82ae85111fb444f4cd914ecb34a0"><td class="memItemLeft" align="right" valign="top"><a id="ac6be82ae85111fb444f4cd914ecb34a0"></a>

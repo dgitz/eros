@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['levelstring_340',['LevelString',['../classeros_1_1Level.html#af0b1e5cafda35e4defd205e5dac44b04',1,'eros::Level']]],
-  ['log_5fdebug_341',['LOG_DEBUG',['../classeros_1_1Logger.html#ae05cacdeb3b4fc6588a235ff7170af17',1,'eros::Logger']]],
-  ['log_5fdiagnostic_342',['LOG_DIAGNOSTIC',['../classeros_1_1Logger.html#ab28c00081d096e100ff50295f3f98620',1,'eros::Logger']]],
-  ['log_5ferror_343',['LOG_ERROR',['../classeros_1_1Logger.html#a6c35a6e2a5b764ddca2154466fa18b8e',1,'eros::Logger']]],
-  ['log_5ffatal_344',['LOG_FATAL',['../classeros_1_1Logger.html#a38617620d57aba7d54c4cf8d8df329de',1,'eros::Logger']]],
-  ['log_5finfo_345',['LOG_INFO',['../classeros_1_1Logger.html#a15f82e22dcfdab871ab96a9ad54231a8',1,'eros::Logger']]],
-  ['log_5fnotice_346',['LOG_NOTICE',['../classeros_1_1Logger.html#a5ec10dceb4ac483c0d94a9a4fe549a7f',1,'eros::Logger']]],
-  ['log_5fwarn_347',['LOG_WARN',['../classeros_1_1Logger.html#a4291e7ade096b5d3e3956704e8896239',1,'eros::Logger']]],
-  ['logger_348',['Logger',['../classeros_1_1Logger.html#a0fefb6088c7644daba2b90ed1e2c46fe',1,'eros::Logger::Logger(std::string level, std::string name)'],['../classeros_1_1Logger.html#ae6373abb707086aec6b3dfaf0ed3f34d',1,'eros::Logger::Logger(std::string level, std::string directory, std::string name)']]],
-  ['loggerlevel_5fservice_349',['loggerlevel_service',['../classeros_1_1BaseNode.html#a3d69f38c697dd0d4a1523cdf494f2008',1,'eros::BaseNode']]]
+  ['levelstring_354',['LevelString',['../group__eros.html#gaf0b1e5cafda35e4defd205e5dac44b04',1,'eros::Level']]],
+  ['log_5fdebug_355',['LOG_DEBUG',['../classeros_1_1Logger.html#ae05cacdeb3b4fc6588a235ff7170af17',1,'eros::Logger']]],
+  ['log_5fdiagnostic_356',['LOG_DIAGNOSTIC',['../classeros_1_1Logger.html#ab28c00081d096e100ff50295f3f98620',1,'eros::Logger']]],
+  ['log_5ferror_357',['LOG_ERROR',['../classeros_1_1Logger.html#a6c35a6e2a5b764ddca2154466fa18b8e',1,'eros::Logger']]],
+  ['log_5ffatal_358',['LOG_FATAL',['../classeros_1_1Logger.html#a38617620d57aba7d54c4cf8d8df329de',1,'eros::Logger']]],
+  ['log_5finfo_359',['LOG_INFO',['../classeros_1_1Logger.html#a15f82e22dcfdab871ab96a9ad54231a8',1,'eros::Logger']]],
+  ['log_5fnotice_360',['LOG_NOTICE',['../classeros_1_1Logger.html#a5ec10dceb4ac483c0d94a9a4fe549a7f',1,'eros::Logger']]],
+  ['log_5fwarn_361',['LOG_WARN',['../classeros_1_1Logger.html#a4291e7ade096b5d3e3956704e8896239',1,'eros::Logger']]],
+  ['logger_362',['Logger',['../classeros_1_1Logger.html#a0fefb6088c7644daba2b90ed1e2c46fe',1,'eros::Logger::Logger(std::string level, std::string name)'],['../classeros_1_1Logger.html#ae6373abb707086aec6b3dfaf0ed3f34d',1,'eros::Logger::Logger(std::string level, std::string directory, std::string name)']]],
+  ['loggerlevel_5fservice_363',['loggerlevel_service',['../classeros_1_1BaseNode.html#a3d69f38c697dd0d4a1523cdf494f2008',1,'eros::BaseNode']]]
 ];

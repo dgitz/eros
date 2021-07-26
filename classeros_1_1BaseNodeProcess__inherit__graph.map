@@ -1,9 +1,9 @@
 <map id="eros::BaseNodeProcess" name="eros::BaseNodeProcess">
 <area shape="rect" id="node1" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="5,148,168,175"/>
-<area shape="rect" id="node2" href="$classeros__nodes_1_1DataLoggerProcess.html" title=" " alt="" coords="218,5,429,32"/>
-<area shape="rect" id="node3" href="$classeros__nodes_1_1DiagnosticNodeProcess.html" title=" " alt="" coords="230,57,417,98"/>
-<area shape="rect" id="node4" href="$classeros__nodes_1_1MasterNodeProcess.html" title=" " alt="" coords="216,123,431,149"/>
-<area shape="rect" id="node5" href="$classeros__nodes_1_1SafetyNodeProcess.html" title=" " alt="" coords="218,173,429,200"/>
-<area shape="rect" id="node6" href="$classeros__nodes_1_1SnapshotProcess.html" title=" " alt="" coords="224,224,423,251"/>
-<area shape="rect" id="node7" href="$classeros__nodes_1_1SystemMonitorProcess.html" title=" " alt="" coords="232,275,415,317"/>
+<area shape="rect" id="node2" href="$classeros__nodes_1_1DataLoggerProcess.html" title="The process utility for the DataLogger." alt="" coords="218,5,429,32"/>
+<area shape="rect" id="node3" href="$classeros__nodes_1_1DiagnosticNodeProcess.html" title="The process utility for the DiagnosticNode." alt="" coords="230,57,417,98"/>
+<area shape="rect" id="node4" href="$classeros__nodes_1_1MasterNodeProcess.html" title="The process utility for the Master Node." alt="" coords="216,123,431,149"/>
+<area shape="rect" id="node5" href="$classeros__nodes_1_1SafetyNodeProcess.html" title="The process utility for the Safety Node." alt="" coords="218,173,429,200"/>
+<area shape="rect" id="node6" href="$classeros__nodes_1_1SnapshotProcess.html" title="The process utility for the Snapshot Node." alt="" coords="224,224,423,251"/>
+<area shape="rect" id="node7" href="$classeros__nodes_1_1SystemMonitorProcess.html" title="The process utility for the SystemMonitorNode." alt="" coords="232,275,415,317"/>
 </map>
