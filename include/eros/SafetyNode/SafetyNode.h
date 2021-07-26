@@ -12,7 +12,7 @@
 #include "SafetyNodeProcess.h"
 namespace eros_nodes {
 /*! \class SafetyNode SafetyNode.h "SafetyNode.h"
- *  \brief */
+ *  \brief The SafetyNode is used to control a system Safely. */
 class SafetyNode : public eros::BaseNode
 {
    public:

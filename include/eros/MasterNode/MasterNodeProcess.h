@@ -5,7 +5,7 @@
 #include <eros/BaseNodeProcess.h>
 namespace eros_nodes {
 /*! \class MasterNodeProcess MasterNodeProcess.h "MasterNodeProcess.h"
- *  \brief */
+ *  \brief The process utility for the Master Node. */
 class MasterNodeProcess : public eros::BaseNodeProcess
 {
    public:

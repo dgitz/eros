@@ -17,6 +17,9 @@ namespace eros_nodes {
 class WindowManager
 {
    public:
+    /*! \struct ScreenCoordinatePerc
+     \brief ScreenCoordinatePerc container.
+     */
     struct ScreenCoordinatePerc {
         ScreenCoordinatePerc(double start_x, double start_y, double width, double height)
             : start_x_perc(start_x), start_y_perc(start_y), width_perc(width), height_perc(height) {
@@ -26,6 +29,9 @@ class WindowManager
         double width_perc;
         double height_perc;
     };
+    /*! \struct ScreenCoordinatePixel
+    \brief ScreenCoordinatePixel container.
+    */
     struct ScreenCoordinatePixel {
         ScreenCoordinatePixel(double start_x, double start_y, double width, double height)
             : start_x_pix(start_x), start_y_pix(start_y), width_pix(width), height_pix(height) {
@@ -89,7 +95,7 @@ class WindowManager
     WINDOW* window_reference;
 };
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
- *  \brief  */
+ *  \brief  The process utility for the SystemMonitorNode. */
 class SystemMonitorProcess : public eros::BaseNodeProcess
 {
    public:
@@ -172,6 +178,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         LOADFACTOR = 6,
         RX = 7
     };
+    /*! \struct Task
+    \brief Task container, used for holding Task parameters.
+    */
     struct Task {
         Task(uint16_t _id,
              TaskType _type,
@@ -205,6 +214,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         double last_heartbeat_delta;
         uint64_t restart_count;
     };
+    /*! \struct Device
+    \brief Device container, used for holding Device information for the System Monitor.
+    */
     struct Device {
         Device(uint16_t _id, std::string _name)
             : id(_id),
@@ -226,7 +238,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         double disk_av_perc;
         std::vector<double> load_factor;
     };
-
+    /*! \struct Field
+    \brief Field container, used for holding Field attributes.
+    */
     struct Field {
         Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
         }

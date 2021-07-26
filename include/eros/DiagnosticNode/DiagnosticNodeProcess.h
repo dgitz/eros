@@ -5,10 +5,14 @@
 #include <eros/BaseNodeProcess.h>
 namespace eros_nodes {
 /*! \class DiagnosticNodeProcess DiagnosticNodeProcess.h "DiagnosticNodeProcess.h"
- *  \brief */
+ *  \brief The process utility for the DiagnosticNode. */
 class DiagnosticNodeProcess : public eros::BaseNodeProcess
 {
    public:
+    /*! \struct DiagnosticTypeAggregate
+        \brief DiagnosticTypeAggregate Container
+        Container to aggregate Diagnostic Information.
+    */
     struct DiagnosticTypeAggregate {
         DiagnosticTypeAggregate() : update_count(0) {
         }

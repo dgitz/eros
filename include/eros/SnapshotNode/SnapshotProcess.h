@@ -10,7 +10,7 @@
 #include <fstream>
 namespace eros_nodes {
 /*! \class SnapshotProcess SnapshotProcess.h "SnapshotProcess.h"
- *  \brief */
+ *  \brief The process utility for the Snapshot Node. */
 class SnapshotProcess : public eros::BaseNodeProcess
 {
    public:
@@ -25,17 +25,22 @@ class SnapshotProcess : public eros::BaseNodeProcess
           holdcomplete_timer(0.0){};
     ~SnapshotProcess();
     const double HOLDCOMPLETE_TIME = 5.0;
-    enum class Mode { UNKNOWN = 0, MASTER = 1, SLAVE = 2, END_OF_LIST = 3 };
+    enum class Mode {
+        UNKNOWN = 0,    /*!< Uninitialized value. */
+        MASTER = 1,     /*!< The SnapshotNode is running as a Master. */
+        SLAVE = 2,      /*!< The SnapshotNode is running as a Slave. */
+        END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
+    };
 
     enum class SnapshotState {
-        UNKNOWN = 0,
-        NOTRUNNING = 1,
-        STARTED = 2,
-        RUNNING = 3,
-        READY = 4,
-        COMPLETE = 5,
-        INCOMPLETE = 6,
-        END_OF_LIST = 7
+        UNKNOWN = 0,    /*!< Uninitialized value. */
+        NOTRUNNING = 1, /*!< Snapshot is not Running. */
+        STARTED = 2,    /*!< Snapshot was Started. */
+        RUNNING = 3,    /*!< Snapshot is Running. */
+        READY = 4,      /*!< Snapshot is ready for retreival. */
+        COMPLETE = 5,   /*!< Snapshot was Completed. */
+        INCOMPLETE = 6, /*!< Snapshot was unable to Complete. */
+        END_OF_LIST = 7 /*!< Last item of list. Used for Range Checks. */
     };
     static std::string SnapshotStateString(SnapshotState v) {
         switch (v) {
@@ -69,10 +74,17 @@ class SnapshotProcess : public eros::BaseNodeProcess
             default: return ModeString(Mode::UNKNOWN); break;
         }
     }
+    /*! \struct ExecCommand
+    \brief ExecCommand container.  Holds executable commands and where there output goes for a
+    Snapshot.
+    */
     struct ExecCommand {
         std::string command;
         std::string output_file;
     };
+    /*! \struct SlaveDevice
+    \brief SlaveDevice container, used for tracking Snapshot information and logic.
+    */
     struct SlaveDevice {
         SlaveDevice(std::string _name)
             : name(_name), device_snapshot_generated(false), timer(0.0), devicesnapshot_path("") {
@@ -83,6 +95,9 @@ class SnapshotProcess : public eros::BaseNodeProcess
         double timer;
         std::string devicesnapshot_path;
     };
+    /*! \struct SnapshotConfig
+    \brief SnapshotConfig container, used for holding Snapshot Configuration parameters.
+    */
     struct SnapshotConfig {
         std::string stage_directory;
 

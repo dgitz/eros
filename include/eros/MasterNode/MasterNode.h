@@ -10,9 +10,17 @@
 #include <eros/BaseNode.h>
 
 #include "MasterNodeProcess.h"
+
+/*!
+ *  \addtogroup eros_nodes
+ *  @{
+ */
+
+//! Namespace for Enhanced-ROS Nodes
 namespace eros_nodes {
 /*! \class MasterNode MasterNode.h "MasterNode.h"
- *  \brief */
+ *  \brief MasterNode is used to provide information about a host device.
+ */
 class MasterNode : public eros::BaseNode
 {
    public:
