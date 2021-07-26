@@ -21,6 +21,7 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
         if (diag_list.at(i).level >= Level::Type::WARN) {
             any_error = true;
             diag = diag_list.at(i);
+            logger->log_diagnostic(diag);
         }
     }
     if (any_error == false) {

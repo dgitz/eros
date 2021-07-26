@@ -161,7 +161,7 @@ class SnapshotProcess : public eros::BaseNodeProcess
     std::vector<eros::Diagnostic::DiagnosticDefinition> createnew_snapshot();
 
    private:
-    int count_files_indirectory(std::string directory, std::string filter);
+    int count_files_indirectory(std::string directory, std::string filter = "");
     ros::NodeHandle* nodeHandle;
     std::string robot_namespace;
     Mode mode;
