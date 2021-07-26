@@ -19,41 +19,29 @@ def main():
     parser.add_option("-q","--dry-run",default=0,dest="dryrun",type="int",help="Prepares Sync and instead of synchronizing writes to console. Options: 0(default) or 1")
     parser.add_option("-v","--verbose",dest="verbose",default="0",help="How Verbose this script should run.  Options: 0(Default),1,2")
     parser.add_option("-x","--clean",dest="clean",default=1,type="int",help="Clean Target folder before syncing. (Default=1)")
-    parser.add_option("-c","--contentmode",dest="content_mode",default="manual",help="Content Mode.  Options: manual(Default),automatic")
+    parser.add_option("-s","--syncconfigfile",dest="syncconfigfile",help="File Path to Sync Config File.")
     parser.add_option("-f","--folderlist", dest="folder_list",action="append", type="str",help="Folder list to sync.  Input multiple values with option preceeding each one.")
-    parser.add_option("-t","--foldertype",dest="folder_type_list",action="append",type="str",help="Folder Types.  Default is GENERIC.  Input multiple values with option preceeding each one.  If no option is set, Generic will be assumed.")
     parser.add_option("-d","--device",dest="device",help="Device to sync to.")
     parser.add_option("-u","--user",dest="user",default="robot",help="User account on Target. Default=robot")
     (opts,args) = parser.parse_args()
     verbose = Verbosity.convert(opts.verbose)
-    content_mode = ContentSync.convert_ContentMode(opts.content_mode)
-    if(content_mode != ContentSyncType.MANUAL):
-        print COLOR_YELLOW + "ERROR: Content Model MANUAL is currently Required." + COLOR_END
-        return
-    if(opts.folder_list is None):
-        print COLOR_YELLOW + "ERROR: Folder List is currently required." + COLOR_END
-        return
-    if(len(opts.folder_list) > 0):
-        if(opts.folder_type_list is None):
-            opts.folder_type_list = []
-            for folder in opts.folder_list:
-                opts.folder_type_list.append("generic")
-        elif(len(opts.folder_type_list) != len(opts.folder_list)):
-            print COLOR_RED + " ERROR: Folder Type List must match the size of the Folder List." + COLOR_END
-            return
-    
-
-    folder_list = opts.folder_list
+    folder_list = []
     folder_type_list = []
-    for folder_type in opts.folder_type_list:
-        t = ContentSync.convert_FolderType(folder_type)
-        folder_type_list.append(t)
-    # Validate any input arguments
-    if(content_mode == ContentSyncType.UNKNOWN):
-        return
+    folders = []
+    devices = []
     sync = ContentSync()
-    print COLOR_GREEN + " Sync Beginning to: " + opts.device + "..." + COLOR_END
-    if sync.manual_sync(opts.user,opts.device,folder_type_list,folder_list,opts.clean,opts.dryrun,verbose) == False:
+    if(opts.syncconfigfile is None):
+        content_mode = ContentSyncType.MANUAL
+    else:
+        content_mode = ContentSyncType.AUTOMATIC
+    if(content_mode == ContentSyncType.MANUAL):
+        folders,devices = sync.read_config_cli(opts.folder_list,opts.user,opts.device)
+    else:
+        folders,devices = sync.read_config_file(opts.syncconfigfile)
+        pdb.set_trace()
+
+    #if(content_mode == ContentSyncType.MANUAL):
+    if sync.sync(devices,folders,opts.clean,opts.dryrun,verbose) == False:
         print COLOR_RED + " Sync Failed!" + COLOR_END
 if __name__ == "__main__":
     main()

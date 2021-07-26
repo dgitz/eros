@@ -8,8 +8,20 @@ from ContentSyncDefinition import ContentSyncType
 from ContentSyncDefinition import FolderType
 from ArchitectureType import ArchitectureType
 from Architecture import Architecture
+import xml.etree.ElementTree as ET
 
 import pdb
+class Folder(object):
+    def __init__(self,Name='',Type='',Path=''):
+        self.Name = Name
+        self.Type = Type
+        self.Directory = Path
+class Device(object):
+    def __init__(self,Name='',User='',ChildDevices=[]):
+        self.Name = Name
+        self.User = User
+        self.ChildDevices = ChildDevices
+
 class ContentSync():
     __initialized = False
     def __init__(self):
@@ -35,16 +47,48 @@ class ContentSync():
             return FolderType.BINARY
         else:
             return FolderType.GENERIC
-    def manual_sync(self,username,target,folder_type_list,folder_list,clean,dryrun,verbose):
+    def sync(self,devices,folders,clean,dryrun,verbose):
         arch_detector = Architecture()
         host_arch = arch_detector.get_architecture('localhost')
-        target_arch = arch_detector.get_architecture(target,username)
-        drop_binaries = False
-        if(arch_detector.check_architecture_compatability(host_arch,target_arch) == False): 
-            print COLOR_YELLOW + "WARN: Host Arch: " + Architecture.convert_ArchStr(host_arch) + " Is not Directly Compatible Target Arch: " + Architecture.convert_ArchStr(target_arch) + COLOR_END
-            drop_binaries = True
-        return self.__sync(username,target,folder_type_list,folder_list,drop_binaries,clean,dryrun,verbose)
-    def __sync(self,username,target,folder_type_list,folder_list,drop_binaries,clean,dryrun,verbose):
+        for device in devices:
+            target = device.Name
+            username = device.User    
+            target_arch = arch_detector.get_architecture(target,username)
+            drop_binaries = False
+            if(arch_detector.check_architecture_compatability(host_arch,target_arch) == False): 
+                drop_binaries = True
+            folder_list = []
+            for f in folders:
+                folder_list.append(f.Directory)
+            if(self.__transfer(username,target,folder_list,drop_binaries,clean,dryrun,verbose) == False):
+                print COLOR_YELLOW + "WARN: Sync Failed to Target: " + target + COLOR_END
+    def read_config_cli(self,folder_list,username,target):
+        FolderList = []
+        DeviceTreeList = []
+        for f in folder_list:
+            newFolder = Folder(f,'generic',f)
+            FolderList.append(newFolder)
+        newDevice = Device(target,username)
+        DeviceTreeList.append(newDevice)
+        return FolderList,DeviceTreeList
+    def read_config_file(self,file_path):
+        FolderList = []
+        DeviceTreeList = []
+        tree = ET.parse(file_path)
+        root = tree.getroot()
+        for List in root:
+            for item in List:
+                if(List.tag == 'SyncDevices'):
+                    newDevice = Device(item.attrib["name"])
+                    for child_item in item:
+                        childDevice = Device(child_item.attrib["user"],child_item.attrib["name"])
+                        newDevice.ChildDevices.append(childDevice)
+                    DeviceTreeList.append(newDevice)
+                elif(List.tag == 'Folders'):
+                    newFolder = Folder(item.attrib["name"],item.attrib["type"],item.attrib["directory"])
+                    FolderList.append(newFolder)
+        return FolderList,DeviceTreeList
+    def __transfer(self,username,target,folder_list,drop_binaries,clean,dryrun,verbose):
         if(dryrun):
             print COLOR_YELLOW + "WARN: Enabling Dry-Run Mode!!!" + COLOR_END
         else:
