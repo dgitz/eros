@@ -15,9 +15,12 @@ void commandstate_Callback(const eros::command_state& msg) {
     commandstate_msg = msg;
 }
 TEST(SnapshotNode, TestMaster) {
-    int TEST_COUNT = 50;
+    int TEST_COUNT = 5;
+    int TEST_PASS_REQUIRED_COUNT = 1;
+    int tests_passed = 0;
     Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
     for (int i = 0; i < TEST_COUNT; ++i) {
+        bool ok = true;
         logger->log_info("Test iteration: " + std::to_string(i) + "/" + std::to_string(TEST_COUNT));
         heartbeat_count = 0;
         commandstate_count = 0;
@@ -45,13 +48,16 @@ TEST(SnapshotNode, TestMaster) {
         command_pub.publish(snapshot_command);
         usleep(1.0 * 1000000.0);
 
-        EXPECT_TRUE(commandstate_count > 0);
-        EXPECT_TRUE(commandstate_msg.CurrentCommand.Command ==
-                    (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT);
-        EXPECT_TRUE(commandstate_msg.CurrentCommand.Option1 ==
-                    (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS);
-        EXPECT_TRUE(commandstate_msg.diag.DiagnosticMessage ==
-                    (uint8_t)Diagnostic::Message::NOERROR);
+        if ((commandstate_count > 0) &&
+            (commandstate_msg.CurrentCommand.Command ==
+             (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT) &&
+            (commandstate_msg.CurrentCommand.Option1 ==
+             (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS) &&
+            (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
+        else {
+            logger->log_warn("Clear Command Failed!");
+            ok = false;
+        }
         usleep(2.0 * 1000000.0);
 
         eros::srv_filetransfer req;
@@ -66,22 +72,36 @@ TEST(SnapshotNode, TestMaster) {
         snapshot_command.Option1 = (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE;
         command_pub.publish(snapshot_command);
         usleep(5.0 * 1000000.0);
-        EXPECT_TRUE(commandstate_count > 0);
-        EXPECT_TRUE(commandstate_msg.CurrentCommand.Command ==
-                    (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT);
-        EXPECT_TRUE(commandstate_msg.CurrentCommand.Option1 ==
-                    (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE);
-        EXPECT_TRUE(commandstate_msg.diag.DiagnosticMessage ==
-                    (uint8_t)Diagnostic::Message::NOERROR);
+
+        if ((commandstate_count > 0) &&
+            (commandstate_msg.CurrentCommand.Command ==
+             (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT) &&
+            (commandstate_msg.CurrentCommand.Option1 ==
+             (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE) &&
+            (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
+        else {
+            logger->log_warn("Gen Snap for Slave Command Failed!");
+            ok = false;
+        }
+
         usleep(5.0 * 1000000.0);
 
         req.response.files.clear();
-        EXPECT_EQ(client.call(req), true);
-        EXPECT_TRUE(req.response.files.size() == 1);
+        if (client.call(req) == false) {
+            logger->log_warn("Snap Command for Client Failed!");
+            ok = false;
+        }
+        if ((req.response.files.size() == 1) == false) {
+            logger->log_warn("Snap Response Had no Files!");
+            ok = false;
+        }
         for (std::size_t i = 0; i < req.response.files.size(); ++i) {
-            EXPECT_TRUE(req.response.files.at(i).status ==
-                        (uint8_t)FileHelper::FileStatus::FILE_OK);
-            EXPECT_TRUE(req.response.files.at(i).data_length > 0);
+            if ((req.response.files.at(i).status == (uint8_t)FileHelper::FileStatus::FILE_OK) &&
+                (req.response.files.at(i).data_length > 0)) {}
+            else {
+                logger->log_warn("Snap File Missing!");
+                ok = false;
+            }
             /*
             Don't unit test, but keep this for future examples.
             char arr[req.response.files.at(i).data_length];
@@ -92,7 +112,15 @@ TEST(SnapshotNode, TestMaster) {
             FileHelper::FileStatus::FILE_OK);
             */
         }
+        if (ok == true) {
+            tests_passed++;
+            logger->log_notice("Snap Test: " + std::to_string(i + 1) + " Passed!");
+        }
+        else {
+            logger->log_warn("Snap Test: " + std::to_string(i + 1) + " Failed!");
+        }
     }
+    EXPECT_TRUE(tests_passed >= TEST_PASS_REQUIRED_COUNT);
     delete logger;
 }
 int main(int argc, char** argv) {
