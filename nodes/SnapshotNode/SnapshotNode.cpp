@@ -43,6 +43,9 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
         state.State = 0;
         state.PercentComplete = 0.0;
         state.diag = convert(diag);
+        if (diag.level > Level::Type::NOTICE) {
+            logger->log_diagnostic(diag);
+        }
         commandstate_pub.publish(state);
     }
 }
@@ -319,8 +322,12 @@ bool SnapshotNode::run_10hz() {
             state.State = (uint8_t)process->get_devicesnapshot_state();
         }
         state.Name = get_hostname();
-
+        state.diag.Level = (uint8_t)Level::Type::DEBUG;
+        state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
+        if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
+            logger->log_diagnostic(process->convert(state.diag));
+        }
         commandstate_pub.publish(state);
     }
     return true;
@@ -377,6 +384,9 @@ void SnapshotNode::thread_snapshotcreation() {
                 }
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
+                if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
+                    logger->log_diagnostic(diag);
+                }
                 commandstate_pub.publish(state);
             }
             else {
@@ -396,6 +406,9 @@ void SnapshotNode::thread_snapshotcreation() {
                 state.State = (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE;
                 state.PercentComplete = 0.0;
                 state.diag = convert(diag);
+                if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
+                    logger->log_diagnostic(diag);
+                }
                 commandstate_pub.publish(state);
             }
         }
