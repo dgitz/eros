@@ -9,7 +9,6 @@
         <SystemSnapshotPath>~/storage/SNAPSHOT/SYSTEMSNAPSHOT/</SystemSnapshotPath>
         <Architecture type="X86_64">
             <DeviceSnapshotPath>~/storage/SNAPSHOT/DEVICESNAPSHOT/</DeviceSnapshotPath>
-            <!--
             <Command file="ps_log">ps aux</Command>
             <Command file="ifconfig_log">ifconfig</Command>
             <Command file="rosnode_list">rosnode list</Command>
@@ -23,7 +22,6 @@
             <Command file="uptime">uptime</Command>
             <Command file="ntp_status">ntpq -p</Command>
             <Command file="lsmod">lsmod</Command>
-            -->
             <Folder>~/var/log/output/</Folder>
             <Folder>~/config/</Folder>
             <File>/var/log/syslog</File>
