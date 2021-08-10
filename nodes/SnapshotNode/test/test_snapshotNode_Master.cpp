@@ -54,6 +54,7 @@ TEST(SnapshotNode, TestMaster) {
                 (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT);
     EXPECT_TRUE(commandstate_msg.CurrentCommand.Option1 ==
                 (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER);
+    logger->log_info(commandstate_msg.diag.Description);
     EXPECT_TRUE(commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR);
     delete logger;
 }
