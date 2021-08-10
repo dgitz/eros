@@ -318,7 +318,6 @@ bool BaseNodeProcess::isEqual(double a, double b, double eps) {
 std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
     char buffer[512];
     std::string result = "";
-    logger->log_debug("Exec: " + std::string(cmd));
     try {
         FILE *pipe = popen(cmd, "r");
         if (wait_for_result == false) {
