@@ -43,8 +43,9 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
         state.State = 0;
         state.PercentComplete = 0.0;
         state.diag = convert(diag);
-        logger->log_debug("Level: " + std::to_string(state.diag.Level) +
-                          " Desc: " + state.diag.Description);
+        if (diag.level > Level::Type::NOTICE) {
+            logger->log_diagnostic(diag);
+        }
         commandstate_pub.publish(state);
     }
 }
@@ -324,8 +325,10 @@ bool SnapshotNode::run_10hz() {
         state.diag.Level = (uint8_t)Level::Type::DEBUG;
         state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
-        logger->log_debug("Level: " + std::to_string(state.diag.Level) +
+        logger->log_diagnostic(process->convert(state.diag));
+        /*logger->log_debug("Level: " + std::to_string(state.diag.Level) +
                           " Desc: " + state.diag.Description);
+                          */
         commandstate_pub.publish(state);
     }
     return true;
@@ -382,8 +385,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 }
                 state.PercentComplete = 100.0;
                 state.diag = convert(diag);
-                logger->log_debug("Level: " + std::to_string(state.diag.Level) +
-                                  " Desc: " + state.diag.Description);
+                logger->log_diagnostic(diag);
                 commandstate_pub.publish(state);
             }
             else {
@@ -403,8 +405,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 state.State = (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE;
                 state.PercentComplete = 0.0;
                 state.diag = convert(diag);
-                logger->log_debug("Level: " + std::to_string(state.diag.Level) +
-                                  " Desc: " + state.diag.Description);
+                logger->log_diagnostic(diag);
                 commandstate_pub.publish(state);
             }
         }
