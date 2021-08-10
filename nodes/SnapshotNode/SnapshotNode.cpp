@@ -321,7 +321,8 @@ bool SnapshotNode::run_10hz() {
             state.State = (uint8_t)process->get_devicesnapshot_state();
         }
         state.Name = get_hostname();
-
+        state.diag.Level = (uint8_t)Level::Type::DEBUG;
+        state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
         logger->log_debug("Level: " + std::to_string(state.diag.Level) +
                           " Desc: " + state.diag.Description);
