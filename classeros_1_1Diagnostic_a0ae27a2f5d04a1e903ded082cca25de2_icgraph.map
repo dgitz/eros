@@ -1,5 +1,5 @@
 <map id="eros::Diagnostic::DiagnosticTypeString" name="eros::Diagnostic::DiagnosticTypeString">
-<area shape="rect" id="node1" title="Convert Diagnostic::DiagnosticType to human readable string." alt="" coords="212,27,393,69"/>
-<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#adacebf9a58e28745fa43688204dc69e8" title="Generate human readable string of a diagnostic." alt="" coords="9,5,161,32"/>
-<area shape="rect" id="node3" href="$classeros_1_1Diagnostic.html#a71fb9fa103f74637477087cb34baa5e0" title="Update Diagnostic." alt="" coords="5,57,164,98"/>
+<area shape="rect" id="node1" title="Convert Diagnostic::DiagnosticType to human readable string." alt="" coords="212,29,393,71"/>
+<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#adacebf9a58e28745fa43688204dc69e8" title="Generate human readable string of a diagnostic." alt="" coords="9,7,161,34"/>
+<area shape="rect" id="node3" href="$classeros_1_1Diagnostic.html#a71fb9fa103f74637477087cb34baa5e0" title="Update Diagnostic." alt="" coords="5,59,164,100"/>
 </map>

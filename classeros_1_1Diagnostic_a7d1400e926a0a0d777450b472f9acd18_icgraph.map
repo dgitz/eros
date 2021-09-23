@@ -1,4 +1,4 @@
 <map id="eros::Diagnostic::DiagnosticMessageString" name="eros::Diagnostic::DiagnosticMessageString">
-<area shape="rect" id="node1" title="Convert Diagnostic::Message to human readable string." alt="" coords="205,5,387,47"/>
-<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#adacebf9a58e28745fa43688204dc69e8" title="Generate human readable string of a diagnostic." alt="" coords="5,13,157,39"/>
+<area shape="rect" id="node1" title="Convert Diagnostic::Message to human readable string." alt="" coords="205,29,387,71"/>
+<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#adacebf9a58e28745fa43688204dc69e8" title="Generate human readable string of a diagnostic." alt="" coords="5,37,157,63"/>
 </map>
