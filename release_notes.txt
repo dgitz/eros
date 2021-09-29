@@ -1,4 +1,20 @@
 // clang-format off
+Release: CAPTAINMARVEL
+SW Tag: TBD
+Author: David Gitz
+Date: TBD
+
+--- User Stories
+US: 924 Unit tests should not test application content
+  Author: David Gitz
+  Date: 29-Sep-2021
+  * Removed ROS_HOSTNAME from test launch files
+  * Removed reliance on ~/config directory
+
+--- Bugs
+
+--- Other Comments
+
 ****
 
 Release: CAPTAINMARVEL

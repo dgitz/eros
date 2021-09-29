@@ -38,7 +38,7 @@ TEST(BasicTest, TestOperation_Slave) {
     diag = tester->load_config("~/config/Some file that doesn't exist.xml", {});
     EXPECT_TRUE(diag.level >= Level::Type::ERROR);
 
-    diag = tester->load_config("~/config/SnapshotConfig.xml", {});
+    diag = tester->load_config(std::string(TESTDATA_DIR) + "/config/SnapshotConfig.xml", {});
     logger->log_diagnostic(diag);
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 

@@ -1,5 +1,6 @@
 #// clang-format off
 project(eros_SnapshotNodeTest)
+add_definitions(-DTESTDATA_DIR="${PROJECT_SOURCE_DIR}/data")
 catkin_add_gtest(test_snapshotProcess test_SnapshotProcess.cpp)
 target_link_libraries(test_snapshotProcess ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger snapshotProcess)
 add_dependencies(test_snapshotProcess eros_generate_messages_cpp)
