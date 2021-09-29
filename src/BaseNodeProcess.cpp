@@ -367,7 +367,7 @@ json BaseNodeProcess::read_configuration(std::string device_name,
         return empty;
     }
     file_path = sanitize_path(file_path);
-
+    printf("f: %s\n", file_path.c_str());
     std::ifstream fd(file_path);
     if (fd.is_open() == false) {
         logger->log_error("Unable to read file.");
