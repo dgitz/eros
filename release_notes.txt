@@ -5,13 +5,14 @@ Author: David Gitz
 Date: TBD
 
 --- User Stories
-US: 924 Unit tests should not test application content
-  Author: David Gitz
-  Date: 29-Sep-2021
-  * Removed ROS_HOSTNAME from test launch files
-  * Removed reliance on ~/config directory
+
 
 --- Bugs
+US: 925 Unit tests should not test application content
+  Author: David Gitz
+  Date: 4-Dec-2021
+  * Removed ROS_HOSTNAME from test launch files
+  * Removed reliance on ~/config directory
 
 --- Other Comments
 
