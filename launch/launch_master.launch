@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="robot_namespace"/> 
+    <arg name="device_hostname"/>
     <group ns="$(arg robot_namespace)">
         <!-- Nodes that should be launched under a device HostName. -->
-        <group ns="$(env ROS_HOSTNAME)">
+        <group ns="$(arg device_hostname)">
             <include file="$(find eros)/launch/nodes/master_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include>     
