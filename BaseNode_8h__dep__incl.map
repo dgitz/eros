@@ -1,8 +1,8 @@
 <map id="include/eros/BaseNode.h" name="include/eros/BaseNode.h">
-<area shape="rect" id="node1" title=" " alt="" coords="405,5,571,32"/>
-<area shape="rect" id="node2" href="$DataLoggerNode_8h.html" title=" " alt="" coords="5,80,168,121"/>
-<area shape="rect" id="node3" href="$DiagnosticNode_8h.html" title=" " alt="" coords="193,80,381,121"/>
-<area shape="rect" id="node4" href="$MasterNode_8h.html" title=" " alt="" coords="405,80,571,121"/>
-<area shape="rect" id="node5" href="$SafetyNode_8h.html" title=" " alt="" coords="595,80,759,121"/>
-<area shape="rect" id="node6" href="$SnapshotNode_8h.html" title=" " alt="" coords="783,80,966,121"/>
+<area shape="rect" id="node1" title=" " alt="" coords="405,5,571,31"/>
+<area shape="rect" id="node2" href="$DataLoggerNode_8h.html" title=" " alt="" coords="5,79,168,119"/>
+<area shape="rect" id="node3" href="$DiagnosticNode_8h.html" title=" " alt="" coords="193,79,381,119"/>
+<area shape="rect" id="node4" href="$MasterNode_8h.html" title=" " alt="" coords="405,79,571,119"/>
+<area shape="rect" id="node5" href="$SafetyNode_8h.html" title=" " alt="" coords="595,79,759,119"/>
+<area shape="rect" id="node6" href="$SnapshotNode_8h.html" title=" " alt="" coords="783,79,966,119"/>
 </map>

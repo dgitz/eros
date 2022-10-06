@@ -1,4 +1,4 @@
 <map id="eros::BaseNodeProcess::update" name="eros::BaseNodeProcess::update">
-<area shape="rect" id="node1" title="Update function must be implemented in Derived Process. This is used for all state machine logic,..." alt="" coords="5,29,168,71"/>
-<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#a3ec3d19eb74655f375bba759a75f084d" title="Update Diagnostic." alt="" coords="216,29,375,71"/>
+<area shape="rect" id="node1" title="Update function must be implemented in Derived Process. This is used for all state machine logic,..." alt="" coords="5,29,168,69"/>
+<area shape="rect" id="node2" href="$classeros_1_1Diagnostic.html#a3ec3d19eb74655f375bba759a75f084d" title="Update Diagnostic." alt="" coords="216,29,375,69"/>
 </map>
