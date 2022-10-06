@@ -16,12 +16,12 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:jammy
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: ros-tooling/setup-ros@v0.4
+    - uses: ros-tooling/setup-ros@v0.3
       with:
         required-ros-distributions: noetic
-    - run: "source /opt/ros/noetic/setup.bash && rosnode --help"
+    - uses: ros-tooling/action-ros-ci@v0.2
+      with:
+        package-name: eros
+        target-ros1-distro: noetic
