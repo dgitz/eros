@@ -26,12 +26,18 @@ jobs:
         git clone https://github.com/dgitz/eros.git
         cd eros
         python scripts/simple_setup.py
-    
-    - name: Build & Test
-      run: |
         cd ~/catkin_ws/
         source /opt/ros/noetic/setup.bash
+    
+    - name: Build Libraries & Binaries
+      run: |
         catkin_make
+    - name: Build Tests
+      run: |
+        catkin_make tests
+
+    - name: Run Tests
+      run: |
         catkin_make run_tests
     #- uses: ros-tooling/action-ros-ci@v0.2
     #  with:
