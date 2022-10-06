@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ros-tooling/setup-ros@v0.3
-      with:
-        required-ros-distributions: noetic
+    #- uses: ros-tooling/setup-ros@v0.3
+    #  with:
+    #    required-ros-distributions: noetic
     - name: Setup
       run: |
         mkdir -p catkin_ws/src/ && cd ~/catkin_ws/src/
