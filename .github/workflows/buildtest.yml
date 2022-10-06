@@ -6,7 +6,7 @@ name: BuildTest
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ US_1100_SetupBuildServerPipeline ]
 
 
   
