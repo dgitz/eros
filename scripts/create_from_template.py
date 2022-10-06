@@ -8,9 +8,6 @@ from cookiecutter.main import cookiecutter
 from util.Helpers import *
 from os.path import expanduser
 
-
-
-
 def generate(output_folder,template_path):
     print(CGREEN + "Generating From Template:"  + str(template_path)  + " and storing at: " + str(output_folder) + CEND)
     if(os.path.isdir(output_folder) == False):
