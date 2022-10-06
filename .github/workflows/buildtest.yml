@@ -20,6 +20,9 @@ jobs:
       with:
         required-ros-distributions: noetic
     - uses: ros-tooling/action-ros-ci@v0.2
+      with:
+        target-ros1-distro: noetic
+        
     - name: Build & Test
       run: |
         mkdir ~/catkin_ws/ && cd ~/catkin_ws/src/
