@@ -19,18 +19,15 @@ jobs:
     - uses: ros-tooling/setup-ros@v0.3
       with:
         required-ros-distributions: noetic
-    - uses: ros-tooling/action-ros-ci@v0.2
-      with:
-        target-ros1-distro: noetic
-        
     - name: Build & Test
       run: |
         mkdir ~/catkin_ws/ && cd ~/catkin_ws/src/
         git clone https://github.com/dgitz/eros.git
         python scripts/simple_setup.py
-        cd ~/catkin_ws/
-        catkin_make
-        catkin_make run_tests
         #with:
         #  package-name: eros
         #  target-ros1-distro: noetic
+    
+    - uses: ros-tooling/action-ros-ci@v0.2
+      with:
+        target-ros1-distro: noetic
