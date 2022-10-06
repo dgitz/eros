@@ -4,7 +4,7 @@ from optparse import OptionParser
 import subprocess
 import pdb
 import shutil
-from Helpers import *
+from util.Helpers import *
 import os.path
 from os import path
 import socket
@@ -16,6 +16,7 @@ folder_list = [ '~/config/',
                 '~/storage/DATALOGS/',
                 '~/storage/SNAPSHOT/DEVICESNAPSHOT/',
                 '~/storage/SNAPSHOT/SYSTEMSNAPSHOT/',
+                '~/tmp/',
                 '~/test/',
                 '~/test/storage/stage/',
                 '~/test/storage/DATALOGS/',
@@ -28,7 +29,8 @@ dependency_list = [ 'libncurses5-dev',
                     'caffeine',
                     'ntp',
 		    'net-tools',
-            'openssh-server']
+            'openssh-server',
+            'python3-pip']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']
@@ -45,6 +47,8 @@ def run_setup():
     print(CGREEN + "Installing Dependencies via apt..." + CEND)
     for i in range(0,len(dependency_list)):
         os.system("sudo apt --yes --force-yes install " + dependency_list[i])
+    os.system("python3 -m pip install --user cookiecutter")
+    os.system("sudo snap install cookiecutter --edge")
     print(CGREEN + "Installing other dependencies from source..." + CEND)
     home = expanduser("~")
     hostname = socket.gethostname()
