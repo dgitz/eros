@@ -23,6 +23,7 @@ jobs:
       run: |
         mkdir -p ~/catkin_ws/src/ && cd ~/catkin_ws/src/
         git clone https://github.com/dgitz/eros.git
+        cd eros
         python scripts/simple_setup.py
     
     #- uses: ros-tooling/action-ros-ci@v0.2
