@@ -16,9 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    #- uses: ros-tooling/setup-ros@v0.3
-    #  with:
-    #    required-ros-distributions: noetic
+    - uses: ros-tooling/setup-ros@v0.3
+      with:
+        required-ros-distributions: noetic
+    
     - name: Setup
       run: |
         mkdir -p ~/catkin_ws/src/ && cd ~/catkin_ws/src/
@@ -26,6 +27,11 @@ jobs:
         cd eros
         python scripts/simple_setup.py
     
+    - name: Build & Test
+      run: |
+        cd ~/catkin_ws/
+        catkin_make
+        catkin_make run_tests
     #- uses: ros-tooling/action-ros-ci@v0.2
     #  with:
     #    package-name: eros
