@@ -80,6 +80,8 @@ def run_setup():
 
 # Main
 def main():
+    print("DEBUG")
+    return
     parser = OptionParser("simple_setup.py [options]")
     (opts,args) = parser.parse_args()
     run_setup()
