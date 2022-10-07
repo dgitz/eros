@@ -56,7 +56,3 @@ jobs:
         catkin_make run_tests
         catkin_test_results build/test_results
       #working-directory: catkin_ws
-    #- uses: ros-tooling/action-ros-ci@v0.2
-    #  with:
-    #    package-name: eros
-    #    target-ros1-distro: noetic

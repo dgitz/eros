@@ -14,7 +14,6 @@ class MasterNodeProcessTester : public MasterNodeProcess
     }
 };
 TEST(BasicTest, TestOperation) {
-    EXPECT_TRUE(false);
     Logger* logger = new Logger("DEBUG", "UnitTestMasterNodeProcess");
     MasterNodeProcessTester* tester = new MasterNodeProcessTester;
     tester->initialize("UnitTestMasterNodeProcess",
