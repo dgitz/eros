@@ -19,11 +19,9 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
+        echo $PWD
         tree
-
-    - name: Early exit
-      run: exit_with_success 
-    
+   
     - name: Install gTest
       run: |
         sudo apt -y install googletest
