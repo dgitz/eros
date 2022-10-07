@@ -16,6 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Add Pipeline Tools
+      run: |
+        sudo apt install tree
+        tree
+
+    - name: Early exit
+      run: exit_with_success 
     
     - name: Install gTest
       run: |
