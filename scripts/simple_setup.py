@@ -30,7 +30,8 @@ dependency_list = [ 'libncurses5-dev',
                     'ntp',
 		    'net-tools',
             'openssh-server',
-            'python3-pip']
+            'python3-pip',
+            'googletest']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']

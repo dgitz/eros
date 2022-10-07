@@ -28,7 +28,6 @@ jobs:
 
     - name: Setup
       run: |
-        echo "$PWD"
         mkdir -p catkin_ws/src/ && cd catkin_ws/src/
         git clone https://github.com/dgitz/eros.git
         cd eros
@@ -36,7 +35,6 @@ jobs:
     
     - name: Build Libraries & Binaries
       run: |
-        echo "$PWD"
         source /opt/ros/noetic/setup.bash
         catkin_make
       working-directory: catkin_ws
