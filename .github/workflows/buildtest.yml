@@ -29,13 +29,13 @@ jobs:
         echo ~
         tree -a
    
-    #- name: Install gTest
-    #  run: |
-    #    sudo apt -y install googletest
+    - name: Install gTest
+      run: |
+        sudo apt -y install googletest
 
-    #- uses: ros-tooling/setup-ros@v0.3
-    #  with:
-    #    required-ros-distributions: noetic
+    - uses: ros-tooling/setup-ros@v0.3
+      with:
+        required-ros-distributions: noetic
 
 
     - name: Setup
@@ -48,7 +48,6 @@ jobs:
     - name: Build Libraries & Binaries
       run: |
         cd ../../
-        tree
         source /opt/ros/noetic/setup.bash
         catkin_make
 
