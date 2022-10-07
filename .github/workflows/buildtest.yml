@@ -20,6 +20,9 @@ jobs:
       with:
         required-ros-distributions: noetic
     
+    - name: Install Extra Dependencies
+      run: |
+        sudo apt install ros-noetic-catkin
     - name: Setup
       run: |
         mkdir -p ~/catkin_ws/src/ && cd ~/catkin_ws/src/
