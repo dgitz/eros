@@ -42,5 +42,4 @@ jobs:
         cd ../../
         source /opt/ros/noetic/setup.bash
         catkin_make run_tests
-        ls ~/test/storage/SNAPSHOT/DEVICESNAPSHOT/
         catkin_test_results build/test_results
