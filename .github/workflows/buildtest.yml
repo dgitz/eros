@@ -28,9 +28,9 @@ jobs:
         echo $PWD
         tree -a
    
-    - name: Install gTest
-      run: |
-        sudo apt -y install googletest
+    #- name: Install gTest
+    #  run: |
+    #    sudo apt -y install googletest
 
     #- uses: ros-tooling/setup-ros@v0.3
     #  with:
@@ -39,8 +39,10 @@ jobs:
 
     - name: Setup
       run: |
+        echo $PWD
+        tree
         python scripts/simple_setup.py
-      working-directory: catkin_ws/src/eros
+      #working-directory: catkin_ws/src/eros
     
     - name: Build Libraries & Binaries
       run: |
