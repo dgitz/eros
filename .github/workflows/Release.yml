@@ -4,8 +4,9 @@ on:
   push:
     branches: [ master ]
 
-call_BuildTest:
-  uses: ./.github/workflows/buildtest.yml
-  
-call_Documentation:
-  uses: ./.github/workflows/documentation.yml
+jobs:
+  call_BuildTest:
+    uses: ./.github/workflows/buildtest.yml
+    
+  call_Documentation:
+    uses: ./.github/workflows/documentation.yml
