@@ -1,0 +1,45 @@
+name: BuildTest
+
+on:
+  workflow_call:
+
+jobs:
+  BuildTest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        path: catkin_ws/src/eros
+        
+    - name: Add Pipeline Tools
+      run: |
+        sudo apt install tree
+   
+    - uses: ros-tooling/setup-ros@v0.3
+      with:
+        required-ros-distributions: noetic
+
+
+    - name: Setup
+      run: |
+        python scripts/simple_setup.py
+
+    - name: Build Libraries & Binaries
+      run: |
+        cd ../../
+        source /opt/ros/noetic/setup.bash
+        catkin_make
+
+    - name: Build Tests
+      run: |
+        cd ../../
+        source /opt/ros/noetic/setup.bash
+        catkin_make tests
+
+    - name: Run Tests
+      run: |
+        cd ../../
+        source /opt/ros/noetic/setup.bash
+        catkin_make run_tests
+        catkin_test_results build/test_results

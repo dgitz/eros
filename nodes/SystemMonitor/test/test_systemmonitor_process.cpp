@@ -1,10 +1,13 @@
 /*! \file test_systemmonitor_process.cpp
  */
-#include <eros/SystemMonitor/SystemMonitorProcess.h>
+// clang-format off
 #include <gtest/gtest.h>
+#include <eros/SystemMonitor/SystemMonitorProcess.h>
 #include <stdio.h>
+// clang-format on
 using namespace eros;
 using namespace eros_nodes;
+
 class SystemMonitorProcessTester : public SystemMonitorProcess
 {
    public:
