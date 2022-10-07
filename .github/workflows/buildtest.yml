@@ -29,7 +29,7 @@ jobs:
     - name: Setup
       run: |
         mkdir -p catkin_ws/src/ && cd catkin_ws/src/
-        git clone https://github.com/dgitz/eros.git
+        git clone https://github.com/dgitz/eros.git --branch US_1100_SetupBuildServerPipeline
         cd eros
         python scripts/simple_setup.py
     
