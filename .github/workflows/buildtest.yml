@@ -26,6 +26,7 @@ jobs:
       run: |
         sudo apt install tree
         echo $PWD
+        echo ~
         tree -a
    
     #- name: Install gTest
@@ -46,21 +47,22 @@ jobs:
     
     - name: Build Libraries & Binaries
       run: |
+        cd ../../
+        tree
         source /opt/ros/noetic/setup.bash
         catkin_make
-      working-directory: catkin_ws
 
     - name: Build Tests
       run: |
         source /opt/ros/noetic/setup.bash
         catkin_make tests
-      working-directory: catkin_ws
+      #working-directory: catkin_ws
 
     - name: Run Tests
       run: |
         source /opt/ros/noetic/setup.bash
         catkin_make run_tests
-      working-directory: catkin_ws
+      #working-directory: catkin_ws
     #- uses: ros-tooling/action-ros-ci@v0.2
     #  with:
     #    package-name: eros
