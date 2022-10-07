@@ -1,21 +1,11 @@
-# This is a basic workflow to help you get started with Actions
-
 name: BuildTest
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
-  push:
-    branches: [ US_1100_SetupBuildServerPipeline ]
+  workflow_call:
 
-
-  
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  BuildTest:
     runs-on: ubuntu-latest
-
-
 
     steps:
     - uses: actions/checkout@v1
@@ -34,8 +24,7 @@ jobs:
     - name: Setup
       run: |
         python scripts/simple_setup.py
-      #working-directory: catkin_ws/src/eros
-    
+
     - name: Build Libraries & Binaries
       run: |
         cd ../../
@@ -47,7 +36,6 @@ jobs:
         cd ../../
         source /opt/ros/noetic/setup.bash
         catkin_make tests
-      #working-directory: catkin_ws
 
     - name: Run Tests
       run: |
@@ -56,4 +44,3 @@ jobs:
         catkin_make run_tests
         ls ~/test/storage/SNAPSHOT/DEVICESNAPSHOT/
         catkin_test_results build/test_results
-      #working-directory: catkin_ws
