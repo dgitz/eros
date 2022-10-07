@@ -29,7 +29,6 @@ jobs:
         #python scripts/simple_setup.py
         cd ~/catkin_ws
         ls src/
-      working-directory: ~/
     
     - name: Build Libraries & Binaries
       run: |
