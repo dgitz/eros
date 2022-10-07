@@ -27,8 +27,6 @@ jobs:
         git clone https://github.com/dgitz/eros.git
         cd eros
         #python scripts/simple_setup.py
-        cd catkin_ws
-        ls src/
     
     - name: Build Libraries & Binaries
       run: |
