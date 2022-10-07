@@ -25,14 +25,7 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
-        echo $PWD
-        echo ~
-        tree -a
    
-    - name: Install gTest
-      run: |
-        sudo apt -y install googletest
-
     - uses: ros-tooling/setup-ros@v0.3
       with:
         required-ros-distributions: noetic
@@ -40,8 +33,6 @@ jobs:
 
     - name: Setup
       run: |
-        echo $PWD
-        tree
         python scripts/simple_setup.py
       #working-directory: catkin_ws/src/eros
     
@@ -53,14 +44,17 @@ jobs:
 
     - name: Build Tests
       run: |
+        cd ../../
         source /opt/ros/noetic/setup.bash
         catkin_make tests
       #working-directory: catkin_ws
 
     - name: Run Tests
       run: |
+        cd ../../
         source /opt/ros/noetic/setup.bash
         catkin_make run_tests
+        catkin_test_results build/test_results
       #working-directory: catkin_ws
     #- uses: ros-tooling/action-ros-ci@v0.2
     #  with:
