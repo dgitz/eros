@@ -25,7 +25,6 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
-        cd ..
         echo $PWD
         tree -a
    
@@ -33,17 +32,15 @@ jobs:
       run: |
         sudo apt -y install googletest
 
-    - uses: ros-tooling/setup-ros@v0.3
-      with:
-        required-ros-distributions: noetic
+    #- uses: ros-tooling/setup-ros@v0.3
+    #  with:
+    #    required-ros-distributions: noetic
 
 
     - name: Setup
       run: |
-        mkdir -p catkin_ws/src/ && cd catkin_ws/src/
-        git clone https://github.com/dgitz/eros.git --branch US_1100_SetupBuildServerPipeline
-        cd eros
         python scripts/simple_setup.py
+      working-directory: catkin_ws/src/eros
     
     - name: Build Libraries & Binaries
       run: |
