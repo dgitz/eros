@@ -14,11 +14,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+
+
+    steps:
     - uses: actions/checkout@v1
       with:
-      path: catkin_ws/src/eros
-      
-    steps:
+        path: catkin_ws/src/eros
+        
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
