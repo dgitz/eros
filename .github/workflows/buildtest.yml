@@ -19,9 +19,9 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
-        echo $PWD
         cd ..
-        tree
+        echo $PWD
+        tree -a
    
     - name: Install gTest
       run: |
