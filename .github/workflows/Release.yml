@@ -9,4 +9,5 @@ jobs:
     uses: ./.github/workflows/buildtest.yml
     
   call_Documentation:
+    needs: call_BuildTest
     uses: ./.github/workflows/documentation.yml
