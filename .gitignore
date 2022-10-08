@@ -8,3 +8,4 @@ _templates/
 html/
 xml/
 coverage/
+.vscode/settings.json

@@ -102,11 +102,11 @@ class System
     */
     static std::string MainSystemString(System::MainSystem v) {
         switch (v) {
-            case System::MainSystem::UNKNOWN: return "UNKNOWN"; break;
-            case System::MainSystem::ROVER: return "ROVER"; break;
-            case System::MainSystem::SIMROVER: return "SIMROVER"; break;
-            case System::MainSystem::REMOTE_CONTROL: return "REMOTE_CONTROL"; break;
-            default: return MainSystemString(System::MainSystem::UNKNOWN); break;
+            case System::MainSystem::UNKNOWN: return "UNKNOWN";
+            case System::MainSystem::ROVER: return "ROVER";
+            case System::MainSystem::SIMROVER: return "SIMROVER";
+            case System::MainSystem::REMOTE_CONTROL: return "REMOTE_CONTROL";
+            default: return MainSystemString(System::MainSystem::UNKNOWN);
         }
     }
 
@@ -125,11 +125,11 @@ class System
     */
     static std::string SubSystemString(System::SubSystem v) {
         switch (v) {
-            case System::SubSystem::UNKNOWN: return "UNKNOWN"; break;
-            case System::SubSystem::ENTIRE_SYSTEM: return "ENTIRE_SYSTEM"; break;
-            case System::SubSystem::ROBOT_CONTROLLER: return "ROBOT_CONTROLLER"; break;
-            case System::SubSystem::ROBOT_MONITOR: return "ROBOT_MONITOR"; break;
-            default: return SubSystemString(System::SubSystem::UNKNOWN); break;
+            case System::SubSystem::UNKNOWN: return "UNKNOWN";
+            case System::SubSystem::ENTIRE_SYSTEM: return "ENTIRE_SYSTEM";
+            case System::SubSystem::ROBOT_CONTROLLER: return "ROBOT_CONTROLLER";
+            case System::SubSystem::ROBOT_MONITOR: return "ROBOT_MONITOR";
+            default: return SubSystemString(System::SubSystem::UNKNOWN);
         }
     }
 
@@ -160,22 +160,22 @@ class System
     */
     static std::string ComponentString(System::Component v) {
         switch (v) {
-            case System::Component::UNKNOWN: return "UNKNOWN"; break;
-            case System::Component::ENTIRE_SUBSYSTEM: return "ENTIRE_SUBSYSTEM"; break;
-            case System::Component::CONTROLLER: return "CONTROLLER"; break;
-            case System::Component::DIAGNOSTIC: return "DIAGNOSTIC"; break;
-            case System::Component::NAVIGATION: return "NAVIGATION"; break;
-            case System::Component::MAPPING: return "MAPPING"; break;
-            case System::Component::LEARNING: return "LEARNING"; break;
-            case System::Component::TARGETING: return "TARGETING"; break;
-            case System::Component::TIMING: return "TIMING"; break;
-            case System::Component::VISION: return "VISION"; break;
-            case System::Component::GPIO: return "GPIO"; break;
-            case System::Component::COMMUNICATION: return "COMMUNICATION"; break;
-            case System::Component::DYNAMICS: return "DYNAMICS"; break;
-            case System::Component::POWER: return "POWER"; break;
-            case System::Component::POSE: return "POSE"; break;
-            default: return ComponentString(System::Component::UNKNOWN); break;
+            case System::Component::UNKNOWN: return "UNKNOWN";
+            case System::Component::ENTIRE_SUBSYSTEM: return "ENTIRE_SUBSYSTEM";
+            case System::Component::CONTROLLER: return "CONTROLLER";
+            case System::Component::DIAGNOSTIC: return "DIAGNOSTIC";
+            case System::Component::NAVIGATION: return "NAVIGATION";
+            case System::Component::MAPPING: return "MAPPING";
+            case System::Component::LEARNING: return "LEARNING";
+            case System::Component::TARGETING: return "TARGETING";
+            case System::Component::TIMING: return "TIMING";
+            case System::Component::VISION: return "VISION";
+            case System::Component::GPIO: return "GPIO";
+            case System::Component::COMMUNICATION: return "COMMUNICATION";
+            case System::Component::DYNAMICS: return "DYNAMICS";
+            case System::Component::POWER: return "POWER";
+            case System::Component::POSE: return "POSE";
+            default: return ComponentString(System::Component::UNKNOWN);
         }
     }
 };
@@ -210,14 +210,14 @@ class Level
     */
     static std::string LevelString(Level::Type v) {
         switch (v) {
-            case Level::Type::UNKNOWN: return "UNKNOWN"; break;
-            case Level::Type::DEBUG: return "DEBUG"; break;    //
-            case Level::Type::INFO: return "INFO"; break;      //
-            case Level::Type::NOTICE: return "NOTICE"; break;  //
-            case Level::Type::WARN: return "WARN"; break;      //
-            case Level::Type::ERROR: return "ERROR"; break;    //
-            case Level::Type::FATAL: return "FATAL"; break;    //
-            default: return LevelString(Level::Type::UNKNOWN); break;
+            case Level::Type::UNKNOWN: return "UNKNOWN";
+            case Level::Type::DEBUG: return "DEBUG";
+            case Level::Type::INFO: return "INFO";
+            case Level::Type::NOTICE: return "NOTICE";
+            case Level::Type::WARN: return "WARN";
+            case Level::Type::ERROR: return "ERROR";
+            case Level::Type::FATAL: return "FATAL";
+            default: return LevelString(Level::Type::UNKNOWN);
         }
     }
     static Level::Type LevelType(std::string level) {
@@ -275,13 +275,13 @@ class ArmDisarm
     */
     static std::string ArmDisarmString(ArmDisarm::Type v) {
         switch (v) {
-            case ArmDisarm::Type::UNKNOWN: return "UNKNOWN"; break;
-            case ArmDisarm::Type::ARMED: return "ARMED"; break;
-            case ArmDisarm::Type::DISARMED_CANNOTARM: return "DISARMED_CANNOTARM"; break;
-            case ArmDisarm::Type::DISARMED: return "DISARMED"; break;
-            case ArmDisarm::Type::DISARMING: return "DISARMING"; break;
-            case ArmDisarm::Type::ARMING: return "ARMING"; break;
-            default: return ArmDisarmString(ArmDisarm::Type::UNKNOWN); break;
+            case ArmDisarm::Type::UNKNOWN: return "UNKNOWN";
+            case ArmDisarm::Type::ARMED: return "ARMED";
+            case ArmDisarm::Type::DISARMED_CANNOTARM: return "DISARMED_CANNOTARM";
+            case ArmDisarm::Type::DISARMED: return "DISARMED";
+            case ArmDisarm::Type::DISARMING: return "DISARMING";
+            case ArmDisarm::Type::ARMING: return "ARMING";
+            default: return ArmDisarmString(ArmDisarm::Type::UNKNOWN);
         }
     }
 };
@@ -329,23 +329,23 @@ class Command
     */
     static std::string CommandString(Command::Type v) {
         switch (v) {
-            case Command::Type::UNKNOWN: return "UNKNOWN"; break;
-            case Command::Type::NONE: return "NONE"; break;
-            case Command::Type::RUN_DIAGNOSTIC: return "RUN_DIAGNOSTIC"; break;
-            case Command::Type::ACQUIRE_TARGET: return "ACQUIRE_TARGET"; break;
-            case Command::Type::ARM: return "ARM"; break;
-            case Command::Type::DISARM: return "DISARM"; break;
-            case Command::Type::CONFIGURE: return "CONFIGURE"; break;
-            case Command::Type::RUN: return "RUN"; break;
-            case Command::Type::STOPMOVEMENT: return "STOPMOVEMENT"; break;
-            case Command::Type::DRIVE: return "DRIVE"; break;
-            case Command::Type::RESET: return "RESET"; break;
-            case Command::Type::SETLOGLEVEL: return "SETLOGLEVEL"; break;
-            case Command::Type::TASKCONTROL: return "TASKCONTROL"; break;
-            case Command::Type::CALIBRATION: return "CALIBRATION"; break;
-            case Command::Type::GENERATE_SNAPSHOT: return "GENERATE_SNAPSHOT"; break;
-            case Command::Type::WAIT: return "WAIT"; break;
-            default: return CommandString(Command::Type::UNKNOWN); break;
+            case Command::Type::UNKNOWN: return "UNKNOWN";
+            case Command::Type::NONE: return "NONE";
+            case Command::Type::RUN_DIAGNOSTIC: return "RUN_DIAGNOSTIC";
+            case Command::Type::ACQUIRE_TARGET: return "ACQUIRE_TARGET";
+            case Command::Type::ARM: return "ARM";
+            case Command::Type::DISARM: return "DISARM";
+            case Command::Type::CONFIGURE: return "CONFIGURE";
+            case Command::Type::RUN: return "RUN";
+            case Command::Type::STOPMOVEMENT: return "STOPMOVEMENT";
+            case Command::Type::DRIVE: return "DRIVE";
+            case Command::Type::RESET: return "RESET";
+            case Command::Type::SETLOGLEVEL: return "SETLOGLEVEL";
+            case Command::Type::TASKCONTROL: return "TASKCONTROL";
+            case Command::Type::CALIBRATION: return "CALIBRATION";
+            case Command::Type::GENERATE_SNAPSHOT: return "GENERATE_SNAPSHOT";
+            case Command::Type::WAIT: return "WAIT";
+            default: return CommandString(Command::Type::UNKNOWN);
         }
     }
 };
@@ -377,17 +377,17 @@ class Node
     */
     static std::string NodeStateString(Node::State v) {
         switch (v) {
-            case Node::State::UNKNOWN: return "UNKNOWN"; break;
-            case Node::State::START: return "START"; break;
-            case Node::State::INITIALIZING: return "INITIALIZING"; break;
-            case Node::State::INITIALIZED: return "INITIALIZED"; break;
-            case Node::State::RUNNING: return "RUNNING"; break;
-            case Node::State::PAUSED: return "PAUSED"; break;
-            case Node::State::RESET: return "RESET"; break;
-            case Node::State::NODATA: return "NODATA"; break;
-            case Node::State::FINISHED: return "FINISHED"; break;
-            case Node::State::CRASHED: return "CRASHED"; break;
-            default: return NodeStateString(Node::State::UNKNOWN); break;
+            case Node::State::UNKNOWN: return "UNKNOWN";
+            case Node::State::START: return "START";
+            case Node::State::INITIALIZING: return "INITIALIZING";
+            case Node::State::INITIALIZED: return "INITIALIZED";
+            case Node::State::RUNNING: return "RUNNING";
+            case Node::State::PAUSED: return "PAUSED";
+            case Node::State::RESET: return "RESET";
+            case Node::State::NODATA: return "NODATA";
+            case Node::State::FINISHED: return "FINISHED";
+            case Node::State::CRASHED: return "CRASHED";
+            default: return NodeStateString(Node::State::UNKNOWN);
         }
     }
 
@@ -444,11 +444,11 @@ class Architecture
     */
     static std::string ArchitectureString(Architecture::Type v) {
         switch (v) {
-            case Architecture::Type::UNKNOWN: return "UNKNOWN"; break;
-            case Architecture::Type::X86_64: return "X86_64"; break;
-            case Architecture::Type::ARMV7L: return "ARMV7L"; break;
-            case Architecture::Type::AARCH64: return "AARCH64"; break;
-            default: return ArchitectureString(Architecture::Type::UNKNOWN); break;
+            case Architecture::Type::UNKNOWN: return "UNKNOWN";
+            case Architecture::Type::X86_64: return "X86_64";
+            case Architecture::Type::ARMV7L: return "ARMV7L";
+            case Architecture::Type::AARCH64: return "AARCH64";
+            default: return ArchitectureString(Architecture::Type::UNKNOWN);
         }
     }
 
