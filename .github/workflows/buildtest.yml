@@ -43,3 +43,12 @@ jobs:
         source /opt/ros/noetic/setup.bash
         catkin_make run_tests
         catkin_test_results build/test_results
+      
+    - name: Code Coverage
+      run: |
+        ./scripts/dev_tools.sh
+
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/coverage.xml
