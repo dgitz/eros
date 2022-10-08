@@ -31,7 +31,8 @@ dependency_list = [ 'libncurses5-dev',
 		    'net-tools',
             'openssh-server',
             'python3-pip',
-            'googletest']
+            'googletest',
+            'gcovr']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']
