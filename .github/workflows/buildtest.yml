@@ -43,3 +43,7 @@ jobs:
         source /opt/ros/noetic/setup.bash
         catkin_make run_tests
         catkin_test_results build/test_results
+      
+    - name: Code Coverage
+      run: |
+        ./scripts/dev_tools.sh

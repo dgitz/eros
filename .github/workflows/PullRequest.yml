@@ -1,8 +1,7 @@
 name: Development
 
 on:
-  push:
-    branches: [ US_1101_CodeCoverageScan ]
+  pull_request:
 
 jobs:
   call_BuildTest:
