@@ -122,8 +122,7 @@ TEST(BasicTest, TestOperation) {
         task_list = tester->get_task_list();
         task_it = task_list.begin();
         while (task_it != task_list.end()) {
-            EXPECT_TRUE(
-                SystemMonitorProcess::isEqual(task_it->second.last_heartbeat_delta, dt, 1e-6));
+            EXPECT_TRUE(isEqual(task_it->second.last_heartbeat_delta, dt, 1e-6));
             ++task_it;
         }
     }
@@ -143,8 +142,7 @@ TEST(BasicTest, TestOperation) {
         std::map<std::string, SystemMonitorProcess::Task> task_list = tester->get_task_list();
         std::map<std::string, SystemMonitorProcess::Task>::iterator task_it = task_list.begin();
         while (task_it != task_list.end()) {
-            EXPECT_TRUE(
-                SystemMonitorProcess::isEqual(task_it->second.last_heartbeat_delta, 0.0, 1e-6));
+            EXPECT_TRUE(isEqual(task_it->second.last_heartbeat_delta, 0.0, 1e-6));
             ++task_it;
         }
         printf("%s\n", SystemMonitorProcess::pretty(tester->get_task_list()).c_str());
@@ -155,8 +153,7 @@ TEST(BasicTest, TestOperation) {
         task_list = tester->get_task_list();
         task_it = task_list.begin();
         while (task_it != task_list.end()) {
-            EXPECT_TRUE(
-                SystemMonitorProcess::isEqual(task_it->second.last_heartbeat_delta, dt, 1e-6));
+            EXPECT_TRUE(isEqual(task_it->second.last_heartbeat_delta, dt, 1e-6));
             ++task_it;
         }
     }

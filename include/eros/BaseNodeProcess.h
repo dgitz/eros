@@ -48,6 +48,7 @@
 #include "Diagnostic.h"
 #include "Logger.h"
 #include "ResourceMonitor.h"
+#include "Utility.h"
 #include "eROS_Definitions.h"
 
 using json = nlohmann::json;
@@ -61,7 +62,7 @@ class BaseNodeProcess
     BaseNodeProcess()
         : logger(nullptr),
           base_node_name(""),
-          node_state(Node::State::UNKNOWN),
+          node_state(Node::State::START),
           diagnostic_helper(),
           unittest_running(false),
           run_time(0.0),
@@ -89,7 +90,7 @@ class BaseNodeProcess
                     System::Component t_component,
                     Logger* _logger) {
         base_node_name = t_base_node_name;
-        node_state = Node::State::INITIALIZING;
+        node_state = Node::State::START;
         hostname = t_hostname;
         diagnostic_helper.initialize(t_hostname, t_node_name, t_system, t_subsystem, t_component);
         logger = _logger;
@@ -170,32 +171,20 @@ class BaseNodeProcess
     /*! \brief Must be implemented in Derived Process.  Used for diagnostic testing LEVEL2 and for
      * basic checking of different variables, if they are initialized, etc. */
     virtual std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() = 0;
-    /*! \brief Runs Unit Test on Derived Process. */
-    std::vector<Diagnostic::DiagnosticDefinition> run_unittest();
 
     //! Convert struct timeval to ros::Time
     /*!
       \param t Standard timeval object
       \return Time converted to ros::Time
     */
-    ros::Time convert_time(struct timeval t);
+    static ros::Time convert_time(struct timeval t);
 
     //! Convert time as a float to ros::Time
     /*!
       \param t timestamp in seconds.
       \return Time converted to ros::Time
     */
-    ros::Time convert_time(double t);
-
-    //! Execute a command
-    /*!
-      \param cmd The command to execute
-      \param wait_for_results If function should return results or not.
-      \return The result of the command
-    */
-    std::string exec(const char* cmd, bool wait_for_result);
-
-    static bool isEqual(double a, double b, double eps);
+    static ros::Time convert_time(double t);
 
     //! Convert eros::command message (as received via a ROS Node) to the regular datatype
     /*!
@@ -214,12 +203,12 @@ class BaseNodeProcess
     */
     static eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
 
-    eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
+    static eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
 
-    Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
+    static Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
-    eros::armed_state convert(ArmDisarm::State v);
-    ArmDisarm::State convert(eros::armed_state v);
+    static eros::armed_state convert(ArmDisarm::State v);
+    static ArmDisarm::State convert(eros::armed_state v);
     Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
 
     static std::string sanitize_path(std::string path);
