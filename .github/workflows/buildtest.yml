@@ -13,9 +13,9 @@ jobs:
         path: catkin_ws/src/eros
     
     - name: Generate SVG Diagrams
-        uses: holowinski/plantuml-github-action@main
-        with:
-          args: -v -tsvg doc/*.puml
+      uses: holowinski/plantuml-github-action@main
+      with:
+        args: -v -tsvg doc/*.puml
         
     - name: Add Pipeline Tools
       run: |
