@@ -76,6 +76,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classeros_1_1Logger-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">eros::Logger Class Reference</div></div>
 </div><!--header-->
@@ -110,9 +111,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a68b585752aa4d7528a506ab50301fb8b"><td class="memItemLeft" align="right" valign="top"><a id="a68b585752aa4d7528a506ab50301fb8b" name="a68b585752aa4d7528a506ab50301fb8b"></a>
 <a class="el" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_logverbosity</b> ()</td></tr>
 <tr class="separator:a68b585752aa4d7528a506ab50301fb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af92372eb1a56ba585f7d646ca1b269e2"><td class="memItemLeft" align="right" valign="top"><a id="af92372eb1a56ba585f7d646ca1b269e2" name="af92372eb1a56ba585f7d646ca1b269e2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_logverbosity</b> (<a class="el" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level)</td></tr>
-<tr class="separator:af92372eb1a56ba585f7d646ca1b269e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b39be1f7511965fa886b24e3fe4dcf"><td class="memItemLeft" align="right" valign="top"><a id="ae0b39be1f7511965fa886b24e3fe4dcf" name="ae0b39be1f7511965fa886b24e3fe4dcf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_logger_ok</b> ()</td></tr>
+<tr class="separator:ae0b39be1f7511965fa886b24e3fe4dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3488a03fde6906018a591cb3a03dec59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1Logger.html#a3488a03fde6906018a591cb3a03dec59">set_logverbosity</a> (<a class="el" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level)</td></tr>
+<tr class="separator:a3488a03fde6906018a591cb3a03dec59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab53efa2af156e0e0ed8a17d14f54a85c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1Logger.html#ab53efa2af156e0e0ed8a17d14f54a85c">disable_consoleprint</a> ()</td></tr>
 <tr class="memdesc:ab53efa2af156e0e0ed8a17d14f54a85c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Console Output.  <a href="classeros_1_1Logger.html#ab53efa2af156e0e0ed8a17d14f54a85c">More...</a><br /></td></tr>
 <tr class="separator:ab53efa2af156e0e0ed8a17d14f54a85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +153,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>enable_consoleprint</
 <a class="el" href="classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572">LoggerStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>LOG_DIAGNOSTIC</b> (std::string filename, uint64_t linenumber, <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diagnostic)</td></tr>
 <tr class="memdesc:ab28c00081d096e100ff50295f3f98620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a <a class="el" href="classeros_1_1Diagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information.">Diagnostic</a>. Do not use, use: log_diagnostic. <br /></td></tr>
 <tr class="separator:ab28c00081d096e100ff50295f3f98620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a62175cacd26e9f34a6274ef909a3223f"><td class="memItemLeft" align="right" valign="top"><a id="a62175cacd26e9f34a6274ef909a3223f" name="a62175cacd26e9f34a6274ef909a3223f"></a>
+static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>MAXLINE_COUNT</b> = 5000</td></tr>
+<tr class="separator:a62175cacd26e9f34a6274ef909a3223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a> class <a class="el" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a> class used to write log outputs for strings and diagnostic information to console and output text files. </p>
@@ -324,6 +333,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>enable_consoleprint</
 
 <p>Enable ROS <a class="el" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>If the ROS Console Output was enabled or not. </dd></dl>
+
+</div>
+</div>
+<a id="a3488a03fde6906018a591cb3a03dec59" name="a3488a03fde6906018a591cb3a03dec59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3488a03fde6906018a591cb3a03dec59">&#9670;&#160;</a></span>set_logverbosity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eros::Logger::set_logverbosity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a>&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">level</td><td>The new verbosity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the verbosity was able to be set (True) or not (False) </dd></dl>
 
 </div>
 </div>
