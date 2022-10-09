@@ -2,7 +2,7 @@ name: Development
 
 on:
   push:
-    branches: [ US_1108_SetupLocalPipelineServer ]
+    branches: [ US_1102_ImproveCodeCoverage ]
 
 jobs:
   call_BuildTest:

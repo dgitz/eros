@@ -1,13 +1,16 @@
+add_library(utility Utility.cpp)
+target_link_libraries(utility ${catkin_LIBRARIES})
+
 add_library(logger Logger.cpp)
 target_link_libraries(logger ${catkin_LIBRARIES})
 add_dependencies(logger eros_generate_messages_cpp)
 
 add_library(resourceMonitor ResourceMonitor.cpp)
-target_link_libraries(resourceMonitor ${catkin_LIBRARIES})
+target_link_libraries(resourceMonitor ${catkin_LIBRARIES} utility)
 add_dependencies(resourceMonitor eros_generate_messages_cpp)
 
 add_library(baseNodeProcess BaseNodeProcess.cpp)
-target_link_libraries(baseNodeProcess ${catkin_LIBRARIES} logger)
+target_link_libraries(baseNodeProcess ${catkin_LIBRARIES} utility logger)
 add_dependencies(baseNodeProcess eros_generate_messages_cpp)
 
 add_library(baseNode BaseNode.cpp)
