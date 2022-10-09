@@ -32,8 +32,8 @@ bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Reque
             if ((Diagnostic::DiagnosticType)i == Diagnostic::DiagnosticType::UNKNOWN_TYPE) {
                 continue;
             }
-            res.diag_list.push_back(
-                convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
+            res.diag_list.push_back(BaseNodeProcess::convert(
+                process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
         }
         logger->log_debug("Fulfilled System Diagnostics Service.");
         return true;
