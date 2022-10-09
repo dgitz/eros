@@ -15,11 +15,10 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
-        sudo apt-get remove python3-empy
    
-    - uses: ros-tooling/setup-ros@v0.3
-      with:
-        required-ros-distributions: noetic
+   # - uses: ros-tooling/setup-ros@v0.3
+   #   with:
+   #     required-ros-distributions: noetic
 
 
     - name: Setup
