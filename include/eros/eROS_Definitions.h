@@ -364,10 +364,8 @@ class Node
         RUNNING = 4,      /*!< Node is running. */
         PAUSED = 5,       /*!< Node is paused. */
         RESET = 6,        /*!< Node is reset. */
-        NODATA = 7,       /*!< Node is missing data. */
-        FINISHED = 8,     /*!< Node has finished cleanly. */
-        CRASHED = 9,      /*!< Node has crashed. */
-        END_OF_LIST = 10  /*!< Last item of list. Used for Range Checks. */
+        FINISHED = 7,     /*!< Node has finished cleanly. */
+        END_OF_LIST = 8   /*!< Last item of list. Used for Range Checks. */
     };
 
     //! Convert Node::State to human readable string
@@ -384,9 +382,7 @@ class Node
             case Node::State::RUNNING: return "RUNNING";
             case Node::State::PAUSED: return "PAUSED";
             case Node::State::RESET: return "RESET";
-            case Node::State::NODATA: return "NODATA";
             case Node::State::FINISHED: return "FINISHED";
-            case Node::State::CRASHED: return "CRASHED";
             default: return NodeStateString(Node::State::UNKNOWN);
         }
     }
@@ -410,14 +406,8 @@ class Node
         if (state == "RESET") {
             return Node::State::RESET;
         }
-        if (state == "NODATA") {
-            return Node::State::NODATA;
-        }
         if (state == "FINISHED") {
             return Node::State::FINISHED;
-        }
-        if (state == "CRASHED") {
-            return Node::State::CRASHED;
         }
         return Node::State::UNKNOWN;
     }
