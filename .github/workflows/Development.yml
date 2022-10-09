@@ -1,7 +1,8 @@
 name: Development
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ BUG_1109_SnapshotSlaveUnitTestFail ]
 
 jobs:
   call_BuildTest:
