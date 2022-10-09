@@ -12,14 +12,10 @@ jobs:
       with:
         path: catkin_ws/src/eros
     
-    - name: plantuml
-      id: plantuml
-      uses: grassedge/generate-plantuml-action@v1.5
-      with:
-        path: doc
-        message: "Render PlantUML files"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Generate SVG Diagrams
+        uses: holowinski/plantuml-github-action@main
+        with:
+          args: -v -tsvg doc/*.puml
         
     - name: Add Pipeline Tools
       run: |
