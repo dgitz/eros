@@ -32,6 +32,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
+        logger->log_diagnostic(diag);
         initialized = false;
     }
     // LCOV_EXCL_STOP
@@ -45,6 +46,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
             "Architecture: " + Architecture::ArchitectureString(architecture) + " Not Supported.";
+        logger->log_diagnostic(diag);
         diag.update_count++;
         initialized = false;
     }
@@ -66,6 +68,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         diag.description = tempstr;
         diag.update_count++;
         logger->log_error(tempstr);
+        logger->log_diagnostic(diag);
         initialized = false;
     }
     // LCOV_EXCL_STOP
@@ -78,6 +81,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         // being run on.
         // LCOV_EXCL_START
         if (diag.level > Level::Type::WARN) {
+            logger->log_diagnostic(diag);
             return diag;
         }
         // LCOV_EXCL_STOP
@@ -94,6 +98,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         initialized = false;
     }
     // LCOV_EXCL_STOP
+    logger->log_diagnostic(diag);
     return diag;
 }
 bool ResourceMonitor::reset() {
