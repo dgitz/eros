@@ -29,13 +29,15 @@ TEST(MasterNode, TestMaster) {
     ros::master::V_TopicInfo master_topics;
     ros::master::getTopics(master_topics);
     for (int i = 0; i < master_topics.size(); ++i) {
-        printf("%d topic: %s\n", master_topics.at(i).name.c_str());
+        printf("%d topic: %s\n", i, master_topics.at(i).name.c_str());
     }
+
     ros::V_string master_nodes;
     ros::master::getNodes(master_nodes);
     for (int i = 0; i < master_nodes.size(); ++i) {
-        printf("%d node: %s\n", master_nodes.at(i).c_str());
+        printf("%d node: %s\n", i, master_nodes.at(i).c_str());
     }
+
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
     EXPECT_EQ(1, heartbeat_sub.getNumPublishers());
