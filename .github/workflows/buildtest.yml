@@ -24,6 +24,7 @@ jobs:
       run: |
         cd ../../
         source /opt/ros/noetic/setup.bash
+        rm -r -f build/ devel/
         catkin_make
 
     - name: Build Tests
