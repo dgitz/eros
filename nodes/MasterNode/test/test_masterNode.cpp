@@ -26,6 +26,8 @@ TEST(MasterNode, TestMaster) {
     ros::Subscriber heartbeat_sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
     ros::Subscriber diagnostic_sub = nh.subscribe(diagnostic_topic, 100, &diagnostic_Callback);
     sleep(10.0);
+    printf("heartbeat topic: %s\n", heartbeat_sub.getTopic().c_str());
+    printf("diag topic: %s\n", diagnostic_sub.getTopic().c_str());
     ros::master::V_TopicInfo master_topics;
     ros::master::getTopics(master_topics);
     for (int i = 0; i < master_topics.size(); ++i) {
