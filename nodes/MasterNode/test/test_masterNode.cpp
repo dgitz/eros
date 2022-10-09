@@ -25,7 +25,7 @@ TEST(MasterNode, TestMaster) {
     std::string diagnostic_topic = robot_namespace + unittest_nodename + "/diagnostic";
     ros::Subscriber heartbeat_sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
     ros::Subscriber diagnostic_sub = nh.subscribe(diagnostic_topic, 100, &diagnostic_Callback);
-    sleep(10.0);
+    sleep(8.0);
     printf("heartbeat topic: %s\n", heartbeat_sub.getTopic().c_str());
     printf("diag topic: %s\n", diagnostic_sub.getTopic().c_str());
     ros::master::V_TopicInfo master_topics;
