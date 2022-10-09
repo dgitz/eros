@@ -26,20 +26,6 @@ TEST(MasterNode, TestMaster) {
     std::string diagnostic_topic = robot_namespace + unittest_nodename + "/diagnostic";
     ros::Subscriber heartbeat_sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
     ros::Subscriber diagnostic_sub = nh.subscribe(diagnostic_topic, 100, &diagnostic_Callback);
-    sleep(8.0);
-    logger->log_warn("heartbeat topic: " + heartbeat_sub.getTopic());
-    logger->log_warn("diag topic: " + diagnostic_sub.getTopic());
-    ros::master::V_TopicInfo master_topics;
-    ros::master::getTopics(master_topics);
-    for (int i = 0; i < master_topics.size(); ++i) {
-        logger->log_warn(std::to_string(i) + " topic: " + master_topics.at(i).name);
-    }
-
-    ros::V_string master_nodes;
-    ros::master::getNodes(master_nodes);
-    for (int i = 0; i < master_nodes.size(); ++i) {
-        logger->log_warn(std::to_string(i) + " node: " + master_nodes.at(i));
-    }
 
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
