@@ -1,7 +1,7 @@
 var searchData=
 [
   ['navigation_0',['NAVIGATION',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338a5995d98caf31b9445202b0f054fdc54e',1,'eros::System']]],
-  ['nodata_1',['NODATA',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024ae5c1b61d3810e29aebbc8fba3978d362',1,'eros::Diagnostic::NODATA()'],['../group__eros.html#ggacdaf97604bbb90b853f095781557754aae5c1b61d3810e29aebbc8fba3978d362',1,'eros::Node::NODATA()']]],
+  ['nodata_1',['NODATA',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024ae5c1b61d3810e29aebbc8fba3978d362',1,'eros::Diagnostic']]],
   ['noerror_2',['NOERROR',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024a2b7a5d9c6a3ccad249c1bb7ecc93a6ed',1,'eros::Diagnostic']]],
   ['none_3',['NONE',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4ab50339a10e1de285ac99d4c3990b8693',1,'eros::Command']]],
   ['notice_4',['NOTICE',['../group__eros.html#ggadf15b7ed977a35b7cc7ab70708ad4822aaa14599dc3fdfa9cc81a7c3c247b77b9',1,'eros::Level']]],
