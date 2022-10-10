@@ -33,7 +33,6 @@ dependency_list = [ 'libncurses5-dev',
             'python3-pip',
             'googletest',
             'gcovr',
-            'plantuml',
             'graphviz']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
@@ -53,6 +52,7 @@ def run_setup():
         os.system("sudo apt --yes --force-yes install " + dependency_list[i])
     os.system("python3 -m pip install --user cookiecutter")
     os.system("sudo snap install cookiecutter --edge")
+    os.system('sudo bash -c "curl -L https://raw.githubusercontent.com/riboseinc/plantuml-install/master/ubuntu.sh | bash"')
     print(CGREEN + "Installing other dependencies from source..." + CEND)
     home = expanduser("~")
     hostname = socket.gethostname()
