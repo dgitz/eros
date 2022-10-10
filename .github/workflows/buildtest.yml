@@ -52,19 +52,3 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: coverage/coverage.xml
-
-    - name: Process Diagrams
-      run: |
-        mkdir output
-        plantuml -v -tsvg -r -o "${{ github.workspace }}/output" "doc*/**.puml"
-    
-    - name: Commit Diagrams
-      run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m ":rocket: adding generated diagrams" || exit 0
-    - name: Push Diagrams
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -17,6 +17,11 @@ function code_coverage_scan()
     status=$?
     return $status
 }
+function generate_plantuml()
+{
+    mkdir output
+    plantuml -tsvg -r -o output "doc*/**.puml"
+}
 code_coverage_scan
 status=$?
 if [ "$status" -eq 0 ]; then
@@ -33,4 +38,5 @@ else
         exit 1
     fi
 fi
+generate_plantuml
 exit 0
