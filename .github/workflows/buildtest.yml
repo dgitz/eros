@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Hack
       run: |
-        sudo chown -R $USER:$USER /home/github/actions-runner/_work/eros
+        sudo chown -R $USER:$USER /home/github/actions-runner/_work/
     - uses: actions/checkout@v1
       with:
         path: catkin_ws/src/eros
