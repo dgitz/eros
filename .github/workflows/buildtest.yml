@@ -46,7 +46,7 @@ jobs:
       
     - name: Code Coverage
       run: |
-        ./scripts/dev_tools.sh
+        ./scripts/dev_tools.sh code_coverage
 
     - name: Code Coverage Summary Report
       uses: irongut/CodeCoverageSummary@v1.3.0
