@@ -23,6 +23,11 @@ jobs:
     - name: Setup
       run: |
         python scripts/simple_setup.py
+      
+    - name: Process Diagrams
+      run: |
+        mkdir output
+        java -jar plantuml.jar -v -tsvg -r -o "${{ github.workspace }}/output" "doc*/**.puml"
 
     - name: Build Libraries & Binaries
       run: |
