@@ -15,7 +15,6 @@ jobs:
     - name: Add Pipeline Tools
       run: |
         sudo apt install tree
-
     - name: Setup
       run: |
         python scripts/simple_setup.py
