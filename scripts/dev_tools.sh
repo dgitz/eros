@@ -17,7 +17,6 @@ function code_coverage_scan()
     status=$?
     return $status
 }
-
 code_coverage_scan
 status=$?
 if [ "$status" -eq 0 ]; then

@@ -1,0 +1,24 @@
+@startuml
+title NodeState State Machine
+note "This diagram represents the allowed\n  state transitions for Node::State.\n" as mainNote
+note "Requirements:\n  * Custom Nodes must implement state change per API: request_statechange().\n  * Custom Nodes must implement srv_change_nodestate() service per template." as requirements
+state "START" as Start
+state "INITIALIZING" as Initializing
+state "INITIALIZED" as Initialized
+state "RUNNING" as Running
+state "PAUSED" as Paused
+state "RESET" as Reset
+state "FINISHED" as Finished
+
+[*] -> Start
+Start --> Initializing 
+Initializing -> Initialized
+Initialized --> Running
+Running --> Reset
+Reset --> Running: Must implement base_reset()
+Reset --> Initializing
+Running --> Paused
+Paused --> Running
+Running --> Finished: Typically from Deconstructor
+Finished -> [*]
+@enduml
