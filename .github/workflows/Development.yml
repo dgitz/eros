@@ -2,7 +2,7 @@ name: Development
 
 on:
   push:
-    branches: [ BUG_1109_SnapshotSlaveUnitTestFail ]
+    branches: [ US_1102_ImproveCodeCoverage ]
 
 jobs:
   call_BuildTest:
