@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-<arg name="robot_namespace"/> 
+<arg name="robot_namespace" default="/"/> 
 <arg name="verbosity_level" default="NOTICE"/>
 <remap from="snapshot_trigger" to="$(arg robot_namespace)/snapshot_trigger"/> 
 <node name="datalogger_node" pkg="eros" type="datalogger_node"  output="screen" clear_params="true">

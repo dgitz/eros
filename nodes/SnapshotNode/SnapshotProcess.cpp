@@ -86,11 +86,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
         else if ((t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS)) {
             diag_list = clear_snapshots();
         }
-        else {
-        }
+        else {}
     }
-    else {
-    }
+    else {}
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
@@ -740,7 +738,8 @@ int SnapshotProcess::count_files_indirectory(std::string directory, std::string 
     try {
         char tempstr[1024];
         sprintf(tempstr, "ls %s*%s* 2>/dev/null | wc -l", directory.c_str(), filter.c_str());
-        std::string return_v = exec(tempstr, true);
+        ExecResult res = exec(tempstr, true);
+        std::string return_v = res.Result;
         boost::trim_right(return_v);
         return std::atoi(return_v.c_str());
     }
