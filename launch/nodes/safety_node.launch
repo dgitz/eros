@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-<arg name="robot_namespace"/> 
+<arg name="robot_namespace" default="/"/> 
 <arg name="verbosity_level" default="NOTICE"/>
 <node name="safety_node" pkg="eros" type="safety_node"  output="screen" clear_params="true">
         <param name="robot_namespace" value="$(arg robot_namespace)"/>
