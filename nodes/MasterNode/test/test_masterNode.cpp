@@ -26,7 +26,7 @@ TEST(MasterNode, TestMaster) {
     std::string diagnostic_topic = robot_namespace + unittest_nodename + "/diagnostic";
     ros::Subscriber heartbeat_sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
     ros::Subscriber diagnostic_sub = nh.subscribe(diagnostic_topic, 100, &diagnostic_Callback);
-
+    sleep(5.0);
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
     EXPECT_EQ(1, heartbeat_sub.getNumPublishers());
