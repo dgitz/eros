@@ -15,6 +15,7 @@ TEST(DataLoggerNode, TestDataLoggerNode) {
 
     std::string heartbeat_topic = "/test/datalogger_node/heartbeat";
     ros::Subscriber sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
+    sleep(5.0);
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
     EXPECT_EQ(1, sub.getNumPublishers());

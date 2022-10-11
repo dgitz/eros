@@ -56,24 +56,28 @@ function run_regression {
         catkin_make
         status=$?
         if [ "$status" -ne 0 ]; then
+            echo "Regression Test Failed at Iteration: "$c
             popd
             exit $status
         fi
         catkin_make tests
         status=$?
         if [ "$status" -ne 0 ]; then
+            echo "Regression Test Failed at Iteration: "$c
             popd
             exit $status
         fi
         catkin_make run_tests
         status=$?
         if [ "$status" -ne 0 ]; then
+            echo "Regression Test Failed at Iteration: "$c
             popd
             exit $status
         fi
         catkin_test_results build/test_results/
         status=$?
         if [ "$status" -ne 0 ]; then
+            echo "Regression Test Failed at Iteration: "$c
             popd
             exit $status
         fi

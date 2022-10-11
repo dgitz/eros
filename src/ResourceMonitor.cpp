@@ -39,9 +39,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
 
     // The following can't currently be checked for code coverage as it depends on the device being
     // run on. LCOV_EXCL_START
-    if ((architecture != Architecture::Type::X86_64) ||
-        (architecture != Architecture::Type::ARMV7L) ||
-        (architecture != Architecture::Type::AARCH64)) {
+    if ((architecture == Architecture::Type::UNKNOWN)) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
