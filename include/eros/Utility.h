@@ -3,6 +3,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include <eros/file.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -27,5 +28,7 @@ struct ExecResult {
   \return The result of the command
 */
 ExecResult exec(const char* cmd, bool wait_for_result);
+
+std::string pretty(eros::file msg);
 }  // namespace eros
 #endif  // UTILITY_H

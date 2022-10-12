@@ -17,7 +17,7 @@ void commandstate_Callback(const eros::command_state& msg) {
 TEST(SnapshotNode, TestMaster) {
     ros::NodeHandle nh("~");
     Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
-
+    logger->enable_ROS_logger();
     std::string heartbeat_topic = "/test/snapshot_node/heartbeat";
     ros::Subscriber sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
     sleep(5.0);

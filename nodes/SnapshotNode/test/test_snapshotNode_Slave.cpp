@@ -18,10 +18,11 @@ TEST(SnapshotNode, TestMaster) {
     int TEST_COUNT = 5;
     int TEST_PASS_REQUIRED_COUNT = 1;
     int tests_passed = 0;
-    Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
+    Logger* logger = new Logger("DEBUG", "tester_SnapshotNode");
+    logger->enable_ROS_logger();
     for (int i = 0; i < TEST_COUNT; ++i) {
         bool ok = true;
-        logger->log_info("Test iteration: " + std::to_string(i) + "/" + std::to_string(TEST_COUNT));
+        logger->log_warn("Test iteration: " + std::to_string(i) + "/" + std::to_string(TEST_COUNT));
         heartbeat_count = 0;
         commandstate_count = 0;
         ros::NodeHandle nh("~");
@@ -42,7 +43,7 @@ TEST(SnapshotNode, TestMaster) {
         EXPECT_TRUE(heartbeat_count > 0);
 
         eros::command snapshot_command;
-        logger->log_notice("Testing Clearing of Snapshots.");
+        logger->log_warn("Testing Clearing of Snapshots.");
         snapshot_command.Command = (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT;
         snapshot_command.Option1 =
             (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS;
@@ -56,7 +57,7 @@ TEST(SnapshotNode, TestMaster) {
              (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS) &&
             (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
         else {
-            logger->log_warn("Clear Command Failed!");
+            logger->log_error("Clear Command Failed!");
             ok = false;
         }
         usleep(2.0 * 1000000.0);
@@ -68,7 +69,7 @@ TEST(SnapshotNode, TestMaster) {
         EXPECT_TRUE(req.response.files.size() == 0);
         commandstate_count = 0;
 
-        logger->log_notice("Testing Generation of Snapshot");
+        logger->log_warn("Testing Generation of Snapshot");
         snapshot_command.Command = (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT;
         snapshot_command.Option1 = (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE;
         command_pub.publish(snapshot_command);
@@ -81,7 +82,7 @@ TEST(SnapshotNode, TestMaster) {
              (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE) &&
             (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
         else {
-            logger->log_warn("Gen Snap for Slave Command Failed!");
+            logger->log_error("Gen Snap for Slave Command Failed!");
             ok = false;
         }
 
@@ -89,18 +90,18 @@ TEST(SnapshotNode, TestMaster) {
 
         req.response.files.clear();
         if (client.call(req) == false) {
-            logger->log_warn("Snap Command for Client Failed!");
+            logger->log_error("Snap Command for Client Failed!");
             ok = false;
         }
         if ((req.response.files.size() == 1) == false) {
-            logger->log_warn("Snap Response Had no Files!");
+            logger->log_error("Snap Response Had no Files!");
             ok = false;
         }
         for (std::size_t i = 0; i < req.response.files.size(); ++i) {
             if ((req.response.files.at(i).status == (uint8_t)FileHelper::FileStatus::FILE_OK) &&
                 (req.response.files.at(i).data_length > 0)) {}
             else {
-                logger->log_warn("Snap File Missing!");
+                logger->log_error("Snap File Missing!");
                 ok = false;
             }
             /*
@@ -115,10 +116,10 @@ TEST(SnapshotNode, TestMaster) {
         }
         if (ok == true) {
             tests_passed++;
-            logger->log_notice("Snap Test: " + std::to_string(i + 1) + " Passed!");
+            logger->log_warn("Snap Test: " + std::to_string(i + 1) + " Passed!");
         }
         else {
-            logger->log_warn("Snap Test: " + std::to_string(i + 1) + " Failed!");
+            logger->log_error("Snap Test: " + std::to_string(i + 1) + " Failed!");
         }
     }
     EXPECT_TRUE(tests_passed >= TEST_PASS_REQUIRED_COUNT);
@@ -126,7 +127,7 @@ TEST(SnapshotNode, TestMaster) {
 }
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
-    ros::init(argc, argv, "test_snapshotNode");
+    ros::init(argc, argv, "tester_snapshotNode");
     ros::AsyncSpinner spinner(1);
     spinner.start();
     int ret = RUN_ALL_TESTS();

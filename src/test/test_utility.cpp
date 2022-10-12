@@ -32,6 +32,12 @@ TEST(UtilityEquality, TestCases) {
         EXPECT_FALSE(isEqual(a, b, eps));
     }
 }
+TEST(PrettyFunctions, PrettyCases) {
+    {
+        eros::file msg;
+        EXPECT_GT(pretty(msg).size(), 0);
+    }
+}
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -1,5 +1,6 @@
 add_library(utility Utility.cpp)
 target_link_libraries(utility ${catkin_LIBRARIES})
+add_dependencies(utility eros_generate_messages_cpp)
 
 add_library(logger Logger.cpp)
 target_link_libraries(logger ${catkin_LIBRARIES})
