@@ -5,6 +5,13 @@ Author: David Gitz
 Date: TBD
 
 --- User Stories
+US: 1110 Create Release Test Plan
+  Author: David Gitz
+  Date: 11-Oct-2022
+  * Created SW Release Plan
+  * Updated Wiki
+  * Added Regression tool in Dev Tools script.
+
 US: 1103 Add SW Architecture Documentation
   Author: David Gitz
   Date: 9-Oct-2022

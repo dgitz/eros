@@ -18,7 +18,7 @@ TEST(SnapshotNode, TestMaster) {
     int TEST_COUNT = 5;
     int TEST_PASS_REQUIRED_COUNT = 1;
     int tests_passed = 0;
-    Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
+    Logger* logger = new Logger("DEBUG", "tester_SnapshotNode");
     for (int i = 0; i < TEST_COUNT; ++i) {
         bool ok = true;
         logger->log_info("Test iteration: " + std::to_string(i) + "/" + std::to_string(TEST_COUNT));
@@ -126,7 +126,7 @@ TEST(SnapshotNode, TestMaster) {
 }
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
-    ros::init(argc, argv, "test_snapshotNode");
+    ros::init(argc, argv, "tester_snapshotNode");
     ros::AsyncSpinner spinner(1);
     spinner.start();
     int ret = RUN_ALL_TESTS();

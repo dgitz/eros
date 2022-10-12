@@ -344,12 +344,12 @@ std::vector<std::string> BaseNodeProcess::get_files_indir(std::string dir) {
     ExecResult execResult = exec(ls_cmd.c_str(), true);
     std::string res = execResult.Result;
     boost::split(files, res, boost::is_any_of("\n"), boost::token_compress_on);
-    if (files.size() > 0) {
-        if (files.at(0).size() == 0) {
-            // No way practically to unit test.
-            // LCOV_EXCL_START
-            files.erase(files.begin());
-            // LCOV_EXCL_STOP
+    for (std::vector<std::string>::iterator it = files.begin(); it != files.end();) {
+        if (it->size() == 0) {
+            it = files.erase(it);
+        }
+        else {
+            ++it;
         }
     }
     return files;

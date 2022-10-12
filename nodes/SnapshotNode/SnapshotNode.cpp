@@ -281,7 +281,7 @@ bool SnapshotNode::run_1hz() {
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(BaseNodeProcess::convert(latest_diagnostics.at(i)));
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {
@@ -330,7 +330,7 @@ bool SnapshotNode::run_10hz() {
         state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
         if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
-            logger->log_diagnostic(process->convert(state.diag));
+            logger->log_diagnostic(BaseNodeProcess::convert(state.diag));
         }
         commandstate_pub.publish(state);
     }

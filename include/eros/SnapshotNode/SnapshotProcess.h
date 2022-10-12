@@ -3,6 +3,7 @@
 #ifndef SnapshotProcess_H
 #define SnapshotProcess_H
 #include <eros/BaseNodeProcess.h>
+#include <eros/Utility.h>
 #include <tinyxml.h>
 
 #include <boost/thread.hpp>

@@ -59,4 +59,13 @@ ExecResult exec(const char *cmd, bool wait_for_result) {
     }
 }
 // LCOV_EXCL_STOP
+
+std::string pretty(eros::file msg) {
+    std::string str;
+    str = "File: " + msg.file_name;
+    str += " Length: " + std::to_string(msg.data_length);
+    str += " Extension Type: " + std::to_string(msg.extension_type);
+    str += " Status: " + std::to_string(msg.status);
+    return str;
+}
 }  // namespace eros
