@@ -45,6 +45,12 @@ US: 1097 Update basic scripts to support ROS Noetic
 
 --- Bugs
 
+BUG: 1109 Intermittent Snapshot Node Slave Unit Test Fails
+  Author: David Gitz
+  Date: 12-Oct-2022
+  * Found root cause of bug, not filtering out zero length file names in list query.
+  * Resolves Issue https://github.com/dgitz/eros/issues/204
+
 --- Other Comments
 * This release is intended to migrate to ROS Noetic.
 
