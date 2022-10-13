@@ -73,7 +73,7 @@ bool SafetyNode::start() {
     }
     if (process->request_statechange(Node::State::INITIALIZING) == false) {
         logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
+                         Node::NodeStateString(Node::State::INITIALIZING));
     }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
         logger->log_warn("Unable to Change State to: " +

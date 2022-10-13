@@ -26,7 +26,7 @@ class ResourceMonitor
     struct ResourceInfo {
         /*@{*/
         std::string process_name; /**< The name of the process. */
-        uint16_t pid;             /**< The PID of the Process.  0 is Invalid. */
+        uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
         double cpu_perc; /**< CPU Usage of a Process in Percentage.  100% would indicate the process
                             is fully utilizing 1 CPU. */
         double ram_perc; /**< RAM Usage of a Process in Percentage.  100% would indicate the process
