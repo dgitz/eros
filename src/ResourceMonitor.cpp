@@ -49,7 +49,6 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         initialized = false;
     }
     // LCOV_EXCL_STOP
-
     resourceInfo.pid = ::getpid();
     try {
         execResult = exec("nproc", true);
