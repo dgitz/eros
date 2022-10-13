@@ -44,6 +44,11 @@ US: 1097 Update basic scripts to support ROS Noetic
   * Updated simple_setup script, create from template scripts. to work for ROS Noetic
 
 --- Bugs
+BUG: 1113 Snapshot Node doesn't obey Logger Threshold
+  Author: David Gitz
+  Date: 13-Oct-2022
+  * <param> tag not set right in Snapshot Node launch file.
+
 BUG: 1112 Resource Monitor reports "SIGENV" error message
   Author: David Gitz
   Date: 13-Oct-2022
