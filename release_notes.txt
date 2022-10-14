@@ -1,8 +1,11 @@
 // clang-format off
 Release: DOCTORSTRANGE
-SW Tag: TBD
+SW Tag: DOCTORSTRANGE00
 Author: David Gitz
-Date: TBD
+Date: 14-Oct-2022
+
+--- General Notes
+  * This release is intended to support ROS Noetic/Ubuntu 20.04
 
 --- User Stories
 US: 1110 Create Release Test Plan
