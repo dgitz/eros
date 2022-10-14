@@ -8,7 +8,6 @@ CYELLOW = '\33[33m'
 CGREEN = '\33[32m'
 CBLUE = '\33[34m'
 CEND = '\033[0m'
-
 class Device():
     def __init__(self,Name='',Parent='',ID=0,PartNumber='',Capability='',CatkinWS = '',Architecture='',Jobs=0):
         self.Name = Name
