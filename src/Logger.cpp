@@ -1,10 +1,8 @@
 #include <eros/Logger.h>
 using namespace eros;
-Logger::Logger() : verbosity(Level::Type::WARN) {
-}
 Logger::~Logger() {
 }
-Logger::Logger(std::string level, std::string directory, std::string name) {
+Logger::Logger(std::string level, std::string directory, std::string name) : logger_ok(false) {
     console_print = true;
     use_ROS_logger = false;
     verbosity = Level::LevelType(level);
@@ -16,11 +14,16 @@ Logger::Logger(std::string level, std::string directory, std::string name) {
     std::ofstream log_file;
     log_file.open(file_path);  // Overwrite file.
     if (log_file.is_open() == false) {
-        printf("WARN: Unable to open file: %s\n", file_path);
+        printf("%sWARN: Unable to open Logger at Filepath: %s%s\n",
+               YELLOW_FOREGROUND.c_str(),
+               file_path,
+               END_COLOR.c_str());
+        return;
     }
     log_file.close();
+    logger_ok = true;
 }
-Logger::Logger(std::string level, std::string name) {
+Logger::Logger(std::string level, std::string name) : logger_ok(false) {
     console_print = true;
     use_ROS_logger = false;
     verbosity = Level::LevelType(level);
@@ -37,19 +40,21 @@ Logger::Logger(std::string level, std::string name) {
     std::ofstream log_file;
     log_file.open(file_path);  // Overwrite file.
     log_file.close();
+    logger_ok = true;
 }
 
-void Logger::set_logverbosity(Level::Type level) {
+bool Logger::set_logverbosity(Level::Type level) {
     if (level == verbosity) {
-        return;
+        return true;
     }
     if ((level < Level::Type::DEBUG) or (level > Level::Type::FATAL)) {
-        return;
+        return false;
     }
     std::string tempstr = "Changing Log Level from " + Level::LevelString(verbosity) + " to " +
                           Level::LevelString(level) + ".";
     verbosity = level;
     print_log("", 0, verbosity, tempstr);
+    return true;
 }
 Logger::LoggerStatus Logger::LOG_DEBUG(std::string filename,
                                        uint64_t linenumber,
@@ -97,23 +102,14 @@ Logger::LoggerStatus Logger::LOG_DIAGNOSTIC(std::string filename,
         Diagnostic::DiagnosticMessageString(diagnostic.message).c_str(),
         diagnostic.description.c_str());
     switch (diagnostic.level) {
-        case Level::Type::DEBUG:
-            return LOG_DEBUG(filename, linenumber, std::string(tempstr));
-            break;
-        case Level::Type::INFO: return LOG_INFO(filename, linenumber, std::string(tempstr)); break;
-        case Level::Type::NOTICE:
-            return LOG_NOTICE(filename, linenumber, std::string(tempstr));
-            break;
-        case Level::Type::WARN: return LOG_WARN(filename, linenumber, std::string(tempstr)); break;
-        case Level::Type::ERROR:
-            return LOG_ERROR(filename, linenumber, std::string(tempstr));
-            break;
-        case Level::Type::FATAL:
-            return LOG_FATAL(filename, linenumber, std::string(tempstr));
-            break;
+        case Level::Type::DEBUG: return LOG_DEBUG(filename, linenumber, std::string(tempstr));
+        case Level::Type::INFO: return LOG_INFO(filename, linenumber, std::string(tempstr));
+        case Level::Type::NOTICE: return LOG_NOTICE(filename, linenumber, std::string(tempstr));
+        case Level::Type::WARN: return LOG_WARN(filename, linenumber, std::string(tempstr));
+        case Level::Type::ERROR: return LOG_ERROR(filename, linenumber, std::string(tempstr));
+        case Level::Type::FATAL: return LOG_FATAL(filename, linenumber, std::string(tempstr));
         default:
             return LOG_ERROR("", 0, "UNKNOWN LEVEL: " + std::to_string((uint8_t)diagnostic.level));
-            break;
     }
 }
 Logger::LoggerStatus Logger::print_log(std::string filename,
@@ -134,6 +130,15 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
     std::string swcode_info = "";
     if (linenumber > 0) {
         swcode_info = filename + "(" + std::to_string(linenumber) + ")";
+    }
+    if (logger_ok == false) {
+        printf("%s[%s %s]: WARN: LOGGER HAS FAILED: %s%s\n",
+               YELLOW_FOREGROUND.c_str(),
+               datebuffer,
+               node_name.c_str(),
+               tempstr.c_str(),
+               END_COLOR.c_str());
+        return LoggerStatus::FAILED_TO_OPEN;
     }
     if (log_file.is_open() == true) {
         if (level >= verbosity) {
@@ -233,7 +238,10 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
                     }
 #endif
                     break;
-                default: break;
+                    /*default:
+                        break;   Not possible to enter here, since this is a private function and
+                                verbosity has already been validated. Keeping code here so it's
+                       obvious.*/
             }
         }
         else {
@@ -241,17 +249,8 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
             return LoggerStatus::LOG_SUPPRESSED;
         }
     }
-    else {
-        printf("%s[%s %s]: ERROR: UNABLE TO OPEN OUTPUT FILE: %s%s\n",
-               RED_FOREGROUND.c_str(),
-               datebuffer,
-               node_name.c_str(),
-               file_path,
-               END_COLOR.c_str());
-        return LoggerStatus::FAILED_TO_OPEN;
-    }
     log_file.close();
-    if (line_counter > 5000) {
+    if (line_counter > MAXLINE_COUNT) {
         log_file.open(file_path);  // Overwrite file.
         log_file.close();
         line_counter = 0;

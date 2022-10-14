@@ -8,6 +8,9 @@ Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, doubl
                                             Level::Type::DEBUG,
                                             Diagnostic::Message::NOERROR,
                                             "Base Process Updated.");
+    if (node_state == Node::State::START) {
+        request_statechange(Node::State::INITIALIZING);
+    }
     return diag;
 }
 ros::Time BaseNodeProcess::convert_time(struct timeval t_) {
@@ -85,125 +88,21 @@ bool BaseNodeProcess::request_statechange(Node::State newstate) {
             }
             break;
         case Node::State::FINISHED: state_changed = false; break;
-        default: state_changed = false; break;
+        // No practical way to enter, keeping just in case.
+        // LCOV_EXCL_START
+        default:
+            state_changed = false;
+            break;
+            // LCOV_EXCL_STOP
     }
     if (state_changed == true) {
         node_state = newstate;
     }
-    return state_changed;
-}
-std::vector<Diagnostic::DiagnosticDefinition> BaseNodeProcess::run_unittest() {
-    std::vector<Diagnostic::DiagnosticDefinition> diaglist;
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    if (unittest_running == false) {
-        unittest_running = true;
-        bool status = true;
-        std::string data;
-        std::string cmd =
-            "cd ~/catkin_ws && "
-            "bash devel/setup.bash && catkin_make run_tests_icarus_rover_v2_gtest_test_" +
-            base_node_name +
-            "_process >/dev/null 2>&1 && "
-            "mv ~/catkin_ws/build/test_results/icarus_rover_v2/gtest-test_" +
-            base_node_name +
-            "_process.xml "
-            "~/catkin_ws/build/test_results/icarus_rover_v2/" +
-            base_node_name + "/ >/dev/null 2>&1";
-        // system(cmd.c_str());
-        cmd =
-            "cd ~/catkin_ws && bash devel/setup.bash && catkin_test_results "
-            "build/test_results/icarus_rover_v2/" +
-            base_node_name + "/";
-        FILE *stream;
-
-        const int max_buffer = 256;
-        char buffer[max_buffer];
-        cmd.append(" 2>&1");
-        stream = popen(cmd.c_str(), "r");
-        if (stream) {
-            if (!feof(stream)) {
-                if (fgets(buffer, max_buffer, stream) != NULL) {
-                    data.append(buffer);
-                }
-                pclose(stream);
-            }
-        }
-        std::vector<std::string> strs;
-        std::size_t start = data.find(":");
-        data.erase(0, start + 1);
-        boost::split(strs, data, boost::is_any_of(",: "), boost::token_compress_on);
-        if (strs.size() < 6) {
-            char tempstr[1024];
-            sprintf(tempstr, "Unable to process Unit Test Result: %s.", data.c_str());
-            diag.description = std::string(tempstr);
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       Level::Type::ERROR,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       std::string(tempstr));
-            diaglist.push_back(diag);
-            return diaglist;
-        }
-        int test_count = std::atoi(strs.at(1).c_str());
-        int error_count = std::atoi(strs.at(3).c_str());
-        int failure_count = std::atoi(strs.at(5).c_str());
-        if (test_count == 0) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       Level::Type::ERROR,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Test Count: 0");
-            diaglist.push_back(diag);
-            status = false;
-        }
-        if (error_count > 0) {
-            char tempstr[512];
-            sprintf(tempstr, "Error Count: %d.", error_count);
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       Level::Type::ERROR,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       std::string(tempstr));
-            diaglist.push_back(diag);
-            status = false;
-        }
-        if (failure_count > 0) {
-            char tempstr[512];
-            sprintf(tempstr, "Failure Count: %d.", failure_count);
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       Level::Type::ERROR,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       std::string(tempstr));
-            diaglist.push_back(diag);
-            status = false;
-        }
-        if (status == true) {
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       Level::Type::NOTICE,
-                                                       Diagnostic::Message::NOERROR,
-                                                       "Unit Test -> PASSED.");
-            diaglist.push_back(diag);
-        }
-        else {
-            Level::Type highest_error = Level::Type::INFO;
-            for (std::size_t i = 0; i < diaglist.size(); i++) {
-                if (diaglist.at(i).level > highest_error) {
-                    highest_error = diaglist.at(i).level;
-                }
-            }
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                       highest_error,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Unit Test -> FAILED.");
-            diaglist.push_back(diag);
-        }
-        unittest_running = false;
-    }
     else {
-        diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                                   Level::Type::WARN,
-                                                   Diagnostic::Message::DROPPING_PACKETS,
-                                                   "Unit Test -> IS STILL IN PROGRESS.");
-        diaglist.push_back(diag);
+        logger->log_info("State Change from: " + Node::NodeStateString(current_state) +
+                         " To State: " + Node::NodeStateString(newstate) + " Rejected.");
     }
-    return diaglist;
+    return state_changed;
 }
 eros::armed_state BaseNodeProcess::convert(ArmDisarm::State v) {
     eros::armed_state msg;
@@ -215,12 +114,17 @@ ArmDisarm::State BaseNodeProcess::convert(eros::armed_state v) {
     data.state = (ArmDisarm::Type)v.armed_state;
     return data;
 }
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::ready_to_arm BaseNodeProcess::convert_fromptr(const eros::ready_to_arm::ConstPtr &t_ptr) {
     eros::ready_to_arm msg;
     msg.ready_to_arm = t_ptr->ready_to_arm;
     msg.diag = t_ptr->diag;
     return msg;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr &t_ptr) {
     eros::heartbeat msg;
     msg.stamp = t_ptr->stamp;
@@ -230,6 +134,9 @@ eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr
     msg.NodeState = t_ptr->NodeState;
     return msg;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::command BaseNodeProcess::convert_fromptr(const eros::command::ConstPtr &t_ptr) {
     eros::command cmd;
     cmd.Command = t_ptr->Command;
@@ -240,6 +147,9 @@ eros::command BaseNodeProcess::convert_fromptr(const eros::command::ConstPtr &t_
     cmd.Option3 = t_ptr->Option3;
     return cmd;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::diagnostic BaseNodeProcess::convert_fromptr(const eros::diagnostic::ConstPtr &t_ptr) {
     eros::diagnostic diag;
     diag.Component = t_ptr->Component;
@@ -253,6 +163,9 @@ eros::diagnostic BaseNodeProcess::convert_fromptr(const eros::diagnostic::ConstP
     diag.System = t_ptr->System;
     return diag;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::resource BaseNodeProcess::convert_fromptr(const eros::resource::ConstPtr &t_ptr) {
     eros::resource msg;
     msg.stamp = t_ptr->stamp;
@@ -263,6 +176,9 @@ eros::resource BaseNodeProcess::convert_fromptr(const eros::resource::ConstPtr &
     msg.DISK_Perc = t_ptr->DISK_Perc;
     return msg;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstPtr &t_ptr) {
     eros::loadfactor msg;
     msg.stamp = t_ptr->stamp;
@@ -270,6 +186,9 @@ eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstP
     msg.loadfactor = t_ptr->loadfactor;
     return msg;
 }
+// LCOV_EXCL_STOP
+// No Obvious way to Unit test
+// LCOV_EXCL_START
 eros::command_state BaseNodeProcess::convert_fromptr(const eros::command_state::ConstPtr &t_ptr) {
     eros::command_state msg;
     msg.stamp = t_ptr->stamp;
@@ -280,6 +199,7 @@ eros::command_state BaseNodeProcess::convert_fromptr(const eros::command_state::
     msg.diag = t_ptr->diag;
     return msg;
 }
+// LCOV_EXCL_STOP
 Diagnostic::DiagnosticDefinition BaseNodeProcess::convert(const eros::diagnostic diag) {
     Diagnostic::DiagnosticDefinition def;
     def.device_name = diag.DeviceName;
@@ -306,54 +226,7 @@ eros::diagnostic BaseNodeProcess::convert(const Diagnostic::DiagnosticDefinition
     diag.Description = def.description;
     return diag;
 }
-bool BaseNodeProcess::isEqual(double a, double b, double eps) {
-    double dv = a - b;
-    if (fabs(dv) < eps) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-std::string BaseNodeProcess::exec(const char *cmd, bool wait_for_result) {
-    char buffer[512];
-    std::string result = "";
-    try {
-        FILE *pipe = popen(cmd, "r");
-        if (wait_for_result == false) {
-            pclose(pipe);
-            return "";
-        }
-        if (!pipe) {
-            std::string tempstr = "popen() failed with command: " + std::string(cmd);
-            logger->log_error(tempstr);
-            pclose(pipe);
-            return "";
-        }
-        try {
-            while (!feof(pipe)) {
-                if (fgets(buffer, 512, pipe) != NULL)
-                    result += buffer;
-            }
-        }
-        catch (const std::exception &e) {
-            pclose(pipe);
-            std::string tempstr = "popen() failed with command: " + std::string(cmd) +
-                                  " and exception: " + std::string(e.what());
-            logger->log_error(tempstr);
-            return "";
-        }
-        pclose(pipe);
-        boost::algorithm::trim(result);
-        return result;
-    }
-    catch (const std::exception &e) {
-        std::string tempstr = "popen() failed with command: " + std::string(cmd) +
-                              " and exception: " + std::string(e.what());
-        logger->log_error(tempstr);
-        return "";
-    }
-}
+
 void BaseNodeProcess::base_cleanup() {
     return;
 }
@@ -367,7 +240,6 @@ json BaseNodeProcess::read_configuration(std::string device_name,
         return empty;
     }
     file_path = sanitize_path(file_path);
-    printf("f: %s\n", file_path.c_str());
     std::ifstream fd(file_path);
     if (fd.is_open() == false) {
         logger->log_error("Unable to read file.");
@@ -469,11 +341,15 @@ FileHelper::FileInfo BaseNodeProcess::write_file(std::string full_path,
 std::vector<std::string> BaseNodeProcess::get_files_indir(std::string dir) {
     std::vector<std::string> files;
     std::string ls_cmd = "ls " + dir;
-    std::string res = exec(ls_cmd.c_str(), true);
+    ExecResult execResult = exec(ls_cmd.c_str(), true);
+    std::string res = execResult.Result;
     boost::split(files, res, boost::is_any_of("\n"), boost::token_compress_on);
-    if (files.size() > 0) {
-        if (files.at(0).size() == 0) {
-            files.erase(files.begin());
+    for (std::vector<std::string>::iterator it = files.begin(); it != files.end();) {
+        if (it->size() == 0) {
+            it = files.erase(it);
+        }
+        else {
+            ++it;
         }
     }
     return files;

@@ -32,8 +32,8 @@ bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Reque
             if ((Diagnostic::DiagnosticType)i == Diagnostic::DiagnosticType::UNKNOWN_TYPE) {
                 continue;
             }
-            res.diag_list.push_back(
-                convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
+            res.diag_list.push_back(BaseNodeProcess::convert(
+                process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
         }
         logger->log_debug("Fulfilled System Diagnostics Service.");
         return true;
@@ -96,6 +96,10 @@ bool DiagnosticNode::start() {
     if (diagnostic.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diagnostic);
         return false;
+    }
+    if (process->request_statechange(Node::State::INITIALIZING) == false) {
+        logger->log_warn("Unable to Change State to: " +
+                         Node::NodeStateString(Node::State::INITIALIZING));
     }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
         logger->log_warn("Unable to Change State to: " +

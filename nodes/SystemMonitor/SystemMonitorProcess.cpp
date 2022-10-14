@@ -37,7 +37,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
     while (task_it != task_list.end()) {
         task_it->second.last_heartbeat_delta += t_dt;
         if (task_it->second.last_heartbeat_delta >= COMMTIMEOUT_THRESHOLD) {
-            task_it->second.state = Node::State::NODATA;
+            task_it->second.state = Node::State::UNKNOWN;
         }
         ++task_it;
     }
@@ -45,7 +45,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
     while (device_it != device_list.end()) {
         device_it->second.last_heartbeat_delta += t_dt;
         if (device_it->second.last_heartbeat_delta >= 4.0 * COMMTIMEOUT_THRESHOLD) {
-            device_it->second.state = Node::State::NODATA;
+            device_it->second.state = Node::State::UNKNOWN;
         }
         ++device_it;
     }
@@ -302,8 +302,7 @@ bool SystemMonitorProcess::initialize_windows() {
             mvwprintw(it->second.get_window_reference(), 2, 1, dashed.c_str());
             wtimeout(it->second.get_window_reference(), 0);
         }
-        else if (it->first == "diag_sidebar") {
-        }
+        else if (it->first == "diag_sidebar") {}
         else if (it->first == "device_window") {
             std::string header = get_deviceheader();
             mvwprintw(it->second.get_window_reference(), 1, 1, header.c_str());
@@ -492,10 +491,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_diagnosticwindow(
                 str += "  ";
                 if (str.size() >
                     (std::size_t)(window_it->second.get_screen_coordinates_pixel().width_pix - 4)) {
-                    str = str.substr(0,
-                                     (std::size_t)(window_it->second.get_screen_coordinates_pixel()
-                                                       .width_pix -
-                                                   4)) +
+                    str = str.substr(
+                              0,
+                              (std::size_t)(
+                                  window_it->second.get_screen_coordinates_pixel().width_pix - 4)) +
                           "...";
                 }
                 wattron(window_it->second.get_window_reference(), COLOR_PAIR(color));
@@ -597,7 +596,6 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_devicewindow(
             case Node::State::START: color = Color::YELLOW_COLOR; break;
             case Node::State::INITIALIZING: color = Color::YELLOW_COLOR; break;
             case Node::State::INITIALIZED: color = Color::YELLOW_COLOR; break;
-            case Node::State::NODATA: color = Color::RED_COLOR; break;
             case Node::State::RUNNING: color = Color::BLUE_COLOR; break;
             case Node::State::PAUSED: color = Color::GREEN_COLOR; break;
             case Node::State::RESET: color = Color::YELLOW_COLOR; break;
@@ -943,7 +941,6 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_taskwindow(
             case Node::State::START: color = Color::YELLOW_COLOR; break;
             case Node::State::INITIALIZING: color = Color::YELLOW_COLOR; break;
             case Node::State::INITIALIZED: color = Color::YELLOW_COLOR; break;
-            case Node::State::NODATA: color = Color::RED_COLOR; break;
             case Node::State::RUNNING: color = Color::BLUE_COLOR; break;
             case Node::State::PAUSED: color = Color::GREEN_COLOR; break;
             case Node::State::RESET: color = Color::YELLOW_COLOR; break;

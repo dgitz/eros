@@ -42,7 +42,7 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
         state.CurrentCommand = command;
         state.State = 0;
         state.PercentComplete = 0.0;
-        state.diag = convert(diag);
+        state.diag = BaseNodeProcess::convert(diag);
         if (diag.level > Level::Type::NOTICE) {
             logger->log_diagnostic(diag);
         }
@@ -159,6 +159,10 @@ bool SnapshotNode::start() {
         diagnostic.message = Diagnostic::Message::NOERROR;
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
+    }
+    if (process->request_statechange(Node::State::INITIALIZING) == false) {
+        logger->log_warn("Unable to Change State to: " +
+                         Node::NodeStateString(Node::State::INITIALIZING));
     }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
         logger->log_warn("Unable to Change State to: " +
@@ -277,7 +281,7 @@ bool SnapshotNode::run_1hz() {
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(BaseNodeProcess::convert(latest_diagnostics.at(i)));
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {
@@ -326,7 +330,7 @@ bool SnapshotNode::run_10hz() {
         state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
         if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
-            logger->log_diagnostic(process->convert(state.diag));
+            logger->log_diagnostic(BaseNodeProcess::convert(state.diag));
         }
         commandstate_pub.publish(state);
     }
@@ -383,7 +387,7 @@ void SnapshotNode::thread_snapshotcreation() {
                     state.State = (uint8_t)process->get_devicesnapshot_state();
                 }
                 state.PercentComplete = 100.0;
-                state.diag = convert(diag);
+                state.diag = BaseNodeProcess::convert(diag);
                 if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
                     logger->log_diagnostic(diag);
                 }
@@ -405,7 +409,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 }
                 state.State = (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE;
                 state.PercentComplete = 0.0;
-                state.diag = convert(diag);
+                state.diag = BaseNodeProcess::convert(diag);
                 if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
                     logger->log_diagnostic(diag);
                 }

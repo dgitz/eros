@@ -17,15 +17,17 @@ void commandstate_Callback(const eros::command_state& msg) {
 TEST(SnapshotNode, TestMaster) {
     ros::NodeHandle nh("~");
     Logger* logger = new Logger("DEBUG", "test_SnapshotNode");
-
+    logger->enable_ROS_logger();
     std::string heartbeat_topic = "/test/snapshot_node/heartbeat";
     ros::Subscriber sub = nh.subscribe(heartbeat_topic, 100, &heartbeat_Callback);
+    sleep(5.0);
     EXPECT_NE(ros::topic::waitForMessage<eros::heartbeat>(heartbeat_topic, ros::Duration(10)),
               nullptr);
     EXPECT_EQ(1, sub.getNumPublishers());
     ros::Subscriber commandstate_sub =
         nh.subscribe("/test/SystemCommandState", 100, &commandstate_Callback);
     ros::Publisher command_pub = nh.advertise<eros::command>("/test/SystemCommand", 20);
+
     usleep(1.0 * 1000000.0);  // Wait for Snapshot Node to Start.
     EXPECT_TRUE(heartbeat_count > 0);
 

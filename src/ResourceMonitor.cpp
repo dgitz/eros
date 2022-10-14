@@ -1,7 +1,5 @@
 #include <eros/ResourceMonitor.h>
 using namespace eros;
-ResourceMonitor::ResourceMonitor() {
-}
 ResourceMonitor::ResourceMonitor(Mode _mode,
                                  Diagnostic::DiagnosticDefinition _diag,
                                  Logger *_logger)
@@ -25,28 +23,40 @@ ResourceMonitor::~ResourceMonitor() {
 }
 Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    ExecResult execResult;
     architecture = read_device_architecture();
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on. LCOV_EXCL_START
     if (architecture == Architecture::Type::UNKNOWN) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
+        logger->log_diagnostic(diag);
         initialized = false;
     }
-    if ((architecture != Architecture::Type::X86_64) ||
-        (architecture != Architecture::Type::ARMV7L) ||
-        (architecture != Architecture::Type::AARCH64)) {
+    // LCOV_EXCL_STOP
+
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on. LCOV_EXCL_START
+    if ((architecture == Architecture::Type::UNKNOWN)) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
             "Architecture: " + Architecture::ArchitectureString(architecture) + " Not Supported.";
+        logger->log_diagnostic(diag);
         diag.update_count++;
         initialized = false;
     }
+    // LCOV_EXCL_STOP
     resourceInfo.pid = ::getpid();
     try {
-        processor_count = std::atoi(exec("nproc", true).c_str());
+        execResult = exec("nproc", true);
+        processor_count = std::atoi(execResult.Result.c_str());
     }
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on.
+    // LCOV_EXCL_START
     catch (const std::exception &e) {
         std::string tempstr = "Unable to determine number of processors: " + std::string(e.what());
 
@@ -55,28 +65,40 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         diag.description = tempstr;
         diag.update_count++;
         logger->log_error(tempstr);
+        logger->log_diagnostic(diag);
         initialized = false;
     }
+    // LCOV_EXCL_STOP
     if (mode == Mode::PROCESS) {
         diag = read_process_resource_usage();
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         if (diag.level > Level::Type::WARN) {
+            logger->log_diagnostic(diag);
             return diag;
         }
+        // LCOV_EXCL_STOP
         diag = read_device_loadfactor();
     }
     if (diag.level <= Level::Type::NOTICE) {
         initialized = true;
         logger->log_diagnostic(diag);
     }
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on.
+    // LCOV_EXCL_START
     else {
         initialized = false;
     }
+    // LCOV_EXCL_STOP
+    logger->log_diagnostic(diag);
     return diag;
 }
-void ResourceMonitor::reset() {
+bool ResourceMonitor::reset() {
     ResourceInfo reset_info;
     reset_info.process_name = resourceInfo.process_name;
     reset_info.pid = resourceInfo.pid;
@@ -84,24 +106,30 @@ void ResourceMonitor::reset() {
     reset_info.ram_perc = 0.0;
     reset_info.disk_perc = 0.0;
     resourceInfo = reset_info;
+    return true;
 }
 Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
-    run_time += t_dt;
-    if (architecture == Architecture::Type::UNKNOWN) {
+    if (initialized == false) {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
+        return diag;
     }
+    run_time += t_dt;
     if (mode == Mode::PROCESS) {
         diag = read_process_resource_usage();
     }
     else if (mode == Mode::DEVICE) {
         diag = read_device_resource_availability();
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         if (diag.level > Level::Type::WARN) {
             return diag;
         }
+        // LCOV_EXCL_STOP
         diag = read_device_loadfactor();
     }
     return diag;
@@ -110,14 +138,18 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string top_query =
         "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
-
-    std::string res = exec(top_query.c_str(), true);
+    ExecResult execResult;
+    execResult = exec(top_query.c_str(), true);
+    std::string res = execResult.Result;
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
     if (strs.at(0) == "") {
         strs.erase(strs.begin());
     }
     if (architecture == Architecture::Type::X86_64) {
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         if (strs.size() != 12) {
             for (std::size_t i = 0; i < strs.size(); ++i) {
                 printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
@@ -128,10 +160,14 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             diag.update_count++;
             return diag;
         }
+        // LCOV_EXCL_STOP
         try {
             resourceInfo.cpu_perc = std::atof(strs.at(8).c_str());
             resourceInfo.ram_perc = std::atof(strs.at(9).c_str());
         }
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -140,7 +176,11 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             diag.update_count++;
             return diag;
         }
+        // LCOV_EXCL_STOP
     }
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on.
+    // LCOV_EXCL_START
     else if (architecture == Architecture::Type::AARCH64) {
         if (strs.size() != 12) {
             for (std::size_t i = 0; i < strs.size(); ++i) {
@@ -165,6 +205,10 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             return diag;
         }
     }
+    // LCOV_EXCL_STOP
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on.
+    // LCOV_EXCL_START
     else if (architecture == Architecture::Type::ARMV7L) {
         if (strs.size() != 12) {
             for (std::size_t i = 0; i < strs.size(); ++i) {
@@ -189,6 +233,10 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
             return diag;
         }
     }
+    // LCOV_EXCL_STOP
+    // The following can't currently be checked for code coverage as it depends on the device being
+    // run on.
+    // LCOV_EXCL_START
     else {
         diag.level = Level::Type::ERROR;
         diag.message = Diagnostic::Message::INITIALIZING_ERROR;
@@ -197,6 +245,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         diag.update_count++;
         return diag;
     }
+    // LCOV_EXCL_STOP
     diag.message = Diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;
@@ -206,12 +255,12 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     {  // Read Free CPU
         std::string res;
-        if ((architecture == Architecture::Type::X86_64) ||
-            (architecture == Architecture::Type::AARCH64) ||
-            (architecture == Architecture::Type::ARMV7L)) {
+        if (architecture != Architecture::Type::UNKNOWN) {
             try {
                 std::string top_query = "top -bn1 | grep '%Cpu(s)'";
-                std::string res = exec(top_query.c_str(), true);
+                ExecResult execResult;
+                execResult = exec(top_query.c_str(), true);
+                std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
                     strs, res, boost::is_any_of("\t "), boost::token_compress_on);
@@ -224,6 +273,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                         }
                     }
                 }
+                // The following can't currently be checked for code coverage as it depends on the
+                // device being run on.
+                // LCOV_EXCL_START
                 if (found_me == false) {
                     diag.level = Level::Type::ERROR;
                     diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -231,7 +283,11 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     diag.update_count++;
                     return diag;
                 }
+                // LCOV_EXCL_STOP
             }
+            // The following can't currently be checked for code coverage as it depends on the
+            // device being run on.
+            // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -240,6 +296,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 diag.update_count++;
                 return diag;
             }
+            // LCOV_EXCL_STOP
         }
         diag.level = Level::Type::INFO;
         diag.message = Diagnostic::Message::NOERROR;
@@ -248,12 +305,12 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
     }
     {  // Read Free RAM
         std::string res;
-        if ((architecture == Architecture::Type::X86_64) ||
-            (architecture == Architecture::Type::AARCH64) ||
-            (architecture == Architecture::Type::ARMV7L)) {
+        if (architecture != Architecture::Type::UNKNOWN) {
             try {
                 std::string top_query = "top -bn1 | grep 'Mem'";
-                std::string res = exec(top_query.c_str(), true);
+                ExecResult execResult;
+                execResult = exec(top_query.c_str(), true);
+                std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
                     strs, res, boost::is_any_of("\t "), boost::token_compress_on);
@@ -277,6 +334,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                         break;
                     }
                 }
+                // The following can't currently be checked for code coverage as it depends on the
+                // device being run on.
+                // LCOV_EXCL_START
                 if (found_count != 2) {
                     diag.level = Level::Type::ERROR;
                     diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -284,11 +344,15 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     diag.update_count++;
                     return diag;
                 }
+                // LCOV_EXCL_STOP
                 else {
                     resourceInfo.ram_perc =
                         100.0 - (100.0 * (double)(used_mem) / (double)(total_mem));
                 }
             }
+            // The following can't currently be checked for code coverage as it depends on the
+            // device being run on.
+            // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -297,16 +361,17 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 diag.update_count++;
                 return diag;
             }
+            // LCOV_EXCL_STOP
         }
     }
     {  // Read Free Disk Space
         std::string res;
-        if ((architecture == Architecture::Type::X86_64) ||
-            (architecture == Architecture::Type::AARCH64) ||
-            (architecture == Architecture::Type::ARMV7L)) {
+        if (architecture != Architecture::Type::UNKNOWN) {
             try {
                 std::string df_query = "df -h";
-                std::string res = exec(df_query.c_str(), true);
+                ExecResult execResult;
+                execResult = exec(df_query.c_str(), true);
+                std::string res = execResult.Result;
                 std::vector<std::string> lines;
                 boost::split(lines, res, boost::is_any_of("\n"), boost::token_compress_on);
                 bool found_me = false;
@@ -324,6 +389,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                                 tempstr1.substr(0, tempstr1.size() - 1);  // Remove trailing % sign
                             resourceInfo.disk_perc = 100.0 - std::atof(tempstr1.c_str());
                         }
+                        // The following can't currently be checked for code coverage as it depends
+                        // on the device being run on.
+                        // LCOV_EXCL_START
                         catch (const std::exception &e) {
                             diag.level = Level::Type::ERROR;
                             diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -332,8 +400,12 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                             diag.update_count++;
                             return diag;
                         }
+                        // LCOV_EXCL_STOP
                     }
                 }
+                // The following can't currently be checked for code coverage as it depends on the
+                // device being run on.
+                // LCOV_EXCL_START
                 if (found_me == false) {
                     diag.level = Level::Type::ERROR;
                     diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -341,7 +413,11 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                     diag.update_count++;
                     return diag;
                 }
+                // LCOV_EXCL_STOP
             }
+            // The following can't currently be checked for code coverage as it depends on the
+            // device being run on.
+            // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -350,6 +426,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 diag.update_count++;
                 return diag;
             }
+            // LCOV_EXCL_STOP
         }
     }
     diag.level = Level::Type::INFO;
@@ -361,12 +438,12 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
 Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string res;
-    if ((architecture == Architecture::Type::X86_64) ||
-        (architecture == Architecture::Type::AARCH64) ||
-        (architecture == Architecture::Type::ARMV7L)) {
+    if (architecture != Architecture::Type::UNKNOWN) {
         try {
             std::string top_query = "top -bn1 | grep 'load average:'";
-            std::string res = exec(top_query.c_str(), true);
+            ExecResult execResult;
+            execResult = exec(top_query.c_str(), true);
+            std::string res = execResult.Result;
             std::vector<std::string> strs;
             boost::algorithm::split(strs, res, boost::is_any_of(", "), boost::token_compress_on);
             bool found_me = false;
@@ -384,6 +461,9 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
                     }
                 }
             }
+            // The following can't currently be checked for code coverage as it depends on the
+            // device being run on.
+            // LCOV_EXCL_START
             if (found_me == false) {
                 diag.level = Level::Type::ERROR;
                 diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -391,7 +471,11 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
                 diag.update_count++;
                 return diag;
             }
+            // LCOV_EXCL_STOP
         }
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
             diag.message = Diagnostic::Message::DROPPING_PACKETS;
@@ -400,6 +484,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
             diag.update_count++;
             return diag;
         }
+        // LCOV_EXCL_STOP
     }
     diag.level = Level::Type::INFO;
     diag.message = Diagnostic::Message::NOERROR;
@@ -411,13 +496,18 @@ Architecture::Type ResourceMonitor::read_device_architecture() {
     // Try 1: Read command: "uname -m"
     {
         std::string cmd = "uname -m";
-        std::string result = exec(cmd.c_str(), true);
+        ExecResult execResult;
+        execResult = exec(cmd.c_str(), true);
+        std::string result = execResult.Result;
         std::size_t found_x86_64 = result.find("x86_64");
         std::size_t found_armv7l = result.find("armv7l");
         std::size_t found_aarch64 = result.find("aarch64");
         if (found_x86_64 != std::string::npos) {
             return Architecture::Type::X86_64;
         }
+        // The following can't currently be checked for code coverage as it depends on the device
+        // being run on.
+        // LCOV_EXCL_START
         else if (found_armv7l != std::string::npos) {
             return Architecture::Type::ARMV7L;
         }
@@ -427,8 +517,13 @@ Architecture::Type ResourceMonitor::read_device_architecture() {
         else {
             logger->log_warn("Unexpected result of command: " + cmd + " result: " + result);
         }
+        // LCOV_EXCL_STOP
     }
+    // The following can't currently be checked for code coverage as it depends on the device
+    // being run on.
+    // LCOV_EXCL_START
     return Architecture::Type::UNKNOWN;
+    // LCOV_EXCL_STOP
 }
 std::string ResourceMonitor::pretty(ResourceInfo info) {
     std::string str = "--- Resource Monitor Info ---\n";
@@ -440,42 +535,4 @@ std::string ResourceMonitor::pretty(ResourceInfo info) {
     str += "\tDisk: " + std::to_string(info.disk_perc) + "%\n";
 
     return str;
-}
-std::string ResourceMonitor::exec(const char *cmd, bool wait_for_result) {
-    char buffer[512];
-    std::string result = "";
-    try {
-        FILE *pipe = popen(cmd, "r");
-        if (wait_for_result == false) {
-            pclose(pipe);
-            return "";
-        }
-        if (!pipe) {
-            std::string tempstr = "popen() failed with command: " + std::string(cmd);
-            logger->log_error(tempstr);
-            pclose(pipe);
-            return "";
-        }
-        try {
-            while (!feof(pipe)) {
-                if (fgets(buffer, 512, pipe) != NULL)
-                    result += buffer;
-            }
-        }
-        catch (const std::exception &e) {
-            pclose(pipe);
-            std::string tempstr = "popen() failed with command: " + std::string(cmd) +
-                                  " and exception: " + std::string(e.what());
-            logger->log_error(tempstr);
-            return "";
-        }
-        pclose(pipe);
-        return result;
-    }
-    catch (const std::exception &e) {
-        std::string tempstr = "popen() failed with command: " + std::string(cmd) +
-                              " and exception: " + std::string(e.what());
-        logger->log_error(tempstr);
-        return "";
-    }
 }

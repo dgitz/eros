@@ -7,3 +7,5 @@ _static/
 _templates/
 html/
 xml/
+coverage/
+.vscode/settings.json

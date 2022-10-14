@@ -89,6 +89,8 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
 
     diagnostic = read_baselaunchparameters();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diagnostic.level > Level::Type::WARN) {
         if (logger_initialized == true) {
             logger->log_diagnostic(diagnostic);
@@ -97,6 +99,7 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
             printf("[%s ERROR]: %s\n", node_name.c_str(), diagnostic.description.c_str());
         }
     }
+    // LCOV_EXCL_STOP
     std::string heartbeat_topic = node_name + "/heartbeat";
     heartbeat_pub = n->advertise<eros::heartbeat>(heartbeat_topic, 1);
     heartbeat.stamp = ros::Time::now();
@@ -132,6 +135,8 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
         std::string readytoarm_topic = node_name + "/ready_to_arm";
         readytoarm_pub = n->advertise<eros::ready_to_arm>(readytoarm_topic, 1);
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diagnostic.level > Level::Type::WARN) {
         if (logger_initialized == true) {
             logger->log_diagnostic(diagnostic);
@@ -140,6 +145,7 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
             printf("[%s] Could not complete pre-initialization. Exiting.\n", node_name.c_str());
         }
     }
+    // LCOV_EXCL_STOP
     return diagnostic;
 }
 Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
@@ -153,6 +159,8 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
     }
     else {
         std::string param_verbosity_level = node_name + "/verbosity_level";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_verbosity_level, verbosity_level) == false) {
             diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
             diag.level = Level::Type::ERROR;
@@ -161,31 +169,41 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
             diagnostic = diag;
             return diag;
         }
+        // LCOV_EXCL_STOP
         else {
             logger = new Logger(verbosity_level, node_name);
             logger->log_notice("Initialized.");
             logger_initialized = true;
         }
         std::string param_robot_namespace = node_name + "/robot_namespace";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_robot_namespace, robot_namespace) == false) {
             robot_namespace = "/";
         }
+        // LCOV_EXCL_STOP
         robot_namespace = validate_robotnamespace(robot_namespace);
     }
 
     resource_monitor = new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
     diag = resource_monitor->init();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diag.level >= Level::Type::ERROR) {
         logger->log_diagnostic(diag);
         return diag;
     }
+    // LCOV_EXCL_STOP
     if (no_launch_enabled == true) {}
     else {
         std::string param_startup_delay = node_name + "/startup_delay";
         double startup_delay = 0.0;
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_startup_delay, startup_delay) == false) {
             logger->log_notice("Missing Parameter: startup_delay.  Using Default: 0.0 sec.");
         }
+        // LCOV_EXCL_STOP
         else {
             if (startup_delay > 0.1) {
                 char tempstr[128];
@@ -198,6 +216,8 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
     if (no_launch_enabled == true) {}
     else {
         std::string param_require_pps_to_start = node_name + "/require_pps_to_start";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
             diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
             diag.level = Level::Type::ERROR;
@@ -206,6 +226,7 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
             diagnostic = diag;
             logger->log_diagnostic(diag);
         }
+        // LCOV_EXCL_STOP
     }
     double max_rate = 0.0;
     if (no_launch_enabled == true) {
@@ -222,10 +243,13 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         last_1hz_timer = ros::Time::now();
         last_10hz_timer = ros::Time::now();
         std::string param_loop1_rate = node_name + "/loop1_rate";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_loop1_rate, loop1_rate) == false) {
             logger->log_warn("Missing parameter: loop1_rate.  Not running loop1 code.");
             loop1_enabled = false;
         }
+        // LCOV_EXCL_STOP
         else {
             last_loop1_timer = ros::Time::now();
             loop1_enabled = true;
@@ -235,10 +259,13 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         }
 
         std::string param_loop2_rate = node_name + "/loop2_rate";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_loop2_rate, loop2_rate) == false) {
             logger->log_warn("Missing parameter: loop2_rate.  Not running loop2 code.");
             loop2_enabled = false;
         }
+        // LCOV_EXCL_STOP
         else {
             last_loop2_timer = ros::Time::now();
             loop2_enabled = true;
@@ -248,22 +275,31 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         }
 
         std::string param_loop3_rate = node_name + "/loop3_rate";
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (n->getParam(param_loop3_rate, loop3_rate) == false) {
             logger->log_warn("Missing parameter: loop3_rate.  Not running loop3 code.");
             loop3_enabled = false;
         }
+        // LCOV_EXCL_STOP
         else {
             last_loop3_timer = ros::Time::now();
             loop3_enabled = true;
+            // No Practical way to Unit Test
+            // LCOV_EXCL_START
             if (loop3_rate > max_rate) {
                 max_rate = loop3_rate;
             }
+            // LCOV_EXCL_STOP
         }
     }
     ros_rate = max_rate * 4.0;
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (ros_rate > 100.0) {
         ros_rate = 100.0;
     }
+    // LCOV_EXCL_STOP
     if (ros_rate <= 1.0) {
         ros_rate = 20.0;
     }
@@ -279,9 +315,14 @@ bool BaseNode::update(Node::State node_state) {
     if (require_pps_to_start == false) {
         ok_to_run = true;
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     else if ((require_pps_to_start == true) and (pps_received == true)) {
         ok_to_run = true;
     }
+    // LCOV_EXCL_STOP
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (ok_to_run == false) {
         ros::Duration d(1.0);
         d.sleep();
@@ -289,6 +330,7 @@ bool BaseNode::update(Node::State node_state) {
         logger->log_notice("Waiting on PPS To Start.");
         return true;
     }
+    // LCOV_EXCL_STOP
     ros::Rate r(ros_rate);
     r.sleep();
     ros::spinOnce();
@@ -309,7 +351,7 @@ bool BaseNode::update(Node::State node_state) {
         resource_used_pub.publish(resource_used);
         std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
         for (std::size_t i = 0; i < diag_list.size(); ++i) {
-            eros::diagnostic diag = convert(diag_list.at(i));
+            eros::diagnostic diag = BaseNodeProcess::convert(diag_list.at(i));
             diagnostic_pub.publish(diag);
         }
         last_01hz_noisy_timer = ros::Time::now();
@@ -372,11 +414,14 @@ void BaseNode::base_reset() {
     resource_used.stamp = ros::Time::now();
     resource_used_pub.publish(resource_used);
 }
+// No Practical way to Unit Test
+// LCOV_EXCL_START
 void BaseNode::new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg) {
     if (t_msg->data == true) {
         pps_received = true;
     }
 }
+// LCOV_EXCL_STOP
 bool BaseNode::firmware_service(eros::srv_firmware::Request &req,
                                 eros::srv_firmware::Response &res) {
     (void)req;  // No req information needed
@@ -395,10 +440,13 @@ bool BaseNode::loggerlevel_service(eros::srv_logger_level::Request &req,
         res.Response = "Unsupported Logger Level: " + req.LoggerLevel;
         return false;
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     else if (logger == nullptr) {
         res.Response = "Logger is uninitialized.";
         return false;
     }
+    // LCOV_EXCL_STOP
     else {
         logger->set_logverbosity(newLevel);
         res.Response = "Changed Logger Level to: " + req.LoggerLevel;
@@ -414,24 +462,27 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request &req,
         if (diag_list.at(i).level > worst_diag.level) {
             worst_diag = diag_list.at(i);
         }
-        eros::diagnostic diag = convert(diag_list.at(i));
+        eros::diagnostic diag = BaseNodeProcess::convert(diag_list.at(i));
         bool add_me = false;
         if ((req.MinLevel == 0) || (req.DiagnosticType == 0)) {
             add_me = true;
         }
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         else if ((diag.Level >= req.MinLevel)) {
             add_me = true;
         }
         else if (diag.DiagnosticType == req.DiagnosticType) {
             add_me = true;
         }
+        // LCOV_EXCL_STOP
         if (add_me == true) {
             res.diag_list.push_back(diag);
         }
         logger->log_diagnostic(diag_list.at(i));
         diagnostic_pub.publish(diag);
     }
-    res.worst_diag = convert(worst_diag);
+    res.worst_diag = BaseNodeProcess::convert(worst_diag);
 
     return true;
 }
@@ -443,32 +494,6 @@ void BaseNode::base_cleanup() {
     }
     delete resource_monitor;
     delete logger;
-}
-eros::diagnostic BaseNode::convert(Diagnostic::DiagnosticDefinition diag_def) {
-    eros::diagnostic diag;
-    diag.DeviceName = diag_def.device_name;
-    diag.NodeName = diag_def.node_name;
-    diag.System = (uint8_t)diag_def.system;
-    diag.SubSystem = (uint8_t)diag_def.subsystem;
-    diag.Component = (uint8_t)diag_def.component;
-    diag.DiagnosticType = (uint8_t)diag_def.type;
-    diag.Level = (uint8_t)diag_def.level;
-    diag.DiagnosticMessage = (uint8_t)diag_def.message;
-    diag.Description = diag_def.description;
-    return diag;
-}
-Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def) {
-    Diagnostic::DiagnosticDefinition diag;
-    diag.device_name = diag_def.DeviceName;
-    diag.node_name = diag_def.NodeName;
-    diag.system = (System::MainSystem)diag_def.System;
-    diag.subsystem = (System::SubSystem)diag_def.SubSystem;
-    diag.component = (System::Component)diag_def.Component;
-    diag.type = (Diagnostic::DiagnosticType)diag_def.DiagnosticType;
-    diag.level = (Level::Type)diag_def.Level;
-    diag.message = (Diagnostic::Message)diag_def.DiagnosticMessage;
-    diag.description = diag_def.Description;
-    return diag;
 }
 eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
     eros::resource res;

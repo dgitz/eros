@@ -1,0 +1,135 @@
+@startuml
+title Base Node and Process Class Diagram
+package eros {
+    class BaseNodeProcess
+    class BaseNode
+    together {
+        enum Level::Type
+        struct Diagnostic::DiagnosticDefinition
+        enum Node::State
+        class Logger
+        enum ArmDisarm::State
+        enum FileHelper::FileInfo
+        class Diagnostic
+    }
+}
+Logger <-- BaseNodeProcess
+Level::Type *-- BaseNodeProcess
+Diagnostic::DiagnosticDefinition *-- BaseNodeProcess
+Node::State *-- BaseNodeProcess
+ArmDisarm::State *-- BaseNodeProcess
+FileHelper::FileInfo *-- BaseNodeProcess
+Diagnostic *-- BaseNodeProcess
+Diagnostic *-- BaseNode
+Logger *-- BaseNode
+Diagnostic +- Diagnostic::DiagnosticDefinition
+class BaseNodeProcess {
+    +{abstract} Diagnostic::DiagnosticDefinition finish_initialization()
+    +{abstract} void reset()
+    +{abstract} Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time)
+    +{abstract} std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg)
+    +{abstract} std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() 
+    +{abstract} void cleanup()
+
+    +void initialize(std::string t_base_node_name,std::string t_node_name,std::string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
+    +bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types)
+    +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticDefinition diag)
+    +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,std::string description)
+    +Node::State get_nodestate()
+    +double get_runtime()
+    +eros::ready_to_arm get_ready_to_arm()
+    +std::string get_hostname()
+    +Diagnostic::DiagnosticDefinition get_root_diagnostic()
+    +std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics()
+    +std::vector<Diagnostic::DiagnosticDefinition> get_latest_diagnostics()
+    +double get_system_time() 
+    +double get_run_time()
+    +Logger* get_logger()
+    +json read_configuration(std::string device_name,bool include_self = true,std::string file_path = "~/config/DeviceList.json")
+    +bool request_statechange(Node::State newstate)
+    +Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time)
+    +std::vector<std::string> get_files_indir(std::string dir)
+    +void base_cleanup()
+
+    +{static} ros::Time convert_time(struct timeval t)
+    +{static} ros::Time convert_time(double t)
+    +{static} eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr)
+    +{static} eros::ready_to_arm convert_fromptr(const eros::ready_to_arm::ConstPtr& t_ptr)
+    +{static} eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr)
+    +{static} eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr)
+    +{static} eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def)
+    +{static} Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag)
+    +{static} eros::armed_state convert(ArmDisarm::State v)
+    +{static} ArmDisarm::State convert(eros::armed_state v)
+    +{static} std::string sanitize_path(std::string path)
+    +{static} FileHelper::FileInfo read_file(std::string file_path)
+    +{static} FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count)
+
+    #Logger* logger
+    #std::string hostname
+    #std::string base_node_name
+    #Node::State node_state
+    #Diagnostic diagnostic_helper
+    #bool unittest_running
+    #eros::ready_to_arm ready_to_arm
+
+
+}
+class BaseNode {
+    +{abstract} bool start()
+    +{abstract} bool run_loop1()
+    +{abstract} bool run_loop2()
+    +{abstract} bool run_loop3()
+    +{abstract} bool run_001hz()
+    +{abstract} bool run_01hz()
+    +{abstract} bool run_01hz_noisy()
+    +{abstract} bool run_1hz()
+    +{abstract} bool run_10hz()
+    +{abstract} void thread_loop()
+    +{abstract} bool changenodestate_service(eros::srv_change_nodestate::Request &req,
+                                         eros::srv_change_nodestate::Response &res)
+    +{abstract} void command_Callback(const eros::command::ConstPtr &t_msg)
+    +{abstract} void cleanup()
+
+    +void set_no_launch_enabled(bool v)
+    +void disable_armedstate_sub()
+    +void disable_modestate_sub()
+    +void enable_ready_to_arm_pub(bool v)
+    +void set_basenodename(std::string t_base_node_name)
+    +void initialize_diagnostic(System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component)
+    +void initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,std::string t_description)
+    +void set_nodename(std::string t_node_name)
+    +Diagnostic::DiagnosticDefinition preinitialize_basenode()
+    +void set_loop1_rate(double t_rate)
+    +void set_loop2_rate(double t_rate)
+    +void set_loop3_rate(double t_rate)
+    +void set_ros_rate(double t_rate)
+    +bool update(Node::State node_state)
+    +std::string get_basenodename()
+    +std::string get_nodename()
+    +std::string read_robotnamespace()
+    +void set_robotnamespace(std::string _robot_namespace)
+    +std::string get_robotnamespace()
+    +std::string get_verbositylevel()
+    +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
+    +Logger *get_logger()
+    +void update_ready_to_arm(eros::ready_to_arm v)
+    +double measure_time_diff(ros::Time t_timer_a, ros::Time t_timer_b)
+    +eros::resource convert(ResourceMonitor::ResourceInfo res_info)
+    +void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg)
+    +bool firmware_service(eros::srv_firmware::Request &req, eros::srv_firmware::Response &res)
+    +bool loggerlevel_service(eros::srv_logger_level::Request &req,
+                             eros::srv_logger_level::Response &res)
+    +bool diagnostics_service(eros::srv_get_diagnostics::Request &req,
+                             eros::srv_get_diagnostics::Response &res)
+    +void armedstate_Callback(const eros::armed_state::ConstPtr &t_msg)
+    +void modestate_Callback(const eros::mode_state::ConstPtr &t_msg)
+    +void base_reset()
+
+
+    +{static} std::string validate_robotnamespace(std::string str)
+    +{static} std::string get_hostname()
+    +{static} eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr)
+    +{static} eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr)
+}
+@enduml

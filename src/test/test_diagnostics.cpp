@@ -29,6 +29,7 @@ TEST(BasicTest, DiagnosticHelper) {
         diag_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
         diag_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
         diag_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+        diag_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);  // Add Extra
         EXPECT_TRUE(diag_helper.enable_diagnostics(diag_types));
         printf("Diagnostics:\n");
         printf("%s\n", diag_helper.pretty().c_str());
@@ -46,6 +47,18 @@ TEST(BasicTest, DiagnosticHelper) {
         printf("Diag: %s\n", Diagnostic::pretty("\t", diag).c_str());
         EXPECT_TRUE(logger->log_diagnostic(diag) == Logger::LoggerStatus::LOG_WRITTEN);
         EXPECT_TRUE(diag.level > Level::Type::WARN);
+    }
+    {  // Add a Diagnostic for a Different Device
+
+        Diagnostic::DiagnosticDefinition diag =
+            diag_helper.update_diagnostic("AnotherDevice",
+                                          Diagnostic::DiagnosticType::SOFTWARE,
+                                          Level::Type::INFO,
+                                          Diagnostic::Message::NOERROR,
+                                          "No Error");
+        printf("Diag: %s\n", Diagnostic::pretty("\t", diag).c_str());
+        EXPECT_TRUE(logger->log_diagnostic(diag) == Logger::LoggerStatus::LOG_WRITTEN);
+        EXPECT_TRUE(diag.level <= Level::Type::WARN);
     }
     {
         Diagnostic::DiagnosticDefinition diag =
@@ -81,6 +94,16 @@ TEST(BasicTest, DiagnosticHelper) {
         }
     }
     delete logger;
+}
+TEST(FailureTests, FailureCases) {
+    {
+        Diagnostic diag_helper;
+        std::vector<Diagnostic::DiagnosticDefinition> emptyDiagnosticList;
+        std::vector<Diagnostic::DiagnosticType> emptyDiagnosticTypeList;
+        std::string str = diag_helper.pretty("", emptyDiagnosticList);
+        EXPECT_EQ(str, "NO DIAGNOSTICS DEFINED YET.");
+        EXPECT_FALSE(diag_helper.enable_diagnostics(emptyDiagnosticTypeList));
+    }
 }
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);

@@ -67,6 +67,7 @@ namespace eros {
 class Logger
 {
    public:
+    static constexpr uint16_t MAXLINE_COUNT = 5000;
     enum class LoggerStatus {
         UNKNOWN = 0,        /*!< Uninitialized value. */
         FAILED_TO_OPEN = 1, /*!< Logger was not able to open file to log. */
@@ -92,8 +93,14 @@ class Logger
     Level::Type get_logverbosity() {
         return verbosity;
     }
-
-    void set_logverbosity(Level::Type level);
+    bool is_logger_ok() {
+        return logger_ok;
+    }
+    /*!
+      \param level The new verbosity.
+      \return If the verbosity was able to be set (True) or not (False)
+    */
+    bool set_logverbosity(Level::Type level);
 
     //! Disable Console Output
     /*!
@@ -144,6 +151,8 @@ class Logger
     const std::string YELLOW_FOREGROUND = "\033[1;33m";
     const std::string RED_FOREGROUND = "\033[1;31m";
     const std::string END_COLOR = "\033[0m";
+
+    bool logger_ok;
     int line_counter;
     Level::Type verbosity;
     std::ofstream log_file;

@@ -185,22 +185,31 @@ class BaseNode
     std::string get_nodename() {
         return node_name;
     }
+    // No practical way to unit test
+    // LCOV_EXCL_START
     std::string read_robotnamespace() {
         std::string _robot_namespace;
         std::string param_robot_namespace = n->getUnresolvedNamespace() + "/robot_namespace";
+
         if (n->getParam(param_robot_namespace, _robot_namespace) == false) {
             _robot_namespace = "/";
         }
+
         _robot_namespace = validate_robotnamespace(_robot_namespace);
         return _robot_namespace;
     }
+    // LCOV_EXCL_STOP
     void set_robotnamespace(std::string _robot_namespace) {
         robot_namespace = validate_robotnamespace(_robot_namespace);
     }
     std::string get_robotnamespace() {
         return robot_namespace;
     }
+    // For some reason gcov is saying this isn't getting line coverage, but it assuredely is.
+    // LCOV_EXCL_START
     static std::string validate_robotnamespace(std::string str);
+    // LCOV_EXCL_STOP
+
     /*! \brief Get the current logger verbosity level. */
     std::string get_verbositylevel() {
         return verbosity_level;
@@ -235,8 +244,6 @@ class BaseNode
         return etime;
     }
 
-    eros::diagnostic convert(Diagnostic::DiagnosticDefinition diag_def);
-    Diagnostic::DiagnosticDefinition convert(eros::diagnostic diag_def);
     eros::resource convert(ResourceMonitor::ResourceInfo res_info);
     static eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr);
     static eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr);

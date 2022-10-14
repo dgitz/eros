@@ -5,6 +5,7 @@
 
 #include <map>
 using namespace eros;
+std::string robot_namespace = "/test";
 class BaseNodeTester : public eros::BaseNode
 {
    public:
@@ -32,6 +33,7 @@ class BaseNodeTester : public eros::BaseNode
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::CONTROLLER;
     bool start() {
         set_no_launch_enabled(true);
+        set_robotnamespace(robot_namespace);
 
         disable_device_client = true;
         initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
@@ -48,6 +50,11 @@ class BaseNodeTester : public eros::BaseNode
         if (diagnostic.level > Level::Type::WARN) {
             return false;
         }
+        disable_armedstate_sub();
+        set_loop1_rate(1.0);
+        set_loop2_rate(2.0);
+        set_loop3_rate(3.0);
+        set_ros_rate(30.0);
         std::vector<Diagnostic::DiagnosticType> diagnostic_types;
         diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
         diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
@@ -126,6 +133,7 @@ class BaseNodeTester : public eros::BaseNode
 TEST(BaseNode, BasicFunctionality) {
     BaseNodeTester tester;
     bool status = tester.start();
+    printf("Verbosity Level: %s\n", tester.get_verbositylevel().c_str());
     EXPECT_TRUE(status);
     {                                                         // Namespace checks
         std::map<std::string, std::string> namespace_checks;  // First=Input, Second=Output
@@ -151,6 +159,17 @@ TEST(BaseNode, BasicFunctionality) {
             EXPECT_TRUE(output_str == expected_str);
             i++;
         }
+    }
+    {  // Time Checks
+        ros::Time t_now = ros::Time::now();
+        double t_dur = tester.measure_time_diff(t_now, t_now);
+        EXPECT_NEAR(t_dur, 0.0, 1e-8);
+        sleep(1.0);
+        ros::Time t_future = ros::Time::now();
+        t_dur = tester.measure_time_diff(t_now, t_future);
+        EXPECT_NEAR(t_dur, -1.0, 0.25);  // Allow for imprecise time clocks
+        t_dur = tester.measure_time_diff(t_future, t_now);
+        EXPECT_NEAR(t_dur, 1.0, 0.25);  // Allow for imprecise time clocks
     }
 }
 int main(int argc, char** argv) {

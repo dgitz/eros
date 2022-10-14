@@ -4,6 +4,7 @@
 #define RESOURCEMONITOR_H
 #include <eros/Diagnostic.h>
 #include <eros/Logger.h>
+#include <eros/Utility.h>
 #include <eros/eROS_Definitions.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -25,7 +26,7 @@ class ResourceMonitor
     struct ResourceInfo {
         /*@{*/
         std::string process_name; /**< The name of the process. */
-        uint16_t pid;             /**< The PID of the Process.  0 is Invalid. */
+        uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
         double cpu_perc; /**< CPU Usage of a Process in Percentage.  100% would indicate the process
                             is fully utilizing 1 CPU. */
         double ram_perc; /**< RAM Usage of a Process in Percentage.  100% would indicate the process
@@ -42,9 +43,11 @@ class ResourceMonitor
             2, /*!< This Mode is used when checking Device Resource Availability Information. */
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
-    ResourceMonitor();
     ~ResourceMonitor();
     ResourceMonitor(Mode _mode, Diagnostic::DiagnosticDefinition _diag, Logger* _logger);
+    bool is_initialized() {
+        return initialized;
+    }
 
     std::string pretty(ResourceInfo info);
     Diagnostic::DiagnosticDefinition init();
@@ -56,12 +59,10 @@ class ResourceMonitor
     }
     Diagnostic::DiagnosticDefinition update(double t_dt);
 
-    std::string exec(const char* cmd, bool wait_for_result);
-
     std::vector<double> get_load_factor() {
         return load_factor;
     }
-    void reset();
+    bool reset();
 
    private:
     Diagnostic::DiagnosticDefinition read_process_resource_usage();

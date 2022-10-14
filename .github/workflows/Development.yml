@@ -1,0 +1,9 @@
+name: Development
+
+on:
+  push:
+    branches: [ US_877_ReleaseDoctorStrange00 ]
+
+jobs:
+  call_BuildTest:
+    uses: ./.github/workflows/buildtest.yml

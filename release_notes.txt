@@ -1,4 +1,73 @@
 // clang-format off
+Release: DOCTORSTRANGE
+SW Tag: DOCTORSTRANGE00
+Author: David Gitz
+Date: 14-Oct-2022
+
+--- General Notes
+  * This release is intended to support ROS Noetic/Ubuntu 20.04
+
+--- User Stories
+US: 1110 Create Release Test Plan
+  Author: David Gitz
+  Date: 11-Oct-2022
+  * Created SW Release Plan
+  * Updated Wiki
+  * Added Regression tool in Dev Tools script.
+
+US: 1103 Add SW Architecture Documentation
+  Author: David Gitz
+  Date: 9-Oct-2022
+  * Created SW Architecture documentatino for BaseNode, Custom Node, Logger, ResourceMonitor, Diagnostic content.
+
+US: 1108 Setup Local Pipeline Server
+  Author: David Gitz
+  Date: 9-Oct-2022
+  * Added support for local Pipeline server.
+
+US: 1102 Improve Code Coverage for Basic content
+  Author: David Gitz
+  Date: 9-Oct-2022
+  * Improved Code Coverage for BaseNode, Utility, ResourceMonitor, Logger classes.
+  * Does not affect other Nodes.
+
+US: 1101 Add Code Coverage Scan/Results
+  Author: David Gitz
+  Date: 9-Oct-2022
+  * Add ability to check code coverage in Pipeline and local run.
+
+US: 1100 Setup Build Server/Pipeline
+  Author: David Gitz
+  Date: 7-Oct-2022
+  * Created yml files to support run in Pipeline
+
+US: 1097 Update basic scripts to support ROS Noetic
+  Author: David Gitz
+  Date: 6-Oct-2022
+  * Updated simple_setup script, create from template scripts. to work for ROS Noetic
+
+--- Bugs
+BUG: 1113 Snapshot Node doesn't obey Logger Threshold
+  Author: David Gitz
+  Date: 13-Oct-2022
+  * <param> tag not set right in Snapshot Node launch file.
+
+BUG: 1112 Resource Monitor reports "SIGENV" error message
+  Author: David Gitz
+  Date: 13-Oct-2022
+  * Cause was using an uint16 for PID, but on Ubuntu 20.04 PID's are now higher.  Changed to uint64.
+
+BUG: 1109 Intermittent Snapshot Node Slave Unit Test Fails
+  Author: David Gitz
+  Date: 12-Oct-2022
+  * Found root cause of bug, not filtering out zero length file names in list query.
+  * Resolves Issue https://github.com/dgitz/eros/issues/204
+
+--- Other Comments
+* This release is intended to migrate to ROS Noetic.
+
+****
+
 Release: CAPTAINMARVEL
 SW Tag: TBD
 Author: David Gitz
