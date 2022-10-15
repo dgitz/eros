@@ -4,43 +4,30 @@ from util.Helpers import *
 from util.bag2csv import *
 import rosbag
 import shutil
+import util.performance_analysis
 
-
-def performance_scan(bag_dir,output_dir):
+def convert_performance_logs(bag_dir,output_dir):
     topicTypeList = ['eros/loadfactor','eros/resource']
-    topicNameList = ['loadfactor','resource_used','resource_available']
     print(CGREEN + "Starting Performance Scan..."  + CEND)
-    # Check bag_dir for bag files
+    convert_logs(bag_dir,output_dir,topicTypeList)
 
-    bagFileList=[]
-    for file in os.listdir(bag_dir):
-        if file.endswith(".bag"):
-            bagFileList.append(file)
-    print("Found: " + str(len(bagFileList)) + " Bag Files.")
-    if len(bagFileList) == 0:
-        print(CYELLOW + "No Bag Files found in Directory. Exiting." + CEND)
-        return
-
-    # Clear out Output Folder
-    if os.path.exists(output_dir) and os.path.isdir(output_dir):
-        shutil.rmtree(output_dir)
-    os.mkdir(output_dir)
+def analyze_performance_logs(csv_dir,output_dir):
+    # Load Data into memory
+    ANALYZE_RAM=0
+    ANALYZE_CPU=0
+    ANALYZE_LOADFACTOR=1
+    fileList = [os.path.join(r,file) for r,d,f in os.walk(csv_dir) for file in f]
+        #for f in filenames:
+        #    files.append(dir)
+    for f in fileList:
+        f_name = os.path.basename(f)
+        if(f_name == "loadfactor.csv"):
+            util.performance_analysis.analyze_loadfactor(f)
+        
 
     
-    for file in bagFileList:
-        fileName = os.path.join(bag_dir,file)
-        print("Scanning " + fileName)
-        # Get Topic Names of Interest
-        bag = rosbag.Bag(fileName)
-        keys = list(bag.get_type_and_topic_info()[1].keys())
-        values = list(bag.get_type_and_topic_info()[1].values())
-        for i in range(0,len(keys)):
-            topicName = keys[i]
-            topicType = values[i].msg_type
             
-            if any(topicType in x for x in topicTypeList):
-                bag2csv(fileName,topicName,topicType,output_dir)
-            
+
 
 
 
@@ -48,11 +35,20 @@ def performance_scan(bag_dir,output_dir):
 def main():
     parser = OptionParser("analyze_logs.py [options]")
     parser.add_option("-m","--mode",dest="mode",default="performance",help="performance")
+    parser.add_option("-s","--submode",dest="submode",default="analysis",help="conversion,analysis")
     parser.add_option("-d","--directory",dest="directory",default="~/",help="Location of Bag Files.")
     parser.add_option("-o","--output",dest="output",default="~/temp/",help="Output Location")
     (opts,args) = parser.parse_args()
     if(opts.mode=="performance"):
-        performance_scan(opts.directory,opts.output)
+        if(opts.submode == "conversion"):
+            convert_performance_logs(opts.directory,opts.output)
+        elif(opts.submode == "analysis"):
+            analyze_performance_logs(opts.directory,opts.output)
+        else:
+            print(CRED + "Not Supported!" + CEND)
+    else:
+        print(CRED + "Not Supported!" + CEND)
+
 
 
 if __name__ == "__main__":
