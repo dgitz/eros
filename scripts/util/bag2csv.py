@@ -8,7 +8,6 @@ def convert_logs(bag_dir,output_dir,topic_type_list):
         if file.endswith(".bag"):
             bagFileList.append(file)
     bagFileList.sort()
-    print("Found: " + str(len(bagFileList)) + " Bag Files.")
     if len(bagFileList) == 0:
         print(CYELLOW + "No Bag Files found in Directory. Exiting." + CEND)
         return
@@ -65,7 +64,6 @@ def bag2csv(fileName,topicName,topicType,output_dir):
                     if val.__slots__[0] == 'secs' and val.__slots__[1] == 'nsecs':
                         outstr += str(val.to_sec()) + ","
             except:
-                #pdb.set_trace()
                 if type(val).__name__ == "tuple":
                     for field in range(val.__len__()):
                         outstr += str(val[field]) + ","
