@@ -16,15 +16,22 @@ void DataLoggerNode::system_commandAction_Callback(const eros::system_commandGoa
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult result_;
     system_command_action_server.setAborted(result_);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::WARN,
+                                      Diagnostic::Message::DROPPING_PACKETS,
+                                      "Received unsupported CommandAction: " +
+                                          Command::CommandString((Command::Type)goal->Command));
+    logger->log_diagnostic(diag);
+}
+void DataLoggerNode::command_Callback(const eros::command::ConstPtr &t_msg) {
+    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         Diagnostic::DiagnosticType::COMMUNICATIONS,
         Level::Type::WARN,
         Diagnostic::Message::DROPPING_PACKETS,
-        "Received unsupported Command: " + Command::CommandString((Command::Type)goal->Command));
+        "Received unsupported Command: " + Command::CommandString((Command::Type)cmd.Command));
     logger->log_diagnostic(diag);
-}
-void DataLoggerNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    (void)t_msg;
 }
 bool DataLoggerNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                              eros::srv_change_nodestate::Response &res) {
@@ -42,14 +49,19 @@ bool DataLoggerNode::start() {
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
     enable_ready_to_arm_pub(true);
     diagnostic = preinitialize_basenode();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
+    // LCOV_EXCL_STOP
     diagnostic = read_launchparameters();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
-
+    // LCOV_EXCL_STOP
     process->initialize(get_basenodename(),
                         get_nodename(),
                         get_hostname(),
@@ -61,12 +73,16 @@ bool DataLoggerNode::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (diagnostic.level > Level::Type::WARN) {
         return false;
     }
+    // LCOV_EXCL_STOP
     if (diagnostic.level < Level::Type::WARN) {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
         diagnostic.level = Level::Type::INFO;
@@ -74,6 +90,8 @@ bool DataLoggerNode::start() {
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (process->request_statechange(Node::State::INITIALIZING) == false) {
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZING));
@@ -86,6 +104,7 @@ bool DataLoggerNode::start() {
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
     }
+    // LCOV_EXCL_STOP
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     status = true;
     return status;
@@ -99,6 +118,8 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string param_logfile_duration = node_name + "/LogFile_Duration";
     double logfile_duration;
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (n->getParam(param_logfile_duration, logfile_duration) == false) {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
@@ -107,8 +128,11 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
+    // LCOV_EXCL_STOP
     std::string param_logfile_directory = node_name + "/LogFile_Directory";
     std::string logfile_directory;
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (n->getParam(param_logfile_directory, logfile_directory) == false) {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
@@ -117,8 +141,11 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
+    // LCOV_EXCL_STOP
     process->set_logfileduration(logfile_duration);
     bool available = process->set_logdirectory(logfile_directory);
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (available == false) {
         diag = process->update_diagnostic(
             Diagnostic::DiagnosticType::DATA_STORAGE,
@@ -128,8 +155,11 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
         logger->log_diagnostic(diag);
         return diag;
     }
+    // LCOV_EXCL_STOP
     std::string param_snapshot_mode = node_name + "/SnapshotMode";
     bool snapshot_mode = false;
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (n->getParam(param_snapshot_mode, snapshot_mode) == false) {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::WARN,
@@ -137,7 +167,10 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
                                           "Missing Parameter: SnapshotMode.");
         logger->log_diagnostic(diag);
     }
+    // LCOV_EXCL_STOP
     process->setSnapshotMode(snapshot_mode);
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (snapshot_mode == false) {
         diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::WARN,
@@ -145,6 +178,7 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
                                           "SnapshotMode Disabled.  Logging to File Storage.");
         logger->log_diagnostic(diag);
     }
+    // LCOV_EXCL_STOP
     else {
         snapshot_trigger_sub =
             n->subscribe<std_msgs::Empty>(get_robotnamespace() + "snapshot_trigger",
@@ -158,6 +192,8 @@ Diagnostic::DiagnosticDefinition DataLoggerNode::finish_initialization() {
                                           "Snapshot is triggered.");
         logger->log_diagnostic(diag);
     }
+    command_sub = n->subscribe<eros::command>(
+        get_robotnamespace() + "SystemCommand", 10, &DataLoggerNode::command_Callback, this);
     std::string srv_nodestate_topic = "srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &DataLoggerNode::changenodestate_service, this);

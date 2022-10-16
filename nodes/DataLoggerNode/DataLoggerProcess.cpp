@@ -10,6 +10,7 @@ DataLoggerProcess::DataLoggerProcess()
 }
 
 DataLoggerProcess::~DataLoggerProcess() {
+    cleanup();
 }
 Diagnostic::DiagnosticDefinition DataLoggerProcess::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag;

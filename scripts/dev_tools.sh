@@ -1,5 +1,5 @@
 #!/bin/bash
-LINE_COVERAGE_THRESHOLD=10
+LINE_COVERAGE_THRESHOLD=60
 BRANCH_COVERAGE_THRESHOLD=0 # Don't care about Branch Coverage.
 bin_dir="../../build"
 
