@@ -3,11 +3,11 @@ from os import makedirs
 import rosbag
 def convert_logs(bag_dir,output_dir,topic_type_list):
     # Check bag_dir for bag files
-
     bagFileList=[]
     for file in os.listdir(bag_dir):
         if file.endswith(".bag"):
             bagFileList.append(file)
+    bagFileList.sort()
     print("Found: " + str(len(bagFileList)) + " Bag Files.")
     if len(bagFileList) == 0:
         print(CYELLOW + "No Bag Files found in Directory. Exiting." + CEND)
@@ -18,8 +18,10 @@ def convert_logs(bag_dir,output_dir,topic_type_list):
         shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
-    
+    counter = 0
     for file in bagFileList:
+        print(CGREEN + "Bag File Number: " + str(counter+1) + "/" + str(len(bagFileList)) +  CEND)
+
         fileName = os.path.join(bag_dir,file)
         # Get Topic Names of Interest
         bag = rosbag.Bag(fileName)
@@ -31,9 +33,10 @@ def convert_logs(bag_dir,output_dir,topic_type_list):
             
             if any(topicType in x for x in topic_type_list):
                 bag2csv(fileName,topicName,topicType,output_dir)
-                
+        counter+=1
+
 def bag2csv(fileName,topicName,topicType,output_dir):
-    print(CGREEN + "Converting: " + fileName + " with Topic: " + topicName + CEND)
+    print(fileName)
     outFileName = output_dir + topicName[1:]+".csv"
     outFileDirectory = os.path.dirname(outFileName)
     if os.path.exists(outFileDirectory) == False:
