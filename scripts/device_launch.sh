@@ -1,6 +1,6 @@
 #!/bin/bash
 #Usage: 
-source ./scripts/simple_logger.sh
+source ./util/simple_logger.sh
 launch_list_file="~/storage/stage/device_launch_list"
 while IFS= read -r line
 do

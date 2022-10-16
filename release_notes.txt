@@ -1,5 +1,26 @@
 // clang-format off
 Release: DOCTORSTRANGE
+SW Tag: TBD
+Author: TBD
+Date: TBD
+
+--- General Notes
+
+--- User Stories
+US: 1114 Create Script to analyze logs for RAM, CPU Usage
+  Author: David Gitz
+  Date: 16-Oct-2022
+  * Created python scripts to convert bag files to csv files.
+  * Created python scripts to analyze csv files for ram, cpu usage.
+  * Updated Wiki for instructions
+
+--- Bugs
+
+--- Other Comments
+
+**** 
+
+Release: DOCTORSTRANGE
 SW Tag: DOCTORSTRANGE00
 Author: David Gitz
 Date: 14-Oct-2022
