@@ -33,9 +33,22 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 
+    tester->reset();
+
+    {
+        eros::command cmd;
+        std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(cmd);
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+    {
+        std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->check_programvariables();
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+
     delete logger;
     delete tester;
 }
+
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
