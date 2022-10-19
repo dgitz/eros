@@ -8,8 +8,9 @@ std::string unittest_nodename = "datalogger_node";
 using namespace eros;
 typedef actionlib::SimpleActionClient<eros::system_commandAction> CommandActionClient;
 uint64_t heartbeat_count = 0;
+eros::heartbeat latest_heartbeat;
 void heartbeat_Callback(const eros::heartbeat& msg) {
-    (void)msg;
+    latest_heartbeat = msg;
     heartbeat_count++;
 }
 TEST(DataLoggerNode, TestDataLoggerNode) {
@@ -51,9 +52,31 @@ TEST(DataLoggerNode, TestDataLoggerNode) {
         req.request.RequestedNodeState = "PAUSED";
         EXPECT_TRUE(client.call(req));
         sleep(1);
+        EXPECT_EQ((uint8_t)Node::State::PAUSED, latest_heartbeat.NodeState);
         req.request.RequestedNodeState = "RUNNING";
         EXPECT_TRUE(client.call(req));
+        sleep(1);
+        EXPECT_EQ((uint8_t)Node::State::RUNNING, latest_heartbeat.NodeState);
+
+        req.request.RequestedNodeState = "RESET";
+        EXPECT_TRUE(client.call(req));
+        sleep(1);
+        EXPECT_EQ((uint8_t)Node::State::RUNNING,
+                  latest_heartbeat.NodeState);  // Node should automatically change state to Running
     }
+
+    logger->log_notice("Test Snapshot");
+    {
+        ros::Publisher snapshot_trigger_pub =
+            nh.advertise<std_msgs::Empty>(robot_namespace + "snapshot_trigger", 20);
+        sleep(1);
+        EXPECT_EQ(1, snapshot_trigger_pub.getNumSubscribers());
+        std_msgs::Empty trigger;
+        snapshot_trigger_pub.publish(trigger);
+        sleep(1);
+    }
+    logger->log_warn("Allow time for other functions to get called by Node.");
+    sleep(10);
 
     delete logger;
 }

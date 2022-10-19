@@ -2,6 +2,9 @@
 using namespace eros;
 using namespace eros_nodes;
 bool kill_node = false;
+// Coverage Suppress not working for this function.
+DataLoggerNode::~DataLoggerNode() {
+}
 DataLoggerNode::DataLoggerNode()
     : system_command_action_server(
           *n.get(),
@@ -9,8 +12,6 @@ DataLoggerNode::DataLoggerNode()
           boost::bind(&DataLoggerNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
-}
-DataLoggerNode::~DataLoggerNode() {
 }
 void DataLoggerNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
@@ -109,6 +110,7 @@ bool DataLoggerNode::start() {
     status = true;
     return status;
 }
+
 Diagnostic::DiagnosticDefinition DataLoggerNode::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     get_logger()->log_notice("Configuration Files Loaded.");
@@ -229,19 +231,31 @@ void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &
                       << " (Time may not be exactly right...)" << std::endl;
         snapshot_file.close();
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     else {
         logger->log_warn("Could not open file: " + snapshot_file_path);
     }
+    // LCOV_EXCL_STOP
 }
+// Not used by Node, No way to unit test.  Still need to keep for BaseNode.
+// LCOV_EXCL_START
 bool DataLoggerNode::run_loop1() {
     return true;
 }
+// LCOV_EXCL_STOP
+// Not used by Node, No way to unit test.  Still need to keep for BaseNode.
+// LCOV_EXCL_START
 bool DataLoggerNode::run_loop2() {
     return true;
 }
+// LCOV_EXCL_STOP
+// Not used by Node, No way to unit test.  Still need to keep for BaseNode.
+// LCOV_EXCL_START
 bool DataLoggerNode::run_loop3() {
     return true;
 }
+// LCOV_EXCL_STOP
 bool DataLoggerNode::run_001hz() {
     return true;
 }
@@ -265,6 +279,8 @@ bool DataLoggerNode::run_1hz() {
         base_reset();
         process->reset();
         logger->log_notice("Node has Reset");
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (process->request_statechange(Node::State::RUNNING) == false) {
             diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
@@ -273,6 +289,7 @@ bool DataLoggerNode::run_1hz() {
                                               "Running.");
             logger->log_diagnostic(diag);
         }
+        // LCOV_EXCL_STOP
     }
     return true;
 }
@@ -300,9 +317,12 @@ void DataLoggerNode::run_logger(DataLoggerNode *node) {
         ros::master::V_TopicInfo master_topics;
         ros::master::getTopics(master_topics);
         for (std::size_t i = 0; i < master_topics.size(); ++i) {
+            // No Practical way to Unit Test
+            // LCOV_EXCL_START
             if (get_robotnamespace() == "/") {
                 opts.topics.push_back(master_topics.at(i).name);
             }
+            // LCOV_EXCL_STOP
             else if (master_topics.at(i).name.rfind(get_robotnamespace(), 0) == 0) {
                 opts.topics.push_back(master_topics.at(i).name);
             }
@@ -310,16 +330,25 @@ void DataLoggerNode::run_logger(DataLoggerNode *node) {
         rosbag::Recorder recorder(opts);
         logger->log_warn("Data Logger Running.");
         recorder.run();
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         node->get_logger()->log_notice("Logger Finished.");
+        // LCOV_EXCL_STOP
     }
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     return;
+    // LCOV_EXCL_STOP
 }
+// No Practical way to Unit Test
+// LCOV_EXCL_START
 void DataLoggerNode::cleanup() {
     process->request_statechange(Node::State::FINISHED);
     process->cleanup();
     delete process;
     base_cleanup();
 }
+// LCOV_EXCL_STOP
 void signalinterrupt_handler(int sig) {
     printf("Killing DataLoggerNode with Signal: %d\n", sig);
     kill_node = true;
@@ -331,9 +360,12 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "datalogger_node");
     DataLoggerNode *node = new DataLoggerNode();
     bool status = node->start();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     if (status == false) {
         return EXIT_FAILURE;
     }
+    // LCOV_EXCL_STOP
     std::thread thread(&DataLoggerNode::thread_loop, node);
     std::thread thread2(&DataLoggerNode::run_logger, node, node);
     while ((status == true) and (kill_node == false)) {
@@ -341,8 +373,11 @@ int main(int argc, char **argv) {
     }
 
     thread2.join();
+    // No Practical way to Unit Test
+    // LCOV_EXCL_START
     thread.detach();
     node->cleanup();
     delete node;
     return 0;
+    // LCOV_EXCL_STOP
 }

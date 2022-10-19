@@ -7,6 +7,11 @@ Date: TBD
 --- General Notes
 
 --- User Stories
+US: 886 Add Level2 Unit Tests for DataLogger
+  Author: David Gitz
+  Date: 19-Oct-2022
+  * Maxed out unit tests/code coverage for Data Logger Node.
+
 US: 1114 Create Script to analyze logs for RAM, CPU Usage
   Author: David Gitz
   Date: 16-Oct-2022
