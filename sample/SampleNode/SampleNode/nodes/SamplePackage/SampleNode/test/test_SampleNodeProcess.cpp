@@ -1,20 +1,20 @@
-/*! \file test_{{cookiecutter.process_classname}}.cpp
+/*! \file test_SampleNodeProcess.cpp
  */
 #include <gtest/gtest.h>
 #include <stdio.h>
 
-#include <{{cookiecutter.package_name}}/{{cookiecutter.node_classname}}/{{cookiecutter.process_classname}}.h>
+#include <SamplePackage/SampleNode/SampleNodeProcess.h>
 using namespace eros;
-class {{cookiecutter.process_classname}}Tester : public {{cookiecutter.process_classname}} {
+class SampleNodeProcessTester : public SampleNodeProcess {
     public :
-        {{cookiecutter.process_classname}}Tester(){}
-        ~{{cookiecutter.process_classname}}Tester(){}
+        SampleNodeProcessTester(){}
+        ~SampleNodeProcessTester(){}
 };
 TEST(BasicTest, TestOperation) {
-    Logger* logger = new Logger("DEBUG", "UnitTest{{cookiecutter.process_classname}}");
-    {{cookiecutter.process_classname}}Tester* tester = new {{cookiecutter.process_classname}}Tester;
-    tester->initialize("UnitTest{{cookiecutter.process_classname}}",
-                       "UnitTest{{cookiecutter.process_classname}}",
+    Logger* logger = new Logger("DEBUG", "UnitTestSampleNodeProcess");
+    SampleNodeProcessTester* tester = new SampleNodeProcessTester;
+    tester->initialize("UnitTestSampleNodeProcess",
+                       "UnitTestSampleNodeProcess",
                        "MyHost",
                        System::MainSystem::SIMROVER,
                        System::SubSystem::ENTIRE_SYSTEM,

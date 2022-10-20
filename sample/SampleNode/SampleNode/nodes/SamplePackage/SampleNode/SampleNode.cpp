@@ -1,17 +1,17 @@
-#include <{{cookiecutter.package_name}}/{{cookiecutter.node_classname}}/{{cookiecutter.node_classname}}.h>
+#include <SamplePackage/SampleNode/SampleNode.h>
 using namespace eros;
 bool kill_node = false;
-{{cookiecutter.node_classname}}::{{cookiecutter.node_classname}}()
+SampleNode::SampleNode()
     : system_command_action_server(
           *n.get(),
           read_robotnamespace() + "SystemCommandAction",
-          boost::bind(&{{cookiecutter.node_classname}}::system_commandAction_Callback, this, _1),
+          boost::bind(&SampleNode::system_commandAction_Callback, this, _1),
           false) {
     system_command_action_server.start();
 }
-{{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
+SampleNode::~SampleNode() {
 }
-void {{cookiecutter.node_classname}}::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
+void SampleNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
     system_command_action_server.setAborted(system_commandResult_);
@@ -22,7 +22,7 @@ void {{cookiecutter.node_classname}}::system_commandAction_Callback(const eros::
                                           Command::CommandString((Command::Type)goal->Command));
     logger->log_diagnostic(diag);
 }
-void {{cookiecutter.node_classname}}::command_Callback(const eros::command::ConstPtr &t_msg) {
+void SampleNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
@@ -32,7 +32,7 @@ void {{cookiecutter.node_classname}}::command_Callback(const eros::command::Cons
         "Received unsupported Command: " + Command::CommandString((Command::Type)cmd.Command));
     logger->log_diagnostic(diag);
 }
-bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_nodestate::Request &req,
+bool SampleNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res)
 {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
@@ -40,10 +40,10 @@ bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_n
     res.NodeState = Node::NodeStateString(process->get_nodestate());
     return true;
 }
-bool {{cookiecutter.node_classname}}::start() {
+bool SampleNode::start() {
     initialize_diagnostic(DIAGNOSTIC_SYSTEM, DIAGNOSTIC_SUBSYSTEM, DIAGNOSTIC_COMPONENT);
     bool status = false;
-    process = new {{cookiecutter.process_classname}}();
+    process = new SampleNodeProcess();
     set_basenodename(BASE_NODE_NAME);
     initialize_firmware(
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
@@ -115,17 +115,17 @@ bool {{cookiecutter.node_classname}}::start() {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchparameters() {
+Diagnostic::DiagnosticDefinition SampleNode::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     command_sub = n->subscribe<eros::command>(
         get_robotnamespace() + "SystemCommand", 10, &SampleNode::command_Callback, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initialization() {
+Diagnostic::DiagnosticDefinition SampleNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = "srv_nodestate_change";
-    nodestate_srv = n->advertiseService(srv_nodestate_topic, &{{cookiecutter.node_classname}}::changenodestate_service, this);
+    nodestate_srv = n->advertiseService(srv_nodestate_topic, &SampleNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -136,27 +136,27 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initial
                                       "All Configuration Files Loaded.");    
     return diag;
 }
-bool {{cookiecutter.node_classname}}::run_loop1() {
+bool SampleNode::run_loop1() {
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_loop2() {
+bool SampleNode::run_loop2() {
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_loop3() {
+bool SampleNode::run_loop3() {
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_001hz() {
+bool SampleNode::run_001hz() {
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_01hz() {
+bool SampleNode::run_01hz() {
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_01hz_noisy() {
+bool SampleNode::run_01hz_noisy() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_1hz() {
+bool SampleNode::run_1hz() {
     std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
@@ -181,15 +181,15 @@ bool {{cookiecutter.node_classname}}::run_1hz() {
     }
     return true;
 }
-bool {{cookiecutter.node_classname}}::run_10hz() {
+bool SampleNode::run_10hz() {
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
     return true;
 }
-void {{cookiecutter.node_classname}}::thread_loop() {
+void SampleNode::thread_loop() {
     while (kill_node == false) { ros::Duration(1.0).sleep(); }
 }
-void {{cookiecutter.node_classname}}::cleanup() {
+void SampleNode::cleanup() {
     process->request_statechange(Node::State::FINISHED);
     process->cleanup();
     delete process;
@@ -198,7 +198,7 @@ void {{cookiecutter.node_classname}}::cleanup() {
 // No practical way to unit test
 // LCOV_EXCL_START
 void signalinterrupt_handler(int sig) {
-    printf("Killing {{cookiecutter.node_classname}} with Signal: %d\n", sig);
+    printf("Killing SampleNode with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
@@ -206,8 +206,8 @@ void signalinterrupt_handler(int sig) {
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
-    ros::init(argc, argv, "{{cookiecutter.node_name_binary}}");
-    {{cookiecutter.node_classname}} *node = new {{cookiecutter.node_classname}}();
+    ros::init(argc, argv, "sample_node");
+    SampleNode *node = new SampleNode();
     bool status = node->start();
     if (status == false) {
         // No practical way to unit test
@@ -215,7 +215,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
         // LCOV_EXCL_STOP
     }
-    std::thread thread(&{{cookiecutter.node_classname}}::thread_loop, node);
+    std::thread thread(&SampleNode::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
         status = node->update(node->get_process()->get_nodestate());
     }

@@ -9,3 +9,4 @@ Now perform the following:
     * FIRMWARE_DESCRIPTION
 5. In the generated Node Class cpp file, update the following entries:
     * diagnostic_types.push_back(...) // See eROS_Definitions.h for appropriate values.
+6. In the generated Node Launch file, change the package name of the node to your package.

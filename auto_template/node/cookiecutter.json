@@ -1,10 +1,10 @@
 {
-    "package_name":"Package",
+    "package_name": "SamplePackage",
     "process_name_binary": "sampleNodeProcess",
     "process_classname": "SampleNodeProcess",
     "node_name_binary": "sample_node",
     "node_classname": "SampleNode",
-    "system":"ROVER",
-    "subsystem":"ENTIRE_SYSTEM",
-    "component":"ENTIRE_SUBSYSTEM"
+    "system": "ROVER",
+    "subsystem": "ENTIRE_SYSTEM",
+    "component": "ENTIRE_SUBSYSTEM"
 }

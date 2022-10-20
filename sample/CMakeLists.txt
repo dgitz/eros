@@ -1,0 +1,2 @@
+add_subdirectory(SampleClass/SampleClass/src/SamplePackage/SampleClass)
+add_subdirectory(SampleNode/SampleNode/nodes/SamplePackage/SampleNode)

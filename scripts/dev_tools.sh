@@ -7,10 +7,15 @@ function print_usage()
 {
     echo "Usage Instructions"
     echo -e "<mode>:
+        update: Update,
         code_coverage: Run Code Coverage Scan,
         plantuml: Generate plantuml Images
         regression: Run Regression Tests"
     exit 1
+}
+function update {
+    ./scripts/create_from_template.py -t auto_template/class/ -o sample/SampleClass/ -i 0
+    ./scripts/create_from_template.py -t auto_template/node/ -o sample/SampleNode/ -i 0
 }
 # Code Coverage Scan
 function code_coverage_scan {
@@ -93,6 +98,7 @@ if [ $# -eq 0 ]; then
     print_usage
 else
     case $1 in
+        "update") update;;
         "code_coverage") code_coverage_scan;;
         "plantuml") generate_plantuml;;
         "regression") run_regression;;

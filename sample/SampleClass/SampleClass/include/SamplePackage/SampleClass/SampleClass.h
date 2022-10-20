@@ -1,7 +1,7 @@
-/*! \file {{cookiecutter.class_name}}.h
+/*! \file SampleClass.h
  */
-#ifndef {{cookiecutter.class_name}}_H
-#define {{cookiecutter.class_name}}_H
+#ifndef SampleClass_H
+#define SampleClass_H
 // C System Files
 // C++ System Files
 // ROS Base Functionality
@@ -10,19 +10,19 @@
 // ROS Actions
 // Project Includes
 #include <eros/Logger.h>
-/*! \class {{cookiecutter.class_name}}
-    \brief {{cookiecutter.class_name}}
+/*! \class SampleClass
+    \brief SampleClass
     A description of your new Class.
 */
-class {{cookiecutter.class_name}} {
+class SampleClass {
     public:
     // Constructors & Desostructors
-    {{cookiecutter.class_name}}() : 
+    SampleClass() : 
         logger(nullptr),
         run_time(0.0) {
 
     }
-    virtual ~{{cookiecutter.class_name}}() {
+    virtual ~SampleClass() {
     }
     // Constants
 
@@ -32,31 +32,31 @@ class {{cookiecutter.class_name}} {
         VALUE1 = 1,     /*!< Last item of list. Used for Range Checks. */
         END_OF_LIST = 2     /*!< Last item of list. Used for Range Checks. */
     };
-    //! Convert {{cookiecutter.class_name}}::Enum1 to human readable string
+    //! Convert SampleClass::Enum1 to human readable string
     /*!
-      \param v {{cookiecutter.class_name}}::Enum1 type
+      \param v SampleClass::Enum1 type
       \return The converted string.
     */
-    static std::string Enum1String({{cookiecutter.class_name}}::Enum1 v) {
+    static std::string Enum1String(SampleClass::Enum1 v) {
         switch (v) {
-            case {{cookiecutter.class_name}}::Enum1::UNKNOWN: return "UNKNOWN"; break;
-            case {{cookiecutter.class_name}}::Enum1::VALUE1: return "VALUE1"; break;
-            default: return Enum1String({{cookiecutter.class_name}}::Enum1::UNKNOWN); break;
+            case SampleClass::Enum1::UNKNOWN: return "UNKNOWN"; break;
+            case SampleClass::Enum1::VALUE1: return "VALUE1"; break;
+            default: return Enum1String(SampleClass::Enum1::UNKNOWN); break;
         }
     }
-    //! Convert human readable string to {{cookiecutter.class_name}}::Enum1
+    //! Convert human readable string to SampleClass::Enum1
     /*!
       \param v Human Readable String
-      \return {{cookiecutter.class_name}}::Enum1 type
+      \return SampleClass::Enum1 type
     */
-    static {{cookiecutter.class_name}}::Enum1 Enum1Type(std::string v) {
+    static SampleClass::Enum1 Enum1Type(std::string v) {
         if(v == "VALUE1")
         {
-            return {{cookiecutter.class_name}}::Enum1::VALUE1;
+            return SampleClass::Enum1::VALUE1;
         }
         else
         {
-            return {{cookiecutter.class_name}}::Enum1::UNKNOWN;
+            return SampleClass::Enum1::UNKNOWN;
         }
     }
 
@@ -74,7 +74,7 @@ class {{cookiecutter.class_name}} {
 
     // Initializing & Reset Functions
     /*! \brief Initialize Object. */
-    bool init(Logger* _logger);
+    bool init(eros::Logger* _logger);
     /*! \brief Reset Object */
     bool reset();
 
@@ -98,4 +98,4 @@ class {{cookiecutter.class_name}} {
         double run_time;
 };
 
-#endif // {{cookiecutter.class_name}}_H
+#endif // SampleClass_H

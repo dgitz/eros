@@ -2,7 +2,7 @@
 <launch>
 <arg name="robot_namespace" default="/"/>
 <arg name="verbosity_level" default="NOTICE"/> 
-<node name="{{cookiecutter.node_name_binary}}" pkg="eros" type="{{cookiecutter.node_name_binary}}"  output="screen" clear_params="true">
+<node name="sample_node" pkg="eros" type="sample_node"  output="screen" clear_params="true">
         <param name="robot_namespace"           value="$(arg robot_namespace)"/>
         <param name="startup_delay"             value="0.0"/>
 	<param name="verbosity_level"           value="$(arg verbosity_level)"/>

@@ -7,6 +7,13 @@ Date: TBD
 --- General Notes
 
 --- User Stories
+US: 1115 Create class/node from template automatically in source code
+  Author: David Gitz
+  Date: 20-Oct-2022
+  * Updated dev_tools script to create template code and put in repo.
+  * Updated template code to build in repo.
+  * Increased code coverage of (autogen)template code to 100%.
+
 US: 886 Add Level2 Unit Tests for DataLogger
   Author: David Gitz
   Date: 19-Oct-2022
