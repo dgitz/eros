@@ -70,6 +70,7 @@ install(
   DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
+add_subdirectory(sample)
 
 # Doxygen
 

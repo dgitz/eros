@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <stdio.h>
 #include <{{cookiecutter.package_name}}/{{cookiecutter.class_name}}.h>
+using namespace eros;
 TEST(BasicTest, TestDefintions) {
     // Test Type: Enum1
     for (uint8_t i = 1; i < (uint8_t)({{cookiecutter.class_name}}::Enum1::END_OF_LIST); ++i) {

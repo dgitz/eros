@@ -1,0 +1,1 @@
+add_subdirectory(SampleClass/SampleClass/src/SamplePackage/)

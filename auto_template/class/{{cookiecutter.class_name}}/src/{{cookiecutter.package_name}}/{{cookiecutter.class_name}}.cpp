@@ -1,5 +1,5 @@
 #include <{{cookiecutter.package_name}}/{{cookiecutter.class_name}}.h>
-bool {{cookiecutter.class_name}}::init(Logger* _logger) {
+bool {{cookiecutter.class_name}}::init(eros::Logger* _logger) {
     logger = _logger;
     return reset();
 }
