@@ -1,3 +1,8 @@
+include_directories(
+  ../../../include
+  ${catkin_INCLUDE_DIRS}
+)
+
 add_library({{cookiecutter.process_name_binary}} {{cookiecutter.process_classname}}.cpp)
 target_link_libraries({{cookiecutter.process_name_binary}} ${catkin_LIBRARIES} baseNodeProcess)
 

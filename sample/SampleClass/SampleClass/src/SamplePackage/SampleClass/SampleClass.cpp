@@ -1,4 +1,4 @@
-#include <SamplePackage/SampleClass.h>
+#include <SamplePackage/SampleClass/SampleClass.h>
 bool SampleClass::init(eros::Logger* _logger) {
     logger = _logger;
     return reset();

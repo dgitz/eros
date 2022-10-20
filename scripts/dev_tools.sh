@@ -14,7 +14,8 @@ function print_usage()
     exit 1
 }
 function update {
-    python scripts/create_from_template.py -t auto_template/class/ -o sample/SampleClass/ -i 0
+    ./scripts/create_from_template.py -t auto_template/class/ -o sample/SampleClass/ -i 0
+    ./scripts/create_from_template.py -t auto_template/node/ -o sample/SampleNode/ -i 0
 }
 # Code Coverage Scan
 function code_coverage_scan {

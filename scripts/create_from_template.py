@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Headers
 import sys,getopt,os
 from optparse import OptionParser

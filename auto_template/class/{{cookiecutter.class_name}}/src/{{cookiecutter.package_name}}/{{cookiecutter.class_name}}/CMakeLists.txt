@@ -1,7 +1,6 @@
 include_directories(
-  ../../include
+  ../../../include
   ${catkin_INCLUDE_DIRS}
-  ${TinyXML_INCLUDE_DIRS}
 )
 
 add_library({{cookiecutter.class_binary}} {{cookiecutter.class_name}}.cpp)
