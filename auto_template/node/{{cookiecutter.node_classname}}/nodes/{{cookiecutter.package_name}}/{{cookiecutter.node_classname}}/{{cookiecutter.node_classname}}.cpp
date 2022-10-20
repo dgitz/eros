@@ -12,12 +12,25 @@ bool kill_node = false;
 {{cookiecutter.node_classname}}::~{{cookiecutter.node_classname}}() {
 }
 void {{cookiecutter.node_classname}}::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
-    (void)goal;
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
     system_command_action_server.setAborted(system_commandResult_);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::WARN,
+                                      Diagnostic::Message::DROPPING_PACKETS,
+                                      "Received unsupported CommandAction: " +
+                                          Command::CommandString((Command::Type)goal->Command));
+    logger->log_diagnostic(diag);
 }
 void {{cookiecutter.node_classname}}::command_Callback(const eros::command::ConstPtr &t_msg) {
-    (void)t_msg;
+    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    diag = process->update_diagnostic(
+        Diagnostic::DiagnosticType::COMMUNICATIONS,
+        Level::Type::WARN,
+        Diagnostic::Message::DROPPING_PACKETS,
+        "Received unsupported Command: " + Command::CommandString((Command::Type)cmd.Command));
+    logger->log_diagnostic(diag);
 }
 bool {{cookiecutter.node_classname}}::changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res)
@@ -36,11 +49,17 @@ bool {{cookiecutter.node_classname}}::start() {
         MAJOR_RELEASE_VERSION, MINOR_RELEASE_VERSION, BUILD_NUMBER, FIRMWARE_DESCRIPTION);
     diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     diagnostic = read_launchparameters();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
 
     process->initialize(get_basenodename(),
@@ -54,11 +73,15 @@ bool {{cookiecutter.node_classname}}::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     if (diagnostic.level < Level::Type::WARN) {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
@@ -67,13 +90,26 @@ bool {{cookiecutter.node_classname}}::start() {
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
+    if (process->request_statechange(Node::State::INITIALIZING) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
+        logger->log_warn("Unable to Change State to: " +
+                         Node::NodeStateString(Node::State::INITIALIZING));
+        // LCOV_EXCL_STOP
+    }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZED));
+        // LCOV_EXCL_STOP
     }
     if (process->request_statechange(Node::State::RUNNING) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
+        // LCOV_EXCL_STOP
     }
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     status = true;
@@ -81,6 +117,8 @@ bool {{cookiecutter.node_classname}}::start() {
 }
 Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    command_sub = n->subscribe<eros::command>(
+        get_robotnamespace() + "SystemCommand", 10, &SampleNode::command_Callback, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -131,11 +169,14 @@ bool {{cookiecutter.node_classname}}::run_1hz() {
         process->reset();
         logger->log_notice("Node has Reset");
         if (process->request_statechange(Node::State::RUNNING) == false) {
+            // No practical way to unit test
+            // LCOV_EXCL_START
             diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
                                               Diagnostic::Message::DEVICE_NOT_AVAILABLE,
                                               "Not able to Change Node State to Running.");
             logger->log_diagnostic(diag);
+            // LCOV_EXCL_STOP
         }
     }
     return true;
@@ -154,11 +195,14 @@ void {{cookiecutter.node_classname}}::cleanup() {
     delete process;
     base_cleanup();
 }
+// No practical way to unit test
+// LCOV_EXCL_START
 void signalinterrupt_handler(int sig) {
     printf("Killing {{cookiecutter.node_classname}} with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
+// LCOV_EXCL_STOP
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
@@ -166,7 +210,10 @@ int main(int argc, char **argv) {
     {{cookiecutter.node_classname}} *node = new {{cookiecutter.node_classname}}();
     bool status = node->start();
     if (status == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return EXIT_FAILURE;
+        // LCOV_EXCL_STOP
     }
     std::thread thread(&{{cookiecutter.node_classname}}::thread_loop, node);
     while ((status == true) and (kill_node == false)) {

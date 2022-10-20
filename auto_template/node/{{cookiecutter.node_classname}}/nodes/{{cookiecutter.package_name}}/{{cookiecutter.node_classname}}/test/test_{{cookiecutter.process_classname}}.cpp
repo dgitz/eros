@@ -29,6 +29,35 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 
+    Diagnostic::DiagnosticDefinition diag = tester->finish_initialization();
+    logger->log_diagnostic(diag);
+    EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+
+    tester->reset();
+
+    double timeToRun = 10.0;
+    double dt = 0.1;
+    double timer = 0.0;
+    while (timer <= timeToRun) {
+        diag = tester->update(dt, timer);
+        EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+        timer += dt;
+    }
+
+    logger->log_warn("Testing Unsupported Command Message");
+    {
+        eros::command cmd;
+        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(cmd);
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+    logger->log_warn("Testing Unsupported Program Variables Check");
+    {
+        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list =
+            tester->check_programvariables();
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+    tester->cleanup();
+
     delete logger;
     delete tester;
 }
