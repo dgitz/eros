@@ -126,6 +126,10 @@ Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::finish_initial
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = "srv_nodestate_change";
     nodestate_srv = n->advertiseService(srv_nodestate_topic, &{{cookiecutter.node_classname}}::changenodestate_service, this);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::INFO,
+                                      Diagnostic::Message::NOERROR,
+                                      "Comms Ready.");
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
