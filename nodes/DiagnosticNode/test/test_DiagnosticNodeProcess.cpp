@@ -32,8 +32,17 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
     tester->finish_initialization();
-    ;
 
+    double timeToRun = 10.0;
+    double dt = 0.1;
+    double timer = 0.0;
+    Diagnostic::DiagnosticDefinition diag;
+    while (timer <= timeToRun) {
+        diag = tester->update(dt, timer);
+        EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+        timer += dt;
+    }
+    tester->reset();
     {
         Diagnostic::DiagnosticDefinition worst_diag =
             tester->get_worst_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL);
@@ -85,6 +94,51 @@ TEST(BasicTest, TestOperation) {
     EXPECT_TRUE(tester->get_worst_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL).level ==
                 Level::Type::NOTICE);
     printf("%s\n", tester->pretty().c_str());
+
+    logger->log_warn("Testing Unsupported Command Message");
+    {
+        eros::command cmd;
+        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(cmd);
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+    logger->log_warn("Testing Unsupported Program Variables Check");
+    {
+        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list =
+            tester->check_programvariables();
+        EXPECT_EQ(diag_list.size(), 0);
+    }
+
+    logger->log_notice("Check Topic Subscribe List.");
+    {
+        std::vector<std::string> topic_list = {"/a", "/b", "/c"};
+        Diagnostic::DiagnosticDefinition diag = tester->update_topiclist(topic_list);
+        EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+
+        std::vector<std::string> redundant_topic_list = {"/a", "/d", "/e"};
+        diag = tester->update_topiclist(redundant_topic_list);
+        EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
+    }
+    logger->log_notice("Check Diagnostic Aggregator.");
+    {
+        Diagnostic::DiagnosticDefinition badDiag("Device1",
+                                                 "Node1",
+                                                 System::MainSystem::ROVER,
+                                                 System::SubSystem::ROBOT_CONTROLLER,
+                                                 System::Component::COMMUNICATION,
+                                                 Diagnostic::DiagnosticType::REMOTE_CONTROL,
+                                                 Diagnostic::Message::DROPPING_PACKETS,
+                                                 Level::Type::ERROR,
+                                                 "Dropping Packets");
+        EXPECT_TRUE(tester->new_external_diagnostic(badDiag));
+        logger->log_notice(tester->pretty());
+    }
+    logger->log_notice("Check Failure Cases");
+    {
+        Diagnostic::DiagnosticDefinition unknownDiag;
+        unknownDiag.type = Diagnostic::DiagnosticType::UNKNOWN;
+        EXPECT_FALSE(tester->new_external_diagnostic(unknownDiag));
+    }
+    tester->cleanup();
     delete logger;
     delete tester;
 }
