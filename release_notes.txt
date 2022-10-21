@@ -7,6 +7,11 @@ Date: TBD
 --- General Notes
 
 --- User Stories
+US: 890 Add Level2 Unit Tests for Master Node
+  Author: David Gitz
+  Date: 20-Oct-2022
+  * Increased Code Coverage to 100% for Master Node.
+
 US: 1115 Create class/node from template automatically in source code
   Author: David Gitz
   Date: 20-Oct-2022
