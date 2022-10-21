@@ -6,7 +6,7 @@ DiagnosticNodeProcess::DiagnosticNodeProcess() {
 DiagnosticNodeProcess::~DiagnosticNodeProcess() {
 }
 Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag;
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
 
     for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
         DiagnosticTypeAggregate aggregate;
@@ -38,10 +38,12 @@ std::vector<Diagnostic::DiagnosticDefinition> DiagnosticNodeProcess::new_command
     eros::command msg) {
     (void)msg;
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    logger->log_warn("No Command Messages Supported at this time.");
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> DiagnosticNodeProcess::check_programvariables() {
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    logger->log_warn("No Program Variables Checked.");
     return diag_list;
 }
 Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
@@ -57,7 +59,10 @@ Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
                                                 "Unknown Diagnostic Type: " + (uint8_t)type);
     auto aggregate_it = diagnostic_aggregator.find(type);
     if (aggregate_it == diagnostic_aggregator.end()) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return empty_diag;
+        // LCOV_EXCL_STOP
     }
     else {
         if (aggregate_it->second.update_count == 0) {

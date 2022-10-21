@@ -13,12 +13,25 @@ DiagnosticNode::DiagnosticNode()
 DiagnosticNode::~DiagnosticNode() {
 }
 void DiagnosticNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
-    (void)goal;
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
     system_command_action_server.setAborted(system_commandResult_);
+    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::WARN,
+                                      Diagnostic::Message::DROPPING_PACKETS,
+                                      "Received unsupported CommandAction: " +
+                                          Command::CommandString((Command::Type)goal->Command));
+    logger->log_diagnostic(diag);
 }
 void DiagnosticNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    (void)t_msg;
+    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    diag = process->update_diagnostic(
+        Diagnostic::DiagnosticType::COMMUNICATIONS,
+        Level::Type::WARN,
+        Diagnostic::Message::DROPPING_PACKETS,
+        "Received unsupported Command: " + Command::CommandString((Command::Type)cmd.Command));
+    logger->log_diagnostic(diag);
 }
 void DiagnosticNode::diagnostic_Callback(const eros::diagnostic::ConstPtr &t_msg) {
     eros::diagnostic eros_diag = BaseNodeProcess::convert_fromptr(t_msg);
@@ -61,11 +74,17 @@ bool DiagnosticNode::start() {
     enable_ready_to_arm_pub(true);
     diagnostic = preinitialize_basenode();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     diagnostic = read_launchparameters();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
 
     process->initialize(get_basenodename(),
@@ -79,11 +98,15 @@ bool DiagnosticNode::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     if (diagnostic.level < Level::Type::WARN) {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
@@ -94,20 +117,32 @@ bool DiagnosticNode::start() {
     }
     diagnostic = rescan_nodes();
     if (diagnostic.level >= Level::Type::ERROR) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diagnostic);
         return false;
+        // LCOV_EXCL_STOP
     }
     if (process->request_statechange(Node::State::INITIALIZING) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZING));
+        // LCOV_EXCL_STOP
     }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZED));
+        // LCOV_EXCL_STOP
     }
     if (process->request_statechange(Node::State::RUNNING) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
+        // LCOV_EXCL_STOP
     }
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     status = true;
@@ -115,6 +150,8 @@ bool DiagnosticNode::start() {
 }
 Diagnostic::DiagnosticDefinition DiagnosticNode::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
+    command_sub = n->subscribe<eros::command>(
+        get_robotnamespace() + "SystemCommand", 10, &DiagnosticNode::command_Callback, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -142,7 +179,10 @@ bool DiagnosticNode::run_loop1() {
 bool DiagnosticNode::run_loop2() {
     Diagnostic::DiagnosticDefinition diag = rescan_nodes();
     if (diag.level > Level::Type::NOTICE) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     return true;
 }
@@ -174,11 +214,14 @@ bool DiagnosticNode::run_1hz() {
         process->reset();
         logger->log_notice("Node has Reset");
         if (process->request_statechange(Node::State::RUNNING) == false) {
+            // No practical way to unit test
+            // LCOV_EXCL_START
             diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
                                               Diagnostic::Message::DEVICE_NOT_AVAILABLE,
                                               "Not able to Change Node State to Running.");
             logger->log_diagnostic(diag);
+            // LCOV_EXCL_STOP
         }
     }
     return true;
@@ -186,7 +229,10 @@ bool DiagnosticNode::run_1hz() {
 bool DiagnosticNode::run_10hz() {
     Diagnostic::DiagnosticDefinition diag = process->update(0.1, ros::Time::now().toSec());
     if (diag.level >= Level::Type::NOTICE) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
@@ -213,8 +259,11 @@ Diagnostic::DiagnosticDefinition DiagnosticNode::rescan_nodes() {
     std::vector<std::string> new_diagnostic_topics_to_subscribe = diagnostic_list;
     diag = process->update_topiclist(new_diagnostic_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
         return diag;
+        // LCOV_EXCL_STOP
     }
     for (std::size_t i = 0; i < new_diagnostic_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub =
@@ -243,11 +292,14 @@ void DiagnosticNode::cleanup() {
     delete process;
     base_cleanup();
 }
+// No practical way to unit test
+// LCOV_EXCL_START
 void signalinterrupt_handler(int sig) {
     printf("Killing DiagnosticNode with Signal: %d\n", sig);
     kill_node = true;
     exit(0);
 }
+// LCOV_EXCL_STOP
 int main(int argc, char **argv) {
     signal(SIGINT, signalinterrupt_handler);
     signal(SIGTERM, signalinterrupt_handler);
@@ -255,7 +307,10 @@ int main(int argc, char **argv) {
     DiagnosticNode *node = new DiagnosticNode();
     bool status = node->start();
     if (status == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return EXIT_FAILURE;
+        // LCOV_EXCL_STOP
     }
     std::thread thread(&DiagnosticNode::thread_loop, node);
     while ((status == true) and (kill_node == false)) {
