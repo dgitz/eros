@@ -2,10 +2,15 @@
 <launch>
     <arg name="robot_namespace" value="/test" />
     <group ns="test">
+        <include file="$(find eros)/launch/nodes/safety_node.launch">
+            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="verbosity_level" value="INFO"/>
+        </include>
         <include file="$(find eros)/launch/nodes/diagnostic_node.launch">
             <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             <arg name="verbosity_level" value="INFO"/>
         </include>
         <test test-name="test_diagnosticNode" pkg="eros" type="test_diagnosticNode"/>
     </group>
+   
 </launch>

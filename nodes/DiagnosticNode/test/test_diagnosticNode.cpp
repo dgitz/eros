@@ -1,8 +1,8 @@
+#include <actionlib/client/simple_action_client.h>
 #include <eros/DiagnosticNode/DiagnosticNode.h>
+#include <eros/system_commandAction.h>
 #include <gtest/gtest.h>
 #include <ros/ros.h>
-#include <actionlib/client/simple_action_client.h>
-#include <eros/system_commandAction.h>
 
 using namespace eros;
 
@@ -42,7 +42,7 @@ TEST(DiagnosticNode, TestBasics) {
         ros::Publisher command_pub =
             nh.advertise<eros::command>(robot_namespace + "SystemCommand", 20);
         sleep(1);
-        EXPECT_EQ(1, command_pub.getNumSubscribers());
+        EXPECT_GT(command_pub.getNumSubscribers(), 0);
         eros::command snapshot_command;
         command_pub.publish(snapshot_command);
         sleep(1.0);
@@ -68,12 +68,23 @@ TEST(DiagnosticNode, TestBasics) {
                   latest_heartbeat.NodeState);  // Node should automatically change state to Running
     }
 
-
-    // Check Diagnostic Service
-    std::string diagnostic_srv_topic = "/test/srv_system_diagnostics";
-    ros::ServiceClient client = nh.serviceClient<eros::srv_get_diagnostics>(diagnostic_srv_topic);
-    eros::srv_get_diagnostics srv_get_diagnostics;
-    EXPECT_EQ(client.call(srv_get_diagnostics), true);
+    logger->log_notice("Checking Diagnostics Service...");
+    {
+        std::string diagnostic_srv_topic = "/test/srv_system_diagnostics";
+        ros::ServiceClient client =
+            nh.serviceClient<eros::srv_get_diagnostics>(diagnostic_srv_topic);
+        eros::srv_get_diagnostics srv_get_diagnostics;
+        EXPECT_TRUE(client.call(srv_get_diagnostics));
+    }
+    logger->log_warn("Checking unsupported diagnostics service...");
+    {
+        std::string diagnostic_srv_topic = "/test/srv_system_diagnostics";
+        ros::ServiceClient client =
+            nh.serviceClient<eros::srv_get_diagnostics>(diagnostic_srv_topic);
+        eros::srv_get_diagnostics srv_get_diagnostics;
+        srv_get_diagnostics.request.MinLevel = (uint8_t)Level::Type::INFO;
+        EXPECT_FALSE(client.call(srv_get_diagnostics));
+    }
 
     delete logger;
 }

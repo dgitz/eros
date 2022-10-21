@@ -103,7 +103,10 @@ bool DiagnosticNode::start() {
     process->finish_initialization();
     diagnostic = finish_initialization();
     if (diagnostic.level > Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     if (diagnostic.level < Level::Type::WARN) {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
@@ -114,8 +117,11 @@ bool DiagnosticNode::start() {
     }
     diagnostic = rescan_nodes();
     if (diagnostic.level >= Level::Type::ERROR) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diagnostic);
         return false;
+        // LCOV_EXCL_STOP
     }
     if (process->request_statechange(Node::State::INITIALIZING) == false) {
         // No practical way to unit test
@@ -173,7 +179,10 @@ bool DiagnosticNode::run_loop1() {
 bool DiagnosticNode::run_loop2() {
     Diagnostic::DiagnosticDefinition diag = rescan_nodes();
     if (diag.level > Level::Type::NOTICE) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     return true;
 }
@@ -220,7 +229,10 @@ bool DiagnosticNode::run_1hz() {
 bool DiagnosticNode::run_10hz() {
     Diagnostic::DiagnosticDefinition diag = process->update(0.1, ros::Time::now().toSec());
     if (diag.level >= Level::Type::NOTICE) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
@@ -247,8 +259,11 @@ Diagnostic::DiagnosticDefinition DiagnosticNode::rescan_nodes() {
     std::vector<std::string> new_diagnostic_topics_to_subscribe = diagnostic_list;
     diag = process->update_topiclist(new_diagnostic_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_diagnostic(diag);
         return diag;
+        // LCOV_EXCL_STOP
     }
     for (std::size_t i = 0; i < new_diagnostic_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub =
