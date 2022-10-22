@@ -1,0 +1,12 @@
+@startuml
+class SystemMonitor {
+    -IWindow[] windows
+    -RenderEngine renderEngine
+}
+class RenderEngine {
+    +bool update(RenderData[] data)
+}
+SystemMonitor -* "*" IWindow
+SystemMonitor -> RenderEngine
+
+@enduml

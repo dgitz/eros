@@ -1,0 +1,12 @@
+@startuml
+interface ITable {
+    +{abstract} IRecord[] get_Records()
+    +{abstract} RenderData[] get_RenderData()
+}
+abstract BaseTable {
+    -IRecord[] records
+
+}
+BaseTable -|> ITable
+BaseTable -* "*" IRecord
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+enum CoordinateReference {
+
+}
+enum Color {
+    RED
+    GREEN
+    BLUE
+    WHITE
+    BLACK
+}
+struct RenderCoordinate {
+    +CoordinateReference reference
+    +double x
+    +double y
+}
+RenderCoordinate -* CoordinateReference
+struct RenderData {
+    +RenderCoordinate startCoordinate
+    +Color color
+    +string data
+
+}
+RenderData -* RenderCoordinate
+RenderData -* Color
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+interface IRecord {
+    +{abstract}IField[] get_Fields()
+    +{abstract} RenderData[] get_RenderData()
+}
+
+abstract BaseRecord {
+    -IField[] fields
+
+}
+BaseRecord -|> IRecord
+BaseRecord -* "*" IField
+@enduml

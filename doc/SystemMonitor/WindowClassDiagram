@@ -1,0 +1,32 @@
+@startuml
+interface IWindow {
+    +{abstract} WindowType getWindowType()
+    +{abstract} RenderData[] getRenderData()
+    +{abstract} bool isActive()
+    +{abstract} string getName()
+} 
+abstract BaseWindow {
+    -WindowType windowType
+
+}
+BaseWindow --|> IWindow
+
+enum WindowType {
+    TABLE
+    TEXT
+}
+WindowType -+ IWindow
+
+class WindowTable {
+    +RenderData[] get_RenderData()
+    -ITable table
+
+}
+WindowTable -|> BaseWindow
+class WindowText {
+    +RenderData[] get_RenderData()
+    -IText text
+}
+WindowText -|> BaseWindow
+
+@enduml

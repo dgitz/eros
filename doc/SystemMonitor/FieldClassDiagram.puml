@@ -1,0 +1,11 @@
+@startuml
+interface IField {
+    +{abstract} RenderData get_RenderData()
+
+}
+class BaseField {
+
+}
+BaseField -|> IField
+
+@enduml
