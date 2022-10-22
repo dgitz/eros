@@ -1,0 +1,3 @@
+catkin_add_gtest(test_systemMonitorProcess test_SystemMonitorProcess.cpp)
+target_link_libraries(test_systemMonitorProcess ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger systemMonitorProcess)
+add_dependencies(test_systemMonitorProcess eros_generate_messages_cpp)

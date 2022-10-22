@@ -14,8 +14,7 @@ Diagnostic::DiagnosticDefinition SampleNodeProcess::update(double t_dt, double t
     Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SampleNodeProcess::new_commandmsg(
-    eros::command msg) {
+std::vector<Diagnostic::DiagnosticDefinition> SampleNodeProcess::new_commandmsg(eros::command msg) {
     (void)msg;
     std::vector<Diagnostic::DiagnosticDefinition> diag_list;
     logger->log_warn("No Command Messages Supported at this time.");
