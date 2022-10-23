@@ -55,26 +55,26 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 }
 bool SystemMonitorProcess::initializeWindows() {
     {
-        HeaderWindow* window = new HeaderWindow();
+        StatusWindow* window = new StatusWindow(logger);
         windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::HEADER, window));
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::STATUS, window));
     }
     {
-        ProcessWindow* window = new ProcessWindow();
+        ProcessWindow* window = new ProcessWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::PROCESS, window));
     }
     {
-        NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow();
+        NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::NODEDIAGNOSTICS, window));
     }
     {
-        InfoWindow* window = new InfoWindow();
+        InfoWindow* window = new InfoWindow(logger);
         windows.insert(std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::INFO, window));
     }
     {
-        DeviceWindow* window = new DeviceWindow();
+        DeviceWindow* window = new DeviceWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::DEVICE, window));
     }

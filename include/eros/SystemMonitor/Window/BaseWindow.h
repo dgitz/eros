@@ -5,7 +5,13 @@ namespace eros {
 class BaseWindow : public IWindow
 {
    public:
-   private:
+    BaseWindow(eros::Logger* logger) : logger(logger) {
+    }
+    virtual ~BaseWindow() {
+    }
+
+   protected:
+    eros::Logger* logger;
 };
 }  // namespace eros
 #endif

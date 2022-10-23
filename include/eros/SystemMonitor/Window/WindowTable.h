@@ -5,6 +5,10 @@ namespace eros {
 class WindowTable : public BaseWindow
 {
    public:
+    WindowTable(eros::Logger* logger) : BaseWindow(logger) {
+    }
+    virtual ~WindowTable() {
+    }
 };
 }  // namespace eros
 #endif

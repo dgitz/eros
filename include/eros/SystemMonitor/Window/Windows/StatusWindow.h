@@ -1,13 +1,13 @@
-#ifndef INFOWINDOW_H
-#define INFOWINDOW_H
+#ifndef STATUSWINDOW_H
+#define STATUSWINDOW_H
 #include <eros/SystemMonitor/Window/WindowText.h>
 namespace eros {
-class InfoWindow : public WindowText
+class StatusWindow : public WindowText
 {
    public:
-    InfoWindow(eros::Logger* logger) : WindowText(logger) {
+    StatusWindow(eros::Logger* logger) : WindowText(logger) {
     }
-    virtual ~InfoWindow() {
+    virtual ~StatusWindow() {
     }
     WindowSize getWindowSize();
     std::vector<RenderData> getData();

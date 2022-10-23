@@ -6,10 +6,10 @@
 #include <eros/SystemMonitor/RenderEngine/RenderEngine.h>
 #include <eros/SystemMonitor/Window/IWindow.h>
 #include <eros/SystemMonitor/Window/Windows/DeviceWindow.h>
-#include <eros/SystemMonitor/Window/Windows/HeaderWindow.h>
 #include <eros/SystemMonitor/Window/Windows/InfoWindow.h>
 #include <eros/SystemMonitor/Window/Windows/NodeDiagnosticsWindow.h>
 #include <eros/SystemMonitor/Window/Windows/ProcessWindow.h>
+#include <eros/SystemMonitor/Window/Windows/StatusWindow.h>
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief */
 class SystemMonitorProcess : public eros::BaseNodeProcess

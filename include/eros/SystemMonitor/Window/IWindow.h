@@ -1,5 +1,6 @@
 #ifndef IWINDOW_H
 #define IWINDOW_H
+#include <eros/Logger.h>
 #include <eros/SystemMonitor/DataStructures.h>
 
 #include <string>
@@ -13,12 +14,15 @@ class IWindow
         PROCESS = 1,
         NODEDIAGNOSTICS = 2,
         DEVICE = 3,
-        HEADER = 4,
+        STATUS = 4,
         INFO = 5,
         END_OF_LIST = 6
     };
+    virtual ~IWindow() {
+    }
     virtual WindowSize getWindowSize() = 0;
     virtual std::vector<RenderData> getData() = 0;
+    virtual bool keyPressed(KeyMap key) = 0;
 
    private:
 };

@@ -18,6 +18,12 @@ std::vector<RenderData> ProcessWindow::getData() {
     return dataVector;
 }
 bool ProcessWindow::new_heartbeat(eros::heartbeat msg) {
+    (void)msg;
     updateCounter++;
+    return true;
+}
+bool ProcessWindow::keyPressed(KeyMap key) {
+    (void)key;
+    logger->log_warn("NOT SUPPORTED YET.");
     return true;
 }

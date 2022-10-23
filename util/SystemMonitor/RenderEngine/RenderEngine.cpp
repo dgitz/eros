@@ -58,18 +58,47 @@ bool RenderEngine::initScreen() {
     return true;
 }
 bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _windows) {
+    (void)dt;
+    for (auto window : _windows) { windows.find(window.first)->second.windowData = window.second; }
     uint16_t key = getch();
     KeyMap keyPressed = (KeyMap)key;
+    bool validKey = false;
     switch (keyPressed) {
-        case KeyMap::KEY_Q: killMe = true; break;
-        case KeyMap::KEY_q: killMe = true; break;
-        case KeyMap::KEY_TAB: incrementFocus(); break;
-        default: logger->log_debug("Key: " + std::to_string(key));
+        case KeyMap::KEY_Q:
+            killMe = true;
+            validKey = true;
+            break;
+        case KeyMap::KEY_q:
+            killMe = true;
+            validKey = true;
+            break;
+        case KeyMap::KEY_TAB:
+            incrementFocus();
+            validKey = true;
+            break;
+        default:
+            if (key != USHRT_MAX) {
+                validKey = true;
+                logger->log_debug("Key: " + std::to_string(key));
+            }
+            break;
     }
-
+    if (validKey == true) {
+        if (windows.find(IWindow::WindowType::INFO)->second.windowData->keyPressed(keyPressed) ==
+            false) {
+            return false;
+        }
+    }
     for (std::map<IWindow::WindowType, Window>::iterator it = windows.begin(); it != windows.end();
          it++) {
         renderWindow(it->second.windowData, it->second.windowRender);
+        if (it->second.windowRender->isFocused()) {
+            if (validKey == true) {
+                if (it->second.windowData->keyPressed(keyPressed) == false) {
+                    return false;
+                }
+            }
+        }
     }
     return true;
 }

@@ -17,3 +17,8 @@ std::vector<RenderData> DeviceWindow::getData() {
     dataVector.push_back(data);
     return dataVector;
 }
+bool DeviceWindow::keyPressed(KeyMap key) {
+    (void)key;
+    logger->log_warn("NOT SUPPORTED YET.");
+    return true;
+}

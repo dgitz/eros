@@ -17,3 +17,8 @@ std::vector<RenderData> InfoWindow::getData() {
     dataVector.push_back(data);
     return dataVector;
 }
+bool InfoWindow::keyPressed(KeyMap key) {
+    (void)key;
+    logger->log_warn("NOT SUPPORTED YET.");
+    return true;
+}

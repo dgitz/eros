@@ -4,6 +4,7 @@
 
 #include <string>
 namespace eros {
+enum class KeyMap { KEY_q = 113, KEY_Q = 81, KEY_TAB = 9 };
 struct ScreenCoordinatePerc {
     ScreenCoordinatePerc(double start_x, double start_y, double width, double height)
         : start_x_perc(start_x), start_y_perc(start_y), width_perc(width), height_perc(height) {

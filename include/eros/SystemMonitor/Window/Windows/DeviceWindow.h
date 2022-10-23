@@ -5,10 +5,13 @@ namespace eros {
 class DeviceWindow : public WindowTable
 {
    public:
-    DeviceWindow() {
+    DeviceWindow(eros::Logger* logger) : WindowTable(logger) {
+    }
+    virtual ~DeviceWindow() {
     }
     WindowSize getWindowSize();
     std::vector<RenderData> getData();
+    bool keyPressed(KeyMap key);
 
    private:
 };

@@ -12,8 +12,7 @@ namespace eros {
 
 class RenderEngine
 {
-    enum class KeyMap { KEY_q = 113, KEY_Q = 81, KEY_TAB = 9 };
-    struct Window {
+        struct Window {
         Window(IWindow* windowData, RenderWindow* windowRender)
             : windowData(windowData), windowRender(windowRender) {
         }
