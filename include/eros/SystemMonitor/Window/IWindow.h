@@ -2,6 +2,7 @@
 #define IWINDOW_H
 #include <eros/Logger.h>
 #include <eros/SystemMonitor/DataStructures.h>
+#include <eros/SystemMonitor/Record/IRecord.h>
 
 #include <string>
 #include <vector>
@@ -21,7 +22,7 @@ class IWindow
     virtual ~IWindow() {
     }
     virtual WindowSize getWindowSize() = 0;
-    virtual std::vector<RenderData> getData() = 0;
+    virtual std::vector<IRecord*> getRecords() = 0;
     virtual bool keyPressed(KeyMap key) = 0;
 
    private:

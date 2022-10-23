@@ -103,9 +103,15 @@ bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _wi
     return true;
 }
 bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow) {
-    for (auto data : windowData->getData()) {
-        mvwprintw(renderWindow->get_window_reference(), data.x + 1, data.y + 1, data.data.c_str());
+    for (auto record : windowData->getRecords()) {
+        for (auto field : record->getFields()) {
+            mvwprintw(renderWindow->get_window_reference(),
+                      field->getData().x + 1,
+                      field->getData().y + 1,
+                      field->getData().data.c_str());
+        }
     }
+
     if (renderWindow->isFocused() == true) {
         box(renderWindow->get_window_reference(), '|', '-');
     }

@@ -1,3 +1,5 @@
+add_subdirectory(Field)
+add_subdirectory(Record)
 add_subdirectory(Window)
 add_subdirectory(RenderEngine)
 add_library(systemMonitorProcess SystemMonitorProcess.cpp)

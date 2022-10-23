@@ -1,5 +1,7 @@
 #ifndef DEVICEWINDOW_H
 #define DEVICEWINDOW_H
+#include <eros/SystemMonitor/Field/GenericField.h>
+#include <eros/SystemMonitor/Record/GenericRecord.h>
 #include <eros/SystemMonitor/Window/WindowTable.h>
 namespace eros {
 class DeviceWindow : public WindowTable
@@ -10,7 +12,7 @@ class DeviceWindow : public WindowTable
     virtual ~DeviceWindow() {
     }
     WindowSize getWindowSize();
-    std::vector<RenderData> getData();
+    std::vector<IRecord*> getRecords();
     bool keyPressed(KeyMap key);
 
    private:

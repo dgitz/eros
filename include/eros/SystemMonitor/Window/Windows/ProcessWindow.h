@@ -1,5 +1,7 @@
 #ifndef PROCESSWINDOW_H
 #define PROCESSWINDOW_H
+#include <eros/SystemMonitor/Field/GenericField.h>
+#include <eros/SystemMonitor/Record/GenericRecord.h>
 #include <eros/SystemMonitor/Window/WindowTable.h>
 #include <eros/heartbeat.h>
 namespace eros {
@@ -11,7 +13,7 @@ class ProcessWindow : public WindowTable
     virtual ~ProcessWindow() {
     }
     WindowSize getWindowSize();
-    std::vector<RenderData> getData();
+    std::vector<IRecord*> getRecords();
     bool new_heartbeat(eros::heartbeat msg);
     bool keyPressed(KeyMap key);
 
