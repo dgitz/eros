@@ -29,12 +29,19 @@ class RenderWindow
     ScreenCoordinatePixel getActualSize() {
         return actualSize;
     }
+    bool isFocused() {
+        return focused;
+    }
+    void setFocused(bool v) {
+        focused = v;
+    }
 
    private:
     eros::Logger* logger;
     WINDOW* window_reference;
     ScreenCoordinatePixel actualSize;
     ScreenCoordinatePixel minSize;
+    bool focused;
 };
 }  // namespace eros
 #endif

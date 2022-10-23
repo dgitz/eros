@@ -3,7 +3,8 @@ using namespace eros;
 SystemMonitorProcess::SystemMonitorProcess() {
 }
 SystemMonitorProcess::~SystemMonitorProcess() {
-    for (std::map<std::string, IWindow*>::iterator it = windows.begin(); it != windows.end();
+    for (std::map<IWindow::WindowType, IWindow*>::iterator it = windows.begin();
+         it != windows.end();
          it++) {
         delete it->second;
     }
@@ -55,23 +56,27 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 bool SystemMonitorProcess::initializeWindows() {
     {
         HeaderWindow* window = new HeaderWindow();
-        windows.insert(std::pair<std::string, IWindow*>("header", window));
+        windows.insert(
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::HEADER, window));
     }
     {
         ProcessWindow* window = new ProcessWindow();
-        windows.insert(std::pair<std::string, IWindow*>("process", window));
+        windows.insert(
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::PROCESS, window));
     }
     {
         NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow();
-        windows.insert(std::pair<std::string, IWindow*>("nodediagnostics", window));
+        windows.insert(
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::NODEDIAGNOSTICS, window));
     }
     {
         InfoWindow* window = new InfoWindow();
-        windows.insert(std::pair<std::string, IWindow*>("info", window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::INFO, window));
     }
     {
         DeviceWindow* window = new DeviceWindow();
-        windows.insert(std::pair<std::string, IWindow*>("device", window));
+        windows.insert(
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::DEVICE, window));
     }
     return true;
 }
@@ -80,14 +85,15 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
     eros::heartbeat msg = convert_fromptr(t_msg);
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     for (auto window : windows) {
-        if (window.first == "process") {
+        if (window.first == IWindow::WindowType::PROCESS) {
             ProcessWindow* win = dynamic_cast<ProcessWindow*>(window.second);
             bool v = win->new_heartbeat(msg);
             if (v == false) {
-                diag = update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                         Level::Type::ERROR,
-                                         Diagnostic::Message::DROPPING_PACKETS,
-                                         "Unable to Update Window: " + window.first);
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
                 return diag;
             }
         }

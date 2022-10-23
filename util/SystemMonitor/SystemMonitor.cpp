@@ -97,6 +97,7 @@ bool SystemMonitor::start() {
         return false;
         // LCOV_EXCL_STOP
     }
+    get_logger()->set_logverbosity(Level::Type::DEBUG);
     if (diagnostic.level < Level::Type::WARN) {
         diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
         diagnostic.level = Level::Type::INFO;

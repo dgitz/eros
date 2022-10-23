@@ -12,7 +12,7 @@ namespace eros {
 
 class RenderEngine
 {
-    enum class KeyMap { KEY_q = 113, KEY_Q = 81 };
+    enum class KeyMap { KEY_q = 113, KEY_Q = 81, KEY_TAB = 9 };
     struct Window {
         Window(IWindow* windowData, RenderWindow* windowRender)
             : windowData(windowData), windowRender(windowRender) {
@@ -22,14 +22,14 @@ class RenderEngine
     };
 
    public:
-    RenderEngine(eros::Logger* logger, std::map<std::string, IWindow*> windowData)
+    RenderEngine(eros::Logger* logger, std::map<IWindow::WindowType, IWindow*> windowData)
         : logger(logger), dataWindows(windowData), killMe(false) {
     }
     virtual ~RenderEngine() {
         endwin();
     }
     bool initScreen();
-    bool update(double dt, std::map<std::string, IWindow*> windows);
+    bool update(double dt, std::map<IWindow::WindowType, IWindow*> windows);
     bool shouldKill() {
         return killMe;
     }
@@ -38,10 +38,11 @@ class RenderEngine
     bool renderWindow(IWindow* windowData, RenderWindow* renderWindow);
 
    private:
+    void incrementFocus();
     eros::Logger* logger;
-    std::map<std::string, IWindow*> dataWindows;
-    std::map<std::string, RenderWindow*> renderWindows;
-    std::map<std::string, Window> windows;
+    std::map<IWindow::WindowType, IWindow*> dataWindows;
+    std::map<IWindow::WindowType, RenderWindow*> renderWindows;
+    std::map<IWindow::WindowType, Window> windows;
     bool killMe;
 };
 }  // namespace eros

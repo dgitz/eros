@@ -15,7 +15,7 @@ RenderWindow::RenderWindow(eros::Logger* logger,
                            WindowSize size,
                            uint16_t mainWindowWidth,
                            uint16_t mainWindowHeight)
-    : logger(logger) {
+    : logger(logger), focused(false) {
     ScreenCoordinatePixel coord =
         WindowSize::convert(size.coordinate, mainWindowWidth, mainWindowHeight);
     WINDOW* win = create_newwin(
@@ -40,4 +40,4 @@ bool RenderWindow::init() {
     }
     return true;
 }
-}
+}  // namespace eros

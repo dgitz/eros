@@ -34,7 +34,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
 
    private:
     bool initializeWindows();
-    std::map<std::string, eros::IWindow*> windows;
+    std::map<eros::IWindow::WindowType, eros::IWindow*> windows;
     eros::RenderEngine* renderEngine;
 };
 #endif  // SystemMonitorProcess_H

@@ -35,8 +35,11 @@ bool RenderEngine::initScreen() {
         if (renderWindow->init() == false) {
             return false;
         }
+        if (window.first == IWindow::WindowType::PROCESS) {
+            renderWindow->setFocused(true);
+        }
         Window win(window.second, renderWindow);
-        windows.insert(std::pair<std::string, Window>(window.first, win));
+        windows.insert(std::pair<IWindow::WindowType, Window>(window.first, win));
         // renderWindows.insert(std::pair<std::string, RenderWindow *>(window.first, renderWindow));
     }
 
@@ -54,23 +57,19 @@ bool RenderEngine::initScreen() {
     */
     return true;
 }
-bool RenderEngine::update(double dt, std::map<std::string, IWindow*> _windows) {
-    KeyMap keyPressed = (KeyMap)getch();
+bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _windows) {
+    uint16_t key = getch();
+    KeyMap keyPressed = (KeyMap)key;
     switch (keyPressed) {
         case KeyMap::KEY_Q: killMe = true; break;
         case KeyMap::KEY_q: killMe = true; break;
-        default: break;
+        case KeyMap::KEY_TAB: incrementFocus(); break;
+        default: logger->log_debug("Key: " + std::to_string(key));
     }
 
-    for (std::map<std::string, Window>::iterator it = windows.begin(); it != windows.end(); it++) {
+    for (std::map<IWindow::WindowType, Window>::iterator it = windows.begin(); it != windows.end();
+         it++) {
         renderWindow(it->second.windowData, it->second.windowRender);
-        // wprintw(it->second->get_window_reference(), 2, 1, "Dumb");
-        //  box(it->second->get_window_reference(), 0, 0);
-        //  wrefresh();
-        //   renderWindow(/*it->second->windowData*/ it->second);
-        //    box(it->secondwindowRender->get_window_reference(), 0, 0);
-        // refresh();
-        // wrefresh(it->second->get_window_reference());
     }
     return true;
 }
@@ -78,8 +77,30 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
     for (auto data : windowData->getData()) {
         mvwprintw(renderWindow->get_window_reference(), data.x + 1, data.y + 1, data.data.c_str());
     }
-    box(renderWindow->get_window_reference(), 0, 0);
+    if (renderWindow->isFocused() == true) {
+        box(renderWindow->get_window_reference(), '|', '-');
+    }
+    else {
+        box(renderWindow->get_window_reference(), 0, 0);
+    }
     wrefresh(renderWindow->get_window_reference());
     return true;
+}
+void RenderEngine::incrementFocus() {
+    IWindow::WindowType currentFocusedWindow = IWindow::WindowType::UNKNOWN;
+    // Get current window that's focused
+    for (std::map<IWindow::WindowType, Window>::iterator it = windows.begin(); it != windows.end();
+         it++) {
+        if (it->second.windowRender->isFocused() == true) {
+            currentFocusedWindow = it->first;
+        }
+    }
+    IWindow::WindowType newFocusedWindow = (IWindow::WindowType)((uint8_t)currentFocusedWindow + 1);
+    if ((newFocusedWindow == IWindow::WindowType::END_OF_LIST) ||
+        (newFocusedWindow == IWindow::WindowType::INFO)) {
+        newFocusedWindow = (IWindow::WindowType)((uint8_t)IWindow::WindowType::UNKNOWN + 1);
+    }
+    windows.find(currentFocusedWindow)->second.windowRender->setFocused(false);
+    windows.find(newFocusedWindow)->second.windowRender->setFocused(true);
 }
 }  // namespace eros
