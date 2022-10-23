@@ -3,12 +3,13 @@
 #include <eros/SystemMonitor/DataStructures.h>
 
 #include <string>
+#include <vector>
 namespace eros {
 class IWindow
 {
    public:
-    virtual std::string getData() = 0;
     virtual WindowSize getWindowSize() = 0;
+    virtual std::vector<RenderData> getData() = 0;
 
    private:
 };

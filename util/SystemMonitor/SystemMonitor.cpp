@@ -7,9 +7,16 @@ SystemMonitor::SystemMonitor()
           read_robotnamespace() + "SystemCommandAction",
           boost::bind(&SystemMonitor::system_commandAction_Callback, this, _1),
           false) {
+    filter_list.insert(std::make_pair("rostopic", true));
     system_command_action_server.start();
 }
 SystemMonitor::~SystemMonitor() {
+}
+void SystemMonitor::heartbeat_Callback(const eros::heartbeat::ConstPtr &t_msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_heartbeatmessage(t_msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
 }
 void SystemMonitor::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
@@ -104,6 +111,11 @@ bool SystemMonitor::start() {
                          Node::NodeStateString(Node::State::INITIALIZING));
         // LCOV_EXCL_STOP
     }
+    diagnostic = rescan_nodes();
+    if (diagnostic.level >= Level::Type::ERROR) {
+        logger->log_diagnostic(diagnostic);
+        return false;
+    }
     if (process->request_statechange(Node::State::INITIALIZED) == false) {
         // No practical way to unit test
         // LCOV_EXCL_START
@@ -146,12 +158,19 @@ Diagnostic::DiagnosticDefinition SystemMonitor::finish_initialization() {
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+    set_loop1_rate(1.0);
+    set_loop2_rate(0.2);
+    set_ros_rate(20.0);
     return diag;
 }
 bool SystemMonitor::run_loop1() {
     return true;
 }
 bool SystemMonitor::run_loop2() {
+    Diagnostic::DiagnosticDefinition diag = rescan_nodes();
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
     return true;
 }
 bool SystemMonitor::run_loop3() {
@@ -240,4 +259,109 @@ int main(int argc, char **argv) {
     thread.detach();
     delete node;
     return 0;
+}
+Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
+    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    std::size_t found_new_subscribers = 0;
+    ros::V_string nodes;
+    ros::master::getNodes(nodes);
+    std::vector<std::string> node_list;
+    for (ros::V_string::iterator it = nodes.begin(); it != nodes.end(); it++) {
+        const std::string &_node_name = *it;
+        std::size_t found = _node_name.find(BASE_NODE_NAME);
+        if (found != std::string::npos) {
+            continue;
+        }
+        bool add_me = true;
+        if (_node_name.rfind(get_robotnamespace(), 0) != 0) {
+            add_me = false;
+        }
+        if (add_me == true) {
+            std::map<std::string, bool>::iterator filter_it = filter_list.begin();
+            while (filter_it != filter_list.end()) {
+                if (filter_it->second == true) {
+                    if (_node_name.find(filter_it->first) != std::string::npos) {
+                        add_me = false;
+                    }
+                }
+                filter_it++;
+            }
+        }
+        if (add_me == true) {
+            node_list.push_back(_node_name);
+        }
+    }
+    ros::master::V_TopicInfo master_topics;
+    ros::master::getTopics(master_topics);
+    std::vector<std::string> heartbeat_list;
+    std::vector<std::string> resource_used_list;
+    std::vector<std::string> loadfactor_list;
+    for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
+         it++) {
+        const ros::master::TopicInfo &info = *it;
+        std::size_t found = info.name.find(BASE_NODE_NAME);
+        if (found != std::string::npos) {
+            continue;
+        }
+
+        if (info.datatype == "eros/heartbeat") {
+            if (info.name.rfind(get_robotnamespace(), 0) == 0) {
+                if (heartbeat_subs.find(info.name) == heartbeat_subs.end()) {
+                    heartbeat_list.push_back(info.name);
+                }
+            }
+        }
+        /*if (info.datatype == "eros/loadfactor") {
+            if (info.name.rfind(get_robotnamespace(), 0) == 0) {
+                loadfactor_list.push_back(info.name);
+            }
+        }
+        */
+    }
+
+    /*
+    diag = process->update_devicelist(loadfactor_list,
+                                      new_resourceavailable_topics_to_subscribe,
+                                      new_loadfactor_topics_to_subscribe);
+                                      */
+    for (std::size_t i = 0; i < heartbeat_list.size(); ++i) {
+        ros::Subscriber sub = n->subscribe<eros::heartbeat>(
+            heartbeat_list.at(i), 50, &SystemMonitor::heartbeat_Callback, this);
+        heartbeat_subs.insert(std::pair<std::string, ros::Subscriber>(heartbeat_list.at(i), sub));
+    }
+    /*
+    for (std::size_t i = 0; i < new_resourceused_topics_to_subscribe.size(); ++i) {
+        ros::Subscriber sub =
+            n->subscribe<eros::resource>(new_resourceused_topics_to_subscribe.at(i),
+                                         50,
+                                         &SystemMonitorNode::resourceused_Callback,
+                                         this);
+        resource_used_subs.push_back(sub);
+    }
+    for (std::size_t i = 0; i < new_loadfactor_topics_to_subscribe.size(); ++i) {
+        ros::Subscriber sub =
+            n->subscribe<eros::loadfactor>(new_loadfactor_topics_to_subscribe.at(i),
+                                           50,
+                                           &SystemMonitorNode::loadfactor_Callback,
+                                           this);
+        loadfactor_subs.push_back(sub);
+    }
+    for (std::size_t i = 0; i < new_resourceavailable_topics_to_subscribe.size(); ++i) {
+        ros::Subscriber sub =
+            n->subscribe<eros::resource>(new_resourceavailable_topics_to_subscribe.at(i),
+                                         50,
+                                         &SystemMonitorNode::resourceavailable_Callback,
+                                         this);
+        resource_available_subs.push_back(sub);
+    }
+    */
+    found_new_subscribers = heartbeat_list.size();
+    if (found_new_subscribers > 0) {
+        logger->log_notice("Rescanned and found " + std::to_string(found_new_subscribers) +
+                           " new things to subscribe to.");
+    }
+    else {
+        logger->log_notice("Rescanned and found no new things to subscribe to.");
+    }
+    return diag;
 }

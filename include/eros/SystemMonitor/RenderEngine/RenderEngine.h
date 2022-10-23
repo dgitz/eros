@@ -3,38 +3,13 @@
 #include <curses.h>
 #include <eros/Logger.h>
 #include <eros/SystemMonitor/DataStructures.h>
+#include <eros/SystemMonitor/RenderEngine/RenderWindow.h>
 #include <eros/SystemMonitor/Window/IWindow.h>
 
 #include <map>
 #include <string>
 namespace eros {
-WINDOW* create_newwin(int height, int width, int starty, int startx);
-class RenderWindow
-{
-   public:
-    RenderWindow(eros::Logger* logger, WindowSize size) : logger(logger) {
-        logger->log_notice("A");
-        WINDOW* win = create_newwin(10, 10, 1, 1);
-        logger->log_notice("B");
-        set_window_reference(win);
-    }
-    virtual ~RenderWindow() {
-        if (window_reference != nullptr) {
-            delete window_reference;
-            window_reference = nullptr;
-        }
-    }
-    void set_window_reference(WINDOW* win) {
-        window_reference = win;
-    }
-    WINDOW* get_window_reference() {
-        return window_reference;
-    }
 
-   private:
-    eros::Logger* logger;
-    WINDOW* window_reference;
-};
 class RenderEngine
 {
     enum class KeyMap { KEY_q = 113, KEY_Q = 81 };

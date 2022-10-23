@@ -54,8 +54,43 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 }
 bool SystemMonitorProcess::initializeWindows() {
     {
-        WindowTable* window = new WindowTable();
-        windows.insert(std::pair<std::string, IWindow*>("dumb", window));
+        HeaderWindow* window = new HeaderWindow();
+        windows.insert(std::pair<std::string, IWindow*>("header", window));
+    }
+    {
+        ProcessWindow* window = new ProcessWindow();
+        windows.insert(std::pair<std::string, IWindow*>("process", window));
+    }
+    {
+        NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow();
+        windows.insert(std::pair<std::string, IWindow*>("nodediagnostics", window));
+    }
+    {
+        InfoWindow* window = new InfoWindow();
+        windows.insert(std::pair<std::string, IWindow*>("info", window));
+    }
+    {
+        DeviceWindow* window = new DeviceWindow();
+        windows.insert(std::pair<std::string, IWindow*>("device", window));
     }
     return true;
+}
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
+    const eros::heartbeat::ConstPtr& t_msg) {
+    eros::heartbeat msg = convert_fromptr(t_msg);
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == "process") {
+            ProcessWindow* win = dynamic_cast<ProcessWindow*>(window.second);
+            bool v = win->new_heartbeat(msg);
+            if (v == false) {
+                diag = update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+                                         Level::Type::ERROR,
+                                         Diagnostic::Message::DROPPING_PACKETS,
+                                         "Unable to Update Window: " + window.first);
+                return diag;
+            }
+        }
+    }
+    return diag;
 }

@@ -11,8 +11,8 @@ enum Color {
 }
 struct RenderCoordinate {
     +CoordinateReference reference
-    +double x
-    +double y
+    +uint32_t x
+    +uint32_t y
 }
 RenderCoordinate -* CoordinateReference
 struct RenderData {

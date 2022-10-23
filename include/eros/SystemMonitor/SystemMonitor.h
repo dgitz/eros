@@ -60,10 +60,15 @@ class SystemMonitor : public eros::BaseNode
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+    void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
 
    private:
+    eros::Diagnostic::DiagnosticDefinition rescan_nodes();
     eros::Diagnostic::DiagnosticDefinition read_launchparameters();
     SystemMonitorProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
+
+    std::map<std::string, bool> filter_list;
+    std::map<std::string, ros::Subscriber> heartbeat_subs;
 };
 #endif  // SystemMonitor_H

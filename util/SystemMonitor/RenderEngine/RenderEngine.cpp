@@ -1,16 +1,6 @@
 #include <eros/SystemMonitor/RenderEngine/RenderEngine.h>
 namespace eros {
-WINDOW *create_newwin(int height, int width, int starty, int startx) {
-    WINDOW *local_win;
 
-    local_win = newwin(height, width, starty, startx);
-    box(local_win, 0, 0); /* 0, 0 gives default characters
-                           * for the vertical and horizontal
-                           * lines			*/
-    wrefresh(local_win);  /* Show that box 		*/
-
-    return local_win;
-}
 bool RenderEngine::initScreen() {
     // setlocale(LC_ALL, "");
     mousemask(ALL_MOUSE_EVENTS, NULL);
@@ -38,8 +28,13 @@ bool RenderEngine::initScreen() {
     */
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
+    logger->log_notice(std::to_string(mainwindow_width) + " " + std::to_string(mainwindow_height));
     for (auto window : dataWindows) {
-        RenderWindow *renderWindow = new RenderWindow(logger, window.second->getWindowSize());
+        RenderWindow* renderWindow = new RenderWindow(
+            logger, window.second->getWindowSize(), mainwindow_width, mainwindow_height);
+        if (renderWindow->init() == false) {
+            return false;
+        }
         Window win(window.second, renderWindow);
         windows.insert(std::pair<std::string, Window>(window.first, win));
         // renderWindows.insert(std::pair<std::string, RenderWindow *>(window.first, renderWindow));
@@ -59,7 +54,7 @@ bool RenderEngine::initScreen() {
     */
     return true;
 }
-bool RenderEngine::update(double dt, std::map<std::string, IWindow *> _windows) {
+bool RenderEngine::update(double dt, std::map<std::string, IWindow*> _windows) {
     KeyMap keyPressed = (KeyMap)getch();
     switch (keyPressed) {
         case KeyMap::KEY_Q: killMe = true; break;
@@ -79,8 +74,10 @@ bool RenderEngine::update(double dt, std::map<std::string, IWindow *> _windows) 
     }
     return true;
 }
-bool RenderEngine::renderWindow(IWindow *windowData, RenderWindow *renderWindow) {
-    mvwprintw(renderWindow->get_window_reference(), 5, 5, windowData->getData().c_str());
+bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow) {
+    for (auto data : windowData->getData()) {
+        mvwprintw(renderWindow->get_window_reference(), data.x + 1, data.y + 1, data.data.c_str());
+    }
     box(renderWindow->get_window_reference(), 0, 0);
     wrefresh(renderWindow->get_window_reference());
     return true;
