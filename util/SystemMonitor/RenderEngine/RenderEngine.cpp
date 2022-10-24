@@ -8,12 +8,17 @@ bool RenderEngine::initScreen() {
     timeout(1);
     clear();
     if (has_colors() == FALSE) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         endwin();
         return false;
+        // LCOV_EXCL_STOP
     }
+
     curs_set(0);
     noecho();
     raw();
+
     /*
     start_color();
     init_color(COLOR_BLACK, 0, 0, 0);
@@ -28,33 +33,23 @@ bool RenderEngine::initScreen() {
     */
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
+
     logger->log_notice(std::to_string(mainwindow_width) + " " + std::to_string(mainwindow_height));
     for (auto window : dataWindows) {
         RenderWindow* renderWindow = new RenderWindow(
             logger, window.second->getWindowSize(), mainwindow_width, mainwindow_height);
         if (renderWindow->init() == false) {
+            // No Practical way to Unit Test
+            // LCOV_EXCL_START
             return false;
+            // LCOV_EXCL_STOP
         }
         if (window.first == IWindow::WindowType::PROCESS) {
             renderWindow->setFocused(true);
         }
         Window win(window.second, renderWindow);
         windows.insert(std::pair<IWindow::WindowType, Window>(window.first, win));
-        // renderWindows.insert(std::pair<std::string, RenderWindow *>(window.first, renderWindow));
     }
-
-    /*bool status = process->set_mainwindow(mainwindow_width, mainwindow_height);
-    if (status == false) {
-        logger->enable_consoleprint();
-        logger->log_error("Window: Width: " + std::to_string(mainwindow_width) + " Height: " +
-                          std::to_string(mainwindow_height) + " is too small. Exiting.");
-        return false;
-    }
-    status = process->initialize_windows();
-    if (status == false) {
-        return false;
-    }
-    */
     return true;
 }
 bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _windows) {
@@ -64,6 +59,8 @@ bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _wi
     KeyMap keyPressed = (KeyMap)key;
     bool validKey = false;
     switch (keyPressed) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         case KeyMap::KEY_Q:
             killMe = true;
             validKey = true;
@@ -82,21 +79,28 @@ bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _wi
                 logger->log_debug("Key: " + std::to_string(key));
             }
             break;
+            // LCOV_EXCL_STOP
     }
     if (validKey == true) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         if (windows.find(IWindow::WindowType::INFO)->second.windowData->keyPressed(keyPressed) ==
             false) {
             return false;
         }
+        // LCOV_EXCL_STOP
     }
     for (std::map<IWindow::WindowType, Window>::iterator it = windows.begin(); it != windows.end();
          it++) {
         renderWindow(it->second.windowData, it->second.windowRender);
         if (it->second.windowRender->isFocused()) {
             if (validKey == true) {
+                // No Practical way to Unit Test
+                // LCOV_EXCL_START
                 if (it->second.windowData->keyPressed(keyPressed) == false) {
                     return false;
                 }
+                // LCOV_EXCL_STOP
             }
         }
     }
@@ -121,7 +125,7 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
     wrefresh(renderWindow->get_window_reference());
     return true;
 }
-void RenderEngine::incrementFocus() {
+bool RenderEngine::incrementFocus() {
     IWindow::WindowType currentFocusedWindow = IWindow::WindowType::UNKNOWN;
     // Get current window that's focused
     for (std::map<IWindow::WindowType, Window>::iterator it = windows.begin(); it != windows.end();
@@ -137,5 +141,14 @@ void RenderEngine::incrementFocus() {
     }
     windows.find(currentFocusedWindow)->second.windowRender->setFocused(false);
     windows.find(newFocusedWindow)->second.windowRender->setFocused(true);
+    if (currentFocusedWindow != newFocusedWindow) {
+        return true;
+    }
+    else {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
+        return false;
+        // LCOV_EXCL_STOP
+    }
 }
 }  // namespace eros

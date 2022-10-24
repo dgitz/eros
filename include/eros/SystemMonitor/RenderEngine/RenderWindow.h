@@ -15,8 +15,11 @@ class RenderWindow
                  uint16_t mainWindowHeight);
     virtual ~RenderWindow() {
         if (window_reference != nullptr) {
+            // No Practical way to Unit Test
+            // LCOV_EXCL_START
             delete window_reference;
             window_reference = nullptr;
+            // LCOV_EXCL_STOP
         }
     }
     bool init();

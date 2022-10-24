@@ -12,7 +12,7 @@ namespace eros {
 
 class RenderEngine
 {
-        struct Window {
+    struct Window {
         Window(IWindow* windowData, RenderWindow* windowRender)
             : windowData(windowData), windowRender(windowRender) {
         }
@@ -21,8 +21,8 @@ class RenderEngine
     };
 
    public:
-    RenderEngine(eros::Logger* logger, std::map<IWindow::WindowType, IWindow*> windowData)
-        : logger(logger), dataWindows(windowData), killMe(false) {
+    RenderEngine(eros::Logger* logger, std::map<IWindow::WindowType, IWindow*> dataWindows)
+        : logger(logger), dataWindows(dataWindows), killMe(false) {
     }
     virtual ~RenderEngine() {
         endwin();
@@ -32,12 +32,13 @@ class RenderEngine
     bool shouldKill() {
         return killMe;
     }
-
-   private:
+    bool incrementFocus();
     bool renderWindow(IWindow* windowData, RenderWindow* renderWindow);
+    std::map<IWindow::WindowType, Window> getWindows() {
+        return windows;
+    }
 
    private:
-    void incrementFocus();
     eros::Logger* logger;
     std::map<IWindow::WindowType, IWindow*> dataWindows;
     std::map<IWindow::WindowType, RenderWindow*> renderWindows;

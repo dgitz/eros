@@ -27,16 +27,24 @@ RenderWindow::RenderWindow(eros::Logger* logger,
 }
 bool RenderWindow::init() {
     if (actualSize.height_pixel < minSize.height_pixel) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         logger->enable_consoleprint();
         logger->log_error("Height Too Small: " + std::to_string(actualSize.height_pixel) + "<" +
                           std::to_string(minSize.height_pixel));
+
         return false;
+        // LCOV_EXCL_STOP
     }
     if (actualSize.width_pixel < minSize.width_pixel) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         logger->enable_consoleprint();
         logger->log_error("Width Too Small: " + std::to_string(actualSize.width_pixel) + "<" +
                           std::to_string(minSize.width_pixel));
+
         return false;
+        // LCOV_EXCL_STOP
     }
     return true;
 }

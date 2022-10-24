@@ -2,7 +2,7 @@ name: Development
 
 on:
   push:
-    branches: [ US_886_DataLoggerLevel2Tests ]
+    branches: [ US_1116_RearchitectSystemMonitor ]
 
 jobs:
   call_BuildTest:
