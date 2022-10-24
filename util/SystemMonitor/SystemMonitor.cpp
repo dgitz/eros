@@ -1,3 +1,5 @@
+// No practical way to this file due to screen rendering.
+// LCOV_EXCL_START
 #include <eros/SystemMonitor/SystemMonitor.h>
 using namespace eros;
 bool kill_node = false;
@@ -366,3 +368,4 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
     }
     return diag;
 }
+// LCOV_EXCL_STOP

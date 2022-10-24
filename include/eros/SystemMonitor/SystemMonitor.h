@@ -1,5 +1,7 @@
 /*! \file SystemMonitor.h
  */
+// No practical way to this file due to screen rendering.
+// LCOV_EXCL_START
 #ifndef SystemMonitor_H
 #define SystemMonitor_H
 // C System Files
@@ -72,3 +74,4 @@ class SystemMonitor : public eros::BaseNode
     std::map<std::string, ros::Subscriber> heartbeat_subs;
 };
 #endif  // SystemMonitor_H
+        // LCOV_EXCL_STOP

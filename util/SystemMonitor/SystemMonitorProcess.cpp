@@ -1,3 +1,5 @@
+// No practical way to this file due to screen rendering.
+// LCOV_EXCL_START
 #include <eros/SystemMonitor/SystemMonitorProcess.h>
 using namespace eros;
 SystemMonitorProcess::SystemMonitorProcess() {
@@ -113,3 +115,4 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(eros
     }
     return diag;
 }
+// LCOV_EXCL_STOP

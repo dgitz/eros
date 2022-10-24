@@ -1,5 +1,7 @@
 /*! \file SystemMonitorProcess.h
  */
+// No practical way to this file due to screen rendering.
+// LCOV_EXCL_START
 #ifndef SystemMonitorProcess_H
 #define SystemMonitorProcess_H
 #include <eros/BaseNodeProcess.h>
@@ -31,8 +33,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     }
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
         const eros::heartbeat::ConstPtr& t_msg);
-    eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
-        eros::heartbeat msg);
+    eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(eros::heartbeat msg);
 
    private:
     bool initializeWindows();
@@ -40,3 +41,4 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     eros::RenderEngine* renderEngine;
 };
 #endif  // SystemMonitorProcess_H
+        // LCOV_EXCL_STOP
