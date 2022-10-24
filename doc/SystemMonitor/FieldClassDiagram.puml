@@ -1,11 +1,19 @@
 @startuml
+title "Field Class Diagram"
 interface IField {
-    +{abstract} RenderData get_RenderData()
+    +{abstract} RenderData getData()
+    +{abstract} void setData(RenderData data)
 
 }
-class BaseField {
+abstract BaseField {
+    +RenderData getData()
+    +void setData(RenderData newData)
+    -RenderData data
 
 }
-BaseField -|> IField
+IField <|-- BaseField
+class GenericField {
 
+}
+BaseField <|-- GenericField
 @enduml

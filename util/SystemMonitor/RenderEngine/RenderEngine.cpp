@@ -38,9 +38,9 @@ bool RenderEngine::initScreen() {
         RenderWindow* renderWindow = new RenderWindow(
             logger, window.second->getWindowSize(), mainwindow_width, mainwindow_height);
         if (renderWindow->init() == false) {
-            logger->log_error("Unable to initialize Render Window.");
             // No Practical way to Unit Test
             // LCOV_EXCL_START
+            logger->log_error("Unable to initialize Render Window.");
             return false;
             // LCOV_EXCL_STOP
         }
