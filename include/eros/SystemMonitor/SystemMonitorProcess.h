@@ -31,6 +31,8 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     }
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
         const eros::heartbeat::ConstPtr& t_msg);
+    eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
+        eros::heartbeat msg);
 
    private:
     bool initializeWindows();

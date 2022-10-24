@@ -16,21 +16,27 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     bool status = initializeWindows();
     if (status == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
                                  Level::Type::ERROR,
                                  Diagnostic::Message::INITIALIZING_ERROR,
                                  "Unable to Initialize Windows.");
         logger->enable_consoleprint();
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     renderEngine = new RenderEngine(logger, windows);
     if (renderEngine->initScreen() == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
                                  Level::Type::ERROR,
                                  Diagnostic::Message::INITIALIZING_ERROR,
                                  "Unable to Initialize Screen.");
         logger->enable_consoleprint();
         logger->log_diagnostic(diag);
+        // LCOV_EXCL_STOP
     }
     return diag;
 }
@@ -80,9 +86,16 @@ bool SystemMonitorProcess::initializeWindows() {
     }
     return true;
 }
+// No practical way to unit test
+// LCOV_EXCL_START
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
     const eros::heartbeat::ConstPtr& t_msg) {
     eros::heartbeat msg = convert_fromptr(t_msg);
+    return new_heartbeatmessage(msg);
+}
+// LCOV_EXCL_STOP
+
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(eros::heartbeat msg) {
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window.first == IWindow::WindowType::PROCESS) {

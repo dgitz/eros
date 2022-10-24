@@ -2,19 +2,22 @@
 namespace eros {
 
 bool RenderEngine::initScreen() {
+    printf("%s %d\n", __FILE__, __LINE__);
     // setlocale(LC_ALL, "");
     mousemask(ALL_MOUSE_EVENTS, NULL);
     initscr();
     timeout(1);
     clear();
+    printf("%s %d\n", __FILE__, __LINE__);
     if (has_colors() == FALSE) {
         // No Practical way to Unit Test
         // LCOV_EXCL_START
+        logger->log_error("No Colors for Terminal.");
         endwin();
         return false;
         // LCOV_EXCL_STOP
     }
-
+    printf("%s %d\n", __FILE__, __LINE__);
     curs_set(0);
     noecho();
     raw();
@@ -31,25 +34,31 @@ bool RenderEngine::initScreen() {
     init_pair((uint8_t)SystemMonitorProcess::Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
     init_pair((uint8_t)SystemMonitorProcess::Color::PURPLE_COLOR, COLOR_WHITE, 10);
     */
+    printf("%s %d\n", __FILE__, __LINE__);
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
-
+    printf("%s %d\n", __FILE__, __LINE__);
     logger->log_notice(std::to_string(mainwindow_width) + " " + std::to_string(mainwindow_height));
     for (auto window : dataWindows) {
         RenderWindow* renderWindow = new RenderWindow(
             logger, window.second->getWindowSize(), mainwindow_width, mainwindow_height);
         if (renderWindow->init() == false) {
+            printf("%s %d\n", __FILE__, __LINE__);
+            logger->log_error("Unable to initialize Render Window.");
             // No Practical way to Unit Test
             // LCOV_EXCL_START
             return false;
             // LCOV_EXCL_STOP
         }
+        printf("%s %d\n", __FILE__, __LINE__);
         if (window.first == IWindow::WindowType::PROCESS) {
             renderWindow->setFocused(true);
         }
+        printf("%s %d\n", __FILE__, __LINE__);
         Window win(window.second, renderWindow);
         windows.insert(std::pair<IWindow::WindowType, Window>(window.first, win));
     }
+    printf("%s %d\n", __FILE__, __LINE__);
     return true;
 }
 bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _windows) {

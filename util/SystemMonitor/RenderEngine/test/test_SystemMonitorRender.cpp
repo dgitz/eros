@@ -13,32 +13,126 @@
 
 #include <memory>
 using namespace eros;
+class TesterStatusWindow : public WindowText
+{
+   public:
+    TesterStatusWindow(eros::Logger* logger) : WindowText(logger) {
+    }
+    virtual ~TesterStatusWindow() {
+    }
+    WindowSize getWindowSize() {
+        WindowSize size;
+        ScreenCoordinatePerc coord(0.0, 0.0, 100.0, 15.0);
+        size.coordinate = coord;
+        size.min_height_pixel = 1;
+        size.min_width_pixel = 1;
+        return size;
+    }
+    std::vector<std::shared_ptr<IRecord>> getRecords() {
+        std::vector<std::shared_ptr<IRecord>> records;
+        {
+            std::vector<std::shared_ptr<IField>> fields;
+            std::shared_ptr<GenericRecord> record(new GenericRecord);
+            std::shared_ptr<GenericField> field(new GenericField);
+            RenderData data;
+            data.data = "Status";
+            data.x = 0;
+            data.y = 0;
+            field->setData(data);
+            fields.push_back(std::move(field));
+
+            record->setFields(fields);
+            records.push_back(std::move(record));
+        }
+
+        return records;
+    }
+    bool keyPressed(KeyMap key) {
+        (void)key;
+        logger->log_warn("NOT SUPPORTED YET.");
+        return true;
+    }
+    // Not allowed to set records independently.
+    bool setRecords(std::vector<std::shared_ptr<IRecord>> records) {
+        (void)records;
+        return false;
+    }
+
+   private:
+};
+class TesterInfoWindow : public WindowText
+{
+   public:
+    TesterInfoWindow(eros::Logger* logger) : WindowText(logger) {
+    }
+    virtual ~TesterInfoWindow() {
+    }
+    WindowSize getWindowSize() {
+        WindowSize size;
+        ScreenCoordinatePerc coord(33.0, 75.0, 33.0, 25.0);
+        size.coordinate = coord;
+        size.min_height_pixel = 1;
+        size.min_width_pixel = 1;
+        return size;
+    }
+    std::vector<std::shared_ptr<IRecord>> getRecords() {
+        std::vector<std::shared_ptr<IRecord>> records;
+        {
+            std::vector<std::shared_ptr<IField>> fields;
+            std::shared_ptr<GenericRecord> record(new GenericRecord);
+            std::shared_ptr<GenericField> field(new GenericField);
+            RenderData data;
+            data.data = "Info";
+            data.x = 0;
+            data.y = 0;
+            field->setData(data);
+            fields.push_back(std::move(field));
+
+            record->setFields(fields);
+            records.push_back(std::move(record));
+        }
+
+        return records;
+    }
+    bool keyPressed(KeyMap key) {
+        (void)key;
+        logger->log_warn("NOT SUPPORTED YET.");
+        return true;
+    }
+    // Not allowed to set records independently.
+    bool setRecords(std::vector<std::shared_ptr<IRecord>> records) {
+        (void)records;
+        return false;
+    }
+
+   private:
+};
 std::map<eros::IWindow::WindowType, IWindow*> initializeWindows(Logger* logger) {
     std::map<eros::IWindow::WindowType, IWindow*> windows;
     {
-        StatusWindow* window = new StatusWindow(logger);
+        TesterStatusWindow* window = new TesterStatusWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::STATUS, window));
     }
 
     {
-        ProcessWindow* window = new ProcessWindow(logger);
-        windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::PROCESS, window));
-    }
-    {
-        InfoWindow* window = new InfoWindow(logger);
+        TesterInfoWindow* window = new TesterInfoWindow(logger);
         windows.insert(std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::INFO, window));
     }
     {
-        DeviceWindow* window = new DeviceWindow(logger);
+        TesterInfoWindow* window = new TesterInfoWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::DEVICE, window));
     }
     {
-        NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow(logger);
+        TesterInfoWindow* window = new TesterInfoWindow(logger);
         windows.insert(
             std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::NODEDIAGNOSTICS, window));
+    }
+    {
+        TesterInfoWindow* window = new TesterInfoWindow(logger);
+        windows.insert(
+            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::PROCESS, window));
     }
 
     return windows;
@@ -56,7 +150,8 @@ TEST(BasicTest, RenderEngineTest) {
     std::map<eros::IWindow::WindowType, IWindow*> windows = initializeWindows(logger);
 
     RenderEngine engine(logger, windows);
-    EXPECT_TRUE(engine.initScreen());
+
+    ASSERT_TRUE(engine.initScreen());
     {  // Test Focus Increment
         for (int i = 0; i < 5 * (uint8_t)IWindow::WindowType::END_OF_LIST; ++i) {
             EXPECT_TRUE(engine.incrementFocus());
