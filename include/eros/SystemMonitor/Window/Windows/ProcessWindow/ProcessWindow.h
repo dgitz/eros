@@ -13,9 +13,14 @@ class ProcessWindow : public WindowTable
     virtual ~ProcessWindow() {
     }
     WindowSize getWindowSize();
-    std::vector<IRecord*> getRecords();
+    std::vector<std::shared_ptr<IRecord>> getRecords();
     bool new_heartbeat(eros::heartbeat msg);
     bool keyPressed(KeyMap key);
+    // Not allowed to set records independently.
+    bool setRecords(std::vector<std::shared_ptr<IRecord>> records) {
+        (void)records;
+        return false;
+    }
 
    private:
     uint64_t updateCounter;

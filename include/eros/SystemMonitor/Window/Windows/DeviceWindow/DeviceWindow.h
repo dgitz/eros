@@ -12,7 +12,12 @@ class DeviceWindow : public WindowTable
     virtual ~DeviceWindow() {
     }
     WindowSize getWindowSize();
-    std::vector<IRecord*> getRecords();
+    std::vector<std::shared_ptr<IRecord>> getRecords();
+    // Not allowed to set records independently.
+    bool setRecords(std::vector<std::shared_ptr<IRecord>> records) {
+        (void)records;
+        return false;
+    }
     bool keyPressed(KeyMap key);
 
    private:

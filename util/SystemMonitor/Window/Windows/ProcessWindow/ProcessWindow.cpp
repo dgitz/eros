@@ -1,4 +1,4 @@
-#include <eros/SystemMonitor/Window/Windows/ProcessWindow.h>
+#include <eros/SystemMonitor/Window/Windows/ProcessWindow/ProcessWindow.h>
 using namespace eros;
 WindowSize ProcessWindow::getWindowSize() {
     WindowSize size;
@@ -8,21 +8,21 @@ WindowSize ProcessWindow::getWindowSize() {
     size.min_width_pixel = 60;
     return size;
 }
-std::vector<IRecord*> ProcessWindow::getRecords() {
-    std::vector<IRecord*> records;
+std::vector<std::shared_ptr<IRecord>> ProcessWindow::getRecords() {
+    std::vector<std::shared_ptr<IRecord>> records;
     {
-        std::vector<IField*> fields;
-        GenericRecord* record = new GenericRecord();
-        GenericField* field = new GenericField();
+        std::vector<std::shared_ptr<IField>> fields;
+        std::shared_ptr<GenericRecord> record(new GenericRecord);
+        std::shared_ptr<GenericField> field(new GenericField);
         RenderData data;
-        data.data = "Process: " + std::to_string(updateCounter);
+        data.data = "Process:" + std::to_string(updateCounter);
         data.x = 0;
         data.y = 0;
         field->setData(data);
-        fields.push_back(field);
+        fields.push_back(std::move(field));
 
         record->setFields(fields);
-        records.push_back(record);
+        records.push_back(std::move(record));
     }
 
     return records;

@@ -5,11 +5,11 @@
 #include <eros/BaseNodeProcess.h>
 #include <eros/SystemMonitor/RenderEngine/RenderEngine.h>
 #include <eros/SystemMonitor/Window/IWindow.h>
-#include <eros/SystemMonitor/Window/Windows/DeviceWindow.h>
-#include <eros/SystemMonitor/Window/Windows/InfoWindow.h>
-#include <eros/SystemMonitor/Window/Windows/NodeDiagnosticsWindow.h>
-#include <eros/SystemMonitor/Window/Windows/ProcessWindow.h>
-#include <eros/SystemMonitor/Window/Windows/StatusWindow.h>
+#include <eros/SystemMonitor/Window/Windows/DeviceWindow/DeviceWindow.h>
+#include <eros/SystemMonitor/Window/Windows/InfoWindow/InfoWindow.h>
+#include <eros/SystemMonitor/Window/Windows/NodeDiagnosticsWindow/NodeDiagnosticsWindow.h>
+#include <eros/SystemMonitor/Window/Windows/ProcessWindow/ProcessWindow.h>
+#include <eros/SystemMonitor/Window/Windows/StatusWindow/StatusWindow.h>
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
  *  \brief */
 class SystemMonitorProcess : public eros::BaseNodeProcess

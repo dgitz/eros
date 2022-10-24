@@ -2,6 +2,7 @@
 #define IRECORD_H
 #include <eros/SystemMonitor/Field/IField.h>
 
+#include <memory>
 #include <vector>
 namespace eros {
 class IRecord
@@ -11,8 +12,8 @@ class IRecord
     }
     virtual ~IRecord() {
     }
-    virtual std::vector<IField*> getFields() = 0;
-    virtual void setFields(std::vector<IField*> fields) = 0;
+    virtual std::vector<std::shared_ptr<IField>> getFields() = 0;
+    virtual void setFields(std::vector<std::shared_ptr<IField>> fields) = 0;
 };
 }  // namespace eros
 #endif

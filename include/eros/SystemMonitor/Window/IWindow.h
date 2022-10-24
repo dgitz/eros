@@ -4,6 +4,7 @@
 #include <eros/SystemMonitor/DataStructures.h>
 #include <eros/SystemMonitor/Record/IRecord.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 namespace eros {
@@ -22,7 +23,8 @@ class IWindow
     virtual ~IWindow() {
     }
     virtual WindowSize getWindowSize() = 0;
-    virtual std::vector<IRecord*> getRecords() = 0;
+    virtual std::vector<std::shared_ptr<IRecord>> getRecords() = 0;
+    virtual bool setRecords(std::vector<std::shared_ptr<IRecord>> records) = 0;
     virtual bool keyPressed(KeyMap key) = 0;
 
    private:

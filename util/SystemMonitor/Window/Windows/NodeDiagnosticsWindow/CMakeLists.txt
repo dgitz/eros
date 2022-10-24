@@ -1,0 +1,3 @@
+add_library(nodeDiagnosticsWindow NodeDiagnosticsWindow.cpp)
+target_link_libraries(nodeDiagnosticsWindow ${catkin_LIBRARIES} logger windowTable)
+add_subdirectory(test)

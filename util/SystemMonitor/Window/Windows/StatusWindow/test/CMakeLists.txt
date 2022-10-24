@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorStatusWindow test_SystemMonitorStatusWindow.cpp)
+target_link_libraries(test_SystemMonitorStatusWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger statusWindow)

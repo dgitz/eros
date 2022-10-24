@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorField test_SystemMonitorField.cpp)
+target_link_libraries(test_SystemMonitorField ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger baseField genericField)

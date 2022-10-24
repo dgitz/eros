@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorRecord test_SystemMonitorRecord.cpp)
+target_link_libraries(test_SystemMonitorRecord ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger baseRecord genericRecord)

@@ -10,15 +10,15 @@ class BaseRecord : public IRecord
     }
     virtual ~BaseRecord() {
     }
-    std::vector<IField*> getFields() {
+    std::vector<std::shared_ptr<IField>> getFields() {
         return fields;
     }
-    void setFields(std::vector<IField*> newFields) {
+    void setFields(std::vector<std::shared_ptr<IField>> newFields) {
         fields = newFields;
     }
 
    private:
-    std::vector<IField*> fields;
+    std::vector<std::shared_ptr<IField>> fields;
 };
 }  // namespace eros
 #endif

@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorNodeDiagnosticsWindow test_SystemMonitorNodeDiagnosticsWindow.cpp)
+target_link_libraries(test_SystemMonitorNodeDiagnosticsWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger nodeDiagnosticsWindow)
