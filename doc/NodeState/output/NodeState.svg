@@ -9,7 +9,7 @@ link Reset to Initializing--><g id="link_Reset_Initializing"><path d="M39.39,397
 link Running to Paused--><g id="link_Running_Paused"><path d="M358.19,299.8569 C397.89,305.1569 456.28,318.2069 497,350.2969 C510.71,361.1069 520.3,378.1269 528.47,392.7969 " fill="none" id="Running-to-Paused" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="530.97,397.2669,530.0714,387.4591,528.5309,392.9022,523.0878,391.3617,530.97,397.2669" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[0b6f5eecfd6b7d9789c0c0117b0581f3]
 link Paused to Running--><g id="link_Paused_Running"><path d="M560.6,397.2669 C557.24,381.7169 547.13,362.2169 532,350.2969 C483.94,312.4269 411.25,301.0669 363.17,297.6869 " fill="none" id="Paused-to-Running" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="358.02,297.3469,366.7383,301.9284,363.0092,297.6747,367.2629,293.9456,358.02,297.3469" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[c130f4c3aaddf8c30b53e0c830bcbfde]
 link Running to Finished--><g id="link_Running_Finished"><path d="M318.51,320.3969 C320.64,340.8869 323.7,370.3769 325.97,392.1769 " fill="none" id="Running-to-Finished" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="326.5,397.2669,329.5527,387.9031,325.9855,392.2934,321.5951,388.7262,326.5,397.2669" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="182" x="324" y="363.3638">Typically from Deconstructor</text></g><!--MD5=[f3edc34042f787149cb4b2f443172939]
-link Finished to *end--><g id="link_Finished_*end"><path d="M370.8,422.2969 C380.72,422.2969 390.65,422.2969 400.57,422.2969 " fill="none" id="Finished-to-*end" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="405.76,422.2969,396.76,418.2969,400.76,422.2969,396.76,426.2969,405.76,422.2969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[6bab1bbddc5bf6204545c73ee66b6184]
+link Finished to *end--><g id="link_Finished_*end"><path d="M370.8,422.2969 C380.72,422.2969 390.65,422.2969 400.57,422.2969 " fill="none" id="Finished-to-*end" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="405.76,422.2969,396.76,418.2969,400.76,422.2969,396.76,426.2969,405.76,422.2969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7e0a070170552c480f32f25cd9d46708]
 @startuml
 title NodeState State Machine
 note "This diagram represents the allowed\n  state transitions for Node::State.\n" as mainNote
@@ -35,7 +35,7 @@ Running - -> Finished: Typically from Deconstructor
 Finished -> [*]
 @enduml
 
-PlantUML version 1.2022.8(Sun Sep 25 09:00:33 UTC 2022)
+PlantUML version 1.2022.8(Sun Sep 25 04:00:33 CDT 2022)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM

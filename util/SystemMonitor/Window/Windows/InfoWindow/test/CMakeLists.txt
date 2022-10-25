@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorInfoWindow test_SystemMonitorInfoWindow.cpp)
+target_link_libraries(test_SystemMonitorInfoWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger infoWindow)

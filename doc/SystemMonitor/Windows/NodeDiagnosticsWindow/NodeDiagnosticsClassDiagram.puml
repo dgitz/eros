@@ -1,0 +1,10 @@
+@startuml
+title "Node Diagnostics Window Class Diagram"
+abstract WindowTable {
+    
+}
+class NodeDiagnosticsWindow {
+
+}
+WindowTable <|-- NodeDiagnosticsWindow
+@enduml

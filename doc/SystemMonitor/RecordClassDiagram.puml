@@ -1,0 +1,21 @@
+@startuml
+title "Record Class Diagram"
+interface IRecord {
+    +{abstract}IField[] getFields()
+    +{abstract} void setFields(IField[] fields)
+}
+
+abstract BaseRecord {
+    +IField[] getFields()
+    +void setFields(IField[] fields)
+    -IField[] fields
+
+}
+class GenericRecord {
+
+}
+interface IField {}
+IRecord <|-- BaseRecord
+BaseRecord -* "*" IField
+BaseRecord <|-- GenericRecord
+@enduml

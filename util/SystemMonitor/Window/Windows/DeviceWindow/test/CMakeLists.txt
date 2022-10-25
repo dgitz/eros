@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorDeviceWindow test_SystemMonitorDeviceWindow.cpp)
+target_link_libraries(test_SystemMonitorDeviceWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger deviceWindow)

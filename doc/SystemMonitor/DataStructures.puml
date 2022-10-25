@@ -1,0 +1,61 @@
+@startuml
+title "System Monitor Data Structures"
+enum CoordinateReference {
+    GLOBAL
+    TO_PARENT
+}
+enum KeyMap { 
+    KEY_q
+    KEY_Q
+    KEY_TAB 
+}
+
+enum Color {
+    RED
+    GREEN
+    BLUE
+    WHITE
+    BLACK
+}
+struct ScreenCoordinatePerc {
+    CoordinateReference reference
+    double start_x_perc
+    double start_y_perc
+    double width_perc
+    double height_perc
+}
+ScreenCoordinatePerc --> CoordinateReference
+struct ScreenCoordinatePixel {
+    CoordinateReference reference
+    uint16_t start_x_pixel
+    uint16_t start_y_pixel
+    uint16_t width_pixel
+    uint16_t height_pixel
+}
+
+ScreenCoordinatePixel --> CoordinateReference
+struct RenderData {
+    +ScreenCoordinatePixel startCoordinate
+    +Color color
+    +std::string data
+}
+class WindowSize
+{
+
+    +{static} ScreenCoordinatePixel convert(ScreenCoordinatePerc coord_perc,uint16_t width_pix,uint16_t height_pix)
+    +ScreenCoordinatePerc coordinate;
+    +uint16_t min_height_pixel;
+    +uint16_t min_width_pixel;
+}
+WindowSize --> ScreenCoordinatePerc
+RenderData --> ScreenCoordinatePixel
+RenderData -> Color
+
+
+
+@enduml
+
+
+
+
+

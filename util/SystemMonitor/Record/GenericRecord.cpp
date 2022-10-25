@@ -1,0 +1,1 @@
+#include <eros/SystemMonitor/Record/GenericRecord.h>

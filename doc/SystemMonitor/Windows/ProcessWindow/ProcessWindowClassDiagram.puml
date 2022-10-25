@@ -1,0 +1,10 @@
+@startuml
+title "Process Window Class Diagram"
+abstract WindowTable {
+    
+}
+class ProcessWindow {
+
+}
+WindowTable <|-- ProcessWindow
+@enduml

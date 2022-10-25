@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="207px" preserveAspectRatio="none" style="width:349px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 349 207" width="349px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="26.2969" id="_title" style="stroke:none;stroke-width:1.0;" width="331" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="321" x="10" y="22.9951">Node Diagnostics Window Class Diagram</text><!--MD5=[c58e0bd06874a0c0f3955fe7b23323b6]
+class WindowTable--><g id="elem_WindowTable"><rect codeLine="2" fill="#F1F1F1" height="48" id="WindowTable" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="125" x="115" y="44.2969"/><ellipse cx="130" cy="60.2969" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M130.1094,55.6406 L128.9531,60.7188 L131.2813,60.7188 L130.1094,55.6406 Z M128.625,53.4063 L131.6094,53.4063 L134.9688,65.7969 L132.5156,65.7969 L131.75,62.7344 L128.4688,62.7344 L127.7188,65.7969 L125.2813,65.7969 L128.625,53.4063 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="93" x="144" y="65.1436">WindowTable</text><line style="stroke:#181818;stroke-width:0.5;" x1="116" x2="239" y1="76.2969" y2="76.2969"/><line style="stroke:#181818;stroke-width:0.5;" x1="116" x2="239" y1="84.2969" y2="84.2969"/></g><!--MD5=[f6fed66d1020c036eff2a6685cac900a]
+class NodeDiagnosticsWindow--><g id="elem_NodeDiagnosticsWindow"><rect codeLine="5" fill="#F1F1F1" height="48" id="NodeDiagnosticsWindow" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="204" x="75.5" y="152.2969"/><ellipse cx="90.5" cy="168.2969" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M93.4688,173.9375 Q92.8906,174.2344 92.25,174.375 Q91.6094,174.5313 90.9063,174.5313 Q88.4063,174.5313 87.0781,172.8906 Q85.7656,171.2344 85.7656,168.1094 Q85.7656,164.9844 87.0781,163.3281 Q88.4063,161.6719 90.9063,161.6719 Q91.6094,161.6719 92.25,161.8281 Q92.9063,161.9844 93.4688,162.2813 L93.4688,165 Q92.8438,164.4219 92.25,164.1563 Q91.6563,163.875 91.0313,163.875 Q89.6875,163.875 89,164.9531 Q88.3125,166.0156 88.3125,168.1094 Q88.3125,170.2031 89,171.2813 Q89.6875,172.3438 91.0313,172.3438 Q91.6563,172.3438 92.25,172.0781 Q92.8438,171.7969 93.4688,171.2188 L93.4688,173.9375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="172" x="104.5" y="173.1436">NodeDiagnosticsWindow</text><line style="stroke:#181818;stroke-width:0.5;" x1="76.5" x2="278.5" y1="184.2969" y2="184.2969"/><line style="stroke:#181818;stroke-width:0.5;" x1="76.5" x2="278.5" y1="192.2969" y2="192.2969"/></g><!--MD5=[43f9edba5abfbfc52cb8581a24d765f1]
+reverse link WindowTable to NodeDiagnosticsWindow--><g id="link_WindowTable_NodeDiagnosticsWindow"><path codeLine="8" d="M177.5,112.3169 C177.5,125.8769 177.5,140.3369 177.5,151.9769 " fill="none" id="WindowTable-backto-NodeDiagnosticsWindow" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="170.5,112.2969,177.5,92.2969,184.5,112.2969,170.5,112.2969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[2fe9350c0c68939bcbaa36f89b8788cc]
+@startuml
+title "Node Diagnostics Window Class Diagram"
+abstract WindowTable {
+    
+}
+class NodeDiagnosticsWindow {
+
+}
+WindowTable <|- - NodeDiagnosticsWindow
+@enduml
+
+PlantUML version 1.2022.8(Sun Sep 25 04:00:33 CDT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

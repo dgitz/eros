@@ -1,0 +1,10 @@
+@startuml
+title "Status Window Class Diagram"
+abstract WindowText {
+    
+}
+class StatusWindow {
+
+}
+WindowText <|-- StatusWindow
+@enduml

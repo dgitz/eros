@@ -1,0 +1,2 @@
+catkin_add_gtest(test_SystemMonitorWindow test_SystemMonitorWindow.cpp)
+target_link_libraries(test_SystemMonitorWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger genericField genericRecord baseWindow  windowTable windowText)

@@ -1,0 +1,10 @@
+@startuml
+title "Device Window Class Diagram"
+abstract WindowTable {
+    
+}
+class DeviceWindow {
+
+}
+WindowTable <|-- DeviceWindow
+@enduml

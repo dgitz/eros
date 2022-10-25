@@ -118,7 +118,7 @@ bool {{cookiecutter.node_classname}}::start() {
 Diagnostic::DiagnosticDefinition {{cookiecutter.node_classname}}::read_launchparameters() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     command_sub = n->subscribe<eros::command>(
-        get_robotnamespace() + "SystemCommand", 10, &SampleNode::command_Callback, this);
+        get_robotnamespace() + "SystemCommand", 10, &{{cookiecutter.node_classname}}::command_Callback, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }

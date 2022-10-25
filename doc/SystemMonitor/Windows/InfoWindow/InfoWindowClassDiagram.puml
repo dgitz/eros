@@ -1,0 +1,10 @@
+@startuml
+title "Info Window Class Diagram"
+abstract WindowText {
+    
+}
+class InfoWindow {
+
+}
+WindowText <|-- InfoWindow
+@enduml

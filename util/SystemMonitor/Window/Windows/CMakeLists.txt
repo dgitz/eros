@@ -1,0 +1,5 @@
+add_subdirectory(DeviceWindow)
+add_subdirectory(InfoWindow)
+add_subdirectory(NodeDiagnosticsWindow)
+add_subdirectory(ProcessWindow)
+add_subdirectory(StatusWindow)
