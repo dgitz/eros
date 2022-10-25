@@ -2,7 +2,7 @@
 using namespace eros;
 WindowSize StatusWindow::getWindowSize() {
     WindowSize size;
-    ScreenCoordinatePerc coord(0.0, 0.0, 100.0, 15.0);
+    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 0.0, 0.0, 100.0, 15.0);
     size.coordinate = coord;
     size.min_height_pixel = 4;
     size.min_width_pixel = 30;
@@ -16,8 +16,8 @@ std::vector<std::shared_ptr<IRecord>> StatusWindow::getRecords() {
         std::shared_ptr<GenericField> field(new GenericField);
         RenderData data;
         data.data = "Status";
-        data.x = 0;
-        data.y = 0;
+        data.startCoordinate.start_x_pixel = 0;
+        data.startCoordinate.start_y_pixel = 0;
         field->setData(data);
         fields.push_back(std::move(field));
 

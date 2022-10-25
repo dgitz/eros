@@ -64,27 +64,23 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 bool SystemMonitorProcess::initializeWindows() {
     {
         StatusWindow* window = new StatusWindow(logger);
-        windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::STATUS, window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(window->getWindowType(), window));
     }
     {
         ProcessWindow* window = new ProcessWindow(logger);
-        windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::PROCESS, window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(window->getWindowType(), window));
     }
     {
         NodeDiagnosticsWindow* window = new NodeDiagnosticsWindow(logger);
-        windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::NODEDIAGNOSTICS, window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(window->getWindowType(), window));
     }
     {
         InfoWindow* window = new InfoWindow(logger);
-        windows.insert(std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::INFO, window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(window->getWindowType(), window));
     }
     {
         DeviceWindow* window = new DeviceWindow(logger);
-        windows.insert(
-            std::pair<IWindow::WindowType, IWindow*>(IWindow::WindowType::DEVICE, window));
+        windows.insert(std::pair<IWindow::WindowType, IWindow*>(window->getWindowType(), window));
     }
     return true;
 }

@@ -2,7 +2,7 @@
 using namespace eros;
 WindowSize NodeDiagnosticsWindow::getWindowSize() {
     WindowSize size;
-    ScreenCoordinatePerc coord(70.0, 15.0, 30.0, 60.0);
+    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 70.0, 15.0, 30.0, 60.0);
     size.coordinate = coord;
     size.min_height_pixel = 4;
     size.min_width_pixel = 30;
@@ -16,8 +16,8 @@ std::vector<std::shared_ptr<IRecord>> NodeDiagnosticsWindow::getRecords() {
         std::shared_ptr<GenericField> field(new GenericField);
         RenderData data;
         data.data = "NodeDiagnostics";
-        data.x = 0;
-        data.y = 0;
+        data.startCoordinate.start_x_pixel = 0;
+        data.startCoordinate.start_y_pixel = 0;
         field->setData(data);
         fields.push_back(std::move(field));
 

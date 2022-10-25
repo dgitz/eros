@@ -7,7 +7,7 @@ namespace eros {
 class DeviceWindow : public WindowTable
 {
    public:
-    DeviceWindow(eros::Logger* logger) : WindowTable(logger) {
+    DeviceWindow(eros::Logger* logger) : WindowTable(logger, IWindow::WindowType::DEVICE) {
     }
     virtual ~DeviceWindow() {
     }

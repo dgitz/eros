@@ -2,7 +2,7 @@
 using namespace eros;
 WindowSize ProcessWindow::getWindowSize() {
     WindowSize size;
-    ScreenCoordinatePerc coord(0.0, 15.0, 70.0, 60.0);
+    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 0.0, 15.0, 70.0, 60.0);
     size.coordinate = coord;
     size.min_height_pixel = 8;
     size.min_width_pixel = 60;
@@ -16,8 +16,8 @@ std::vector<std::shared_ptr<IRecord>> ProcessWindow::getRecords() {
         std::shared_ptr<GenericField> field(new GenericField);
         RenderData data;
         data.data = "Process:" + std::to_string(updateCounter);
-        data.x = 0;
-        data.y = 0;
+        data.startCoordinate.start_x_pixel = 0;
+        data.startCoordinate.start_y_pixel = 0;
         field->setData(data);
         fields.push_back(std::move(field));
 

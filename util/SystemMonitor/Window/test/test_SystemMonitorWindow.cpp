@@ -29,6 +29,9 @@ class TesterIWindow : public IWindow
         (void)key;
         return false;
     }
+    WindowType getWindowType() {
+        return IWindow::WindowType::INFO;
+    }
 
    private:
     std::vector<std::shared_ptr<IRecord>> records;
@@ -81,7 +84,7 @@ TEST(BasicTest, IWindowTest) {
 class BaseWindowTester : public BaseWindow
 {
    public:
-    BaseWindowTester(eros::Logger* logger) : BaseWindow(logger) {
+    BaseWindowTester(eros::Logger* logger) : BaseWindow(logger, IWindow::WindowType::INFO) {
     }
     WindowSize getWindowSize() {
         WindowSize size;
@@ -107,12 +110,14 @@ class BaseWindowTester : public BaseWindow
 TEST(BasicTest, BaseWindowTest) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
     BaseWindowTester window(logger);
+    EXPECT_EQ(window.getWindowType(), IWindow::WindowType::INFO);
+
     delete logger;
 }
 class WindowTableTester : public WindowTable
 {
    public:
-    WindowTableTester(eros::Logger* logger) : WindowTable(logger) {
+    WindowTableTester(eros::Logger* logger) : WindowTable(logger, IWindow::WindowType::DEVICE) {
     }
     WindowSize getWindowSize() {
         WindowSize size;
@@ -143,7 +148,7 @@ TEST(BasicTest, WindowTableTest) {
 class WindowTextTester : public WindowText
 {
    public:
-    WindowTextTester(eros::Logger* logger) : WindowText(logger) {
+    WindowTextTester(eros::Logger* logger) : WindowText(logger, IWindow::WindowType::INFO) {
     }
     WindowSize getWindowSize() {
         WindowSize size;

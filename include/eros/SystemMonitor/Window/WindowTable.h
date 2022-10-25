@@ -5,7 +5,7 @@ namespace eros {
 class WindowTable : public BaseWindow
 {
    public:
-    WindowTable(eros::Logger* logger) : BaseWindow(logger) {
+    WindowTable(eros::Logger* logger, WindowType windowType) : BaseWindow(logger, windowType) {
     }
     virtual ~WindowTable() {
     }

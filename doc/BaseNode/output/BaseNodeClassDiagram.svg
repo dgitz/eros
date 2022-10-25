@@ -18,7 +18,7 @@ reverse link FileHelper::FileInfo to BaseNodeProcess--><g id="link_FileHelper::F
 reverse link Diagnostic to BaseNodeProcess--><g id="link_Diagnostic_BaseNodeProcess"><path codeLine="21" d="M1191.48,230.9669 C1171.13,254.6669 1141.3,289.4069 1106.65,329.7569 " fill="none" id="Diagnostic-backto-BaseNodeProcess" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="1200.15,220.8769,1193.2073,222.8259,1192.3362,229.9842,1199.2789,228.0352,1200.15,220.8769" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[21251ec311c97d3f01d5704280bc6a7c]
 reverse link Diagnostic to BaseNode--><g id="link_Diagnostic_BaseNode"><path codeLine="22" d="M1259.81,228.3169 C1269.58,234.6069 1280.31,240.5769 1291,244.7569 C1383.67,281.0369 1423.28,235.6769 1512,280.7569 C1517.64,283.6269 1523.25,286.5769 1528.84,289.6269 " fill="none" id="Diagnostic-backto-BaseNode" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="1248.85,220.8869,1251.5686,227.5659,1258.7795,227.6252,1256.0609,220.9462,1248.85,220.8869" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[42366fffd4852c440755fd0551f75bf9]
 reverse link Logger to BaseNode--><g id="link_Logger_BaseNode"><path codeLine="23" d="M1400.34,219.2169 C1433.76,234.1069 1477.2,255.7169 1512,280.7569 C1517.59,284.7769 1523.18,288.8669 1528.76,293.0269 " fill="none" id="Logger-backto-BaseNode" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="1388.05,213.8469,1391.9402,219.9186,1399.0412,218.6629,1395.1509,212.5912,1388.05,213.8469" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[e6bba0c6f9a634d1774ea1e20463ada1]
-reverse link Diagnostic to Diagnostic::DiagnosticDefinition--><g id="link_Diagnostic_Diagnostic::DiagnosticDefinition"><path codeLine="24" d="M1204.29,158.8869 C1190.16,130.2769 1166.37,93.0569 1132.5,75.7569 C1068.98,43.2969 558.18,53.2169 490.5,75.7569 C433.16,94.8569 379.77,143.1569 351.04,172.6269 " fill="none" id="Diagnostic-backto-Diagnostic::DiagnosticDefinition" style="stroke:#181818;stroke-width:1.0;"/><ellipse cx="1207.2548" cy="165.2737" fill="#FFFFFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="1203.8797" x2="1210.63" y1="158.0206" y2="172.5269"/><line style="stroke:#181818;stroke-width:1.0;" x1="1214.508" x2="1200.0017" y1="161.8986" y2="168.6489"/></g><!--MD5=[4a792b3380ae698a06999739478b9bae]
+reverse link Diagnostic to Diagnostic::DiagnosticDefinition--><g id="link_Diagnostic_Diagnostic::DiagnosticDefinition"><path codeLine="24" d="M1204.29,158.8869 C1190.16,130.2769 1166.37,93.0569 1132.5,75.7569 C1068.98,43.2969 558.18,53.2169 490.5,75.7569 C433.16,94.8569 379.77,143.1569 351.04,172.6269 " fill="none" id="Diagnostic-backto-Diagnostic::DiagnosticDefinition" style="stroke:#181818;stroke-width:1.0;"/><ellipse cx="1207.2548" cy="165.2737" fill="#FFFFFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="1203.8797" x2="1210.63" y1="158.0206" y2="172.5269"/><line style="stroke:#181818;stroke-width:1.0;" x1="1214.508" x2="1200.0017" y1="161.8986" y2="168.6489"/></g><!--MD5=[692802636c82e13e2ee4640553e01051]
 @startuml
 title Base Node and Process Class Diagram
 package eros {
@@ -155,7 +155,7 @@ class BaseNode {
 }
 @enduml
 
-PlantUML version 1.2022.8(Sun Sep 25 09:00:33 UTC 2022)
+PlantUML version 1.2022.8(Sun Sep 25 04:00:33 CDT 2022)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM

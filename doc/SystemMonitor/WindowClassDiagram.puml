@@ -1,32 +1,53 @@
 @startuml
 interface IWindow {
+    +{abstract} WindowSize getWindowSize()
     +{abstract} WindowType getWindowType()
-    +{abstract} RenderData[] getRenderData()
-    +{abstract} bool isActive()
-    +{abstract} string getName()
+    +{abstract} IRecord[] getRecords()
+    +{abstract} bool setRecords(IRecord[] records)
+    +{abstract} bool keyPressed(KeyMap key)
 } 
 abstract BaseWindow {
+    +WindowType getWindowType()
     -WindowType windowType
 
 }
-BaseWindow --|> IWindow
+IWindow <|-- BaseWindow
 
 enum WindowType {
-    TABLE
-    TEXT
+    PROCESS
+    NODEDIAGNOSTICS
+    DEVICE
+    STATUS
+    INFO
 }
 WindowType -+ IWindow
 
-class WindowTable {
-    +RenderData[] get_RenderData()
-    -ITable table
+abstract WindowTable {
 
 }
-WindowTable -|> BaseWindow
-class WindowText {
-    +RenderData[] get_RenderData()
-    -IText text
+BaseWindow <|-- WindowTable
+abstract WindowText {
 }
-WindowText -|> BaseWindow
+BaseWindow <|-- WindowText
 
+class DeviceWindow {
+
+}
+WindowTable <|-- DeviceWindow
+class InfoWindow {
+
+}
+WindowText <|-- InfoWindow
+class NodeDiagnosticsWindow {
+
+}
+WindowTable <|-- NodeDiagnosticsWindow
+class ProcessWindow {
+
+}
+WindowTable <|-- ProcessWindow
+class StatusWindow {
+
+}
+WindowText <|-- StatusWindow
 @enduml

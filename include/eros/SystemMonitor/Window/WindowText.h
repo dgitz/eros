@@ -5,7 +5,7 @@ namespace eros {
 class WindowText : public BaseWindow
 {
    public:
-    WindowText(eros::Logger* logger) : BaseWindow(logger) {
+    WindowText(eros::Logger* logger, WindowType windowType) : BaseWindow(logger, windowType) {
     }
     virtual ~WindowText() {
     }

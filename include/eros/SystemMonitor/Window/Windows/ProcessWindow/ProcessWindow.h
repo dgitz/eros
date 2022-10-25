@@ -8,7 +8,8 @@ namespace eros {
 class ProcessWindow : public WindowTable
 {
    public:
-    ProcessWindow(eros::Logger* logger) : WindowTable(logger), updateCounter(0) {
+    ProcessWindow(eros::Logger* logger)
+        : WindowTable(logger, IWindow::WindowType::PROCESS), updateCounter(0) {
     }
     virtual ~ProcessWindow() {
     }

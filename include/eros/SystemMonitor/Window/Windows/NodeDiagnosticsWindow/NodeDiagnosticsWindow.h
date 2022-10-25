@@ -7,7 +7,8 @@ namespace eros {
 class NodeDiagnosticsWindow : public WindowTable
 {
    public:
-    NodeDiagnosticsWindow(eros::Logger* logger) : WindowTable(logger) {
+    NodeDiagnosticsWindow(eros::Logger* logger)
+        : WindowTable(logger, IWindow::WindowType::NODEDIAGNOSTICS) {
     }
     virtual ~NodeDiagnosticsWindow() {
     }

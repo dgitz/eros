@@ -7,7 +7,7 @@ namespace eros {
 class StatusWindow : public WindowText
 {
    public:
-    StatusWindow(eros::Logger* logger) : WindowText(logger) {
+    StatusWindow(eros::Logger* logger) : WindowText(logger, IWindow::WindowType::STATUS) {
     }
     virtual ~StatusWindow() {
     }

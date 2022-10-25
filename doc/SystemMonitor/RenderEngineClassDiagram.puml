@@ -1,0 +1,28 @@
+@startuml
+title "Render Engine"
+class RenderWindow {
+    +RenderWindow(eros::Logger* logger,WindowSize size, uint16_t mainWindowWidth,uint16_t mainWindowHeight)
+    +bool init()
+    +void set_window_reference(WINDOW* win)
+    +WINDOW* get_window_reference()
+    +ScreenCoordinatePixel getActualSize() 
+    +bool isFocused()
+    +void setFocused(bool v)
+}
+
+struct Window {
+    IWindow windowData
+    RenderWindow windowRender
+}
+class RenderEngine {
+    RenderEngine(eros::Logger* logger, std::map<IWindow::WindowType, IWindow> dataWindows)
+    bool initScreen()
+    bool update(double dt, std::map<IWindow::WindowType, IWindow*> windows)
+    bool shouldKill()
+    bool incrementFocus();
+    bool renderWindow(IWindow windowData, RenderWindow renderWindow)
+    std::map<IWindow::WindowType, Window> getWindows() 
+}
+Window --> RenderWindow
+RenderEngine --* "*" Window
+@enduml

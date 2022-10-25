@@ -29,9 +29,12 @@ class RenderEngine
     }
     bool initScreen();
     bool update(double dt, std::map<IWindow::WindowType, IWindow*> windows);
+    // No practical way to unit test
+    // LCOV_EXCL_START
     bool shouldKill() {
         return killMe;
     }
+    // LCOV_EXCL_STOP
     bool incrementFocus();
     bool renderWindow(IWindow* windowData, RenderWindow* renderWindow);
     std::map<IWindow::WindowType, Window> getWindows() {

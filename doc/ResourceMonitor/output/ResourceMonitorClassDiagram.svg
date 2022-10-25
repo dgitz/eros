@@ -10,7 +10,7 @@ reverse link ResourceMonitor to ResourceMonitor::ResourceInfo--><g id="link_Reso
 reverse link ResourceMonitor to ResourceMonitor::Mode--><g id="link_ResourceMonitor_ResourceMonitor::Mode"><path codeLine="16" d="M433.75,418.4169 C450.31,443.7269 466.9,469.0569 479.99,489.0669 " fill="none" id="ResourceMonitor-backto-ResourceMonitor::Mode" style="stroke:#181818;stroke-width:1.0;"/><ellipse cx="429.7494" cy="412.3117" fill="#FFFFFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="434.1289" x2="425.37" y1="419.0065" y2="405.6169"/><line style="stroke:#181818;stroke-width:1.0;" x1="423.0546" x2="436.4442" y1="416.6911" y2="407.9323"/></g><!--MD5=[83877331e5797761cf2e71f7b24746f3]
 reverse link Logger to ResourceMonitor--><g id="link_Logger_ResourceMonitor"><path codeLine="17" d="M351.63,163.6169 C352.62,177.2969 353.8,193.5869 355,210.1869 " fill="none" id="Logger-backto-ResourceMonitor" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="350.67,150.3969,347.1086,156.6672,351.5268,162.3662,355.0882,156.0959,350.67,150.3969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[f089fddf56afab350e04c3ba128d5b11]
 reverse link Architecture::Type to ResourceMonitor--><g id="link_Architecture::Type_ResourceMonitor"><path codeLine="18" d="M224.81,160.2169 C238.23,174.5569 254.73,192.1869 271.58,210.1869 " fill="none" id="Architecture::Type-backto-ResourceMonitor" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="215.62,150.3969,216.8026,157.5103,223.8238,159.1546,222.6411,152.0411,215.62,150.3969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[c96752f6d8e39c455dd69e71ab705cb6]
-reverse link Diagnostic::DiagnosticDefinition to ResourceMonitor--><g id="link_Diagnostic::DiagnosticDefinition_ResourceMonitor"><path codeLine="19" d="M517.22,159.3869 C501.96,173.8669 483.05,191.8369 463.73,210.1869 " fill="none" id="Diagnostic::DiagnosticDefinition-backto-ResourceMonitor" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="526.68,150.3969,519.575,151.6294,517.98,158.6619,525.085,157.4294,526.68,150.3969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[822b81bc2e95b02fc5501efc576de415]
+reverse link Diagnostic::DiagnosticDefinition to ResourceMonitor--><g id="link_Diagnostic::DiagnosticDefinition_ResourceMonitor"><path codeLine="19" d="M517.22,159.3869 C501.96,173.8669 483.05,191.8369 463.73,210.1869 " fill="none" id="Diagnostic::DiagnosticDefinition-backto-ResourceMonitor" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="526.68,150.3969,519.575,151.6294,517.98,158.6619,525.085,157.4294,526.68,150.3969" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[020c5d491bce994cf26eb4937a5f6d95]
 @startuml
 title Resource Monitor Class Diagram
 package eros {
@@ -56,7 +56,7 @@ class ResourceMonitor {
 }
 @enduml
 
-PlantUML version 1.2022.8(Sun Sep 25 09:00:33 UTC 2022)
+PlantUML version 1.2022.8(Sun Sep 25 04:00:33 CDT 2022)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM

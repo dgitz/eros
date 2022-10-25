@@ -2,7 +2,7 @@
 using namespace eros;
 WindowSize InfoWindow::getWindowSize() {
     WindowSize size;
-    ScreenCoordinatePerc coord(33.0, 75.0, 33.0, 25.0);
+    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 33.0, 75.0, 33.0, 25.0);
     size.coordinate = coord;
     size.min_height_pixel = 4;
     size.min_width_pixel = 30;
@@ -16,8 +16,8 @@ std::vector<std::shared_ptr<IRecord>> InfoWindow::getRecords() {
         std::shared_ptr<GenericField> field(new GenericField);
         RenderData data;
         data.data = "Info";
-        data.x = 0;
-        data.y = 0;
+        data.startCoordinate.start_x_pixel = 0;
+        data.startCoordinate.start_y_pixel = 0;
         field->setData(data);
         fields.push_back(std::move(field));
 

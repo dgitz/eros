@@ -16,13 +16,13 @@ using namespace eros;
 class TesterStatusWindow : public WindowText
 {
    public:
-    TesterStatusWindow(eros::Logger* logger) : WindowText(logger) {
+    TesterStatusWindow(eros::Logger* logger) : WindowText(logger, IWindow::WindowType::STATUS) {
     }
     virtual ~TesterStatusWindow() {
     }
     WindowSize getWindowSize() {
         WindowSize size;
-        ScreenCoordinatePerc coord(0.0, 0.0, 100.0, 15.0);
+        ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 0.0, 0.0, 100.0, 15.0);
         size.coordinate = coord;
         size.min_height_pixel = 1;
         size.min_width_pixel = 1;
@@ -36,8 +36,8 @@ class TesterStatusWindow : public WindowText
             std::shared_ptr<GenericField> field(new GenericField);
             RenderData data;
             data.data = "Status";
-            data.x = 0;
-            data.y = 0;
+            data.startCoordinate.start_x_pixel = 0;
+            data.startCoordinate.start_y_pixel = 0;
             field->setData(data);
             fields.push_back(std::move(field));
 
@@ -63,13 +63,13 @@ class TesterStatusWindow : public WindowText
 class TesterInfoWindow : public WindowText
 {
    public:
-    TesterInfoWindow(eros::Logger* logger) : WindowText(logger) {
+    TesterInfoWindow(eros::Logger* logger) : WindowText(logger, IWindow::WindowType::INFO) {
     }
     virtual ~TesterInfoWindow() {
     }
     WindowSize getWindowSize() {
         WindowSize size;
-        ScreenCoordinatePerc coord(33.0, 75.0, 33.0, 25.0);
+        ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 33.0, 75.0, 33.0, 25.0);
         size.coordinate = coord;
         size.min_height_pixel = 1;
         size.min_width_pixel = 1;
@@ -83,8 +83,8 @@ class TesterInfoWindow : public WindowText
             std::shared_ptr<GenericField> field(new GenericField);
             RenderData data;
             data.data = "Info";
-            data.x = 0;
-            data.y = 0;
+            data.startCoordinate.start_x_pixel = 0;
+            data.startCoordinate.start_y_pixel = 0;
             field->setData(data);
             fields.push_back(std::move(field));
 

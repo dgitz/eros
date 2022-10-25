@@ -110,8 +110,8 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
     for (auto record : windowData->getRecords()) {
         for (auto field : record->getFields()) {
             mvwprintw(renderWindow->get_window_reference(),
-                      field->getData().x + 1,
-                      field->getData().y + 1,
+                      field->getData().startCoordinate.start_x_pixel + 1,
+                      field->getData().startCoordinate.start_y_pixel + 1,
                       field->getData().data.c_str());
         }
     }
