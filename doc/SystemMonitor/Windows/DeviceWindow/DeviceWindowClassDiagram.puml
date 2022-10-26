@@ -4,7 +4,15 @@ abstract WindowTable {
     
 }
 class DeviceWindow {
+    -DeviceManager manager
+}
+class DeviceManager {
+    -Device[] devices
+}
+DeviceWindow -> DeviceManager
+class Device {
 
 }
+DeviceManager --* "*" Device
 WindowTable <|-- DeviceWindow
 @enduml

@@ -2,7 +2,7 @@
 using namespace eros;
 WindowSize InfoWindow::getWindowSize() {
     WindowSize size;
-    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 33.0, 75.0, 33.0, 25.0);
+    ScreenCoordinatePerc coord(CoordinateReference::GLOBAL, 25.0, 75.0, 25.0, 25.0);
     size.coordinate = coord;
     size.min_height_pixel = 4;
     size.min_width_pixel = 30;

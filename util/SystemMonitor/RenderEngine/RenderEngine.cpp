@@ -19,18 +19,18 @@ bool RenderEngine::initScreen() {
     noecho();
     raw();
 
-    /*
     start_color();
     init_color(COLOR_BLACK, 0, 0, 0);
     init_color(COLOR_GREEN, 0, 600, 0);
     init_color(10, 500, 0, 500);
-    init_pair((uint8_t)SystemMonitorProcess::Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
-    init_pair((uint8_t)SystemMonitorProcess::Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
-    init_pair((uint8_t)SystemMonitorProcess::Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
-    init_pair((uint8_t)SystemMonitorProcess::Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
-    init_pair((uint8_t)SystemMonitorProcess::Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
-    init_pair((uint8_t)SystemMonitorProcess::Color::PURPLE_COLOR, COLOR_WHITE, 10);
-    */
+
+    init_pair((uint8_t)Color::BLACK, COLOR_BLACK, COLOR_WHITE);
+    init_pair((uint8_t)Color::WHITE, COLOR_WHITE, COLOR_BLACK);
+    init_pair((uint8_t)Color::RED, COLOR_WHITE, COLOR_RED);
+    init_pair((uint8_t)Color::YELLOW, COLOR_WHITE, COLOR_YELLOW);
+    init_pair((uint8_t)Color::GREEN, COLOR_WHITE, COLOR_GREEN);
+    init_pair((uint8_t)Color::BLUE, COLOR_WHITE, COLOR_BLUE);
+    init_pair((uint8_t)Color::PURPLE, COLOR_WHITE, 10);
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
     logger->log_notice(std::to_string(mainwindow_width) + " " + std::to_string(mainwindow_height));
@@ -107,22 +107,77 @@ bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _wi
     return true;
 }
 bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow) {
-    for (auto record : windowData->getRecords()) {
-        for (auto field : record->getFields()) {
-            mvwprintw(renderWindow->get_window_reference(),
-                      field->getData().startCoordinate.start_x_pixel + 1,
-                      field->getData().startCoordinate.start_y_pixel + 1,
-                      field->getData().data.c_str());
-        }
-    }
-
     if (renderWindow->isFocused() == true) {
         box(renderWindow->get_window_reference(), '|', '-');
     }
     else {
         box(renderWindow->get_window_reference(), 0, 0);
     }
+    {
+        // WindowTable Render
+
+        WindowTable* win = dynamic_cast<WindowTable*>(windowData);
+        if (win != nullptr) {
+            if (win->getWindowType() != IWindow::WindowType::DEVICE) {  // For debugging now
+                return true;
+            }
+            uint16_t xValue = 1;
+            std::vector<WindowTable::ColumnLabel> labels = win->getColumnLabels();
+            for (auto label : labels) {
+                mvwprintw(renderWindow->get_window_reference(), 1, xValue, label.label.c_str());
+                xValue += label.minWidth;
+            }
+            std::string dashed(renderWindow->getActualSize().width_pixel - 2, '-');
+            mvwprintw(renderWindow->get_window_reference(), 2, 1, dashed.c_str());
+
+            for (auto record : win->getRecords()) {
+                if (labels.size() < record->getFields().size()) {
+                    logger->log_error("No label defined for all Record Fields!");
+                    return false;
+                }
+                bool useFirstColor = false;
+                Color firstColor = Color::UNKNOWN;
+                if (record->getFields().size() > 1) {
+                    if (record->getFields().at(1)->getData().color == Color::UNKNOWN) {
+                        useFirstColor = true;
+                        firstColor = record->getFields().at(0)->getData().color;
+                    }
+                }
+                uint16_t labelIndex = 0;
+                for (auto field : record->getFields()) {
+                    std::string data = field->getData().data;
+                    if (data.length() > labels.at(labelIndex).minWidth) {
+                        data = data.substr(0, labels.at(labelIndex).minWidth - 3);
+                        data += "...";
+                    }
+                    else {
+                        data += std::string(labels.at(labelIndex).minWidth - data.size(), ' ');
+                    }
+                    if (useFirstColor == false) {
+                        wattron(renderWindow->get_window_reference(),
+                                COLOR_PAIR(field->getData().color));
+                    }
+                    else {
+                        wattron(renderWindow->get_window_reference(), COLOR_PAIR(firstColor));
+                    }
+                    mvwprintw(renderWindow->get_window_reference(),
+                              field->getData().startCoordinate.start_y_pixel + 3,
+                              field->getData().startCoordinate.start_x_pixel + 2,
+                              data.c_str());
+                    labelIndex++;
+                    if (useFirstColor == false) {
+                        wattroff(renderWindow->get_window_reference(),
+                                 COLOR_PAIR(field->getData().color));
+                    }
+                    else {
+                        wattroff(renderWindow->get_window_reference(), COLOR_PAIR(firstColor));
+                    }
+                }
+            }
+        }
+    }
     wrefresh(renderWindow->get_window_reference());
+
     return true;
 }
 bool RenderEngine::incrementFocus() {

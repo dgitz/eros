@@ -63,6 +63,8 @@ class SystemMonitor : public eros::BaseNode
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
+    void loadfactor_Callback(const eros::loadfactor::ConstPtr& msg);
+    void resourceAvailable_Callback(const eros::resource::ConstPtr& msg);
 
    private:
     eros::Diagnostic::DiagnosticDefinition rescan_nodes();
@@ -72,6 +74,8 @@ class SystemMonitor : public eros::BaseNode
 
     std::map<std::string, bool> filter_list;
     std::map<std::string, ros::Subscriber> heartbeat_subs;
+    std::map<std::string, ros::Subscriber> resourceavailable_subs;
+    std::map<std::string, ros::Subscriber> loadfactor_subs;
 };
 #endif  // SystemMonitor_H
         // LCOV_EXCL_STOP

@@ -111,4 +111,60 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(eros
     }
     return diag;
 }
+
+// No practical way to unit test
+// LCOV_EXCL_START
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceavailablemessage(
+    const eros::resource::ConstPtr& t_msg) {
+    eros::resource msg = convert_fromptr(t_msg);
+    return new_resourceavailablemessage(msg);
+}
 // LCOV_EXCL_STOP
+
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceavailablemessage(
+    eros::resource msg) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == IWindow::WindowType::DEVICE) {
+            DeviceWindow* win = dynamic_cast<DeviceWindow*>(window.second);
+            bool v = win->new_resourceavailable(msg);
+            if (v == false) {
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
+                return diag;
+            }
+        }
+    }
+    return diag;
+}
+
+// No practical way to unit test
+// LCOV_EXCL_START
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_loadfactormessage(
+    const eros::loadfactor::ConstPtr& t_msg) {
+    eros::loadfactor msg = convert_fromptr(t_msg);
+    return new_loadfactormessage(msg);
+}
+// LCOV_EXCL_STOP
+
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_loadfactormessage(eros::loadfactor msg) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == IWindow::WindowType::DEVICE) {
+            DeviceWindow* win = dynamic_cast<DeviceWindow*>(window.second);
+            bool v = win->new_loadfactor(msg);
+            if (v == false) {
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
+                return diag;
+            }
+        }
+    }
+    return diag;
+}
