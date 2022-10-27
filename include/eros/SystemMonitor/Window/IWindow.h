@@ -27,6 +27,7 @@ class IWindow
     virtual std::vector<std::shared_ptr<IRecord>> getRecords() = 0;
     virtual bool setRecords(std::vector<std::shared_ptr<IRecord>> records) = 0;
     virtual bool keyPressed(KeyMap key) = 0;
+    virtual bool update(double currentTime_sec) = 0;
 
    private:
 };

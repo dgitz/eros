@@ -17,6 +17,7 @@ enum class Color {
     PURPLE = 7,
     END_OF_LIST = 8
 };
+
 struct ScreenCoordinatePerc {
     ScreenCoordinatePerc(
         CoordinateReference reference, double start_x, double start_y, double width, double height)

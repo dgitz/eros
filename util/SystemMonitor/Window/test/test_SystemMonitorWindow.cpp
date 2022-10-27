@@ -32,6 +32,9 @@ class TesterIWindow : public IWindow
     WindowType getWindowType() {
         return IWindow::WindowType::INFO;
     }
+    bool update(double currentTime_s) {
+        return true;
+    }
 
    private:
     std::vector<std::shared_ptr<IRecord>> records;

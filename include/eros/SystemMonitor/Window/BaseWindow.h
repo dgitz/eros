@@ -1,5 +1,8 @@
 #ifndef BASEWINDOW_H
 #define BASEWINDOW_H
+#include <eros/SystemMonitor/DataStructures.h>
+#include <eros/eROS_Definitions.h>
+
 #include "IWindow.h"
 namespace eros {
 class BaseWindow : public IWindow
@@ -13,6 +16,8 @@ class BaseWindow : public IWindow
     WindowType getWindowType() {
         return windowType;
     }
+    bool update(double currentTime_s);
+    static Color convertLevelToColor(Level::Type level);
 
    protected:
     eros::Logger* logger;

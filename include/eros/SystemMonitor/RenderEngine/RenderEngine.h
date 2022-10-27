@@ -25,8 +25,6 @@ class RenderEngine
         : logger(logger), dataWindows(dataWindows), killMe(false) {
     }
     virtual ~RenderEngine() {
-        logger->log_notice("destroy");
-
         std::map<IWindow::WindowType, Window>::iterator win_it = windows.begin();
         while (win_it != windows.end()) {
             delwin(win_it->second.windowRender->get_window_reference());
