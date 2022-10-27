@@ -1,0 +1,46 @@
+@startuml
+title "Device Window Sequence Diagram"
+actor DeviceWindow
+participant DeviceManager
+participant Device
+
+-> DeviceWindow: new_loadfactor()
+activate DeviceWindow
+DeviceWindow -> DeviceManager: new_loadfactor()
+activate DeviceManager
+alt DeviceName in devices
+    DeviceManager -> DeviceManager: create newDevice
+    DeviceManager -> DeviceManager: insert(newDevice)
+end
+DeviceManager -> Device: new_loadfactor() 
+Device --> DeviceManager
+DeviceManager --> DeviceWindow
+deactivate DeviceManager
+deactivate DeviceWindow
+
+-> DeviceWindow: new_resourceavailable()
+activate DeviceWindow
+DeviceWindow -> DeviceManager: new_resourceavailable()
+activate DeviceManager
+alt DeviceName in devices
+    DeviceManager -> DeviceManager: create newDevice
+    DeviceManager -> DeviceManager: insert(newDevice)
+end
+DeviceManager -> Device: new_resourceavailable() 
+Device --> DeviceManager
+DeviceManager --> DeviceWindow
+deactivate DeviceManager
+deactivate DeviceWindow
+
+-> DeviceWindow: update
+activate DeviceWindow
+DeviceWindow -> DeviceManager: update(currentTime)
+activate DeviceManager
+loop for Device in devices
+DeviceManager -> Device: update(currentTime)
+Device --> DeviceManager
+end 
+DeviceManager --> DeviceWindow
+deactivate DeviceManager
+deactivate DeviceWindow
+@enduml

@@ -3,6 +3,8 @@
 #include <curses.h>
 #include <eros/Logger.h>
 #include <eros/SystemMonitor/DataStructures.h>
+#include <eros/SystemMonitor/Window/WindowTable.h>
+#include <eros/SystemMonitor/Window/WindowText.h>
 namespace eros {
 WINDOW* create_newwin(int height, int width, int starty, int startx);
 

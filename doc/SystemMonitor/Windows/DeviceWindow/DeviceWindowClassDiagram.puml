@@ -4,7 +4,33 @@ abstract WindowTable {
     
 }
 class DeviceWindow {
-
+    -DeviceManager manager
+    +WindowSize getWindowSize()
+    +IRecord[] getRecords()
+    +bool setRecords(IRecord[] records)
+    +bool keyPressed(KeyMap key)
+    +bool new_loadfactor(eros::loadfactor msg)
+    +bool new_resourceavailable(eros::resource msg)
+    +bool update(double currentTime_s)
 }
+class DeviceManager {
+    -Device[] devices
+    +bool new_loadfactor(eros::loadfactor msg)
+    +bool new_resourceavailable(eros::resource msg)
+    +Device[] getDevices()
+    bool update(double currentTime_s);
+}
+DeviceWindow -> DeviceManager
+class Device {
+    +std::string getName() 
+    +bool new_resourceavailable(eros::resource resourceAvailable)
+    +eros::resource getResourceAvailable()
+    +bool new_loadfactor(eros::loadfactor loadFactor)
+    +eros::loadfactor getLoadFactor()
+    +Level::Type getStatus() 
+    +bool update(double currentTime_s)
+    +double getLastHeartbeatDelta()
+}
+DeviceManager --* "*" Device
 WindowTable <|-- DeviceWindow
 @enduml

@@ -35,6 +35,14 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         const eros::heartbeat::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(eros::heartbeat msg);
 
+    eros::Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
+        const eros::resource::ConstPtr& t_msg);
+    eros::Diagnostic::DiagnosticDefinition new_resourceavailablemessage(eros::resource msg);
+
+    eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(
+        const eros::loadfactor::ConstPtr& t_msg);
+    eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(eros::loadfactor msg);
+
    private:
     bool initializeWindows();
     std::map<eros::IWindow::WindowType, eros::IWindow*> windows;

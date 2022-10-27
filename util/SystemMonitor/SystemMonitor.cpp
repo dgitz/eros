@@ -20,6 +20,18 @@ void SystemMonitor::heartbeat_Callback(const eros::heartbeat::ConstPtr &t_msg) {
         logger->log_diagnostic(diag);
     }
 }
+void SystemMonitor::loadfactor_Callback(const eros::loadfactor::ConstPtr &msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_loadfactormessage(msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
+void SystemMonitor::resourceAvailable_Callback(const eros::resource::ConstPtr &msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_resourceavailablemessage(msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
 void SystemMonitor::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
@@ -299,6 +311,7 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
     std::vector<std::string> heartbeat_list;
     std::vector<std::string> resource_used_list;
     std::vector<std::string> loadfactor_list;
+    std::vector<std::string> resource_available_list;
     for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
          it++) {
         const ros::master::TopicInfo &info = *it;
@@ -314,23 +327,34 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
                 }
             }
         }
-        /*if (info.datatype == "eros/loadfactor") {
+        if (info.datatype == "eros/resource") {
+            if (info.name.find("resource_available") != std::string::npos) {
+                if (resourceavailable_subs.find(info.name) == resourceavailable_subs.end()) {
+                    resource_available_list.push_back(info.name);
+                }
+            }
+        }
+        if (info.datatype == "eros/loadfactor") {
             if (info.name.rfind(get_robotnamespace(), 0) == 0) {
                 loadfactor_list.push_back(info.name);
             }
         }
-        */
     }
-
-    /*
-    diag = process->update_devicelist(loadfactor_list,
-                                      new_resourceavailable_topics_to_subscribe,
-                                      new_loadfactor_topics_to_subscribe);
-                                      */
     for (std::size_t i = 0; i < heartbeat_list.size(); ++i) {
         ros::Subscriber sub = n->subscribe<eros::heartbeat>(
             heartbeat_list.at(i), 50, &SystemMonitor::heartbeat_Callback, this);
         heartbeat_subs.insert(std::pair<std::string, ros::Subscriber>(heartbeat_list.at(i), sub));
+    }
+    for (std::size_t i = 0; i < resource_available_list.size(); ++i) {
+        ros::Subscriber sub = n->subscribe<eros::resource>(
+            resource_available_list.at(i), 50, &SystemMonitor::resourceAvailable_Callback, this);
+        resourceavailable_subs.insert(
+            std::pair<std::string, ros::Subscriber>(resource_available_list.at(i), sub));
+    }
+    for (std::size_t i = 0; i < loadfactor_list.size(); ++i) {
+        ros::Subscriber sub = n->subscribe<eros::loadfactor>(
+            loadfactor_list.at(i), 50, &SystemMonitor::loadfactor_Callback, this);
+        loadfactor_subs.insert(std::pair<std::string, ros::Subscriber>(loadfactor_list.at(i), sub));
     }
     /*
     for (std::size_t i = 0; i < new_resourceused_topics_to_subscribe.size(); ++i) {

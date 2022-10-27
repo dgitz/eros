@@ -7,6 +7,19 @@ Date: TBD
 --- General Notes
 
 --- User Stories
+US: 1121 Support current features for Device Window
+  Author: David Gitz
+  Date: 27-Oct-2022
+  * Added support for Device Window features to new System Monitor.
+  * Updated documentation.
+
+US: 1116 Re-Architect System Monitor
+  Author: David Gitz
+  Date: 25-Oct-2022
+  * Re-architected System Monitor
+  * Created architecture Documentation
+  * Created most classes.
+
 US: 1117 Increase Code Coverage for Diagnostics Node
   Author: David Gitz
   Date: 21-Oct-2022

@@ -1,2 +1,6 @@
 #include <eros/SystemMonitor/Window/WindowTable.h>
-namespace eros {}  // namespace eros
+namespace eros {
+void WindowTable::setColumnLabels(std::vector<ColumnLabel> _columnLabels) {
+    columnLabels = _columnLabels;
+}
+}  // namespace eros

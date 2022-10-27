@@ -13,8 +13,11 @@ enum class Color {
     BLUE = 3,
     WHITE = 4,
     BLACK = 5,
-    END_OF_LIST = 6
+    YELLOW = 6,
+    PURPLE = 7,
+    END_OF_LIST = 8
 };
+
 struct ScreenCoordinatePerc {
     ScreenCoordinatePerc(
         CoordinateReference reference, double start_x, double start_y, double width, double height)
@@ -83,7 +86,7 @@ struct RenderData {
     RenderData(ScreenCoordinatePixel startCoordinate, Color color, std::string data)
         : startCoordinate(startCoordinate), color(color), data(data) {
     }
-    RenderData() : startCoordinate(), color(Color::WHITE), data("") {
+    RenderData() : startCoordinate(), color(Color::UNKNOWN), data("") {
     }
     ScreenCoordinatePixel startCoordinate;
     Color color;
