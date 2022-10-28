@@ -4,7 +4,17 @@ abstract WindowTable {
     
 }
 class ProcessWindow {
-
+    -ProcessManager processManager
 }
 WindowTable <|-- ProcessWindow
+class ProcessManager {
+    -Process[] processes
+}
+ProcessWindow -> ProcessManager
+class Process {
+
+}
+
+
+ProcessManager --* "*" Process
 @enduml
