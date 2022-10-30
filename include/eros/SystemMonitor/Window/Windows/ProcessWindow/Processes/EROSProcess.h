@@ -8,19 +8,18 @@ namespace eros {
 class EROSProcess : public BaseProcess
 {
    public:
-    EROSProcess(eros::Logger* logger, std::string nodeName, double commTimeout_s)
-        : BaseProcess(logger, ProcessType::EROS, nodeName, commTimeout_s), restartCount(0) {
+    EROSProcess(eros::Logger* logger,
+                std::string hostName,
+                std::string nodeName,
+                double commTimeout_s)
+        : BaseProcess(logger, ProcessType::EROS, hostName, nodeName, commTimeout_s) {
     }
     bool new_resourceused(eros::resource resourceUsed);
     bool new_heartbeat(eros::heartbeat heartbeat);
     std::string pretty(const std::string& pre = "", const std::string& post = "");
-    uint64_t getRestartCount() {
-        return restartCount;
-    }
 
    private:
     eros::resource resourceInfo;
-    uint64_t restartCount;
 };
 }  // namespace eros
 #endif

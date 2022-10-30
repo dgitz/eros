@@ -4,7 +4,7 @@ bool ProcessManager::new_resourceUsed(eros::resource msg) {
     std::lock_guard<std::mutex> lock(processListMutex);
     std::string nodeName = msg.Name;
     if (processList.find(nodeName) == processList.end()) {
-        std::shared_ptr<EROSProcess> process(new EROSProcess(logger, nodeName, commTimeout_s));
+        std::shared_ptr<EROSProcess> process(new EROSProcess(logger, "", nodeName, commTimeout_s));
         processList.insert(
             std::pair<std::string, std::shared_ptr<IProcess>>(nodeName, std::move(process)));
     }
@@ -27,7 +27,8 @@ bool ProcessManager::new_resourceUsed(eros::resource msg) {
             return false;
             // LCOV_EXCL_STOP
         }
-        std::shared_ptr<EROSProcess> newProcess(new EROSProcess(logger, nodeName, commTimeout_s));
+        std::shared_ptr<EROSProcess> newProcess(
+            new EROSProcess(logger, "", nodeName, commTimeout_s));
         if (newProcess->new_resourceused(msg) == false) {
             // No Practical way to Unit Test
             // LCOV_EXCL_START
@@ -46,7 +47,8 @@ bool ProcessManager::new_heartbeat(eros::heartbeat msg) {
     std::lock_guard<std::mutex> lock(processListMutex);
     std::string nodeName = msg.NodeName;
     if (processList.find(nodeName) == processList.end()) {
-        std::shared_ptr<EROSProcess> process(new EROSProcess(logger, nodeName, commTimeout_s));
+        std::shared_ptr<EROSProcess> process(
+            new EROSProcess(logger, msg.HostName, nodeName, commTimeout_s));
         processList.insert(
             std::pair<std::string, std::shared_ptr<IProcess>>(nodeName, std::move(process)));
     }
@@ -69,7 +71,8 @@ bool ProcessManager::new_heartbeat(eros::heartbeat msg) {
             return false;
             // LCOV_EXCL_STOP
         }
-        std::shared_ptr<EROSProcess> newProcess(new EROSProcess(logger, nodeName, commTimeout_s));
+        std::shared_ptr<EROSProcess> newProcess(
+            new EROSProcess(logger, msg.HostName, nodeName, commTimeout_s));
         if (newProcess->new_heartbeat(msg) == false) {
             // No Practical way to Unit Test
             // LCOV_EXCL_START
@@ -88,7 +91,7 @@ bool ProcessManager::new_nodeAlive(std::string nodeName, double currentTime_s) {
     std::lock_guard<std::mutex> lock(processListMutex);
     if (processList.find(nodeName) == processList.end()) {
         std::shared_ptr<GenericProcess> process(
-            new GenericProcess(logger, nodeName, commTimeout_s));
+            new GenericProcess(logger, "", nodeName, commTimeout_s));
         processList.insert(
             std::pair<std::string, std::shared_ptr<IProcess>>(nodeName, std::move(process)));
     }

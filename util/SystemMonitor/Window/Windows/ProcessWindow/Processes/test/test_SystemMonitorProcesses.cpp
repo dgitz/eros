@@ -10,7 +10,7 @@ double COMMTIMEOUT_S = 2.0;
 
 TEST(BasicTest, TestEROSProcess) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
-    EROSProcess SUT(logger, "TestEROSProcess", COMMTIMEOUT_S);
+    EROSProcess SUT(logger, "TestEROSHostName", "TestEROSProcess", COMMTIMEOUT_S);
 
     EXPECT_EQ(SUT.getProcessType(), IProcess::ProcessType::EROS);
     double currentTime_s = 0.0;
@@ -71,7 +71,7 @@ TEST(BasicTest, TestEROSProcess) {
 TEST(BasicTest, TestEROSProcess_FailureCases) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
     logger->log_warn("Testing EROS Process Failure Scenario's.");
-    EROSProcess SUT(logger, "TestEROSProcess", COMMTIMEOUT_S);
+    EROSProcess SUT(logger, "TestEROSHostName", "TestEROSProcess", COMMTIMEOUT_S);
     {
         eros::heartbeat beat;
         EXPECT_FALSE(SUT.new_heartbeat(beat));
@@ -95,7 +95,7 @@ TEST(BasicTest, TestEROSProcess_FailureCases) {
 }
 TEST(BasicTest, TestGenericProcess) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
-    GenericProcess SUT(logger, "TestGenericProcess", COMMTIMEOUT_S);
+    GenericProcess SUT(logger, "TestGenericHostName", "TestGenericProcess", COMMTIMEOUT_S);
 
     EXPECT_EQ(SUT.getProcessType(), IProcess::ProcessType::GENERIC);
     double currentTime_s = 0.0;
@@ -130,95 +130,6 @@ TEST(BasicTest, TestGenericProcess) {
 
     delete logger;
 }
-/*
-TEST(BasicTest, TestProcess) {
-    Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
-
-    {  // eros Node
-        double currentTime = 0.0;
-        eros::resource resourceInfo;
-        resourceInfo.stamp.fromSec(currentTime += COMMTIMEOUT_S / 10.0);
-        resourceInfo.PID = 1;
-        resourceInfo.CPU_Perc = 2.0;
-        resourceInfo.RAM_Perc = 3.0;
-        resourceInfo.DISK_Perc = 4.0;
-        Process SUT(logger,
-                    Process::ProcessType::EROS,
-                    "/a/b/Node1",
-                    "GenericNode",
-                    "MyDevice",
-                    COMMTIMEOUT_S,
-                    resourceInfo);
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.update(currentTime));
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::INFO);
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.update(currentTime += 1.1 * COMMTIMEOUT_S));
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::WARN);
-        EXPECT_TRUE(SUT.update(currentTime += 10.0 * COMMTIMEOUT_S));
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::ERROR);
-        logger->log_debug(SUT.pretty());
-        EXPECT_EQ(SUT.getRestartCount(), 0);
-
-        resourceInfo.stamp.fromSec(currentTime += COMMTIMEOUT_S / 10.0);
-        EXPECT_TRUE(SUT.new_resourceused(resourceInfo));
-        EXPECT_EQ(SUT.getRestartCount(), 0);
-
-        resourceInfo.PID++;
-        resourceInfo.stamp.fromSec(currentTime += COMMTIMEOUT_S / 10.0);
-        EXPECT_TRUE(SUT.new_resourceused(resourceInfo));
-        EXPECT_EQ(SUT.getRestartCount(), 1);
-        logger->log_debug(SUT.pretty());
-    }
-    {  // Non eros Node
-        double currentTime = 0.0;
-        Process SUT(logger,
-                    Process::ProcessType::NON_EROS,
-                    "/a/b/Node1",
-                    "GenericNode",
-                    "MyDevice",
-                    COMMTIMEOUT_S);
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.update(currentTime));
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::INFO);
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.update(currentTime += 1.1 * COMMTIMEOUT_S));
-        logger->log_debug(SUT.pretty());
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::WARN);
-        EXPECT_TRUE(SUT.update(currentTime += 10.0 * COMMTIMEOUT_S));
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::ERROR);
-        logger->log_debug(SUT.pretty());
-        EXPECT_EQ(SUT.getRestartCount(), 0);
-
-        EXPECT_TRUE(SUT.setNodeAlive(currentTime += COMMTIMEOUT_S / 10.0));
-        EXPECT_TRUE(SUT.update(currentTime += COMMTIMEOUT_S / 10.0));
-        EXPECT_TRUE(SUT.getStatus() == Level::Type::INFO);
-
-        logger->log_debug(SUT.pretty());
-    }
-    delete logger;
-}
-*/
-/*
-TEST(BasicTest, TestProcessManager) {
-    Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
-    ProcessManager SUT(logger, COMMTIMEOUT_S);
-    EXPECT_EQ(SUT.getProcesses().size(), 0);
-
-    {  // 1 Process
-        eros::heartbeat heartbeat;
-        EXPECT_TRUE(SUT.new_heartbeat(heartbeat));
-        EXPECT_EQ(SUT.getProcesses().size(), 1);
-
-        eros::resource resource;
-        EXPECT_TRUE(SUT.new_resourceused(resource));
-        EXPECT_EQ(SUT.getProcesses().size(), 1);
-    }
-    logger->log_debug(SUT.pretty());
-    delete logger;
-}
-*/
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

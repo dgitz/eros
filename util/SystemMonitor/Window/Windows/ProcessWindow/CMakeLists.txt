@@ -9,6 +9,6 @@ target_link_libraries(processManager ${catkin_LIBRARIES} logger baseProcess eros
 add_dependencies(processManager ${eros_EXPORTED_TARGETS})
 
 add_library(processWindow ProcessWindow.cpp)
-target_link_libraries(processWindow ${catkin_LIBRARIES} logger windowTable)
+target_link_libraries(processWindow ${catkin_LIBRARIES} logger windowTable processManager)
 
 add_subdirectory(test)

@@ -108,7 +108,30 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(eros
     }
     return diag;
 }
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceusedmessage(
+    const eros::resource::ConstPtr& t_msg) {
+    eros::resource msg = convert_fromptr(t_msg);
+    return new_resourceusedmessage(msg);
+}
 
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceusedmessage(eros::resource msg) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == IWindow::WindowType::PROCESS) {
+            ProcessWindow* win = dynamic_cast<ProcessWindow*>(window.second);
+            bool v = win->new_resource(msg);
+            if (v == false) {
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
+                return diag;
+            }
+        }
+    }
+    return diag;
+}
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceavailablemessage(
     const eros::resource::ConstPtr& t_msg) {
     eros::resource msg = convert_fromptr(t_msg);

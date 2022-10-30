@@ -30,75 +30,13 @@ class IProcess
     virtual Node::State getState() = 0;
     virtual ProcessType getProcessType() = 0;
     virtual std::string getNodeName() = 0;
+    virtual std::string getHostName() = 0;
     virtual uint64_t getAliveCount() = 0;
-    /*
-     enum class ProcessType { UNKNOWN = 0, EROS = 1, NON_EROS = 2 };
-     Process(eros::Logger* logger,
-             ProcessType processType,
-             std::string nodeName,
-             std::string baseNodeName,
-             std::string hostDevice,
-             double commTimeout_s)
-         : logger(logger),
-           processType(processType),
-           nodeName(nodeName),
-           baseNodeName(baseNodeName),
-           hostDevice(hostDevice),
-           commTimeout_s(commTimeout_s),
-           state(eros::Node::State::UNKNOWN),
-           status(eros::Level::Type::UNKNOWN),
-           lastHeartbeat(0.0),
-           lastHeartbeatDelta(0.0),
-           restartCount(0) {
-     }
-     Process(eros::Logger* logger,
-             ProcessType processType,
-             std::string nodeName,
-             std::string baseNodeName,
-             std::string hostDevice,
-             double commTimeout_s,
-             eros::resource resourceInfo)
-         : logger(logger),
-           processType(processType),
-           nodeName(nodeName),
-           baseNodeName(baseNodeName),
-           hostDevice(hostDevice),
-           commTimeout_s(commTimeout_s),
-           state(eros::Node::State::UNKNOWN),
-           status(eros::Level::Type::UNKNOWN),
-           lastHeartbeat(0.0),
-           lastHeartbeatDelta(0.0),
-           restartCount(0) {
-         this->resourceInfo = resourceInfo;
-         lastHeartbeat = resourceInfo.stamp.toSec();
-         lastHeartbeatDelta = 0.0;
-     }
-     bool new_resourceused(eros::resource resourceUsed);
-
-
-     uint64_t getRestartCount() {
-         return restartCount;
-     }
-     bool setNodeAlive(double currentTime_s);
-
-    private:
-     eros::Logger* logger;
-     ProcessType processType;
-     std::string nodeName;
-
-     std::string baseNodeName;
-     std::string hostDevice;
-     double commTimeout_s;
-
-     eros::resource resourceInfo;
-
-     eros::Node::State state;
-     eros::Level::Type status;
-
-     double lastHeartbeat;
-     double lastHeartbeatDelta;
-     uint64_t restartCount;
-     */
+    virtual uint64_t getRestartCount() = 0;
+    virtual uint64_t getPID() = 0;
+    virtual double getCPUUsed() = 0;
+    virtual double getRAMUsed() = 0;
+    virtual double getLastHeartbeatDelta() = 0;
 };
 }  // namespace eros
 #endif

@@ -12,6 +12,10 @@ bool EROSProcess::new_resourceused(eros::resource resourceUsed) {
             restartCount++;
         }
     }
+    PID = resourceUsed.PID;
+    CPUUsed = resourceUsed.CPU_Perc;
+    RAMUsed = resourceUsed.RAM_Perc;
+
     resourceInfo = resourceUsed;
     return setNodeAlive(resourceInfo.stamp.toSec());
 }
@@ -22,6 +26,7 @@ bool EROSProcess::new_heartbeat(eros::heartbeat heartbeat) {
     if (heartbeat.NodeName != nodeName) {
         return false;
     }
+    hostName = heartbeat.HostName;
     return setNodeAlive(heartbeat.stamp.toSec());
 }
 std::string EROSProcess::pretty(const std::string& pre, const std::string& post) {

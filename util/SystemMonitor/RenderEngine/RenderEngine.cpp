@@ -118,9 +118,6 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
 
         WindowTable* win = dynamic_cast<WindowTable*>(windowData);
         if (win != nullptr) {
-            if (win->getWindowType() != IWindow::WindowType::DEVICE) {  // For debugging now
-                return true;
-            }
             uint16_t xValue = 1;
             std::vector<WindowTable::ColumnLabel> labels = win->getColumnLabels();
             for (auto label : labels) {
@@ -132,7 +129,10 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
 
             for (auto record : win->getRecords()) {
                 if (labels.size() < record->getFields().size()) {
-                    logger->log_error("No label defined for all Record Fields!");
+                    logger->log_error("No label defined for all Record Fields: Win: " +
+                                      std::to_string((uint8_t)win->getWindowType()) + " " +
+                                      std::to_string(labels.size()) + " < " +
+                                      std::to_string(record->getFields().size()));
                     return false;
                 }
                 bool useFirstColor = false;

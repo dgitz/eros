@@ -32,6 +32,12 @@ void SystemMonitor::resourceAvailable_Callback(const eros::resource::ConstPtr &m
         logger->log_diagnostic(diag);
     }
 }
+void SystemMonitor::resourceUsed_Callback(const eros::resource::ConstPtr &msg) {
+    Diagnostic::DiagnosticDefinition diag = process->new_resourceusedmessage(msg);
+    if (diag.level > Level::Type::NOTICE) {
+        logger->log_diagnostic(diag);
+    }
+}
 void SystemMonitor::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
@@ -333,6 +339,11 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
                     resource_available_list.push_back(info.name);
                 }
             }
+            if (info.name.find("resource_used") != std::string::npos) {
+                if (resourceused_subs.find(info.name) == resourceused_subs.end()) {
+                    resource_used_list.push_back(info.name);
+                }
+            }
         }
         if (info.datatype == "eros/loadfactor") {
             if (info.name.rfind(get_robotnamespace(), 0) == 0) {
@@ -350,6 +361,12 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
             resource_available_list.at(i), 50, &SystemMonitor::resourceAvailable_Callback, this);
         resourceavailable_subs.insert(
             std::pair<std::string, ros::Subscriber>(resource_available_list.at(i), sub));
+    }
+    for (std::size_t i = 0; i < resource_used_list.size(); ++i) {
+        ros::Subscriber sub = n->subscribe<eros::resource>(
+            resource_used_list.at(i), 50, &SystemMonitor::resourceUsed_Callback, this);
+        resourceused_subs.insert(
+            std::pair<std::string, ros::Subscriber>(resource_used_list.at(i), sub));
     }
     for (std::size_t i = 0; i < loadfactor_list.size(); ++i) {
         ros::Subscriber sub = n->subscribe<eros::loadfactor>(

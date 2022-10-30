@@ -11,7 +11,7 @@ class BaseProcessTester : public BaseProcess
 {
    public:
     BaseProcessTester(eros::Logger* logger, std::string nodeName)
-        : BaseProcess(logger, IProcess::ProcessType::GENERIC, nodeName, COMMTIMEOUT_S) {
+        : BaseProcess(logger, IProcess::ProcessType::GENERIC, "", nodeName, COMMTIMEOUT_S) {
     }
     bool setNodeAlive(double currentTime_s) {
         return BaseProcess::setNodeAlive(currentTime_s);
@@ -243,6 +243,12 @@ TEST(BasicTest, TestProcessManager_GenericToEROSProcess) {
     EXPECT_TRUE(SUT.update(dt));
     for (auto proc : SUT.getProcesses()) {
         EXPECT_TRUE(proc.second->getLevel() <= Level::Type::NOTICE);
+    }
+
+    if (0) {  // May have to enable
+        uint64_t currentAliveCount = SUT.getProcesses().find("Process1")->second->getAliveCount();
+        EXPECT_TRUE(SUT.new_nodeAlive("Process1", currentTime_s));
+        EXPECT_GT(SUT.getProcesses().find("Process1")->second->getAliveCount(), currentAliveCount);
     }
 }
 int main(int argc, char** argv) {
