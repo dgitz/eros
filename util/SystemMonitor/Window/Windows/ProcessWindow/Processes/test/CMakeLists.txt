@@ -1,0 +1,3 @@
+
+catkin_add_gtest(test_SystemMonitorProcesses test_SystemMonitorProcesses.cpp)
+target_link_libraries(test_SystemMonitorProcesses ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger erosProcess genericProcess)
