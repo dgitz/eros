@@ -284,40 +284,14 @@ int main(int argc, char **argv) {
 Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     std::size_t found_new_subscribers = 0;
-    ros::V_string nodes;
-    ros::master::getNodes(nodes);
-    std::vector<std::string> node_list;
-    for (ros::V_string::iterator it = nodes.begin(); it != nodes.end(); it++) {
-        const std::string &_node_name = *it;
-        std::size_t found = _node_name.find(BASE_NODE_NAME);
-        if (found != std::string::npos) {
-            continue;
-        }
-        bool add_me = true;
-        if (_node_name.rfind(get_robotnamespace(), 0) != 0) {
-            add_me = false;
-        }
-        if (add_me == true) {
-            std::map<std::string, bool>::iterator filter_it = filter_list.begin();
-            while (filter_it != filter_list.end()) {
-                if (filter_it->second == true) {
-                    if (_node_name.find(filter_it->first) != std::string::npos) {
-                        add_me = false;
-                    }
-                }
-                filter_it++;
-            }
-        }
-        if (add_me == true) {
-            node_list.push_back(_node_name);
-        }
-    }
+
     ros::master::V_TopicInfo master_topics;
     ros::master::getTopics(master_topics);
     std::vector<std::string> heartbeat_list;
     std::vector<std::string> resource_used_list;
     std::vector<std::string> loadfactor_list;
     std::vector<std::string> resource_available_list;
+    std::vector<std::string> eros_name_list;
     for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
          it++) {
         const ros::master::TopicInfo &info = *it;
@@ -330,6 +304,7 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
             if (info.name.rfind(get_robotnamespace(), 0) == 0) {
                 if (heartbeat_subs.find(info.name) == heartbeat_subs.end()) {
                     heartbeat_list.push_back(info.name);
+                    eros_name_list.push_back(info.name);
                 }
             }
         }
@@ -337,17 +312,20 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
             if (info.name.find("resource_available") != std::string::npos) {
                 if (resourceavailable_subs.find(info.name) == resourceavailable_subs.end()) {
                     resource_available_list.push_back(info.name);
+                    eros_name_list.push_back(info.name);
                 }
             }
             if (info.name.find("resource_used") != std::string::npos) {
                 if (resourceused_subs.find(info.name) == resourceused_subs.end()) {
                     resource_used_list.push_back(info.name);
+                    eros_name_list.push_back(info.name);
                 }
             }
         }
         if (info.datatype == "eros/loadfactor") {
             if (info.name.rfind(get_robotnamespace(), 0) == 0) {
                 loadfactor_list.push_back(info.name);
+                eros_name_list.push_back(info.name);
             }
         }
     }
@@ -373,33 +351,60 @@ Diagnostic::DiagnosticDefinition SystemMonitor::rescan_nodes() {
             loadfactor_list.at(i), 50, &SystemMonitor::loadfactor_Callback, this);
         loadfactor_subs.insert(std::pair<std::string, ros::Subscriber>(loadfactor_list.at(i), sub));
     }
-    /*
-    for (std::size_t i = 0; i < new_resourceused_topics_to_subscribe.size(); ++i) {
-        ros::Subscriber sub =
-            n->subscribe<eros::resource>(new_resourceused_topics_to_subscribe.at(i),
-                                         50,
-                                         &SystemMonitorNode::resourceused_Callback,
-                                         this);
-        resource_used_subs.push_back(sub);
+
+    ros::V_string nodes;
+    ros::master::getNodes(nodes);
+    std::vector<std::string> generic_node_list;
+    for (ros::V_string::iterator it = nodes.begin(); it != nodes.end(); it++) {
+        const std::string &_node_name = *it;
+        std::size_t found = _node_name.find(BASE_NODE_NAME);
+        if (found != std::string::npos) {
+            continue;
+        }
+        bool add_me = true;
+        if (_node_name.rfind(get_robotnamespace(), 0) != 0) {
+            add_me = false;
+        }
+        if (add_me == true) {
+            std::map<std::string, bool>::iterator filter_it = filter_list.begin();
+            while (filter_it != filter_list.end()) {
+                if (filter_it->second == true) {
+                    if (_node_name.find(filter_it->first) != std::string::npos) {
+                        add_me = false;
+                    }
+                }
+                filter_it++;
+            }
+        }
+        std::vector<std::string>::iterator itGenericNode =
+            find(genericNodeList.begin(), genericNodeList.end(), _node_name);
+        if (itGenericNode != genericNodeList.end()) {
+            add_me = false;
+        }
+        else {
+            std::vector<std::string>::iterator itErosNode =
+                find(eros_name_list.begin(), eros_name_list.end(), _node_name);
+
+            if (itErosNode != eros_name_list.end()) {
+                logger->log_warn("Not adding: " + _node_name + " Since its an eros node.");
+                add_me = false;
+            }
+        }
+
+        if (add_me == true) {
+            generic_node_list.push_back(_node_name);
+            genericNodeList.push_back(_node_name);
+        }
     }
-    for (std::size_t i = 0; i < new_loadfactor_topics_to_subscribe.size(); ++i) {
-        ros::Subscriber sub =
-            n->subscribe<eros::loadfactor>(new_loadfactor_topics_to_subscribe.at(i),
-                                           50,
-                                           &SystemMonitorNode::loadfactor_Callback,
-                                           this);
-        loadfactor_subs.push_back(sub);
+    for (auto genericNode : generic_node_list) {
+        diag = process->update_genericNode("", genericNode, ros::Time::now().toSec());
+        if (diag.level > Level::Type::NOTICE) {
+            logger->log_error("Unable to Update Generic Node: " + genericNode);
+            return diag;
+        }
     }
-    for (std::size_t i = 0; i < new_resourceavailable_topics_to_subscribe.size(); ++i) {
-        ros::Subscriber sub =
-            n->subscribe<eros::resource>(new_resourceavailable_topics_to_subscribe.at(i),
-                                         50,
-                                         &SystemMonitorNode::resourceavailable_Callback,
-                                         this);
-        resource_available_subs.push_back(sub);
-    }
-    */
-    found_new_subscribers = heartbeat_list.size();
+
+    found_new_subscribers = eros_name_list.size() + generic_node_list.size();
     if (found_new_subscribers > 0) {
         logger->log_notice("Rescanned and found " + std::to_string(found_new_subscribers) +
                            " new things to subscribe to.");

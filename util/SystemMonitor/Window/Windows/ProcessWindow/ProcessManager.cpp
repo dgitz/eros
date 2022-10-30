@@ -87,11 +87,13 @@ bool ProcessManager::new_heartbeat(eros::heartbeat msg) {
     }
     return p->new_heartbeat(msg);
 }
-bool ProcessManager::new_nodeAlive(std::string nodeName, double currentTime_s) {
+bool ProcessManager::new_nodeAlive(std::string hostName,
+                                   std::string nodeName,
+                                   double currentTime_s) {
     std::lock_guard<std::mutex> lock(processListMutex);
     if (processList.find(nodeName) == processList.end()) {
         std::shared_ptr<GenericProcess> process(
-            new GenericProcess(logger, "", nodeName, commTimeout_s));
+            new GenericProcess(logger, hostName, nodeName, commTimeout_s));
         processList.insert(
             std::pair<std::string, std::shared_ptr<IProcess>>(nodeName, std::move(process)));
     }

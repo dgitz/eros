@@ -21,7 +21,7 @@ class ProcessWindow : public WindowTable
         columnLabels.push_back(ColumnLabel(" ID ", 4));
         columnLabels.push_back(ColumnLabel(" Host ", 20));
         columnLabels.push_back(ColumnLabel(" Node Name ", 24));
-        columnLabels.push_back(ColumnLabel(" Status ", 8));
+        columnLabels.push_back(ColumnLabel(" Status ", 14));
         columnLabels.push_back(ColumnLabel(" Restarts ", 10));
         columnLabels.push_back(ColumnLabel(" PID ", 8));
         columnLabels.push_back(ColumnLabel(" CPU(%) ", 8));
@@ -35,7 +35,7 @@ class ProcessWindow : public WindowTable
     std::vector<std::shared_ptr<IRecord>> getRecords();
     bool new_heartbeat(eros::heartbeat msg);
     bool new_resource(eros::resource msg);
-    bool new_nodeAlive(std::string nodeName, double currentTime_s);
+    bool new_nodeAlive(std::string hostName, std::string nodeName, double currentTime_s);
     bool keyPressed(KeyMap key);
     bool update(double currentTime_s);
     // Not allowed to set records independently.

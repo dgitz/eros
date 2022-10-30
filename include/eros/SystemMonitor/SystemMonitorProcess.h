@@ -47,6 +47,10 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         const eros::loadfactor::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(eros::loadfactor msg);
 
+    eros::Diagnostic::DiagnosticDefinition update_genericNode(std::string hostName,
+                                                              std::string nodeName,
+                                                              double currentTime_s);
+
    private:
     bool initializeWindows();
     std::map<eros::IWindow::WindowType, eros::IWindow*> windows;

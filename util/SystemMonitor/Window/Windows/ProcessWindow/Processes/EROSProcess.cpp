@@ -27,6 +27,7 @@ bool EROSProcess::new_heartbeat(eros::heartbeat heartbeat) {
         return false;
     }
     hostName = heartbeat.HostName;
+    state = (Node::State)heartbeat.NodeState;
     return setNodeAlive(heartbeat.stamp.toSec());
 }
 std::string EROSProcess::pretty(const std::string& pre, const std::string& post) {

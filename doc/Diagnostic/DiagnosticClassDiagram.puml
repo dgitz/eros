@@ -39,15 +39,15 @@ enum Diagnostic::Message {
 
 }
 struct Diagnostic::DiagnosticDefinition {
-    std::string device_name
-    std::string node_name
+    string device_name
+    string node_name
     System::MainSystem system
     System::SubSystem subsystem
     System::Component component
     Diagnostic::DiagnosticType type
     Diagnostic::Message message
     Level::Type level
-    std::string description
+    string description
     uint64_t update_count
 }
 Diagnostic +-- Diagnostic::Message
@@ -56,21 +56,21 @@ Diagnostic +-- Diagnostic::DiagnosticDefinition
 System *- Diagnostic
 class Diagnostic {
 
-    +{static} std::string DiagnosticTypeString(Diagnostic::DiagnosticType v)
-    +{static} std::string DiagnosticMessageString(Diagnostic::Message v)
-    +{static} std::string pretty(std::string pre, std::vector<DiagnosticDefinition> diagnostics)
-    +{static} std::string pretty(std::string pre,DiagnosticDefinition diag,bool print_end_line = true)
+    +{static} string DiagnosticTypeString(Diagnostic::DiagnosticType v)
+    +{static} string DiagnosticMessageString(Diagnostic::Message v)
+    +{static} string pretty(string pre, std::vector<DiagnosticDefinition> diagnostics)
+    +{static} string pretty(string pre,DiagnosticDefinition diag,bool print_end_line = true)
     
-    +std::string pretty()
-    +void initialize(std::string device_name,std::string node_name,System::MainSystem system,System::SubSystem subsystem,System::Component component)
+    +string pretty()
+    +void initialize(string device_name,string node_name,System::MainSystem system,System::SubSystem subsystem,System::Component component)
     +void initialize(Diagnostic::DiagnosticDefinition diag)
     +bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types)
     +DiagnosticDefinition get_root_diagnostic() 
     +std::vector<DiagnosticDefinition> get_diagnostics()
     +std::vector<DiagnosticDefinition> get_latest_diagnostics()
-    +DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,std::string description)
+    +DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,string description)
     +DiagnosticDefinition update_diagnostic(DiagnosticDefinition diag)
-    +DiagnosticDefinition update_diagnostic(std::string device_name Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,std::string description)
+    +DiagnosticDefinition update_diagnostic(string device_name Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,string description)
 }
 @enduml
 

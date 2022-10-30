@@ -21,7 +21,7 @@ TEST(BasicTest, TestOperation) {
         {  // Process 1: Generic Process
 
             std::string nodeName = "Process1";
-            EXPECT_TRUE(SUT.new_nodeAlive(nodeName, currentTime_s += dt));
+            EXPECT_TRUE(SUT.new_nodeAlive("Host1", nodeName, currentTime_s += dt));
         }
         {  // Process 2: EROS Process
 

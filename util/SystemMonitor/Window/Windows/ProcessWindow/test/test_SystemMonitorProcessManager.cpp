@@ -134,7 +134,7 @@ TEST(BasicTest, TestProcessManager_AllGenericProcesses) {
     double currentTime_s = 0.0;
     double dt = 0.001;
     {  // 1 Process
-        EXPECT_TRUE(SUT.new_nodeAlive("Process1", currentTime_s += dt));
+        EXPECT_TRUE(SUT.new_nodeAlive("Host1", "Process1", currentTime_s += dt));
         logger->log_debug(SUT.pretty());
         for (auto proc : SUT.getProcesses()) { EXPECT_GT(proc.second->getAliveCount(), 0); }
     }
@@ -147,7 +147,7 @@ TEST(BasicTest, TestProcessManager_AllGenericProcesses) {
 
     // Add a bunch more processes
     for (int i = 2; i < 52; ++i) {
-        EXPECT_TRUE(SUT.new_nodeAlive("Process" + std::to_string(i), currentTime_s += dt));
+        EXPECT_TRUE(SUT.new_nodeAlive("Host1", "Process" + std::to_string(i), currentTime_s += dt));
         EXPECT_EQ(SUT.getProcesses().size(), i);
         logger->log_debug(SUT.pretty("\t", ""));
     }
@@ -167,7 +167,7 @@ TEST(BasicTest, TestProcessManager_GenericToEROSProcess) {
     double currentTime_s = 0.0;
     double dt = 0.001;
     {  // 1 Process
-        EXPECT_TRUE(SUT.new_nodeAlive("Process1", currentTime_s += dt));
+        EXPECT_TRUE(SUT.new_nodeAlive("Host1", "Process1", currentTime_s += dt));
         EXPECT_EQ(SUT.getProcesses().size(), 1);
         logger->log_debug(SUT.pretty());
         for (auto proc : SUT.getProcesses()) { EXPECT_GT(proc.second->getAliveCount(), 0); }
@@ -190,7 +190,7 @@ TEST(BasicTest, TestProcessManager_GenericToEROSProcess) {
     }
     // Create 10 more generic processes
     for (int i = 2; i < 12; ++i) {
-        EXPECT_TRUE(SUT.new_nodeAlive("Process" + std::to_string(i), currentTime_s += dt));
+        EXPECT_TRUE(SUT.new_nodeAlive("Host1", "Process" + std::to_string(i), currentTime_s += dt));
         EXPECT_EQ(SUT.getProcesses().size(), i);
         logger->log_debug(SUT.pretty());
         for (auto proc : SUT.getProcesses()) { EXPECT_GT(proc.second->getAliveCount(), 0); }
@@ -247,7 +247,7 @@ TEST(BasicTest, TestProcessManager_GenericToEROSProcess) {
 
     if (0) {  // May have to enable
         uint64_t currentAliveCount = SUT.getProcesses().find("Process1")->second->getAliveCount();
-        EXPECT_TRUE(SUT.new_nodeAlive("Process1", currentTime_s));
+        EXPECT_TRUE(SUT.new_nodeAlive("Host1", "Process1", currentTime_s));
         EXPECT_GT(SUT.getProcesses().find("Process1")->second->getAliveCount(), currentAliveCount);
     }
 }

@@ -73,6 +73,8 @@ bool RenderEngine::update(double dt, std::map<IWindow::WindowType, IWindow*> _wi
             incrementFocus();
             validKey = true;
             break;
+        case KeyMap::KEY_down: validKey = true; break;
+        case KeyMap::KEY_up: validKey = true; break;
         default:
             if (key != USHRT_MAX) {
                 validKey = true;
@@ -124,10 +126,31 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
                 mvwprintw(renderWindow->get_window_reference(), 1, xValue, label.label.c_str());
                 xValue += label.minWidth;
             }
+
             std::string dashed(renderWindow->getActualSize().width_pixel - 2, '-');
             mvwprintw(renderWindow->get_window_reference(), 2, 1, dashed.c_str());
 
+            uint16_t recordsAllowedToShow = renderWindow->getActualSize().height_pixel - 4;
+            uint16_t startRecordShow = 0;
+            uint16_t stopRecordShow = recordsAllowedToShow;
+            uint16_t selectedRecordIndex = win->getSelectedRecordIndex();
+            uint16_t shiftDown = 0;
+            if (win->getRecords().size() > recordsAllowedToShow) {
+                if (selectedRecordIndex >= recordsAllowedToShow) {
+                    shiftDown = selectedRecordIndex - stopRecordShow + 1;
+                }
+            }
+
+            startRecordShow += shiftDown;
+            stopRecordShow += shiftDown;
+
+            uint16_t recordIndex = 0;
             for (auto record : win->getRecords()) {
+                if ((recordIndex < startRecordShow) || (recordIndex >= stopRecordShow)) {
+                    recordIndex++;
+                    continue;
+                }
+
                 if (labels.size() < record->getFields().size()) {
                     logger->log_error("No label defined for all Record Fields: Win: " +
                                       std::to_string((uint8_t)win->getWindowType()) + " " +
@@ -173,6 +196,7 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
                         wattroff(renderWindow->get_window_reference(), COLOR_PAIR(firstColor));
                     }
                 }
+                recordIndex++;
             }
         }
     }

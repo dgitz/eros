@@ -108,11 +108,11 @@ TEST(BasicTest, TestGenericProcess) {
     EXPECT_EQ(SUT.getLevel(), Level::Type::INFO);
     EXPECT_TRUE(SUT.update(currentTime_s += 1.1 * COMMTIMEOUT_S));
     logger->log_debug(SUT.pretty());
-    EXPECT_EQ(SUT.getLevel(), Level::Type::WARN);
+    EXPECT_EQ(SUT.getLevel(), Level::Type::INFO);
     EXPECT_TRUE(SUT.update(currentTime_s += 10.0 * COMMTIMEOUT_S));
     logger->log_debug(SUT.pretty());
 
-    EXPECT_EQ(SUT.getLevel(), Level::Type::ERROR);
+    EXPECT_EQ(SUT.getLevel(), Level::Type::INFO);
 
     EXPECT_TRUE(SUT.update(currentTime_s += 0.1 * COMMTIMEOUT_S));
     logger->log_debug(SUT.pretty());
@@ -122,7 +122,7 @@ TEST(BasicTest, TestGenericProcess) {
     EXPECT_EQ(SUT.getLevel(), Level::Type::INFO);
 
     EXPECT_TRUE(SUT.update(currentTime_s += 10.0 * COMMTIMEOUT_S));
-    EXPECT_EQ(SUT.getLevel(), Level::Type::ERROR);
+    EXPECT_EQ(SUT.getLevel(), Level::Type::INFO);
 
     EXPECT_TRUE(SUT.setNodeAlive(currentTime_s));
     EXPECT_TRUE(SUT.update(currentTime_s += 0.1 * COMMTIMEOUT_S));

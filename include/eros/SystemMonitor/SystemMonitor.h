@@ -10,7 +10,7 @@
 // ROS Messages
 // Project
 #include <eros/BaseNode.h>
-
+#include <algorithm>
 #include "SystemMonitorProcess.h"
 /*! \class SystemMonitor SystemMonitor.h "SystemMonitor.h"
  *  \brief */
@@ -78,6 +78,7 @@ class SystemMonitor : public eros::BaseNode
     std::map<std::string, ros::Subscriber> resourceavailable_subs;
     std::map<std::string, ros::Subscriber> loadfactor_subs;
     std::map<std::string, ros::Subscriber> resourceused_subs;
+    std::vector<std::string> genericNodeList;
 };
 #endif  // SystemMonitor_H
         // LCOV_EXCL_STOP

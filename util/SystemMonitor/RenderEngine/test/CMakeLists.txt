@@ -1,2 +1,2 @@
 catkin_add_gtest(test_SystemMonitorRender test_SystemMonitorRender.cpp)
-target_link_libraries(test_SystemMonitorRender ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger renderWindow renderEngine windowText)
+target_link_libraries(test_SystemMonitorRender ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger renderWindow renderEngine windowText windowTable)

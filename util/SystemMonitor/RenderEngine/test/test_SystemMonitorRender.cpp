@@ -140,7 +140,7 @@ std::map<eros::IWindow::WindowType, IWindow*> initializeWindows(Logger* logger) 
 TEST(BasicTest, RenderWindowTest) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
     WindowSize size;
-    RenderWindow window(logger, size, 0, 0);
+    RenderWindow window(logger, size, 100, 100);
     EXPECT_TRUE(window.init());
     delete logger;
 }

@@ -37,7 +37,7 @@ ScreenCoordinatePixel --> CoordinateReference
 struct RenderData {
     +ScreenCoordinatePixel startCoordinate
     +Color color
-    +std::string data
+    +string data
 }
 class WindowSize
 {

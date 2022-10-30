@@ -19,7 +19,7 @@ class ProcessManager
     }
     bool new_resourceUsed(eros::resource msg);
     bool new_heartbeat(eros::heartbeat msg);
-    bool new_nodeAlive(std::string nodeName, double currentTime_s);
+    bool new_nodeAlive(std::string hostName, std::string nodeName, double currentTime_s);
     bool update(double currentTime_s);
     std::map<std::string, std::shared_ptr<IProcess>> getProcesses() {
         return processList;

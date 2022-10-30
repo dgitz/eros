@@ -14,6 +14,7 @@ class GenericProcess : public BaseProcess
     }
     std::string pretty(const std::string& pre = "", const std::string& post = "");
     bool setNodeAlive(double currentTime_s);
+    bool update(double currentTime_s) override;
 };
 }  // namespace eros
 #endif
