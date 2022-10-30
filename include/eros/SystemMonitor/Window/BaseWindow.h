@@ -18,6 +18,7 @@ class BaseWindow : public IWindow
     }
     bool update(double currentTime_s);
     static Color convertLevelToColor(Level::Type level);
+    static Color convertNodeStateToColor(Node::State state);
 
    protected:
     eros::Logger* logger;

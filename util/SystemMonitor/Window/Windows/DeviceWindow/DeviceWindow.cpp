@@ -45,10 +45,23 @@ std::vector<std::shared_ptr<IRecord>> DeviceWindow::getRecords() {
         std::shared_ptr<GenericRecord> record(new GenericRecord);
         uint16_t xValue = 0;
         uint16_t index = 0;
-        {  // ID
+        {  // Selected?
             std::shared_ptr<GenericField> field(new GenericField);
             RenderData data;
             data.color = color;
+            if (selectedRecordIndex == deviceIndex) {
+                data.data = "***";
+            }
+            data.startCoordinate.start_x_pixel = xValue;
+            data.startCoordinate.start_y_pixel = deviceIndex;
+            field->setData(data);
+            fields.push_back(std::move(field));
+            xValue += getColumnLabels().at(index).minWidth;
+            index++;
+        }
+        {  // ID
+            std::shared_ptr<GenericField> field(new GenericField);
+            RenderData data;
             data.data = std::to_string(deviceIndex);
             data.startCoordinate.start_x_pixel = xValue;
             data.startCoordinate.start_y_pixel = deviceIndex;
@@ -135,7 +148,10 @@ std::vector<std::shared_ptr<IRecord>> DeviceWindow::getRecords() {
                             device.second.getLoadFactor().loadfactor.at(2));
                 }
                 else {
+                    // No Practical way to Unit test
+                    // LCOV_EXCL_START
                     logger->log_warn("Load Factor Ill-Formed!");
+                    // LCOV_EXCL_STOP
                 }
             }
             else {

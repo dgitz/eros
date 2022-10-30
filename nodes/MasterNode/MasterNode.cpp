@@ -122,6 +122,7 @@ bool MasterNode::start() {
                          Node::NodeStateString(Node::State::INITIALIZED));
         // LCOV_EXCL_STOP
     }
+
     if (process->request_statechange(Node::State::RUNNING) == false) {
         // No practical way to unit test
         // LCOV_EXCL_START

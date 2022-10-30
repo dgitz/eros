@@ -17,6 +17,7 @@ class DeviceWindow : public WindowTable
         : WindowTable(logger, IWindow::WindowType::DEVICE),
           deviceManager(logger, DEVICE_COMMTIME_THRESHOLD) {
         std::vector<ColumnLabel> columnLabels;
+        columnLabels.push_back(ColumnLabel(" ? ", 3));
         columnLabels.push_back(ColumnLabel(" ID ", 4));
         columnLabels.push_back(ColumnLabel(" Device ", 24));
         columnLabels.push_back(ColumnLabel(" CPU Av ", 8));

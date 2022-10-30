@@ -10,7 +10,8 @@ WindowSize NodeDiagnosticsWindow::getWindowSize() {
 }
 std::vector<std::shared_ptr<IRecord>> NodeDiagnosticsWindow::getRecords() {
     std::vector<std::shared_ptr<IRecord>> records;
-    {
+
+    if (0) {
         std::vector<std::shared_ptr<IField>> fields;
         std::shared_ptr<GenericRecord> record(new GenericRecord);
         std::shared_ptr<GenericField> field(new GenericField);

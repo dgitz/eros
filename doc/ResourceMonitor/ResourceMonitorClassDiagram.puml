@@ -19,7 +19,7 @@ Logger *-- ResourceMonitor
 Architecture::Type *-- ResourceMonitor 
 Diagnostic::DiagnosticDefinition *-- ResourceMonitor 
 struct ResourceMonitor::ResourceInfo {
-    std::string process_name
+    string process_name
     uint16_t pid
     double cpu_perc
     double ram_perc
@@ -32,7 +32,7 @@ enum ResourceMonitor::Mode {
 class ResourceMonitor {
     +ResourceMonitor(Mode _mode, Diagnostic::DiagnosticDefinition _diag, Logger* _logger)
     +bool is_initialized()
-    +std::string pretty(ResourceInfo info)
+    +string pretty(ResourceInfo info)
     +Diagnostic::DiagnosticDefinition init()
     +ResourceInfo get_resourceinfo()
     +Architecture::Type get_architecture()

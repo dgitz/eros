@@ -10,7 +10,7 @@
 // ROS Messages
 // Project
 #include <eros/BaseNode.h>
-
+#include <algorithm>
 #include "SystemMonitorProcess.h"
 /*! \class SystemMonitor SystemMonitor.h "SystemMonitor.h"
  *  \brief */
@@ -65,6 +65,7 @@ class SystemMonitor : public eros::BaseNode
     void heartbeat_Callback(const eros::heartbeat::ConstPtr& msg);
     void loadfactor_Callback(const eros::loadfactor::ConstPtr& msg);
     void resourceAvailable_Callback(const eros::resource::ConstPtr& msg);
+    void resourceUsed_Callback(const eros::resource::ConstPtr& msg);
 
    private:
     eros::Diagnostic::DiagnosticDefinition rescan_nodes();
@@ -76,6 +77,8 @@ class SystemMonitor : public eros::BaseNode
     std::map<std::string, ros::Subscriber> heartbeat_subs;
     std::map<std::string, ros::Subscriber> resourceavailable_subs;
     std::map<std::string, ros::Subscriber> loadfactor_subs;
+    std::map<std::string, ros::Subscriber> resourceused_subs;
+    std::vector<std::string> genericNodeList;
 };
 #endif  // SystemMonitor_H
         // LCOV_EXCL_STOP

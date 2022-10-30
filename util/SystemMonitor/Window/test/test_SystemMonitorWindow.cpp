@@ -33,6 +33,7 @@ class TesterIWindow : public IWindow
         return IWindow::WindowType::INFO;
     }
     bool update(double currentTime_s) {
+        (void)currentTime_s;
         return true;
     }
 
@@ -110,6 +111,18 @@ class BaseWindowTester : public BaseWindow
    private:
     std::vector<std::shared_ptr<IRecord>> records;
 };
+TEST(BasicTest, SupportFunctions) {
+    for (uint8_t i = 0; i <= (uint8_t)Level::Type::END_OF_LIST; ++i) {
+        Color color = BaseWindow::convertLevelToColor((Level::Type)i);
+        EXPECT_NE(color, Color::END_OF_LIST);
+        EXPECT_NE(color, Color::UNKNOWN);
+    }
+    for (uint8_t i = 0; i <= (uint8_t)Node::State::END_OF_LIST; ++i) {
+        Color color = BaseWindow::convertNodeStateToColor((Node::State)i);
+        EXPECT_NE(color, Color::END_OF_LIST);
+        EXPECT_NE(color, Color::UNKNOWN);
+    }
+}
 TEST(BasicTest, BaseWindowTest) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
     BaseWindowTester window(logger);

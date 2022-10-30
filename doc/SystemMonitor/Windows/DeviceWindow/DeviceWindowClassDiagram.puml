@@ -22,7 +22,7 @@ class DeviceManager {
 }
 DeviceWindow -> DeviceManager
 class Device {
-    +std::string getName() 
+    +string getName() 
     +bool new_resourceavailable(eros::resource resourceAvailable)
     +eros::resource getResourceAvailable()
     +bool new_loadfactor(eros::loadfactor loadFactor)

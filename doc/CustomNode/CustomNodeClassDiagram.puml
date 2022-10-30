@@ -11,11 +11,11 @@ package userPackage {
   BaseNodeProcess <|-- CustomNodeProcess
 }
 class CustomNode {
-    +const std::string BASE_NODE_NAME
+    +const string BASE_NODE_NAME
     +const uint16_t MAJOR_RELEASE_VERSION
     +const uint16_t MINOR_RELEASE_VERSION
     +const uint16_t BUILD_NUMBER
-    +const std::string FIRMWARE_DESCRIPTION
+    +const string FIRMWARE_DESCRIPTION
     +const eros::System::MainSystem DIAGNOSTIC_SYSTEM
     +const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM
     +const eros::System::Component DIAGNOSTIC_COMPONENT

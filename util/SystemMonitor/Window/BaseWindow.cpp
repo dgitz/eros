@@ -16,5 +16,18 @@ Color BaseWindow::convertLevelToColor(Level::Type level) {
         default: return convertLevelToColor(Level::Type::UNKNOWN);
     }
 }
+Color BaseWindow::convertNodeStateToColor(Node::State state) {
+    switch (state) {
+        case Node::State::UNKNOWN: return Color::RED;
+        case Node::State::START: return Color::GREEN;
+        case Node::State::INITIALIZING: return Color::GREEN;
+        case Node::State::INITIALIZED: return Color::GREEN;
+        case Node::State::RUNNING: return Color::BLUE;
+        case Node::State::PAUSED: return Color::GREEN;
+        case Node::State::RESET: return Color::GREEN;
+        case Node::State::FINISHED: return Color::GREEN;
+        default: return Color::RED;
+    }
+}
 
 }  // namespace eros

@@ -4,7 +4,82 @@ abstract WindowTable {
     
 }
 class ProcessWindow {
-
+    +WindowSize getWindowSize()
+    +IRecord[] getRecords()
+    +bool new_heartbeat(eros::heartbeat msg)
+    +bool new_resource(eros::resource msg)
+    +bool new_nodeAlive(string hostName, string nodeName, double currentTime_s)
+    +bool keyPressed(KeyMap key)
+    +bool update(double currentTime_s)
+    +{static} string smallifyROSName(string v)
+    -ProcessManager processManager
 }
 WindowTable <|-- ProcessWindow
+class ProcessManager {
+    +bool new_resourceUsed(eros::resource msg)
+    +bool new_heartbeat(eros::heartbeat msg)
+    +bool new_nodeAlive(string hostName, string nodeName, double currentTime_s)
+    +bool update(double currentTime_s)
+    +std::map<string, IProcess> getProcesses()
+    +string pretty()
+
+    -Process[] processes
+}
+ProcessWindow -> ProcessManager
+enum ProcessType {
+    EROS
+    GENERIC
+}
+ProcessType -+ IProcess
+interface IProcess {
+
+    +{static} string ProcessTypeString(ProcessType v)
+    +{static} ProcessType ProcessTypeEnum(std::string type)  
+    +{abstract} ProcessType getProcessType()
+    +{abstract} string pretty()
+    +{abstract} bool update(double currentTime_s)
+    +{abstract} Level::Type getLevel()
+    +{abstract} Node::State getState() 
+    +{abstract} string getNodeName()
+    +{abstract} string getHostName()
+    +{abstract} uint64_t getAliveCount()
+    +{abstract} uint64_t getPID()
+    +{abstract} double getCPUUsed()
+    +{abstract} double getRAMUsed() 
+    +{abstract} uint64_t getRestartCount() 
+    +{abstract} double getLastHeartbeatDelta() 
+
+}
+ProcessManager --* "*" IProcess
+abstract BaseProcess {
+    +ProcessType getProcessType()
+    +string pretty()
+    +bool update(double currentTime_s)
+    +Level::Type getLevel()
+    +Node::State getState() 
+    +string getNodeName()
+    +string getHostName()
+    +uint64_t getAliveCount()
+    +uint64_t getPID()
+    +double getCPUUsed()
+    +double getRAMUsed() 
+    +uint64_t getRestartCount() 
+    +double getLastHeartbeatDelta()
+}
+IProcess <|- BaseProcess
+class GenericProcess {
+    +bool setNodeAlive(double currentTime_s)
+    +<<override>> bool update(double currentTime_s)
+    +string pretty()
+
+}
+class EROSProcess {
+    +bool new_resourceused(eros::resource resourceUsed)
+    +bool new_heartbeat(eros::heartbeat heartbeat)
+    +string pretty()
+
+}
+BaseProcess <|-- GenericProcess
+BaseProcess <|-- EROSProcess
+
 @enduml

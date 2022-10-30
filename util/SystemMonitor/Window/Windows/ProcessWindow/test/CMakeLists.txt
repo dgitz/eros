@@ -1,2 +1,6 @@
+
+catkin_add_gtest(test_SystemMonitorProcessManager test_SystemMonitorProcessManager.cpp)
+target_link_libraries(test_SystemMonitorProcessManager ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger baseProcess processManager)
+
 catkin_add_gtest(test_SystemMonitorProcessWindow test_SystemMonitorProcessWindow.cpp)
 target_link_libraries(test_SystemMonitorProcessWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger processWindow)

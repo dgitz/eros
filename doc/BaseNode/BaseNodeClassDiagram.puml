@@ -31,24 +31,24 @@ class BaseNodeProcess {
     +{abstract} std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() 
     +{abstract} void cleanup()
 
-    +void initialize(std::string t_base_node_name,std::string t_node_name,std::string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
+    +void initialize(string t_base_node_name,string t_node_name,string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
     +bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types)
     +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticDefinition diag)
-    +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,std::string description)
+    +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,string description)
     +Node::State get_nodestate()
     +double get_runtime()
     +eros::ready_to_arm get_ready_to_arm()
-    +std::string get_hostname()
+    +string get_hostname()
     +Diagnostic::DiagnosticDefinition get_root_diagnostic()
     +std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics()
     +std::vector<Diagnostic::DiagnosticDefinition> get_latest_diagnostics()
     +double get_system_time() 
     +double get_run_time()
     +Logger* get_logger()
-    +json read_configuration(std::string device_name,bool include_self = true,std::string file_path = "~/config/DeviceList.json")
+    +json read_configuration(string device_name,bool include_self = true,string file_path = "~/config/DeviceList.json")
     +bool request_statechange(Node::State newstate)
     +Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time)
-    +std::vector<std::string> get_files_indir(std::string dir)
+    +std::vector<string> get_files_indir(string dir)
     +void base_cleanup()
 
     +{static} ros::Time convert_time(struct timeval t)
@@ -61,13 +61,13 @@ class BaseNodeProcess {
     +{static} Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag)
     +{static} eros::armed_state convert(ArmDisarm::State v)
     +{static} ArmDisarm::State convert(eros::armed_state v)
-    +{static} std::string sanitize_path(std::string path)
-    +{static} FileHelper::FileInfo read_file(std::string file_path)
-    +{static} FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count)
+    +{static} string sanitize_path(string path)
+    +{static} FileHelper::FileInfo read_file(string file_path)
+    +{static} FileHelper::FileInfo write_file(string full_path, char* bytes, uint64_t byte_count)
 
     #Logger* logger
-    #std::string hostname
-    #std::string base_node_name
+    #string hostname
+    #string base_node_name
     #Node::State node_state
     #Diagnostic diagnostic_helper
     #bool unittest_running
@@ -95,22 +95,22 @@ class BaseNode {
     +void disable_armedstate_sub()
     +void disable_modestate_sub()
     +void enable_ready_to_arm_pub(bool v)
-    +void set_basenodename(std::string t_base_node_name)
+    +void set_basenodename(string t_base_node_name)
     +void initialize_diagnostic(System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component)
-    +void initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,std::string t_description)
-    +void set_nodename(std::string t_node_name)
+    +void initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,string t_description)
+    +void set_nodename(string t_node_name)
     +Diagnostic::DiagnosticDefinition preinitialize_basenode()
     +void set_loop1_rate(double t_rate)
     +void set_loop2_rate(double t_rate)
     +void set_loop3_rate(double t_rate)
     +void set_ros_rate(double t_rate)
     +bool update(Node::State node_state)
-    +std::string get_basenodename()
-    +std::string get_nodename()
-    +std::string read_robotnamespace()
-    +void set_robotnamespace(std::string _robot_namespace)
-    +std::string get_robotnamespace()
-    +std::string get_verbositylevel()
+    +string get_basenodename()
+    +string get_nodename()
+    +string read_robotnamespace()
+    +void set_robotnamespace(string _robot_namespace)
+    +string get_robotnamespace()
+    +string get_verbositylevel()
     +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
     +Logger *get_logger()
     +void update_ready_to_arm(eros::ready_to_arm v)
@@ -127,8 +127,8 @@ class BaseNode {
     +void base_reset()
 
 
-    +{static} std::string validate_robotnamespace(std::string str)
-    +{static} std::string get_hostname()
+    +{static} string validate_robotnamespace(string str)
+    +{static} string get_hostname()
     +{static} eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr)
     +{static} eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr)
 }
