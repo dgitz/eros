@@ -30,14 +30,26 @@ TEST(BasicTest, TestOperation) {
             msg.NodeName = nodeName;
             msg.stamp.fromSec(currentTime_s += dt);
             EXPECT_TRUE(SUT.new_heartbeat(msg));
+
+            eros::resource res;
+            res.Name = nodeName;
+            msg.stamp.fromSec(currentTime_s += dt);
+            EXPECT_TRUE(SUT.new_resource(res));
         }
     }
 
     // Tests
-
-    std::vector<std::shared_ptr<IRecord>> records = SUT.getRecords();
-    EXPECT_GT(records.size(), 0);
-    for (auto record : records) { EXPECT_GT(record->getFields().size(), 0); }
+    if (1) {
+        std::vector<std::shared_ptr<IRecord>> records = SUT.getRecords();
+        EXPECT_GT(records.size(), 0);
+        for (auto record : records) { EXPECT_GT(record->getFields().size(), 0); }
+    }
+    EXPECT_TRUE(SUT.update(100.0 * ProcessWindow::COMMTIMEOUT_S));
+    if (1) {
+        std::vector<std::shared_ptr<IRecord>> records = SUT.getRecords();
+        EXPECT_GT(records.size(), 0);
+        for (auto record : records) { EXPECT_GT(record->getFields().size(), 0); }
+    }
 
     KeyMap noKey;
     EXPECT_TRUE(SUT.keyPressed(noKey));

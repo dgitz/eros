@@ -52,6 +52,44 @@ class Diagnostic
             default: return DiagnosticTypeString(Diagnostic::DiagnosticType::UNKNOWN); break;
         }
     }
+    static Diagnostic::DiagnosticType DiagnosticTypeEnum(std::string v) {
+        if (v == "UNKNOWN_TYPE") {
+            return Diagnostic::DiagnosticType::UNKNOWN_TYPE;
+        }
+        else if (v == "SOFTWARE") {
+            return Diagnostic::DiagnosticType::SOFTWARE;
+        }
+        else if (v == "COMMUNICATIONS") {
+            return Diagnostic::DiagnosticType::COMMUNICATIONS;
+        }
+        else if (v == "SENSORS") {
+            return Diagnostic::DiagnosticType::SENSORS;
+        }
+        else if (v == "ACTUATORS") {
+            return Diagnostic::DiagnosticType::ACTUATORS;
+        }
+        else if (v == "DATA_STORAGE") {
+            return Diagnostic::DiagnosticType::DATA_STORAGE;
+        }
+        else if (v == "REMOTE_CONTROL") {
+            return Diagnostic::DiagnosticType::REMOTE_CONTROL;
+        }
+        else if (v == "TARGETING") {
+            return Diagnostic::DiagnosticType::TARGETING;
+        }
+        else if (v == "POSE") {
+            return Diagnostic::DiagnosticType::POSE;
+        }
+        else if (v == "TIMING") {
+            return Diagnostic::DiagnosticType::TIMING;
+        }
+        else if (v == "SYSTEM_RESOURCE") {
+            return Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+        }
+        else {
+            return Diagnostic::DiagnosticType::UNKNOWN;
+        }
+    }
     enum class Message {
         UNKNOWN = 0,              /*!< Uninitialized value. */
         NOERROR = 1,              /*!< No Error.*/
@@ -91,6 +129,50 @@ class Diagnostic
             case Diagnostic::Message::HIGH_RESOURCE_USAGE: return "HIGH_RESOURCE_USAGE"; break;
             case Diagnostic::Message::DIAGNOSTIC_FAILED: return "DIAGNOSTIC_FAILED"; break;
             default: return DiagnosticMessageString(Diagnostic::Message::UNKNOWN); break;
+        }
+    }
+    static Diagnostic::Message DiagnosticMessageEnum(std::string v) {
+        if (v == "NOERROR") {
+            return Diagnostic::Message::NOERROR;
+        }
+        else if (v == "NODATA") {
+            return Diagnostic::Message::NODATA;
+        }
+        else if (v == "UNKNOWN_ERROR") {
+            return Diagnostic::Message::UNKNOWN_ERROR;
+        }
+        else if (v == "INITIALIZING") {
+            return Diagnostic::Message::INITIALIZING;
+        }
+        else if (v == "INITIALIZING_ERROR") {
+            return Diagnostic::Message::INITIALIZING_ERROR;
+        }
+        else if (v == "DROPPING_PACKETS") {
+            return Diagnostic::Message::DROPPING_PACKETS;
+        }
+        else if (v == "MISSING_HEARTBEATS") {
+            return Diagnostic::Message::MISSING_HEARTBEATS;
+        }
+        else if (v == "DEVICE_NOT_AVAILABLE") {
+            return Diagnostic::Message::DEVICE_NOT_AVAILABLE;
+        }
+        else if (v == "TEMPERATURE_HIGH") {
+            return Diagnostic::Message::TEMPERATURE_HIGH;
+        }
+        else if (v == "TEMPERATURE_LOW") {
+            return Diagnostic::Message::TEMPERATURE_LOW;
+        }
+        else if (v == "RESOURCE_LEAK") {
+            return Diagnostic::Message::RESOURCE_LEAK;
+        }
+        else if (v == "HIGH_RESOURCE_USAGE") {
+            return Diagnostic::Message::HIGH_RESOURCE_USAGE;
+        }
+        else if (v == "DIAGNOSTIC_FAILED") {
+            return Diagnostic::Message::DIAGNOSTIC_FAILED;
+        }
+        else {
+            return Diagnostic::Message::UNKNOWN;
         }
     }
     /*! \struct DiagnosticDefinition

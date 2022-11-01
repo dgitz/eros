@@ -7,13 +7,45 @@
 using namespace eros;
 TEST(BasicTest, TestDefintions) {
     // Test Type: DiagnosticType
+    /*
     for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
         EXPECT_FALSE(Diagnostic::DiagnosticTypeString((Diagnostic::DiagnosticType)(i)) ==
                      "UNKNOWN");
     }
+    */
+    for (uint8_t i = 0; i <= (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
+        if ((i == 0) || (i == (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST))) {
+            EXPECT_TRUE(Diagnostic::DiagnosticTypeString((Diagnostic::DiagnosticType)(i)) ==
+                        "UNKNOWN");
+            EXPECT_TRUE(Diagnostic::DiagnosticTypeEnum(
+                            Diagnostic::DiagnosticTypeString((Diagnostic::DiagnosticType)(i))) ==
+                        Diagnostic::DiagnosticType::UNKNOWN);
+        }
+        else {
+            EXPECT_FALSE(Diagnostic::DiagnosticTypeString((Diagnostic::DiagnosticType)(i)) ==
+                         "UNKNOWN");
+            EXPECT_TRUE(Diagnostic::DiagnosticTypeEnum(Diagnostic::DiagnosticTypeString(
+                            (Diagnostic::DiagnosticType)(i))) == (Diagnostic::DiagnosticType)(i));
+        }
+    }
     // Test Type: Message
+    /*
     for (uint8_t i = 1; i < (uint8_t)(Diagnostic::Message::END_OF_LIST); ++i) {
         EXPECT_FALSE(Diagnostic::DiagnosticMessageString((Diagnostic::Message)(i)) == "UNKNOWN");
+    }
+    */
+    for (uint8_t i = 0; i <= (uint8_t)(Diagnostic::Message::END_OF_LIST); ++i) {
+        if ((i == 0) || (i == (uint8_t)(Diagnostic::Message::END_OF_LIST))) {
+            EXPECT_TRUE(Diagnostic::DiagnosticMessageString((Diagnostic::Message)(i)) == "UNKNOWN");
+            EXPECT_TRUE(Diagnostic::DiagnosticMessageEnum(Diagnostic::DiagnosticMessageString(
+                            (Diagnostic::Message)(i))) == Diagnostic::Message::UNKNOWN);
+        }
+        else {
+            EXPECT_FALSE(Diagnostic::DiagnosticMessageString((Diagnostic::Message)(i)) ==
+                         "UNKNOWN");
+            EXPECT_TRUE(Diagnostic::DiagnosticMessageEnum(Diagnostic::DiagnosticMessageString(
+                            (Diagnostic::Message)(i))) == (Diagnostic::Message)(i));
+        }
     }
 }
 TEST(BasicTest, DiagnosticHelper) {

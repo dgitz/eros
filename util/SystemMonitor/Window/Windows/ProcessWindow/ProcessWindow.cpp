@@ -11,7 +11,10 @@ WindowSize ProcessWindow::getWindowSize() {
 bool ProcessWindow::update(double currentTime_s) {
     bool v = BaseWindow::update(currentTime_s);
     if (v == false) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     return processManager.update(currentTime_s);
 }
@@ -178,7 +181,10 @@ bool ProcessWindow::new_nodeAlive(std::string hostName,
 bool ProcessWindow::keyPressed(KeyMap key) {
     bool v = WindowTable::keyPressed(key);
     if (v == false) {
+        // No Practical way to Unit Test
+        // LCOV_EXCL_START
         return false;
+        // LCOV_EXCL_STOP
     }
     return true;
 }

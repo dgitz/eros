@@ -27,7 +27,7 @@ class StatusWindow : public WindowText
         return false;
     }
     bool newArmedState(eros::armed_state armedState);
-    Color convertArmedStateColor(ArmDisarm::Type state);
+    static Color convertArmedStateColor(ArmDisarm::Type state);
     bool set_currentROSTime(double currentTime_s) {
         this->currentTime_s = currentTime_s;
         return true;
