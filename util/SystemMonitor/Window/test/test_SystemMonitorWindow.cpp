@@ -36,6 +36,9 @@ class TesterIWindow : public IWindow
         (void)currentTime_s;
         return true;
     }
+    void setActualWindowSize(ScreenCoordinatePixel size) {
+        (void)size;
+    }
 
    private:
     std::vector<std::shared_ptr<IRecord>> records;

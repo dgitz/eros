@@ -236,7 +236,9 @@ bool SystemMonitor::run_1hz() {
 bool SystemMonitor::run_10hz() {
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
+    process->new_ArmedState(armed_state);
     process->update(0.1, ros::Time::now().toSec());
+    process->new_ROSTime(ros::Time::now().toSec());
     if (process->shouldKill() == true) {
         kill_node = true;
     }

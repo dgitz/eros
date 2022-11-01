@@ -51,6 +51,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
                                                               std::string nodeName,
                                                               double currentTime_s);
 
+    eros::Diagnostic::DiagnosticDefinition new_ArmedState(eros::armed_state armedState);
+    eros::Diagnostic::DiagnosticDefinition new_ROSTime(double currentTime_s);
+
    private:
     bool initializeWindows();
     std::map<eros::IWindow::WindowType, eros::IWindow*> windows;
