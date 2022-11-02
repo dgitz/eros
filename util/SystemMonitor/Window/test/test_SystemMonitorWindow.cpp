@@ -130,7 +130,7 @@ TEST(BasicTest, BaseWindowTest) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
     BaseWindowTester window(logger);
     EXPECT_EQ(window.getWindowType(), IWindow::WindowType::INFO);
-
+    EXPECT_TRUE(window.update(123.0));
     delete logger;
 }
 class WindowTableTester : public WindowTable
@@ -149,11 +149,11 @@ class WindowTableTester : public WindowTable
     }
     bool setRecords(std::vector<std::shared_ptr<IRecord>> newRecords) {
         records = newRecords;
+        recordCount = records.size();
         return true;
     }
     bool keyPressed(KeyMap key) {
-        (void)key;
-        return false;
+        return WindowTable::keyPressed(key);
     }
 
    private:
@@ -161,7 +161,31 @@ class WindowTableTester : public WindowTable
 };
 TEST(BasicTest, WindowTableTest) {
     Logger* logger = new Logger("DEBUG", "UnitTestSystemMonitor");
-    WindowTableTester window(logger);
+    WindowTableTester SUT(logger);
+    EXPECT_EQ(SUT.getRecords().size(), 0);
+    {
+        EXPECT_TRUE(SUT.keyPressed(KeyMap::KEY_None));
+        EXPECT_TRUE(SUT.keyPressed(KeyMap::KEY_up));
+        EXPECT_TRUE(SUT.keyPressed(KeyMap::KEY_down));
+    }
+
+    {
+        std::vector<WindowTable::ColumnLabel> labels;
+        SUT.setColumnLabels(labels);
+    }
+    // Add a record
+    {
+        std::vector<std::shared_ptr<IRecord>> records;
+        std::shared_ptr<GenericRecord> record(new GenericRecord);
+        std::vector<std::shared_ptr<IField>> fields;
+        std::shared_ptr<GenericField> field(new GenericField);
+        fields.push_back(std::move(field));
+        record->setFields(fields);
+        records.push_back(std::move(record));
+        EXPECT_TRUE(SUT.setRecords(records));
+    }
+    for (int i = 0; i < 5; ++i) { EXPECT_TRUE(SUT.keyPressed(KeyMap::KEY_up)); }
+    for (int i = 0; i < 5; ++i) { EXPECT_TRUE(SUT.keyPressed(KeyMap::KEY_down)); }
     delete logger;
 }
 class WindowTextTester : public WindowText

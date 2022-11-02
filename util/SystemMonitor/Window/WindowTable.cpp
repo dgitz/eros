@@ -11,6 +11,9 @@ bool WindowTable::keyPressed(KeyMap key) {
     }
 }
 bool WindowTable::incrementSelectedRecord() {
+    if (recordCount == 0) {
+        return true;
+    }
     int32_t newSelect = selectedRecordIndex + 1;
     if ((uint16_t)newSelect > (recordCount - 1)) {
         newSelect = recordCount - 1;
@@ -19,6 +22,9 @@ bool WindowTable::incrementSelectedRecord() {
     return true;
 }
 bool WindowTable::decrementSelectedRecord() {
+    if (recordCount == 0) {
+        return true;
+    }
     int32_t newSelect = selectedRecordIndex - 1;
     if (newSelect < 0) {
         newSelect = 0;

@@ -7,6 +7,12 @@ Date: TBD
 --- General Notes
 
 --- User Stories
+US: 1125 Support current features for Status Window
+  Author: David Gitz
+  Date: 2-Nov-2022
+  * Added support for Status Window features to new System Monitor.
+  * Updated documentation.
+
 US: 1122 Support current features for Process Window
   Author: David Gitz
   Date: 30-Oct-2022

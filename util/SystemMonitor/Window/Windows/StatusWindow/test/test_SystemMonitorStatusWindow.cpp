@@ -18,6 +18,10 @@ TEST(BasicTest, TestOperation) {
         eros::armed_state armedState;
         EXPECT_TRUE(SUT.newArmedState(armedState));
     }
+    {  // current time
+        double currentTime = 1.0;
+        EXPECT_TRUE(SUT.set_currentROSTime(currentTime));
+    }
     {
         std::vector<std::shared_ptr<IRecord>> records = SUT.getRecords();
         EXPECT_GT(records.size(), 0);
