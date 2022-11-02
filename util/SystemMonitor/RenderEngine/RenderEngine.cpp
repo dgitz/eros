@@ -34,9 +34,10 @@ bool RenderEngine::initScreen() {
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
     logger->log_notice(std::to_string(mainwindow_width) + " " + std::to_string(mainwindow_height));
-    for (auto window : dataWindows) {
+    std::map<IWindow::WindowType, IWindow*>::iterator it;
+    for (it = dataWindows.begin(); it != dataWindows.end(); ++it) {
         RenderWindow* renderWindow = new RenderWindow(
-            logger, window.second->getWindowSize(), mainwindow_width, mainwindow_height);
+            logger, it->second->getWindowSize(), mainwindow_width, mainwindow_height);
         if (renderWindow->init() == false) {
             // No Practical way to Unit Test
             // LCOV_EXCL_START
@@ -44,11 +45,12 @@ bool RenderEngine::initScreen() {
             return false;
             // LCOV_EXCL_STOP
         }
-        if (window.first == IWindow::WindowType::PROCESS) {
+        if (it->first == IWindow::WindowType::PROCESS) {
             renderWindow->setFocused(true);
         }
-        Window win(window.second, renderWindow);
-        windows.insert(std::pair<IWindow::WindowType, Window>(window.first, win));
+        it->second->setActualWindowSize(renderWindow->getActualSize());
+        Window win(it->second, renderWindow);
+        windows.insert(std::pair<IWindow::WindowType, Window>(it->first, win));
     }
     return true;
 }
@@ -116,12 +118,31 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
         box(renderWindow->get_window_reference(), 0, 0);
     }
     {
+        // WindowText Render
+        WindowText* winText = dynamic_cast<WindowText*>(windowData);
+        if (winText != nullptr) {
+            for (auto record : winText->getRecords()) {
+                for (auto field : record->getFields()) {
+                    std::string data = field->getData().data;
+
+                    wattron(renderWindow->get_window_reference(),
+                            COLOR_PAIR(field->getData().color));
+                    mvwprintw(renderWindow->get_window_reference(),
+                              field->getData().startCoordinate.start_y_pixel + 1,
+                              field->getData().startCoordinate.start_x_pixel + 1,
+                              data.c_str());
+
+                    wattroff(renderWindow->get_window_reference(),
+                             COLOR_PAIR(field->getData().color));
+                }
+            }
+        }
         // WindowTable Render
 
-        WindowTable* win = dynamic_cast<WindowTable*>(windowData);
-        if (win != nullptr) {
+        WindowTable* winTable = dynamic_cast<WindowTable*>(windowData);
+        if (winTable != nullptr) {
             uint16_t xValue = 1;
-            std::vector<WindowTable::ColumnLabel> labels = win->getColumnLabels();
+            std::vector<WindowTable::ColumnLabel> labels = winTable->getColumnLabels();
             for (auto label : labels) {
                 mvwprintw(renderWindow->get_window_reference(), 1, xValue, label.label.c_str());
                 xValue += label.minWidth;
@@ -133,9 +154,9 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
             uint16_t recordsAllowedToShow = renderWindow->getActualSize().height_pixel - 4;
             uint16_t startRecordShow = 0;
             uint16_t stopRecordShow = recordsAllowedToShow;
-            uint16_t selectedRecordIndex = win->getSelectedRecordIndex();
+            uint16_t selectedRecordIndex = winTable->getSelectedRecordIndex();
             uint16_t shiftDown = 0;
-            if (win->getRecords().size() > recordsAllowedToShow) {
+            if (winTable->getRecords().size() > recordsAllowedToShow) {
                 if (selectedRecordIndex >= recordsAllowedToShow) {
                     shiftDown = selectedRecordIndex - stopRecordShow + 1;
                 }
@@ -145,7 +166,7 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
             stopRecordShow += shiftDown;
 
             uint16_t recordIndex = 0;
-            for (auto record : win->getRecords()) {
+            for (auto record : winTable->getRecords()) {
                 if ((recordIndex < startRecordShow) || (recordIndex >= stopRecordShow)) {
                     recordIndex++;
                     continue;
@@ -153,7 +174,7 @@ bool RenderEngine::renderWindow(IWindow* windowData, RenderWindow* renderWindow)
 
                 if (labels.size() < record->getFields().size()) {
                     logger->log_error("No label defined for all Record Fields: Win: " +
-                                      std::to_string((uint8_t)win->getWindowType()) + " " +
+                                      std::to_string((uint8_t)winTable->getWindowType()) + " " +
                                       std::to_string(labels.size()) + " < " +
                                       std::to_string(record->getFields().size()));
                     return false;

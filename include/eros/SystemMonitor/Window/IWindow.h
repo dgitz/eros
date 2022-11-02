@@ -23,6 +23,7 @@ class IWindow
     virtual ~IWindow() {
     }
     virtual WindowSize getWindowSize() = 0;
+    virtual void setActualWindowSize(ScreenCoordinatePixel size) = 0;
     virtual WindowType getWindowType() = 0;
     virtual std::vector<std::shared_ptr<IRecord>> getRecords() = 0;
     virtual bool setRecords(std::vector<std::shared_ptr<IRecord>> records) = 0;

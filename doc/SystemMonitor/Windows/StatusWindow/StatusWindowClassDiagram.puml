@@ -4,6 +4,9 @@ abstract WindowText {
     
 }
 class StatusWindow {
+    +bool newArmedState(eros::armed_state armedState)
+    +bool set_currentROSTime(double currentTime_s)
+    +{static} Color convertArmedStateColor(ArmDisarm::Type state)
 
 }
 WindowText <|-- StatusWindow

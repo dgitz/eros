@@ -4,7 +4,14 @@
 
 #include <string>
 namespace eros {
-enum class KeyMap { KEY_q = 113, KEY_Q = 81, KEY_TAB = 9, KEY_up = 65, KEY_down = 66 };
+enum class KeyMap {
+    KEY_None = 0,
+    KEY_q = 113,
+    KEY_Q = 81,
+    KEY_TAB = 9,
+    KEY_up = 65,
+    KEY_down = 66,
+};
 enum class CoordinateReference { UNKNOWN = 0, GLOBAL = 1, TO_PARENT = 2, END_OF_LIST = 3 };
 enum class Color {
     UNKNOWN = 0,

@@ -3,11 +3,18 @@
 #include <eros/SystemMonitor/Field/GenericField.h>
 #include <eros/SystemMonitor/Record/GenericRecord.h>
 #include <eros/SystemMonitor/Window/WindowText.h>
+#include <eros/armed_state.h>
+#include <eros/eROS_Definitions.h>
+#include <std_msgs/Time.h>
+#include <time.h>
 namespace eros {
 class StatusWindow : public WindowText
 {
    public:
-    StatusWindow(eros::Logger* logger) : WindowText(logger, IWindow::WindowType::STATUS) {
+    StatusWindow(eros::Logger* logger)
+        : WindowText(logger, IWindow::WindowType::STATUS),
+          armedState(ArmDisarm::Type::UNKNOWN),
+          currentTime_s(0.0) {
     }
     virtual ~StatusWindow() {
     }
@@ -19,8 +26,17 @@ class StatusWindow : public WindowText
         (void)records;
         return false;
     }
+    bool newArmedState(eros::armed_state armedState);
+    static Color convertArmedStateColor(ArmDisarm::Type state);
+    bool set_currentROSTime(double currentTime_s) {
+        this->currentTime_s = currentTime_s;
+        return true;
+    }
 
    private:
+    const std::string getCurrentDateTime();
+    ArmDisarm::Type armedState;
+    double currentTime_s;
 };
 }  // namespace eros
 #endif

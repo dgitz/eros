@@ -89,12 +89,51 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
     eros::heartbeat msg = convert_fromptr(t_msg);
     return new_heartbeatmessage(msg);
 }
-Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_genericNode(std::string hostName, std::string nodeName, double currentTime_s) {
+Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_genericNode(std::string hostName,
+                                                                          std::string nodeName,
+                                                                          double currentTime_s) {
     Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window.first == IWindow::WindowType::PROCESS) {
             ProcessWindow* win = dynamic_cast<ProcessWindow*>(window.second);
             bool v = win->new_nodeAlive(hostName, nodeName, currentTime_s);
+            if (v == false) {
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
+                return diag;
+            }
+        }
+    }
+    return diag;
+}
+eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_ArmedState(
+    eros::armed_state armedState) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == IWindow::WindowType::STATUS) {
+            StatusWindow* win = dynamic_cast<StatusWindow*>(window.second);
+            bool v = win->newArmedState(armedState);
+            if (v == false) {
+                diag = update_diagnostic(
+                    Diagnostic::DiagnosticType::COMMUNICATIONS,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to Update Window: " + std::to_string((uint8_t)window.first));
+                return diag;
+            }
+        }
+    }
+    return diag;
+}
+eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_ROSTime(double currentTime_s) {
+    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window.first == IWindow::WindowType::STATUS) {
+            StatusWindow* win = dynamic_cast<StatusWindow*>(window.second);
+            bool v = win->set_currentROSTime(currentTime_s);
             if (v == false) {
                 diag = update_diagnostic(
                     Diagnostic::DiagnosticType::COMMUNICATIONS,

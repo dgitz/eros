@@ -10,7 +10,9 @@
 // ROS Messages
 // Project
 #include <eros/BaseNode.h>
+
 #include <algorithm>
+
 #include "SystemMonitorProcess.h"
 /*! \class SystemMonitor SystemMonitor.h "SystemMonitor.h"
  *  \brief */
