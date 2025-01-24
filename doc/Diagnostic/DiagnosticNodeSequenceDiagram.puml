@@ -1,0 +1,59 @@
+@startuml
+title Diagnostic Node Sequence Diagram
+actor User as user
+participant DiagnosticNode as node
+participant DiagnosticNodeProcess as process
+participant Logger as logger
+
+alt initialize
+    activate node
+    node -> node++: start()
+    node -> node: initialize_diagnostic
+    node -> process++: DiagnosticNodeProcess()
+    node -> node: preinitialize_basenode()
+    node -> process: enable_diagnostics()
+    node -> process: finish_initialization()
+    node -> node: finish_initialization()
+    node -> node: rescan_nodes()
+    node -> process: request_statechange(INITIALIZING)
+    node -> process: request_statechange(INITIALIZED)
+    node -> process: request_statechange(RUNNING)
+    node--
+end
+
+alt message_callback
+end
+
+alt loops
+    alt loop2
+        node -> node++: run_loop2
+        node -> node: diag = rescan_nodes()
+        node -> logger: log_diagnostic(diag);
+        node--
+    end
+    alt run_01hz_noisy
+        node -> process: pretty()
+        process --> node: str
+        node -> logger: log_debug(str)
+    end
+    alt run_1hz
+        node -> process: get_latest_diagnostics()
+        process --> node: latest_diagnostics
+        node -> user: publish(latest_diagnostics)
+    end
+    alt run_10hz
+        node -> process: update(0.1, now)
+        process --> node: diag
+        alt if diag.level >= NOTICE
+            node -> logger: log_diagnostic(diag)
+        end
+        node -> process: get_diagnostics()
+        process --> node: diagnostics
+        node -> node: update_diagnostics(diagnostics)
+        node -> process: get_ready_to_arm()
+        process --> node: ready_to_arm
+        node -> node: update_ready_to_arm(ready_to_arm)
+
+    end
+end
+@enduml
