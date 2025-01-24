@@ -16,18 +16,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
         
-    - name: Doxygen Action
-      uses: mattnotmitt/doxygen-action@v1.1.0
-      with:
-        # Path to Doxyfile
-        doxyfile-path: "./Doxyfile.in" # default is ./Doxyfile
-        # Working directory
-        working-directory: "." # default is .
+    #- name: Doxygen Action Broken
+    #  uses: mattnotmitt/doxygen-action@v1.1.0
+    #  with:
+    #    # Path to Doxyfile
+    #    doxyfile-path: "./Doxyfile.in" # default is ./Doxyfile
+    #    # Working directory
+    #    working-directory: "." # default is .
     
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        # Default Doxyfile build documentation to html directory. 
-        # Change the directory if changes in Doxyfile
-        publish_dir: ./html
+    #- name: Deploy
+    #  uses: peaceiris/actions-gh-pages@v3
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    # Default Doxyfile build documentation to html directory. 
+    #    # Change the directory if changes in Doxyfile
+    #    publish_dir: ./html
