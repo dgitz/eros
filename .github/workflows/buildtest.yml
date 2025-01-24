@@ -9,20 +9,13 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Hack
-      run: |
-        sudo chown -R $USER:$USER ~/actions-runner/_work/eros
     - uses: actions/checkout@v1
       with:
         path: catkin_ws/src/eros
         
-    - name: Add Pipeline Tools
+    - name: Setup Is this really needed on each run?
       run: |
-        sudo apt install tree
-   
-    - name: Setup
-      run: |
-        python scripts/simple_setup.py
+        python3 scripts/simple_setup.py
 
     - name: Build Libraries & Binaries
       run: |
@@ -48,8 +41,8 @@ jobs:
       run: |
         ./scripts/dev_tools.sh code_coverage
 
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: coverage/coverage.xml
-        badge: true
+    #- name: Code Coverage Summary Report # Broken
+    #  uses: irongut/CodeCoverageSummary@v1.3.0
+    #  with:
+    #    filename: coverage/coverage.xml
+    #    badge: true
