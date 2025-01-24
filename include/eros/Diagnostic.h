@@ -120,16 +120,21 @@ class Diagnostic
               description(_description),
               update_count(1) {
         }
-        std::string device_name;
-        std::string node_name;
-        System::MainSystem system;
-        System::SubSystem subsystem;
-        System::Component component;
-        Diagnostic::DiagnosticType type;
-        Diagnostic::Message message;
-        Level::Type level;
-        std::string description;
-        uint64_t update_count;
+        std::string
+            device_name; /*!<  The name of the device that the node is currently running on. */
+
+        std::string node_name;       /*!< The unique name of the node that has an instance of a
+                                        Diagnostics Class. */
+        System::MainSystem system;   /*!< The enum of a System the node represents.  */
+        System::SubSystem subsystem; /*!< The enum of a Subsystem that that node represents. */
+        System::Component component; /*!< The enum of a Component that that node represents. */
+        Diagnostic::DiagnosticType
+            type; /*!< he enum of a Diagnostic Type that the node reports.  A Node can report a
+                     diagnostic on multiple diagnostic types. */
+        Diagnostic::Message message; /*!< A enum containing a summary of the Diagnostic. */
+        Level::Type level;           /*!< Each Diagnostic should have a Level attached to it. */
+        std::string description;     /*!< A human readable string representing the diagnostic. */
+        uint64_t update_count;       /*!<  */
     };
     Diagnostic() : initialized(false) {
     }
