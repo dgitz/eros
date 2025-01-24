@@ -3,7 +3,7 @@ import sys,getopt,os
 from optparse import OptionParser
 import subprocess
 import pdb
-import Helpers
+from util.Helpers import *
 
 # Defines
 CRED = '\33[31m'
@@ -24,6 +24,16 @@ def sync_remote_to_remote(syncconfig_file,origin,remote):
     stdout,stderr = sshProcess.communicate()
     sshProcess.stdin.close()
     print(CGREEN + "Sync From: " + origin + " To: " + remote + " Finished." + CEND)
+
+def sync_remote(syncconfig_file,device_name):
+    print(CGREEN + "Sync Started to: " + device_name + CEND)
+    syncconfig_file = "/home/davidgitz/config/SyncConfig.xml" # Fix this
+    folders = ReadSyncConfig(syncconfig_file)
+    for folder in folders:
+        if((folder.Type == 'Source') or (folder.Type == 'Config')):            
+            subprocess.call("rsync -iart " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'",shell=True)
+    print(CGREEN + "Sync Completed to: " + device_name  + CEND)
+    
 
 def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
     print(CGREEN + "Sync Started to: " + device_name + CEND)
@@ -83,7 +93,14 @@ def main():
     parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
     parser.add_option("-c","--config_dir",dest="config_dir",default="~/config/",help="Location where Config dir should be found. default=~/config")
     (opts,args) = parser.parse_args()
-    if (opts.syncmode=="buildserver"):
+    if(opts.syncmode == "all"):
+        print(CRED + "WIP!!!" + CEND)
+        devices = opts.devices.split(",")
+        remotes = devices
+        for device in remotes:
+            sync_remote(opts.config_dir + "SyncConfig.xml",device)
+        print(CGREEN + 'Remote Sync Finished' + CEND)
+    elif (opts.syncmode=="buildserver"):
         devices = opts.devices.split(",")
         if(len(devices) < 1):
             print(CRED,"No Devices Specified.")
@@ -110,6 +127,8 @@ def main():
         for device in remotes:
             sync_remote_to_remote(opts.config_dir + "SyncConfig.xml",build_server,device)
         print(CGREEN + 'Remote Sync Finished' + CEND)
+    else:
+        print(CRED + 'Sync Mode: ' + opts.syncmode + ' Not Supported.' + CEND)
 
 if __name__ == "__main__":
     main()

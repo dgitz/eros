@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="robot_namespace"/> 
-    <arg name="device_hostname"/>
+    <arg name="robot_namespace" default="/"/> 
+    <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
     <group ns="$(arg robot_namespace)">
         <!-- Nodes that should be launched under a device HostName. -->
         <group ns="$(arg device_hostname)">
