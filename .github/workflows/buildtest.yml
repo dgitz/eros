@@ -41,7 +41,7 @@ jobs:
       run: |
         ./scripts/dev_tools.sh code_coverage
 
-    #- name: Code Coverage Summary Report # Broken
+    #- name: Code Coverage Summary Report # Bug AB#1321
     #  uses: irongut/CodeCoverageSummary@v1.3.0
     #  with:
     #    filename: coverage/coverage.xml

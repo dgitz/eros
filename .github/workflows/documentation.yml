@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
         
-    #- name: Doxygen Action Broken
+    #- name: Doxygen Action # Bug AB#1314
     #  uses: mattnotmitt/doxygen-action@v1.1.0
     #  with:
     #    # Path to Doxyfile
@@ -24,7 +24,7 @@ jobs:
     #    # Working directory
     #    working-directory: "." # default is .
     
-    #- name: Deploy
+    #- name: Deploy # Bug AB#1314
     #  uses: peaceiris/actions-gh-pages@v3
     #  with:
     #    github_token: ${{ secrets.GITHUB_TOKEN }}
