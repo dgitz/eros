@@ -47,7 +47,7 @@ jobs:
         filename: coverage/coverage.xml
         badge: true
         format: markdown
-        hide_branch_rate: false
+        hide_branch_rate: true
         hide_complexity: true
         indicators: true
         output: both
