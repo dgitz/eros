@@ -71,17 +71,12 @@ bool SafetyNode::start() {
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
-    if (process->request_statechange(Node::State::INITIALIZING) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZING));
-    }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
-    }
-    if (process->request_statechange(Node::State::RUNNING) == false) {
+    if (process->request_statechange(Node::State::RUNNING, true) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
+        // LCOV_EXCL_STOP
     }
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     status = true;

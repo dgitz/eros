@@ -46,7 +46,7 @@ class BaseNodeProcess {
     +double get_run_time()
     +Logger* get_logger()
     +json read_configuration(std::string device_name,bool include_self = true,std::string file_path = "~/config/DeviceList.json")
-    +bool request_statechange(Node::State newstate)
+    +bool request_statechange(Node::State newstate,bool override = false)
     +Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time)
     +std::vector<std::string> get_files_indir(std::string dir)
     +void base_cleanup()

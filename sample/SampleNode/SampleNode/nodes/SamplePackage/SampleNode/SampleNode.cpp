@@ -33,8 +33,7 @@ void SampleNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     logger->log_diagnostic(diag);
 }
 bool SampleNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res)
-{
+                                         eros::srv_change_nodestate::Response &res) {
     Node::State req_state = Node::NodeState(req.RequestedNodeState);
     process->request_statechange(req_state);
     res.NodeState = Node::NodeStateString(process->get_nodestate());
@@ -90,21 +89,7 @@ bool SampleNode::start() {
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
-    if (process->request_statechange(Node::State::INITIALIZING) == false) {
-        // No practical way to unit test
-        // LCOV_EXCL_START
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZING));
-        // LCOV_EXCL_STOP
-    }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
-        // No practical way to unit test
-        // LCOV_EXCL_START
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
-        // LCOV_EXCL_STOP
-    }
-    if (process->request_statechange(Node::State::RUNNING) == false) {
+    if (process->request_statechange(Node::State::RUNNING, true) == false) {
         // No practical way to unit test
         // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
@@ -125,7 +110,8 @@ Diagnostic::DiagnosticDefinition SampleNode::read_launchparameters() {
 Diagnostic::DiagnosticDefinition SampleNode::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic;
     std::string srv_nodestate_topic = "srv_nodestate_change";
-    nodestate_srv = n->advertiseService(srv_nodestate_topic, &SampleNode::changenodestate_service, this);
+    nodestate_srv =
+        n->advertiseService(srv_nodestate_topic, &SampleNode::changenodestate_service, this);
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
@@ -137,7 +123,7 @@ Diagnostic::DiagnosticDefinition SampleNode::finish_initialization() {
     diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
                                       Diagnostic::Message::NOERROR,
-                                      "All Configuration Files Loaded.");    
+                                      "All Configuration Files Loaded.");
     return diag;
 }
 bool SampleNode::run_loop1() {

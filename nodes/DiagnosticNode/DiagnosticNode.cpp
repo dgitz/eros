@@ -123,22 +123,6 @@ bool DiagnosticNode::start() {
         return false;
         // LCOV_EXCL_STOP
     }
-    if (process->request_statechange(Node::State::INITIALIZING) ==
-        false) {  // Remove redundant requests during AB#1320
-        // No practical way to unit test
-        // LCOV_EXCL_START
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZING));
-        // LCOV_EXCL_STOP
-    }
-    if (process->request_statechange(Node::State::INITIALIZED) ==
-        false) {  // Remove redundant requests during AB#1320
-        // No practical way to unit test
-        // LCOV_EXCL_START
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
-        // LCOV_EXCL_STOP
-    }
     if (process->request_statechange(Node::State::RUNNING) ==
         false) {  // Remove redundant requests during AB#1320
         // No practical way to unit test

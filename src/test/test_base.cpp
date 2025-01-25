@@ -154,6 +154,48 @@ TEST(BasicTest, TestOperation_StateChange) {
     delete logger;
     delete tester;
 }
+TEST(BasicTest, TestOperation_StateChange_Override) {
+    Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");
+    BaseNodeProcessTester* tester = new BaseNodeProcessTester;
+    tester->initialize("UnitTestBaseNodeProcess",
+                       "UnitTestBaseNodeProcessInstance",
+                       get_hostname(),
+                       System::MainSystem::SIMROVER,
+                       System::SubSystem::ENTIRE_SYSTEM,
+                       System::Component::ENTIRE_SUBSYSTEM,
+                       logger);
+    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    tester->enable_diagnostics(diagnostic_types);
+    // Sequence through States
+    EXPECT_EQ(tester->get_nodestate(), Node::State::START);
+    EXPECT_TRUE(tester->request_statechange(Node::State::RUNNING, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::RUNNING);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::INITIALIZING, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::INITIALIZING);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::PAUSED, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::PAUSED);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::INITIALIZED, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::INITIALIZED);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::RESET, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::RESET);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::START, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::START);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::FINISHED, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::FINISHED);
+
+    EXPECT_TRUE(tester->request_statechange(Node::State::START, true));
+    EXPECT_EQ(tester->get_nodestate(), Node::State::START);
+
+    delete logger;
+    delete tester;
+}
 TEST(TestConversion, ConvertTime) {
     {
         double t_in = 0.0;
