@@ -88,8 +88,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac75ae3352e73645931814bd9f54f7e61"><td class="memItemLeft" align="right" valign="top"><a id="ac75ae3352e73645931814bd9f54f7e61" name="ac75ae3352e73645931814bd9f54f7e61"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Device</b> (uint16_t _id, std::string _name)</td></tr>
+<tr class="memitem:ac75ae3352e73645931814bd9f54f7e61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Device.html#ac75ae3352e73645931814bd9f54f7e61">Device</a> (uint16_t _id, std::string _name)</td></tr>
 <tr class="separator:ac75ae3352e73645931814bd9f54f7e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -124,7 +123,54 @@ std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Device.html" title="Device container, used for holding Device information for the System Monitor.">Device</a> container, used for holding <a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Device.html" title="Device container, used for holding Device information for the System Monitor.">Device</a> information for the System Monitor. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac75ae3352e73645931814bd9f54f7e61" name="ac75ae3352e73645931814bd9f54f7e61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac75ae3352e73645931814bd9f54f7e61">&#9670;&#160;</a></span>Device()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eros_nodes::SystemMonitorProcess::Device::Device </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">  222</span>            : id(_id),</div>
+<div class="line"><span class="lineno">  223</span>              name(_name),</div>
+<div class="line"><span class="lineno">  224</span>              state(<a class="code hl_enumvalue" href="group__eros.html#ggacdaf97604bbb90b853f095781557754aa86bf8c89d85949f8f45cde2f73fce113">eros::Node::State::INITIALIZING</a>),</div>
+<div class="line"><span class="lineno">  225</span>              last_heartbeat_delta(0.0),</div>
+<div class="line"><span class="lineno">  226</span>              cpu_av_perc(0.0),</div>
+<div class="line"><span class="lineno">  227</span>              ram_av_perc(0.0),</div>
+<div class="line"><span class="lineno">  228</span>              disk_av_perc(0.0),</div>
+<div class="line"><span class="lineno">  229</span>              load_factor({0.0, 0.0, 0.0}) {</div>
+<div class="line"><span class="lineno">  230</span>        }</div>
+<div class="ttc" id="agroup__eros_html_ggacdaf97604bbb90b853f095781557754aa86bf8c89d85949f8f45cde2f73fce113"><div class="ttname"><a href="group__eros.html#ggacdaf97604bbb90b853f095781557754aa86bf8c89d85949f8f45cde2f73fce113">eros::Node::State::INITIALIZING</a></div><div class="ttdeci">@ INITIALIZING</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/eros/SystemMonitor/<a class="el" href="SystemMonitorProcess_8h.html">SystemMonitorProcess.h</a></li>
 </ul>
 </div><!-- contents -->

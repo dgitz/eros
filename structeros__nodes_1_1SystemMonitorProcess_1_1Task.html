@@ -88,8 +88,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abb204d07148e91ae5fbaf2c250a93431"><td class="memItemLeft" align="right" valign="top"><a id="abb204d07148e91ae5fbaf2c250a93431" name="abb204d07148e91ae5fbaf2c250a93431"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Task</b> (uint16_t _id, TaskType _type, std::string _host_device, std::string _base_node_name, std::string _node_name)</td></tr>
+<tr class="memitem:abb204d07148e91ae5fbaf2c250a93431"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Task.html#abb204d07148e91ae5fbaf2c250a93431">Task</a> (uint16_t _id, TaskType _type, std::string _host_device, std::string _base_node_name, std::string _node_name)</td></tr>
 <tr class="separator:abb204d07148e91ae5fbaf2c250a93431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -136,7 +135,76 @@ uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>restart_count</b>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Task.html" title="Task container, used for holding Task parameters.">Task</a> container, used for holding <a class="el" href="structeros__nodes_1_1SystemMonitorProcess_1_1Task.html" title="Task container, used for holding Task parameters.">Task</a> parameters. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abb204d07148e91ae5fbaf2c250a93431" name="abb204d07148e91ae5fbaf2c250a93431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb204d07148e91ae5fbaf2c250a93431">&#9670;&#160;</a></span>Task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eros_nodes::SystemMonitorProcess::Task::Task </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TaskType&#160;</td>
+          <td class="paramname"><em>_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>_host_device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>_base_node_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>_node_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">  190</span>            : id(_id),</div>
+<div class="line"><span class="lineno">  191</span>              state(<a class="code hl_enumvalue" href="group__eros.html#ggacdaf97604bbb90b853f095781557754aab078ffd28db767c502ac367053f6e0ac">eros::Node::State::START</a>),</div>
+<div class="line"><span class="lineno">  192</span>              type(_type),</div>
+<div class="line"><span class="lineno">  193</span>              pid(0),</div>
+<div class="line"><span class="lineno">  194</span>              host_device(_host_device),</div>
+<div class="line"><span class="lineno">  195</span>              base_node_name(_base_node_name),</div>
+<div class="line"><span class="lineno">  196</span>              node_name(_node_name),</div>
+<div class="line"><span class="lineno">  197</span>              cpu_used_perc(0.0),</div>
+<div class="line"><span class="lineno">  198</span>              mem_used_perc(0.0),</div>
+<div class="line"><span class="lineno">  199</span>              last_heartbeat(0.0),</div>
+<div class="line"><span class="lineno">  200</span>              last_heartbeat_delta(0.0),</div>
+<div class="line"><span class="lineno">  201</span>              restart_count(0) {</div>
+<div class="line"><span class="lineno">  202</span>        }</div>
+<div class="ttc" id="agroup__eros_html_ggacdaf97604bbb90b853f095781557754aab078ffd28db767c502ac367053f6e0ac"><div class="ttname"><a href="group__eros.html#ggacdaf97604bbb90b853f095781557754aab078ffd28db767c502ac367053f6e0ac">eros::Node::State::START</a></div><div class="ttdeci">@ START</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/eros/SystemMonitor/<a class="el" href="SystemMonitorProcess_8h.html">SystemMonitorProcess.h</a></li>
 </ul>
 </div><!-- contents -->

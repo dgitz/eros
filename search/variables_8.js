@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['time_5fto_5fshow_5fmessages_0',['TIME_TO_SHOW_MESSAGES',['../classeros__nodes_1_1SystemMonitorProcess.html#afdba90e5d651f97e22b06c496a867784',1,'eros_nodes::SystemMonitorProcess']]]
+  ['ram_5fperc_0',['ram_perc',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html#ae9fb5ab30a8ac6e82babc1241d2594e8',1,'eros::ResourceMonitor::ResourceInfo']]]
 ];
