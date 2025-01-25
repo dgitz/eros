@@ -22,6 +22,11 @@ alt initialize
 end
 
 alt message_callback
+    alt diagnostic_Callback(msg)
+    node -> process: convert(msg)
+    process --> node: diag
+    node -> process: new_external_diagnostic(diag)
+    end
 end
 
 alt loops

@@ -101,7 +101,7 @@ bool DiagnosticNode::start() {
     diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
-    diagnostic = finish_initialization(); // Should this get called last in start?
+    diagnostic = finish_initialization();  // Should this get called last in start?
     if (diagnostic.level > Level::Type::WARN) {
         // No practical way to unit test
         // LCOV_EXCL_START
@@ -123,21 +123,24 @@ bool DiagnosticNode::start() {
         return false;
         // LCOV_EXCL_STOP
     }
-    if (process->request_statechange(Node::State::INITIALIZING) == false) { // This seems silly, it should already be initialized by now
+    if (process->request_statechange(Node::State::INITIALIZING) ==
+        false) {  // Remove redundant requests during AB#1320
         // No practical way to unit test
         // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZING));
         // LCOV_EXCL_STOP
     }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
+    if (process->request_statechange(Node::State::INITIALIZED) ==
+        false) {  // Remove redundant requests during AB#1320
         // No practical way to unit test
         // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::INITIALIZED));
         // LCOV_EXCL_STOP
     }
-    if (process->request_statechange(Node::State::RUNNING) == false) { // Should be a way to force the state change instead of all this 
+    if (process->request_statechange(Node::State::RUNNING) ==
+        false) {  // Remove redundant requests during AB#1320
         // No practical way to unit test
         // LCOV_EXCL_START
         logger->log_warn("Unable to Change State to: " +
