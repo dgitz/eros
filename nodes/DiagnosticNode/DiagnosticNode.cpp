@@ -123,7 +123,7 @@ bool DiagnosticNode::start() {
         return false;
         // LCOV_EXCL_STOP
     }
-    if (process->request_statechange(Node::State::RUNNING) ==
+    if (process->request_statechange(Node::State::RUNNING, true) ==
         false) {  // Remove redundant requests during AB#1320
         // No practical way to unit test
         // LCOV_EXCL_START
