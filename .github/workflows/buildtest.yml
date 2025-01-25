@@ -13,10 +13,6 @@ jobs:
       with:
         path: catkin_ws/src/eros
         
-    - name: Setup Is this really needed on each run?
-      run: |
-        python3 scripts/simple_setup.py
-
     - name: Build Libraries & Binaries
       run: |
         cd ../../
