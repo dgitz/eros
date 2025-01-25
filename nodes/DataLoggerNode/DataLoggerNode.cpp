@@ -93,15 +93,7 @@ bool DataLoggerNode::start() {
     }
     // No Practical way to Unit Test
     // LCOV_EXCL_START
-    if (process->request_statechange(Node::State::INITIALIZING) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZING));
-    }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
-    }
-    if (process->request_statechange(Node::State::RUNNING) == false) {
+    if (process->request_statechange(Node::State::RUNNING, true) == false) {
         logger->log_warn("Unable to Change State to: " +
                          Node::NodeStateString(Node::State::RUNNING));
     }

@@ -160,9 +160,12 @@ class BaseNodeProcess
     //! Request a Node State Change
     /*!
       \param newstate The state to be changed to.
-      \return If the state change was successful (true) or not (false)
+      \param override (Optional) Override State Change.  For use in special situations where there's
+      no harm in over-riding state change.
+      \return If the state change was successful (true) or not
+      (false)
     */
-    bool request_statechange(Node::State newstate);
+    bool request_statechange(Node::State newstate, bool override = false);
 
     // Message Functions
     virtual std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg) = 0;

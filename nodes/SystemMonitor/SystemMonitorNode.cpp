@@ -86,19 +86,7 @@ bool SystemMonitorNode::start() {
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
-    if (process->request_statechange(Node::State::INITIALIZING) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZING));
-    }
-    if (process->request_statechange(Node::State::INITIALIZED) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::INITIALIZED));
-    }
-    if (process->request_statechange(Node::State::RUNNING) == false) {
-        logger->log_warn("Unable to Change State to: " +
-                         Node::NodeStateString(Node::State::RUNNING));
-    }
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+
     logger->disable_consoleprint();  // Disabling as System Monitor will use console window.
     status = init_screen();
     if (status == false) {
@@ -110,6 +98,14 @@ bool SystemMonitorNode::start() {
         logger->log_diagnostic(diagnostic);
         return false;
     }
+    if (process->request_statechange(Node::State::RUNNING, true) == false) {
+        // No practical way to unit test
+        // LCOV_EXCL_START
+        logger->log_warn("Unable to Change State to: " +
+                         Node::NodeStateString(Node::State::RUNNING));
+        // LCOV_EXCL_STOP
+    }
+    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return status;
 }
 Diagnostic::DiagnosticDefinition SystemMonitorNode::read_launchparameters() {
