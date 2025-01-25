@@ -155,9 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a31a66915ecf5d7003f6b388353e6c96f"><td class="memItemLeft" align="right" valign="top"><a id="a31a66915ecf5d7003f6b388353e6c96f" name="a31a66915ecf5d7003f6b388353e6c96f"></a>
 json&#160;</td><td class="memItemRight" valign="bottom"><b>read_configuration</b> (std::string device_name, bool include_self=true, std::string file_path=&quot;~/config/DeviceList.json&quot;)</td></tr>
 <tr class="separator:a31a66915ecf5d7003f6b388353e6c96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21bfe48ddb5b72d379094f03970c0f17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a21bfe48ddb5b72d379094f03970c0f17">request_statechange</a> (<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a> newstate)</td></tr>
-<tr class="memdesc:a21bfe48ddb5b72d379094f03970c0f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> State Change.  <a href="classeros_1_1BaseNodeProcess.html#a21bfe48ddb5b72d379094f03970c0f17">More...</a><br /></td></tr>
-<tr class="separator:a21bfe48ddb5b72d379094f03970c0f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44cf3f46b53bfb1a2fbe341ad302dd1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#af44cf3f46b53bfb1a2fbe341ad302dd1">request_statechange</a> (<a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a> newstate, bool override=false)</td></tr>
+<tr class="memdesc:af44cf3f46b53bfb1a2fbe341ad302dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a> State Change.  <a href="classeros_1_1BaseNodeProcess.html#af44cf3f46b53bfb1a2fbe341ad302dd1">More...</a><br /></td></tr>
+<tr class="separator:af44cf3f46b53bfb1a2fbe341ad302dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285f1e47c3eb51e63d2622261bcd1d81"><td class="memItemLeft" align="right" valign="top"><a id="a285f1e47c3eb51e63d2622261bcd1d81" name="a285f1e47c3eb51e63d2622261bcd1d81"></a>
 virtual std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command t_msg)=0</td></tr>
 <tr class="separator:a285f1e47c3eb51e63d2622261bcd1d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,7 +291,7 @@ eros::ready_to_arm&#160;</td><td class="memItemRight" valign="bottom"><b>ready_t
 <div class="line"><span class="lineno">   71</span>        ready_to_arm.ready_to_arm = <span class="keyword">false</span>;</div>
 <div class="line"><span class="lineno">   72</span>        ready_to_arm.diag.Description = <span class="stringliteral">&quot;NOT INITIALIZED&quot;</span>;</div>
 <div class="line"><span class="lineno">   73</span>    }</div>
-<div class="ttc" id="aclasseros_1_1BaseNodeProcess_html_af0dcefbd8a95037c869933bac97be362"><div class="ttname"><a href="classeros_1_1BaseNodeProcess.html#af0dcefbd8a95037c869933bac97be362">eros::BaseNodeProcess::logger</a></div><div class="ttdeci">Logger * logger</div><div class="ttdoc">Base Update Function of all Node Process Classes.</div><div class="ttdef"><b>Definition:</b> BaseNodeProcess.h:255</div></div>
+<div class="ttc" id="aclasseros_1_1BaseNodeProcess_html_af0dcefbd8a95037c869933bac97be362"><div class="ttname"><a href="classeros_1_1BaseNodeProcess.html#af0dcefbd8a95037c869933bac97be362">eros::BaseNodeProcess::logger</a></div><div class="ttdeci">Logger * logger</div><div class="ttdoc">Base Update Function of all Node Process Classes.</div><div class="ttdef"><b>Definition:</b> BaseNodeProcess.h:258</div></div>
 <div class="ttc" id="agroup__eros_html_ggacdaf97604bbb90b853f095781557754aab078ffd28db767c502ac367053f6e0ac"><div class="ttname"><a href="group__eros.html#ggacdaf97604bbb90b853f095781557754aab078ffd28db767c502ac367053f6e0ac">eros::Node::State::START</a></div><div class="ttdeci">@ START</div></div>
 </div><!-- fragment -->
 </div>
@@ -1022,8 +1022,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a21bfe48ddb5b72d379094f03970c0f17" name="a21bfe48ddb5b72d379094f03970c0f17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21bfe48ddb5b72d379094f03970c0f17">&#9670;&#160;</a></span>request_statechange()</h2>
+<a id="af44cf3f46b53bfb1a2fbe341ad302dd1" name="af44cf3f46b53bfb1a2fbe341ad302dd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af44cf3f46b53bfb1a2fbe341ad302dd1">&#9670;&#160;</a></span>request_statechange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1032,8 +1032,18 @@ Here is the call graph for this function:</div>
           <td class="memname">bool eros::BaseNodeProcess::request_statechange </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__eros.html#gacdaf97604bbb90b853f095781557754a">Node::State</a>&#160;</td>
-          <td class="paramname"><em>newstate</em></td><td>)</td>
+          <td class="paramname"><em>newstate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>override</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1042,6 +1052,7 @@ Here is the call graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newstate</td><td>The state to be changed to. </td></tr>
+    <tr><td class="paramname">override</td><td>(Optional) Override State Change. For use in special situations where there's no harm in over-riding state change. </td></tr>
   </table>
   </dd>
 </dl>
