@@ -6,4 +6,4 @@ on:
 
 jobs:
   call_BuildTest:
-    uses: ./.github/workflows/documentation.yml
+    uses: ./.github/workflows/buildtest.yml
