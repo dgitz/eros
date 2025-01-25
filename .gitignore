@@ -7,4 +7,5 @@ _static/
 _templates/
 dox/html/
 dox/xml/
+html/
 coverage/
