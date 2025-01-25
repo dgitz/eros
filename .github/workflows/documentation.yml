@@ -13,6 +13,9 @@ jobs:
     runs-on: self-hosted
 
     # Steps represent a sequence of tasks that will be executed as part of the job
+    - name: Hack
+      run: |
+        sudo chown -R $USER:$USER ~/actions-runner/_work/eros
     steps:
     - uses: actions/checkout@v2
         
