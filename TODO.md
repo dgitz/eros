@@ -1,4 +1,3 @@
 - Fix "Helpers" import
 - Complete Remote Sync
-- Fix issue with reading '~' directory in sync
 - Sync should create full folder structure

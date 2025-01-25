@@ -27,7 +27,7 @@ def sync_remote_to_remote(syncconfig_file,origin,remote):
 
 def sync_remote(syncconfig_file,device_name):
     print(CGREEN + "Sync Started to: " + device_name + CEND)
-    syncconfig_file = "/home/davidgitz/config/SyncConfig.xml" # Fix this
+    syncconfig_file = "/home/davidgitz/config/SyncConfig.xml" #Bug: AB#1319
     folders = ReadSyncConfig(syncconfig_file)
     for folder in folders:
         if((folder.Type == 'Source') or (folder.Type == 'Config')):            
