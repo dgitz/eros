@@ -14,20 +14,24 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Hack
+      run: |
+        sudo chown -R $USER:$USER ~/actions-runner/_work/eros
+        
     - uses: actions/checkout@v2
         
-    #- name: Doxygen Action # Bug AB#1314
-    #  uses: mattnotmitt/doxygen-action@v1.1.0
-    #  with:
-    #    # Path to Doxyfile
-    #    doxyfile-path: "./Doxyfile.in" # default is ./Doxyfile
-    #    # Working directory
-    #    working-directory: "." # default is .
+    - name: Doxygen Action # Bug AB#1314
+      uses: mattnotmitt/doxygen-action@v1.9.5
+      with:
+        # Path to Doxyfile
+        doxyfile-path: "./Doxyfile.in" # default is ./Doxyfile
+        # Working directory
+        working-directory: "." # default is .
     
-    #- name: Deploy # Bug AB#1314
-    #  uses: peaceiris/actions-gh-pages@v3
-    #  with:
-    #    github_token: ${{ secrets.GITHUB_TOKEN }}
-    #    # Default Doxyfile build documentation to html directory. 
-    #    # Change the directory if changes in Doxyfile
-    #    publish_dir: ./html
+    - name: Deploy # Bug AB#1314
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # Default Doxyfile build documentation to html directory. 
+        # Change the directory if changes in Doxyfile
+        publish_dir: ./html
