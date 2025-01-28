@@ -2,6 +2,30 @@
 namespace eros_nodes::SystemMonitor {
 NodeWindow::~NodeWindow() {
 }
+std::string NodeWindow::get_nodeheader() {
+    std::string str = "";
+    std::map<NodeFieldColumn, Field>::iterator it = node_window_fields.begin();
+    while (it != node_window_fields.end()) {
+        // Check if field name is too long:
+        if (it->second.text.size() > it->second.width) {
+            str += it->second.text.substr(0, it->second.width);
+        }
+        else {
+            str += it->second.text;
+            // Figure out how many spaces to add
+            std::size_t spaces = it->second.width - it->second.text.size();
+            for (std::size_t j = 0; j < spaces; ++j) { str += " "; }
+        }
+        ++it;
+    }
+
+    if (str.size() > mainwindow_width) {
+        logger->enable_consoleprint();
+        logger->log_warn("Node Header too long for Window!.");
+        return "";
+    }
+    return str;
+}
 eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ros_time) {
     eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
 
@@ -43,7 +67,21 @@ eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ro
     wrefresh(get_window());
     return diag;
 }
+bool NodeWindow::insertNode(NodeType node_type,
+                            std::string device,
+                            std::string base_node_name,
+                            std::string node_name) {
+    std::lock_guard<std::mutex> guard(node_list_mutex);
+    std::size_t before = node_list.size();
+    NodeData newNode(node_list.size(), node_type, device, base_node_name, node_name);
+    newNode.state = eros::Node::State::RUNNING;
+    std::string key = newNode.node_name;
+    node_list.insert(std::pair<std::string, NodeData>(key, newNode));
+    std::size_t after = node_list.size();
+    return after > before;
+}
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
+    node_list_mutex.lock();
     std::map<std::string, NodeData>::iterator node_it;
 
     node_it = node_list.find(heartbeat_msg.NodeName);
@@ -52,16 +90,31 @@ bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
         node_it->second.last_heartbeat = t_ros_time_;
     }
     else {  // Didn't find it,create one
-        NodeData newNode(node_list.size(),
-                         NodeType::EROS,
-                         "Unknown",
-                         heartbeat_msg.BaseNodeName,
-                         heartbeat_msg.NodeName);
-        newNode.state = eros::Node::State::RUNNING;
-        std::string key = newNode.node_name;
-        node_list.insert(std::pair<std::string, NodeData>(key, newNode));
+        node_list_mutex.unlock();
+        return insertNode(
+            NodeType::EROS, "Unknown", heartbeat_msg.BaseNodeName, heartbeat_msg.NodeName);
     }
+    node_list_mutex.unlock();
     return true;
+}
+bool NodeWindow::new_msg(eros::resource resource_used_msg) {
+    node_list_mutex.lock();
+    std::map<std::string, NodeData>::iterator node_it;
+
+    node_it = node_list.find(resource_used_msg.Name);
+    if (node_it != node_list.end()) {  // Found it, update the record
+        node_it->second.last_heartbeat_delta = 0.0;
+        node_it->second.last_heartbeat = t_ros_time_;
+        node_it->second.pid = resource_used_msg.PID;  // todo: Handle PID # change
+        node_it->second.cpu_used_perc = resource_used_msg.CPU_Perc;
+        node_it->second.mem_used_perc = resource_used_msg.RAM_Perc;
+    }
+    else {  // Didn't find it,create one
+        node_list_mutex.unlock();
+        return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
+    }
+    node_list_mutex.unlock();
+    return false;
 }
 std::string NodeWindow::get_node_info(NodeData node, bool selected) {
     std::string str = "";

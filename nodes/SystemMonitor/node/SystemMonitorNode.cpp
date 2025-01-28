@@ -146,6 +146,7 @@ bool SystemMonitorNode::run_loop2() {
     if (diag.level > Level::Type::NOTICE) {
         logger->log_diagnostic(diag);
     }
+    logger->log_info(process->pretty());
     return true;
 }
 bool SystemMonitorNode::run_loop3() {
@@ -338,12 +339,22 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
                 loadfactor_list.push_back(info.name);
             }
         }
+        if (info.datatype == "eros/resource") {
+            if (info.name.rfind(get_robotnamespace(), 0) == 0) {
+                if (info.name.find("resource_used") != std::string::npos) {
+                    resource_used_list.push_back(info.name);
+                }
+            }
+        }
     }
     std::vector<std::string> new_heartbeat_topics_to_subscribe;
     std::vector<std::string> new_resourceused_topics_to_subscribe;
     std::vector<std::string> new_loadfactor_topics_to_subscribe;
     std::vector<std::string> new_resourceavailable_topics_to_subscribe;
-    diag = process->update_monitorlist(heartbeat_list, new_heartbeat_topics_to_subscribe);
+    diag = process->update_monitorlist(heartbeat_list,
+                                       resource_used_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resourceused_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;

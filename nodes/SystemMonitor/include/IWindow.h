@@ -1,4 +1,7 @@
 #pragma once
+#include <eros/eROS_Definitions.h>
+#include <eros/heartbeat.h>
+#include <eros/resource.h>
 namespace eros_nodes::SystemMonitor {
 
 class IWindow
@@ -10,5 +13,6 @@ class IWindow
     virtual eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) = 0;
     virtual bool new_msg(eros::ArmDisarm::State armed_state) = 0;
     virtual bool new_msg(eros::heartbeat heartbeat_msg) = 0;
+    virtual bool new_msg(eros::resource resource_msg) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor

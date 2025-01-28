@@ -17,7 +17,9 @@ void SystemMonitorProcess::reset() {
 }
 eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
     std::vector<std::string> heartbeat_list,
-    std::vector<std::string>& new_heartbeat_topics_to_subscribe) {
+    std::vector<std::string> resourceused_list,
+    std::vector<std::string>& new_heartbeat_topics_to_subscribe,
+    std::vector<std::string>& new_resourceused_topics_to_subscribe) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     // Check for new Heartbeat messages
     for (auto heartbeat : heartbeat_list) {
@@ -31,6 +33,20 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
         if (found_it == false) {
             monitored_heartbeat_topics.push_back(heartbeat);
             new_heartbeat_topics_to_subscribe.push_back(heartbeat);
+        }
+    }
+    // Check for new Resource Used messages
+    for (auto resourceused : resourceused_list) {
+        bool found_it = false;
+        for (auto monitored_resourceused : monitored_resourceused_topics) {
+            if (monitored_resourceused == resourceused) {
+                found_it = true;
+                break;
+            }
+        }
+        if (found_it == false) {
+            monitored_resourceused_topics.push_back(resourceused);
+            new_resourceused_topics_to_subscribe.push_back(resourceused);
         }
     }
     return diag;
@@ -95,7 +111,7 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessag
                 Diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
                 Diagnostic::Message::DROPPING_PACKETS,
-                "Unable to update Window: " + window->get_name());
+                "Unable to update Window: " + window->get_name() + " With new Heartbeat.");
         }
     }
     return diag;
@@ -109,8 +125,34 @@ void SystemMonitorProcess::update_armedstate(eros::ArmDisarm::State armed_state)
                 Diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
                 Diagnostic::Message::DROPPING_PACKETS,
-                "Unable to update Window: " + window->get_name());
+                "Unable to update Window: " + window->get_name() + " With new Armed State.");
         }
     }
+}
+eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceusedmessage(
+    const eros::resource::ConstPtr& t_msg) {
+    eros::resource msg = convert_fromptr(t_msg);
+    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        bool status = window->new_msg(msg);
+        if (status == false) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::SOFTWARE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Window: " + window->get_name() + " With new Resource Used.");
+        }
+    }
+    return diag;
+}
+std::string SystemMonitorProcess::pretty() {
+    std::string str = "\n----- System Monitor Node Process -----\n";
+    str += "Monitored Topics:Heartbeat(" +
+           std::to_string((uint16_t)monitored_heartbeat_topics.size()) + ")\n";
+    for (auto v : monitored_heartbeat_topics) { str += "\t" + v + "\n"; }
+    str += "Monitored Topics:Resource Used(" +
+           std::to_string((uint16_t)monitored_resourceused_topics.size()) + ")\n";
+    for (auto v : monitored_resourceused_topics) { str += "\t" + v + "\n"; }
+    return str;
 }
 }  // namespace eros_nodes::SystemMonitor

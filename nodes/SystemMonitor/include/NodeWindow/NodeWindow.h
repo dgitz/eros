@@ -1,4 +1,6 @@
 #pragma once
+#include <mutex>
+
 #include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
 enum class NodeType { UNKNOWN = 0, EROS = 1, NON_EROS = 2 };
@@ -86,6 +88,11 @@ class NodeWindow : public BaseWindow
                                     coord_pix.start_x_pix);
         set_screen_coordinates_pix(coord_pix);
         set_window(win);
+
+        std::string header = get_nodeheader();
+        mvwprintw(win, 1, 1, header.c_str());
+        std::string dashed(get_screen_coordinates_pixel().width_pix - 2, '-');
+        mvwprintw(win, 2, 1, dashed.c_str());
         wrefresh(win);
     }
     virtual ~NodeWindow();
@@ -93,10 +100,17 @@ class NodeWindow : public BaseWindow
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;
     }
-    bool new_msg(eros::heartbeat heartbeat_msg);
+    bool new_msg(eros::heartbeat heartbeat_msg) override;
+    bool new_msg(eros::resource resource_used_msg) override;
     std::string get_node_info(NodeData node, bool selected);
 
    private:
+    bool insertNode(NodeType node_type,
+                    std::string device,
+                    std::string base_node_name,
+                    std::string node_name);
+    std::string get_nodeheader();
+    std::mutex node_list_mutex;
     std::map<NodeFieldColumn, Field> node_window_fields;
     std::map<std::string, NodeData> node_list;
 };
