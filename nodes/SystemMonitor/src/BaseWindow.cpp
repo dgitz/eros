@@ -1,5 +1,10 @@
 #include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
+eros::Diagnostic::DiagnosticDefinition BaseWindow::update(double dt, double t_ros_time) {
+    eros::Diagnostic::DiagnosticDefinition diag = root_diagnostic;
+    t_ros_time_ = t_ros_time;
+    return diag;
+}
 ScreenCoordinatePixel BaseWindow::convertCoordinate(ScreenCoordinatePerc coord_perc,
                                                     uint16_t width_pix,
                                                     uint16_t height_pix) {

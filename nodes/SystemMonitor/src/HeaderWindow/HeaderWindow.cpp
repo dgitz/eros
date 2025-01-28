@@ -1,4 +1,4 @@
-#include "HeaderWindow.h"
+#include "HeaderWindow/HeaderWindow.h"
 namespace eros_nodes::SystemMonitor {
 HeaderWindow::~HeaderWindow() {
 }
@@ -6,8 +6,7 @@ bool HeaderWindow::new_msg(eros::ArmDisarm::State armed_state) {
     armed_state_ = armed_state;
 }
 eros::Diagnostic::DiagnosticDefinition HeaderWindow::update(double dt, double t_ros_time) {
-    eros::Diagnostic::DiagnosticDefinition diag = root_diagnostic;
-    t_ros_time_ = t_ros_time;
+    eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
     {  // Armed State
 
         Color color;

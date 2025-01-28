@@ -9,11 +9,10 @@
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
 
-#include "../src/BaseWindow.h"
-#include "../src/DeviceWindow/DeviceWindow.h"
-#include "../src/HeaderWindow/HeaderWindow.h"
-#include "../src/NodeWindow/NodeWindow.h"
-#include "../src/Window_Definitions.h"
+#include "DeviceWindow/DeviceWindow.h"
+#include "HeaderWindow/HeaderWindow.h"
+#include "NodeWindow/NodeWindow.h"
+#include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"
@@ -168,8 +167,8 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     std::vector<std::string> monitored_heartbeat_topics;
 
     // Windows
-    BaseWindow* header_window;
-    BaseWindow* device_window;
-    BaseWindow* node_window;
+    IWindow* header_window;
+    IWindow* device_window;
+    IWindow* node_window;
 };
 }  // namespace eros_nodes::SystemMonitor

@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseWindow.h"
+#include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
 class HeaderWindow : public BaseWindow
 {

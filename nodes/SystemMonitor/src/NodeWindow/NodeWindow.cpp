@@ -1,4 +1,4 @@
-#include "NodeWindow.h"
+#include "NodeWindow/NodeWindow.h"
 namespace eros_nodes::SystemMonitor {
 NodeWindow::~NodeWindow() {
 }
@@ -6,8 +6,8 @@ bool NodeWindow::new_msg(eros::ArmDisarm::State armed_state) {
     return true;
 }
 eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ros_time) {
-    eros::Diagnostic::DiagnosticDefinition diag = root_diagnostic;
-    t_ros_time_ = t_ros_time;
+    eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
+
     std::map<std::string, NodeData>::iterator node_it = node_list.begin();
     while (node_it != node_list.end()) {
         node_it->second.last_heartbeat_delta += dt;

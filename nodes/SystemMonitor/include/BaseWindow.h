@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "IWindow.h"
 #include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 WINDOW* create_newwin(int height, int width, int starty, int startx) {
@@ -29,7 +30,7 @@ struct Field {
     std::string text;
     std::size_t width;
 };
-class BaseWindow
+class BaseWindow : public IWindow
 {
    public:
     BaseWindow(const std::string _name,
@@ -93,12 +94,11 @@ class BaseWindow
     WINDOW* get_window() {
         return win_;
     }
-    virtual eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) = 0;
-    virtual bool new_msg(eros::ArmDisarm::State armed_state) = 0;
-    virtual bool new_msg(eros::heartbeat heartbeat_msg) = 0;
 
    protected:
     double t_ros_time_{0.0};
+    eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time);
+
     eros::Logger* logger;
     bool active{false};
     uint16_t mainwindow_width;
@@ -108,5 +108,7 @@ class BaseWindow
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
     WINDOW* win_;
+
+   private:
 };
 }  // namespace eros_nodes::SystemMonitor

@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseWindow.h"
+#include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
 enum class NodeType { UNKNOWN = 0, EROS = 1, NON_EROS = 2 };
 enum class NodeFieldColumn {
