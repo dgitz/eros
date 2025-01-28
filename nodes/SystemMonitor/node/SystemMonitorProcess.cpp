@@ -18,8 +18,10 @@ void SystemMonitorProcess::reset() {
 eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
     std::vector<std::string> heartbeat_list,
     std::vector<std::string> resourceused_list,
+    std::vector<std::string> resourceavailable_list,
     std::vector<std::string>& new_heartbeat_topics_to_subscribe,
-    std::vector<std::string>& new_resourceused_topics_to_subscribe) {
+    std::vector<std::string>& new_resourceused_topics_to_subscribe,
+    std::vector<std::string>& new_resourceavailable_topics_to_subscribe) {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
     // Check for new Heartbeat messages
     for (auto heartbeat : heartbeat_list) {
@@ -47,6 +49,20 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
         if (found_it == false) {
             monitored_resourceused_topics.push_back(resourceused);
             new_resourceused_topics_to_subscribe.push_back(resourceused);
+        }
+    }
+    // Check for new Resource Available messages
+    for (auto resourceavailable : resourceavailable_list) {
+        bool found_it = false;
+        for (auto monitored_resourceavailable : monitored_resourceavailable_topics) {
+            if (monitored_resourceavailable == resourceavailable) {
+                found_it = true;
+                break;
+            }
+        }
+        if (found_it == false) {
+            monitored_resourceavailable_topics.push_back(resourceavailable);
+            new_resourceavailable_topics_to_subscribe.push_back(resourceavailable);
         }
     }
     return diag;
@@ -134,13 +150,34 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceusedmes
     eros::resource msg = convert_fromptr(t_msg);
     eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     for (auto window : windows) {
-        bool status = window->new_msg(msg);
-        if (status == false) {
-            diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::SOFTWARE,
-                Level::Type::ERROR,
-                Diagnostic::Message::DROPPING_PACKETS,
-                "Unable to update Window: " + window->get_name() + " With new Resource Used.");
+        if (window->get_name() != "device_window") {
+            bool status = window->new_msg(msg);
+            if (status == false) {
+                diag = diagnostic_helper.update_diagnostic(
+                    Diagnostic::DiagnosticType::SOFTWARE,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to update Window: " + window->get_name() + " With new Resource Used.");
+            }
+        }
+    }
+    return diag;
+}
+eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceavailablemessage(
+    const eros::resource::ConstPtr& t_msg) {
+    eros::resource msg = convert_fromptr(t_msg);
+    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        if (window->get_name() == "device_window") {
+            bool status = window->new_msg(msg);
+            if (status == false) {
+                diag = diagnostic_helper.update_diagnostic(
+                    Diagnostic::DiagnosticType::SOFTWARE,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to update Window: " + window->get_name() +
+                        " With new Resource Available.");
+            }
         }
     }
     return diag;
@@ -153,6 +190,9 @@ std::string SystemMonitorProcess::pretty() {
     str += "Monitored Topics:Resource Used(" +
            std::to_string((uint16_t)monitored_resourceused_topics.size()) + ")\n";
     for (auto v : monitored_resourceused_topics) { str += "\t" + v + "\n"; }
+    str += "Monitored Topics:Resource Available(" +
+           std::to_string((uint16_t)monitored_resourceavailable_topics.size()) + ")\n";
+    for (auto v : monitored_resourceavailable_topics) { str += "\t" + v + "\n"; }
     return str;
 }
 }  // namespace eros_nodes::SystemMonitor

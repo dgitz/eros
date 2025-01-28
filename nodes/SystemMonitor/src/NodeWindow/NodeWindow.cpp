@@ -114,7 +114,7 @@ bool NodeWindow::new_msg(eros::resource resource_used_msg) {
         return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
     }
     node_list_mutex.unlock();
-    return false;
+    return true;
 }
 std::string NodeWindow::get_node_info(NodeData node, bool selected) {
     std::string str = "";

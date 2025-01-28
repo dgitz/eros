@@ -321,6 +321,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     std::vector<std::string> heartbeat_list;
     std::vector<std::string> resource_used_list;
     std::vector<std::string> loadfactor_list;
+    std::vector<std::string> resourceavailable_list;
     for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
          it++) {
         const ros::master::TopicInfo &info = *it;
@@ -344,6 +345,9 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
                 if (info.name.find("resource_used") != std::string::npos) {
                     resource_used_list.push_back(info.name);
                 }
+                else if (info.name.find("resource_available") != std::string::npos) {
+                    resourceavailable_list.push_back(info.name);
+                }
             }
         }
     }
@@ -353,8 +357,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     std::vector<std::string> new_resourceavailable_topics_to_subscribe;
     diag = process->update_monitorlist(heartbeat_list,
                                        resource_used_list,
+                                       resourceavailable_list,
                                        new_heartbeat_topics_to_subscribe,
-                                       new_resourceused_topics_to_subscribe);
+                                       new_resourceused_topics_to_subscribe,
+                                       new_resourceavailable_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;
