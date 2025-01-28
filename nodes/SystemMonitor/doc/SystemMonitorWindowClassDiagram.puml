@@ -1,7 +1,34 @@
 @startuml
 title System Monitor Window Class Diagram
-package eros_nodes::SystemMonitor {
-interface IWindow {
+package eros {
+    class Diagnostic 
+    class Definition <<S,00FFFF>> 
+    Diagnostic +-- Definition
+    class ArmDisarm
+    class heartbeat <<M,#FFFF00>>
 }
+package eros_nodes::SystemMonitor {
+    interface IWindow {
+        +{abstract} std::string get_name()
+        +{abstract} eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time)
+        +{abstract} bool new_msg(eros::ArmDisarm::State armed_state)
+        +{abstract} bool new_msg(eros::heartbeat heartbeat_msg)
+    }
+    abstract BaseWindow {
+
+    }
+    IWindow <|-- BaseWindow
+    class DeviceWindow {
+
+    }
+    BaseWindow <|.. DeviceWindow
+    class HeaderWindow {
+
+    }
+    BaseWindow <|.. HeaderWindow
+    class NodeWindow {
+        
+    }
+    BaseWindow <|.. NodeWindow
 }
 @enduml
