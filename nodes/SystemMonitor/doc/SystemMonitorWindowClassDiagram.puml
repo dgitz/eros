@@ -1,3 +1,7 @@
 @startuml
 title System Monitor Window Class Diagram
+package eros_nodes::SystemMonitor {
+interface IWindow {
+}
+}
 @enduml
