@@ -90,7 +90,9 @@ class NodeWindow : public BaseWindow
     }
     virtual ~NodeWindow();
     eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) override;
-    bool new_msg(eros::ArmDisarm::State armed_state) override;
+    bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
+        return true;
+    }
     bool new_msg(eros::heartbeat heartbeat_msg);
     std::string get_node_info(NodeData node, bool selected);
 

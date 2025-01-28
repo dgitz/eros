@@ -4,6 +4,7 @@ HeaderWindow::~HeaderWindow() {
 }
 bool HeaderWindow::new_msg(eros::ArmDisarm::State armed_state) {
     armed_state_ = armed_state;
+    return true;
 }
 eros::Diagnostic::DiagnosticDefinition HeaderWindow::update(double dt, double t_ros_time) {
     eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);

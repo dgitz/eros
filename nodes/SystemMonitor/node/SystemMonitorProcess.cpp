@@ -3,9 +3,7 @@
 using namespace eros;
 namespace eros_nodes::SystemMonitor {
 SystemMonitorProcess::~SystemMonitorProcess() {
-    delete header_window;
-    delete device_window;
-    delete node_window;
+    for (auto window : windows) { delete window; }
 }
 Diagnostic::DiagnosticDefinition SystemMonitorProcess::finish_initialization() {
     Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
@@ -43,10 +41,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
     }
-
-    header_window->update(t_dt, t_ros_time);
-    device_window->update(t_dt, t_ros_time);
-    node_window->update(t_dt, t_ros_time);
+    for (auto window : windows) { window->update(t_dt, t_ros_time); }
     flushinp();
 
     return diag;
@@ -75,18 +70,47 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 }
 bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
-    header_window = new HeaderWindow(logger, mainwindow_height, mainwindow_width);
-    device_window = new DeviceWindow(logger, mainwindow_height, mainwindow_width);
-    node_window = new NodeWindow(logger, mainwindow_height, mainwindow_width);
+    {
+        IWindow* window = new HeaderWindow(logger, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new DeviceWindow(logger, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new NodeWindow(logger, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
     return true;
 }
 eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
     const eros::heartbeat::ConstPtr& t_msg) {
     eros::heartbeat msg = convert_fromptr(t_msg);
     eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-    bool status = header_window->new_msg(msg);
-    status = device_window->new_msg(msg);
-    status = node_window->new_msg(msg);
+    for (auto window : windows) {
+        bool status = window->new_msg(msg);
+        if (status == false) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::SOFTWARE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Window: " + window->get_name());
+        }
+    }
     return diag;
+}
+void SystemMonitorProcess::update_armedstate(eros::ArmDisarm::State armed_state) {
+    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    for (auto window : windows) {
+        bool status = window->new_msg(armed_state);
+        if (status == false) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::SOFTWARE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Window: " + window->get_name());
+        }
+    }
 }
 }  // namespace eros_nodes::SystemMonitor

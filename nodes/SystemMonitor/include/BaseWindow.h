@@ -8,28 +8,10 @@
 #include <string>
 
 #include "IWindow.h"
+#include "SystemMonitorUtilities.h"
 #include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
-WINDOW* create_newwin(int height, int width, int starty, int startx) {
-    WINDOW* local_win;
 
-    local_win = newwin(height, width, starty, startx);
-    box(local_win, 0, 0); /* 0, 0 gives default characters
-                           * for the vertical and horizontal
-                           * lines			*/
-    wrefresh(local_win);  /* Show that box 		*/
-
-    return local_win;
-}
-/*! \struct Field
-    \brief Field container, used for holding Field attributes.
-    */
-struct Field {
-    Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
-    }
-    std::string text;
-    std::size_t width;
-};
 class BaseWindow : public IWindow
 {
    public:
@@ -49,9 +31,7 @@ class BaseWindow : public IWindow
           mainwindow_height(mainwindow_height),
           mainwindow_width(mainwindow_width) {
     }
-    ScreenCoordinatePixel convertCoordinate(ScreenCoordinatePerc coord_perc,
-                                            uint16_t width_pix,
-                                            uint16_t height_pix);
+
     virtual ~BaseWindow() {
     }
     std::string get_name() {
@@ -96,18 +76,20 @@ class BaseWindow : public IWindow
     }
 
    protected:
-    double t_ros_time_{0.0};
-    eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time);
-
-    eros::Logger* logger;
-    bool active{false};
-    uint16_t mainwindow_width;
-    uint16_t mainwindow_height;
-    eros::Diagnostic::DiagnosticDefinition root_diagnostic;
     std::string name;
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
     WINDOW* win_;
+    eros::Logger* logger;
+    uint16_t mainwindow_height;
+    uint16_t mainwindow_width;
+
+    double t_ros_time_{0.0};
+    eros::Diagnostic::DiagnosticDefinition update(double /*dt*/, double t_ros_time);
+
+    bool active{false};
+
+    eros::Diagnostic::DiagnosticDefinition root_diagnostic;
 
    private:
 };

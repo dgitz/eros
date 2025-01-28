@@ -20,8 +20,8 @@ class HeaderWindow : public BaseWindow
     }
     virtual ~HeaderWindow();
     eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) override;
-    bool new_msg(eros::ArmDisarm::State armed_state) override;
-    bool new_msg(eros::heartbeat heartbeat_msg) override {
+    bool new_msg(eros::ArmDisarm::State armed_state);
+    bool new_msg(eros::heartbeat /* heartbeat_msg */) override {  // Not Used
         return true;
     }
 

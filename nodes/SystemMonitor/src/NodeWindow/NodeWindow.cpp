@@ -2,9 +2,6 @@
 namespace eros_nodes::SystemMonitor {
 NodeWindow::~NodeWindow() {
 }
-bool NodeWindow::new_msg(eros::ArmDisarm::State armed_state) {
-    return true;
-}
 eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ros_time) {
     eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
 

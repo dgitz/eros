@@ -124,9 +124,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         return diag;
     }
     // Attribute Functions
-    void update_armedstate(eros::ArmDisarm::State armed_state) {
-        header_window->new_msg(armed_state);
-    }
+    void update_armedstate(eros::ArmDisarm::State armed_state);
     bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
         mainwindow_width = t_mainwindow_width;
         mainwindow_height = t_mainwindow_height;
@@ -166,9 +164,6 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
 
     std::vector<std::string> monitored_heartbeat_topics;
 
-    // Windows
-    IWindow* header_window;
-    IWindow* device_window;
-    IWindow* node_window;
+    std::vector<IWindow*> windows;
 };
 }  // namespace eros_nodes::SystemMonitor

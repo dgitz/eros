@@ -36,4 +36,13 @@ enum class Color {
     PURPLE_COLOR = 7,
     END_OF_LIST = 8
 };
+/*! \struct Field
+    \brief Field container, used for holding Field attributes.
+    */
+struct Field {
+    Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
+    }
+    std::string text;
+    std::size_t width;
+};
 }  // namespace eros_nodes::SystemMonitor
