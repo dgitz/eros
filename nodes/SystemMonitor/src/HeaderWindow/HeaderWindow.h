@@ -19,8 +19,11 @@ class HeaderWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~HeaderWindow();
-    eros::Diagnostic::DiagnosticDefinition update() override;
+    eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State armed_state) override;
+    bool new_msg(eros::heartbeat heartbeat_msg) override {
+        return true;
+    }
 
    private:
     eros::ArmDisarm::State armed_state_;

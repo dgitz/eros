@@ -3,6 +3,7 @@
 #include <eros/Diagnostic.h>
 #include <eros/Logger.h>
 #include <eros/eROS_Definitions.h>
+#include <eros/heartbeat.h>
 
 #include <string>
 
@@ -19,6 +20,15 @@ WINDOW* create_newwin(int height, int width, int starty, int startx) {
 
     return local_win;
 }
+/*! \struct Field
+    \brief Field container, used for holding Field attributes.
+    */
+struct Field {
+    Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
+    }
+    std::string text;
+    std::size_t width;
+};
 class BaseWindow
 {
    public:
@@ -83,10 +93,12 @@ class BaseWindow
     WINDOW* get_window() {
         return win_;
     }
-    virtual eros::Diagnostic::DiagnosticDefinition update() = 0;
+    virtual eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) = 0;
     virtual bool new_msg(eros::ArmDisarm::State armed_state) = 0;
+    virtual bool new_msg(eros::heartbeat heartbeat_msg) = 0;
 
    protected:
+    double t_ros_time_{0.0};
     eros::Logger* logger;
     bool active{false};
     uint16_t mainwindow_width;

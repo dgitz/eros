@@ -76,6 +76,7 @@ bool SystemMonitorNode::start() {
     process->finish_initialization();
     process->set_nodeHandle((n.get()), get_robotnamespace());
     diagnostic = finish_initialization();
+    logger->set_logverbosity(Level::Type::DEBUG);
 
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -342,11 +343,13 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     std::vector<std::string> new_resourceused_topics_to_subscribe;
     std::vector<std::string> new_loadfactor_topics_to_subscribe;
     std::vector<std::string> new_resourceavailable_topics_to_subscribe;
+    diag = process->update_monitorlist(heartbeat_list, new_heartbeat_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;
     }
     for (std::size_t i = 0; i < new_heartbeat_topics_to_subscribe.size(); ++i) {
+        logger->log_notice("Listening to new Topic: " + new_heartbeat_topics_to_subscribe.at(i));
         ros::Subscriber sub = n->subscribe<eros::heartbeat>(new_heartbeat_topics_to_subscribe.at(i),
                                                             50,
                                                             &SystemMonitorNode::heartbeat_Callback,

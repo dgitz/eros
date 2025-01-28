@@ -1,6 +1,6 @@
 #pragma once
 namespace eros_nodes::SystemMonitor {
-
+const double COMMTIMEOUT_THRESHOLD = 5.0f;
 /*! \struct ScreenCoordinatePerc
     \brief ScreenCoordinatePerc container.
     */

@@ -10,7 +10,9 @@
 #include <ros/ros.h>
 
 #include "../src/BaseWindow.h"
+#include "../src/DeviceWindow/DeviceWindow.h"
 #include "../src/HeaderWindow/HeaderWindow.h"
+#include "../src/NodeWindow/NodeWindow.h"
 #include "../src/Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 
@@ -103,11 +105,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         return diag;
     }
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
-        const eros::heartbeat::ConstPtr& t_msg) {
-        eros::heartbeat msg = convert_fromptr(t_msg);
-        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        return diag;
-    }
+        const eros::heartbeat::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_resourceusedmessage(
         const eros::resource::ConstPtr& t_msg) {
         eros::resource msg = convert_fromptr(t_msg);
@@ -138,6 +136,9 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         }
         return true;
     }
+    eros::Diagnostic::DiagnosticDefinition update_monitorlist(
+        std::vector<std::string> heartbeat_list,
+        std::vector<std::string>& new_heartbeat_topics_to_subscribe);
 
     // Support Functions
     std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
@@ -164,7 +165,11 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     uint16_t mainwindow_height;
     eros::ArmDisarm::State armed_state;
 
+    std::vector<std::string> monitored_heartbeat_topics;
+
     // Windows
     BaseWindow* header_window;
+    BaseWindow* device_window;
+    BaseWindow* node_window;
 };
 }  // namespace eros_nodes::SystemMonitor
