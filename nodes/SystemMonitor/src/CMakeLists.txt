@@ -1,0 +1,3 @@
+add_library(baseWindow BaseWindow.cpp)
+target_link_libraries(baseWindow ${catkin_LIBRARIES} ${CURSES_LIBRARIES})
+add_subdirectory(HeaderWindow)

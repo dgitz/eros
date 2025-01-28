@@ -1,7 +1,8 @@
-#include <eros/SystemMonitor/SystemMonitorNode.h>
+#include "SystemMonitorNode.h"
 using namespace eros;
-using namespace eros_nodes;
 bool kill_node = false;
+
+namespace eros_nodes::SystemMonitor {
 
 SystemMonitorNode::SystemMonitorNode()
     : system_command_action_server(
@@ -227,12 +228,12 @@ bool SystemMonitorNode::init_screen() {
     init_color(COLOR_BLACK, 0, 0, 0);
     init_color(COLOR_GREEN, 0, 600, 0);
     init_color(10, 500, 0, 500);
-    init_pair((uint8_t)SystemMonitorProcess::Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
-    init_pair((uint8_t)SystemMonitorProcess::Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
-    init_pair((uint8_t)SystemMonitorProcess::Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
-    init_pair((uint8_t)SystemMonitorProcess::Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
-    init_pair((uint8_t)SystemMonitorProcess::Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
-    init_pair((uint8_t)SystemMonitorProcess::Color::PURPLE_COLOR, COLOR_WHITE, 10);
+    init_pair((uint8_t)Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
+    init_pair((uint8_t)Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
+    init_pair((uint8_t)Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
+    init_pair((uint8_t)Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
+    init_pair((uint8_t)Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
+    init_pair((uint8_t)Color::PURPLE_COLOR, COLOR_WHITE, 10);
 
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
@@ -247,6 +248,7 @@ bool SystemMonitorNode::init_screen() {
     if (status == false) {
         logger->enable_consoleprint();
         logger->log_error("Unable to initialize Windows. Exiting. ");
+        return false;
     }
     return true;
 }
@@ -340,17 +342,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     std::vector<std::string> new_resourceused_topics_to_subscribe;
     std::vector<std::string> new_loadfactor_topics_to_subscribe;
     std::vector<std::string> new_resourceavailable_topics_to_subscribe;
-    diag = process->update_nodelist(node_list,
-                                    heartbeat_list,
-                                    new_heartbeat_topics_to_subscribe,
-                                    new_resourceused_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;
     }
-    diag = process->update_devicelist(loadfactor_list,
-                                      new_resourceavailable_topics_to_subscribe,
-                                      new_loadfactor_topics_to_subscribe);
     for (std::size_t i = 0; i < new_heartbeat_topics_to_subscribe.size(); ++i) {
         ros::Subscriber sub = n->subscribe<eros::heartbeat>(new_heartbeat_topics_to_subscribe.at(i),
                                                             50,
@@ -395,6 +390,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     }
     return diag;
 }
+}  // namespace eros_nodes::SystemMonitor
+using namespace eros_nodes::SystemMonitor;
 void signalinterrupt_handler(int sig) {
     printf("Killing SystemMonitorNode with Signal: %d\n", sig);
     kill_node = true;
