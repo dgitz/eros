@@ -45,7 +45,7 @@ function code_coverage_scan {
 }
 function generate_plantuml {
 
-    plantuml -tsvg -r -o output "doc*/**.puml"
+    plantuml -tsvg -r -o output "*/**.puml"
     status=$?
     exit $status
 }
