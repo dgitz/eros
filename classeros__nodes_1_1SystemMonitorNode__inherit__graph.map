@@ -1,4 +1,0 @@
-<map id="eros_nodes::SystemMonitorNode" name="eros_nodes::SystemMonitorNode">
-<area shape="rect" id="node1" title="The SystemMonitorNode is used to monitor the state of the System." alt="" coords="5,79,219,104"/>
-<area shape="rect" id="node2" href="$classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="55,5,169,31"/>
-</map>
