@@ -96,8 +96,11 @@ class NodeWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~NodeWindow();
-    eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) override;
+    bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
+        return true;
+    }
+    bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
     bool new_msg(eros::heartbeat heartbeat_msg) override;
@@ -110,6 +113,7 @@ class NodeWindow : public BaseWindow
                     std::string base_node_name,
                     std::string node_name);
     std::string get_nodeheader();
+    bool update_window();
     std::mutex node_list_mutex;
     std::map<NodeFieldColumn, Field> node_window_fields;
     std::map<std::string, NodeData> node_list;

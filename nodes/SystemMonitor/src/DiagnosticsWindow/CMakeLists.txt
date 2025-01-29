@@ -1,0 +1,3 @@
+add_library(diagnosticsWindow DiagnosticsWindow.cpp)
+target_link_libraries(diagnosticsWindow ${catkin_LIBRARIES} ${CURSES_LIBRARIES} baseWindow)
+add_dependencies(diagnosticsWindow eros_generate_messages_cpp)

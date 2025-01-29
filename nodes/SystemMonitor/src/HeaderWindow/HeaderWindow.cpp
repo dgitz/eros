@@ -6,8 +6,15 @@ bool HeaderWindow::new_msg(eros::ArmDisarm::State armed_state) {
     armed_state_ = armed_state;
     return true;
 }
-eros::Diagnostic::DiagnosticDefinition HeaderWindow::update(double dt, double t_ros_time) {
-    eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
+bool HeaderWindow::update(double dt, double t_ros_time) {
+    bool status = BaseWindow::update(dt, t_ros_time);
+    if (status == false) {
+        return false;
+    }
+    status = update_window();
+    return status;
+}
+bool HeaderWindow::update_window() {
     {  // Armed State
 
         Color color;
@@ -31,6 +38,6 @@ eros::Diagnostic::DiagnosticDefinition HeaderWindow::update(double dt, double t_
 
     box(get_window(), 0, 0);
     wrefresh(get_window());
-    return diag;
+    return true;
 }
 }  // namespace eros_nodes::SystemMonitor

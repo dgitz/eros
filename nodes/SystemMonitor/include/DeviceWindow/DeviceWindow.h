@@ -75,17 +75,22 @@ class DeviceWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~DeviceWindow();
-    eros::Diagnostic::DiagnosticDefinition update(double dt, double t_ros_time) override;
+    bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;
     }
     bool new_msg(eros::heartbeat /*heartbeat_msg*/) override {  // Not Used
         return true;
     }
-    bool new_msg(eros::resource resource_msg);
+    bool new_msg(eros::resource resource_msg) override;
+    bool new_msg(eros::loadfactor loadfactor_msg) override;
 
    private:
-    bool insertDevice(std::string device_name);
+    bool insertDevice(eros::resource resource_data);
+    bool insertDevice(eros::loadfactor loadfactor_data);
+    std::string get_device_info(DeviceData device, bool selected);
+    bool update_window();
+    std::string get_deviceheader();
     std::mutex device_list_mutex;
     std::map<DeviceFieldColumn, Field> device_window_fields;
     std::map<std::string, DeviceData> device_list;

@@ -2,6 +2,7 @@
 
 # Software Architecture
 ## Class Diagrams
+![](../../../doc/output/Legend.png)
 ![](output/SystemMonitorWindowClassDiagram.png)
 
 ## Sequence Diagrams

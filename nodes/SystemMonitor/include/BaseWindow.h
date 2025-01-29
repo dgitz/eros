@@ -74,6 +74,7 @@ class BaseWindow : public IWindow
     WINDOW* get_window() {
         return win_;
     }
+    virtual bool update_window() = 0;
 
    protected:
     std::string name;
@@ -85,11 +86,9 @@ class BaseWindow : public IWindow
     uint16_t mainwindow_width;
 
     double t_ros_time_{0.0};
-    eros::Diagnostic::DiagnosticDefinition update(double /*dt*/, double t_ros_time);
+    bool update(double /*dt*/, double t_ros_time);
 
     bool active{false};
-
-    eros::Diagnostic::DiagnosticDefinition root_diagnostic;
 
    private:
 };

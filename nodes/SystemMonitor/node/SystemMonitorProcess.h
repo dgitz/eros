@@ -10,8 +10,12 @@
 #include <ros/ros.h>
 
 #include "DeviceWindow/DeviceWindow.h"
+#include "DiagnosticsWindow/DiagnosticsWindow.h"
 #include "HeaderWindow/HeaderWindow.h"
+#include "InstructionWindow/InstructionWindow.h"
+#include "MessageWindow/MessageWindow.h"
 #include "NodeWindow/NodeWindow.h"
+#include "StatusWindow/StatusWindow.h"
 #include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 
@@ -110,11 +114,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     eros::Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
         const eros::resource::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(
-        const eros::loadfactor::ConstPtr& t_msg) {
-        eros::loadfactor msg = convert_fromptr(t_msg);
-        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        return diag;
-    }
+        const eros::loadfactor::ConstPtr& t_msg);
     // Attribute Functions
     void update_armedstate(eros::ArmDisarm::State armed_state);
     bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
@@ -129,9 +129,11 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         std::vector<std::string> heartbeat_list,
         std::vector<std::string> resourceused_list,
         std::vector<std::string> resourceavailable_list,
+        std::vector<std::string> loadfactor_list,
         std::vector<std::string>& new_heartbeat_topics_to_subscribe,
         std::vector<std::string>& new_resourceused_topics_to_subscribe,
-        std::vector<std::string>& new_resourceavailable_topics_to_subscribe);
+        std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
+        std::vector<std::string>& new_loadfactor_topics_to_subscribe);
 
     // Support Functions
     std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
@@ -158,6 +160,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     std::vector<std::string> monitored_heartbeat_topics;
     std::vector<std::string> monitored_resourceused_topics;
     std::vector<std::string> monitored_resourceavailable_topics;
+    std::vector<std::string> monitored_loadfactor_topics;
 
     std::vector<IWindow*> windows;
 };

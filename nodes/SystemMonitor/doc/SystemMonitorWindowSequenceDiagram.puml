@@ -13,6 +13,7 @@ system_monitor -> interface++: update()
 interface -> concrete++: update()
 concrete -> base++: update()
 base --> concrete--: diag
+concrete -> concrete++: update_window()
 concrete --> interface--: diag
 interface --> system_monitor--: diag
 end

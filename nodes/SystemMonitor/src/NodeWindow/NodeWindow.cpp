@@ -26,8 +26,11 @@ std::string NodeWindow::get_nodeheader() {
     }
     return str;
 }
-eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ros_time) {
-    eros::Diagnostic::DiagnosticDefinition diag = BaseWindow::update(dt, t_ros_time);
+bool NodeWindow::update(double dt, double t_ros_time) {
+    bool status = BaseWindow::update(dt, t_ros_time);
+    if (status == false) {
+        return false;
+    }
 
     std::map<std::string, NodeData>::iterator node_it = node_list.begin();
     while (node_it != node_list.end()) {
@@ -37,9 +40,14 @@ eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ro
         }
         ++node_it;
     }
+    status = update_window();
+    return status;
+}
+bool NodeWindow::update_window() {
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
     uint16_t index = 0;
+    std::map<std::string, NodeData>::iterator node_it;
     for (node_it = node_list.begin(); node_it != node_list.end(); node_it++) {
         Color color = Color::UNKNOWN;
         switch (node_it->second.state) {
@@ -65,7 +73,7 @@ eros::Diagnostic::DiagnosticDefinition NodeWindow::update(double dt, double t_ro
 
     box(get_window(), 0, 0);
     wrefresh(get_window());
-    return diag;
+    return true;
 }
 bool NodeWindow::insertNode(NodeType node_type,
                             std::string device,

@@ -358,9 +358,11 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     diag = process->update_monitorlist(heartbeat_list,
                                        resource_used_list,
                                        resourceavailable_list,
+                                       loadfactor_list,
                                        new_heartbeat_topics_to_subscribe,
                                        new_resourceused_topics_to_subscribe,
-                                       new_resourceavailable_topics_to_subscribe);
+                                       new_resourceavailable_topics_to_subscribe,
+                                       new_loadfactor_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;

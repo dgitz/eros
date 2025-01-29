@@ -1,13 +1,18 @@
 #pragma once
 #include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
-class HeaderWindow : public BaseWindow
+class MessageWindow : public BaseWindow
 {
    public:
-    HeaderWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
-        : BaseWindow(
-              "header_window", 0.0, 0.0, 100.0, 15.0, logger, mainwindow_height, mainwindow_width) {
-        logger->log_warn("Initialized Header");
+    MessageWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
+        : BaseWindow("instruction_window",
+                     0,
+                     75.0,
+                     100.0,
+                     7.0,
+                     logger,
+                     mainwindow_height,
+                     mainwindow_width) {
         ScreenCoordinatePixel coord_pix =
             convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = create_newwin(coord_pix.height_pix,
@@ -18,9 +23,11 @@ class HeaderWindow : public BaseWindow
         set_window(win);
         wrefresh(win);
     }
-    virtual ~HeaderWindow();
+    virtual ~MessageWindow();
     bool update(double dt, double t_ros_time) override;
-    bool new_msg(eros::ArmDisarm::State armed_state);
+    bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
+        return true;
+    }
     bool new_msg(eros::heartbeat /* heartbeat_msg */) override {  // Not Used
         return true;
     }
@@ -33,6 +40,5 @@ class HeaderWindow : public BaseWindow
 
    private:
     bool update_window();
-    eros::ArmDisarm::State armed_state_;
 };
 }  // namespace eros_nodes::SystemMonitor
