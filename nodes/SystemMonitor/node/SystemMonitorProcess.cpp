@@ -89,7 +89,19 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
     }
-    for (auto window : windows) { window->update(t_dt, t_ros_time); }
+    for (auto window : windows) {
+        if (window->has_focus()) {
+            bool status = window->new_keyevent(key_pressed);
+            if (status == false) {
+                diag = diagnostic_helper.update_diagnostic(
+                    Diagnostic::DiagnosticType::SOFTWARE,
+                    Level::Type::ERROR,
+                    Diagnostic::Message::DROPPING_PACKETS,
+                    "Unable to update Window: " + window->get_name() + " With new Key Event.");
+            }
+        }
+        window->update(t_dt, t_ros_time);
+    }
     flushinp();
 
     return diag;
@@ -120,6 +132,7 @@ bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
     {
         IWindow* window = new HeaderWindow(logger, mainwindow_height, mainwindow_width);
+        window->set_focused(true);  // Window defaults to focused
         windows.push_back(window);
     }
     {
@@ -132,6 +145,7 @@ bool SystemMonitorProcess::initialize_windows() {
     }
     {
         IWindow* window = new InstructionWindow(logger, mainwindow_height, mainwindow_width);
+        window->set_focused(true);  // Window always has focus
         windows.push_back(window);
     }
     {

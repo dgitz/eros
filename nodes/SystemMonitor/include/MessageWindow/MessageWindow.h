@@ -37,6 +37,9 @@ class MessageWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
+    bool new_keyevent(int /* key */) override {  // Not Used
+        return true;
+    }
 
    private:
     bool update_window();

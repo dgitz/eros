@@ -21,6 +21,12 @@ class InstructionWindow : public BaseWindow
                                     coord_pix.start_x_pix);
         set_screen_coordinates_pix(coord_pix);
         set_window(win);
+
+        std::string str = "Instructions:";
+        keypad(win, TRUE);
+        mvwprintw(win, 1, 1, str.c_str());
+        std::string dashed(coord_pix.width_pix - 2, '-');
+        mvwprintw(win, 2, 1, dashed.c_str());
         wrefresh(win);
     }
     virtual ~InstructionWindow();
@@ -37,6 +43,7 @@ class InstructionWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
+    bool new_keyevent(int key) override;
 
    private:
     bool update_window();

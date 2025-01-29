@@ -12,8 +12,51 @@ bool InstructionWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool InstructionWindow::update_window() {
-    box(get_window(), 0, 0);
-    wrefresh(get_window());
+    bool select_task_mode = true;            // HACK
+    bool change_log_level_mode = false;      // HACK
+    bool show_task_diagnostic_mode = false;  // HACK
+    bool change_nodestate_mode = false;      // HACK
+    if (select_task_mode == true) {
+        std::vector<std::string> instruction_string;
+        instruction_string.push_back("S: Generate System Snapshot. (C: Clear Snapshots)");
+        instruction_string.push_back("F: Get Node Firmware.");
+        instruction_string.push_back("L: Change Log Level.");
+        if (change_log_level_mode == true) {
+            instruction_string.push_back("  1,2,3,4,5,6: Select Log Level.");
+        }
+        if (show_task_diagnostic_mode == false) {
+            instruction_string.push_back("D: Show Task Diagnostics.");
+        }
+        else {
+            instruction_string.push_back("D: Show System Diagnostics.");
+        }
+        instruction_string.push_back("N: Change Node State.");
+        if (change_nodestate_mode == true) {
+            instruction_string.push_back("  1-9: Select Node State.");
+        }
+        for (std::size_t i = 0; i < instruction_string.size(); ++i) {
+            mvwprintw(win_, i + 3, 1, instruction_string.at(i).c_str());
+            wclrtoeol(win_);
+        }
+    }
+    wclrtobot(win_);
+    box(win_, 0, 0);
+    wrefresh(win_);
+    return true;
+}
+bool InstructionWindow::new_keyevent(int key) {
+    if ((key == KEY_s) || (key == KEY_S)) {
+        logger->log_error("Not Supported Yet!");
+        return false;
+        /*
+        set_message_text("Requesting System Snapshot...", Level::Type::INFO);
+        eros::command command;
+        command.stamp = ros::Time::now();
+        command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
+        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+        command_pub.publish(command);
+        */
+    }
     return true;
 }
 }  // namespace eros_nodes::SystemMonitor

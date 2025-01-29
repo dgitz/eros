@@ -84,6 +84,9 @@ class DeviceWindow : public BaseWindow
     }
     bool new_msg(eros::resource resource_msg) override;
     bool new_msg(eros::loadfactor loadfactor_msg) override;
+    bool new_keyevent(int /* key */) override {  // Not Used
+        return true;
+    }
 
    private:
     bool insertDevice(eros::resource resource_data);

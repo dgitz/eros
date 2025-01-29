@@ -21,5 +21,7 @@ class IWindow
      * aren't focused will not receive any key events.
      */
     virtual void set_focused(bool cmd_focus) = 0;
+
+    virtual bool new_keyevent(int key) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor
