@@ -37,11 +37,11 @@ class BaseWindow : public IWindow
     std::string get_name() {
         return name;
     }
-    bool is_active() {
-        return active;
+    bool has_focus() {
+        return focused;
     }
-    void set_active(bool cmd_active) {
-        active = cmd_active;
+    void set_focused(bool cmd_focus) {
+        focused = cmd_focus;
     }
     void set_screen_coordinates_pix(ScreenCoordinatePixel coord) {
         screen_coord_pixel = coord;
@@ -88,7 +88,7 @@ class BaseWindow : public IWindow
     double t_ros_time_{0.0};
     bool update(double /*dt*/, double t_ros_time);
 
-    bool active{false};
+    bool focused{false};
 
    private:
 };
