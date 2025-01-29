@@ -117,8 +117,8 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
    private:
     bool kill_me{false};
     ros::NodeHandle* nodeHandle;
-    std::string robot_namespace;
     ros::Publisher command_pub;
+    std::string robot_namespace;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
     eros::ArmDisarm::State armed_state;

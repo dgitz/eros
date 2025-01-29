@@ -1,4 +1,6 @@
 #include "InstructionWindow/InstructionWindow.h"
+
+#include <eros/command.h>
 namespace eros_nodes::SystemMonitor {
 InstructionWindow::~InstructionWindow() {
 }
@@ -44,19 +46,17 @@ bool InstructionWindow::update_window() {
     wrefresh(win_);
     return true;
 }
-bool InstructionWindow::new_keyevent(int key) {
+MessageText InstructionWindow::new_keyevent(int key) {
     if ((key == KEY_s) || (key == KEY_S)) {
-        logger->log_error("Not Supported Yet!");
-        return false;
-        /*
-        set_message_text("Requesting System Snapshot...", Level::Type::INFO);
+        MessageText message("Requesting System Snapshot...", eros::Level::Type::INFO);
         eros::command command;
         command.stamp = ros::Time::now();
-        command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
-        command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER;
+        command.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
+        command.Option1 = (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER;
         command_pub.publish(command);
-        */
+        return message;
     }
-    return true;
+    MessageText empty;
+    return empty;
 }
 }  // namespace eros_nodes::SystemMonitor

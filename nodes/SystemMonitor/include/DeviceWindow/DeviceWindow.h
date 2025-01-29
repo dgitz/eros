@@ -37,12 +37,18 @@ struct DeviceData {
 class DeviceWindow : public BaseWindow
 {
    public:
-    DeviceWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
+    DeviceWindow(ros::NodeHandle* nodeHandle,
+                 std::string robot_namespace,
+                 eros::Logger* logger,
+                 uint16_t mainwindow_height,
+                 uint16_t mainwindow_width)
         : BaseWindow("device_window",
                      55.0,
                      80.0,
                      45.0,
                      20.0,
+                     nodeHandle,
+                     robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
@@ -84,8 +90,9 @@ class DeviceWindow : public BaseWindow
     }
     bool new_msg(eros::resource resource_msg) override;
     bool new_msg(eros::loadfactor loadfactor_msg) override;
-    bool new_keyevent(int /* key */) override {  // Not Used
-        return true;
+    MessageText new_keyevent(int /* key */) override {  // Not Used
+        MessageText empty;
+        return empty;
     }
 
    private:

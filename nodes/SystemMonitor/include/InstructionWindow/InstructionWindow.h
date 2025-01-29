@@ -4,15 +4,23 @@ namespace eros_nodes::SystemMonitor {
 class InstructionWindow : public BaseWindow
 {
    public:
-    InstructionWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
+    InstructionWindow(ros::NodeHandle* nodeHandle,
+                      std::string robot_namespace,
+                      eros::Logger* logger,
+                      uint16_t mainwindow_height,
+                      uint16_t mainwindow_width,
+                      ros::Publisher command_pub)
         : BaseWindow("instruction_window",
                      30,
                      80.0,
                      25.0,
                      20.0,
+                     nodeHandle,
+                     robot_namespace,
                      logger,
                      mainwindow_height,
-                     mainwindow_width) {
+                     mainwindow_width),
+          command_pub(command_pub) {
         ScreenCoordinatePixel coord_pix =
             convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = create_newwin(coord_pix.height_pix,
@@ -43,9 +51,10 @@ class InstructionWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
-    bool new_keyevent(int key) override;
+    MessageText new_keyevent(int key) override;
 
    private:
     bool update_window();
+    ros::Publisher command_pub;
 };
 }  // namespace eros_nodes::SystemMonitor

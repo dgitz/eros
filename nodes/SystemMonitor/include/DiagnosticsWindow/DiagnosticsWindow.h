@@ -4,12 +4,18 @@ namespace eros_nodes::SystemMonitor {
 class DiagnosticsWindow : public BaseWindow
 {
    public:
-    DiagnosticsWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
+    DiagnosticsWindow(ros::NodeHandle* nodeHandle,
+                      std::string robot_namespace,
+                      eros::Logger* logger,
+                      uint16_t mainwindow_height,
+                      uint16_t mainwindow_width)
         : BaseWindow("diagnostics_window",
                      66,
                      15.0,
                      34.5,
                      60.0,
+                     nodeHandle,
+                     robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
@@ -37,8 +43,9 @@ class DiagnosticsWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
-    bool new_keyevent(int /* key */) override {  // Not Used
-        return true;
+    MessageText new_keyevent(int /* key */) override {  // Not Used
+        MessageText empty;
+        return empty;
     }
 
    private:

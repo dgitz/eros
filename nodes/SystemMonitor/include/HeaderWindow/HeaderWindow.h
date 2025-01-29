@@ -4,9 +4,21 @@ namespace eros_nodes::SystemMonitor {
 class HeaderWindow : public BaseWindow
 {
    public:
-    HeaderWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
-        : BaseWindow(
-              "header_window", 0.0, 0.0, 100.0, 15.0, logger, mainwindow_height, mainwindow_width) {
+    HeaderWindow(ros::NodeHandle* nodeHandle,
+                 std::string robot_namespace,
+                 eros::Logger* logger,
+                 uint16_t mainwindow_height,
+                 uint16_t mainwindow_width)
+        : BaseWindow("header_window",
+                     0.0,
+                     0.0,
+                     100.0,
+                     15.0,
+                     nodeHandle,
+                     robot_namespace,
+                     logger,
+                     mainwindow_height,
+                     mainwindow_width) {
         logger->log_warn("Initialized Header");
         ScreenCoordinatePixel coord_pix =
             convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
@@ -30,8 +42,9 @@ class HeaderWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
-    bool new_keyevent(int /* key */) override {  // Not Used
-        return true;
+    MessageText new_keyevent(int /* key */) override {  // Not Used
+        MessageText empty;
+        return empty;
     }
 
    private:

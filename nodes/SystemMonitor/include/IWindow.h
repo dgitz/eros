@@ -3,6 +3,8 @@
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/resource.h>
+
+#include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 
 class IWindow
@@ -22,6 +24,6 @@ class IWindow
      */
     virtual void set_focused(bool cmd_focus) = 0;
 
-    virtual bool new_keyevent(int key) = 0;
+    virtual MessageText new_keyevent(int key) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor

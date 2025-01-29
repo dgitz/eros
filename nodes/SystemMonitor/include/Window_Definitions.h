@@ -46,6 +46,14 @@ struct Field {
     std::size_t width;
 };
 
+struct MessageText {
+    MessageText(std::string text, eros::Level::Type level) : text(text), level(level) {
+    }
+    MessageText() : text(""), level(eros::Level::Type::DEBUG) {
+    }
+    std::string text;
+    eros::Level::Type level;
+};
 // Keys
 static constexpr int KEY_q = 113;
 static constexpr int KEY_Q = 81;

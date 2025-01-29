@@ -16,4 +16,8 @@ bool MessageWindow::update_window() {
     wrefresh(get_window());
     return true;
 }
+bool MessageWindow::new_MessageTextList(std::vector<MessageText> messages) {
+    logger->log_error("Not Implemented Yet!");
+    return false;
+}
 }  // namespace eros_nodes::SystemMonitor
