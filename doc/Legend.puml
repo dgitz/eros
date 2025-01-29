@@ -1,0 +1,15 @@
+@startuml
+class NotStarted
+
+class Investigating #Yellow
+
+class Developing #Orange
+
+class MinimalComplete #LimeGreen
+
+class ModerateComplete #Cyan
+
+class FullComplete #Purple
+
+class Bypassed #Red
+@enduml

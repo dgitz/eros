@@ -1,7 +1,6 @@
 /*! \file systemmonitor_node.h
  */
-#ifndef SYSTEMMONITORNODE_H
-#define SYSTEMMONITORNODE_H
+#pragma once
 // C System Files
 // C++ System Files
 // ROS Base Functionality
@@ -11,7 +10,7 @@
 #include <eros/BaseNode.h>
 
 #include "SystemMonitorProcess.h"
-namespace eros_nodes {
+namespace eros_nodes::SystemMonitor {
 /*! \class SystemMonitorNode SystemMonitorNode.h "SystemMonitorNode.h"
  *  \brief The SystemMonitorNode is used to monitor the state of the System. */
 class SystemMonitorNode : public eros::BaseNode
@@ -82,5 +81,4 @@ class SystemMonitorNode : public eros::BaseNode
     SystemMonitorProcess *process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };
-}  // namespace eros_nodes
-#endif  // SYSTEMMONITORNODE_H
+}  // namespace eros_nodes::SystemMonitor

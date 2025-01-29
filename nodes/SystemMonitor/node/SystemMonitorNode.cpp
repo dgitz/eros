@@ -1,7 +1,8 @@
-#include <eros/SystemMonitor/SystemMonitorNode.h>
+#include "SystemMonitorNode.h"
 using namespace eros;
-using namespace eros_nodes;
 bool kill_node = false;
+
+namespace eros_nodes::SystemMonitor {
 
 SystemMonitorNode::SystemMonitorNode()
     : system_command_action_server(
@@ -75,6 +76,7 @@ bool SystemMonitorNode::start() {
     process->finish_initialization();
     process->set_nodeHandle((n.get()), get_robotnamespace());
     diagnostic = finish_initialization();
+    logger->set_logverbosity(Level::Type::DEBUG);
 
     if (diagnostic.level > Level::Type::WARN) {
         return false;
@@ -144,6 +146,7 @@ bool SystemMonitorNode::run_loop2() {
     if (diag.level > Level::Type::NOTICE) {
         logger->log_diagnostic(diag);
     }
+    logger->log_info(process->pretty());
     return true;
 }
 bool SystemMonitorNode::run_loop3() {
@@ -227,12 +230,12 @@ bool SystemMonitorNode::init_screen() {
     init_color(COLOR_BLACK, 0, 0, 0);
     init_color(COLOR_GREEN, 0, 600, 0);
     init_color(10, 500, 0, 500);
-    init_pair((uint8_t)SystemMonitorProcess::Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
-    init_pair((uint8_t)SystemMonitorProcess::Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
-    init_pair((uint8_t)SystemMonitorProcess::Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
-    init_pair((uint8_t)SystemMonitorProcess::Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
-    init_pair((uint8_t)SystemMonitorProcess::Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
-    init_pair((uint8_t)SystemMonitorProcess::Color::PURPLE_COLOR, COLOR_WHITE, 10);
+    init_pair((uint8_t)Color::NO_COLOR, COLOR_WHITE, COLOR_BLACK);
+    init_pair((uint8_t)Color::RED_COLOR, COLOR_WHITE, COLOR_RED);
+    init_pair((uint8_t)Color::YELLOW_COLOR, COLOR_WHITE, COLOR_YELLOW);
+    init_pair((uint8_t)Color::GREEN_COLOR, COLOR_WHITE, COLOR_GREEN);
+    init_pair((uint8_t)Color::BLUE_COLOR, COLOR_WHITE, COLOR_BLUE);
+    init_pair((uint8_t)Color::PURPLE_COLOR, COLOR_WHITE, 10);
 
     uint16_t mainwindow_width, mainwindow_height;
     getmaxyx(stdscr, mainwindow_height, mainwindow_width);
@@ -247,6 +250,7 @@ bool SystemMonitorNode::init_screen() {
     if (status == false) {
         logger->enable_consoleprint();
         logger->log_error("Unable to initialize Windows. Exiting. ");
+        return false;
     }
     return true;
 }
@@ -317,6 +321,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     std::vector<std::string> heartbeat_list;
     std::vector<std::string> resource_used_list;
     std::vector<std::string> loadfactor_list;
+    std::vector<std::string> resourceavailable_list;
     for (ros::master::V_TopicInfo::iterator it = master_topics.begin(); it != master_topics.end();
          it++) {
         const ros::master::TopicInfo &info = *it;
@@ -335,23 +340,35 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
                 loadfactor_list.push_back(info.name);
             }
         }
+        if (info.datatype == "eros/resource") {
+            if (info.name.rfind(get_robotnamespace(), 0) == 0) {
+                if (info.name.find("resource_used") != std::string::npos) {
+                    resource_used_list.push_back(info.name);
+                }
+                else if (info.name.find("resource_available") != std::string::npos) {
+                    resourceavailable_list.push_back(info.name);
+                }
+            }
+        }
     }
     std::vector<std::string> new_heartbeat_topics_to_subscribe;
     std::vector<std::string> new_resourceused_topics_to_subscribe;
     std::vector<std::string> new_loadfactor_topics_to_subscribe;
     std::vector<std::string> new_resourceavailable_topics_to_subscribe;
-    diag = process->update_nodelist(node_list,
-                                    heartbeat_list,
-                                    new_heartbeat_topics_to_subscribe,
-                                    new_resourceused_topics_to_subscribe);
+    diag = process->update_monitorlist(heartbeat_list,
+                                       resource_used_list,
+                                       resourceavailable_list,
+                                       loadfactor_list,
+                                       new_heartbeat_topics_to_subscribe,
+                                       new_resourceused_topics_to_subscribe,
+                                       new_resourceavailable_topics_to_subscribe,
+                                       new_loadfactor_topics_to_subscribe);
     if (diag.level >= Level::Type::WARN) {
         logger->log_diagnostic(diag);
         return diag;
     }
-    diag = process->update_devicelist(loadfactor_list,
-                                      new_resourceavailable_topics_to_subscribe,
-                                      new_loadfactor_topics_to_subscribe);
     for (std::size_t i = 0; i < new_heartbeat_topics_to_subscribe.size(); ++i) {
+        logger->log_notice("Listening to new Topic: " + new_heartbeat_topics_to_subscribe.at(i));
         ros::Subscriber sub = n->subscribe<eros::heartbeat>(new_heartbeat_topics_to_subscribe.at(i),
                                                             50,
                                                             &SystemMonitorNode::heartbeat_Callback,
@@ -395,6 +412,8 @@ Diagnostic::DiagnosticDefinition SystemMonitorNode::rescan_nodes() {
     }
     return diag;
 }
+}  // namespace eros_nodes::SystemMonitor
+using namespace eros_nodes::SystemMonitor;
 void signalinterrupt_handler(int sig) {
     printf("Killing SystemMonitorNode with Signal: %d\n", sig);
     kill_node = true;

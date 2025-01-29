@@ -16,7 +16,7 @@
 */
 class {{cookiecutter.class_name}} {
     public:
-    // Constructors & Desostructors
+    // Constructors & Deconstructors
     {{cookiecutter.class_name}}() : 
         logger(nullptr),
         run_time(0.0) {
