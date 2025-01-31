@@ -1,8 +1,11 @@
 #pragma once
+#include <eros/SnapshotNode/SnapshotProcess.h>
+
 #include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
 class MessageWindow : public BaseWindow
 {
+    const double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
    public:
     MessageWindow(ros::NodeHandle* nodeHandle,
                   std::string robot_namespace,
@@ -31,6 +34,7 @@ class MessageWindow : public BaseWindow
     }
     virtual ~MessageWindow();
     bool update(double dt, double t_ros_time) override;
+    bool new_msg(eros::command_state command_state_msg) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;
     }
@@ -51,5 +55,10 @@ class MessageWindow : public BaseWindow
 
    private:
     bool update_window();
+    void set_message_text(std::string text, eros::Level::Type level);
+    void set_message_text(std::string text, Color color);
+    double timer_showing_message_in_window{0.0};
+    std::string message_text;
+    Color message_text_color{Color::NO_COLOR};
 };
 }  // namespace eros_nodes::SystemMonitor

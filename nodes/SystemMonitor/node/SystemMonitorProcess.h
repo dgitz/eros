@@ -68,11 +68,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     // Message Functions
     std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
     eros::Diagnostic::DiagnosticDefinition new_commandstate(
-        const eros::command_state::ConstPtr& t_msg) {
-        eros::command_state state = convert_fromptr(t_msg);
-        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        return diag;
-    }
+        const eros::command_state::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
         const eros::heartbeat::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_resourceusedmessage(

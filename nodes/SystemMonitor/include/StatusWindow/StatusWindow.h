@@ -41,6 +41,10 @@ class StatusWindow : public BaseWindow
         return true;
     }
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
+
+        return true;
+    }
+    bool new_msg(eros::command_state /* command_state_msg */) override {  // Not Used
         return true;
     }
     MessageText new_keyevent(int /* key */) override {  // Not Used

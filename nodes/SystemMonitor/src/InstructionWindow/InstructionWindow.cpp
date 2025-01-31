@@ -56,6 +56,15 @@ MessageText InstructionWindow::new_keyevent(int key) {
         command_pub.publish(command);
         return message;
     }
+    else if ((key == KEY_c) || (key == KEY_C)) {
+        MessageText message("Clearing All Snapshots...", eros::Level::Type::WARN);
+        eros::command command;
+        command.stamp = ros::Time::now();
+        command.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
+        command.Option1 = (uint16_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS;
+        command_pub.publish(command);
+        return message;
+    }
     MessageText empty;
     return empty;
 }

@@ -201,6 +201,23 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessag
     }
     return diag;
 }
+eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_commandstate(
+    const eros::command_state::ConstPtr& t_msg) {
+    eros::command_state msg = convert_fromptr(t_msg);
+    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+
+    for (auto window : windows) {
+        bool status = window->new_msg(msg);
+        if (status == false) {
+            diag = diagnostic_helper.update_diagnostic(
+                Diagnostic::DiagnosticType::SOFTWARE,
+                Level::Type::ERROR,
+                Diagnostic::Message::DROPPING_PACKETS,
+                "Unable to update Window: " + window->get_name() + " With new Command State Msg.");
+        }
+    }
+    return diag;
+}
 void SystemMonitorProcess::update_armedstate(eros::ArmDisarm::State armed_state) {
     eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
     for (auto window : windows) {
