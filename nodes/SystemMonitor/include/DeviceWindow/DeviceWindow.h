@@ -40,7 +40,10 @@ class DeviceWindow : public BaseWindow
     DeviceWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
+<<<<<<< HEAD
                  int16_t tab_order,
+=======
+>>>>>>> origin/master
                  uint16_t mainwindow_height,
                  uint16_t mainwindow_width)
         : BaseWindow("device_window",

@@ -163,12 +163,18 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
     {
+<<<<<<< HEAD
         IWindow* window = new NodeWindow(
             nodeHandle, robot_namespace, logger, 0, mainwindow_height, mainwindow_width);
+=======
+        IWindow* window = new HeaderWindow(
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+>>>>>>> origin/master
         window->set_focused(true);  // Window defaults to focused
         windows.push_back(window);
     }
     {
+<<<<<<< HEAD
         IWindow* window = new DiagnosticsWindow(
             nodeHandle, robot_namespace, logger, 1, mainwindow_height, mainwindow_width);
 
@@ -193,16 +199,44 @@ bool SystemMonitorProcess::initialize_windows() {
                                                 mainwindow_height,
                                                 mainwindow_width,
                                                 command_pub);
+=======
+        IWindow* window = new DeviceWindow(
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new NodeWindow(
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new InstructionWindow(
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width, command_pub);
+        window->set_focused(true);  // Window always has focus
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new DiagnosticsWindow(
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+>>>>>>> origin/master
         windows.push_back(window);
     }
     {
         IWindow* window = new MessageWindow(
+<<<<<<< HEAD
             nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
+=======
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+>>>>>>> origin/master
         windows.push_back(window);
     }
     {
         IWindow* window = new StatusWindow(
+<<<<<<< HEAD
             nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
+=======
+            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+>>>>>>> origin/master
         windows.push_back(window);
     }
     return true;
