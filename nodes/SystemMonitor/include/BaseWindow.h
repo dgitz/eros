@@ -10,6 +10,7 @@
 #include "IWindow.h"
 #include "SystemMonitorUtilities.h"
 #include "Window_Definitions.h"
+#include "ros/ros.h"
 namespace eros_nodes::SystemMonitor {
 
 class BaseWindow : public IWindow
@@ -20,6 +21,8 @@ class BaseWindow : public IWindow
                double start_y_perc,
                double width_perc,
                double height_perc,
+               ros::NodeHandle* nodeHandle,
+               std::string robot_namespace,
                eros::Logger* logger,
                uint16_t mainwindow_height,
                uint16_t mainwindow_width)
@@ -27,6 +30,8 @@ class BaseWindow : public IWindow
           screen_coord_perc(start_x_perc, start_y_perc, width_perc, height_perc),
           screen_coord_pixel(0, 0, 0, 0),
           win_(nullptr),
+          nodeHandle(nodeHandle),
+          robot_namespace(robot_namespace),
           logger(logger),
           mainwindow_height(mainwindow_height),
           mainwindow_width(mainwindow_width) {
@@ -81,6 +86,8 @@ class BaseWindow : public IWindow
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
     WINDOW* win_;
+    ros::NodeHandle* nodeHandle;
+    std::string robot_namespace;
     eros::Logger* logger;
     uint16_t mainwindow_height;
     uint16_t mainwindow_width;

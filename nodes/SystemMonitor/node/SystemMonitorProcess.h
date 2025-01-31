@@ -35,40 +35,6 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     /*! \brief The amount of time to show text in the message window.*/
     const double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
 
-    // Keys
-    static constexpr int KEY_q = 113;
-    static constexpr int KEY_Q = 81;
-    static constexpr int KEY_s = 83;
-    static constexpr int KEY_S = 115;
-    static constexpr int KEY_c = 99;
-    static constexpr int KEY_C = 67;
-    static constexpr int KEY_f = 102;
-    static constexpr int KEY_F = 70;
-    static constexpr int KEY_g = 103;
-    static constexpr int KEY_G = 71;
-    static constexpr int KEY_l = 108;
-    static constexpr int KEY_L = 76;
-    static constexpr int KEY_d = 100;
-    static constexpr int KEY_D = 68;
-    static constexpr int KEY_r = 114;
-    static constexpr int KEY_R = 82;
-    static constexpr int KEY_p = 112;
-    static constexpr int KEY_P = 80;
-    static constexpr int KEY_m = 109;
-    static constexpr int KEY_M = 77;
-    static constexpr int KEY_n = 110;
-    static constexpr int KEY_N = 78;
-
-    static constexpr int KEY_1 = 49;
-    static constexpr int KEY_2 = 50;
-    static constexpr int KEY_3 = 51;
-    static constexpr int KEY_4 = 52;
-    static constexpr int KEY_5 = 53;
-    static constexpr int KEY_6 = 54;
-    static constexpr int KEY_7 = 55;
-    static constexpr int KEY_8 = 56;
-    static constexpr int KEY_9 = 57;
-
     SystemMonitorProcess()
         : kill_me(false),
           nodeHandle(nullptr),
@@ -102,11 +68,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     // Message Functions
     std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
     eros::Diagnostic::DiagnosticDefinition new_commandstate(
-        const eros::command_state::ConstPtr& t_msg) {
-        eros::command_state state = convert_fromptr(t_msg);
-        eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-        return diag;
-    }
+        const eros::command_state::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
         const eros::heartbeat::ConstPtr& t_msg);
     eros::Diagnostic::DiagnosticDefinition new_resourceusedmessage(
@@ -151,8 +113,8 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
    private:
     bool kill_me{false};
     ros::NodeHandle* nodeHandle;
-    std::string robot_namespace;
     ros::Publisher command_pub;
+    std::string robot_namespace;
     uint16_t mainwindow_width;
     uint16_t mainwindow_height;
     eros::ArmDisarm::State armed_state;

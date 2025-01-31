@@ -1,8 +1,11 @@
 #pragma once
+#include <eros/command_state.h>
 #include <eros/eROS_Definitions.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/resource.h>
+
+#include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {
 
 class IWindow
@@ -16,10 +19,13 @@ class IWindow
     virtual bool new_msg(eros::heartbeat heartbeat_msg) = 0;
     virtual bool new_msg(eros::resource resource_msg) = 0;
     virtual bool new_msg(eros::loadfactor loadfactor_msg) = 0;
+    virtual bool new_msg(eros::command_state command_state_msg) = 0;
     virtual bool has_focus() = 0;
     /*! \brief Set focus.  Key events will be passed to any window that has focus.  Windows that
      * aren't focused will not receive any key events.
      */
     virtual void set_focused(bool cmd_focus) = 0;
+
+    virtual MessageText new_keyevent(int key) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor

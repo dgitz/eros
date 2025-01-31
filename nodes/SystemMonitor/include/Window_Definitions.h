@@ -45,4 +45,47 @@ struct Field {
     std::string text;
     std::size_t width;
 };
+
+struct MessageText {
+    MessageText(std::string text, eros::Level::Type level) : text(text), level(level) {
+    }
+    MessageText() : text(""), level(eros::Level::Type::DEBUG) {
+    }
+    std::string text;
+    eros::Level::Type level;
+};
+// Keys
+static constexpr int KEY_q = 113;
+static constexpr int KEY_Q = 81;
+static constexpr int KEY_s = 83;
+static constexpr int KEY_S = 115;
+static constexpr int KEY_c = 99;
+static constexpr int KEY_C = 67;
+static constexpr int KEY_f = 102;
+static constexpr int KEY_F = 70;
+static constexpr int KEY_g = 103;
+static constexpr int KEY_G = 71;
+static constexpr int KEY_l = 108;
+static constexpr int KEY_L = 76;
+static constexpr int KEY_d = 100;
+static constexpr int KEY_D = 68;
+static constexpr int KEY_r = 114;
+static constexpr int KEY_R = 82;
+static constexpr int KEY_p = 112;
+static constexpr int KEY_P = 80;
+static constexpr int KEY_m = 109;
+static constexpr int KEY_M = 77;
+static constexpr int KEY_n = 110;
+static constexpr int KEY_N = 78;
+
+static constexpr int KEY_1 = 49;
+static constexpr int KEY_2 = 50;
+static constexpr int KEY_3 = 51;
+static constexpr int KEY_4 = 52;
+static constexpr int KEY_5 = 53;
+static constexpr int KEY_6 = 54;
+static constexpr int KEY_7 = 55;
+static constexpr int KEY_8 = 56;
+static constexpr int KEY_9 = 57;
+
 }  // namespace eros_nodes::SystemMonitor

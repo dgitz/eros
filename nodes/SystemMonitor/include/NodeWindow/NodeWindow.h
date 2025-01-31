@@ -55,9 +55,21 @@ struct NodeData {
 class NodeWindow : public BaseWindow
 {
    public:
-    NodeWindow(eros::Logger* logger, uint16_t mainwindow_height, uint16_t mainwindow_width)
-        : BaseWindow(
-              "node_window", 0.0, 15.0, 66.0, 60.0, logger, mainwindow_height, mainwindow_width) {
+    NodeWindow(ros::NodeHandle* nodeHandle,
+               std::string robot_namespace,
+               eros::Logger* logger,
+               uint16_t mainwindow_height,
+               uint16_t mainwindow_width)
+        : BaseWindow("node_window",
+                     0.0,
+                     15.0,
+                     66.0,
+                     60.0,
+                     nodeHandle,
+                     robot_namespace,
+                     logger,
+                     mainwindow_height,
+                     mainwindow_width) {
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::MARKER, Field("", 3)));
         node_window_fields.insert(
@@ -78,8 +90,6 @@ class NodeWindow : public BaseWindow
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::RAM, Field(" RAM(%) ", 10)));
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::RX, Field(" Rx ", 6)));
-
-        logger->log_warn("Initialized Node Window");
         ScreenCoordinatePixel coord_pix =
             convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = create_newwin(coord_pix.height_pix,
@@ -103,8 +113,15 @@ class NodeWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
+    bool new_msg(eros::command_state /* command_state_msg */) override {  // Not Used
+        return true;
+    }
     bool new_msg(eros::heartbeat heartbeat_msg) override;
     bool new_msg(eros::resource resource_used_msg) override;
+    MessageText new_keyevent(int /* key */) override {  // Not Used
+        MessageText empty;
+        return empty;
+    }
     std::string get_node_info(NodeData node, bool selected);
 
    private:
