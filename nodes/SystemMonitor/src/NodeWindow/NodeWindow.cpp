@@ -70,8 +70,13 @@ bool NodeWindow::update_window() {
         wattroff(get_window(), COLOR_PAIR(color));
         index++;
     }
+    if (focused) {
+        box(get_window(), '+', '+');
+    }
+    else {
+        box(get_window(), 0, 0);
+    }
 
-    box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
 }

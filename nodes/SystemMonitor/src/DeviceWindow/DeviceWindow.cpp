@@ -47,7 +47,12 @@ bool DeviceWindow::update_window() {
         wattroff(win_, COLOR_PAIR(color));
         index++;
     }
-    box(win_, 0, 0);
+    if (focused) {
+        box(get_window(), '+', '+');
+    }
+    else {
+        box(get_window(), 0, 0);
+    }
     wrefresh(win_);
     return true;
 }

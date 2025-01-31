@@ -12,7 +12,12 @@ bool DiagnosticsWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool DiagnosticsWindow::update_window() {
-    box(get_window(), 0, 0);
+    if (focused) {
+        box(get_window(), '+', '+');
+    }
+    else {
+        box(get_window(), 0, 0);
+    }
     wrefresh(get_window());
     return true;
 }

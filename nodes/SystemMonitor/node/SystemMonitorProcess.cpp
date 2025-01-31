@@ -89,8 +89,24 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
     }
+    else if ((key_pressed == KEY_tab)) {
+        int16_t current_tab_index = tab_index;
+        int16_t new_tab_index = current_tab_index + 1;
+        if (new_tab_index > 2) {  // TODO: Need to figure this out programatically
+            new_tab_index = 0;
+        }
+        tab_index = new_tab_index;
+    }
     std::vector<MessageText> messages;
     for (auto window : windows) {
+        if (window->is_selectable()) {
+            if (window->get_tab_order() == tab_index) {
+                window->set_focused(true);
+            }
+            else {
+                window->set_focused(false);
+            }
+        }
         if (window->has_focus()) {
             MessageText message = window->new_keyevent(key_pressed);
             if (message.text != "") {
@@ -147,40 +163,46 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
     {
-        IWindow* window = new HeaderWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+        IWindow* window = new NodeWindow(
+            nodeHandle, robot_namespace, logger, 0, mainwindow_height, mainwindow_width);
         window->set_focused(true);  // Window defaults to focused
         windows.push_back(window);
     }
     {
-        IWindow* window = new DeviceWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
-        windows.push_back(window);
-    }
-    {
-        IWindow* window = new NodeWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
-        windows.push_back(window);
-    }
-    {
-        IWindow* window = new InstructionWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width, command_pub);
-        window->set_focused(true);  // Window always has focus
-        windows.push_back(window);
-    }
-    {
         IWindow* window = new DiagnosticsWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+            nodeHandle, robot_namespace, logger, 1, mainwindow_height, mainwindow_width);
+
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new DeviceWindow(
+            nodeHandle, robot_namespace, logger, 2, mainwindow_height, mainwindow_width);
+
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new HeaderWindow(
+            nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
+        windows.push_back(window);
+    }
+    {
+        IWindow* window = new InstructionWindow(nodeHandle,
+                                                robot_namespace,
+                                                logger,
+                                                -1,
+                                                mainwindow_height,
+                                                mainwindow_width,
+                                                command_pub);
         windows.push_back(window);
     }
     {
         IWindow* window = new MessageWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+            nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
         windows.push_back(window);
     }
     {
         IWindow* window = new StatusWindow(
-            nodeHandle, robot_namespace, logger, mainwindow_height, mainwindow_width);
+            nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
         windows.push_back(window);
     }
     return true;

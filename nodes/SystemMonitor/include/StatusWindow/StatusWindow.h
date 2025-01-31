@@ -7,9 +7,11 @@ class StatusWindow : public BaseWindow
     StatusWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
+                 int16_t tab_order,
                  uint16_t mainwindow_height,
                  uint16_t mainwindow_width)
         : BaseWindow("status_window",
+                     tab_order,
                      0,
                      80.0,
                      30.0,
@@ -30,6 +32,9 @@ class StatusWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~StatusWindow();
+    bool is_selectable() override {
+        return false;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;

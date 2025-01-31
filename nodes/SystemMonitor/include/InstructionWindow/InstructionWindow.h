@@ -12,10 +12,12 @@ class InstructionWindow : public BaseWindow
     InstructionWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
+                      int16_t tab_order,
                       uint16_t mainwindow_height,
                       uint16_t mainwindow_width,
                       ros::Publisher command_pub)
         : BaseWindow("instruction_window",
+                     tab_order,
                      30,
                      80.0,
                      25.0,
@@ -43,6 +45,9 @@ class InstructionWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~InstructionWindow();
+    bool is_selectable() override {
+        return false;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;

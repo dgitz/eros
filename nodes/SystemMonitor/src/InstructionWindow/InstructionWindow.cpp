@@ -50,6 +50,7 @@ bool InstructionWindow::update_window() {
     return true;
 }
 MessageText InstructionWindow::new_keyevent(int key) {
+    logger->log_debug("Key: " + std::to_string(key));
     if (mode == InstructionMode::GENERAL) {
         if ((key == KEY_s) || (key == KEY_S)) {
             MessageText message("Requesting System Snapshot...", eros::Level::Type::INFO);

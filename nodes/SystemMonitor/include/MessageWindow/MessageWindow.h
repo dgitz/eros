@@ -10,9 +10,11 @@ class MessageWindow : public BaseWindow
     MessageWindow(ros::NodeHandle* nodeHandle,
                   std::string robot_namespace,
                   eros::Logger* logger,
+                  int16_t tab_order,
                   uint16_t mainwindow_height,
                   uint16_t mainwindow_width)
         : BaseWindow("message_window",
+                     tab_order,
                      0,
                      75.0,
                      100.0,
@@ -33,6 +35,9 @@ class MessageWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~MessageWindow();
+    bool is_selectable() override {
+        return false;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::command_state command_state_msg) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used

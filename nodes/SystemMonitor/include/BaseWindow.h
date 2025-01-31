@@ -17,6 +17,7 @@ class BaseWindow : public IWindow
 {
    public:
     BaseWindow(const std::string _name,
+               int16_t tab_order,
                double start_x_perc,
                double start_y_perc,
                double width_perc,
@@ -27,6 +28,7 @@ class BaseWindow : public IWindow
                uint16_t mainwindow_height,
                uint16_t mainwindow_width)
         : name(_name),
+          tab_order(tab_order),
           screen_coord_perc(start_x_perc, start_y_perc, width_perc, height_perc),
           screen_coord_pixel(0, 0, 0, 0),
           win_(nullptr),
@@ -80,9 +82,13 @@ class BaseWindow : public IWindow
         return win_;
     }
     virtual bool update_window() = 0;
+    int16_t get_tab_order() {
+        return tab_order;
+    }
 
    protected:
     std::string name;
+    int16_t tab_order;
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
     WINDOW* win_;

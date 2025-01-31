@@ -40,9 +40,11 @@ class DeviceWindow : public BaseWindow
     DeviceWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
+                 int16_t tab_order,
                  uint16_t mainwindow_height,
                  uint16_t mainwindow_width)
         : BaseWindow("device_window",
+                     tab_order,
                      55.0,
                      80.0,
                      45.0,
@@ -81,6 +83,9 @@ class DeviceWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~DeviceWindow();
+    bool is_selectable() override {
+        return true;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;
