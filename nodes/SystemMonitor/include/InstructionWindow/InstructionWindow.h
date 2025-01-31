@@ -3,6 +3,11 @@
 namespace eros_nodes::SystemMonitor {
 class InstructionWindow : public BaseWindow
 {
+    enum class InstructionMode {
+        GENERAL = 0,
+        NODE = 1,
+    };
+
    public:
     InstructionWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
@@ -58,6 +63,7 @@ class InstructionWindow : public BaseWindow
 
    private:
     bool update_window();
+    InstructionMode mode{InstructionMode::GENERAL};
     ros::Publisher command_pub;
 };
 }  // namespace eros_nodes::SystemMonitor
