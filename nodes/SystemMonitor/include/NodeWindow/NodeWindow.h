@@ -134,6 +134,7 @@ class NodeWindow : public BaseWindow
                     std::string node_name);
     std::string get_nodeheader();
     bool update_window();
+    int previous_key{-1};
     std::mutex node_list_mutex;
     std::map<NodeFieldColumn, Field> node_window_fields;
     std::vector<NodeData> node_list;

@@ -94,6 +94,11 @@ bool NodeWindow::insertNode(NodeType node_type,
     return after > before;
 }
 MessageText NodeWindow::new_keyevent(int key) {
+    MessageText message;
+    if (key == -1) {
+        return message;
+    }
+    logger->log_debug("Key: " + std::to_string(key));
     if (focused == true) {
         if (key == KEY_UP) {
             decrement_selected_record();
@@ -112,26 +117,24 @@ MessageText NodeWindow::new_keyevent(int key) {
                     nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
                 eros::srv_firmware srv;
                 if (client.call(srv)) {
-                    MessageText message("Firmware: Node: " + srv.response.NodeName + " Version: " +
-                                            std::to_string(srv.response.MajorRelease) + "." +
-                                            std::to_string(srv.response.MinorRelease) + "." +
-                                            std::to_string(srv.response.BuildNumber) +
-                                            " Desc: " + srv.response.Description,
-                                        eros::Level::Type::INFO);
-                    return message;
+                    message =
+                        MessageText("Firmware: Node: " + srv.response.NodeName +
+                                        " Version: " + std::to_string(srv.response.MajorRelease) +
+                                        "." + std::to_string(srv.response.MinorRelease) + "." +
+                                        std::to_string(srv.response.BuildNumber) +
+                                        " Desc: " + srv.response.Description,
+                                    eros::Level::Type::INFO);
                 }
                 else {
                     std::string str = "Node: " + node.node_name + " Firmware Check Failed!";
-                    MessageText message(str, eros::Level::Type::WARN);
+                    message = MessageText(str, eros::Level::Type::WARN);
                     logger->log_warn(str);
-                    return message;
                 }
             }
             else {
                 std::string str = "Node: " + node.node_name + " is not an EROS Node.";
-                MessageText message(str, eros::Level::Type::WARN);
+                message = MessageText(str, eros::Level::Type::WARN);
                 logger->log_warn(str);
-                return message;
             }
         }
         else if ((key == KEY_l) || (key == KEY_L)) {
@@ -147,14 +150,92 @@ MessageText NodeWindow::new_keyevent(int key) {
                            eros::Level::LevelString((eros::Level::Type)i) + " ";
                 }
             }
-            MessageText message(str, eros::Level::Type::INFO);
-            return message;
+            message = MessageText(str, eros::Level::Type::INFO);
+        }
+        else if ((key == KEY_n) || (key == KEY_N)) {
+            std::string str = "Enter new Node State ";
+            for (uint8_t i = (uint8_t)eros::Node::State::UNKNOWN;
+                 i < (uint8_t)eros::Node::State::END_OF_LIST;
+                 ++i) {
+                if (i == (uint8_t)eros::Node::State::UNKNOWN) {
+                    // Do nothing
+                }
+                else {
+                    str += std::to_string(i) + ":" +
+                           eros::Node::NodeStateString((eros::Node::State)i) + " ";
+                }
+            }
+            message = MessageText(str, eros::Level::Type::INFO);
+        }
+        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4) ||
+                 (key == KEY_5) || (key == KEY_6) || (key == KEY_7) || (key == KEY_8) ||
+                 (key == KEY_9)) {
+            if ((previous_key == KEY_l) || (previous_key == KEY_L)) {
+                uint16_t verbosity_value = key - (KEY_1) + 1;
+                std::string verbosity_level =
+                    eros::Level::LevelString((eros::Level::Type)verbosity_value);
+                if (verbosity_level == "UNKNOWN") {
+                    std::string str = "Requested Log Level Not Supported.";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+                auto node = node_list.at((uint16_t)get_selected_record());
+                std::string logger_level_topic = node.node_name + "/srv_loggerlevel";
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
+                eros::srv_logger_level srv;
+                srv.request.LoggerLevel = verbosity_level;
+                if (client.call(srv)) {
+                    std::string str = "Node: " + node.node_name + " " + srv.response.Response;
+                    message = MessageText(str, eros::Level::Type::INFO);
+                }
+                else {
+                    std::string str = "Node: " + node.node_name + " Logger Level Change Failed!";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+            }
+            if ((previous_key == KEY_n) || (previous_key == KEY_N)) {
+                uint16_t state_value = key - (KEY_1) + 1;
+                std::string req_state = eros::Node::NodeStateString((eros::Node::State)state_value);
+                if (req_state == "UNKNOWN") {
+                    std::string str = "Requested Node State Not Supported.";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+
+                auto node = node_list.at((uint16_t)get_selected_record());
+                std::string nodestate_topic = node.node_name + "/srv_nodestate_change";
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
+                eros::srv_change_nodestate srv;
+                srv.request.RequestedNodeState = req_state;
+                if (client.call(srv)) {
+                    if (req_state == srv.response.NodeState) {
+                        std::string str = "Node: " + node.node_name +
+                                          " New Node State: " + srv.response.NodeState;
+                        message = MessageText(str, eros::Level::Type::INFO);
+                    }
+                    else {
+                        std::string str = "Node: " + node.node_name +
+                                          " Requested State: " + req_state + " Rejected! ";
+                        message = MessageText(str, eros::Level::Type::WARN);
+                        logger->log_warn(str);
+                    }
+                }
+                else {
+                    std::string str =
+                        "Node: " + node.node_name + " Node State Change Request Failed! ";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+            }
         }
         else {
         }
     }
-    MessageText empty;
-    return empty;
+    previous_key = key;
+    return message;
 }
 
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
