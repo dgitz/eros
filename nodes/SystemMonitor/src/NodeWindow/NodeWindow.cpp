@@ -93,6 +93,16 @@ bool NodeWindow::insertNode(NodeType node_type,
     std::size_t after = node_list.size();
     return after > before;
 }
+MessageText NodeWindow::new_keyevent(int key) {
+    if (focused == true) {
+        logger->log_warn("Key: " + std::to_string(key));
+        MessageText empty;
+        return empty;
+    }
+    MessageText empty;
+    return empty;
+    // if(key == )
+}
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     node_list_mutex.lock();
     std::map<std::string, NodeData>::iterator node_it;

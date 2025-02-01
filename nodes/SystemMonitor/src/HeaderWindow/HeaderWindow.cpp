@@ -30,10 +30,10 @@ bool HeaderWindow::update_window() {
             case eros::ArmDisarm::Type::ARMING: color = Color::GREEN_COLOR; break;
             default: color = Color::RED_COLOR; break;
         }
-        wattron(win_, COLOR_PAIR(color));
-        mvwprintw(win_, 2, 1, str.c_str());
-        wclrtoeol(win_);
-        wattroff(win_, COLOR_PAIR(color));
+        wattron(get_window(), COLOR_PAIR(color));
+        mvwprintw(get_window(), 2, 1, str.c_str());
+        wclrtoeol(get_window());
+        wattroff(get_window(), COLOR_PAIR(color));
     }
 
     box(get_window(), 0, 0);

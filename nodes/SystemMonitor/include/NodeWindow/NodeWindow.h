@@ -72,6 +72,7 @@ class NodeWindow : public BaseWindow
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
+        set_window_records_are_selectable(true);
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::MARKER, Field("", 3)));
         node_window_fields.insert(
@@ -123,10 +124,7 @@ class NodeWindow : public BaseWindow
     }
     bool new_msg(eros::heartbeat heartbeat_msg) override;
     bool new_msg(eros::resource resource_used_msg) override;
-    MessageText new_keyevent(int /* key */) override {  // Not Used
-        MessageText empty;
-        return empty;
-    }
+    MessageText new_keyevent(int key) override;
     std::string get_node_info(NodeData node, bool selected);
 
    private:

@@ -31,12 +31,12 @@ class BaseWindow : public IWindow
           tab_order(tab_order),
           screen_coord_perc(start_x_perc, start_y_perc, width_perc, height_perc),
           screen_coord_pixel(0, 0, 0, 0),
-          win_(nullptr),
           nodeHandle(nodeHandle),
           robot_namespace(robot_namespace),
           logger(logger),
           mainwindow_height(mainwindow_height),
-          mainwindow_width(mainwindow_width) {
+          mainwindow_width(mainwindow_width),
+          win_(nullptr) {
     }
 
     virtual ~BaseWindow() {
@@ -85,13 +85,26 @@ class BaseWindow : public IWindow
     int16_t get_tab_order() {
         return tab_order;
     }
+    void set_window_records_are_selectable(bool cmd) {
+        if (cmd == true) {
+            records_are_selectable = true;
+            record_selected = 0;
+        }
+        else {
+            records_are_selectable = false;
+            record_selected = 0;
+        }
+    }
+    bool get_window_records_are_selectable() {
+        return records_are_selectable;
+    }
 
    protected:
     std::string name;
     int16_t tab_order;
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
-    WINDOW* win_;
+
     ros::NodeHandle* nodeHandle;
     std::string robot_namespace;
     eros::Logger* logger;
@@ -104,5 +117,8 @@ class BaseWindow : public IWindow
     bool focused{false};
 
    private:
+    WINDOW* win_;
+    bool records_are_selectable{false};
+    int16_t record_selected{-1};
 };
 }  // namespace eros_nodes::SystemMonitor

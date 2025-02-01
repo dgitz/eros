@@ -41,16 +41,15 @@ bool InstructionWindow::update_window() {
         return false;
     }
     for (std::size_t i = 0; i < instruction_string.size(); ++i) {
-        mvwprintw(win_, i + 3, 1, instruction_string.at(i).c_str());
-        wclrtoeol(win_);
+        mvwprintw(get_window(), i + 3, 1, instruction_string.at(i).c_str());
+        wclrtoeol(get_window());
     }
-    wclrtobot(win_);
-    box(win_, 0, 0);
-    wrefresh(win_);
+    wclrtobot(get_window());
+    box(get_window(), 0, 0);
+    wrefresh(get_window());
     return true;
 }
 MessageText InstructionWindow::new_keyevent(int key) {
-    logger->log_debug("Key: " + std::to_string(key));
     if (mode == InstructionMode::GENERAL) {
         if ((key == KEY_s) || (key == KEY_S)) {
             MessageText message("Requesting System Snapshot...", eros::Level::Type::INFO);

@@ -20,9 +20,9 @@ bool DeviceWindow::update(double dt, double t_ros_time) {
 }
 bool DeviceWindow::update_window() {
     std::string header = get_deviceheader();
-    mvwprintw(win_, 1, 1, header.c_str());
+    mvwprintw(get_window(), 1, 1, header.c_str());
     std::string dashed(get_screen_coordinates_pixel().width_pix - 2, '-');
-    mvwprintw(win_, 2, 1, dashed.c_str());
+    mvwprintw(get_window(), 2, 1, dashed.c_str());
     const uint16_t DEVICESTART_COORD_Y = 1;
     const uint16_t DEVICESTART_COORD_X = 1;
     uint16_t index = 0;
@@ -41,10 +41,13 @@ bool DeviceWindow::update_window() {
             default: color = Color::RED_COLOR; break;
         }
         std::string str = get_device_info(device_it->second, false);
-        wattron(win_, COLOR_PAIR(color));
-        mvwprintw(win_, DEVICESTART_COORD_Y + 2 + (int)index, DEVICESTART_COORD_X + 1, str.c_str());
-        wclrtoeol(win_);
-        wattroff(win_, COLOR_PAIR(color));
+        wattron(get_window(), COLOR_PAIR(color));
+        mvwprintw(get_window(),
+                  DEVICESTART_COORD_Y + 2 + (int)index,
+                  DEVICESTART_COORD_X + 1,
+                  str.c_str());
+        wclrtoeol(get_window());
+        wattroff(get_window(), COLOR_PAIR(color));
         index++;
     }
     if (focused) {
@@ -53,7 +56,7 @@ bool DeviceWindow::update_window() {
     else {
         box(get_window(), 0, 0);
     }
-    wrefresh(win_);
+    wrefresh(get_window());
     return true;
 }
 bool DeviceWindow::new_msg(eros::resource resource_available_msg) {
