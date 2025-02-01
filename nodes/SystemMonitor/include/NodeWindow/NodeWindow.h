@@ -20,7 +20,7 @@ enum class NodeFieldColumn {
 \brief NodeData container, used for holding Node parameters.
 */
 struct NodeData {
-    NodeData(uint16_t _id,
+    NodeData(int16_t _id,
              NodeType _type,
              std::string _host_device,
              std::string _base_node_name,
@@ -136,6 +136,6 @@ class NodeWindow : public BaseWindow
     bool update_window();
     std::mutex node_list_mutex;
     std::map<NodeFieldColumn, Field> node_window_fields;
-    std::map<std::string, NodeData> node_list;
+    std::vector<NodeData> node_list;
 };
 }  // namespace eros_nodes::SystemMonitor
