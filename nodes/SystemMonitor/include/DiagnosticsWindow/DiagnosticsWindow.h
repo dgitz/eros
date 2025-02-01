@@ -4,6 +4,12 @@ namespace eros_nodes::SystemMonitor {
 class DiagnosticsWindow : public BaseWindow
 {
    public:
+    struct SystemDiagnosticData {
+        SystemDiagnosticData() : update_counter(0) {
+        }
+        eros::diagnostic diagnostic;
+        uint64_t update_counter;
+    };
     DiagnosticsWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
@@ -58,5 +64,6 @@ class DiagnosticsWindow : public BaseWindow
 
    private:
     bool update_window();
+    std::map<uint8_t, SystemDiagnosticData> system_diagnostics;
 };
 }  // namespace eros_nodes::SystemMonitor

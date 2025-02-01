@@ -6,6 +6,7 @@
 #include <eros/heartbeat.h>
 #include <eros/srv_change_nodestate.h>
 #include <eros/srv_firmware.h>
+#include <eros/srv_get_diagnostics.h>
 #include <eros/srv_logger_level.h>
 
 #include <string>
