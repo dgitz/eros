@@ -25,6 +25,9 @@ class IWindow
      * aren't focused will not receive any key events.
      */
     virtual void set_focused(bool cmd_focus) = 0;
+    virtual bool is_selectable() = 0;
+
+    virtual int16_t get_tab_order() = 0;
 
     virtual MessageText new_keyevent(int key) = 0;
 };

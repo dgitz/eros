@@ -7,9 +7,11 @@ class HeaderWindow : public BaseWindow
     HeaderWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
+                 int16_t tab_order,
                  uint16_t mainwindow_height,
                  uint16_t mainwindow_width)
         : BaseWindow("header_window",
+                     tab_order,
                      0.0,
                      0.0,
                      100.0,
@@ -31,6 +33,9 @@ class HeaderWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~HeaderWindow();
+    bool is_selectable() override {
+        return false;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State armed_state);
     bool new_msg(eros::heartbeat /* heartbeat_msg */) override {  // Not Used

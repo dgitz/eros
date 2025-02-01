@@ -88,4 +88,5 @@ static constexpr int KEY_7 = 55;
 static constexpr int KEY_8 = 56;
 static constexpr int KEY_9 = 57;
 
+static constexpr int KEY_tab = 9;
 }  // namespace eros_nodes::SystemMonitor

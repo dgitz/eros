@@ -32,11 +32,11 @@ bool NodeWindow::update(double dt, double t_ros_time) {
         return false;
     }
 
-    std::map<std::string, NodeData>::iterator node_it = node_list.begin();
+    std::vector<NodeData>::iterator node_it = node_list.begin();
     while (node_it != node_list.end()) {
-        node_it->second.last_heartbeat_delta += dt;
-        if (node_it->second.last_heartbeat_delta >= COMMTIMEOUT_THRESHOLD) {
-            node_it->second.state = eros::Node::State::UNKNOWN;
+        node_it->last_heartbeat_delta += dt;
+        if (node_it->last_heartbeat_delta >= COMMTIMEOUT_THRESHOLD) {
+            node_it->state = eros::Node::State::UNKNOWN;
         }
         ++node_it;
     }
@@ -47,10 +47,10 @@ bool NodeWindow::update_window() {
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
     uint16_t index = 0;
-    std::map<std::string, NodeData>::iterator node_it;
+    std::vector<NodeData>::iterator node_it;
     for (node_it = node_list.begin(); node_it != node_list.end(); node_it++) {
         Color color = Color::UNKNOWN;
-        switch (node_it->second.state) {
+        switch (node_it->state) {
             case eros::Node::State::UNKNOWN: color = Color::RED_COLOR; break;
             case eros::Node::State::START: color = Color::YELLOW_COLOR; break;
             case eros::Node::State::INITIALIZING: color = Color::YELLOW_COLOR; break;
@@ -63,15 +63,20 @@ bool NodeWindow::update_window() {
         }
 
         wattron(get_window(), COLOR_PAIR(color));
-        std::string str = get_node_info(node_it->second, false);
+        std::string str = get_node_info((*node_it), index == get_selected_record());
         mvwprintw(
             get_window(), TASKSTART_COORD_Y + 2 + (int)index, TASKSTART_COORD_X + 1, str.c_str());
         wclrtoeol(get_window());
         wattroff(get_window(), COLOR_PAIR(color));
         index++;
     }
+    if (focused) {
+        box(get_window(), '.', '.');
+    }
+    else {
+        box(get_window(), 0, 0);
+    }
 
-    box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
 }
@@ -83,46 +88,190 @@ bool NodeWindow::insertNode(NodeType node_type,
     std::size_t before = node_list.size();
     NodeData newNode(node_list.size(), node_type, device, base_node_name, node_name);
     newNode.state = eros::Node::State::RUNNING;
-    std::string key = newNode.node_name;
-    node_list.insert(std::pair<std::string, NodeData>(key, newNode));
+    node_list.push_back(newNode);
     std::size_t after = node_list.size();
+    update_record_count((uint16_t)after);
     return after > before;
 }
+MessageText NodeWindow::new_keyevent(int key) {
+    MessageText message;
+    if (key == -1) {
+        return message;
+    }
+    logger->log_debug("Key: " + std::to_string(key));
+    if (focused == true) {
+        if (key == KEY_UP) {
+            decrement_selected_record();
+        }
+        else if (key == KEY_DOWN) {
+            increment_selected_record();
+        }
+        else if ((key == KEY_f) || (key == KEY_F)) {
+            auto node = node_list.at((uint16_t)get_selected_record());
+            if (node.type == NodeType::EROS) {
+                std::string firmware_topic = node.node_name + "/srv_firmware";
+                if (nodeHandle == nullptr) {
+                    logger->log_error("Node Handle has no memory!");
+                }
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
+                eros::srv_firmware srv;
+                if (client.call(srv)) {
+                    message =
+                        MessageText("Firmware: Node: " + srv.response.NodeName +
+                                        " Version: " + std::to_string(srv.response.MajorRelease) +
+                                        "." + std::to_string(srv.response.MinorRelease) + "." +
+                                        std::to_string(srv.response.BuildNumber) +
+                                        " Desc: " + srv.response.Description,
+                                    eros::Level::Type::INFO);
+                }
+                else {
+                    std::string str = "Node: " + node.node_name + " Firmware Check Failed!";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+            }
+            else {
+                std::string str = "Node: " + node.node_name + " is not an EROS Node.";
+                message = MessageText(str, eros::Level::Type::WARN);
+                logger->log_warn(str);
+            }
+        }
+        else if ((key == KEY_l) || (key == KEY_L)) {
+            std::string str = "Enter new Log Level ";
+            for (uint8_t i = (uint8_t)eros::Level::Type::UNKNOWN;
+                 i < (uint8_t)eros::Level::Type::END_OF_LIST;
+                 ++i) {
+                if (i == (uint8_t)eros::Level::Type::UNKNOWN) {
+                    // Do nothing
+                }
+                else {
+                    str += std::to_string(i) + ":" +
+                           eros::Level::LevelString((eros::Level::Type)i) + " ";
+                }
+            }
+            message = MessageText(str, eros::Level::Type::INFO);
+        }
+        else if ((key == KEY_n) || (key == KEY_N)) {
+            std::string str = "Enter new Node State ";
+            for (uint8_t i = (uint8_t)eros::Node::State::UNKNOWN;
+                 i < (uint8_t)eros::Node::State::END_OF_LIST;
+                 ++i) {
+                if (i == (uint8_t)eros::Node::State::UNKNOWN) {
+                    // Do nothing
+                }
+                else {
+                    str += std::to_string(i) + ":" +
+                           eros::Node::NodeStateString((eros::Node::State)i) + " ";
+                }
+            }
+            message = MessageText(str, eros::Level::Type::INFO);
+        }
+        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4) ||
+                 (key == KEY_5) || (key == KEY_6) || (key == KEY_7) || (key == KEY_8) ||
+                 (key == KEY_9)) {
+            if ((previous_key == KEY_l) || (previous_key == KEY_L)) {
+                uint16_t verbosity_value = key - (KEY_1) + 1;
+                std::string verbosity_level =
+                    eros::Level::LevelString((eros::Level::Type)verbosity_value);
+                if (verbosity_level == "UNKNOWN") {
+                    std::string str = "Requested Log Level Not Supported.";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+                auto node = node_list.at((uint16_t)get_selected_record());
+                std::string logger_level_topic = node.node_name + "/srv_loggerlevel";
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
+                eros::srv_logger_level srv;
+                srv.request.LoggerLevel = verbosity_level;
+                if (client.call(srv)) {
+                    std::string str = "Node: " + node.node_name + " " + srv.response.Response;
+                    message = MessageText(str, eros::Level::Type::INFO);
+                }
+                else {
+                    std::string str = "Node: " + node.node_name + " Logger Level Change Failed!";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+            }
+            if ((previous_key == KEY_n) || (previous_key == KEY_N)) {
+                uint16_t state_value = key - (KEY_1) + 1;
+                std::string req_state = eros::Node::NodeStateString((eros::Node::State)state_value);
+                if (req_state == "UNKNOWN") {
+                    std::string str = "Requested Node State Not Supported.";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+
+                auto node = node_list.at((uint16_t)get_selected_record());
+                std::string nodestate_topic = node.node_name + "/srv_nodestate_change";
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
+                eros::srv_change_nodestate srv;
+                srv.request.RequestedNodeState = req_state;
+                if (client.call(srv)) {
+                    if (req_state == srv.response.NodeState) {
+                        std::string str = "Node: " + node.node_name +
+                                          " New Node State: " + srv.response.NodeState;
+                        message = MessageText(str, eros::Level::Type::INFO);
+                    }
+                    else {
+                        std::string str = "Node: " + node.node_name +
+                                          " Requested State: " + req_state + " Rejected! ";
+                        message = MessageText(str, eros::Level::Type::WARN);
+                        logger->log_warn(str);
+                    }
+                }
+                else {
+                    std::string str =
+                        "Node: " + node.node_name + " Node State Change Request Failed! ";
+                    message = MessageText(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                }
+            }
+        }
+        else {
+        }
+    }
+    previous_key = key;
+    return message;
+}
+
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     node_list_mutex.lock();
-    std::map<std::string, NodeData>::iterator node_it;
-
-    node_it = node_list.find(heartbeat_msg.NodeName);
-    if (node_it != node_list.end()) {  // Found it, update the record
-        node_it->second.last_heartbeat_delta = 0.0;
-        node_it->second.last_heartbeat = t_ros_time_;
-    }
-    else {  // Didn't find it,create one
-        node_list_mutex.unlock();
-        return insertNode(
-            NodeType::EROS, "Unknown", heartbeat_msg.BaseNodeName, heartbeat_msg.NodeName);
+    for (std::vector<NodeData>::iterator node_it = node_list.begin(); node_it != node_list.end();
+         ++node_it) {
+        if (node_it->node_name == heartbeat_msg.NodeName) {
+            node_it->last_heartbeat_delta = 0.0;
+            node_it->last_heartbeat = t_ros_time_;
+            node_it->host_device = heartbeat_msg.HostName;
+            node_it->base_node_name = heartbeat_msg.BaseNodeName;
+            node_it->state = (eros::Node::State)heartbeat_msg.NodeState;
+            node_list_mutex.unlock();
+            return true;
+        }
     }
     node_list_mutex.unlock();
-    return true;
+    return insertNode(
+        NodeType::EROS, "Unknown", heartbeat_msg.BaseNodeName, heartbeat_msg.NodeName);
 }
 bool NodeWindow::new_msg(eros::resource resource_used_msg) {
     node_list_mutex.lock();
-    std::map<std::string, NodeData>::iterator node_it;
-
-    node_it = node_list.find(resource_used_msg.Name);
-    if (node_it != node_list.end()) {  // Found it, update the record
-        node_it->second.last_heartbeat_delta = 0.0;
-        node_it->second.last_heartbeat = t_ros_time_;
-        node_it->second.pid = resource_used_msg.PID;  // todo: Handle PID # change
-        node_it->second.cpu_used_perc = resource_used_msg.CPU_Perc;
-        node_it->second.mem_used_perc = resource_used_msg.RAM_Perc;
-    }
-    else {  // Didn't find it,create one
-        node_list_mutex.unlock();
-        return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
+    for (std::vector<NodeData>::iterator node_it = node_list.begin(); node_it != node_list.end();
+         ++node_it) {
+        if (node_it->node_name == resource_used_msg.Name) {
+            node_it->last_heartbeat_delta = 0.0;
+            node_it->last_heartbeat = t_ros_time_;
+            node_it->pid = resource_used_msg.PID;  // todo: Handle PID # change
+            node_it->cpu_used_perc = resource_used_msg.CPU_Perc;
+            node_it->mem_used_perc = resource_used_msg.RAM_Perc;
+            node_list_mutex.unlock();
+            return true;
+        }
     }
     node_list_mutex.unlock();
-    return true;
+    return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
 }
 std::string NodeWindow::get_node_info(NodeData node, bool selected) {
     std::string str = "";

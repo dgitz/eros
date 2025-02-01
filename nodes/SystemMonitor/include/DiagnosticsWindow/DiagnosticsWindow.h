@@ -7,9 +7,11 @@ class DiagnosticsWindow : public BaseWindow
     DiagnosticsWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
+                      int16_t tab_order,
                       uint16_t mainwindow_height,
                       uint16_t mainwindow_width)
         : BaseWindow("diagnostics_window",
+                     tab_order,
                      66,
                      15.0,
                      34.5,
@@ -30,6 +32,9 @@ class DiagnosticsWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~DiagnosticsWindow();
+    bool is_selectable() override {
+        return true;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;

@@ -20,7 +20,7 @@ enum class NodeFieldColumn {
 \brief NodeData container, used for holding Node parameters.
 */
 struct NodeData {
-    NodeData(uint16_t _id,
+    NodeData(int16_t _id,
              NodeType _type,
              std::string _host_device,
              std::string _base_node_name,
@@ -58,9 +58,11 @@ class NodeWindow : public BaseWindow
     NodeWindow(ros::NodeHandle* nodeHandle,
                std::string robot_namespace,
                eros::Logger* logger,
+               int16_t tab_order,
                uint16_t mainwindow_height,
                uint16_t mainwindow_width)
         : BaseWindow("node_window",
+                     tab_order,
                      0.0,
                      15.0,
                      66.0,
@@ -70,6 +72,7 @@ class NodeWindow : public BaseWindow
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
+        set_window_records_are_selectable(true);
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::MARKER, Field("", 3)));
         node_window_fields.insert(
@@ -106,6 +109,9 @@ class NodeWindow : public BaseWindow
         wrefresh(win);
     }
     virtual ~NodeWindow();
+    bool is_selectable() override {
+        return true;
+    }
     bool update(double dt, double t_ros_time) override;
     bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
         return true;
@@ -118,10 +124,7 @@ class NodeWindow : public BaseWindow
     }
     bool new_msg(eros::heartbeat heartbeat_msg) override;
     bool new_msg(eros::resource resource_used_msg) override;
-    MessageText new_keyevent(int /* key */) override {  // Not Used
-        MessageText empty;
-        return empty;
-    }
+    MessageText new_keyevent(int key) override;
     std::string get_node_info(NodeData node, bool selected);
 
    private:
@@ -131,8 +134,9 @@ class NodeWindow : public BaseWindow
                     std::string node_name);
     std::string get_nodeheader();
     bool update_window();
+    int previous_key{-1};
     std::mutex node_list_mutex;
     std::map<NodeFieldColumn, Field> node_window_fields;
-    std::map<std::string, NodeData> node_list;
+    std::vector<NodeData> node_list;
 };
 }  // namespace eros_nodes::SystemMonitor

@@ -4,6 +4,9 @@
 #include <eros/Logger.h>
 #include <eros/eROS_Definitions.h>
 #include <eros/heartbeat.h>
+#include <eros/srv_change_nodestate.h>
+#include <eros/srv_firmware.h>
+#include <eros/srv_logger_level.h>
 
 #include <string>
 
@@ -17,6 +20,7 @@ class BaseWindow : public IWindow
 {
    public:
     BaseWindow(const std::string _name,
+               int16_t tab_order,
                double start_x_perc,
                double start_y_perc,
                double width_perc,
@@ -27,14 +31,15 @@ class BaseWindow : public IWindow
                uint16_t mainwindow_height,
                uint16_t mainwindow_width)
         : name(_name),
+          tab_order(tab_order),
           screen_coord_perc(start_x_perc, start_y_perc, width_perc, height_perc),
           screen_coord_pixel(0, 0, 0, 0),
-          win_(nullptr),
           nodeHandle(nodeHandle),
           robot_namespace(robot_namespace),
           logger(logger),
           mainwindow_height(mainwindow_height),
-          mainwindow_width(mainwindow_width) {
+          mainwindow_width(mainwindow_width),
+          win_(nullptr) {
     }
 
     virtual ~BaseWindow() {
@@ -80,12 +85,35 @@ class BaseWindow : public IWindow
         return win_;
     }
     virtual bool update_window() = 0;
+    int16_t get_tab_order() {
+        return tab_order;
+    }
+    void set_window_records_are_selectable(bool cmd) {
+        if (cmd == true) {
+            records_are_selectable = true;
+            record_selected = 0;
+        }
+        else {
+            records_are_selectable = false;
+            record_selected = 0;
+        }
+    }
+    bool get_window_records_are_selectable() {
+        return records_are_selectable;
+    }
+    int16_t get_selected_record() {
+        return record_selected;
+    }
 
    protected:
+    void update_record_count(uint16_t count);
+    void decrement_selected_record();
+    void increment_selected_record();
     std::string name;
+    int16_t tab_order;
     ScreenCoordinatePerc screen_coord_perc;
     ScreenCoordinatePixel screen_coord_pixel;
-    WINDOW* win_;
+
     ros::NodeHandle* nodeHandle;
     std::string robot_namespace;
     eros::Logger* logger;
@@ -98,5 +126,9 @@ class BaseWindow : public IWindow
     bool focused{false};
 
    private:
+    WINDOW* win_;
+    bool records_are_selectable{false};
+    int16_t record_selected{-1};
+    uint16_t record_count{0};
 };
 }  // namespace eros_nodes::SystemMonitor

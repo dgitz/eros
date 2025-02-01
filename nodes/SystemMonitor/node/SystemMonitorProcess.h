@@ -125,5 +125,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     std::vector<std::string> monitored_loadfactor_topics;
 
     std::vector<IWindow*> windows;
+    int16_t tab_index{0};
+    int16_t highest_tab_index{0};
 };
 }  // namespace eros_nodes::SystemMonitor
