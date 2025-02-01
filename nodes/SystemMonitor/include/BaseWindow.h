@@ -4,6 +4,7 @@
 #include <eros/Logger.h>
 #include <eros/eROS_Definitions.h>
 #include <eros/heartbeat.h>
+#include <eros/srv_firmware.h>
 
 #include <string>
 

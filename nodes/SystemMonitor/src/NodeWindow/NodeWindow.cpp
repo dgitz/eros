@@ -102,75 +102,63 @@ MessageText NodeWindow::new_keyevent(int key) {
             increment_selected_record();
         }
         else if ((key == KEY_f) || (key == KEY_F)) {
-            // auto node = node_list.at((uint16_t)get_selected_record());
-        }
-        MessageText empty;
-        return empty;
-    }
-
-    MessageText empty;
-    return empty;
-    // if(key == )
-}
-/*
-else if ((key_pressed == KEY_f) || (key_pressed == KEY_F)) {
-        if (select_task_mode == true) {
-            std::map<uint16_t, std::string>::iterator task_name_lookup =
-                task_name_list.find(selected_task_index);
-            if (task_name_lookup == task_name_list.end()) {
-                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
-                logger->log_error(str);
-                set_message_text(str, Color::RED_COLOR);
-            }
-            else {
-                std::map<std::string, Task>::iterator task_info_it =
-                    task_list.find(task_name_lookup->second);
-                if (task_info_it == task_list.end()) {
-                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
-                    set_message_text(str, Color::RED_COLOR);
-                    logger->log_error(str);
+            auto node = node_list.at((uint16_t)get_selected_record());
+            if (node.type == NodeType::EROS) {
+                std::string firmware_topic = node.node_name + "/srv_firmware";
+                if (nodeHandle == nullptr) {
+                    logger->log_error("Node Handle has no memory!");
+                }
+                ros::ServiceClient client =
+                    nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
+                eros::srv_firmware srv;
+                if (client.call(srv)) {
+                    MessageText message("Firmware: Node: " + srv.response.NodeName + " Version: " +
+                                            std::to_string(srv.response.MajorRelease) + "." +
+                                            std::to_string(srv.response.MinorRelease) + "." +
+                                            std::to_string(srv.response.BuildNumber) +
+                                            " Desc: " + srv.response.Description,
+                                        eros::Level::Type::INFO);
+                    return message;
                 }
                 else {
-                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
-                        std::string firmware_topic =
-                            task_info_it->second.node_name + "/srv_firmware";
-                        if (nodeHandle == nullptr) {
-                            logger->log_error("Node Handle has no memory!");
-                        }
-                        ros::ServiceClient client =
-                            nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
-                        eros::srv_firmware srv;
-                        if (client.call(srv)) {
-                            set_message_text(
-                                "Firmware: Node: " + srv.response.NodeName +
-                                    " Version: " + std::to_string(srv.response.MajorRelease) + "." +
-                                    std::to_string(srv.response.MinorRelease) + "." +
-                                    std::to_string(srv.response.BuildNumber) +
-                                    " Desc: " + srv.response.Description,
-                                Color::NO_COLOR);
-                        }
-                        else {
-                            std::string str = "Node: " + task_info_it->second.node_name +
-                                              " Firmware Change Failed!";
-                            set_message_text(str, Color::YELLOW_COLOR);
-                            logger->log_warn(str);
-                        }
-                    }
-                    else {
-                        std::string str =
-                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
-                        set_message_text(str, Color::YELLOW_COLOR);
-                        logger->log_warn(str);
-                    }
+                    std::string str = "Node: " + node.node_name + " Firmware Check Failed!";
+                    MessageText message(str, eros::Level::Type::WARN);
+                    logger->log_warn(str);
+                    return message;
                 }
             }
+            else {
+                std::string str = "Node: " + node.node_name + " is not an EROS Node.";
+                MessageText message(str, eros::Level::Type::WARN);
+                logger->log_warn(str);
+                return message;
+            }
+        }
+        else if ((key == KEY_l) || (key == KEY_L)) {
+            std::string str = "Enter new Log Level ";
+            for (uint8_t i = (uint8_t)eros::Level::Type::UNKNOWN;
+                 i < (uint8_t)eros::Level::Type::END_OF_LIST;
+                 ++i) {
+                if (i == (uint8_t)eros::Level::Type::UNKNOWN) {
+                    // Do nothing
+                }
+                else {
+                    str += std::to_string(i) + ":" +
+                           eros::Level::LevelString((eros::Level::Type)i) + " ";
+                }
+            }
+            MessageText message(str, eros::Level::Type::INFO);
+            return message;
+        }
+        else {
         }
     }
-*/
+    MessageText empty;
+    return empty;
+}
+
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     node_list_mutex.lock();
-    // std::vector<NodeData>::iterator node_it = node_list.begin();
-    // for (node_it != node_list.end(); ++node_it) {
     for (std::vector<NodeData>::iterator node_it = node_list.begin(); node_it != node_list.end();
          ++node_it) {
         if (node_it->node_name == heartbeat_msg.NodeName) {
@@ -180,30 +168,26 @@ bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
             return true;
         }
     }
-
     node_list_mutex.unlock();
     return insertNode(
         NodeType::EROS, "Unknown", heartbeat_msg.BaseNodeName, heartbeat_msg.NodeName);
 }
 bool NodeWindow::new_msg(eros::resource resource_used_msg) {
     node_list_mutex.lock();
-    std::map<std::string, NodeData>::iterator node_it;
-    /* // FIX THIS
-    node_it = node_list.find(resource_used_msg.Name);
-    if (node_it != node_list.end()) {  // Found it, update the record
-        node_it->last_heartbeat_delta = 0.0;
-        node_it->last_heartbeat = t_ros_time_;
-        node_it->pid = resource_used_msg.PID;  // todo: Handle PID # change
-        node_it->cpu_used_perc = resource_used_msg.CPU_Perc;
-        node_it->mem_used_perc = resource_used_msg.RAM_Perc;
+    for (std::vector<NodeData>::iterator node_it = node_list.begin(); node_it != node_list.end();
+         ++node_it) {
+        if (node_it->node_name == resource_used_msg.Name) {
+            node_it->last_heartbeat_delta = 0.0;
+            node_it->last_heartbeat = t_ros_time_;
+            node_it->pid = resource_used_msg.PID;  // todo: Handle PID # change
+            node_it->cpu_used_perc = resource_used_msg.CPU_Perc;
+            node_it->mem_used_perc = resource_used_msg.RAM_Perc;
+            node_list_mutex.unlock();
+            return true;
+        }
     }
-    else {  // Didn't find it,create one
-        node_list_mutex.unlock();
-        return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
-    }
-    */
     node_list_mutex.unlock();
-    return true;
+    return insertNode(NodeType::EROS, "Unknown", "Unknown", resource_used_msg.Name);
 }
 std::string NodeWindow::get_node_info(NodeData node, bool selected) {
     std::string str = "";

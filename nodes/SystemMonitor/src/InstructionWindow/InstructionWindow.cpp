@@ -33,7 +33,7 @@ bool InstructionWindow::update_window() {
         else {
             instruction_string.push_back("D: Show System Diagnostics.");
         }
-        instruction_string.push_back("N: Change Node State.");
+        instruction_string.push_back("N: Change Node State (1-9).");
         if (change_nodestate_mode == true) {
             instruction_string.push_back("  1-9: Select Node State.");
         }
