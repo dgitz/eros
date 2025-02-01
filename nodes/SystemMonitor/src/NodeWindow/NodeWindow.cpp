@@ -63,7 +63,7 @@ bool NodeWindow::update_window() {
         }
 
         wattron(get_window(), COLOR_PAIR(color));
-        std::string str = get_node_info(node_it->second, false);
+        std::string str = get_node_info(node_it->second, index == get_selected_record());
         mvwprintw(
             get_window(), TASKSTART_COORD_Y + 2 + (int)index, TASKSTART_COORD_X + 1, str.c_str());
         wclrtoeol(get_window());
@@ -91,18 +91,83 @@ bool NodeWindow::insertNode(NodeType node_type,
     std::string key = newNode.node_name;
     node_list.insert(std::pair<std::string, NodeData>(key, newNode));
     std::size_t after = node_list.size();
+    update_record_count((uint16_t)after);
     return after > before;
 }
 MessageText NodeWindow::new_keyevent(int key) {
     if (focused == true) {
-        logger->log_warn("Key: " + std::to_string(key));
+        if (key == KEY_UP) {
+            decrement_selected_record();
+        }
+        else if (key == KEY_DOWN) {
+            increment_selected_record();
+        }
+        else if ((key == KEY_f) || (key == KEY_F)) {
+            // auto node = node_list.at((uint16_t)get_selected_record());
+        }
         MessageText empty;
         return empty;
     }
+
     MessageText empty;
     return empty;
     // if(key == )
 }
+/*
+else if ((key_pressed == KEY_f) || (key_pressed == KEY_F)) {
+        if (select_task_mode == true) {
+            std::map<uint16_t, std::string>::iterator task_name_lookup =
+                task_name_list.find(selected_task_index);
+            if (task_name_lookup == task_name_list.end()) {
+                std::string str = "Unable to lookup Task: " + std::to_string(selected_task_index);
+                logger->log_error(str);
+                set_message_text(str, Color::RED_COLOR);
+            }
+            else {
+                std::map<std::string, Task>::iterator task_info_it =
+                    task_list.find(task_name_lookup->second);
+                if (task_info_it == task_list.end()) {
+                    std::string str = "Unable to lookup Task: " + task_name_lookup->second;
+                    set_message_text(str, Color::RED_COLOR);
+                    logger->log_error(str);
+                }
+                else {
+                    if (task_info_it->second.type == SystemMonitorProcess::TaskType::EROS) {
+                        std::string firmware_topic =
+                            task_info_it->second.node_name + "/srv_firmware";
+                        if (nodeHandle == nullptr) {
+                            logger->log_error("Node Handle has no memory!");
+                        }
+                        ros::ServiceClient client =
+                            nodeHandle->serviceClient<eros::srv_firmware>(firmware_topic);
+                        eros::srv_firmware srv;
+                        if (client.call(srv)) {
+                            set_message_text(
+                                "Firmware: Node: " + srv.response.NodeName +
+                                    " Version: " + std::to_string(srv.response.MajorRelease) + "." +
+                                    std::to_string(srv.response.MinorRelease) + "." +
+                                    std::to_string(srv.response.BuildNumber) +
+                                    " Desc: " + srv.response.Description,
+                                Color::NO_COLOR);
+                        }
+                        else {
+                            std::string str = "Node: " + task_info_it->second.node_name +
+                                              " Firmware Change Failed!";
+                            set_message_text(str, Color::YELLOW_COLOR);
+                            logger->log_warn(str);
+                        }
+                    }
+                    else {
+                        std::string str =
+                            "Node: " + task_info_it->second.node_name + " is not an EROS Node.";
+                        set_message_text(str, Color::YELLOW_COLOR);
+                        logger->log_warn(str);
+                    }
+                }
+            }
+        }
+    }
+*/
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     node_list_mutex.lock();
     std::map<std::string, NodeData>::iterator node_it;

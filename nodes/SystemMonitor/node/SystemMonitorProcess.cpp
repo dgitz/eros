@@ -98,10 +98,18 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         tab_index = new_tab_index;
     }
     std::vector<MessageText> messages;
+    std::string previous_selected_window;
+    for (auto window : windows) {
+        if (window->has_focus()) {
+            previous_selected_window = window->get_name();
+        }
+    }
+    std::string new_selected_window;
     for (auto window : windows) {
         if (window->is_selectable()) {
             if (window->get_tab_order() == tab_index) {
                 window->set_focused(true);
+                new_selected_window = window->get_name();
             }
             else {
                 window->set_focused(false);
@@ -110,6 +118,17 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         MessageText message = window->new_keyevent(key_pressed);
         if (message.text != "") {
             messages.push_back(message);
+        }
+    }
+    if (previous_selected_window != new_selected_window) {
+        for (auto window : windows) {
+            auto* p = dynamic_cast<InstructionWindow*>(
+                window);  // Figure out which window is actually a Message Window
+            if (p) {
+                if (new_selected_window == "node_window") {
+                    p->set_InstructionMode(InstructionWindow::InstructionMode::NODE);
+                }
+            }
         }
     }
     // Update Message Window only if there's new messages
@@ -160,6 +179,7 @@ std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_progra
 }
 bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
+    keypad(stdscr, TRUE);
     {
         IWindow* window = new NodeWindow(
             nodeHandle, robot_namespace, logger, 0, mainwindow_height, mainwindow_width);

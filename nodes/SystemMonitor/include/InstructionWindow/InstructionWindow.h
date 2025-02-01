@@ -3,12 +3,10 @@
 namespace eros_nodes::SystemMonitor {
 class InstructionWindow : public BaseWindow
 {
-    enum class InstructionMode {
-        GENERAL = 0,
-        NODE = 1,
-    };
-
    public:
+    enum class InstructionMode {
+        NODE = 0,
+    };
     InstructionWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
@@ -64,11 +62,14 @@ class InstructionWindow : public BaseWindow
     bool new_msg(eros::command_state /* command_state_msg */) override {  // Not Used
         return true;
     }
+    void set_InstructionMode(InstructionMode cmd_mode) {
+        mode = cmd_mode;
+    }
     MessageText new_keyevent(int key) override;
 
    private:
     bool update_window();
-    InstructionMode mode{InstructionMode::GENERAL};
+    InstructionMode mode{InstructionMode::NODE};
     ros::Publisher command_pub;
 };
 }  // namespace eros_nodes::SystemMonitor

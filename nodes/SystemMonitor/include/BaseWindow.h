@@ -98,8 +98,14 @@ class BaseWindow : public IWindow
     bool get_window_records_are_selectable() {
         return records_are_selectable;
     }
+    int16_t get_selected_record() {
+        return record_selected;
+    }
 
    protected:
+    void update_record_count(uint16_t count);
+    void decrement_selected_record();
+    void increment_selected_record();
     std::string name;
     int16_t tab_order;
     ScreenCoordinatePerc screen_coord_perc;
@@ -120,5 +126,6 @@ class BaseWindow : public IWindow
     WINDOW* win_;
     bool records_are_selectable{false};
     int16_t record_selected{-1};
+    uint16_t record_count{0};
 };
 }  // namespace eros_nodes::SystemMonitor
