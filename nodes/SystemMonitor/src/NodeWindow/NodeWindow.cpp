@@ -96,6 +96,9 @@ bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     if (node_it != node_list.end()) {  // Found it, update the record
         node_it->second.last_heartbeat_delta = 0.0;
         node_it->second.last_heartbeat = t_ros_time_;
+        node_it->second.host_device = heartbeat_msg.HostName;
+        node_it->second.base_node_name = heartbeat_msg.BaseNodeName;
+        node_it->second.state = (eros::Node::State)heartbeat_msg.NodeState;
     }
     else {  // Didn't find it,create one
         node_list_mutex.unlock();
