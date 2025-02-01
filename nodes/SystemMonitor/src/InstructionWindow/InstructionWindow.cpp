@@ -19,24 +19,16 @@ bool InstructionWindow::update_window() {
     instruction_string.push_back("S: Start System Snapshot. (C: Clear Snapshots)");
     if (mode == InstructionMode::NODE) {
         instruction_string.push_back("F: Get Node Firmware.");
-
-        bool change_log_level_mode = false;      // HACK
-        bool show_task_diagnostic_mode = false;  // HACK
-        bool change_nodestate_mode = false;      // HACK
         instruction_string.push_back("L: Change Log Level.");
-        if (change_log_level_mode == true) {
-            instruction_string.push_back("  1,2,3,4,5,6: Select Log Level.");
-        }
+        instruction_string.push_back("N: Change Node State (1-9).");
+        /*
         if (show_task_diagnostic_mode == false) {
             instruction_string.push_back("D: Show Task Diagnostics.");
         }
         else {
             instruction_string.push_back("D: Show System Diagnostics.");
         }
-        instruction_string.push_back("N: Change Node State (1-9).");
-        if (change_nodestate_mode == true) {
-            instruction_string.push_back("  1-9: Select Node State.");
-        }
+        */
     }
 
     else {

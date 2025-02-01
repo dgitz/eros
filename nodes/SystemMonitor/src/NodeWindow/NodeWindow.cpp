@@ -71,7 +71,7 @@ bool NodeWindow::update_window() {
         index++;
     }
     if (focused) {
-        box(get_window(), '+', '+');
+        box(get_window(), '.', '.');
     }
     else {
         box(get_window(), 0, 0);
@@ -245,6 +245,9 @@ bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
         if (node_it->node_name == heartbeat_msg.NodeName) {
             node_it->last_heartbeat_delta = 0.0;
             node_it->last_heartbeat = t_ros_time_;
+            node_it->host_device = heartbeat_msg.HostName;
+            node_it->base_node_name = heartbeat_msg.BaseNodeName;
+            node_it->state = (eros::Node::State)heartbeat_msg.NodeState;
             node_list_mutex.unlock();
             return true;
         }

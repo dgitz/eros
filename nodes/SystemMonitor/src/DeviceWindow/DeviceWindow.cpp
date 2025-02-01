@@ -51,7 +51,7 @@ bool DeviceWindow::update_window() {
         index++;
     }
     if (focused) {
-        box(get_window(), '+', '+');
+        box(get_window(), '.', '.');
     }
     else {
         box(get_window(), 0, 0);
