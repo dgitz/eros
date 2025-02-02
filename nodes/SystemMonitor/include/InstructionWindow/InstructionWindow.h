@@ -7,6 +7,10 @@ class InstructionWindow : public BaseWindow
     enum class InstructionMode {
         NODE = 0,
     };
+    enum class DiagnosticMode {
+        NODE = 0,
+        SYSTEM = 1,
+    };
     InstructionWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
@@ -63,13 +67,17 @@ class InstructionWindow : public BaseWindow
         return true;
     }
     void set_InstructionMode(InstructionMode cmd_mode) {
-        mode = cmd_mode;
+        instruction_mode = cmd_mode;
     }
-    MessageText new_keyevent(int key) override;
+    KeyEventContainer new_keyevent(int key) override;
+    bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
+        return true;
+    }
 
    private:
     bool update_window();
-    InstructionMode mode{InstructionMode::NODE};
+    InstructionMode instruction_mode{InstructionMode::NODE};
+    DiagnosticMode diagnostic_mode{DiagnosticMode::SYSTEM};
     ros::Publisher command_pub;
 };
 }  // namespace eros_nodes::SystemMonitor

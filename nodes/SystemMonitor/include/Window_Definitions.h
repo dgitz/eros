@@ -1,6 +1,18 @@
 #pragma once
 namespace eros_nodes::SystemMonitor {
 const double COMMTIMEOUT_THRESHOLD = 5.0f;
+enum class WindowCommandType {
+    UNKNOWN = 0,
+    VIEW_DIAGNOSTICS_NODE = 1,
+    VIEW_DIAGNOSTICS_SYSTEM = 2,
+    END_OF_LIST = 3
+};
+struct WindowCommand {
+    WindowCommand() : type(WindowCommandType::UNKNOWN) {
+    }
+    WindowCommandType type;
+    std::string option;
+};
 /*! \struct ScreenCoordinatePerc
     \brief ScreenCoordinatePerc container.
     */
@@ -54,6 +66,10 @@ struct MessageText {
     std::string text;
     eros::Level::Type level;
 };
+struct KeyEventContainer {
+    WindowCommand command;
+    MessageText message;
+};
 // Keys
 static constexpr int KEY_q = 113;
 static constexpr int KEY_Q = 81;
@@ -89,4 +105,5 @@ static constexpr int KEY_8 = 56;
 static constexpr int KEY_9 = 57;
 
 static constexpr int KEY_tab = 9;
+static constexpr int KEY_space = 32;
 }  // namespace eros_nodes::SystemMonitor

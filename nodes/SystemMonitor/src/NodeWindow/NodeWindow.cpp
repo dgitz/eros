@@ -93,10 +93,11 @@ bool NodeWindow::insertNode(NodeType node_type,
     update_record_count((uint16_t)after);
     return after > before;
 }
-MessageText NodeWindow::new_keyevent(int key) {
+KeyEventContainer NodeWindow::new_keyevent(int key) {
+    KeyEventContainer output;
     MessageText message;
     if (key == -1) {
-        return message;
+        return output;
     }
     logger->log_debug("Key: " + std::to_string(key));
     if (focused == true) {
@@ -167,6 +168,14 @@ MessageText NodeWindow::new_keyevent(int key) {
             }
             message = MessageText(str, eros::Level::Type::INFO);
         }
+        else if ((key == KEY_d) || (key == KEY_D)) {
+            auto node = node_list.at((uint16_t)get_selected_record());
+            output.command.type = WindowCommandType::VIEW_DIAGNOSTICS_NODE;
+            output.command.option = node.node_name;
+            std::string str = "Requesting Diagnostics for Node: " + node.node_name;
+            message = MessageText(str, eros::Level::Type::INFO);
+            logger->log_debug(str);
+        }
         else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4) ||
                  (key == KEY_5) || (key == KEY_6) || (key == KEY_7) || (key == KEY_8) ||
                  (key == KEY_9)) {
@@ -235,7 +244,8 @@ MessageText NodeWindow::new_keyevent(int key) {
         }
     }
     previous_key = key;
-    return message;
+    output.message = message;
+    return output;
 }
 
 bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {

@@ -52,11 +52,14 @@ class MessageWindow : public BaseWindow
     bool new_msg(eros::loadfactor /*loadfactor_msg*/) override {  // Not Used
         return true;
     }
-    MessageText new_keyevent(int /* key */) override {  // Not Used
-        MessageText empty;
-        return empty;
+    KeyEventContainer new_keyevent(int /* key */) override {  // Not Used
+        KeyEventContainer output;
+        return output;
     }
     bool new_MessageTextList(std::vector<MessageText> messages);
+    bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
+        return true;
+    }
 
    private:
     bool update_window();
