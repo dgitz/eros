@@ -1,6 +1,7 @@
 #pragma once
 #include <curses.h>
 #include <eros/Diagnostic.h>
+#include <eros/Diagnostic_Utility.h>
 #include <eros/Logger.h>
 #include <eros/eROS_Definitions.h>
 #include <eros/heartbeat.h>

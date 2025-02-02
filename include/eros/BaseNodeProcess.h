@@ -46,6 +46,7 @@
 #include <nlohmann/json.hpp>
 
 #include "Diagnostic.h"
+#include "Diagnostic_Utility.h"
 #include "Logger.h"
 #include "ResourceMonitor.h"
 #include "Utility.h"
@@ -205,10 +206,6 @@ class BaseNodeProcess
       \return The object
     */
     static eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
-
-    static eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def);
-
-    static Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag);
 
     static eros::armed_state convert(ArmDisarm::State v);
     static ArmDisarm::State convert(eros::armed_state v);

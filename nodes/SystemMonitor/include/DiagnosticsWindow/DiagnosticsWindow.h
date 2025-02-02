@@ -4,10 +4,11 @@ namespace eros_nodes::SystemMonitor {
 class DiagnosticsWindow : public BaseWindow
 {
    public:
+    const double REQUEST_DATA_RATE = 1.0;  // Hz
     struct SystemDiagnosticData {
         SystemDiagnosticData() : update_counter(0) {
         }
-        eros::diagnostic diagnostic;
+        eros::Diagnostic::DiagnosticDefinition diagnostic;
         uint64_t update_counter;
     };
     DiagnosticsWindow(ros::NodeHandle* nodeHandle,
@@ -65,5 +66,6 @@ class DiagnosticsWindow : public BaseWindow
    private:
     bool update_window();
     std::map<uint8_t, SystemDiagnosticData> system_diagnostics;
+    double request_data_timer{0.0};
 };
 }  // namespace eros_nodes::SystemMonitor

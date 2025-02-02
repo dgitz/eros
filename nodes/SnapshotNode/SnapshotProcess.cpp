@@ -31,7 +31,7 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
         }
     }
     ready_to_arm.ready_to_arm = true;
-    ready_to_arm.diag = convert(diag);
+    ready_to_arm.diag = eros::convert(diag);
     return diag;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
@@ -86,9 +86,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
         else if ((t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS)) {
             diag_list = clear_snapshots();
         }
-        else {}
+        else {
+        }
     }
-    else {}
+    else {
+    }
     return diag_list;
 }
 std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
