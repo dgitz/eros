@@ -125,6 +125,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a43b18bc4a44e84bd95c005e46a937f37"><td class="memItemLeft" align="right" valign="top">eros::diagnostic&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeros.html#a43b18bc4a44e84bd95c005e46a937f37">convert</a> (<a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> def)</td></tr>
+<tr class="separator:a43b18bc4a44e84bd95c005e46a937f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076e87ae5d63d058984c4e3d553ac16a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeros.html#a076e87ae5d63d058984c4e3d553ac16a">convert</a> (eros::diagnostic diag)</td></tr>
+<tr class="separator:a076e87ae5d63d058984c4e3d553ac16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a644185c74d55d11b914c1b3e470e5ce1"><td class="memItemLeft" align="right" valign="top"><a id="a644185c74d55d11b914c1b3e470e5ce1" name="a644185c74d55d11b914c1b3e470e5ce1"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isEqual</b> (double a, double b, double eps)</td></tr>
 <tr class="separator:a644185c74d55d11b914c1b3e470e5ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +142,84 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> (er
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Enhanced-ROS Namespace. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a43b18bc4a44e84bd95c005e46a937f37" name="a43b18bc4a44e84bd95c005e46a937f37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43b18bc4a44e84bd95c005e46a937f37">&#9670;&#160;</a></span>convert() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">eros::diagnostic eros::convert </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td>
+          <td class="paramname"><em>def</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">    5</span>                                                           {</div>
+<div class="line"><span class="lineno">    6</span>    eros::diagnostic diag;</div>
+<div class="line"><span class="lineno">    7</span>    diag.DeviceName = def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a8fd806bca964562c30304882f36e5b36">device_name</a>;</div>
+<div class="line"><span class="lineno">    8</span>    diag.NodeName = def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a23cae4b8198f1538e20cac3840044b17">node_name</a>;</div>
+<div class="line"><span class="lineno">    9</span>    diag.System = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a7246d83b3251b5b7f639a56a90b23de3">system</a>;</div>
+<div class="line"><span class="lineno">   10</span>    diag.SubSystem = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3d5563926ec133076a17e489873d4cbb">subsystem</a>;</div>
+<div class="line"><span class="lineno">   11</span>    diag.Component = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a789efb4f720c9f15daac2b6e30fa468b">component</a>;</div>
+<div class="line"><span class="lineno">   12</span>    diag.DiagnosticType = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3b78931eeccd56453f38fa1d56b7b83c">type</a>;</div>
+<div class="line"><span class="lineno">   13</span>    diag.DiagnosticMessage = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#afaa9403975c073715cfb6abc7064424b">message</a>;</div>
+<div class="line"><span class="lineno">   14</span>    diag.Level = (uint8_t)def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#ad7b0aeb1cdde4b87d658ccf360522ff0">level</a>;</div>
+<div class="line"><span class="lineno">   15</span>    diag.Description = def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a5b19e85935bee353b97a5349acd2f3f0">description</a>;</div>
+<div class="line"><span class="lineno">   16</span>    <span class="keywordflow">return</span> diag;</div>
+<div class="line"><span class="lineno">   17</span>}</div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a23cae4b8198f1538e20cac3840044b17"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a23cae4b8198f1538e20cac3840044b17">eros::Diagnostic::DiagnosticDefinition::node_name</a></div><div class="ttdeci">std::string node_name</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:126</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a3b78931eeccd56453f38fa1d56b7b83c"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3b78931eeccd56453f38fa1d56b7b83c">eros::Diagnostic::DiagnosticDefinition::type</a></div><div class="ttdeci">Diagnostic::DiagnosticType type</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:132</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a3d5563926ec133076a17e489873d4cbb"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3d5563926ec133076a17e489873d4cbb">eros::Diagnostic::DiagnosticDefinition::subsystem</a></div><div class="ttdeci">System::SubSystem subsystem</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:129</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a5b19e85935bee353b97a5349acd2f3f0"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a5b19e85935bee353b97a5349acd2f3f0">eros::Diagnostic::DiagnosticDefinition::description</a></div><div class="ttdeci">std::string description</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:136</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a7246d83b3251b5b7f639a56a90b23de3"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a7246d83b3251b5b7f639a56a90b23de3">eros::Diagnostic::DiagnosticDefinition::system</a></div><div class="ttdeci">System::MainSystem system</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:128</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a789efb4f720c9f15daac2b6e30fa468b"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a789efb4f720c9f15daac2b6e30fa468b">eros::Diagnostic::DiagnosticDefinition::component</a></div><div class="ttdeci">System::Component component</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:130</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_a8fd806bca964562c30304882f36e5b36"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a8fd806bca964562c30304882f36e5b36">eros::Diagnostic::DiagnosticDefinition::device_name</a></div><div class="ttdeci">std::string device_name</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:124</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_ad7b0aeb1cdde4b87d658ccf360522ff0"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#ad7b0aeb1cdde4b87d658ccf360522ff0">eros::Diagnostic::DiagnosticDefinition::level</a></div><div class="ttdeci">Level::Type level</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:135</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html_afaa9403975c073715cfb6abc7064424b"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#afaa9403975c073715cfb6abc7064424b">eros::Diagnostic::DiagnosticDefinition::message</a></div><div class="ttdeci">Diagnostic::Message message</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:134</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a076e87ae5d63d058984c4e3d553ac16a" name="a076e87ae5d63d058984c4e3d553ac16a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a076e87ae5d63d058984c4e3d553ac16a">&#9670;&#160;</a></span>convert() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> eros::convert </td>
+          <td>(</td>
+          <td class="paramtype">eros::diagnostic&#160;</td>
+          <td class="paramname"><em>diag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   19</span>                                                            {</div>
+<div class="line"><span class="lineno">   20</span>    <a class="code hl_struct" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> def;</div>
+<div class="line"><span class="lineno">   21</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a8fd806bca964562c30304882f36e5b36">device_name</a> = diag.DeviceName;</div>
+<div class="line"><span class="lineno">   22</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a23cae4b8198f1538e20cac3840044b17">node_name</a> = diag.NodeName;</div>
+<div class="line"><span class="lineno">   23</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a7246d83b3251b5b7f639a56a90b23de3">system</a> = (<a class="code hl_enumeration" href="group__eros.html#ga7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a>)diag.System;</div>
+<div class="line"><span class="lineno">   24</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3d5563926ec133076a17e489873d4cbb">subsystem</a> = (<a class="code hl_enumeration" href="group__eros.html#ga3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a>)diag.SubSystem;</div>
+<div class="line"><span class="lineno">   25</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a789efb4f720c9f15daac2b6e30fa468b">component</a> = (<a class="code hl_enumeration" href="group__eros.html#ga34a61840c9cd6ede13ed123e6facf338">System::Component</a>)diag.Component;</div>
+<div class="line"><span class="lineno">   26</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3b78931eeccd56453f38fa1d56b7b83c">type</a> = (<a class="code hl_enumeration" href="classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df">Diagnostic::DiagnosticType</a>)diag.DiagnosticType;</div>
+<div class="line"><span class="lineno">   27</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#afaa9403975c073715cfb6abc7064424b">message</a> = (<a class="code hl_enumeration" href="classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024">Diagnostic::Message</a>)diag.DiagnosticMessage;</div>
+<div class="line"><span class="lineno">   28</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#ad7b0aeb1cdde4b87d658ccf360522ff0">level</a> = (<a class="code hl_enumeration" href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a>)diag.Level;</div>
+<div class="line"><span class="lineno">   29</span>    def.<a class="code hl_variable" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a5b19e85935bee353b97a5349acd2f3f0">description</a> = diag.Description;</div>
+<div class="line"><span class="lineno">   30</span>    <span class="keywordflow">return</span> def;</div>
+<div class="line"><span class="lineno">   31</span>}</div>
+<div class="ttc" id="aclasseros_1_1Diagnostic_html_a745e5e7522f7514f63e96baa07913024"><div class="ttname"><a href="classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024">eros::Diagnostic::Message</a></div><div class="ttdeci">Message</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:55</div></div>
+<div class="ttc" id="aclasseros_1_1Diagnostic_html_a8e6414a2e8513786b446d438af2b65df"><div class="ttname"><a href="classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df">eros::Diagnostic::DiagnosticType</a></div><div class="ttdeci">DiagnosticType</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:18</div></div>
+<div class="ttc" id="agroup__eros_html_ga34a61840c9cd6ede13ed123e6facf338"><div class="ttname"><a href="group__eros.html#ga34a61840c9cd6ede13ed123e6facf338">eros::System::Component</a></div><div class="ttdeci">Component</div><div class="ttdef"><b>Definition:</b> eROS_Definitions.h:136</div></div>
+<div class="ttc" id="agroup__eros_html_ga3adcdfcbabd1045cf45829dff620b1ab"><div class="ttname"><a href="group__eros.html#ga3adcdfcbabd1045cf45829dff620b1ab">eros::System::SubSystem</a></div><div class="ttdeci">SubSystem</div><div class="ttdef"><b>Definition:</b> eROS_Definitions.h:113</div></div>
+<div class="ttc" id="agroup__eros_html_ga7c607a1224b68fbf12782f6969aa5c4b"><div class="ttname"><a href="group__eros.html#ga7c607a1224b68fbf12782f6969aa5c4b">eros::System::MainSystem</a></div><div class="ttdeci">MainSystem</div><div class="ttdef"><b>Definition:</b> eROS_Definitions.h:90</div></div>
+<div class="ttc" id="agroup__eros_html_gadf15b7ed977a35b7cc7ab70708ad4822"><div class="ttname"><a href="group__eros.html#gadf15b7ed977a35b7cc7ab70708ad4822">eros::Level::Type</a></div><div class="ttdeci">Type</div><div class="ttdef"><b>Definition:</b> eROS_Definitions.h:191</div></div>
+<div class="ttc" id="astructeros_1_1Diagnostic_1_1DiagnosticDefinition_html"><div class="ttname"><a href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">eros::Diagnostic::DiagnosticDefinition</a></div><div class="ttdoc">Contains the definition for the DiagnosticDefinition.</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:100</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="aad340bc10819e324ff74ba82fba10fbf" name="aad340bc10819e324ff74ba82fba10fbf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aad340bc10819e324ff74ba82fba10fbf">&#9670;&#160;</a></span>exec()</h2>
 
