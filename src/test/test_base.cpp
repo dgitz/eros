@@ -226,52 +226,6 @@ TEST(TestConversion, ArmedState) {
         EXPECT_EQ((uint8_t)in.armed_state, (uint8_t)out.state);
     }
 }
-TEST(TestConversion, Diagnostic) {
-    {
-        eros::diagnostic in;
-        in.DeviceName = "a";
-        in.NodeName = "b";
-        in.System = (uint8_t)System::MainSystem::SIMROVER;
-        in.SubSystem = (uint8_t)System::SubSystem::ROBOT_MONITOR;
-        in.Component = (uint8_t)System::Component::DIAGNOSTIC;
-        in.DiagnosticType = (uint8_t)Diagnostic::DiagnosticType::SOFTWARE;
-        in.DiagnosticMessage = (uint8_t)Diagnostic::Message::INITIALIZING;
-        in.Level = (uint8_t)Level::Type::INFO;
-        in.Description = "c";
-        Diagnostic::DiagnosticDefinition out = BaseNodeProcess::convert(in);
-        EXPECT_EQ(in.DeviceName, out.device_name);
-        EXPECT_EQ(in.NodeName, out.node_name);
-        EXPECT_EQ((uint8_t)in.System, (uint8_t)out.system);
-        EXPECT_EQ((uint8_t)in.SubSystem, (uint8_t)out.subsystem);
-        EXPECT_EQ((uint8_t)in.Component, (uint8_t)out.component);
-        EXPECT_EQ((uint8_t)in.DiagnosticType, (uint8_t)out.type);
-        EXPECT_EQ((uint8_t)in.DiagnosticMessage, (uint8_t)out.message);
-        EXPECT_EQ((uint8_t)in.Level, (uint8_t)out.level);
-        EXPECT_EQ(in.Description, out.description);
-    }
-    {
-        Diagnostic::DiagnosticDefinition in;
-        in.device_name = "a";
-        in.node_name = "b";
-        in.system = System::MainSystem::SIMROVER;
-        in.subsystem = System::SubSystem::ROBOT_MONITOR;
-        in.component = System::Component::DIAGNOSTIC;
-        in.type = Diagnostic::DiagnosticType::SOFTWARE;
-        in.message = Diagnostic::Message::INITIALIZING;
-        in.level = Level::Type::INFO;
-        in.description = "c";
-        eros::diagnostic out = BaseNodeProcess::convert(in);
-        EXPECT_EQ(out.DeviceName, in.device_name);
-        EXPECT_EQ(out.NodeName, in.node_name);
-        EXPECT_EQ((uint8_t)out.System, (uint8_t)in.system);
-        EXPECT_EQ((uint8_t)out.SubSystem, (uint8_t)in.subsystem);
-        EXPECT_EQ((uint8_t)out.Component, (uint8_t)in.component);
-        EXPECT_EQ((uint8_t)out.DiagnosticType, (uint8_t)in.type);
-        EXPECT_EQ((uint8_t)out.DiagnosticMessage, (uint8_t)in.message);
-        EXPECT_EQ((uint8_t)out.Level, (uint8_t)in.level);
-        EXPECT_EQ(out.Description, in.description);
-    }
-}
 TEST(ConfigurationTests, ConfigurationTestCases) {
     Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");
     BaseNodeProcessTester* tester = new BaseNodeProcessTester;

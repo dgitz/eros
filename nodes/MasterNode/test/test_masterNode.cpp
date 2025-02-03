@@ -80,7 +80,7 @@ TEST(MasterNode, TestMaster) {
         req.request.MinLevel = 0;        // All
         req.request.DiagnosticType = 0;  // All
         EXPECT_TRUE(client.call(req));
-        logger->log_diagnostic(BaseNodeProcess::convert(req.response.worst_diag));
+        logger->log_diagnostic(eros::convert(req.response.worst_diag));
         EXPECT_LT(req.response.worst_diag.Level, (uint8_t)Level::Type::WARN);
         for (auto diag : req.response.diag_list) {
             EXPECT_LT(diag.Level, (uint8_t)Level::Type::WARN);
