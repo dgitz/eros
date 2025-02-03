@@ -1,0 +1,1 @@
+![](https://github.com/dgitz/eros/blob/master/doc/NodeState/output/NodeState.svg)
