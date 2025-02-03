@@ -124,8 +124,11 @@ class NodeWindow : public BaseWindow
     }
     bool new_msg(eros::heartbeat heartbeat_msg) override;
     bool new_msg(eros::resource resource_used_msg) override;
-    MessageText new_keyevent(int key) override;
+    KeyEventContainer new_keyevent(int key) override;
     std::string get_node_info(NodeData node, bool selected);
+    bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
+        return true;
+    }
 
    private:
     bool insertNode(NodeType node_type,

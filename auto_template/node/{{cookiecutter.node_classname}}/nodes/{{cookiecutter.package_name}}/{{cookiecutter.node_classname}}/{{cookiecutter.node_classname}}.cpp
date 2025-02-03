@@ -165,7 +165,7 @@ bool {{cookiecutter.node_classname}}::run_1hz() {
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(eros::convert(latest_diagnostics.at(i)));
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {

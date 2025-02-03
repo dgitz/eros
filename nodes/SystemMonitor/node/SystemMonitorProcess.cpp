@@ -98,6 +98,7 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         tab_index = new_tab_index;
     }
     std::vector<MessageText> messages;
+    std::vector<WindowCommand> window_commands;
     std::string previous_selected_window;
     for (auto window : windows) {
         if (window->has_focus()) {
@@ -115,9 +116,12 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
                 window->set_focused(false);
             }
         }
-        MessageText message = window->new_keyevent(key_pressed);
-        if (message.text != "") {
-            messages.push_back(message);
+        auto output = window->new_keyevent(key_pressed);
+        if (output.message.text != "") {
+            messages.push_back(output.message);
+        }
+        if (output.command.type != WindowCommandType::UNKNOWN) {
+            window_commands.push_back(output.command);
         }
     }
     if (previous_selected_window != new_selected_window) {
@@ -150,7 +154,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
         }
     }
     // Update all Windows
-    for (auto window : windows) { window->update(t_dt, t_ros_time); }
+    for (auto window : windows) {
+        window->new_command(window_commands);
+        window->update(t_dt, t_ros_time);
+    }
     flushinp();
 
     return diag;

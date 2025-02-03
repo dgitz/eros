@@ -16,8 +16,15 @@ bool InstructionWindow::update(double dt, double t_ros_time) {
 bool InstructionWindow::update_window() {
     std::vector<std::string> instruction_string;
     // Instructions that are always supported
+    instruction_string.push_back("Space: Reset Screen");
     instruction_string.push_back("S: Start System Snapshot. (C: Clear Snapshots)");
-    if (mode == InstructionMode::NODE) {
+    if (diagnostic_mode == DiagnosticMode::SYSTEM) {
+        instruction_string.push_back("D: View NODE Diagnostics");
+    }
+    else if (diagnostic_mode == DiagnosticMode::NODE) {
+        instruction_string.push_back("D: View SYSTEM Diagnostics");
+    }
+    if (instruction_mode == InstructionMode::NODE) {
         instruction_string.push_back("F: Get Node Firmware.");
         instruction_string.push_back("L: Change Log Level.");
         instruction_string.push_back("N: Change Node State (1-9).");
@@ -32,7 +39,7 @@ bool InstructionWindow::update_window() {
     }
 
     else {
-        logger->log_warn("Mode: " + std::to_string((uint8_t)mode) + " Not Supported!");
+        logger->log_warn("Mode: " + std::to_string((uint8_t)instruction_mode) + " Not Supported!");
         return false;
     }
     for (std::size_t i = 0; i < instruction_string.size(); ++i) {
@@ -44,16 +51,26 @@ bool InstructionWindow::update_window() {
     wrefresh(get_window());
     return true;
 }
-MessageText InstructionWindow::new_keyevent(int key) {
+KeyEventContainer InstructionWindow::new_keyevent(int key) {
+    KeyEventContainer output;
     // Keys that are always supported.
-    if ((key == KEY_s) || (key == KEY_S)) {
+    if ((key == KEY_space)) {
+        output.command.type = WindowCommandType::VIEW_DIAGNOSTICS_SYSTEM;
+        std::string str = "Requesting Diagnostics for System";
+        MessageText message(str, eros::Level::Type::INFO);
+        logger->log_debug(str);
+        output.message = message;
+        return output;
+    }
+    else if ((key == KEY_s) || (key == KEY_S)) {
         MessageText message("Requesting System Snapshot...", eros::Level::Type::INFO);
         eros::command command;
         command.stamp = ros::Time::now();
         command.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
         command.Option1 = (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER;
         command_pub.publish(command);
-        return message;
+        output.message = message;
+        return output;
     }
     else if ((key == KEY_c) || (key == KEY_C)) {
         MessageText message("Clearing All Snapshots...", eros::Level::Type::WARN);
@@ -62,16 +79,16 @@ MessageText InstructionWindow::new_keyevent(int key) {
         command.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
         command.Option1 = (uint16_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS;
         command_pub.publish(command);
-        return message;
+        output.message = message;
+        return output;
     }
+
     // Specific Key/Mode support
-    if (mode == InstructionMode::NODE) {}
+    if (instruction_mode == InstructionMode::NODE) {}
     else {
-        logger->log_warn("Mode: " + std::to_string((uint8_t)mode) + " Not Supported!");
-        MessageText empty;
-        return empty;
+        logger->log_warn("Mode: " + std::to_string((uint8_t)instruction_mode) + " Not Supported!");
+        return output;
     }
-    MessageText empty;
-    return empty;
+    return output;
 }
 }  // namespace eros_nodes::SystemMonitor

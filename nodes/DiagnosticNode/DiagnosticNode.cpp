@@ -35,7 +35,7 @@ void DiagnosticNode::command_Callback(const eros::command::ConstPtr &t_msg) {
 }
 void DiagnosticNode::diagnostic_Callback(const eros::diagnostic::ConstPtr &t_msg) {
     eros::diagnostic eros_diag = BaseNodeProcess::convert_fromptr(t_msg);
-    Diagnostic::DiagnosticDefinition diag = process->convert(eros_diag);
+    Diagnostic::DiagnosticDefinition diag = eros::convert(eros_diag);
     process->new_external_diagnostic(diag);
 }
 bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Request &req,
@@ -45,8 +45,8 @@ bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Reque
             if ((Diagnostic::DiagnosticType)i == Diagnostic::DiagnosticType::UNKNOWN_TYPE) {
                 continue;
             }
-            res.diag_list.push_back(BaseNodeProcess::convert(
-                process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
+            res.diag_list.push_back(
+                eros::convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
         }
         logger->log_debug("Fulfilled System Diagnostics Service.");
         return true;
@@ -193,7 +193,7 @@ bool DiagnosticNode::run_1hz() {
         process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(process->convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(eros::convert(latest_diagnostics.at(i)));
     }
     Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {

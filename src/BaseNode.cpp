@@ -351,7 +351,7 @@ bool BaseNode::update(Node::State node_state) {
         resource_used_pub.publish(resource_used);
         std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
         for (std::size_t i = 0; i < diag_list.size(); ++i) {
-            eros::diagnostic diag = BaseNodeProcess::convert(diag_list.at(i));
+            eros::diagnostic diag = eros::convert(diag_list.at(i));
             diagnostic_pub.publish(diag);
         }
         last_01hz_noisy_timer = ros::Time::now();
@@ -462,7 +462,7 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request &req,
         if (diag_list.at(i).level > worst_diag.level) {
             worst_diag = diag_list.at(i);
         }
-        eros::diagnostic diag = BaseNodeProcess::convert(diag_list.at(i));
+        eros::diagnostic diag = eros::convert(diag_list.at(i));
         bool add_me = false;
         if ((req.MinLevel == 0) || (req.DiagnosticType == 0)) {
             add_me = true;
@@ -482,7 +482,7 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request &req,
         logger->log_diagnostic(diag_list.at(i));
         diagnostic_pub.publish(diag);
     }
-    res.worst_diag = BaseNodeProcess::convert(worst_diag);
+    res.worst_diag = eros::convert(worst_diag);
 
     return true;
 }

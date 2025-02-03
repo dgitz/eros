@@ -20,6 +20,8 @@ class IWindow
     virtual bool new_msg(eros::resource resource_msg) = 0;
     virtual bool new_msg(eros::loadfactor loadfactor_msg) = 0;
     virtual bool new_msg(eros::command_state command_state_msg) = 0;
+
+    virtual bool new_command(std::vector<WindowCommand> commands) = 0;
     virtual bool has_focus() = 0;
     /*! \brief Set focus.  Key events will be passed to any window that has focus.  Windows that
      * aren't focused will not receive any key events.
@@ -29,6 +31,6 @@ class IWindow
 
     virtual int16_t get_tab_order() = 0;
 
-    virtual MessageText new_keyevent(int key) = 0;
+    virtual KeyEventContainer new_keyevent(int key) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor

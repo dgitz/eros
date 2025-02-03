@@ -98,9 +98,12 @@ class DeviceWindow : public BaseWindow
     }
     bool new_msg(eros::resource resource_msg) override;
     bool new_msg(eros::loadfactor loadfactor_msg) override;
-    MessageText new_keyevent(int /* key */) override {  // Not Used
-        MessageText empty;
-        return empty;
+    KeyEventContainer new_keyevent(int /* key */) override {  // Not Used
+        KeyEventContainer output;
+        return output;
+    }
+    bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
+        return true;
     }
 
    private:

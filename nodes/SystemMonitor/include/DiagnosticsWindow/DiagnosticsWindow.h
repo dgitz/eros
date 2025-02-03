@@ -4,6 +4,8 @@ namespace eros_nodes::SystemMonitor {
 class DiagnosticsWindow : public BaseWindow
 {
    public:
+    const double REQUEST_DATA_RATE = 1.0;  // Hz
+    enum class DiagnosticMode { UNKNOWN = 0, SYSTEM = 1, NODE = 2 };
     DiagnosticsWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
@@ -51,12 +53,17 @@ class DiagnosticsWindow : public BaseWindow
     bool new_msg(eros::command_state /* command_state_msg */) override {  // Not Used
         return true;
     }
-    MessageText new_keyevent(int /* key */) override {  // Not Used
-        MessageText empty;
-        return empty;
+    KeyEventContainer new_keyevent(int /* key */) override {  // Not Used
+        KeyEventContainer output;
+        return output;
     }
+    bool new_command(std::vector<WindowCommand> commands) override;
 
    private:
     bool update_window();
+    DiagnosticMode diagnostic_mode{DiagnosticMode::SYSTEM};
+    std::map<uint8_t, eros::Diagnostic::DiagnosticDefinition> diagnostic_data;
+    double request_data_timer{0.0};
+    std::string node_to_monitor{""};
 };
 }  // namespace eros_nodes::SystemMonitor
