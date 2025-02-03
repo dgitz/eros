@@ -1,4 +1,15 @@
 # EROS
+__TOC__
+- [ROS Version Support](#ros-version-support)
+- [Overview](#overview)
+- [Messages](#messages)
+- [Features](#features)
+- [Sister Repositories](#sister-repositories)
+- [Compatability](#compatability)
+- [Usage Instructions](#usage-in-your-package)
+- [Development Guide](#development-guide)
+- [Test Plan](#test-plan)
+
 Welcome to the EROS Wiki!
 [![Release](https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg)](https://github.com/dgitz/eros/actions/workflows/Release.yml)
 
@@ -24,21 +35,18 @@ The purpose of EROS is the following:
 
 ## [Messages](doc/Messages/Messages.md)
 
-## [Development Guide](doc/Development/DevelopmentGuide.md)
-
-## [Test Plan](doc/TestPlan/TestPlan.md)
+## [Features](doc/Features/Features.md)
 
 
-**Sister Repositories:**
+## Sister Repositories
 
   * [robot_dev](https://github.com/dgitz/robot_dev/wiki) 
   * [ros_hats](https://github.com/dgitz/ros_hats/wiki)
   * [ros_display_hats](https://github.com/dgitz/ros_display_hats/wiki)
 
-See the sidebar for more information on this project.  
-
 I am very interested in what other people have to say about this project how they can integrate this into their applications.  Please let me know about any feature requests, bugs, etc that you encounter.  
-# Compatability
+
+## Compatability
 This package is currently compatible with the following architectures:
 * Any x86/64 compatible system
 * AArch Linux (such as a Jetson Nano)
@@ -51,7 +59,7 @@ If you would like to use this in your project on an architecture that is not cur
 
 Installation instructions for each of these supported device types are on the side, under [Device Deployment](https://github.com/dgitz/eROS/wiki/Device-Deployment).
 
-# Usage in your Package
+## Usage in your Package
 Update your package CMakeLists.txt:
 ```
 find_package(catkin REQUIRED COMPONENTS
@@ -69,6 +77,7 @@ OR
 ```
 <build_depend>eros</build_depend>
 ```
-# [Current Issues](doc/Issues.md)
 
-# [Features](doc/Features/Features.md)
+## [Development Guide](doc/Development/DevelopmentGuide.md)
+
+## [Test Plan](doc/TestPlan/TestPlan.md)
