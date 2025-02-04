@@ -1,3 +1,9 @@
+# Logger
+
+## Overview
+The eROS Logger gives you a nice way of printing out to console and to text files, to aid in debugging your contnet.
+
+## Features
 The EROS Logger has the following features:
 * No ROS Dependencies (i.e. can be used in Nodes, Unit Tests, etc).
    * Can be used with ROS Console Output if Installed/Enabled.
@@ -10,8 +16,12 @@ The EROS Logger has the following features:
 * Logger can take as an input either "std::string" or a Diagnostic.
 * Can be used in a Node or in a Unit Test
 
-![](https://github.com/dgitz/eros/blob/master/doc/Logger/output/LoggerClassDiagram.svg)
-# Examples:
+## Software Design
+![](../../output/Legend.png)
+### Class Diagram
+![](../../../include/eros/doc/output/LoggerClassDiagram.png)
+
+## Examples
 ```
 logger->log_notice("Hello World");
 logger->log_debug("Another String of length: " + std::to_string(2));

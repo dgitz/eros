@@ -1,12 +1,10 @@
 @startuml
 title Logger Class Diagram
 package eros {
-    class Logger
-    enum Logger::LoggerStatus
-    enum Level::Type
-    struct Diagnostic::DiagnosticDefinition
-}
-class Logger {
+enum Logger::LoggerStatus
+
+struct Diagnostic::DiagnosticDefinition
+class Logger #Cyan {
     +Logger(std::string level, std::string name)
     +Logger(std::string level, std::string directory, std::string name)
     +Level::Type get_logverbosity()
@@ -26,7 +24,8 @@ class Logger {
     +LoggerStatus log_diagnostic(Diagnostic::DiagnosticDefinition diagnostic)   
 
 }
-enum Logger::LoggerStatus {
+enum Level::Type #Cyan
+enum Logger::LoggerStatus #Cyan {
     FAILED_TO_OPEN
     LOG_WRITTEN
     LOG_SUPPRESSED
@@ -34,4 +33,5 @@ enum Logger::LoggerStatus {
 Logger +-- Logger::LoggerStatus
 Level::Type *-- Logger
 Diagnostic::DiagnosticDefinition *-- Logger
+}
 @enduml

@@ -1,13 +1,17 @@
+# eROS Features
+eROS has different features to help make your robot more robust.  Here is some documentation.
+
 | Status | Feature |
 | --- | --- |
 | DRAFT | [Arm & Disarm](ArmDisarm/ArmDisarm.md) |
 | DRAFT | [Base Node](BaseNode/BaseNodeOverview.md) |
-| DRAFT | [Data Logger](DataLogger/DataLogger.md) |
+| READY | [Data Logger](DataLogger/DataLogger.md) |
 | DRAFT | [Diagnostics](Diagnostics/Diagnostics.md) |
-| DRAFT | [Logger](Logger/Logger.md) | 
+| READY | [Logger](Logger/Logger.md) | 
 | DRAFT | [Master Control](MasterControl/MasterControl.md) |
+| READY | [Resource Monitor](ResourceMonitor/ResourceMonitor.md) |
 | DRAFT | [Safety Control](SafetyControl/SafetyControl.md) |
 | DRAFT | [Snapshot](Snapshot/Snapshot.md) |
 | DRAFT | [Software Sync](SoftwareSync/SoftwareSync.md) |
 | DRAFT | [System Monitor](SystemMonitor/SystemMonitor.md) |
-| DRAFT | [Templates](Templates/Templates.md) |
+| READY | [Templates](Templates/Templates.md) |
