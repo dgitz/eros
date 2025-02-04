@@ -1,11 +1,14 @@
-# TOC
-- [Diagnostics Overview](#diagnostics-overview)
+# Diagnostics
+
+## TOC
+- [Diagnostics Overview](#overview)
 - [Diagnostics Philosophy](#eros-diagnostic-philosophy)
 - [Structure](#diagnostic-structure)
+- [Software Design](#software-design)
 - [Examples](#examples)
 - [Future Feature List](#future-feature-list)
 
-# Diagnostics Overview
+## Overview
 Diagnostics seem to be more of an after-thought when developing typical ROS applications.  In EROS, Diagnostics are front and center.
 
 Diagnostics are useful for the following reasons:
@@ -18,7 +21,7 @@ Applications may also have their own use cases for diagnostics:
 * Arming/Disarming a robot automatically.
 * Generating error codes that can be tied back to malfunctioning Hardware.
 
-# EROS Diagnostic Philosophy
+## EROS Diagnostic Philosophy
 * Should not require ROS
 * Diagnostics are NOT to be used as a heartbeat.  Diagnostics should only be generated on an as-needed basis, as they may contain a large amount of data.
 * Diagnostics should be enabled on a node by node basis.  
@@ -26,7 +29,7 @@ Applications may also have their own use cases for diagnostics:
 * A Node may report 0, some or diagnostics for every diagnostic type.
   * Prefer to have every Node report the following Diagnostic Types (but not required): SOFTWARE,COMMUNICATIONS,DATA_STORAGE,SYSTEM_RESOURCE
 
-# Diagnostic Structure
+## Diagnostic Structure
 The following data should be common across all diagnostics defined on a single node:
   * Device Name
   * Node Name
@@ -42,10 +45,17 @@ Multiple Diagnostics can be enabled on a Node.  These diagnostics will have the 
 
 More information can be found at [eros::Diagnostic Class Reference](https://dgitz.github.io/eros/classeros_1_1Diagnostic.html).
 
-![](https://github.com/dgitz/eros/blob/master/doc/Diagnostic/output/DiagnosticClassDiagram.svg)
+## Software Design
+![](../../output/Legend.png)
 
-# Examples
-## Node Initialization
+### Class Diagrams
+![](../../../include/eros/doc/output/DiagnosticClassDiagram.png)
+
+## [Diagnostic Node](DiagnosticNode.md)
+A node that listes to all diagnostics and aggregates them.
+
+## Examples
+### Node Initialization
 The following illustrates how to initialize an EROS Node to attach a Node to a Diagnostic System, Subsystem, and Component.
 
 ```code
@@ -67,7 +77,7 @@ The following illustrates how to enable diagnostics for specific Diagnostic Type
   process->enable_diagnostics(diagnostic_types);
 ```
 
-## Update a specific Diagnostic Type
+### Update a specific Diagnostic Type
 The following illustrates how to update a specific Diagnostic Type.  This will over-write the current Diagnostic Type with this new information.
 
 ```code
@@ -77,7 +87,7 @@ The following illustrates how to update a specific Diagnostic Type.  This will o
                                       "All Configuration Files Loaded.");
 ```
 
-## Instantiate a new Diagnostic
+### Instantiate a new Diagnostic
 The following illustrates how to instantiate a new Diagnostic.
 
 ```code
@@ -92,7 +102,7 @@ The following illustrates how to instantiate a new Diagnostic.
                                         "Msg1");
 ```
 
-## Log a Diagnostic
+### Log a Diagnostic
 The following illustrates how to log a diagnostic.  Note that the Logger will only log a diagnostic if the diagnostic level is equal or higher than the current logger threshold level.
 
 ```code
@@ -102,6 +112,6 @@ if (diag.level > Level::Type::NOTICE) {
 ```
 
 
-# Future Feature List
+## Future Feature List
 * Diagnostic Aggregator: Collects diagnostics on system and aggregates on Diagnostic Type.
 * Integrate with ROS Diagnostics: http://wiki.ros.org/diagnostics
