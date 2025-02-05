@@ -1,10 +1,10 @@
 # eROS Features
 eROS has different features to help make your robot more robust.  Here is some documentation.
 
-| Status | Feature |
-| --- | --- |
+| Status | Feature | Comments |
+| --- | --- | --- |
 | READY | [Arm & Disarm](ArmDisarm/ArmDisarm.md) |
-| DRAFT | [Base Node](BaseNode/BaseNodeOverview.md) |
+| DRAFT | [Base Node](BaseNode/BaseNode.md) | Make Node State a mermaid diagram.  Create Base Node Sequence Diagram |
 | READY | [Data Logger](DataLogger/DataLogger.md) |
 | READY | [Diagnostics](Diagnostics/Diagnostics.md) |
 | READY | [Logger](Logger/Logger.md) | 
