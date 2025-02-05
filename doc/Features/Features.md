@@ -3,7 +3,7 @@ eROS has different features to help make your robot more robust.  Here is some d
 
 | Status | Feature |
 | --- | --- |
-| DRAFT | [Arm & Disarm](ArmDisarm/ArmDisarm.md) |
+| READY | [Arm & Disarm](ArmDisarm/ArmDisarm.md) |
 | DRAFT | [Base Node](BaseNode/BaseNodeOverview.md) |
 | READY | [Data Logger](DataLogger/DataLogger.md) |
 | READY | [Diagnostics](Diagnostics/Diagnostics.md) |
