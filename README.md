@@ -6,6 +6,7 @@ __TOC__
 - [Features](#features)
 - [Sister Repositories](#sister-repositories)
 - [Compatability](#compatability)
+- [Setup Instructions](#setup-instructions)
 - [Usage Instructions](#usage-in-your-package)
 - [Development Guide](#development-guide)
 - [Test Plan](#test-plan)
@@ -58,6 +59,23 @@ There are currently only a few features of eROS that actually need to be compati
 If you would like to use this in your project on an architecture that is not currently supported (but is still ROS compliant), let me know and I'll see what I can do to help.
 
 Installation instructions for each of these supported device types are on the side, under [Device Deployment](https://github.com/dgitz/eROS/wiki/Device-Deployment).
+
+## Setup Instructions
+### x86
+For x86 Setup, perform the following:
+1. Follow the typical ROS Noetic install instructions: http://wiki.ros.org/noetic/Installation/Ubuntu
+1. Go to your workspace/src folder and clone eROS: \
+  `git clone https://github.com/dgitz/eros.git`
+1. Run the Auto Setup Script: `cd eros && python3 scripts/simple_setup.py`
+1. Go back to your workspace directory
+1. Install all dependencies, build eROS and run unit tests.\
+  `rosdep install eros`\
+  `catkin_make` \
+  `catkin_make run_tests_eros`
+
+### Other Targets
+For other targets, follow [Device Deployment](doc/Development/DeviceDeployment.md)
+
 
 ## Usage in your Package
 Update your package CMakeLists.txt:

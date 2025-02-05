@@ -1,3 +1,7 @@
+# VS Code Setup
+1. Install the Recommended VS Code extensions by opening the Extensions Sidebar and typing `@recommended`.
+
+
 # Generate Doxygen HTML
 
 ```

@@ -1,5 +1,5 @@
 eROS currently supports the following types of devices that can run ROS:
-- Any x86_64 compatible system (uname -m gives: x86_64)
+- Any x86_64 compatible system (uname -m gives: x86_64).  For this architecture, follow [x86 Development](../../README.md#setup-instructions).
 - Any arm7 compatible system (uname -m gives: arv7l)  (Raspberry Pi...)
 - Any aarch64 compatible system (uname -m gives: aarch64)  (Jetson Nano...)
 
@@ -7,17 +7,6 @@ Here are some basic assumptions:
 1. All directories specified here and in the eROS content can be modified through either config files and in the code itself.  This just assumes the standard installation.
 
 The following is a brief guide for setup operations on these different devices.
-
-# X86_64
-1. Follow the typical ROS Noetic install instructions: http://wiki.ros.org/noetic/Installation/Ubuntu
-1. Go to your workspace/src folder and clone eROS: \
-  `git clone https://github.com/dgitz/eros.git`
-1. Perform either [Auto Setup](#auto-setup) or [Manual Setup](#manual-setup)
-1. Go back to your workspace directory
-1. Install all dependencies, build eROS and run unit tests.\
-  `rosdep install eros`\
-  `catkin_make` \
-  `catkin_make run_tests_eros`
 
 # ARM7VL
 1. Add user to dialout group: `sudo usermod -a -G gpio <USER ACCOUNT>`

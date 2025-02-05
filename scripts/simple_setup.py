@@ -33,7 +33,8 @@ dependency_list = [ 'libncurses5-dev',
             'python3-pip',
             'googletest',
             'gcovr',
-            'graphviz']
+            'graphviz'
+            'clang-format']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']
