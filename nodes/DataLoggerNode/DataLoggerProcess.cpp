@@ -9,8 +9,6 @@ DataLoggerProcess::DataLoggerProcess()
       snapshot_mode(true) {
 }
 
-
-
 DataLoggerProcess::~DataLoggerProcess() {
     cleanup();
 }
