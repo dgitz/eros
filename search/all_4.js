@@ -8,7 +8,7 @@ var searchData=
   ['entire_5fsystem_5',['ENTIRE_SYSTEM',['../group__eros.html#gga3adcdfcbabd1045cf45829dff620b1aba14f1f77bc31384d949bda4170d3c8477',1,'eros::System']]],
   ['eros_6',['eros',['../namespaceeros.html',1,'']]],
   ['eros_7',['Eros',['../group__eros.html',1,'']]],
-  ['eros_8',['eROS',['../index.html',1,'']]],
+  ['eros_8',['EROS',['../index.html',1,'']]],
   ['eros_5fdefinitions_2eh_9',['eROS_Definitions.h',['../eROS__Definitions_8h.html',1,'']]],
   ['eros_5fnodes_10',['eros_nodes',['../namespaceeros__nodes.html',1,'']]],
   ['eros_5fnodes_11',['Eros_nodes',['../group__eros__nodes.html',1,'']]],

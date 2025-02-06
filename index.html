@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>eROS: eROS</title>
+<title>eROS: EROS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,12 +69,90 @@ $(function() {
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">eROS </div></div>
+  <div class="headertitle"><div class="title">EROS </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a> Welcome to the eROS API Documentation.</p>
-<p >eROS Wiki: <a href="https://github.com/dgitz/eROS/wiki">https://github.com/dgitz/eROS/wiki</a></p>
-<p >Current Release: <a href="https://github.com/dgitz/eROS/releases/tag/CAPTAINMARVEL01"><b>CAPTAIN MARVEL</b></a> </p>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a><a href="https://github.com/dgitz/eros/actions/workflows/Release.yml"><img src="https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg" alt="Release" style="pointer-events: none;" class="inline"/></a></p>
+<p ><b>TOC</b></p><ul>
+<li>ROS Version Support</li>
+<li>Overview</li>
+<li>Messages</li>
+<li>Features</li>
+<li>Sister Repositories</li>
+<li>Compatability</li>
+<li>Setup Instructions</li>
+<li>Usage Instructions</li>
+<li>Development Guide</li>
+<li>Test Plan</li>
+</ul>
+<p >Welcome to the EROS Wiki!</p>
+<p ><a href="https://dgitz.github.io/eros/">Source Code Documentation</a></p>
+<p >EROS is: "Enhanced ROS". For more information on ROS, see: <a href="https://www.ros.org/">https://www.ros.org/</a></p>
+<h1>ROS Version Support</h1>
+<p >eROS will target ROS Noetic for future releases.</p>
+<p >eROS Support for ROS Melodic is limited. Final planned release is <a href="https://github.com/dgitz/eros/releases/tag/CAPTAINMARVEL02">CAPTAINMARVEL02</a> and code branch <a href="https://github.com/dgitz/eros/tree/melodic-devel">melodic-devel</a></p>
+<h1>Overview</h1>
+<p >ROS is a great tool for developing software for robotics. However there are definitely features lacking in ROS that I have encountered over the years, starting with my first forays into ROS Diamondback back in the day. After more than 25 years of robotics development, I've found that the biggest hurdle with developing robots is knowing exactly what is going on with a robot (good or bad), in a timely fashion. <br  />
+</p>
+<p >The purpose of EROS is the following:</p>
+<ul>
+<li>Make developing robot software easier</li>
+<li>Make troubleshooting robot software easier</li>
+<li>Make robot software more resilient</li>
+</ul>
+<h1>@ref /github/workspace/doc/Messages/Messages.md "Messages"</h1>
+<h1>@ref /github/workspace/doc/Features/Features.md "Features"</h1>
+<h1>Sister Repositories</h1>
+<ul>
+<li><a href="https://github.com/dgitz/robot_dev/wiki">robot_dev</a></li>
+<li><a href="https://github.com/dgitz/ros_hats/wiki">ros_hats</a></li>
+<li><a href="https://github.com/dgitz/ros_display_hats/wiki">ros_display_hats</a></li>
+</ul>
+<p >I am very interested in what other people have to say about this project how they can integrate this into their applications. Please let me know about any feature requests, bugs, etc that you encounter. <br  />
+</p>
+<h1>Compatability</h1>
+<p >This package is currently compatible with the following architectures:</p><ul>
+<li>Any x86/64 compatible system</li>
+<li>AArch Linux (such as a Jetson Nano)</li>
+<li>ARM7L (such as Raspberry Pi 2 or 3)</li>
+</ul>
+<p >There are currently only a few features of eROS that actually need to be compatible with these architectures:</p><ul>
+<li>Resource Monitor</li>
+</ul>
+<p >If you would like to use this in your project on an architecture that is not currently supported (but is still ROS compliant), let me know and I'll see what I can do to help.</p>
+<p >Installation instructions for each of these supported device types are on the side, under <a href="https://github.com/dgitz/eROS/wiki/Device-Deployment">Device Deployment</a>.</p>
+<h1>Setup Instructions</h1>
+<h2>x86</h2>
+<p >For x86 Setup, perform the following:</p><ol type="1">
+<li>Follow the typical ROS Noetic install instructions: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a></li>
+</ol>
+<ol type="1">
+<li>Go to your workspace/src folder and clone eROS: \ <code>git clone <a href="https://github.com/dgitz/eros.git">https://github.com/dgitz/eros.git</a></code></li>
+</ol>
+<ol type="1">
+<li>Run the Auto Setup Script: <code>cd eros &amp;&amp; python3 scripts/simple_setup.py</code></li>
+</ol>
+<ol type="1">
+<li>Go back to your workspace directory</li>
+</ol>
+<ol type="1">
+<li>Install all dependencies, build eROS and run unit tests.\ <code>rosdep install eros</code>\ <code>catkin_make</code> \ <code>catkin_make run_tests_eros</code></li>
+</ol>
+<ol type="1">
+<li>Setup <a href="https://wiki.ros.org/ROS/NetworkSetup">ROS Network Environment</a>.</li>
+</ol>
+<h2>Other Targets</h2>
+<p >For other targets, follow Device Deployment</p>
+<h1>Usage in your Package</h1>
+<p >Update your package CMakeLists.txt: </p><div class="fragment"><div class="line">find_package(catkin REQUIRED COMPONENTS</div>
+<div class="line">...</div>
+<div class="line">  eros</div>
+<div class="line">...</div>
+<div class="line">)</div>
+</div><!-- fragment --><p >Update your package.xml: </p><div class="fragment"><div class="line">&lt;depend&gt;eros&lt;/depend&gt;</div>
+</div><!-- fragment --><p> OR </p><div class="fragment"><div class="line">&lt;build_depend&gt;eros&lt;/build_depend&gt;</div>
+</div><!-- fragment --><h1>@ref /github/workspace/doc/Development/DevelopmentInstructions.md "Development Instructions"</h1>
+<h1>@ref /github/workspace/doc/TestPlan/TestPlan.md "Test Plan"</h1>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
