@@ -30,15 +30,15 @@ bool MessageWindow::new_msg(eros::command_state msg) {
     if ((msg.CurrentCommand.Command == (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT)) {
         if (msg.CurrentCommand.Option1 ==
             (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER) {
-            if (msg.State == (uint8_t)SnapshotProcess::SnapshotState::RUNNING) {
+            if (msg.State == (uint8_t)eros::SnapshotState::RUNNING) {
                 char tempstr[512];
                 sprintf(tempstr, "System Snap Progress: %4.2f %%", msg.PercentComplete);
                 set_message_text(std::string(tempstr), eros::Level::Type::NOTICE);
             }
-            else if (msg.State == (uint8_t)SnapshotProcess::SnapshotState::INCOMPLETE) {
+            else if (msg.State == (uint8_t)eros::SnapshotState::INCOMPLETE) {
                 set_message_text("System Snapshot Incomplete", eros::Level::Type::WARN);
             }
-            else if (msg.State == (uint8_t)SnapshotProcess::SnapshotState::COMPLETE) {
+            else if (msg.State == (uint8_t)eros::SnapshotState::COMPLETE) {
                 set_message_text("System Snapshot Completed.", eros::Level::Type::NOTICE);
             }
         }

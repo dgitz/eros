@@ -5,7 +5,6 @@
 #include <actionlib/client/terminal_state.h>
 #include <curses.h>
 #include <eros/BaseNodeProcess.h>
-#include <eros/SnapshotNode/SnapshotProcess.h>
 #include <eros/heartbeat.h>
 #include <ros/ros.h>
 

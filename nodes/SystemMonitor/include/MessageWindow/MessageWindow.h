@@ -1,5 +1,4 @@
 #pragma once
-#include <eros/SnapshotNode/SnapshotProcess.h>
 
 #include "BaseWindow.h"
 namespace eros_nodes::SystemMonitor {
