@@ -36,7 +36,7 @@ apt_dependency_list = [ 'libncurses5-dev',
             'graphviz',
             'clang-format',
             'doxygen']
-pip_dependency_list = ['pre-commit']
+pip_dependency_list = ['pre-commit','post-merge']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']

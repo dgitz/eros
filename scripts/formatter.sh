@@ -10,8 +10,13 @@ function print_usage()
 
 function format_dryrun {
     # Run clang-format on the files and check for errors
-    if clang-format --dry-run -Werror $FILES; then
+    format_error_file="format_cpp_error.log"
+    cmd="clang-format --dry-run -Werror "$FILES" &> "$format_error_file
+    eval $cmd
+    statusCode=$?
+    if [ $statusCode -eq 0 ]; then
         echo "No formatting errors found."
+        rm $format_error_file
         return 0
     else
         echo "Formatting errors found. Please run clang-format to fix them."
