@@ -72,6 +72,7 @@ For x86 Setup, perform the following:
   `rosdep install eros`\
   `catkin_make` \
   `catkin_make run_tests_eros`
+1. Setup [ROS Network Environment](https://wiki.ros.org/ROS/NetworkSetup).
 
 ### Other Targets
 For other targets, follow [Device Deployment](doc/Development/DeviceDeployment.md)
