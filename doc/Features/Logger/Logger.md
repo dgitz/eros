@@ -1,3 +1,5 @@
+[Features](../Features.md)
+
 # Logger
 
 ## Overview

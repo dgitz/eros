@@ -1,3 +1,5 @@
+[Features](../Features.md)
+
 # Base Node
 ## Overview
 The eROS Base Node is a derivable Node that adds a lot of functionality to your Nodes.
@@ -28,6 +30,39 @@ The eROS Base Node is a derivable Node that adds a lot of functionality to your 
 * Request current Firmware version
 * Change Logger Level
 * Request Node State Change
+
+## Node State Progression
+The Base Node progresses through different states to aid in proper context management.  The following illustrates the allowed Node::State Transitions.
+
+
+```mermaid
+graph TD;
+  Start[START];
+  Initializing[INITIALIZING];
+  Initialized[INITIALIZED];
+  Running[RUNNING];
+  Reset[RESET];
+  Paused[PAUSED];
+  Finished[FINISHED];
+  StateStart@{ shape: circle, label: " " }
+  StateStart --> Start
+  Start --> Initializing
+  Initializing --> Initialized
+  Initialized --> Running
+  Running --> Reset
+  Reset --> Running
+  Reset --> Initializing
+  Running --> Paused
+  Paused --> Running
+  Running --> Finished
+
+```
+
+In order for an eROS Custom Node to support this, the following must be supported in the Custom Node:
+```code
+bool changenodestate_service(eros::srv_change_nodestate::Request &req,
+                             eros::srv_change_nodestate::Response &res);
+```
 
 ## Usage Guide
 ### Call Order for Initialization

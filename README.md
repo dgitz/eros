@@ -1,4 +1,6 @@
 # EROS
+[![Release](https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg)](https://github.com/dgitz/eros/actions/workflows/Release.yml)
+
 __TOC__
 - [ROS Version Support](#ros-version-support)
 - [Overview](#overview)
@@ -12,7 +14,7 @@ __TOC__
 - [Test Plan](#test-plan)
 
 Welcome to the EROS Wiki!
-[![Release](https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg)](https://github.com/dgitz/eros/actions/workflows/Release.yml)
+
 
 [Source Code Documentation](https://dgitz.github.io/eros/)
 
@@ -97,6 +99,6 @@ OR
 <build_depend>eros</build_depend>
 ```
 
-## [Development Guide](doc/Development/DevelopmentGuide.md)
+## [Development Instructions](doc/Development/DevelopmentInstructions.md)
 
 ## [Test Plan](doc/TestPlan/TestPlan.md)

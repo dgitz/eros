@@ -1,6 +1,11 @@
+[Features](../Features.md)
+
+# System Monitor
+
+## Overview
 The EROS System Monitor is a nice tool to aid in viewing different aspects of a ROS system.
-![](https://github.com/dgitz/eROS/blob/master/media/SystemMonitor/SystemMonitor_Image1.png?raw=true)
-![](https://github.com/dgitz/eROS/blob/master/media/SystemMonitor/SystemMonitor_Image2.png?raw=true)
+
+## Features
 The following features are currently supported:
 * View active nodes (EROS nodes have more info, regular ROS nodes will also show up though).
 * View when the node was last able to be pinged/received a heartbeat from.  Note that if the System Monitor is started after a node has shutdown, it will not see it.
@@ -18,10 +23,21 @@ The following features are currently supported:
 * Request System Snapshot (System Snapshot is made up of individual Device Snapshots).
 * View Aggregate of System Diagnostics (press "D" to toggle Task/System mode).
 * View Info based on a specified robot namespace
-# Usage Instructions:
+
+## Usage Instructions:
 After building the eros application, simply run:
 ```
 rosrun eros system_monitor # With no __ns, will use a root namespace.
 rosrun eros system_monitor __ns:=<NAMESPACE> # Run in a namespace, only monitors on this namespace.
 ```
-# Future Features
+
+## Software Design
+![](../../output/Legend.png)
+
+### Class Diagrams
+![](../../../nodes/SystemMonitor/doc/output/SystemMonitorUtilitiesClassDiagram.png)
+![](../../../nodes/SystemMonitor/doc/output/SystemMonitorWindowClassDiagram.png)
+![](../../../nodes/SystemMonitor/doc/output/SystemMonitorNodeClassDiagram.png)
+
+### Sequence Diagrams
+![](../../../nodes/SystemMonitor/doc/output/SystemMonitorWindowSequenceDiagram.png)
