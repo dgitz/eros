@@ -15,7 +15,7 @@ function format_dryrun {
         return 0
     else
         echo "Formatting errors found. Please run clang-format to fix them."
-        return 0
+        return 1
     fi
 }
 
