@@ -38,13 +38,10 @@ The purpose of EROS is the following:
 
 ## [Messages](doc/Messages/Messages.md)
 
-<<<<<<< HEAD
 ## Software Design
 ![](doc/output/Legend.png)
 ![](doc/output/EROSPackageDiagram.png)
 
-=======
->>>>>>> origin/master
 ## [Features](doc/Features/Features.md)
 
 
