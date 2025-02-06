@@ -1,0 +1,17 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: local
+    hooks:
+    -   id: check-format
+        name: check-format
+        entry: ./scripts/formatter.sh dry-run
+        language: script
+    -   id: plantuml
+        name: plantuml
+        entry: ./scripts/dev_tools.sh plantuml
+        language: script
+    -   id: doxygen
+        name: doxygen
+        entry: doxygen Doxyfile.in
+        language: system
