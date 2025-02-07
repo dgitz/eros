@@ -455,5 +455,27 @@ class Architecture
         return Architecture::Type::UNKNOWN;
     }
 };
+enum class SnapshotState {
+    UNKNOWN = 0,    /*!< Uninitialized value. */
+    NOTRUNNING = 1, /*!< Snapshot is not Running. */
+    STARTED = 2,    /*!< Snapshot was Started. */
+    RUNNING = 3,    /*!< Snapshot is Running. */
+    READY = 4,      /*!< Snapshot is ready for retreival. */
+    COMPLETE = 5,   /*!< Snapshot was Completed. */
+    INCOMPLETE = 6, /*!< Snapshot was unable to Complete. */
+    END_OF_LIST = 7 /*!< Last item of list. Used for Range Checks. */
+};
+static std::string SnapshotStateString(SnapshotState v) {
+    switch (v) {
+        case SnapshotState::UNKNOWN: return "UNKNOWN";
+        case SnapshotState::NOTRUNNING: return "NOT RUNNING";
+        case SnapshotState::STARTED: return "STARTED";
+        case SnapshotState::RUNNING: return "RUNNING";
+        case SnapshotState::READY: return "READY";
+        case SnapshotState::COMPLETE: return "COMPLETE";
+        case SnapshotState::INCOMPLETE: return "INCOMPLETE";
+        default: return SnapshotStateString(SnapshotState::UNKNOWN);
+    }
+};
 }  // namespace eros
 #endif  // EROSDEFINITIONS_H
