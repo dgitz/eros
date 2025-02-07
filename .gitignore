@@ -9,3 +9,4 @@ dox/html/
 dox/xml/
 html/
 coverage/
+format_cpp_error.log

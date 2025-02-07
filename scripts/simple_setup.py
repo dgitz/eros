@@ -22,7 +22,7 @@ folder_list = [ '~/config/',
                 '~/test/storage/DATALOGS/',
                 '~/test/storage/SNAPSHOT/DEVICESNAPSHOT/',
                 '~/test/storage/SNAPSHOT/SYSTEMSNAPSHOT/']
-dependency_list = [ 'libncurses5-dev',
+apt_dependency_list = [ 'libncurses5-dev',
                     'libncursesw5-dev',
                     'libtinyxml-dev',
                     'zip',
@@ -33,8 +33,10 @@ dependency_list = [ 'libncurses5-dev',
             'python3-pip',
             'googletest',
             'gcovr',
-            'graphviz'
-            'clang-format']
+            'graphviz',
+            'clang-format',
+            'doxygen']
+pip_dependency_list = ['pre-commit','post-merge']
 config_file_list = [    'DeviceList.json',
                         'SnapshotConfig.xml',
                         'SyncConfig.xml']
@@ -49,8 +51,11 @@ def run_setup():
     for i in range(0,len(folder_list)):
         os.system("mkdir -p " + folder_list[i])
     print(CGREEN + "Installing Dependencies via apt..." + CEND)
-    for i in range(0,len(dependency_list)):
-        os.system("sudo apt --yes --force-yes install " + dependency_list[i])
+    for i in range(0,len(apt_dependency_list)):
+        os.system("sudo apt --yes --force-yes install " + apt_dependency_list[i])
+    print(CGREEN + "Installing Dependencies via pip..." + CEND)
+    for i in range(0,len(pip_dependency_list)):
+        os.system("pip install " + pip_dependency_list[i])
     os.system("python3 -m pip install --user cookiecutter")
     os.system("sudo snap install cookiecutter --edge")
     os.system('sudo bash -c "curl -L https://raw.githubusercontent.com/riboseinc/plantuml-install/master/ubuntu.sh | bash"')
