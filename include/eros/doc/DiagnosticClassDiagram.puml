@@ -1,7 +1,10 @@
 @startuml
 title Diagnostic Class Diagram
 package eros {
-    class System
+    class System::MainSystem
+    class System::SubSystem
+    class System::Component
+    class Level::Type
     together {
         class Diagnostic
         enum Diagnostic::DiagnosticType
@@ -52,7 +55,10 @@ package eros {
     Diagnostic +-- Diagnostic::Message
     Diagnostic +-- Diagnostic::DiagnosticType
     Diagnostic +-- Diagnostic::DiagnosticDefinition
-    System *- Diagnostic
+    System::MainSystem *-- Diagnostic
+    System::SubSystem *-- Diagnostic
+    System::Component *-- Diagnostic
+    Level::Type *-- Diagnostic
     class Diagnostic #LimeGreen {
 
         +{static} std::string DiagnosticTypeString(Diagnostic::DiagnosticType v)
