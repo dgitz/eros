@@ -88,19 +88,6 @@ $(function() {
 
 <p><code>#include &quot;BaseNodeProcess.h&quot;</code></p>
 <div class="dynheader">
-Inheritance diagram for eros::BaseNodeProcess:</div>
-<div class="dyncontent">
-<div class="center"><img src="classeros_1_1BaseNodeProcess__inherit__graph.png" border="0" usemap="#aeros_1_1BaseNodeProcess_inherit__map" alt="Inheritance graph"/></div>
-<map name="aeros_1_1BaseNodeProcess_inherit__map" id="aeros_1_1BaseNodeProcess_inherit__map">
-<area shape="rect" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="5,120,168,145"/>
-<area shape="rect" href="classeros__nodes_1_1DataLoggerProcess.html" title="The process utility for the DataLogger." alt="" coords="218,5,429,31"/>
-<area shape="rect" href="classeros__nodes_1_1DiagnosticNodeProcess.html" title="The process utility for the DiagnosticNode." alt="" coords="230,55,417,95"/>
-<area shape="rect" href="classeros__nodes_1_1MasterNodeProcess.html" title="The process utility for the Master Node." alt="" coords="216,120,431,145"/>
-<area shape="rect" href="classeros__nodes_1_1SafetyNodeProcess.html" title="The process utility for the Safety Node." alt="" coords="218,169,429,195"/>
-<area shape="rect" href="classeros__nodes_1_1SnapshotProcess.html" title="The process utility for the Snapshot Node." alt="" coords="224,219,423,244"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
 Collaboration diagram for eros::BaseNodeProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros_1_1BaseNodeProcess__coll__graph.png" border="0" usemap="#aeros_1_1BaseNodeProcess_coll__map" alt="Collaboration graph"/></div>
@@ -118,14 +105,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae7e106ebe0ddb39709c7f8ecef9407e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d2ff1a6f7248aaa0b802da74491b2fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a1d2ff1a6f7248aaa0b802da74491b2fd">enable_diagnostics</a> (std::vector&lt; <a class="el" href="classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65df">Diagnostic::DiagnosticType</a> &gt; diagnostic_types)</td></tr>
 <tr class="separator:a1d2ff1a6f7248aaa0b802da74491b2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5a9a30986aa6f5e7606925319e6d510"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#aa5a9a30986aa6f5e7606925319e6d510">finish_initialization</a> ()=0</td></tr>
-<tr class="memdesc:aa5a9a30986aa6f5e7606925319e6d510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derived Process Initialization.  <a href="classeros_1_1BaseNodeProcess.html#aa5a9a30986aa6f5e7606925319e6d510">More...</a><br /></td></tr>
+<tr class="memitem:aa5a9a30986aa6f5e7606925319e6d510"><td class="memItemLeft" align="right" valign="top"><a id="aa5a9a30986aa6f5e7606925319e6d510" name="aa5a9a30986aa6f5e7606925319e6d510"></a>
+virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>finish_initialization</b> ()=0</td></tr>
+<tr class="memdesc:aa5a9a30986aa6f5e7606925319e6d510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derived Process Initialization. <br /></td></tr>
 <tr class="separator:aa5a9a30986aa6f5e7606925319e6d510"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae473a795e2f2da302200ffbe810585ff"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#ae473a795e2f2da302200ffbe810585ff">reset</a> ()=0</td></tr>
-<tr class="memdesc:ae473a795e2f2da302200ffbe810585ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets Process. Used for counters, timers, etc.  <a href="classeros_1_1BaseNodeProcess.html#ae473a795e2f2da302200ffbe810585ff">More...</a><br /></td></tr>
+<tr class="memitem:ae473a795e2f2da302200ffbe810585ff"><td class="memItemLeft" align="right" valign="top"><a id="ae473a795e2f2da302200ffbe810585ff" name="ae473a795e2f2da302200ffbe810585ff"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()=0</td></tr>
+<tr class="memdesc:ae473a795e2f2da302200ffbe810585ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets Process. Used for counters, timers, etc. <br /></td></tr>
 <tr class="separator:ae473a795e2f2da302200ffbe810585ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a962893a682638e1e6bcf1f61763f2e4b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a962893a682638e1e6bcf1f61763f2e4b">update</a> (double t_dt, double t_ros_time)=0</td></tr>
-<tr class="memdesc:a962893a682638e1e6bcf1f61763f2e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update function must be implemented in Derived Process. This is used for all state machine logic, etc.  <a href="classeros_1_1BaseNodeProcess.html#a962893a682638e1e6bcf1f61763f2e4b">More...</a><br /></td></tr>
+<tr class="memitem:a962893a682638e1e6bcf1f61763f2e4b"><td class="memItemLeft" align="right" valign="top"><a id="a962893a682638e1e6bcf1f61763f2e4b" name="a962893a682638e1e6bcf1f61763f2e4b"></a>
+virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (double t_dt, double t_ros_time)=0</td></tr>
+<tr class="memdesc:a962893a682638e1e6bcf1f61763f2e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update function must be implemented in Derived Process. This is used for all state machine logic, etc. <br /></td></tr>
 <tr class="separator:a962893a682638e1e6bcf1f61763f2e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b02c8f86263a8a3c384aed8baf0e34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a09b02c8f86263a8a3c384aed8baf0e34">update_diagnostic</a> (<a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> diag)</td></tr>
 <tr class="separator:a09b02c8f86263a8a3c384aed8baf0e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,8 +150,9 @@ json&#160;</td><td class="memItemRight" valign="bottom"><b>read_configuration</b
 <tr class="memitem:a285f1e47c3eb51e63d2622261bcd1d81"><td class="memItemLeft" align="right" valign="top"><a id="a285f1e47c3eb51e63d2622261bcd1d81" name="a285f1e47c3eb51e63d2622261bcd1d81"></a>
 virtual std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command t_msg)=0</td></tr>
 <tr class="separator:a285f1e47c3eb51e63d2622261bcd1d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d3522f4aab97ef29324800b0412e20b"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#a1d3522f4aab97ef29324800b0412e20b">check_programvariables</a> ()=0</td></tr>
-<tr class="memdesc:a1d3522f4aab97ef29324800b0412e20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc.  <a href="classeros_1_1BaseNodeProcess.html#a1d3522f4aab97ef29324800b0412e20b">More...</a><br /></td></tr>
+<tr class="memitem:a1d3522f4aab97ef29324800b0412e20b"><td class="memItemLeft" align="right" valign="top"><a id="a1d3522f4aab97ef29324800b0412e20b" name="a1d3522f4aab97ef29324800b0412e20b"></a>
+virtual std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>check_programvariables</b> ()=0</td></tr>
+<tr class="memdesc:a1d3522f4aab97ef29324800b0412e20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. <br /></td></tr>
 <tr class="separator:a1d3522f4aab97ef29324800b0412e20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea68ca4d4c6355315c3a4ffc8730216e"><td class="memItemLeft" align="right" valign="top"><a id="aea68ca4d4c6355315c3a4ffc8730216e" name="aea68ca4d4c6355315c3a4ffc8730216e"></a>
 <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a>&#160;</td><td class="memItemRight" valign="bottom"><b>base_update</b> (double t_dt, double t_system_time)</td></tr>
@@ -317,35 +308,6 @@ eros::ready_to_arm&#160;</td><td class="memItemRight" valign="bottom"><b>ready_t
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1d3522f4aab97ef29324800b0412e20b" name="a1d3522f4aab97ef29324800b0412e20b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d3522f4aab97ef29324800b0412e20b">&#9670;&#160;</a></span>check_programvariables()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::vector&lt; <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> &gt; eros::BaseNodeProcess::check_programvariables </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. </p>
-
-<p>Implemented in <a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a2a2eb0c1e56468fa0bb09ba651d5a2a9">eros_nodes::DataLoggerProcess</a>, <a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#a55a33e1bd36d0e12d1783fae6b669bb5">eros_nodes::DiagnosticNodeProcess</a>, <a class="el" href="classeros__nodes_1_1MasterNodeProcess.html#ac62fcfde104676812323cf8503d99e2a">eros_nodes::MasterNodeProcess</a>, <a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html#ad924c63b8e2eadd5a5ae013055ea3a4d">eros_nodes::SafetyNodeProcess</a>, and <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#adee16d91c7bb182f6fee4d1ab7fd00fc">eros_nodes::SnapshotProcess</a>.</p>
-
-</div>
-</div>
 <a id="a0c604fec1eb2168c81bc5bcf368b4dbe" name="a0c604fec1eb2168c81bc5bcf368b4dbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c604fec1eb2168c81bc5bcf368b4dbe">&#9670;&#160;</a></span>convert_fromptr() <span class="overload">[1/5]</span></h2>
 
@@ -619,35 +581,6 @@ eros::ready_to_arm&#160;</td><td class="memItemRight" valign="bottom"><b>ready_t
 <div class="line"><span class="lineno">  101</span>    }</div>
 <div class="ttc" id="aclasseros_1_1Diagnostic_html_aba8d07c6dcdec56feb54c1d68873fcdd"><div class="ttname"><a href="classeros_1_1Diagnostic.html#aba8d07c6dcdec56feb54c1d68873fcdd">eros::Diagnostic::enable_diagnostics</a></div><div class="ttdeci">bool enable_diagnostics(std::vector&lt; Diagnostic::DiagnosticType &gt; diagnostic_types)</div><div class="ttdoc">Enable Diagnostic Types.</div><div class="ttdef"><b>Definition:</b> Diagnostic.h:235</div></div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="aa5a9a30986aa6f5e7606925319e6d510" name="aa5a9a30986aa6f5e7606925319e6d510"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5a9a30986aa6f5e7606925319e6d510">&#9670;&#160;</a></span>finish_initialization()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> eros::BaseNodeProcess::finish_initialization </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Derived Process Initialization. </p>
-
-<p>Implemented in <a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a982667d0b48053a381870bd99ca06bc5">eros_nodes::DataLoggerProcess</a>, <a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#ab466950555baf554930cbe53f35e1ab1">eros_nodes::DiagnosticNodeProcess</a>, <a class="el" href="classeros__nodes_1_1MasterNodeProcess.html#a34a6985b285caa4c29601d90510bd68e">eros_nodes::MasterNodeProcess</a>, <a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html#a1ac95e215ce497df0ffdf5d92dc4a661">eros_nodes::SafetyNodeProcess</a>, and <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a6d361e40f45ef5ad9577de0ea782f45f">eros_nodes::SnapshotProcess</a>.</p>
-
 </div>
 </div>
 <a id="a8f6bfae234cf9edbc0cc2033ed240aa9" name="a8f6bfae234cf9edbc0cc2033ed240aa9"></a>
@@ -1050,84 +983,6 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>If the state change was successful (true) or not (false) </dd></dl>
-
-</div>
-</div>
-<a id="ae473a795e2f2da302200ffbe810585ff" name="ae473a795e2f2da302200ffbe810585ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae473a795e2f2da302200ffbe810585ff">&#9670;&#160;</a></span>reset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void eros::BaseNodeProcess::reset </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Resets Process. Used for counters, timers, etc. </p>
-
-<p>Implemented in <a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#ab03b497f5847c8e177ce5ee697eac497">eros_nodes::DataLoggerProcess</a>, <a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#a23197b02db6c8c7d6a35a2d1bf3a3dab">eros_nodes::DiagnosticNodeProcess</a>, <a class="el" href="classeros__nodes_1_1MasterNodeProcess.html#a4117fe49ed3ca2a22a2824310a6f31bb">eros_nodes::MasterNodeProcess</a>, <a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html#a8af807f0471e18d882294d5272b7320b">eros_nodes::SafetyNodeProcess</a>, and <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#a78f83c906a25e9c0e6bd5b1e2df4851c">eros_nodes::SnapshotProcess</a>.</p>
-
-</div>
-</div>
-<a id="a962893a682638e1e6bcf1f61763f2e4b" name="a962893a682638e1e6bcf1f61763f2e4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a962893a682638e1e6bcf1f61763f2e4b">&#9670;&#160;</a></span>update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="structeros_1_1Diagnostic_1_1DiagnosticDefinition.html">Diagnostic::DiagnosticDefinition</a> eros::BaseNodeProcess::update </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t_dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t_ros_time</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Update function must be implemented in Derived Process. This is used for all state machine logic, etc. </p>
-
-<p>Implemented in <a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a99f2d4819054bc1936d7c8191097be9c">eros_nodes::DataLoggerProcess</a>, <a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#a54e32e093d4631f02dcc1c3d81c5e654">eros_nodes::DiagnosticNodeProcess</a>, <a class="el" href="classeros__nodes_1_1MasterNodeProcess.html#aad24680b7daf77e4b41066734604e5c6">eros_nodes::MasterNodeProcess</a>, <a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html#afefdddaf5b6107c07e8112a4329de1f2">eros_nodes::SafetyNodeProcess</a>, and <a class="el" href="classeros__nodes_1_1SnapshotProcess.html#ad65e9e79ce5a109d69af908279e95432">eros_nodes::SnapshotProcess</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classeros_1_1BaseNodeProcess_a962893a682638e1e6bcf1f61763f2e4b_cgraph.png" border="0" usemap="#aclasseros_1_1BaseNodeProcess_a962893a682638e1e6bcf1f61763f2e4b_cgraph" alt=""/></div>
-<map name="aclasseros_1_1BaseNodeProcess_a962893a682638e1e6bcf1f61763f2e4b_cgraph" id="aclasseros_1_1BaseNodeProcess_a962893a682638e1e6bcf1f61763f2e4b_cgraph">
-<area shape="rect" title="Update function must be implemented in Derived Process. This is used for all state machine logic,..." alt="" coords="5,29,168,69"/>
-<area shape="rect" href="classeros_1_1Diagnostic.html#a3ec3d19eb74655f375bba759a75f084d" title="Update Diagnostic." alt="" coords="216,29,375,69"/>
-</map>
-</div>
 
 </div>
 </div>

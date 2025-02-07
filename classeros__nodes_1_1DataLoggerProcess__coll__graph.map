@@ -1,6 +1,0 @@
-<map id="eros_nodes::DataLoggerProcess" name="eros_nodes::DataLoggerProcess">
-<area shape="rect" id="node1" title="The process utility for the DataLogger." alt="" coords="11,168,221,193"/>
-<area shape="rect" id="node2" href="$classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="35,93,197,119"/>
-<area shape="rect" id="node3" href="$classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="5,5,99,31"/>
-<area shape="rect" id="node4" href="$classeros_1_1Diagnostic.html" title="Diagnostic class Diagnostic class used to create and update diagnostic information." alt="" coords="123,5,237,31"/>
-</map>

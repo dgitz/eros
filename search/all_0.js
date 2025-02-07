@@ -7,10 +7,9 @@ var searchData=
   ['architecturestring_4',['ArchitectureString',['../group__eros.html#ga492b7a7dd8ee76c360361f287fbd9f6c',1,'eros::Architecture']]],
   ['arm_5',['ARM',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4a47f45e65244c17ec9fa8771a5c6d60e1',1,'eros::Command']]],
   ['armdisarm_6',['ArmDisarm',['../classeros_1_1ArmDisarm.html',1,'eros']]],
-  ['armdisarmmonitor_7',['ArmDisarmMonitor',['../classeros__nodes_1_1ArmDisarmMonitor.html',1,'eros_nodes']]],
-  ['armdisarmstring_8',['ArmDisarmString',['../group__eros.html#gadac504266936ea5fba28634df6019a65',1,'eros::ArmDisarm']]],
-  ['armed_9',['ARMED',['../group__eros.html#gga3116e94db74f0768d8f19c908836972eaf40e2850f4c07c01444b5f2393f6eb4c',1,'eros::ArmDisarm']]],
-  ['armedstate_5fcallback_10',['armedstate_Callback',['../classeros_1_1BaseNode.html#ad7698ae0f8fc347eeb810a2fa629da01',1,'eros::BaseNode']]],
-  ['arming_11',['ARMING',['../group__eros.html#gga3116e94db74f0768d8f19c908836972eae32577107fe76fbf64bed546c9bdb94b',1,'eros::ArmDisarm']]],
-  ['armv7l_12',['ARMV7L',['../group__eros.html#gga4de8a31a2dd45d3d9559e76109a23e1fad0600557e19a3dbe302386034bbd6895',1,'eros::Architecture']]]
+  ['armdisarmstring_7',['ArmDisarmString',['../group__eros.html#gadac504266936ea5fba28634df6019a65',1,'eros::ArmDisarm']]],
+  ['armed_8',['ARMED',['../group__eros.html#gga3116e94db74f0768d8f19c908836972eaf40e2850f4c07c01444b5f2393f6eb4c',1,'eros::ArmDisarm']]],
+  ['armedstate_5fcallback_9',['armedstate_Callback',['../classeros_1_1BaseNode.html#ad7698ae0f8fc347eeb810a2fa629da01',1,'eros::BaseNode']]],
+  ['arming_10',['ARMING',['../group__eros.html#gga3116e94db74f0768d8f19c908836972eae32577107fe76fbf64bed546c9bdb94b',1,'eros::ArmDisarm']]],
+  ['armv7l_11',['ARMV7L',['../group__eros.html#gga4de8a31a2dd45d3d9559e76109a23e1fad0600557e19a3dbe302386034bbd6895',1,'eros::Architecture']]]
 ];

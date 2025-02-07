@@ -76,7 +76,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">eROS_Definitions.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -95,22 +96,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="eROS__Definitions_8h__dep__incl.png" border="0" usemap="#ainclude_2eros_2eROS__Definitions_8hdep" alt=""/></div>
 <map name="ainclude_2eros_2eROS__Definitions_8hdep" id="ainclude_2eros_2eROS__Definitions_8hdep">
-<area shape="rect" title=" " alt="" coords="463,5,671,31"/>
-<area shape="rect" href="BaseNodeProcess_8h.html" title=" " alt="" coords="475,299,690,324"/>
-<area shape="rect" href="Diagnostic_8h.html" title=" " alt="" coords="545,79,711,104"/>
-<area shape="rect" href="Logger_8h.html" title=" " alt="" coords="444,152,591,177"/>
-<area shape="rect" href="ResourceMonitor_8h.html" title=" " alt="" coords="647,225,851,251"/>
-<area shape="rect" href="BaseNode_8h.html" title=" " alt="" coords="405,379,571,405"/>
-<area shape="rect" href="DataLoggerProcess_8h.html" title=" " alt="" coords="5,372,168,412"/>
-<area shape="rect" href="DiagnosticNodeProcess_8h.html" title=" " alt="" coords="193,372,381,412"/>
-<area shape="rect" href="MasterNodeProcess_8h.html" title=" " alt="" coords="595,372,762,412"/>
-<area shape="rect" href="SafetyNodeProcess_8h.html" title=" " alt="" coords="786,372,950,412"/>
-<area shape="rect" href="SnapshotProcess_8h.html" title=" " alt="" coords="974,372,1157,412"/>
-<area shape="rect" href="DataLoggerNode_8h.html" title=" " alt="" coords="100,460,263,500"/>
-<area shape="rect" href="DiagnosticNode_8h.html" title=" " alt="" coords="335,460,523,500"/>
-<area shape="rect" href="MasterNode_8h.html" title=" " alt="" coords="571,460,738,500"/>
-<area shape="rect" href="SafetyNode_8h.html" title=" " alt="" coords="774,460,938,500"/>
-<area shape="rect" href="SnapshotNode_8h.html" title=" " alt="" coords="967,460,1150,500"/>
+<area shape="rect" title=" " alt="" coords="42,5,250,31"/>
+<area shape="rect" href="BaseNodeProcess_8h.html" title=" " alt="" coords="54,299,269,324"/>
+<area shape="rect" href="Diagnostic_8h.html" title=" " alt="" coords="124,79,290,104"/>
+<area shape="rect" href="Logger_8h.html" title=" " alt="" coords="23,152,170,177"/>
+<area shape="rect" href="ResourceMonitor_8h.html" title=" " alt="" coords="226,225,430,251"/>
+<area shape="rect" href="BaseNode_8h.html" title=" " alt="" coords="78,372,245,397"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -159,6 +150,22 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ROS_INSTALLED</b></td></tr>
 <tr class="memdesc:a2cac981fc1bc6051088dbe710a60df46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define if ROS is Installed or Not. <br /></td></tr>
 <tr class="separator:a2cac981fc1bc6051088dbe710a60df46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga209031320c478c9ba5fd268b317e4508"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros.html#ga209031320c478c9ba5fd268b317e4508">eros::SnapshotState</a> { <br />
+&#160;&#160;<a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a696b031073e74bf2cb98e5ef201d4aa3">eros::SnapshotState::UNKNOWN</a> = 0
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a3d6fb80d3c9227f95be71c7e4ea2a8f8">eros::SnapshotState::NOTRUNNING</a> = 1
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a17130e6c806885e23770df1519b18eb7">eros::SnapshotState::STARTED</a> = 2
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a43491564ebcfd38568918efbd6e840fd">eros::SnapshotState::RUNNING</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a2baa69eafc7204f3bd8648eba580c489">eros::SnapshotState::READY</a> = 4
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a3de44296982e58199afc513a715b12ba">eros::SnapshotState::COMPLETE</a> = 5
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508a2e47f45b8584e07c8ebd4f693d8cfe10">eros::SnapshotState::INCOMPLETE</a> = 6
+, <a class="el" href="group__eros.html#gga209031320c478c9ba5fd268b317e4508ac2b0b4a580050a88a759ac7c20ce853c">eros::SnapshotState::END_OF_LIST</a> = 7
+<br />
+ }</td></tr>
+<tr class="separator:ga209031320c478c9ba5fd268b317e4508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

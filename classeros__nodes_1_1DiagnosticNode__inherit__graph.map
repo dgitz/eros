@@ -1,4 +1,0 @@
-<map id="eros_nodes::DiagnosticNode" name="eros_nodes::DiagnosticNode">
-<area shape="rect" id="node1" title="A node used to collect diagnostic information." alt="" coords="5,79,192,104"/>
-<area shape="rect" id="node2" href="$classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="41,5,156,31"/>
-</map>

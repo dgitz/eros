@@ -1,8 +1,0 @@
-<map id="eros::BaseNode" name="eros::BaseNode">
-<area shape="rect" id="node1" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="5,104,120,129"/>
-<area shape="rect" id="node2" href="$classeros__nodes_1_1DataLoggerNode.html" title="A Node that can be used to collect bag files. Configured as either always logging to disk,..." alt="" coords="168,5,361,31"/>
-<area shape="rect" id="node3" href="$classeros__nodes_1_1DiagnosticNode.html" title="A node used to collect diagnostic information." alt="" coords="171,55,358,80"/>
-<area shape="rect" id="node4" href="$classeros__nodes_1_1MasterNode.html" title="MasterNode is used to provide information about a host device." alt="" coords="181,104,348,129"/>
-<area shape="rect" id="node5" href="$classeros__nodes_1_1SafetyNode.html" title="The SafetyNode is used to control a system Safely." alt="" coords="183,153,346,179"/>
-<area shape="rect" id="node6" href="$classeros__nodes_1_1SnapshotNode.html" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis." alt="" coords="174,203,355,228"/>
-</map>

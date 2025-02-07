@@ -9,5 +9,5 @@ var searchData=
   ['noerror_6',['NOERROR',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024a2b7a5d9c6a3ccad249c1bb7ecc93a6ed',1,'eros::Diagnostic']]],
   ['none_7',['NONE',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4ab50339a10e1de285ac99d4c3990b8693',1,'eros::Command']]],
   ['notice_8',['NOTICE',['../group__eros.html#ggadf15b7ed977a35b7cc7ab70708ad4822aaa14599dc3fdfa9cc81a7c3c247b77b9',1,'eros::Level']]],
-  ['notrunning_9',['NOTRUNNING',['../classeros__nodes_1_1SnapshotProcess.html#a4238b247d4bd5fcb6dd5d951ddccd4dca3d6fb80d3c9227f95be71c7e4ea2a8f8',1,'eros_nodes::SnapshotProcess']]]
+  ['notrunning_9',['NOTRUNNING',['../group__eros.html#gga209031320c478c9ba5fd268b317e4508a3d6fb80d3c9227f95be71c7e4ea2a8f8',1,'eros']]]
 ];

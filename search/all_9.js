@@ -20,10 +20,9 @@ var searchData=
   ['log_5fwarn_17',['LOG_WARN',['../classeros_1_1Logger.html#a4291e7ade096b5d3e3956704e8896239',1,'eros::Logger']]],
   ['log_5fwarn_18',['log_warn',['../Logger_8h.html#a6450dfaf286e7fca293f2a51ad939ef2',1,'Logger.h']]],
   ['log_5fwritten_19',['LOG_WRITTEN',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572a79c4701ee0b3df9f9fa6e570d24ae605',1,'eros::Logger']]],
-  ['logger_20',['Logger',['../classeros_1_1Logger.html',1,'eros']]],
+  ['logger_20',['Logger',['../classeros_1_1Logger.html',1,'eros::Logger'],['../classeros_1_1Logger.html#ae6373abb707086aec6b3dfaf0ed3f34d',1,'eros::Logger::Logger(std::string level, std::string directory, std::string name)'],['../classeros_1_1Logger.html#a0fefb6088c7644daba2b90ed1e2c46fe',1,'eros::Logger::Logger(std::string level, std::string name)']]],
   ['logger_21',['logger',['../classeros_1_1BaseNodeProcess.html#af0dcefbd8a95037c869933bac97be362',1,'eros::BaseNodeProcess']]],
-  ['logger_22',['Logger',['../classeros_1_1Logger.html#ae6373abb707086aec6b3dfaf0ed3f34d',1,'eros::Logger::Logger(std::string level, std::string directory, std::string name)'],['../classeros_1_1Logger.html#a0fefb6088c7644daba2b90ed1e2c46fe',1,'eros::Logger::Logger(std::string level, std::string name)']]],
-  ['logger_2eh_23',['Logger.h',['../Logger_8h.html',1,'']]],
-  ['loggerlevel_5fservice_24',['loggerlevel_service',['../classeros_1_1BaseNode.html#a3d69f38c697dd0d4a1523cdf494f2008',1,'eros::BaseNode']]],
-  ['loggerstatus_25',['LoggerStatus',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572',1,'eros::Logger']]]
+  ['logger_2eh_22',['Logger.h',['../Logger_8h.html',1,'']]],
+  ['loggerlevel_5fservice_23',['loggerlevel_service',['../classeros_1_1BaseNode.html#a3d69f38c697dd0d4a1523cdf494f2008',1,'eros::BaseNode']]],
+  ['loggerstatus_24',['LoggerStatus',['../classeros_1_1Logger.html#ae09869e0345da7e623b505c31fed7572',1,'eros::Logger']]]
 ];
