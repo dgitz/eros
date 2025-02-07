@@ -6,7 +6,7 @@ on:
 
 jobs:
   BuildTest:
-    runs-on: self-hosted
+    runs-on: development # Options: self-hosted, development
 
     steps:   
     - uses: actions/checkout@v1
