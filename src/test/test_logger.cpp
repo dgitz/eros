@@ -1,18 +1,17 @@
 /*! \file test_diagnostics.cpp
  */
-#include <eros/Diagnostic.h>
 #include <eros/Logger.h>
+#include <eros_diagnostic/Diagnostic.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
 using namespace eros;
 TEST(BasicTest, TestTypicalOperation) {
-    Diagnostic diag_helper;
-    diag_helper.initialize("UnitTestDevice",
-                           "UnitTestNode-Logger",
-                           System::MainSystem::SIMROVER,
-                           System::SubSystem::ENTIRE_SYSTEM,
-                           System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger("INFO", diag_helper.get_root_diagnostic().node_name);
+    eros_diagnostic::Diagnostic diag("UnitTestDevice",
+                                     "UnitTestNode-Logger",
+                                     System::MainSystem::SIMROVER,
+                                     System::SubSystem::ENTIRE_SYSTEM,
+                                     System::Component::ENTIRE_SUBSYSTEM);
+    Logger* logger = new Logger("INFO", diag.node_name);
     EXPECT_TRUE(logger->is_logger_ok());
     EXPECT_TRUE(logger->enable_ROS_logger() == true);
     EXPECT_TRUE(logger->log_debug("A String that should debug") ==
@@ -54,13 +53,12 @@ TEST(BasicTest, TestCustomOperation) {
     delete logger;
 }
 TEST(BasicTest, TestVerbosity) {
-    Diagnostic diag_helper;
-    diag_helper.initialize("UnitTestDevice",
-                           "UnitTestNode-Logger",
-                           System::MainSystem::SIMROVER,
-                           System::SubSystem::ENTIRE_SYSTEM,
-                           System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger("INFO", diag_helper.get_root_diagnostic().node_name);
+    eros_diagnostic::Diagnostic diag("UnitTestDevice",
+                                     "UnitTestNode-Logger",
+                                     System::MainSystem::SIMROVER,
+                                     System::SubSystem::ENTIRE_SYSTEM,
+                                     System::Component::ENTIRE_SUBSYSTEM);
+    Logger* logger = new Logger("INFO", diag.node_name);
     EXPECT_TRUE(logger->is_logger_ok());
     EXPECT_TRUE(logger->set_logverbosity(Level::Type::INFO));
     EXPECT_EQ(logger->get_logverbosity(), Level::Type::INFO);
@@ -74,15 +72,14 @@ TEST(BasicTest, TestVerbosity) {
     delete logger;
 }
 TEST(BasicTest, LogDiagnostic) {
-    Diagnostic diag_helper;
-    diag_helper.initialize("UnitTestDevice",
-                           "UnitTestNode-Logger",
-                           System::MainSystem::SIMROVER,
-                           System::SubSystem::ENTIRE_SYSTEM,
-                           System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger("DEBUG", diag_helper.get_root_diagnostic().node_name);
+    eros_diagnostic::Diagnostic diag("UnitTestDevice",
+                                     "UnitTestNode-Logger",
+                                     System::MainSystem::SIMROVER,
+                                     System::SubSystem::ENTIRE_SYSTEM,
+                                     System::Component::ENTIRE_SUBSYSTEM);
+    Logger* logger = new Logger("DEBUG", diag.node_name);
     logger->enable_ROS_logger();
-    Diagnostic::DiagnosticDefinition testDiagnostic;
+    eros_diagnostic::Diagnostic testDiagnostic;
     for (uint8_t i = 0; i <= (uint8_t)(Level::Type::END_OF_LIST); ++i) {
         testDiagnostic.level = (Level::Type)(i);
         EXPECT_EQ(logger->log_diagnostic(testDiagnostic), Logger::LoggerStatus::LOG_WRITTEN);
@@ -91,13 +88,12 @@ TEST(BasicTest, LogDiagnostic) {
     delete logger;
 }
 TEST(AdvancedTest, LogLineCount) {
-    Diagnostic diag_helper;
-    diag_helper.initialize("UnitTestDevice",
-                           "UnitTestNode-Logger",
-                           System::MainSystem::SIMROVER,
-                           System::SubSystem::ENTIRE_SYSTEM,
-                           System::Component::ENTIRE_SUBSYSTEM);
-    Logger* logger = new Logger("DEBUG", diag_helper.get_root_diagnostic().node_name);
+    eros_diagnostic::Diagnostic diag("UnitTestDevice",
+                                     "UnitTestNode-Logger",
+                                     System::MainSystem::SIMROVER,
+                                     System::SubSystem::ENTIRE_SYSTEM,
+                                     System::Component::ENTIRE_SUBSYSTEM);
+    Logger* logger = new Logger("DEBUG", diag.node_name);
     uint16_t linesToWrite = Logger::MAXLINE_COUNT + 100;
     logger->disable_consoleprint();  // Disabling to not annoy.
     for (uint16_t i = 0; i < linesToWrite; ++i) {

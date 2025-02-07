@@ -1,0 +1,9 @@
+add_library(diagnosticUtility DiagnosticUtility.cpp)
+target_link_libraries(diagnosticUtility ${catkin_LIBRARIES})
+add_dependencies(diagnosticUtility eros_generate_messages_cpp)
+
+add_library(diagnosticManager DiagnosticManager.cpp)
+target_link_libraries(diagnosticManager ${catkin_LIBRARIES} diagnosticUtility)
+add_dependencies(diagnosticManager eros_generate_messages_cpp)
+
+add_subdirectory(test)

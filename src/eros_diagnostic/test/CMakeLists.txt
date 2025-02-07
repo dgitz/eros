@@ -1,0 +1,7 @@
+catkin_add_gtest(test_diagnostic test_diagnostic.cpp)
+target_link_libraries(test_diagnostic ${catkin_LIBRARIES} ${Boost_LIBRARIES} diagnosticUtility)
+add_dependencies(test_diagnostic eros_generate_messages_cpp)
+
+catkin_add_gtest(test_diagnostic_manager test_diagnostic_manager.cpp)
+target_link_libraries(test_diagnostic_manager ${catkin_LIBRARIES} ${Boost_LIBRARIES} diagnosticManager)
+add_dependencies(test_diagnostic_manager eros_generate_messages_cpp)

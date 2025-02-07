@@ -2,10 +2,10 @@
  */
 #ifndef RESOURCEMONITOR_h
 #define RESOURCEMONITOR_H
-#include <eros/Diagnostic.h>
 #include <eros/Logger.h>
 #include <eros/Utility.h>
 #include <eros/eROS_Definitions.h>
+#include <eros_diagnostic/Diagnostic.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -44,20 +44,20 @@ class ResourceMonitor
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
     ~ResourceMonitor();
-    ResourceMonitor(Mode _mode, Diagnostic::DiagnosticDefinition _diag, Logger* _logger);
+    ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger);
     bool is_initialized() {
         return initialized;
     }
 
     std::string pretty(ResourceInfo info);
-    Diagnostic::DiagnosticDefinition init();
+    eros_diagnostic::Diagnostic init();
     ResourceInfo get_resourceinfo() {
         return resourceInfo;
     }
     Architecture::Type get_architecture() {
         return architecture;
     }
-    Diagnostic::DiagnosticDefinition update(double t_dt);
+    eros_diagnostic::Diagnostic update(double t_dt);
 
     std::vector<double> get_load_factor() {
         return load_factor;
@@ -65,14 +65,14 @@ class ResourceMonitor
     bool reset();
 
    private:
-    Diagnostic::DiagnosticDefinition read_process_resource_usage();
-    Diagnostic::DiagnosticDefinition read_device_resource_availability();
-    Diagnostic::DiagnosticDefinition read_device_loadfactor();
+    eros_diagnostic::Diagnostic read_process_resource_usage();
+    eros_diagnostic::Diagnostic read_device_resource_availability();
+    eros_diagnostic::Diagnostic read_device_loadfactor();
     Architecture::Type read_device_architecture();
 
     Mode mode;
     Architecture::Type architecture;
-    Diagnostic::DiagnosticDefinition diagnostic;
+    eros_diagnostic::Diagnostic diagnostic;
     Logger* logger;
     ResourceInfo resourceInfo;
     bool initialized;

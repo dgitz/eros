@@ -1,8 +1,6 @@
 #include <eros/ResourceMonitor.h>
-using namespace eros;
-ResourceMonitor::ResourceMonitor(Mode _mode,
-                                 Diagnostic::DiagnosticDefinition _diag,
-                                 Logger *_logger)
+namespace eros {
+ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger *_logger)
     : mode(_mode),
       architecture(Architecture::Type::UNKNOWN),
       diagnostic(_diag),
@@ -13,23 +11,22 @@ ResourceMonitor::ResourceMonitor(Mode _mode,
     resourceInfo.cpu_perc = -1.0;
     resourceInfo.disk_perc = -1.0;
     resourceInfo.ram_perc = -1.0;
-    diagnostic.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
-    diagnostic.update_count = 0;
+    diagnostic.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     load_factor.push_back(0.0);
     load_factor.push_back(0.0);
     load_factor.push_back(0.0);
 }
 ResourceMonitor::~ResourceMonitor() {
 }
-Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic ResourceMonitor::init() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     ExecResult execResult;
     architecture = read_device_architecture();
     // The following can't currently be checked for code coverage as it depends on the device being
     // run on. LCOV_EXCL_START
     if (architecture == Architecture::Type::UNKNOWN) {
         diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
         logger->log_diagnostic(diag);
@@ -41,7 +38,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
     // run on. LCOV_EXCL_START
     if ((architecture == Architecture::Type::UNKNOWN)) {
         diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
             "Architecture: " + Architecture::ArchitectureString(architecture) + " Not Supported.";
         logger->log_diagnostic(diag);
@@ -61,7 +58,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::init() {
         std::string tempstr = "Unable to determine number of processors: " + std::string(e.what());
 
         diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description = tempstr;
         diag.update_count++;
         logger->log_error(tempstr);
@@ -108,11 +105,11 @@ bool ResourceMonitor::reset() {
     resourceInfo = reset_info;
     return true;
 }
-Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic ResourceMonitor::update(double t_dt) {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     if (initialized == false) {
         diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
         return diag;
@@ -134,8 +131,8 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::update(double t_dt) {
     }
     return diag;
 }
-Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     std::string top_query =
         "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
     ExecResult execResult;
@@ -155,7 +152,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
                 printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
             }
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process (size != 12): " + res;
             diag.update_count++;
             return diag;
@@ -170,7 +167,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         // LCOV_EXCL_START
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description =
                 "Unable to process string: " + res + " with result: " + std::string(e.what());
             diag.update_count++;
@@ -187,7 +184,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
                 printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
             }
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process: (size != 12)" + res;
             diag.update_count++;
             return diag;
@@ -198,7 +195,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         }
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description =
                 "Unable to process string: " + res + " with result: " + std::string(e.what());
             diag.update_count++;
@@ -215,7 +212,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
                 printf("[%d/%d] %s\n", (int)i, (int)strs.size(), strs.at(i).c_str());
             }
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description = "Improper string to process: (size != 13)" + res;
             diag.update_count++;
             return diag;
@@ -226,7 +223,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
         }
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description =
                 "Unable to process string: " + res + " with result: " + std::string(e.what());
             diag.update_count++;
@@ -239,20 +236,20 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_process_resource_usage() 
     // LCOV_EXCL_START
     else {
         diag.level = Level::Type::ERROR;
-        diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+        diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description =
             "Architecture: " + Architecture::ArchitectureString(architecture) + " Not Supported.";
         diag.update_count++;
         return diag;
     }
     // LCOV_EXCL_STOP
-    diag.message = Diagnostic::Message::NOERROR;
+    diag.message = eros_diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;
     return diag;
 }
-Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availability() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     {  // Read Free CPU
         std::string res;
         if (architecture != Architecture::Type::UNKNOWN) {
@@ -278,7 +275,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 // LCOV_EXCL_START
                 if (found_me == false) {
                     diag.level = Level::Type::ERROR;
-                    diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                    diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                     diag.description = "Unable to process string: " + res;
                     diag.update_count++;
                     return diag;
@@ -290,7 +287,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
             // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
-                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
                     "Unable to process string: " + res + " with result: " + std::string(e.what());
                 diag.update_count++;
@@ -299,7 +296,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
             // LCOV_EXCL_STOP
         }
         diag.level = Level::Type::INFO;
-        diag.message = Diagnostic::Message::NOERROR;
+        diag.message = eros_diagnostic::Message::NOERROR;
         diag.description = "Updated.";
         diag.update_count++;
     }
@@ -339,7 +336,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 // LCOV_EXCL_START
                 if (found_count != 2) {
                     diag.level = Level::Type::ERROR;
-                    diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                    diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                     diag.description = "Unable to process string: " + res;
                     diag.update_count++;
                     return diag;
@@ -355,7 +352,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
             // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
-                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
                     "Unable to process string: " + res + " with result: " + std::string(e.what());
                 diag.update_count++;
@@ -394,7 +391,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                         // LCOV_EXCL_START
                         catch (const std::exception &e) {
                             diag.level = Level::Type::ERROR;
-                            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                             diag.description = "Unable to process string: " + res +
                                                " with result: " + std::string(e.what());
                             diag.update_count++;
@@ -408,7 +405,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
                 // LCOV_EXCL_START
                 if (found_me == false) {
                     diag.level = Level::Type::ERROR;
-                    diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                    diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                     diag.description = "Unable to process string: " + res;
                     diag.update_count++;
                     return diag;
@@ -420,7 +417,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
             // LCOV_EXCL_START
             catch (const std::exception &e) {
                 diag.level = Level::Type::ERROR;
-                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                 diag.description =
                     "Unable to process string: " + res + " with result: " + std::string(e.what());
                 diag.update_count++;
@@ -430,13 +427,13 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_resource_availabil
         }
     }
     diag.level = Level::Type::INFO;
-    diag.message = Diagnostic::Message::NOERROR;
+    diag.message = eros_diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;
     return diag;
 }
-Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     std::string res;
     if (architecture != Architecture::Type::UNKNOWN) {
         try {
@@ -466,7 +463,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
             // LCOV_EXCL_START
             if (found_me == false) {
                 diag.level = Level::Type::ERROR;
-                diag.message = Diagnostic::Message::DROPPING_PACKETS;
+                diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
                 diag.description = "Unable to process string: " + res;
                 diag.update_count++;
                 return diag;
@@ -478,7 +475,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
         // LCOV_EXCL_START
         catch (const std::exception &e) {
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::DROPPING_PACKETS;
+            diag.message = eros_diagnostic::Message::DROPPING_PACKETS;
             diag.description =
                 "Unable to process string: " + res + " with result: " + std::string(e.what());
             diag.update_count++;
@@ -487,7 +484,7 @@ Diagnostic::DiagnosticDefinition ResourceMonitor::read_device_loadfactor() {
         // LCOV_EXCL_STOP
     }
     diag.level = Level::Type::INFO;
-    diag.message = Diagnostic::Message::NOERROR;
+    diag.message = eros_diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;
     return diag;
@@ -536,3 +533,4 @@ std::string ResourceMonitor::pretty(ResourceInfo info) {
 
     return str;
 }
+}  // namespace eros
