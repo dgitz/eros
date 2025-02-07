@@ -10,6 +10,12 @@ The Diagnostic Node listes to all diagnostics on a system and aggregates them.
 ## Configuration
 * 1 Instance of the diagnostic_node should be run PER System.
 
+## Software Design
+![](../../../doc/output/Legend.png)
+
+### Sequence Diagram
+![](../../../nodes/DiagnosticNode/doc/output/DiagnosticNodeSequenceDiagram.png)
+
 ## Troubleshooting
 
 ## Future Features
