@@ -1,0 +1,37 @@
+@startuml
+title Diagnostic Class Diagram
+
+namespace eros {
+namespace eros_diagnostic {
+    enum DiagnosticType
+    enum Message
+    struct Diagnostic {
+        +string device_name
+        +string node_name
+        +System::MainSystem system
+        +System::SubSystem sub_system
+        +System::Component component
+        +DiagnosticType type
+        +Message message
+        +Level::Type level
+        +string description
+    }
+    class DiagnosticManager {
+        +initialize(Diagnostic diagnostic)
+        +vool enable_diagnostics(DiagnoEsticType[] diagnostic_types)
+        +Diagnostic get_root_diagnostic()
+        +Diagnostic[] get_diagnostics()
+        +Diagnostic[] get_latest_diagnostics()
+        +Diagnostic update_diagnostic(DiagnosticType diagnostic_type, Level::Type level,Message message,string description)
+        +Diagnostic update_diagnostic(Diagnostic diagnostic)
+        +Diagnostic update_diagnostic(string device_name, DiagnosticType diagnostic_type,Level::Type level,Message message,string description)
+
+
+    }
+    class DiagnosticUtility
+    {
+        {static}+string DiagnosticTypeString(DiagnosticType v)
+    }
+}
+}
+@enduml
