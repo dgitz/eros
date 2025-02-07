@@ -2,6 +2,7 @@
  */
 #include <eros/Logger.h>
 #include <eros/ResourceMonitor.h>
+#include <eros_diagnostic/Diagnostic.h>
 #include <gtest/gtest.h>
 using namespace eros;
 bool isEqual(double a, double b, double eps) {
@@ -16,14 +17,14 @@ bool isEqual(double a, double b, double eps) {
 TEST(BasicTest, TestOperation_Process) {
     const double TIME_TO_RUN = 3.0;
 
-    Diagnostic::DiagnosticDefinition diag;
+    eros_diagnostic::Diagnostic diag;
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;
-    diag.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+    diag.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diag.level = Level::Type::INFO;
     ResourceMonitor* resource_monitor =
         new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
@@ -56,14 +57,14 @@ TEST(BasicTest, TestOperation_Process) {
 TEST(BasicTest, TestOperation_Device) {
     const double TIME_TO_RUN = 3.0;
 
-    Diagnostic::DiagnosticDefinition diag;
+    eros_diagnostic::Diagnostic diag;
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;
-    diag.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+    diag.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diag.level = Level::Type::INFO;
     ResourceMonitor* resource_monitor =
         new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
@@ -100,14 +101,14 @@ TEST(BasicTest, TestOperation_Device) {
     delete logger;
 }
 TEST(BasicOperation, NormalAPI) {
-    Diagnostic::DiagnosticDefinition diag;
+    eros_diagnostic::Diagnostic diag;
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;
-    diag.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+    diag.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diag.level = Level::Type::INFO;
     ResourceMonitor* resource_monitor =
         new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
@@ -120,21 +121,21 @@ TEST(BasicOperation, NormalAPI) {
     delete logger;
 }
 TEST(FailureTests, FailureCases) {
-    Diagnostic::DiagnosticDefinition diag;
+    eros_diagnostic::Diagnostic diag;
     diag.node_name = "UnitTestResourceMonitor";
     diag.device_name = "UnitTest";
     Logger* logger = new Logger("INFO", diag.node_name);
     diag.system = System::MainSystem::ROVER;
     diag.subsystem = System::SubSystem::ROBOT_CONTROLLER;
     diag.component = System::Component::CONTROLLER;
-    diag.type = Diagnostic::DiagnosticType::SYSTEM_RESOURCE;
+    diag.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
     diag.level = Level::Type::INFO;
     ResourceMonitor* resource_monitor =
         new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
     EXPECT_FALSE(resource_monitor->is_initialized());
     {  // Initialization Function Not Called
         diag = resource_monitor->update(0.1);
-        EXPECT_EQ(diag.message, Diagnostic::Message::INITIALIZING_ERROR);
+        EXPECT_EQ(diag.message, eros_diagnostic::Message::INITIALIZING_ERROR);
         EXPECT_TRUE(diag.level > Level::Type::NOTICE);
     }
     delete resource_monitor;

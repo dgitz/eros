@@ -43,10 +43,12 @@
 // ROS Actions
 #include <eros/system_commandAction.h>
 // Project
+#include <eros_diagnostic/Diagnostic.h>
+#include <eros_diagnostic/DiagnosticManager.h>
+#include <eros_diagnostic/DiagnosticUtility.h>
+
 #include <nlohmann/json.hpp>
 
-#include "Diagnostic.h"
-#include "Diagnostic_Utility.h"
 #include "Logger.h"
 #include "ResourceMonitor.h"
 #include "Utility.h"
@@ -64,7 +66,7 @@ class BaseNodeProcess
         : logger(nullptr),
           base_node_name(""),
           node_state(Node::State::START),
-          diagnostic_helper(),
+          diagnostic_manager(),
           unittest_running(false),
           run_time(0.0),
           system_time(0.0) {
@@ -93,15 +95,16 @@ class BaseNodeProcess
         base_node_name = t_base_node_name;
         node_state = Node::State::START;
         hostname = t_hostname;
-        diagnostic_helper.initialize(t_hostname, t_node_name, t_system, t_subsystem, t_component);
+        diagnostic_manager.initialize(eros_diagnostic::Diagnostic(
+            t_hostname, t_node_name, t_system, t_subsystem, t_component));
         logger = _logger;
     }
-    bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types) {
-        return diagnostic_helper.enable_diagnostics(diagnostic_types);
+    bool enable_diagnostics(std::vector<eros_diagnostic::DiagnosticType> diagnostic_types) {
+        return diagnostic_manager.enable_diagnostics(diagnostic_types);
     }
 
     /*! \brief Derived Process Initialization */
-    virtual Diagnostic::DiagnosticDefinition finish_initialization() = 0;
+    virtual eros_diagnostic::Diagnostic finish_initialization() = 0;
     /*! \brief Resets Process. Used for counters, timers, etc.*/
     virtual void reset() = 0;
 
@@ -109,15 +112,15 @@ class BaseNodeProcess
 
     /*! \brief Update function must be implemented in Derived Process.  This is used for all state
      * machine logic, etc. */
-    virtual Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time) = 0;
-    Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticDefinition diag) {
-        return diagnostic_helper.update_diagnostic(diag);
+    virtual eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time) = 0;
+    eros_diagnostic::Diagnostic update_diagnostic(eros_diagnostic::Diagnostic diag) {
+        return diagnostic_manager.update_diagnostic(diag);
     }
-    Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,
-                                                       Level::Type level,
-                                                       Diagnostic::Message message,
-                                                       std::string description) {
-        return diagnostic_helper.update_diagnostic(diagnostic_type, level, message, description);
+    eros_diagnostic::Diagnostic update_diagnostic(eros_diagnostic::DiagnosticType diagnostic_type,
+                                                  Level::Type level,
+                                                  eros_diagnostic::Message message,
+                                                  std::string description) {
+        return diagnostic_manager.update_diagnostic(diagnostic_type, level, message, description);
     }
 
     // Attribute Functions
@@ -134,14 +137,14 @@ class BaseNodeProcess
     std::string get_hostname() {
         return hostname;
     }
-    Diagnostic::DiagnosticDefinition get_root_diagnostic() {
-        return diagnostic_helper.get_root_diagnostic();
+    eros_diagnostic::Diagnostic get_root_diagnostic() {
+        return diagnostic_manager.get_root_diagnostic();
     }
-    std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics() {
-        return diagnostic_helper.get_diagnostics();
+    std::vector<eros_diagnostic::Diagnostic> get_diagnostics() {
+        return diagnostic_manager.get_diagnostics();
     }
-    std::vector<Diagnostic::DiagnosticDefinition> get_latest_diagnostics() {
-        return diagnostic_helper.get_latest_diagnostics();
+    std::vector<eros_diagnostic::Diagnostic> get_latest_diagnostics() {
+        return diagnostic_manager.get_latest_diagnostics();
     }
     double get_system_time() {
         return system_time;
@@ -169,12 +172,12 @@ class BaseNodeProcess
     bool request_statechange(Node::State newstate, bool override = false);
 
     // Message Functions
-    virtual std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg) = 0;
+    virtual std::vector<eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg) = 0;
 
     // Support Functions
     /*! \brief Must be implemented in Derived Process.  Used for diagnostic testing LEVEL2 and for
      * basic checking of different variables, if they are initialized, etc. */
-    virtual std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() = 0;
+    virtual std::vector<eros_diagnostic::Diagnostic> check_programvariables() = 0;
 
     //! Convert struct timeval to ros::Time
     /*!
@@ -209,7 +212,7 @@ class BaseNodeProcess
 
     static eros::armed_state convert(ArmDisarm::State v);
     static ArmDisarm::State convert(eros::armed_state v);
-    Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time);
+    eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time);
 
     static std::string sanitize_path(std::string path);
 
@@ -256,7 +259,7 @@ class BaseNodeProcess
     std::string hostname;
     std::string base_node_name;
     Node::State node_state;
-    Diagnostic diagnostic_helper;
+    eros_diagnostic::DiagnosticManager diagnostic_manager;
 
     bool unittest_running;
     eros::ready_to_arm ready_to_arm;
