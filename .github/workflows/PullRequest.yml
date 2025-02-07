@@ -4,9 +4,5 @@ on:
   pull_request:
 
 jobs:
-  #call_BuildTest:
-  #  uses: ./.github/workflows/buildtest.yml
-  
-  call_Documentation:
-    #needs: call_BuildTest
-    uses: ./.github/workflows/documentation.yml
+  call_BuildTest:
+    uses: ./.github/workflows/buildtest.yml
