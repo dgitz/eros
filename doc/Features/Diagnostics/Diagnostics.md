@@ -58,7 +58,7 @@ More information can be found at [eros::Diagnostic Class Reference](https://dgit
 ### Sequence Diagrams
 ![](../../../include/eros_diagnostic/doc/output/DiagnosticManagerSequenceDiagram.png)
 
-## [Diagnostic Node](DiagnosticNode.md)
+## [Diagnostic Node](../../../nodes/DiagnosticNode/doc/DiagnosticNode.md)
 A node that listes to all diagnostics and aggregates them.
 
 ## Examples

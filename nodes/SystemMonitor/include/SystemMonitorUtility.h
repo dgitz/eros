@@ -1,4 +1,6 @@
 #pragma once
+#include <curses.h>
+
 #include "WindowDefinitions.h"
 namespace eros_nodes::SystemMonitor {
 class SystemMonitorUtility

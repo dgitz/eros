@@ -4,4 +4,4 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 add_subdirectory(src)
-#add_subdirectory(node)
+add_subdirectory(node)

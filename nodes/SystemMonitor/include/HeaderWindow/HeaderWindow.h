@@ -22,12 +22,12 @@ class HeaderWindow : public BaseWindow
                      mainwindow_height,
                      mainwindow_width) {
         logger->log_warn("Initialized Header");
-        ScreenCoordinatePixel coord_pix =
-            convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
-        WINDOW* win = create_newwin(coord_pix.height_pix,
-                                    coord_pix.width_pix,
-                                    coord_pix.start_y_pix,
-                                    coord_pix.start_x_pix);
+        ScreenCoordinatePixel coord_pix = SystemMonitorUtility::convertCoordinate(
+            get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
+        WINDOW* win = SystemMonitorUtility::create_newwin(coord_pix.height_pix,
+                                                          coord_pix.width_pix,
+                                                          coord_pix.start_y_pix,
+                                                          coord_pix.start_x_pix);
         set_screen_coordinates_pix(coord_pix);
         set_window(win);
         wrefresh(win);

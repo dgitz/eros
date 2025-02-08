@@ -1,6 +1,8 @@
 /*! \file WindowDefinitions.h
  */
 #pragma once
+#include <eros/eROS_Definitions.h>
+
 #include <string>
 //! Namespace for SystemMonitor
 namespace eros_nodes::SystemMonitor {
