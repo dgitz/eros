@@ -1,7 +1,7 @@
 @startuml
 title Diagnostic Utility Class Diagram
 
-namespace eros {
+package eros {
     class diagnostic <<M,#FFFF00>>
 namespace eros_diagnostic {
     enum DiagnosticType

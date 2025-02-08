@@ -2,6 +2,7 @@
     "recommendations": [
         "bierner.markdown-mermaid",
         "jebbs.plantuml",
-        "xaver.clang-format"
+        "xaver.clang-format",
+        "cschlosser.doxdocgen"
     ]
 }

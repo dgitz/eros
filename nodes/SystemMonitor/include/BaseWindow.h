@@ -14,7 +14,7 @@
 
 #include "IWindow.h"
 #include "SystemMonitorUtilities.h"
-#include "Window_Definitions.h"
+#include "WindowDefinitions.h"
 #include "ros/ros.h"
 namespace eros_nodes::SystemMonitor {
 

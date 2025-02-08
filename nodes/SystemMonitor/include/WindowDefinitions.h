@@ -1,12 +1,31 @@
+/*! \file WindowDefinitions.h
+ */
 #pragma once
+#include <string>
+//! Namespace for SystemMonitor
 namespace eros_nodes::SystemMonitor {
 const double COMMTIMEOUT_THRESHOLD = 5.0f;
 enum class WindowCommandType {
-    UNKNOWN = 0,
-    VIEW_DIAGNOSTICS_NODE = 1,
-    VIEW_DIAGNOSTICS_SYSTEM = 2,
-    END_OF_LIST = 3
+    UNKNOWN = 0,                 /*!< Uninitialized value. */
+    VIEW_DIAGNOSTICS_NODE = 1,   /*!< View Diagnostics for a Node. */
+    VIEW_DIAGNOSTICS_SYSTEM = 2, /*!< View Diagnostics for the System. */
+    END_OF_LIST = 3              /*!< Last item of list. Used for Range Checks. */
 };
+enum class Color {
+    UNKNOWN = 0,      /*!< Uninitialized value. */
+    NO_COLOR = 1,     /*!< No Color. */
+    RED_COLOR = 2,    /*!< Red. */
+    YELLOW_COLOR = 3, /*!< Yellow. */
+    GREEN_COLOR = 4,  /*!< Green. */
+    BLUE_COLOR = 5,   /*!< Blue. */
+    GRAY_COLOR = 6,   /*!< Gray. */
+    PURPLE_COLOR = 7, /*!< Purple. */
+    END_OF_LIST = 8   /*!< Last item of list. Used for Range Checks. */
+};
+/**
+ * @brief WindowCommand container
+ *
+ */
 struct WindowCommand {
     WindowCommand() : type(WindowCommandType::UNKNOWN) {
     }
@@ -24,7 +43,7 @@ struct ScreenCoordinatePerc {
     double start_y_perc;
     double width_perc;
     double height_perc;
-};  // namespace eros_nodes::SystemMonitorstructScreenCoordinatePerc
+};
 /*! \struct ScreenCoordinatePixel
 \brief ScreenCoordinatePixel container.
 */
@@ -37,22 +56,12 @@ struct ScreenCoordinatePixel {
     uint16_t width_pix;
     uint16_t height_pix;
 };
-enum class Color {
-    UNKNOWN = 0,
-    NO_COLOR = 1,
-    RED_COLOR = 2,
-    YELLOW_COLOR = 3,
-    GREEN_COLOR = 4,
-    BLUE_COLOR = 5,
-    GRAY_COLOR = 6,
-    PURPLE_COLOR = 7,
-    END_OF_LIST = 8
-};
+
 /*! \struct Field
     \brief Field container, used for holding Field attributes.
     */
 struct Field {
-    Field(std::string _text, uint16_t _width) : text(_text), width(_width) {
+    Field(std::string text, uint16_t width) : text(text), width(width) {
     }
     std::string text;
     std::size_t width;
