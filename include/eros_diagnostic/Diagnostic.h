@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+//! Enhanced-ROS Diagnostic Namespace
 namespace eros::eros_diagnostic {
 enum class DiagnosticType {
     UNKNOWN = 0,          /*!< Uninitialized value. */

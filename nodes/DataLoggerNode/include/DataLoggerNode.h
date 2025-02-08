@@ -12,6 +12,7 @@
 #include <eros/BaseNode.h>
 
 #include "DataLoggerProcess.h"
+//! Enhanced-ROS Node Namespace
 namespace eros_nodes {
 /*! \class DataLoggerNode DataLoggerNode.h "DataLoggerNode.h"
  *  \brief A Node that can be used to collect bag files.  Configured as either always logging to
