@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>eROS: Main Page</title>
+<title>eROS: EROS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,12 +62,10 @@ $(function() {
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">eROS Documentation</div>  </div>
+<div class="title">EROS </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>TESTING2</p>
-<h1>EROS</h1>
-<p><a href="https://github.com/dgitz/eros/actions/workflows/Release.yml"><object type="image/svg+xml" data="https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg" style="pointer-events: none;">Release</object></a></p>
+<div class="textblock"><p><a href="https://github.com/dgitz/eros/actions/workflows/Push.yml"><object type="image/svg+xml" data="https://github.com/dgitz/eros/actions/workflows/Push.yml/badge.svg" style="pointer-events: none;">Push</object></a></p>
 <p><b>TOC</b></p><ul>
 <li><a href="#ros-version-support">ROS Version Support</a></li>
 <li><a href="#overview">Overview</a></li>
@@ -83,10 +81,10 @@ $(function() {
 <p>Welcome to the EROS Wiki!</p>
 <p><a href="https://dgitz.github.io/eros/">Source Code Documentation</a></p>
 <p>EROS is: "Enhanced ROS". For more information on ROS, see: <a href="https://www.ros.org/">https://www.ros.org/</a></p>
-<h2>ROS Version Support</h2>
+<h1>ROS Version Support</h1>
 <p>eROS will target ROS Noetic for future releases.</p>
 <p>eROS Support for ROS Melodic is limited. Final planned release is <a href="https://github.com/dgitz/eros/releases/tag/CAPTAINMARVEL02">CAPTAINMARVEL02</a> and code branch <a href="https://github.com/dgitz/eros/tree/melodic-devel">melodic-devel</a></p>
-<h2>Overview</h2>
+<h1>Overview</h1>
 <p>ROS is a great tool for developing software for robotics. However there are definitely features lacking in ROS that I have encountered over the years, starting with my first forays into ROS Diamondback back in the day. After more than 25 years of robotics development, I've found that the biggest hurdle with developing robots is knowing exactly what is going on with a robot (good or bad), in a timely fashion. <br  />
 </p>
 <p>The purpose of EROS is the following:</p>
@@ -95,11 +93,11 @@ $(function() {
 <li>Make troubleshooting robot software easier</li>
 <li>Make robot software more resilient</li>
 </ul>
-<h2>@ref doc/Messages/Messages.md "Messages"</h2>
-<h2>Software Design</h2>
+<h1>@ref doc/Messages/Messages.md "Messages"</h1>
+<h1>Software Design</h1>
 <p><img src="doc/output/Legend.png" alt="" class="inline"/> <img src="doc/output/EROSPackageDiagram.png" alt="" class="inline"/></p>
-<h2>@ref doc/Features/Features.md "Features"</h2>
-<h2>Sister Repositories</h2>
+<h1>@ref doc/Features/Features.md "Features"</h1>
+<h1>Sister Repositories</h1>
 <ul>
 <li><a href="https://github.com/dgitz/robot_dev/wiki">robot_dev</a></li>
 <li><a href="https://github.com/dgitz/ros_hats/wiki">ros_hats</a></li>
@@ -107,7 +105,7 @@ $(function() {
 </ul>
 <p>I am very interested in what other people have to say about this project how they can integrate this into their applications. Please let me know about any feature requests, bugs, etc that you encounter. <br  />
 </p>
-<h2>Compatability</h2>
+<h1>Compatability</h1>
 <p>This package is currently compatible with the following architectures:</p><ul>
 <li>Any x86/64 compatible system</li>
 <li>AArch Linux (such as a Jetson Nano)</li>
@@ -118,8 +116,8 @@ $(function() {
 </ul>
 <p>If you would like to use this in your project on an architecture that is not currently supported (but is still ROS compliant), let me know and I'll see what I can do to help.</p>
 <p>Installation instructions for each of these supported device types are on the side, under <a href="https://github.com/dgitz/eROS/wiki/Device-Deployment">Device Deployment</a>.</p>
-<h2>Setup Instructions</h2>
-<h3>x86</h3>
+<h1>Setup Instructions</h1>
+<h2>x86</h2>
 <p>For x86 Setup, perform the following:</p><ol type="1">
 <li>Follow the typical ROS Noetic install instructions: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a></li>
 </ol>
@@ -138,9 +136,9 @@ $(function() {
 <ol type="1">
 <li>Setup <a href="https://wiki.ros.org/ROS/NetworkSetup">ROS Network Environment</a>.</li>
 </ol>
-<h3>Other Targets</h3>
+<h2>Other Targets</h2>
 <p>For other targets, follow Device Deployment</p>
-<h2>Usage in your Package</h2>
+<h1>Usage in your Package</h1>
 <p>Update your package CMakeLists.txt: </p><div class="fragment"><div class="line">find_package(catkin REQUIRED COMPONENTS</div>
 <div class="line">...</div>
 <div class="line">  eros</div>
@@ -148,8 +146,8 @@ $(function() {
 <div class="line">)</div>
 </div><!-- fragment --><p>Update your package.xml: </p><div class="fragment"><div class="line">&lt;depend&gt;eros&lt;/depend&gt;</div>
 </div><!-- fragment --><p>OR </p><div class="fragment"><div class="line">&lt;build_depend&gt;eros&lt;/build_depend&gt;</div>
-</div><!-- fragment --><h2>@ref doc/Development/DevelopmentInstructions.md "Development Instructions"</h2>
-<h2>@ref doc/TestPlan/TestPlan.md "Test Plan"</h2>
+</div><!-- fragment --><h1>@ref doc/Development/DevelopmentInstructions.md "Development Instructions"</h1>
+<h1>@ref doc/TestPlan/TestPlan.md "Test Plan"</h1>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

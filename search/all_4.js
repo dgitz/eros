@@ -14,5 +14,6 @@ var searchData=
   ['exec_97',['exec',['../namespaceeros_aad340bc10819e324ff74ba82fba10fbf.html#aad340bc10819e324ff74ba82fba10fbf',1,'eros']]],
   ['execcommand_98',['ExecCommand',['../structeros__nodes_1_1SnapshotProcess_1_1ExecCommand.html',1,'eros_nodes::SnapshotProcess']]],
   ['execresult_99',['ExecResult',['../structeros_1_1ExecResult.html',1,'eros']]],
-  ['systemmonitor_100',['SystemMonitor',['../namespaceeros__nodes_1_1SystemMonitor.html',1,'eros_nodes']]]
+  ['eros_100',['EROS',['../index.html',1,'']]],
+  ['systemmonitor_101',['SystemMonitor',['../namespaceeros__nodes_1_1SystemMonitor.html',1,'eros_nodes']]]
 ];
