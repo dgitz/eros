@@ -23,13 +23,13 @@ class SystemMonitorNode : public eros::BaseNode
     const uint16_t MAJOR_RELEASE_VERSION = 0;
 
     /*! \brief The Minor Release Version of the Node.*/
-    const uint16_t MINOR_RELEASE_VERSION = 2;
+    const uint16_t MINOR_RELEASE_VERSION = 3;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 1;
+    const uint16_t BUILD_NUMBER = 0;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 22-Feb-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 8-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::REMOTE_CONTROL;

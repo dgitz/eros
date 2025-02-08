@@ -7,8 +7,9 @@ function print_usage()
 {
     echo "Usage Instructions"
     echo -e "<mode>:
-        update: Update,
-        code_coverage: Run Code Coverage Scan,
+        doxygen: Run Doxygen
+        update: Update
+        code_coverage: Run Code Coverage Scan
         plantuml: Generate plantuml Images
         regression: Run Regression Tests"
     exit 1
@@ -48,6 +49,9 @@ function generate_plantuml {
     plantuml -tpng -r -o output "*/**.puml"
     status=$?
     exit $status
+}
+function generate_doxygen {
+    doxygen Doxyfile.in
 }
 function run_regression {
     ITERATION_COUNT=10
@@ -98,6 +102,7 @@ if [ $# -eq 0 ]; then
     print_usage
 else
     case $1 in
+        "doxygen") generate_doxygen;;
         "update") update;;
         "code_coverage") code_coverage_scan;;
         "plantuml") generate_plantuml;;

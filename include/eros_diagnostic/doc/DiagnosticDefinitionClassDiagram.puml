@@ -1,7 +1,7 @@
 @startuml
 title Diagnostic Definition Diagram
 
-namespace eros {
+package eros {
     together {
         enum System::MainSystem
         enum System::SubSystem
