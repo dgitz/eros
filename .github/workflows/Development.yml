@@ -2,8 +2,8 @@ name: Development
 
 on:
   push:
-    branches: [ US_886_DataLoggerLevel2Tests ]
+    branches: [ dev_branch_name ] # Change as needed
 
 jobs:
   call_BuildTest:
-    uses: ./.github/workflows/buildtest.yml
+    uses: ./.github/workflows/documentation.yml
