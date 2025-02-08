@@ -8,6 +8,7 @@
 // ROS Messages
 // Project
 #include <eros/BaseNode.h>
+
 #include "SampleNodeProcess.h"
 
 /*! \class SampleNode SampleNode.h "SampleNode.h"
@@ -44,7 +45,7 @@ class SampleNode : public eros::BaseNode
         return process;
     }
     bool start();
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -56,13 +57,13 @@ class SampleNode : public eros::BaseNode
     void thread_loop();
     void cleanup();
 
-    bool changenodestate_service(eros::srv_change_nodestate::Request &req,
-                             eros::srv_change_nodestate::Response &res);
+    bool changenodestate_service(eros::srv_change_nodestate::Request& req,
+                                 eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
-    void command_Callback(const eros::command::ConstPtr &t_msg);
+    void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
-    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::eros_diagnostic::Diagnostic read_launchparameters();
     SampleNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };

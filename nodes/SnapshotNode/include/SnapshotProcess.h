@@ -89,7 +89,7 @@ class SnapshotProcess : public eros::BaseNodeProcess
         std::string bagfile_directory;
         std::string active_device_snapshot_completepath;
     };
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     Mode get_mode() {
         return mode;
     }
@@ -117,26 +117,25 @@ class SnapshotProcess : public eros::BaseNodeProcess
     double get_snapshotprogress_percentage() {
         return snapshot_progress_percent;
     }
-    std::vector<eros::Diagnostic::DiagnosticDefinition> clear_snapshots();
+    std::vector<eros::eros_diagnostic::Diagnostic> clear_snapshots();
     bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
         nodeHandle = nh;
         robot_namespace = _robot_namespace;
         return true;
     }
-    eros::Diagnostic::DiagnosticDefinition load_config(
-        std::string file_path, std::vector<std::string> override_devicenames);
+    eros::eros_diagnostic::Diagnostic load_config(std::string file_path,
+                                                  std::vector<std::string> override_devicenames);
     void reset();
-    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
-    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg);
-    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandstatemsg(
-        eros::command_state t_msg);
-    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
+    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg);
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandstatemsg(eros::command_state t_msg);
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
     void cleanup() {
         base_cleanup();
         return;
     }
     std::string pretty();
-    std::vector<eros::Diagnostic::DiagnosticDefinition> createnew_snapshot();
+    std::vector<eros::eros_diagnostic::Diagnostic> createnew_snapshot();
 
    private:
     int count_files_indirectory(std::string directory, std::string filter = "");

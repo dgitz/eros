@@ -72,15 +72,15 @@ eros::mode_state BaseNode::convert_fromptr(const eros::mode_state::ConstPtr &t_p
     msg.mode_state = t_ptr->mode_state;
     return msg;
 }
-Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
+eros_diagnostic::Diagnostic BaseNode::preinitialize_basenode() {
     logger_initialized = false;
     require_pps_to_start = false;
     pps_received = false;
     node_name = ros::this_node::getName();
     boot_time = ros::Time::now();
-    diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
+    diagnostic.type = eros_diagnostic::DiagnosticType::SOFTWARE;
     diagnostic.level = Level::Type::INFO;
-    diagnostic.message = Diagnostic::Message::INITIALIZING;
+    diagnostic.message = eros_diagnostic::Message::INITIALIZING;
     diagnostic.description = "Node Initializing.";
     host_name = get_hostname();
     heartbeat.HostName = host_name;
@@ -148,8 +148,8 @@ Diagnostic::DiagnosticDefinition BaseNode::preinitialize_basenode() {
     // LCOV_EXCL_STOP
     return diagnostic;
 }
-Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic BaseNode::read_baselaunchparameters() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     loop1_enabled = false;
     loop2_enabled = false;
     loop3_enabled = false;
@@ -162,9 +162,9 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         // No Practical way to Unit Test
         // LCOV_EXCL_START
         if (n->getParam(param_verbosity_level, verbosity_level) == false) {
-            diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
+            diag.type = eros_diagnostic::DiagnosticType::DATA_STORAGE;
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+            diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
             diag.description = "Missing Parameter: verbosity_level. Exiting.";
             diagnostic = diag;
             return diag;
@@ -219,9 +219,9 @@ Diagnostic::DiagnosticDefinition BaseNode::read_baselaunchparameters() {
         // No Practical way to Unit Test
         // LCOV_EXCL_START
         if (n->getParam(param_require_pps_to_start, require_pps_to_start) == false) {
-            diag.type = Diagnostic::DiagnosticType::DATA_STORAGE;
+            diag.type = eros_diagnostic::DiagnosticType::DATA_STORAGE;
             diag.level = Level::Type::ERROR;
-            diag.message = Diagnostic::Message::INITIALIZING_ERROR;
+            diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
             diag.description = "Missing Parameter: require_pps_to_start. Exiting.";
             diagnostic = diag;
             logger->log_diagnostic(diag);
@@ -349,9 +349,9 @@ bool BaseNode::update(Node::State node_state) {
         eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
         resource_used.stamp = ros::Time::now();
         resource_used_pub.publish(resource_used);
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
+        std::vector<eros_diagnostic::Diagnostic> diag_list = current_diagnostics;
         for (std::size_t i = 0; i < diag_list.size(); ++i) {
-            eros::diagnostic diag = eros::convert(diag_list.at(i));
+            eros::diagnostic diag = eros_diagnostic::DiagnosticUtility::convert(diag_list.at(i));
             diagnostic_pub.publish(diag);
         }
         last_01hz_noisy_timer = ros::Time::now();
@@ -455,14 +455,14 @@ bool BaseNode::loggerlevel_service(eros::srv_logger_level::Request &req,
 }
 bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request &req,
                                    eros::srv_get_diagnostics::Response &res) {
-    Diagnostic::DiagnosticDefinition worst_diag;
+    eros_diagnostic::Diagnostic worst_diag;
     worst_diag.level = Level::Type::UNKNOWN;
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list = current_diagnostics;
+    std::vector<eros_diagnostic::Diagnostic> diag_list = current_diagnostics;
     for (std::size_t i = 0; i < diag_list.size(); ++i) {
         if (diag_list.at(i).level > worst_diag.level) {
             worst_diag = diag_list.at(i);
         }
-        eros::diagnostic diag = eros::convert(diag_list.at(i));
+        eros::diagnostic diag = eros_diagnostic::DiagnosticUtility::convert(diag_list.at(i));
         bool add_me = false;
         if ((req.MinLevel == 0) || (req.DiagnosticType == 0)) {
             add_me = true;
@@ -482,7 +482,7 @@ bool BaseNode::diagnostics_service(eros::srv_get_diagnostics::Request &req,
         logger->log_diagnostic(diag_list.at(i));
         diagnostic_pub.publish(diag);
     }
-    res.worst_diag = eros::convert(worst_diag);
+    res.worst_diag = eros_diagnostic::DiagnosticUtility::convert(worst_diag);
 
     return true;
 }

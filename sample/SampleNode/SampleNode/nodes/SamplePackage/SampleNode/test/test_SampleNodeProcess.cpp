@@ -1,14 +1,16 @@
 /*! \file test_SampleNodeProcess.cpp
  */
+#include <SamplePackage/SampleNode/SampleNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-
-#include <SamplePackage/SampleNode/SampleNodeProcess.h>
 using namespace eros;
-class SampleNodeProcessTester : public SampleNodeProcess {
-    public :
-        SampleNodeProcessTester(){}
-        ~SampleNodeProcessTester(){}
+class SampleNodeProcessTester : public SampleNodeProcess
+{
+   public:
+    SampleNodeProcessTester() {
+    }
+    ~SampleNodeProcessTester() {
+    }
 };
 TEST(BasicTest, TestOperation) {
     Logger* logger = new Logger("DEBUG", "UnitTestSampleNodeProcess");
@@ -20,16 +22,16 @@ TEST(BasicTest, TestOperation) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
 
-    Diagnostic::DiagnosticDefinition diag = tester->finish_initialization();
+    eros_diagnostic::Diagnostic diag = tester->finish_initialization();
     logger->log_diagnostic(diag);
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
@@ -47,13 +49,12 @@ TEST(BasicTest, TestOperation) {
     logger->log_warn("Testing Unsupported Command Message");
     {
         eros::command cmd;
-        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(cmd);
+        std::vector<eros::eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(cmd);
         EXPECT_EQ(diag_list.size(), 0);
     }
     logger->log_warn("Testing Unsupported Program Variables Check");
     {
-        std::vector<eros::Diagnostic::DiagnosticDefinition> diag_list =
-            tester->check_programvariables();
+        std::vector<eros::eros_diagnostic::Diagnostic> diag_list = tester->check_programvariables();
         EXPECT_EQ(diag_list.size(), 0);
     }
     tester->cleanup();

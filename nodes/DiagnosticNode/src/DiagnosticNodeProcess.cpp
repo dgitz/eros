@@ -5,58 +5,58 @@ DiagnosticNodeProcess::DiagnosticNodeProcess() {
 }
 DiagnosticNodeProcess::~DiagnosticNodeProcess() {
 }
-Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+eros_diagnostic::Diagnostic DiagnosticNodeProcess::finish_initialization() {
+    eros_diagnostic::Diagnostic diag = get_root_diagnostic();
 
-    for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
+    for (uint8_t i = 1; i < (uint8_t)(eros_diagnostic::DiagnosticType::END_OF_LIST); ++i) {
         DiagnosticTypeAggregate aggregate;
-        Diagnostic::DiagnosticDefinition diag("NO DEVICE",
-                                              "NO NODE",
-                                              System::MainSystem::ROVER,
-                                              System::SubSystem::ROBOT_CONTROLLER,
-                                              System::Component::DIAGNOSTIC,
-                                              (Diagnostic::DiagnosticType)i,
-                                              Diagnostic::Message::NOERROR,
-                                              Level::Type::INFO,
-                                              "No Diagnostics Received Yet.");
+        eros_diagnostic::Diagnostic diag("NO DEVICE",
+                                         "NO NODE",
+                                         System::MainSystem::ROVER,
+                                         System::SubSystem::ROBOT_CONTROLLER,
+                                         System::Component::DIAGNOSTIC,
+                                         (eros_diagnostic::DiagnosticType)i,
+                                         eros_diagnostic::Message::NOERROR,
+                                         Level::Type::INFO,
+                                         "No Diagnostics Received Yet.");
         aggregate.worst_diag = diag;
         aggregate.worst_diag_key = build_key(diag);
-        diagnostic_aggregator.insert(std::pair<Diagnostic::DiagnosticType, DiagnosticTypeAggregate>(
-            (Diagnostic::DiagnosticType)i, aggregate));
+        diagnostic_aggregator.insert(
+            std::pair<eros_diagnostic::DiagnosticType, DiagnosticTypeAggregate>(
+                (eros_diagnostic::DiagnosticType)i, aggregate));
     }
     return diag;
 }
 void DiagnosticNodeProcess::reset() {
 }
-Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::update(double t_dt, double t_ros_time) {
-    Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+eros_diagnostic::Diagnostic DiagnosticNodeProcess::update(double t_dt, double t_ros_time) {
+    eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
     ready_to_arm.ready_to_arm = true;
-    ready_to_arm.diag = eros::convert(diag);
+    ready_to_arm.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> DiagnosticNodeProcess::new_commandmsg(
-    eros::command msg) {
+std::vector<eros_diagnostic::Diagnostic> DiagnosticNodeProcess::new_commandmsg(eros::command msg) {
     (void)msg;
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     logger->log_warn("No Command Messages Supported at this time.");
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> DiagnosticNodeProcess::check_programvariables() {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> DiagnosticNodeProcess::check_programvariables() {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     logger->log_warn("No Program Variables Checked.");
     return diag_list;
 }
-Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
-    Diagnostic::DiagnosticType type) {
-    Diagnostic::DiagnosticDefinition empty_diag("NO DEVICE",
-                                                "NO NODE",
-                                                System::MainSystem::ROVER,
-                                                System::SubSystem::ROBOT_CONTROLLER,
-                                                System::Component::DIAGNOSTIC,
-                                                Diagnostic::DiagnosticType::UNKNOWN,
-                                                Diagnostic::Message::END_OF_LIST,
-                                                Level::Type::FATAL,
-                                                "Unknown Diagnostic Type: " + (uint8_t)type);
+eros_diagnostic::Diagnostic DiagnosticNodeProcess::get_worst_diagnostic(
+    eros_diagnostic::DiagnosticType type) {
+    eros_diagnostic::Diagnostic empty_diag("NO DEVICE",
+                                           "NO NODE",
+                                           System::MainSystem::ROVER,
+                                           System::SubSystem::ROBOT_CONTROLLER,
+                                           System::Component::DIAGNOSTIC,
+                                           eros_diagnostic::DiagnosticType::UNKNOWN,
+                                           eros_diagnostic::Message::END_OF_LIST,
+                                           Level::Type::FATAL,
+                                           "Unknown Diagnostic Type: " + (uint8_t)type);
     auto aggregate_it = diagnostic_aggregator.find(type);
     if (aggregate_it == diagnostic_aggregator.end()) {
         // No practical way to unit test
@@ -66,15 +66,15 @@ Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
     }
     else {
         if (aggregate_it->second.update_count == 0) {
-            Diagnostic::DiagnosticDefinition diag("NO DEVICE",
-                                                  "NO NODE",
-                                                  System::MainSystem::ROVER,
-                                                  System::SubSystem::ROBOT_CONTROLLER,
-                                                  System::Component::DIAGNOSTIC,
-                                                  type,
-                                                  Diagnostic::Message::NODATA,
-                                                  Level::Type::INFO,
-                                                  "No Diagnostics Received Yet.");
+            eros_diagnostic::Diagnostic diag("NO DEVICE",
+                                             "NO NODE",
+                                             System::MainSystem::ROVER,
+                                             System::SubSystem::ROBOT_CONTROLLER,
+                                             System::Component::DIAGNOSTIC,
+                                             type,
+                                             eros_diagnostic::Message::NODATA,
+                                             Level::Type::INFO,
+                                             "No Diagnostics Received Yet.");
             return diag;
         }
         else {
@@ -83,9 +83,9 @@ Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::get_worst_diagnostic(
     }
     return empty_diag;
 }
-Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::update_topiclist(
+eros_diagnostic::Diagnostic DiagnosticNodeProcess::update_topiclist(
     std::vector<std::string> &new_diagnostic_topics_to_subscribe) {
-    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     std::vector<std::string> new_diagnostic_topics;
     for (std::size_t i = 0; i < new_diagnostic_topics_to_subscribe.size(); ++i) {
         bool add_me = true;
@@ -104,7 +104,7 @@ Diagnostic::DiagnosticDefinition DiagnosticNodeProcess::update_topiclist(
     new_diagnostic_topics_to_subscribe = new_diagnostic_topics;
     return diag;
 }
-bool DiagnosticNodeProcess::new_external_diagnostic(Diagnostic::DiagnosticDefinition diag) {
+bool DiagnosticNodeProcess::new_external_diagnostic(eros_diagnostic::Diagnostic diag) {
     auto aggregate_it = diagnostic_aggregator.find(diag.type);
     if (aggregate_it == diagnostic_aggregator.end()) {
         return false;
@@ -121,7 +121,7 @@ bool DiagnosticNodeProcess::new_external_diagnostic(Diagnostic::DiagnosticDefini
     auto diag_it = aggregate_it->second.diag_list.find(key);
     if (diag_it == aggregate_it->second.diag_list.end()) {
         aggregate_it->second.diag_list.insert(
-            std::pair<std::string, Diagnostic::DiagnosticDefinition>(key, diag));
+            std::pair<std::string, eros_diagnostic::Diagnostic>(key, diag));
     }
     else {
         diag_it->second = diag;
@@ -135,19 +135,21 @@ std::string DiagnosticNodeProcess::pretty() {
     uint8_t i = 1;
     for (auto aggregate_it : diagnostic_aggregator) {
         str += "[" + std::to_string(i) + "/" + std::to_string(diagnostic_aggregator.size()) + "] " +
-               Diagnostic::DiagnosticTypeString(aggregate_it.first) +
+               eros_diagnostic::DiagnosticUtility::DiagnosticTypeString(aggregate_it.first) +
                " Update Count: " + std::to_string(aggregate_it.second.update_count) +
                " Worst Level: " + Level::LevelString(aggregate_it.second.worst_diag.level) + "\n";
         if (aggregate_it.second.update_count > 0) {
             if (aggregate_it.second.worst_diag.level > Level::Type::NOTICE) {
-                str += "\tWorst: " + Diagnostic::pretty("", aggregate_it.second.worst_diag, false) +
+                str += "\tWorst: " +
+                       eros_diagnostic::DiagnosticUtility::pretty(
+                           "", aggregate_it.second.worst_diag, false) +
                        "\n";
             }
             uint16_t j = 1;
             for (auto diag_it : aggregate_it.second.diag_list) {
                 str += "\t[" + std::to_string(j) + "/" +
                        std::to_string(aggregate_it.second.diag_list.size()) + "] " +
-                       Diagnostic::pretty("", diag_it.second, false) + "\n";
+                       eros_diagnostic::DiagnosticUtility::pretty("", diag_it.second, false) + "\n";
                 j++;
             }
         }
@@ -156,7 +158,7 @@ std::string DiagnosticNodeProcess::pretty() {
     }
     return str;
 }
-std::string DiagnosticNodeProcess::build_key(Diagnostic::DiagnosticDefinition diag) {
+std::string DiagnosticNodeProcess::build_key(eros_diagnostic::Diagnostic diag) {
     std::string key =
         diag.device_name + "_" + diag.node_name + "_" + std::to_string((uint8_t)diag.system) + "_" +
         std::to_string((uint8_t)diag.subsystem) + "_" + std::to_string((uint8_t)diag.component) +

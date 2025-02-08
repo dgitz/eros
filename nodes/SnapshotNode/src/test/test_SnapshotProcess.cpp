@@ -17,7 +17,7 @@ class SnapshotProcessTester : public SnapshotProcess
 TEST(BasicTest, TestOperation_Slave) {
     Logger* logger = new Logger("DEBUG", "UnitTestSnapshotProcess");
     SnapshotProcessTester* tester = new SnapshotProcessTester;
-    Diagnostic::DiagnosticDefinition diag;
+    eros_diagnostic::Diagnostic diag;
     tester->initialize("UnitTestSnapshotProcess",
                        "UnitTestSnapshotProcess",
                        "MyHost",
@@ -25,11 +25,11 @@ TEST(BasicTest, TestOperation_Slave) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
@@ -52,7 +52,7 @@ TEST(BasicTest, TestOperation_Slave) {
     eros::command command;
     command.Command = (uint16_t)Command::Type::GENERATE_SNAPSHOT;
     command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(command);
+    std::vector<eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(command);
     EXPECT_TRUE(tester->get_devicesnapshot_state() == eros::SnapshotState::STARTED);
 
     diag_list = tester->createnew_snapshot();

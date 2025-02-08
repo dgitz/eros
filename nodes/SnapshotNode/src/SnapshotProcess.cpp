@@ -3,26 +3,26 @@ using namespace eros;
 using namespace eros_nodes;
 SnapshotProcess::~SnapshotProcess() {
 }
-Diagnostic::DiagnosticDefinition SnapshotProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+eros_diagnostic::Diagnostic SnapshotProcess::finish_initialization() {
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
     if (mode == Mode::UNKNOWN) {
-        diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                   Level::Type::ERROR,
-                                                   Diagnostic::Message::DEVICE_NOT_AVAILABLE,
-                                                   "Mode not set!");
+        diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                    Level::Type::ERROR,
+                                                    eros_diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                                    "Mode not set!");
     }
     if (architecture == Architecture::Type::UNKNOWN) {
-        diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                   Level::Type::ERROR,
-                                                   Diagnostic::Message::DEVICE_NOT_AVAILABLE,
-                                                   "Architecture not set!");
+        diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                    Level::Type::ERROR,
+                                                    eros_diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                                    "Architecture not set!");
     }
     return diag;
 }
 void SnapshotProcess::reset() {
 }
-Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_ros_time) {
-    Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+eros_diagnostic::Diagnostic SnapshotProcess::update(double t_dt, double t_ros_time) {
+    eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
     if (devicesnapshot_state == SnapshotState::COMPLETE) {
         holdcomplete_timer += t_dt;
         if (holdcomplete_timer > HOLDCOMPLETE_TIME) {
@@ -31,12 +31,12 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::update(double t_dt, double t_r
         }
     }
     ready_to_arm.ready_to_arm = true;
-    ready_to_arm.diag = eros::convert(diag);
+    ready_to_arm.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatemsg(
+std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::new_commandstatemsg(
     eros::command_state t_msg) {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     if (mode == Mode::MASTER) {
         if (t_msg.CurrentCommand.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
             if (t_msg.CurrentCommand.Option1 ==
@@ -55,9 +55,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandstatem
     }
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(eros::command t_msg) {
-    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::new_commandmsg(eros::command t_msg) {
+    eros_diagnostic::Diagnostic diag = get_root_diagnostic();
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     if (t_msg.Command == (uint16_t)Command::Type::GENERATE_SNAPSHOT) {
         if (((mode == Mode::MASTER) &&
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_MASTER)) ||
@@ -65,9 +65,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
              (t_msg.Option1 == (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE))) {
             if ((systemsnapshot_state != SnapshotState::NOTRUNNING) ||
                 (devicesnapshot_state != SnapshotState::NOTRUNNING)) {
-                diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                          Level::Type::WARN,
-                                         Diagnostic::Message::DROPPING_PACKETS,
+                                         eros_diagnostic::Message::DROPPING_PACKETS,
                                          "Snapshot is still being generated.");
                 diag_list.push_back(diag);
                 return diag_list;
@@ -77,9 +77,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
                     systemsnapshot_state = SnapshotState::STARTED;
                 }
                 devicesnapshot_state = SnapshotState::STARTED;
-                diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                          Level::Type::INFO,
-                                         Diagnostic::Message::NOERROR,
+                                         eros_diagnostic::Message::NOERROR,
                                          "Snapshot Started.");
             }
         }
@@ -93,8 +93,8 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::new_commandmsg(er
     }
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::check_programvariables() {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::check_programvariables() {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     return diag_list;
 }
 std::string SnapshotProcess::pretty() {
@@ -148,11 +148,11 @@ std::string SnapshotProcess::pretty() {
     }
     return str;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapshot() {
+std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
     // logger->log_notice("starting");
     snapshot_progress_percent = 0.0;
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
     if (mode == Mode::MASTER) {
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
             snapshot_config.snapshot_devices.at(i).device_snapshot_generated = false;
@@ -171,9 +171,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             exec(mkdir_cmd.c_str(), true);
         }
         catch (const std::exception &e) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::ERROR,
-                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     eros_diagnostic::Message::DROPPING_PACKETS,
                                      "Command Exec failed with error: " + std::string(e.what()));
             diag_list.push_back(diag);
             return diag_list;
@@ -192,9 +192,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             exec(tempstr, true);
         }
         catch (const std::exception &e) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::ERROR,
-                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     eros_diagnostic::Message::DROPPING_PACKETS,
                                      "Command Exec failed with error: " + std::string(e.what()));
             diag_list.push_back(diag);
             return diag_list;
@@ -212,9 +212,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             exec(tempstr, true);
         }
         catch (const std::exception &e) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::ERROR,
-                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     eros_diagnostic::Message::DROPPING_PACKETS,
                                      "File Copy Exec failed with error: " + std::string(e.what()));
             diag_list.push_back(diag);
             return diag_list;
@@ -233,9 +233,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         }
         catch (const std::exception &e) {
             diag =
-                update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                   Level::Type::ERROR,
-                                  Diagnostic::Message::DROPPING_PACKETS,
+                                  eros_diagnostic::Message::DROPPING_PACKETS,
                                   "Folder Copy Exec failed with error: " + std::string(e.what()));
             diag_list.push_back(diag);
             return diag_list;
@@ -283,9 +283,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             if (mode == Mode::SLAVE) {
                 snapshot_progress_percent = 0.0;
             }
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::WARN,
-                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     eros_diagnostic::Message::DROPPING_PACKETS,
                                      "Device Snapshot not created at: " +
                                          snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
@@ -298,9 +298,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
             devicesnapshot_state =
                 SnapshotState::COMPLETE;  // Mark NOT RUNNING For now, may need to change when
                                           // System Snapshot gets implemented.
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::INFO,
-                                     Diagnostic::Message::NOERROR,
+                                     eros_diagnostic::Message::NOERROR,
                                      "Device Snapshot Created at: " +
                                          snapshot_config.active_device_snapshot_completepath);
             diag_list.push_back(diag);
@@ -337,9 +337,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
                 if (snapshot_config.snapshot_devices.at(i).device_snapshot_generated == false) {
                     logger->log_warn("Device: " + snapshot_config.snapshot_devices.at(i).name +
                                      " Has not completed in time.");
-                    diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+                    diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                              Level::Type::WARN,
-                                             Diagnostic::Message::DROPPING_PACKETS,
+                                             eros_diagnostic::Message::DROPPING_PACKETS,
                                              "Device Snapshot was not generated in time: " +
                                                  snapshot_config.snapshot_devices.at(i).name);
                     diag_list.push_back(diag);
@@ -387,9 +387,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         if (count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/",
                                     "_Snapshot_") !=
             ((int)snapshot_config.snapshot_devices.size() + 1)) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::WARN,
-                                     Diagnostic::Message::DROPPING_PACKETS,
+                                     eros_diagnostic::Message::DROPPING_PACKETS,
                                      "Device Snapshots are missing.");
             diag_list.push_back(diag);
             systemsnapshot_state = SnapshotState::INCOMPLETE;
@@ -411,9 +411,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
         logger->log_info("Creating System Snap Text File: " + result_file);
         std::ofstream result_file_fd(result_file.c_str(), std::ofstream::out);
         if (result_file_fd.is_open() == false) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::WARN,
-                                     Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
                                      "Unable to create System Snap Text File.");
             diag_list.push_back(diag);
             systemsnapshot_state = SnapshotState::INCOMPLETE;
@@ -478,9 +478,9 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::createnew_snapsho
     }
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     bool any_error = false;
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/*";
@@ -488,10 +488,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
         int file_count = count_files_indirectory(snapshot_config.device_snapshot_path + "/");
         if (file_count > 0) {
             any_error = true;
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Command Failed: " + rm_cmd);
+            diag =
+                diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                     Level::Type::WARN,
+                                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                     "Command Failed: " + rm_cmd);
             diag_list.push_back(diag);
         }
     }
@@ -501,10 +502,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
         int file_count = count_files_indirectory(snapshot_config.systemsnapshot_path + "/");
         if (file_count > 0) {
             any_error = true;
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Command Failed: " + rm_cmd);
+            diag =
+                diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                     Level::Type::WARN,
+                                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                     "Command Failed: " + rm_cmd);
             diag_list.push_back(diag);
         }
     }
@@ -515,10 +517,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
             count_files_indirectory(snapshot_config.stage_directory + "/DeviceSnapshot/");
         if (file_count > 0) {
             any_error = true;
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Command Failed: " + rm_cmd);
+            diag =
+                diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                     Level::Type::WARN,
+                                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                     "Command Failed: " + rm_cmd);
             diag_list.push_back(diag);
         }
     }
@@ -529,10 +532,11 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
             count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/");
         if (file_count > 0) {
             any_error = true;
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Command Failed: " + rm_cmd);
+            diag =
+                diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                     Level::Type::WARN,
+                                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                     "Command Failed: " + rm_cmd);
             diag_list.push_back(diag);
         }
     }
@@ -542,34 +546,35 @@ std::vector<Diagnostic::DiagnosticDefinition> SnapshotProcess::clear_snapshots()
         int file_count = count_files_indirectory(snapshot_config.bagfile_directory + "/");
         if (file_count > 0) {
             any_error = true;
-            diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                       Level::Type::WARN,
-                                                       Diagnostic::Message::DIAGNOSTIC_FAILED,
-                                                       "Command Failed: " + rm_cmd);
+            diag =
+                diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                     Level::Type::WARN,
+                                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
+                                                     "Command Failed: " + rm_cmd);
             diag_list.push_back(diag);
         }
     }
     if (any_error == false) {
-        diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
-                                                   Level::Type::NOTICE,
-                                                   Diagnostic::Message::NOERROR,
-                                                   "Cleared Snapshot Directories.");
+        diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                                    Level::Type::NOTICE,
+                                                    eros_diagnostic::Message::NOERROR,
+                                                    "Cleared Snapshot Directories.");
 
         diag_list.push_back(diag);
     }
     return diag_list;
 }
-Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
+eros_diagnostic::Diagnostic SnapshotProcess::load_config(
     std::string file_path, std::vector<std::string> override_devicenames) {
     logger->log_notice("Loading: " + file_path);
     file_path = sanitize_path(file_path);
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
     TiXmlDocument doc(file_path);
     bool configfile_loaded = doc.LoadFile();
     if (configfile_loaded == false) {
-        diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+        diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                  Level::Type::ERROR,
-                                 Diagnostic::Message::INITIALIZING_ERROR,
+                                 eros_diagnostic::Message::INITIALIZING_ERROR,
                                  "Unable to load: " + file_path);
         return diag;
     }
@@ -698,9 +703,9 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
     }
     if (missing_required_keys.size() == 0) {
         if (missing_optional_keys.size() == 0) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::NOTICE,
-                                     Diagnostic::Message::NOERROR,
+                                     eros_diagnostic::Message::NOERROR,
                                      "Config File Loaded.");
         }
         else {
@@ -713,9 +718,9 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
                     str += "," + missing_optional_keys.at(i);
                 }
             }
-            diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                      Level::Type::WARN,
-                                     Diagnostic::Message::NOERROR,
+                                     eros_diagnostic::Message::NOERROR,
                                      "Missing Optional Keys: " + str);
         }
     }
@@ -729,9 +734,9 @@ Diagnostic::DiagnosticDefinition SnapshotProcess::load_config(
                 str += "," + missing_required_keys.at(i);
             }
         }
-        diag = update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+        diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                  Level::Type::ERROR,
-                                 Diagnostic::Message::INITIALIZING_ERROR,
+                                 eros_diagnostic::Message::INITIALIZING_ERROR,
                                  "Missing Required Keys: " + str);
     }
     return diag;

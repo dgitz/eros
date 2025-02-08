@@ -53,7 +53,7 @@ class MasterNode : public eros::BaseNode
         return process;
     }
     bool start();
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -72,7 +72,7 @@ class MasterNode : public eros::BaseNode
     void command_Callback(const eros::command::ConstPtr& t_msg);
 
    private:
-    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::eros_diagnostic::Diagnostic read_launchparameters();
     MasterNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::ServiceServer device_server_srv;

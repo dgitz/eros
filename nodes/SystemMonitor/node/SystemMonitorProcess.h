@@ -49,7 +49,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     // Structs
 
     // Initialization Functions
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
     bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
         nodeHandle = nh;
@@ -62,19 +62,17 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     bool initialize_windows();
 
     // Update Functions
-    eros::Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time);
+    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
 
     // Message Functions
-    std::vector<eros::Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg);
-    eros::Diagnostic::DiagnosticDefinition new_commandstate(
-        const eros::command_state::ConstPtr& t_msg);
-    eros::Diagnostic::DiagnosticDefinition new_heartbeatmessage(
-        const eros::heartbeat::ConstPtr& t_msg);
-    eros::Diagnostic::DiagnosticDefinition new_resourceusedmessage(
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
+    eros::eros_diagnostic::Diagnostic new_commandstate(const eros::command_state::ConstPtr& t_msg);
+    eros::eros_diagnostic::Diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg);
+    eros::eros_diagnostic::Diagnostic new_resourceusedmessage(
         const eros::resource::ConstPtr& t_msg);
-    eros::Diagnostic::DiagnosticDefinition new_resourceavailablemessage(
+    eros::eros_diagnostic::Diagnostic new_resourceavailablemessage(
         const eros::resource::ConstPtr& t_msg);
-    eros::Diagnostic::DiagnosticDefinition new_loadfactormessage(
+    eros::eros_diagnostic::Diagnostic new_loadfactormessage(
         const eros::loadfactor::ConstPtr& t_msg);
     // Attribute Functions
     void update_armedstate(eros::ArmDisarm::State armed_state);
@@ -86,7 +84,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         }
         return true;
     }
-    eros::Diagnostic::DiagnosticDefinition update_monitorlist(
+    eros::eros_diagnostic::Diagnostic update_monitorlist(
         std::vector<std::string> heartbeat_list,
         std::vector<std::string> resourceused_list,
         std::vector<std::string> resourceavailable_list,
@@ -97,7 +95,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         std::vector<std::string>& new_loadfactor_topics_to_subscribe);
 
     // Support Functions
-    std::vector<eros::Diagnostic::DiagnosticDefinition> check_programvariables();
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
     std::string pretty();
 
     // Destructors

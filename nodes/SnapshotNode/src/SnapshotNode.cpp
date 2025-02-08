@@ -13,9 +13,9 @@ SnapshotNode::SnapshotNode()
 SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     eros::command command = BaseNodeProcess::convert_fromptr(t_msg);
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->new_commandmsg(command);
+    std::vector<eros_diagnostic::Diagnostic> diag_list = process->new_commandmsg(command);
     bool any_error = false;
     for (std::size_t i = 0; i < diag_list.size(); ++i) {
         if (diag_list.at(i).level >= Level::Type::WARN) {
@@ -26,7 +26,7 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     }
     if (any_error == false) {
         diag.level = Level::Type::INFO;
-        diag.message = Diagnostic::Message::NOERROR;
+        diag.message = eros_diagnostic::Message::NOERROR;
         diag.description = "No Error";
     }
     bool send_reply = false;
@@ -42,7 +42,7 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
         state.CurrentCommand = command;
         state.State = 0;
         state.PercentComplete = 0.0;
-        state.diag = eros::convert(diag);
+        state.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
         if (diag.level > Level::Type::NOTICE) {
             logger->log_diagnostic(diag);
         }
@@ -137,11 +137,11 @@ bool SnapshotNode::start() {
                         DIAGNOSTIC_SUBSYSTEM,
                         DIAGNOSTIC_COMPONENT,
                         logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->set_architecture(resource_monitor->get_architecture());
     diagnostic = process->finish_initialization();
@@ -154,9 +154,9 @@ bool SnapshotNode::start() {
         return false;
     }
     if (diagnostic.level < Level::Type::WARN) {
-        diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
+        diagnostic.type = eros_diagnostic::DiagnosticType::SOFTWARE;
         diagnostic.level = Level::Type::INFO;
-        diagnostic.message = Diagnostic::Message::NOERROR;
+        diagnostic.message = eros_diagnostic::Message::NOERROR;
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
@@ -171,14 +171,14 @@ bool SnapshotNode::start() {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic SnapshotNode::read_launchparameters() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     std::string param_mode = node_name + "/Mode";
     std::string mode;
     if (n->getParam(param_mode, mode) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+        diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
-                                          Diagnostic::Message::INITIALIZING_ERROR,
+                                          eros_diagnostic::Message::INITIALIZING_ERROR,
                                           "Mode Not defined.");
         logger->log_diagnostic(diag);
         return diag;
@@ -188,14 +188,14 @@ Diagnostic::DiagnosticDefinition SnapshotNode::read_launchparameters() {
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic SnapshotNode::finish_initialization() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &SnapshotNode::changenodestate_service, this);
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "Running");
     std::string param_override_devicenames = node_name + "/Override_DeviceNames";
     std::string override_devicename;
@@ -209,9 +209,9 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     std::string param_config_dir = node_name + "/Config_Directory";
     std::string config_dir;
     if (n->getParam(param_config_dir, config_dir) == false) {
-        diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+        diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                           Level::Type::ERROR,
-                                          Diagnostic::Message::INITIALIZING_ERROR,
+                                          eros_diagnostic::Message::INITIALIZING_ERROR,
                                           "Config_Directory Not defined.");
         logger->log_diagnostic(diag);
         return diag;
@@ -241,13 +241,13 @@ Diagnostic::DiagnosticDefinition SnapshotNode::finish_initialization() {
     commandstate_pub = n->advertise<eros::command_state>(commandstate_topic, 1);
     std::string command_topic = get_robotnamespace() + "SystemCommand";
     command_pub = n->advertise<eros::command>(command_topic, 10);
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "Running");
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
     return diag;
 }
@@ -267,26 +267,26 @@ bool SnapshotNode::run_01hz() {
     return true;
 }
 bool SnapshotNode::run_01hz_noisy() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+    eros_diagnostic::Diagnostic diag = diagnostic;
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }
 bool SnapshotNode::run_1hz() {
-    std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
-        process->get_latest_diagnostics();
+    std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(eros::convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(
+            eros_diagnostic::DiagnosticUtility::convert(latest_diagnostics.at(i)));
     }
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {
         base_reset();
         process->reset();
         logger->log_notice("Node has Reset");
         if (process->request_statechange(Node::State::RUNNING) == false) {
-            diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+            diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
-                                              Diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                              eros_diagnostic::Message::DEVICE_NOT_AVAILABLE,
                                               "Not able to Change Node State to Running.");
             logger->log_diagnostic(diag);
         }
@@ -301,7 +301,7 @@ bool SnapshotNode::run_1hz() {
     return true;
 }
 bool SnapshotNode::run_10hz() {
-    Diagnostic::DiagnosticDefinition diag = process->update(0.1, ros::Time::now().toSec());
+    eros_diagnostic::Diagnostic diag = process->update(0.1, ros::Time::now().toSec());
     if (diag.level >= Level::Type::NOTICE) {
         logger->log_diagnostic(diag);
     }
@@ -322,10 +322,10 @@ bool SnapshotNode::run_10hz() {
         }
         state.Name = get_hostname();
         state.diag.Level = (uint8_t)Level::Type::DEBUG;
-        state.diag.DiagnosticMessage = (uint8_t)Diagnostic::Message::NOERROR;
+        state.diag.DiagnosticMessage = (uint8_t)eros_diagnostic::Message::NOERROR;
         state.PercentComplete = process->get_snapshotprogress_percentage();
         if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
-            logger->log_diagnostic(eros::convert(state.diag));
+            logger->log_diagnostic(eros_diagnostic::DiagnosticUtility::convert(state.diag));
         }
         commandstate_pub.publish(state);
     }
@@ -342,7 +342,7 @@ void SnapshotNode::thread_snapshotcreation() {
             logger->log_notice("Snap: " +
                                eros::SnapshotStateString(process->get_devicesnapshot_state()));
             SnapshotProcess::SnapshotConfig config = process->get_snapshot_config();
-            Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+            eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
             if (process->get_mode() == SnapshotProcess::Mode::MASTER) {
                 std_msgs::Empty bagfile_snapshot_trigger;
                 bagfile_snapshottrigger_pub.publish(bagfile_snapshot_trigger);
@@ -354,7 +354,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 command.Option1 = (uint16_t)Command::GenerateSnapshot_Option1::RUN_SLAVE;
                 for (std::size_t i = 0; i < 1; ++i) { command_pub.publish(command); }
             }
-            std::vector<Diagnostic::DiagnosticDefinition> diag_list = process->createnew_snapshot();
+            std::vector<eros_diagnostic::Diagnostic> diag_list = process->createnew_snapshot();
             Level::Type max_level = Level::Type::DEBUG;
             for (std::size_t i = 0; i < diag_list.size(); ++i) {
                 if (diag_list.at(i).level > max_level) {
@@ -382,7 +382,7 @@ void SnapshotNode::thread_snapshotcreation() {
                     state.State = (uint8_t)process->get_devicesnapshot_state();
                 }
                 state.PercentComplete = 100.0;
-                state.diag = eros::convert(diag);
+                state.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
                 if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
                     logger->log_diagnostic(diag);
                 }
@@ -404,7 +404,7 @@ void SnapshotNode::thread_snapshotcreation() {
                 }
                 state.State = (uint8_t)eros::SnapshotState::INCOMPLETE;
                 state.PercentComplete = 0.0;
-                state.diag = eros::convert(diag);
+                state.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
                 if (state.diag.Level > (uint8_t)Level::Type::NOTICE) {
                     logger->log_diagnostic(diag);
                 }
