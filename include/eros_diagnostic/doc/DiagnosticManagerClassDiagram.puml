@@ -1,7 +1,7 @@
 @startuml
 title Diagnostic Manager Class Diagram
 
-namespace eros {
+package eros {
 namespace eros_diagnostic {
     enum DiagnosticType
     enum Message

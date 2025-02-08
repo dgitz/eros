@@ -93,12 +93,12 @@ class NodeWindow : public BaseWindow
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::RAM, Field(" RAM(%) ", 10)));
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::RX, Field(" Rx ", 6)));
-        ScreenCoordinatePixel coord_pix =
-            convertCoordinate(get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
-        WINDOW* win = create_newwin(coord_pix.height_pix,
-                                    coord_pix.width_pix,
-                                    coord_pix.start_y_pix,
-                                    coord_pix.start_x_pix);
+        ScreenCoordinatePixel coord_pix = SystemMonitorUtility::convertCoordinate(
+            get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
+        WINDOW* win = SystemMonitorUtility::create_newwin(coord_pix.height_pix,
+                                                          coord_pix.width_pix,
+                                                          coord_pix.start_y_pix,
+                                                          coord_pix.start_x_pix);
         set_screen_coordinates_pix(coord_pix);
         set_window(win);
 

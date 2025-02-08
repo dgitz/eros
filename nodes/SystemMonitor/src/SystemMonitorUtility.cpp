@@ -1,7 +1,6 @@
-#pragma once
-#include "Window_Definitions.h"
+#include "SystemMonitorUtility.h"
 namespace eros_nodes::SystemMonitor {
-WINDOW* create_newwin(int height, int width, int starty, int startx) {
+WINDOW* SystemMonitorUtility::create_newwin(int height, int width, int starty, int startx) {
     WINDOW* local_win;
 
     local_win = newwin(height, width, starty, startx);
@@ -12,9 +11,9 @@ WINDOW* create_newwin(int height, int width, int starty, int startx) {
 
     return local_win;
 }
-ScreenCoordinatePixel convertCoordinate(ScreenCoordinatePerc coord_perc,
-                                        uint16_t width_pix,
-                                        uint16_t height_pix) {
+ScreenCoordinatePixel SystemMonitorUtility::convertCoordinate(ScreenCoordinatePerc coord_perc,
+                                                              uint16_t width_pix,
+                                                              uint16_t height_pix) {
     ScreenCoordinatePixel coord(0, 0, 0, 0);
     coord.start_x_pix = (uint16_t)((double)width_pix * (.01 * coord_perc.start_x_perc));
     coord.start_y_pix = (uint16_t)((double)height_pix * (.01 * coord_perc.start_y_perc));
@@ -22,5 +21,4 @@ ScreenCoordinatePixel convertCoordinate(ScreenCoordinatePerc coord_perc,
     coord.height_pix = (uint16_t)((double)height_pix * (.01 * coord_perc.height_perc));
     return coord;
 }
-
 }  // namespace eros_nodes::SystemMonitor

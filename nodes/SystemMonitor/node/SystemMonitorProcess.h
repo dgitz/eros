@@ -15,7 +15,7 @@
 #include "MessageWindow/MessageWindow.h"
 #include "NodeWindow/NodeWindow.h"
 #include "StatusWindow/StatusWindow.h"
-#include "Window_Definitions.h"
+#include "WindowDefinitions.h"
 namespace eros_nodes::SystemMonitor {
 
 /*! \class SystemMonitorProcess SystemMonitorProcess.h "SystemMonitorProcess.h"

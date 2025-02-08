@@ -7,7 +7,7 @@
 #include <eros_diagnostic/Diagnostic.h>
 #include <eros_diagnostic/DiagnosticUtility.h>
 
-#include "Window_Definitions.h"
+#include "WindowDefinitions.h"
 namespace eros_nodes::SystemMonitor {
 
 class IWindow
