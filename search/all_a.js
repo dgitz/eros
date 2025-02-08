@@ -1,14 +1,19 @@
 var searchData=
 [
-  ['mainsystem_0',['MainSystem',['../group__eros.html#ga7c607a1224b68fbf12782f6969aa5c4b',1,'eros::System']]],
-  ['mainsystemstring_1',['MainSystemString',['../group__eros.html#ga091efde2945185fc21f5be5a86943c92',1,'eros::System']]],
-  ['majorversion_2',['MajorVersion',['../group__eros.html#ga6832701519a839429a235ed3a606db41',1,'eros::Firmware']]],
-  ['mapping_3',['MAPPING',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338a2fa399f11879d3347f324fe703fb9f97',1,'eros::System']]],
-  ['measure_5ftime_5fdiff_4',['measure_time_diff',['../classeros_1_1BaseNode.html#ae9663723f7854be315f09ed1773175b6',1,'eros::BaseNode']]],
-  ['message_5',['message',['../structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#afaa9403975c073715cfb6abc7064424b',1,'eros::Diagnostic::DiagnosticDefinition']]],
-  ['message_6',['Message',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024',1,'eros::Diagnostic']]],
-  ['minorversion_7',['MinorVersion',['../group__eros.html#gaf1815ff110588fbf9a9e1a6cbfe5b404',1,'eros::Firmware']]],
-  ['missing_5fheartbeats_8',['MISSING_HEARTBEATS',['../classeros_1_1Diagnostic.html#a745e5e7522f7514f63e96baa07913024ae9e37d97f0295a2769728fca8080a1f9',1,'eros::Diagnostic']]],
-  ['mode_9',['Mode',['../classeros_1_1ResourceMonitor.html#a164922763a56f5e72435889853120bf6',1,'eros::ResourceMonitor']]],
-  ['modestate_5fcallback_10',['modestate_Callback',['../classeros_1_1BaseNode.html#a78f6ff44df347c32ced77de913c03261',1,'eros::BaseNode']]]
+  ['learning_133',['LEARNING',['../group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338ac4f6b1a2cc8345c11892ca0f6312b55d',1,'eros::System']]],
+  ['level_134',['Level',['../classeros_1_1Level.html',1,'eros::Level'],['../structeros_1_1eros__diagnostic_1_1Diagnostic_afc821c566b0d7206328ede3c3df35e3f.html#afc821c566b0d7206328ede3c3df35e3f',1,'eros::eros_diagnostic::Diagnostic::level()']]],
+  ['levelstring_135',['LevelString',['../group__eros_gaf0b1e5cafda35e4defd205e5dac44b04.html#gaf0b1e5cafda35e4defd205e5dac44b04',1,'eros::Level']]],
+  ['log_5fdebug_136',['LOG_DEBUG',['../classeros_1_1Logger.html#ae05cacdeb3b4fc6588a235ff7170af17',1,'eros::Logger::LOG_DEBUG()'],['../Logger_8h_a0457d1086ce0a8f9cf2226919cc98976.html#a0457d1086ce0a8f9cf2226919cc98976',1,'log_debug():&#160;Logger.h']]],
+  ['log_5fdiagnostic_137',['LOG_DIAGNOSTIC',['../classeros_1_1Logger.html#a9014f68fb5a9381223734e95e2fdba6e',1,'eros::Logger::LOG_DIAGNOSTIC()'],['../Logger_8h_a8e5f4d67f5f3382045e832df227d4a35.html#a8e5f4d67f5f3382045e832df227d4a35',1,'log_diagnostic():&#160;Logger.h']]],
+  ['log_5ferror_138',['LOG_ERROR',['../classeros_1_1Logger.html#a6c35a6e2a5b764ddca2154466fa18b8e',1,'eros::Logger::LOG_ERROR()'],['../Logger_8h_a932b8c463f95a91cef5e617350f7689a.html#a932b8c463f95a91cef5e617350f7689a',1,'log_error():&#160;Logger.h']]],
+  ['log_5ffatal_139',['LOG_FATAL',['../classeros_1_1Logger.html#a38617620d57aba7d54c4cf8d8df329de',1,'eros::Logger::LOG_FATAL()'],['../Logger_8h_a1c6dbf87d5537039d0d88096ba7715da.html#a1c6dbf87d5537039d0d88096ba7715da',1,'log_fatal():&#160;Logger.h']]],
+  ['log_5finfo_140',['LOG_INFO',['../classeros_1_1Logger.html#a15f82e22dcfdab871ab96a9ad54231a8',1,'eros::Logger::LOG_INFO()'],['../Logger_8h_a6a115e224663a813a7f79225cb8fc2fc.html#a6a115e224663a813a7f79225cb8fc2fc',1,'log_info():&#160;Logger.h']]],
+  ['log_5fnotice_141',['LOG_NOTICE',['../classeros_1_1Logger.html#a5ec10dceb4ac483c0d94a9a4fe549a7f',1,'eros::Logger::LOG_NOTICE()'],['../Logger_8h_a3148885525760ca391aadfb4535b0908.html#a3148885525760ca391aadfb4535b0908',1,'log_notice():&#160;Logger.h']]],
+  ['log_5fsuppressed_142',['LOG_SUPPRESSED',['../classeros_1_1Logger_ae09869e0345da7e623b505c31fed7572.html#ae09869e0345da7e623b505c31fed7572a0d1e4ebcd817bc8d584aff6c4315614f',1,'eros::Logger']]],
+  ['log_5fwarn_143',['LOG_WARN',['../classeros_1_1Logger.html#a4291e7ade096b5d3e3956704e8896239',1,'eros::Logger::LOG_WARN()'],['../Logger_8h_a6450dfaf286e7fca293f2a51ad939ef2.html#a6450dfaf286e7fca293f2a51ad939ef2',1,'log_warn():&#160;Logger.h']]],
+  ['log_5fwritten_144',['LOG_WRITTEN',['../classeros_1_1Logger_ae09869e0345da7e623b505c31fed7572.html#ae09869e0345da7e623b505c31fed7572a79c4701ee0b3df9f9fa6e570d24ae605',1,'eros::Logger']]],
+  ['logger_145',['Logger',['../classeros_1_1Logger.html',1,'eros::Logger'],['../classeros_1_1BaseNodeProcess_af0dcefbd8a95037c869933bac97be362.html#af0dcefbd8a95037c869933bac97be362',1,'eros::BaseNodeProcess::logger()'],['../classeros_1_1Logger_a0fefb6088c7644daba2b90ed1e2c46fe.html#a0fefb6088c7644daba2b90ed1e2c46fe',1,'eros::Logger::Logger(std::string level, std::string name)'],['../classeros_1_1Logger_ae6373abb707086aec6b3dfaf0ed3f34d.html#ae6373abb707086aec6b3dfaf0ed3f34d',1,'eros::Logger::Logger(std::string level, std::string directory, std::string name)']]],
+  ['logger_2eh_146',['Logger.h',['../Logger_8h.html',1,'']]],
+  ['loggerlevel_5fservice_147',['loggerlevel_service',['../classeros_1_1BaseNode.html#a3d69f38c697dd0d4a1523cdf494f2008',1,'eros::BaseNode']]],
+  ['loggerstatus_148',['LoggerStatus',['../classeros_1_1Logger_ae09869e0345da7e623b505c31fed7572.html#ae09869e0345da7e623b505c31fed7572',1,'eros::Logger']]]
 ];

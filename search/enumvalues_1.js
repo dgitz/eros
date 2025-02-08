@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['calibration_0',['CALIBRATION',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4a70542fff955dafe953f0aa7ae3635d0c',1,'eros::Command']]],
-  ['communication_1',['COMMUNICATION',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338a3f27148a0073e6705ee8277dc392ab7d',1,'eros::System']]],
-  ['communications_2',['COMMUNICATIONS',['../classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65dfa322025110415f74112e5388dab886066',1,'eros::Diagnostic']]],
-  ['complete_3',['COMPLETE',['../group__eros.html#gga209031320c478c9ba5fd268b317e4508a3de44296982e58199afc513a715b12ba',1,'eros']]],
-  ['configure_4',['CONFIGURE',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4a24f3e5996ecc173cab972f2bd004fd5a',1,'eros::Command']]],
-  ['controller_5',['CONTROLLER',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338a42e074e8564dad9034ef033c6a6cf8b6',1,'eros::System']]]
+  ['blue_5fcolor_508',['BLUE_COLOR',['../namespaceeros__nodes_1_1SystemMonitor_aadd0987ee63d7baa4c763f29eb45d200.html#aadd0987ee63d7baa4c763f29eb45d200a6afbf6c79a1413494d060fb4a356debd',1,'eros_nodes::SystemMonitor']]]
 ];

@@ -1,13 +1,13 @@
 <map id="include/eros/Logger.h" name="include/eros/Logger.h">
-<area shape="rect" id="node1" title=" " alt="" coords="222,5,369,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,65,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="89,79,144,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="169,79,235,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="259,79,331,104"/>
-<area shape="rect" id="node6" href="$Diagnostic_8h.html" title=" " alt="" coords="406,79,499,104"/>
-<area shape="rect" id="node7" href="$eROS__Definitions_8h.html" title=" " alt="" coords="253,152,415,177"/>
-<area shape="rect" id="node11" title=" " alt="" coords="523,79,622,104"/>
-<area shape="rect" id="node8" title=" " alt="" coords="365,225,420,251"/>
-<area shape="rect" id="node9" title=" " alt="" coords="490,152,565,177"/>
-<area shape="rect" id="node10" title=" " alt="" coords="589,152,647,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="406,5,567,32"/>
+<area shape="rect" id="node2" href="$Diagnostic_8h.html" title=" " alt="" coords="133,80,342,107"/>
+<area shape="rect" id="node3" href="$eROS__Definitions_8h.html" title=" " alt="" coords="5,155,184,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="367,80,433,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="457,80,516,107"/>
+<area shape="rect" id="node9" title=" " alt="" coords="541,80,614,107"/>
+<area shape="rect" id="node10" title=" " alt="" coords="639,80,719,107"/>
+<area shape="rect" id="node11" title=" " alt="" coords="743,80,851,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="128,229,187,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="259,155,344,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="369,155,431,181"/>
 </map>

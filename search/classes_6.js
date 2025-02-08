@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['level_0',['Level',['../classeros_1_1Level.html',1,'eros']]],
-  ['logger_1',['Logger',['../classeros_1_1Logger.html',1,'eros']]]
+  ['headerwindow_323',['HeaderWindow',['../classeros__nodes_1_1SystemMonitor_1_1HeaderWindow.html',1,'eros_nodes::SystemMonitor']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['majorversion_0',['MajorVersion',['../group__eros.html#ga6832701519a839429a235ed3a606db41',1,'eros::Firmware']]],
-  ['message_1',['message',['../structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#afaa9403975c073715cfb6abc7064424b',1,'eros::Diagnostic::DiagnosticDefinition']]],
-  ['minorversion_2',['MinorVersion',['../group__eros.html#gaf1815ff110588fbf9a9e1a6cbfe5b404',1,'eros::Firmware']]]
+  ['level_470',['level',['../structeros_1_1eros__diagnostic_1_1Diagnostic_afc821c566b0d7206328ede3c3df35e3f.html#afc821c566b0d7206328ede3c3df35e3f',1,'eros::eros_diagnostic::Diagnostic']]],
+  ['logger_471',['logger',['../classeros_1_1BaseNodeProcess_af0dcefbd8a95037c869933bac97be362.html#af0dcefbd8a95037c869933bac97be362',1,'eros::BaseNodeProcess']]]
 ];

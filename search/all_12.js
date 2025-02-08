@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['wait_0',['WAIT',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4ad5cc6a0064b5c25ba37826aa3fda910c',1,'eros::Command']]],
-  ['warn_1',['WARN',['../group__eros.html#ggadf15b7ed977a35b7cc7ab70708ad4822a32bd8a1db2275458673903bdb84cb277',1,'eros::Level']]]
+  ['view_5fdiagnostics_5fnode_285',['VIEW_DIAGNOSTICS_NODE',['../namespaceeros__nodes_1_1SystemMonitor_acc9ff54bce4801e017fb48f9de35d507.html#acc9ff54bce4801e017fb48f9de35d507a23d5ce1758f288e91e9fe74fbd9883b2',1,'eros_nodes::SystemMonitor']]],
+  ['view_5fdiagnostics_5fsystem_286',['VIEW_DIAGNOSTICS_SYSTEM',['../namespaceeros__nodes_1_1SystemMonitor_acc9ff54bce4801e017fb48f9de35d507.html#acc9ff54bce4801e017fb48f9de35d507a7f7ea071804a1d77cc4bf7f3c95c247f',1,'eros_nodes::SystemMonitor']]],
+  ['vision_287',['VISION',['../group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a7e0587ea8ffdd03a191500efa700d619',1,'eros::System']]]
 ];

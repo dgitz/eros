@@ -1,0 +1,6 @@
+<map id="eros_nodes::MasterNodeProcess" name="eros_nodes::MasterNodeProcess">
+<area shape="rect" id="node1" title="The process utility for the Master Node." alt="" coords="53,185,286,212"/>
+<area shape="rect" id="node2" href="$classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,109,257,136"/>
+<area shape="rect" id="node3" href="$classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,5,165,47"/>
+<area shape="rect" id="node4" href="$classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,13,305,39"/>
+</map>

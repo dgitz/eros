@@ -1,4 +1,0 @@
-<map id="eros::Diagnostic::initialize" name="eros::Diagnostic::initialize">
-<area shape="rect" id="node1" title="Initialize Root Diagnostic. This should be called once per instance of Diagnostic." alt="" coords="216,13,383,38"/>
-<area shape="rect" id="node2" href="$classeros_1_1BaseNodeProcess.html#ae7e106ebe0ddb39709c7f8ecef9407e6" title="Initializes Process. Should be called right after instantiating variable." alt="" coords="5,5,168,45"/>
-</map>

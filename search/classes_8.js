@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['resourceinfo_0',['ResourceInfo',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html',1,'eros::ResourceMonitor']]],
-  ['resourcemonitor_1',['ResourceMonitor',['../classeros_1_1ResourceMonitor.html',1,'eros']]]
+  ['keyeventcontainer_326',['KeyEventContainer',['../structeros__nodes_1_1SystemMonitor_1_1KeyEventContainer.html',1,'eros_nodes::SystemMonitor']]]
 ];

@@ -1,11 +1,16 @@
 var searchData=
 [
-  ['paused_0',['PAUSED',['../group__eros.html#ggacdaf97604bbb90b853f095781557754aa99b2439e63f73ad515f7ab2447a80673',1,'eros::Node']]],
-  ['pid_1',['pid',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html#a4d225222e0d13ddfa5f1824ca55ca601',1,'eros::ResourceMonitor::ResourceInfo']]],
-  ['pose_2',['POSE',['../classeros_1_1Diagnostic.html#a8e6414a2e8513786b446d438af2b65dfac04482f786dfe8f6d66d78ab6f79c40d',1,'eros::Diagnostic::POSE()'],['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338ac04482f786dfe8f6d66d78ab6f79c40d',1,'eros::System::POSE()']]],
-  ['power_3',['POWER',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338ac9c9c146c630ca5ef9197c73c032f4a6',1,'eros::System']]],
-  ['preinitialize_5fbasenode_4',['preinitialize_basenode',['../classeros_1_1BaseNode.html#a88477df60f3392ab9cd10e43873342d5',1,'eros::BaseNode']]],
-  ['pretty_5',['pretty',['../classeros_1_1Diagnostic.html#a5773884ddc4eba8783fc4ec9b1ebfe34',1,'eros::Diagnostic::pretty()'],['../classeros_1_1Diagnostic.html#ad0598a59d615bb8f626c62082a7efe12',1,'eros::Diagnostic::pretty(std::string pre, std::vector&lt; DiagnosticDefinition &gt; diagnostics)'],['../classeros_1_1Diagnostic.html#adacebf9a58e28745fa43688204dc69e8',1,'eros::Diagnostic::pretty(std::string pre, DiagnosticDefinition diag, bool print_end_line=true)']]],
-  ['process_6',['PROCESS',['../classeros_1_1ResourceMonitor.html#a164922763a56f5e72435889853120bf6ab93c13848c6490ae962feec15fbdd151',1,'eros::ResourceMonitor']]],
-  ['process_5fname_7',['process_name',['../structeros_1_1ResourceMonitor_1_1ResourceInfo.html#a669de58486ecbefd1abafa0559f6eadf',1,'eros::ResourceMonitor::ResourceInfo']]]
+  ['navigation_171',['NAVIGATION',['../group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a5995d98caf31b9445202b0f054fdc54e',1,'eros::System']]],
+  ['new_5fppsmsg_172',['new_ppsmsg',['../classeros_1_1BaseNode.html#ae06698749809cf9d79aa378cbf5c5a86',1,'eros::BaseNode']]],
+  ['no_5fcolor_173',['NO_COLOR',['../namespaceeros__nodes_1_1SystemMonitor_aadd0987ee63d7baa4c763f29eb45d200.html#aadd0987ee63d7baa4c763f29eb45d200a8cf4aaec6ebd9603600c382cd169a843',1,'eros_nodes::SystemMonitor']]],
+  ['nodata_174',['NODATA',['../namespaceeros_1_1eros__diagnostic_abe8edabb73fbbde65c46a2f392cf4cef.html#abe8edabb73fbbde65c46a2f392cf4cefae5c1b61d3810e29aebbc8fba3978d362',1,'eros::eros_diagnostic']]],
+  ['node_175',['Node',['../classeros_1_1Node.html',1,'eros']]],
+  ['node_5fname_176',['node_name',['../structeros_1_1eros__diagnostic_1_1Diagnostic_ac5c9177f0ee198a7f587888a274346a3.html#ac5c9177f0ee198a7f587888a274346a3',1,'eros::eros_diagnostic::Diagnostic']]],
+  ['nodedata_177',['NodeData',['../structeros__nodes_1_1SystemMonitor_1_1NodeData.html',1,'eros_nodes::SystemMonitor']]],
+  ['nodestatestring_178',['NodeStateString',['../group__eros_ga7be0e9cd1ea8fff5bb94a5f867e6b56d.html#ga7be0e9cd1ea8fff5bb94a5f867e6b56d',1,'eros::Node']]],
+  ['nodewindow_179',['NodeWindow',['../classeros__nodes_1_1SystemMonitor_1_1NodeWindow.html',1,'eros_nodes::SystemMonitor']]],
+  ['noerror_180',['NOERROR',['../namespaceeros_1_1eros__diagnostic_abe8edabb73fbbde65c46a2f392cf4cef.html#abe8edabb73fbbde65c46a2f392cf4cefa2b7a5d9c6a3ccad249c1bb7ecc93a6ed',1,'eros::eros_diagnostic']]],
+  ['none_181',['NONE',['../group__eros_ga7498dad170d5c5801621fa3a7f55aad4.html#gga7498dad170d5c5801621fa3a7f55aad4ab50339a10e1de285ac99d4c3990b8693',1,'eros::Command']]],
+  ['notice_182',['NOTICE',['../group__eros_gadf15b7ed977a35b7cc7ab70708ad4822.html#ggadf15b7ed977a35b7cc7ab70708ad4822aaa14599dc3fdfa9cc81a7c3c247b77b9',1,'eros::Level']]],
+  ['notrunning_183',['NOTRUNNING',['../group__eros_ga209031320c478c9ba5fd268b317e4508.html#gga209031320c478c9ba5fd268b317e4508a3d6fb80d3c9227f95be71c7e4ea2a8f8',1,'eros']]]
 ];

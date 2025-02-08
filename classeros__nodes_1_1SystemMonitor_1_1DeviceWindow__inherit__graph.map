@@ -1,0 +1,5 @@
+<map id="eros_nodes::SystemMonitor::DeviceWindow" name="eros_nodes::SystemMonitor::DeviceWindow">
+<area shape="rect" id="node1" title=" " alt="" coords="5,184,208,225"/>
+<area shape="rect" id="node2" href="$classeros__nodes_1_1SystemMonitor_1_1BaseWindow.html" title=" " alt="" coords="5,95,208,136"/>
+<area shape="rect" id="node3" href="$classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title=" " alt="" coords="5,5,208,47"/>
+</map>

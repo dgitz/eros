@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zip_0',['ZIP',['../group__eros.html#gga1a42c6c133ff49e441052cebdfb5b4c2a4348f938bbddd8475e967ccb47ecb234',1,'eros::FileHelper']]]
+  ['x86_5f64_293',['X86_64',['../group__eros_ga4de8a31a2dd45d3d9559e76109a23e1f.html#gga4de8a31a2dd45d3d9559e76109a23e1fa840030b2e70cfe0155e29ee926dbd8ae',1,'eros::Architecture']]]
 ];

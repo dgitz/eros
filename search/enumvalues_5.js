@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['generate_5fsnapshot_0',['GENERATE_SNAPSHOT',['../group__eros.html#gga7498dad170d5c5801621fa3a7f55aad4ab334b65c910a6ea67608cdb1fba178ea',1,'eros::Command']]],
-  ['gpio_1',['GPIO',['../group__eros.html#gga34a61840c9cd6ede13ed123e6facf338aa4b03abff0e37da035d6fc0f9a4b1235',1,'eros::System']]]
+  ['failed_5fto_5fopen_532',['FAILED_TO_OPEN',['../classeros_1_1Logger_ae09869e0345da7e623b505c31fed7572.html#ae09869e0345da7e623b505c31fed7572af263f146f5c4bfc8a92fd053b5701e9b',1,'eros::Logger']]],
+  ['fatal_533',['FATAL',['../group__eros_gadf15b7ed977a35b7cc7ab70708ad4822.html#ggadf15b7ed977a35b7cc7ab70708ad4822a19da7170bea36556dde582519795f3fc',1,'eros::Level']]],
+  ['file_5ferror_534',['FILE_ERROR',['../group__eros_gae84e3a0048327940ce83a1f633753e5d.html#ggae84e3a0048327940ce83a1f633753e5da46c82d16f79f5d93bf336fe7ef8f9acb',1,'eros::FileHelper']]],
+  ['file_5fok_535',['FILE_OK',['../group__eros_gae84e3a0048327940ce83a1f633753e5d.html#ggae84e3a0048327940ce83a1f633753e5da30dcd543721b5a7bfb2bd2e780f0d31f',1,'eros::FileHelper']]],
+  ['finished_536',['FINISHED',['../group__eros_gacdaf97604bbb90b853f095781557754a.html#ggacdaf97604bbb90b853f095781557754aa2c616b2713e2e0aed04b4c4752c88133',1,'eros::Node']]]
 ];

@@ -1,7 +1,7 @@
-<map id="include/eros/Diagnostic.h" name="include/eros/Diagnostic.h">
-<area shape="rect" id="node1" title=" " alt="" coords="159,5,326,31"/>
-<area shape="rect" id="node2" href="$eROS__Definitions_8h.html" title=" " alt="" coords="5,79,168,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="118,152,173,177"/>
-<area shape="rect" id="node4" title=" " alt="" coords="243,79,317,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="341,79,400,104"/>
+<map id="include/eros_diagnostic/Diagnostic.h" name="include/eros_diagnostic/Diagnostic.h">
+<area shape="rect" id="node1" title=" " alt="" coords="174,5,349,47"/>
+<area shape="rect" id="node2" href="$eROS__Definitions_8h.html" title=" " alt="" coords="5,95,184,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="128,169,187,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="259,95,344,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="369,95,431,121"/>
 </map>

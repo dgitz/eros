@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_0',['type',['../structeros_1_1Diagnostic_1_1DiagnosticDefinition.html#a3b78931eeccd56453f38fa1d56b7b83c',1,'eros::Diagnostic::DiagnosticDefinition']]]
+  ['subsystem_483',['subsystem',['../structeros_1_1eros__diagnostic_1_1Diagnostic_af824641cd5713492aed3b99cea758447.html#af824641cd5713492aed3b99cea758447',1,'eros::eros_diagnostic::Diagnostic']]],
+  ['system_484',['system',['../structeros_1_1eros__diagnostic_1_1Diagnostic_a6b8ffcf1b1bdb9bd963a53d6f4d67a9f.html#a6b8ffcf1b1bdb9bd963a53d6f4d67a9f',1,'eros::eros_diagnostic::Diagnostic']]]
 ];
