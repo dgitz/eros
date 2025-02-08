@@ -1,0 +1,25 @@
+# .github/release.yml
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: Breaking Changes 🛠
+      labels:
+        - breaking-change
+    - title: Exciting New Features 🎉
+      labels:
+        - enhancement
+    - title: Documentation 📜
+      labels:
+        - documentation
+    - title: Bugs 🐛
+      labels:
+        - bug
+    - title: Won't Fix 🚫
+      labels:
+        - wontfix
+    - title: Other Changes
+      labels:
+        - "*"

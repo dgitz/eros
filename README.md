@@ -1,5 +1,5 @@
 # EROS
-[![Release](https://github.com/dgitz/eros/actions/workflows/Release.yml/badge.svg)](https://github.com/dgitz/eros/actions/workflows/Release.yml)
+[![Push](https://github.com/dgitz/eros/actions/workflows/Push.yml/badge.svg)](https://github.com/dgitz/eros/actions/workflows/Push.yml)
 
 __TOC__
 - [ROS Version Support](#ros-version-support)
