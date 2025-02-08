@@ -10,7 +10,7 @@ __TOC__
 - [Compatability](#compatability)
 - [Setup Instructions](#setup-instructions)
 - [Usage Instructions](#usage-in-your-package)
-- [Development Guide](#development-guide)
+- [Development Instructions](#development-instructions)
 - [Test Plan](#test-plan)
 
 Welcome to the EROS Wiki!

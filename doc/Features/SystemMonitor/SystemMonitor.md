@@ -5,6 +5,9 @@
 ## Overview
 The EROS System Monitor is a nice tool to aid in viewing different aspects of a ROS system.
 
+![](ref/SystemMonitor1.png)
+![](ref/SystemMonitor2.png)
+
 ## Features
 The following features are currently supported:
 * View active nodes (EROS nodes have more info, regular ROS nodes will also show up though).
