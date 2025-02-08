@@ -46,7 +46,7 @@ class SnapshotNode : public eros::BaseNode
         return process;
     }
     bool start();
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -70,7 +70,7 @@ class SnapshotNode : public eros::BaseNode
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;
     // ros::NodeHandle test_handle;
-    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::eros_diagnostic::Diagnostic read_launchparameters();
     SnapshotProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::ServiceServer filetransfer_srv;

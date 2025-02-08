@@ -128,7 +128,7 @@ class BaseNode
 
     /*! \brief Pre-initialization of node.  This section will create the default pub/subs for the
      * node, along with the logger. */
-    Diagnostic::DiagnosticDefinition preinitialize_basenode();
+    eros_diagnostic::Diagnostic preinitialize_basenode();
 
     /*! \brief Set Loop1 Rate in Hz. */
     void set_loop1_rate(double t_rate) {
@@ -283,11 +283,11 @@ class BaseNode
 
    protected:
     /*! \brief Get Base Launch parameters, which includes loop rates, verbosity, etc. */
-    Diagnostic::DiagnosticDefinition read_baselaunchparameters();
-    void update_diagnostics(std::vector<Diagnostic::DiagnosticDefinition> _diagnostics) {
+    eros_diagnostic::Diagnostic read_baselaunchparameters();
+    void update_diagnostics(std::vector<eros_diagnostic::Diagnostic> _diagnostics) {
         current_diagnostics = _diagnostics;
     }
-    Diagnostic::DiagnosticDefinition diagnostic;
+    eros_diagnostic::Diagnostic diagnostic;
 
     boost::shared_ptr<ros::NodeHandle> n;
     std::string robot_namespace;
@@ -341,7 +341,7 @@ class BaseNode
     bool require_pps_to_start;
     bool pps_received;
     double rand_delay_sec;
-    std::vector<Diagnostic::DiagnosticDefinition> current_diagnostics;
+    std::vector<eros_diagnostic::Diagnostic> current_diagnostics;
 
     bool armedstate_sub_disabled;
     ros::Subscriber armedstate_sub;

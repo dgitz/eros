@@ -3,13 +3,13 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <eros_diagnostic/Diagnostic.h>
 #include <stdio.h>
 
 #include <ctime>
 #include <fstream>
 #include <iostream>
 
-#include "Diagnostic.h"
 #include "eROS_Definitions.h"
 
 #ifdef ROS_INSTALLED
@@ -144,7 +144,7 @@ class Logger
     //! Log a Diagnostic.  Do not use, use: log_diagnostic
     LoggerStatus LOG_DIAGNOSTIC(std::string filename,
                                 uint64_t linenumber,
-                                Diagnostic::DiagnosticDefinition diagnostic);
+                                eros_diagnostic::Diagnostic diagnostic);
 
    private:
     const std::string GREEN_FOREGROUND = "\033[1;32m";

@@ -1,5 +1,6 @@
 #include <eros/Logger.h>
-using namespace eros;
+#include <eros_diagnostic/DiagnosticUtility.h>
+namespace eros {
 Logger::~Logger() {
 }
 Logger::Logger(std::string level, std::string directory, std::string name) : logger_ok(false) {
@@ -88,19 +89,19 @@ Logger::LoggerStatus Logger::LOG_FATAL(std::string filename,
 }
 Logger::LoggerStatus Logger::LOG_DIAGNOSTIC(std::string filename,
                                             uint64_t linenumber,
-                                            Diagnostic::DiagnosticDefinition diagnostic) {
+                                            eros_diagnostic::Diagnostic diagnostic) {
     char tempstr[2048];
 
-    sprintf(
-        tempstr,
-        "Device: %s System: %s Subsystem: %s Component: %s Type: %s Message: %s Description: %s",
-        diagnostic.device_name.c_str(),
-        System::MainSystemString(diagnostic.system).c_str(),
-        System::SubSystemString(diagnostic.subsystem).c_str(),
-        System::ComponentString(diagnostic.component).c_str(),
-        Diagnostic::DiagnosticTypeString(diagnostic.type).c_str(),
-        Diagnostic::DiagnosticMessageString(diagnostic.message).c_str(),
-        diagnostic.description.c_str());
+    sprintf(tempstr,
+            "Device: %s System: %s Subsystem: %s Component: %s Type: %s Message: %s "
+            "Description: %s",
+            diagnostic.device_name.c_str(),
+            System::MainSystemString(diagnostic.system).c_str(),
+            System::SubSystemString(diagnostic.subsystem).c_str(),
+            System::ComponentString(diagnostic.component).c_str(),
+            eros_diagnostic::DiagnosticUtility::DiagnosticTypeString(diagnostic.type).c_str(),
+            eros_diagnostic::DiagnosticUtility::DiagnosticMessageString(diagnostic.message).c_str(),
+            diagnostic.description.c_str());
     switch (diagnostic.level) {
         case Level::Type::DEBUG: return LOG_DEBUG(filename, linenumber, std::string(tempstr));
         case Level::Type::INFO: return LOG_INFO(filename, linenumber, std::string(tempstr));
@@ -239,8 +240,8 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
 #endif
                     break;
                     /*default:
-                        break;   Not possible to enter here, since this is a private function and
-                                verbosity has already been validated. Keeping code here so it's
+                        break;   Not possible to enter here, since this is a private function
+                       and verbosity has already been validated. Keeping code here so it's
                        obvious.*/
             }
         }
@@ -257,3 +258,4 @@ Logger::LoggerStatus Logger::print_log(std::string filename,
     }
     return LoggerStatus::LOG_WRITTEN;
 }
+}  // namespace eros

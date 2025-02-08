@@ -62,7 +62,7 @@ class DiagnosticsWindow : public BaseWindow
    private:
     bool update_window();
     DiagnosticMode diagnostic_mode{DiagnosticMode::SYSTEM};
-    std::map<uint8_t, eros::Diagnostic::DiagnosticDefinition> diagnostic_data;
+    std::map<uint8_t, eros::eros_diagnostic::Diagnostic> diagnostic_data;
     double request_data_timer{0.0};
     std::string node_to_monitor{""};
 };

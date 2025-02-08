@@ -5,17 +5,17 @@ namespace eros_nodes::SystemMonitor {
 SystemMonitorProcess::~SystemMonitorProcess() {
     for (auto window : windows) { delete window; }
 }
-Diagnostic::DiagnosticDefinition SystemMonitorProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                               Level::Type::INFO,
-                                               Diagnostic::Message::NOERROR,
-                                               "Finished Initialization.");
+eros_diagnostic::Diagnostic SystemMonitorProcess::finish_initialization() {
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+    diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
+                                                Level::Type::INFO,
+                                                eros_diagnostic::Message::NOERROR,
+                                                "Finished Initialization.");
     return diag;
 }
 void SystemMonitorProcess::reset() {
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::update_monitorlist(
     std::vector<std::string> heartbeat_list,
     std::vector<std::string> resourceused_list,
     std::vector<std::string> resourceavailable_list,
@@ -24,7 +24,7 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
     std::vector<std::string>& new_resourceused_topics_to_subscribe,
     std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
     std::vector<std::string>& new_loadfactor_topics_to_subscribe) {
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
     // Check for new Heartbeat messages
     for (auto heartbeat : heartbeat_list) {
         bool found_it = false;
@@ -83,8 +83,8 @@ eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::update_monitorlist(
     }
     return diag;
 }
-Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, double t_ros_time) {
-    Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+eros_diagnostic::Diagnostic SystemMonitorProcess::update(double t_dt, double t_ros_time) {
+    eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
     int key_pressed = getch();
     if ((key_pressed == KEY_q) || (key_pressed == KEY_Q)) {
         kill_me = true;
@@ -143,10 +143,10 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
             if (p) {
                 bool status = p->new_MessageTextList(messages);
                 if (status == false) {
-                    diag = diagnostic_helper.update_diagnostic(
-                        Diagnostic::DiagnosticType::SOFTWARE,
+                    diag = diagnostic_manager.update_diagnostic(
+                        eros_diagnostic::DiagnosticType::SOFTWARE,
                         Level::Type::ERROR,
-                        Diagnostic::Message::DROPPING_PACKETS,
+                        eros_diagnostic::Message::DROPPING_PACKETS,
                         "Unable to update Window: " + window->get_name() +
                             " With new Message Text List.");
                 }
@@ -162,25 +162,24 @@ Diagnostic::DiagnosticDefinition SystemMonitorProcess::update(double t_dt, doubl
 
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::new_commandmsg(
-    eros::command msg) {
+std::vector<eros_diagnostic::Diagnostic> SystemMonitorProcess::new_commandmsg(eros::command msg) {
     (void)msg;  // Not currently used.
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                               Level::Type::INFO,
-                                               Diagnostic::Message::NOERROR,
-                                               "Processed Command.");
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+    diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
+                                                Level::Type::INFO,
+                                                eros_diagnostic::Message::NOERROR,
+                                                "Processed Command.");
     diag_list.push_back(diag);
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SystemMonitorProcess::check_programvariables() {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-    Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-    diag = diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                               Level::Type::INFO,
-                                               Diagnostic::Message::NOERROR,
-                                               "Program Variable Check Passed.");
+std::vector<eros_diagnostic::Diagnostic> SystemMonitorProcess::check_programvariables() {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
+    eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+    diag = diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
+                                                Level::Type::INFO,
+                                                eros_diagnostic::Message::NOERROR,
+                                                "Program Variable Check Passed.");
     diag_list.push_back(diag);
     return diag_list;
 }
@@ -233,98 +232,98 @@ bool SystemMonitorProcess::initialize_windows() {
     }
     return true;
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_heartbeatmessage(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_heartbeatmessage(
     const eros::heartbeat::ConstPtr& t_msg) {
     eros::heartbeat msg = convert_fromptr(t_msg);
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         bool status = window->new_msg(msg);
         if (status == false) {
-            diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::SOFTWARE,
+            diag = diagnostic_manager.update_diagnostic(
+                eros_diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros_diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Window: " + window->get_name() + " With new Heartbeat.");
         }
     }
     return diag;
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_commandstate(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_commandstate(
     const eros::command_state::ConstPtr& t_msg) {
     eros::command_state msg = convert_fromptr(t_msg);
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
 
     for (auto window : windows) {
         bool status = window->new_msg(msg);
         if (status == false) {
-            diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::SOFTWARE,
+            diag = diagnostic_manager.update_diagnostic(
+                eros_diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros_diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Window: " + window->get_name() + " With new Command State Msg.");
         }
     }
     return diag;
 }
 void SystemMonitorProcess::update_armedstate(eros::ArmDisarm::State armed_state) {
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         bool status = window->new_msg(armed_state);
         if (status == false) {
-            diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::SOFTWARE,
+            diag = diagnostic_manager.update_diagnostic(
+                eros_diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros_diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Window: " + window->get_name() + " With new Armed State.");
         }
     }
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceusedmessage(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceusedmessage(
     const eros::resource::ConstPtr& t_msg) {
     eros::resource msg = convert_fromptr(t_msg);
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window->get_name() != "device_window") {
             bool status = window->new_msg(msg);
             if (status == false) {
-                diag = diagnostic_helper.update_diagnostic(
-                    Diagnostic::DiagnosticType::SOFTWARE,
+                diag = diagnostic_manager.update_diagnostic(
+                    eros_diagnostic::DiagnosticType::SOFTWARE,
                     Level::Type::ERROR,
-                    Diagnostic::Message::DROPPING_PACKETS,
+                    eros_diagnostic::Message::DROPPING_PACKETS,
                     "Unable to update Window: " + window->get_name() + " With new Resource Used.");
             }
         }
     }
     return diag;
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_loadfactormessage(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_loadfactormessage(
     const eros::loadfactor::ConstPtr& t_msg) {
     eros::loadfactor msg = convert_fromptr(t_msg);
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         bool status = window->new_msg(msg);
         if (status == false) {
-            diag = diagnostic_helper.update_diagnostic(
-                Diagnostic::DiagnosticType::SOFTWARE,
+            diag = diagnostic_manager.update_diagnostic(
+                eros_diagnostic::DiagnosticType::SOFTWARE,
                 Level::Type::ERROR,
-                Diagnostic::Message::DROPPING_PACKETS,
+                eros_diagnostic::Message::DROPPING_PACKETS,
                 "Unable to update Window: " + window->get_name() + " With new Load Factor Data.");
         }
     }
     return diag;
 }
-eros::Diagnostic::DiagnosticDefinition SystemMonitorProcess::new_resourceavailablemessage(
+eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceavailablemessage(
     const eros::resource::ConstPtr& t_msg) {
     eros::resource msg = convert_fromptr(t_msg);
-    eros::Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+    eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window->get_name() == "device_window") {
             bool status = window->new_msg(msg);
             if (status == false) {
-                diag = diagnostic_helper.update_diagnostic(
-                    Diagnostic::DiagnosticType::SOFTWARE,
+                diag = diagnostic_manager.update_diagnostic(
+                    eros_diagnostic::DiagnosticType::SOFTWARE,
                     Level::Type::ERROR,
-                    Diagnostic::Message::DROPPING_PACKETS,
+                    eros_diagnostic::Message::DROPPING_PACKETS,
                     "Unable to update Window: " + window->get_name() +
                         " With new Resource Available.");
             }

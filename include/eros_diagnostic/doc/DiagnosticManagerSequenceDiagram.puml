@@ -1,0 +1,32 @@
+@startuml
+title Diagnostic Manager Sequence Diagram
+actor User as user
+participant DiagnosticManager as manager
+
+alt initialization
+    activate manager
+    user -> manager: initialize(Diagnostic diag)
+    user -> manager++: enable_diagnostics(DiagnosticType[] diagnostic_types)
+    manager --> user--: status
+end
+
+alt update
+    hnote across: Choose one or more of the following:
+    user -> manager++: update_diagnostic(Diagnostic diag)
+    manager --> user--: diagnostic
+    user -> manager++: update_diagnostic(DiagnosticType diagnostic_type,Level::Type level,Message message,string description)
+    manager --> user--: diagnostic
+    user -> manager++:  update_diagnostic(string device_name, DiagnosticType diagnostic_type,Level::Type level,Message message,string description);
+    manager --> user--: diagnostic
+end
+
+alt get_diagnostics
+    hnote across: Choose one or more of the following:
+    user -> manager++: get_root_diagnostic()
+    manager --> user--: diagnostic
+    user -> manager++: get_diagnostics()
+    manager --> user--: diagnostics[]
+    user -> manager++: get_latest_diagnostics()
+    manager --> user--: diagnostics[]
+end
+@enduml

@@ -3,7 +3,7 @@ title Base Node and Process Class Diagram
 package eros {
     together {
         enum Level::Type
-        struct Diagnostic::DiagnosticDefinition
+        struct eros_diagnostic::Diagnostic
         enum Node::State
         class Logger
         enum ArmDisarm::State
@@ -13,39 +13,39 @@ package eros {
 
     Logger <-- BaseNodeProcess
     Level::Type *-- BaseNodeProcess
-    Diagnostic::DiagnosticDefinition *-- BaseNodeProcess
+    eros_diagnostic::Diagnostic *-- BaseNodeProcess
     Node::State *-- BaseNodeProcess
     ArmDisarm::State *-- BaseNodeProcess
     FileHelper::FileInfo *-- BaseNodeProcess
     Diagnostic *-- BaseNodeProcess
     Diagnostic *-- BaseNode
     Logger *-- BaseNode
-    Diagnostic +- Diagnostic::DiagnosticDefinition
+    Diagnostic +- eros_diagnostic::Diagnostic
     class BaseNodeProcess #Cyan {
-        +{abstract} Diagnostic::DiagnosticDefinition finish_initialization()
+        +{abstract} eros_diagnostic::Diagnostic finish_initialization()
         +{abstract} void reset()
-        +{abstract} Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time)
-        +{abstract} std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command t_msg)
-        +{abstract} std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() 
+        +{abstract} eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
+        +{abstract} std::vector<eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg)
+        +{abstract} std::vector<eros_diagnostic::Diagnostic> check_programvariables() 
         +{abstract} void cleanup()
 
         +void initialize(std::string t_base_node_name,std::string t_node_name,std::string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
-        +bool enable_diagnostics(std::vector<Diagnostic::DiagnosticType> diagnostic_types)
-        +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticDefinition diag)
-        +Diagnostic::DiagnosticDefinition update_diagnostic(Diagnostic::DiagnosticType diagnostic_type,Level::Type level,Diagnostic::Message message,std::string description)
+        +bool enable_diagnostics(std::vector<eros_diagnostic::DiagnosticType> diagnostic_types)
+        +eros_diagnostic::Diagnostic update_diagnostic(eros_diagnostic::Diagnostic diag)
+        +eros_diagnostic::Diagnostic update_diagnostic(eros_diagnostic::DiagnosticType diagnostic_type,Level::Type level,eros_diagnostic::Message message,std::string description)
         +Node::State get_nodestate()
         +double get_runtime()
         +eros::ready_to_arm get_ready_to_arm()
         +std::string get_hostname()
-        +Diagnostic::DiagnosticDefinition get_root_diagnostic()
-        +std::vector<Diagnostic::DiagnosticDefinition> get_diagnostics()
-        +std::vector<Diagnostic::DiagnosticDefinition> get_latest_diagnostics()
+        +eros_diagnostic::Diagnostic get_root_diagnostic()
+        +std::vector<eros_diagnostic::Diagnostic> get_diagnostics()
+        +std::vector<eros_diagnostic::Diagnostic> get_latest_diagnostics()
         +double get_system_time() 
         +double get_run_time()
         +Logger* get_logger()
         +json read_configuration(std::string device_name,bool include_self = true,std::string file_path = "~/config/DeviceList.json")
         +bool request_statechange(Node::State newstate,bool override = false)
-        +Diagnostic::DiagnosticDefinition base_update(double t_dt, double t_system_time)
+        +eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time)
         +std::vector<std::string> get_files_indir(std::string dir)
         +void base_cleanup()
 
@@ -55,8 +55,8 @@ package eros {
         +{static} eros::ready_to_arm convert_fromptr(const eros::ready_to_arm::ConstPtr& t_ptr)
         +{static} eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr)
         +{static} eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr)
-        +{static} eros::diagnostic convert(const Diagnostic::DiagnosticDefinition def)
-        +{static} Diagnostic::DiagnosticDefinition convert(const eros::diagnostic diag)
+        +{static} eros::diagnostic convert(const eros_diagnostic::Diagnostic def)
+        +{static} eros_diagnostic::Diagnostic convert(const eros::diagnostic diag)
         +{static} eros::armed_state convert(ArmDisarm::State v)
         +{static} ArmDisarm::State convert(eros::armed_state v)
         +{static} std::string sanitize_path(std::string path)
@@ -67,7 +67,7 @@ package eros {
         #std::string hostname
         #std::string base_node_name
         #Node::State node_state
-        #Diagnostic diagnostic_helper
+        #Diagnostic diagnostic_manager
         #bool unittest_running
         #eros::ready_to_arm ready_to_arm
 
@@ -96,7 +96,7 @@ package eros {
         +void initialize_diagnostic(System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component)
         +void initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,std::string t_description)
         +void set_nodename(std::string t_node_name)
-        +Diagnostic::DiagnosticDefinition preinitialize_basenode()
+        +eros_diagnostic::Diagnostic preinitialize_basenode()
         +void set_loop1_rate(double t_rate)
         +void set_loop2_rate(double t_rate)
         +void set_loop3_rate(double t_rate)

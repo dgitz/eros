@@ -12,24 +12,24 @@ DataLoggerProcess::DataLoggerProcess()
 DataLoggerProcess::~DataLoggerProcess() {
     cleanup();
 }
-Diagnostic::DiagnosticDefinition DataLoggerProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag;
+eros_diagnostic::Diagnostic DataLoggerProcess::finish_initialization() {
+    eros_diagnostic::Diagnostic diag;
     return diag;
 }
 void DataLoggerProcess::reset() {
 }
-Diagnostic::DiagnosticDefinition DataLoggerProcess::update(double t_dt, double t_ros_time) {
-    Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+eros_diagnostic::Diagnostic DataLoggerProcess::update(double t_dt, double t_ros_time) {
+    eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
     ready_to_arm.ready_to_arm = true;
-    ready_to_arm.diag = eros::convert(diag);
+    ready_to_arm.diag = eros_diagnostic::DiagnosticUtility::convert(diag);
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> DataLoggerProcess::new_commandmsg(eros::command msg) {
+std::vector<eros_diagnostic::Diagnostic> DataLoggerProcess::new_commandmsg(eros::command msg) {
     (void)msg;  // Not used yet.
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> DataLoggerProcess::check_programvariables() {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> DataLoggerProcess::check_programvariables() {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     return diag_list;
 }

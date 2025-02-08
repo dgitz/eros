@@ -3,7 +3,7 @@ title Logger Class Diagram
 package eros {
 enum Logger::LoggerStatus
 
-struct Diagnostic::DiagnosticDefinition
+struct eros_diagnostic::Diagnostic
 class Logger #Cyan {
     +Logger(std::string level, std::string name)
     +Logger(std::string level, std::string directory, std::string name)
@@ -21,7 +21,7 @@ class Logger #Cyan {
     +LoggerStatus log_error(std::string str)
     +LoggerStatus log_fatal(std::string str)
     +LoggerStatus log_debug(std::string str)
-    +LoggerStatus log_diagnostic(Diagnostic::DiagnosticDefinition diagnostic)   
+    +LoggerStatus log_diagnostic(eros_diagnostic::Diagnostic diagnostic)   
 
 }
 enum Level::Type #Cyan
@@ -32,6 +32,6 @@ enum Logger::LoggerStatus #Cyan {
 }
 Logger +-- Logger::LoggerStatus
 Level::Type *-- Logger
-Diagnostic::DiagnosticDefinition *-- Logger
+eros_diagnostic::Diagnostic *-- Logger
 }
 @enduml

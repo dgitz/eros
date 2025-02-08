@@ -20,7 +20,8 @@ bool DiagnosticsWindow::update(double dt, double t_ros_time) {
             srv.request.DiagnosticType = 0;
             if (system_diag_client.call(srv)) {
                 for (auto eros_diag : srv.response.diag_list) {
-                    eros::Diagnostic::DiagnosticDefinition diag = eros::convert(eros_diag);
+                    eros::eros_diagnostic::Diagnostic diag =
+                        eros::eros_diagnostic::DiagnosticUtility::convert(eros_diag);
                     diagnostic_data[(uint8_t)diag.type] = diag;
                 }
             }
@@ -38,7 +39,8 @@ bool DiagnosticsWindow::update(double dt, double t_ros_time) {
 
             if (diag_client.call(srv)) {
                 for (auto eros_diag : srv.response.diag_list) {
-                    eros::Diagnostic::DiagnosticDefinition diag = eros::convert(eros_diag);
+                    eros::eros_diagnostic::Diagnostic diag =
+                        eros::eros_diagnostic::DiagnosticUtility::convert(eros_diag);
                     diagnostic_data[(uint8_t)diag.type] = diag;
                 }
             }
@@ -82,8 +84,9 @@ bool DiagnosticsWindow::update_window() {
     mvwprintw(get_window(), 2, 1, dashed.c_str());
     for (auto& diag : diagnostic_data) {
         eros_nodes::SystemMonitor::Color color;
-        std::string str = "  " + eros::Diagnostic::DiagnosticTypeString(diag.second.type);
-        if (diag.second.message == eros::Diagnostic::Message::NODATA) {
+        std::string str =
+            "  " + eros::eros_diagnostic::DiagnosticUtility::DiagnosticTypeString(diag.second.type);
+        if (diag.second.message == eros::eros_diagnostic::Message::NODATA) {
             color = Color::NO_COLOR;
         }
         else {

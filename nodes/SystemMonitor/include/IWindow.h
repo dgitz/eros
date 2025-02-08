@@ -4,6 +4,8 @@
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/resource.h>
+#include <eros_diagnostic/Diagnostic.h>
+#include <eros_diagnostic/DiagnosticUtility.h>
 
 #include "Window_Definitions.h"
 namespace eros_nodes::SystemMonitor {

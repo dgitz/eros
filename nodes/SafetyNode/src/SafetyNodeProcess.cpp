@@ -14,18 +14,18 @@ SafetyNodeProcess::SafetyNodeProcess() {
 }
 SafetyNodeProcess::~SafetyNodeProcess() {
 }
-Diagnostic::DiagnosticDefinition SafetyNodeProcess::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag;
-    diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
+eros_diagnostic::Diagnostic SafetyNodeProcess::finish_initialization() {
+    eros_diagnostic::Diagnostic diag;
+    diag = update_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
                              Level::Type::INFO,
-                             Diagnostic::Message::NODATA,
+                             eros_diagnostic::Message::NODATA,
                              "No Remote Control Command Yet.");
     return diag;
 }
 void SafetyNodeProcess::reset() {
 }
-Diagnostic::DiagnosticDefinition SafetyNodeProcess::update(double t_dt, double t_ros_time) {
-    Diagnostic::DiagnosticDefinition diag = base_update(t_dt, t_ros_time);
+eros_diagnostic::Diagnostic SafetyNodeProcess::update(double t_dt, double t_ros_time) {
+    eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
     ArmDisarm::State prev_arm_state = armed_state;
     ArmDisarm::State temp_arm_state = armed_state;
     std::vector<std::string> temp_cannotarm_reasons;
@@ -80,22 +80,22 @@ Diagnostic::DiagnosticDefinition SafetyNodeProcess::update(double t_dt, double t
     }
     return diag;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SafetyNodeProcess::new_commandmsg(eros::command msg) {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
-    Diagnostic::DiagnosticDefinition diag = get_root_diagnostic();
+std::vector<eros_diagnostic::Diagnostic> SafetyNodeProcess::new_commandmsg(eros::command msg) {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
+    eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     if (msg.Command == (uint16_t)Command::Type::ARM) {
         if (armed_state.state == ArmDisarm::Type::DISARMED) {
             armed_state.state = ArmDisarm::Type::ARMING;
-            diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
                                      Level::Type::NOTICE,
-                                     Diagnostic::Message::NOERROR,
+                                     eros_diagnostic::Message::NOERROR,
                                      "System Arming.");
             diag_list.push_back(diag);
         }
         else if (armed_state.state == ArmDisarm::Type::DISARMED_CANNOTARM) {
-            diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
                                      Level::Type::WARN,
-                                     Diagnostic::Message::DIAGNOSTIC_FAILED,
+                                     eros_diagnostic::Message::DIAGNOSTIC_FAILED,
                                      "System Disarmed and Cannot Arm.");
             diag_list.push_back(diag);
         }
@@ -103,17 +103,17 @@ std::vector<Diagnostic::DiagnosticDefinition> SafetyNodeProcess::new_commandmsg(
     else if (msg.Command == (uint16_t)Command::Type::DISARM) {
         if (armed_state.state == ArmDisarm::Type::ARMED) {
             armed_state.state = ArmDisarm::Type::DISARMING;
-            diag = update_diagnostic(Diagnostic::DiagnosticType::REMOTE_CONTROL,
+            diag = update_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
                                      Level::Type::NOTICE,
-                                     Diagnostic::Message::NOERROR,
+                                     eros_diagnostic::Message::NOERROR,
                                      "System Disarming.");
             diag_list.push_back(diag);
         }
     }
     return diag_list;
 }
-std::vector<Diagnostic::DiagnosticDefinition> SafetyNodeProcess::check_programvariables() {
-    std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+std::vector<eros_diagnostic::Diagnostic> SafetyNodeProcess::check_programvariables() {
+    std::vector<eros_diagnostic::Diagnostic> diag_list;
     return diag_list;
 }
 bool SafetyNodeProcess::new_message_readytoarm(std::string name, eros::ready_to_arm ready_to_arm) {
@@ -123,10 +123,10 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, eros::ready_to_
             it->second.ready_to_arm = ready_to_arm;
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
-            diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                Level::Type::DEBUG,
-                                                Diagnostic::Message::NOERROR,
-                                                "Received Default ReadyToArm Msg");
+            diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                 Level::Type::DEBUG,
+                                                 eros_diagnostic::Message::NOERROR,
+                                                 "Received Default ReadyToArm Msg");
             return true;
         }
         else {
@@ -150,10 +150,10 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, bool v) {
             }
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
-            diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                Level::Type::DEBUG,
-                                                Diagnostic::Message::NOERROR,
-                                                "UpReceived Simple ReadyToArm Msgdated");
+            diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
+                                                 Level::Type::DEBUG,
+                                                 eros_diagnostic::Message::NOERROR,
+                                                 "UpReceived Simple ReadyToArm Msgdated");
             return true;
         }
         else {

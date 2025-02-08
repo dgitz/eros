@@ -5,7 +5,7 @@ package eros {
     struct ResourceMonitor::ResourceInfo
     enum ResourceMonitor::Mode
     together {
-        struct Diagnostic::DiagnosticDefinition
+        struct eros_diagnostic::Diagnostic
         class Logger
         enum Architecture::Type
     }
@@ -13,7 +13,7 @@ package eros {
     ResourceMonitor +-- ResourceMonitor::Mode
     Logger *-- ResourceMonitor
     Architecture::Type *-- ResourceMonitor 
-    Diagnostic::DiagnosticDefinition *-- ResourceMonitor 
+    eros_diagnostic::Diagnostic *-- ResourceMonitor 
     struct ResourceMonitor::ResourceInfo #LimeGreen {
         std::string process_name
         uint16_t pid
@@ -26,13 +26,13 @@ package eros {
         DEVICE
     }
     class ResourceMonitor #LimeGreen {
-        +ResourceMonitor(Mode _mode, Diagnostic::DiagnosticDefinition _diag, Logger* _logger)
+        +ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger)
         +bool is_initialized()
         +std::string pretty(ResourceInfo info)
-        +Diagnostic::DiagnosticDefinition init()
+        +eros_diagnostic::Diagnostic init()
         +ResourceInfo get_resourceinfo()
         +Architecture::Type get_architecture()
-        +Diagnostic::DiagnosticDefinition update(double t_dt)
+        +eros_diagnostic::Diagnostic update(double t_dt)
         +std::vector<double> get_load_factor()
         +bool reset()
 

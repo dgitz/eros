@@ -1,10 +1,10 @@
-/*! \file test_diagnostics.cpp
+/*! \file test_base.cpp
  */
-#include <eros/BaseNode.h>
 #include <eros/BaseNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
 using namespace eros;
+using namespace eros::eros_diagnostic;
 static std::string get_hostname() {
     char name[1024];
     name[1023] = '\0';
@@ -19,8 +19,8 @@ class BaseNodeProcessTester : public BaseNodeProcess
     ~BaseNodeProcessTester() {
     }
 
-    Diagnostic::DiagnosticDefinition finish_initialization() {
-        Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    eros_diagnostic::Diagnostic finish_initialization() {
+        eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
         return diag;
     }
 
@@ -30,20 +30,20 @@ class BaseNodeProcessTester : public BaseNodeProcess
         base_cleanup();
     }
 
-    Diagnostic::DiagnosticDefinition update(double t_dt, double t_ros_time) {
-        Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
+    eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time) {
+        eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
         diag = base_update(t_dt, t_ros_time);
         return diag;
     }
-    std::vector<Diagnostic::DiagnosticDefinition> new_commandmsg(eros::command msg) {
-        Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    std::vector<eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg) {
+        eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+        std::vector<eros_diagnostic::Diagnostic> diag_list;
         (void)msg;
         return diag_list;
     }
-    std::vector<Diagnostic::DiagnosticDefinition> check_programvariables() {
-        Diagnostic::DiagnosticDefinition diag = diagnostic_helper.get_root_diagnostic();
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list;
+    std::vector<eros_diagnostic::Diagnostic> check_programvariables() {
+        eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
+        std::vector<eros_diagnostic::Diagnostic> diag_list;
         return diag_list;
     }
 };
@@ -57,8 +57,8 @@ TEST(BasicTest, TestOperation_BaseNodeProcess) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
@@ -104,13 +104,13 @@ TEST(BasicTest, TestOperation_StateChange) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     // Sequence through States
     EXPECT_EQ(tester->get_nodestate(), Node::State::START);
     EXPECT_FALSE(tester->request_statechange(Node::State::RUNNING));  // Not Allowed
-    Diagnostic::DiagnosticDefinition diag = tester->update(0.0, 0.0);
+    eros_diagnostic::Diagnostic diag = tester->update(0.0, 0.0);
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
     EXPECT_EQ(tester->get_nodestate(), Node::State::INITIALIZING);
@@ -164,8 +164,8 @@ TEST(BasicTest, TestOperation_StateChange_Override) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     // Sequence through States
     EXPECT_EQ(tester->get_nodestate(), Node::State::START);
@@ -236,8 +236,8 @@ TEST(ConfigurationTests, ConfigurationTestCases) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     {  // Failure Tests
         logger->log_warn("Testing Failure Cases...");
@@ -272,8 +272,8 @@ TEST(FileReadTests, FileReadTestCases) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     logger->log_warn("Testing Failure Cases...");
     {
@@ -311,8 +311,8 @@ TEST(FileWriteTests, FileWriteTestCases) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     logger->log_warn("Testing Failure Cases...");
     {
@@ -342,8 +342,8 @@ TEST(DirectoryReadTests, DirectoryReadTestsCases) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
     tester->enable_diagnostics(diagnostic_types);
     {
         std::vector<std::string> fileList = tester->get_files_indir(std::string(getenv("HOME")));

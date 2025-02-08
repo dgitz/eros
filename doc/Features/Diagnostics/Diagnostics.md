@@ -51,7 +51,12 @@ More information can be found at [eros::Diagnostic Class Reference](https://dgit
 ![](../../output/Legend.png)
 
 ### Class Diagrams
-![](../../../include/eros/doc/output/DiagnosticClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticDefinitionClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticManagerClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticUtilityClassDiagram.png)
+
+### Sequence Diagrams
+![](../../../include/eros_diagnostic/doc/output/DiagnosticManagerSequenceDiagram.png)
 
 ## [Diagnostic Node](DiagnosticNode.md)
 A node that listes to all diagnostics and aggregates them.
@@ -71,11 +76,11 @@ The following illustrates how to initialize an EROS Node to attach a Node to a D
 The following illustrates how to enable diagnostics for specific Diagnostic Types.
 
 ```code
-  std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-  diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-  diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-  diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-  diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
+  std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+  diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+  diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+  diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+  diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
   process->enable_diagnostics(diagnostic_types);
 ```
 
@@ -83,9 +88,9 @@ The following illustrates how to enable diagnostics for specific Diagnostic Type
 The following illustrates how to update a specific Diagnostic Type.  This will over-write the current Diagnostic Type with this new information.
 
 ```code
- diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+ diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
 ```
 
@@ -93,13 +98,13 @@ The following illustrates how to update a specific Diagnostic Type.  This will o
 The following illustrates how to instantiate a new Diagnostic.
 
 ```code
- Diagnostic::DiagnosticDefinition diag("Device1",
+ eros_diagnostic::Diagnostic diag("Device1",
                                         "Node1",
                                         System::MainSystem::ROVER,
                                         System::SubSystem::ROBOT_CONTROLLER,
                                         System::Component::COMMUNICATION,
-                                        Diagnostic::DiagnosticType::REMOTE_CONTROL,
-                                        Diagnostic::Message::INITIALIZING,
+                                        eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
+                                        eros_diagnostic::Message::INITIALIZING,
                                         Level::Type::WARN,
                                         "Msg1");
 ```

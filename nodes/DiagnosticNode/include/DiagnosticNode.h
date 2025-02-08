@@ -46,7 +46,7 @@ class DiagnosticNode : public eros::BaseNode
         return process;
     }
     bool start();
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -58,7 +58,7 @@ class DiagnosticNode : public eros::BaseNode
     void thread_loop();
     void cleanup();
 
-    eros::Diagnostic::DiagnosticDefinition rescan_nodes();
+    eros::eros_diagnostic::Diagnostic rescan_nodes();
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
@@ -68,7 +68,7 @@ class DiagnosticNode : public eros::BaseNode
     void diagnostic_Callback(const eros::diagnostic::ConstPtr& t_msg);
 
    private:
-    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::eros_diagnostic::Diagnostic read_launchparameters();
     DiagnosticNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     std::vector<ros::Subscriber> diagnostic_subs;

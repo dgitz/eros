@@ -13,40 +13,41 @@ DiagnosticNode::DiagnosticNode()
 DiagnosticNode::~DiagnosticNode() {
 }
 void DiagnosticNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     eros::system_commandResult system_commandResult_;
     system_command_action_server.setAborted(system_commandResult_);
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::COMMUNICATIONS,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::WARN,
-                                      Diagnostic::Message::DROPPING_PACKETS,
+                                      eros_diagnostic::Message::DROPPING_PACKETS,
                                       "Received unsupported CommandAction: " +
                                           Command::CommandString((Command::Type)goal->Command));
     logger->log_diagnostic(diag);
 }
 void DiagnosticNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
-        Diagnostic::DiagnosticType::COMMUNICATIONS,
+        eros_diagnostic::DiagnosticType::COMMUNICATIONS,
         Level::Type::WARN,
-        Diagnostic::Message::DROPPING_PACKETS,
+        eros_diagnostic::Message::DROPPING_PACKETS,
         "Received unsupported Command: " + Command::CommandString((Command::Type)cmd.Command));
     logger->log_diagnostic(diag);
 }
 void DiagnosticNode::diagnostic_Callback(const eros::diagnostic::ConstPtr &t_msg) {
     eros::diagnostic eros_diag = BaseNodeProcess::convert_fromptr(t_msg);
-    Diagnostic::DiagnosticDefinition diag = eros::convert(eros_diag);
+    eros_diagnostic::Diagnostic diag = eros_diagnostic::DiagnosticUtility::convert(eros_diag);
     process->new_external_diagnostic(diag);
 }
 bool DiagnosticNode::system_diagnostics_service(eros::srv_get_diagnostics::Request &req,
                                                 eros::srv_get_diagnostics::Response &res) {
     if ((req.MinLevel == 0) && (req.DiagnosticType == 0)) {
-        for (uint8_t i = 1; i < (uint8_t)(Diagnostic::DiagnosticType::END_OF_LIST); ++i) {
-            if ((Diagnostic::DiagnosticType)i == Diagnostic::DiagnosticType::UNKNOWN_TYPE) {
+        for (uint8_t i = 1; i < (uint8_t)(eros_diagnostic::DiagnosticType::END_OF_LIST); ++i) {
+            if ((eros_diagnostic::DiagnosticType)i ==
+                eros_diagnostic::DiagnosticType::UNKNOWN_TYPE) {
                 continue;
             }
-            res.diag_list.push_back(
-                eros::convert(process->get_worst_diagnostic((Diagnostic::DiagnosticType)(i))));
+            res.diag_list.push_back(eros_diagnostic::DiagnosticUtility::convert(
+                process->get_worst_diagnostic((eros_diagnostic::DiagnosticType)(i))));
         }
         logger->log_debug("Fulfilled System Diagnostics Service.");
         return true;
@@ -94,11 +95,11 @@ bool DiagnosticNode::start() {
                         DIAGNOSTIC_SUBSYSTEM,
                         DIAGNOSTIC_COMPONENT,
                         logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();  // Should this get called last in start?
@@ -109,9 +110,9 @@ bool DiagnosticNode::start() {
         // LCOV_EXCL_STOP
     }
     if (diagnostic.level < Level::Type::WARN) {
-        diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
+        diagnostic.type = eros_diagnostic::DiagnosticType::SOFTWARE;
         diagnostic.level = Level::Type::INFO;
-        diagnostic.message = Diagnostic::Message::NOERROR;
+        diagnostic.message = eros_diagnostic::Message::NOERROR;
         diagnostic.description = "Node Configured.  Initializing.";
         get_logger()->log_diagnostic(diagnostic);
     }
@@ -135,28 +136,28 @@ bool DiagnosticNode::start() {
     status = true;
     return status;
 }
-Diagnostic::DiagnosticDefinition DiagnosticNode::read_launchparameters() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic DiagnosticNode::read_launchparameters() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     command_sub = n->subscribe<eros::command>(
         get_robotnamespace() + "SystemCommand", 10, &DiagnosticNode::command_Callback, this);
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
-Diagnostic::DiagnosticDefinition DiagnosticNode::finish_initialization() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+eros_diagnostic::Diagnostic DiagnosticNode::finish_initialization() {
+    eros_diagnostic::Diagnostic diag = diagnostic;
     std::string srv_system_diagnostics_topic = get_robotnamespace() + "/srv_system_diagnostics";
     system_diagnostics_srv = n->advertiseService(
         srv_system_diagnostics_topic, &DiagnosticNode::system_diagnostics_service, this);
     std::string srv_nodestate_topic = node_name + "/srv_nodestate_change";
     nodestate_srv =
         n->advertiseService(srv_nodestate_topic, &DiagnosticNode::changenodestate_service, this);
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "Running");
-    diag = process->update_diagnostic(Diagnostic::DiagnosticType::DATA_STORAGE,
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       Level::Type::INFO,
-                                      Diagnostic::Message::NOERROR,
+                                      eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
     return diag;
 }
@@ -164,7 +165,7 @@ bool DiagnosticNode::run_loop1() {
     return true;
 }
 bool DiagnosticNode::run_loop2() {
-    Diagnostic::DiagnosticDefinition diag = rescan_nodes();
+    eros_diagnostic::Diagnostic diag = rescan_nodes();
     if (diag.level > Level::Type::NOTICE) {
         // No practical way to unit test
         // LCOV_EXCL_START
@@ -183,19 +184,19 @@ bool DiagnosticNode::run_01hz() {
     return true;
 }
 bool DiagnosticNode::run_01hz_noisy() {
-    Diagnostic::DiagnosticDefinition diag = diagnostic;
+    eros_diagnostic::Diagnostic diag = diagnostic;
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     logger->log_debug(process->pretty());
     return true;
 }
 bool DiagnosticNode::run_1hz() {
-    std::vector<Diagnostic::DiagnosticDefinition> latest_diagnostics =
-        process->get_latest_diagnostics();
+    std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();
     for (std::size_t i = 0; i < latest_diagnostics.size(); ++i) {
         logger->log_diagnostic(latest_diagnostics.at(i));
-        diagnostic_pub.publish(eros::convert(latest_diagnostics.at(i)));
+        diagnostic_pub.publish(
+            eros_diagnostic::DiagnosticUtility::convert(latest_diagnostics.at(i)));
     }
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     if (process->get_nodestate() == Node::State::RESET) {
         base_reset();
         process->reset();
@@ -203,9 +204,9 @@ bool DiagnosticNode::run_1hz() {
         if (process->request_statechange(Node::State::RUNNING) == false) {
             // No practical way to unit test
             // LCOV_EXCL_START
-            diag = process->update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
+            diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
                                               Level::Type::ERROR,
-                                              Diagnostic::Message::DEVICE_NOT_AVAILABLE,
+                                              eros_diagnostic::Message::DEVICE_NOT_AVAILABLE,
                                               "Not able to Change Node State to Running.");
             logger->log_diagnostic(diag);
             // LCOV_EXCL_STOP
@@ -214,7 +215,7 @@ bool DiagnosticNode::run_1hz() {
     return true;
 }
 bool DiagnosticNode::run_10hz() {
-    Diagnostic::DiagnosticDefinition diag = process->update(0.1, ros::Time::now().toSec());
+    eros_diagnostic::Diagnostic diag = process->update(0.1, ros::Time::now().toSec());
     if (diag.level >= Level::Type::NOTICE) {
         // No practical way to unit test
         // LCOV_EXCL_START
@@ -225,8 +226,8 @@ bool DiagnosticNode::run_10hz() {
     update_ready_to_arm(process->get_ready_to_arm());
     return true;
 }
-Diagnostic::DiagnosticDefinition DiagnosticNode::rescan_nodes() {
-    Diagnostic::DiagnosticDefinition diag = process->get_root_diagnostic();
+eros_diagnostic::Diagnostic DiagnosticNode::rescan_nodes() {
+    eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     std::size_t found_new_subscribers = 0;
     ros::master::V_TopicInfo master_topics;
     ros::master::getTopics(master_topics);

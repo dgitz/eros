@@ -56,7 +56,8 @@ TEST(SnapshotNode, TestMaster) {
              (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT) &&
             (commandstate_msg.CurrentCommand.Option1 ==
              (uint8_t)eros::Command::GenerateSnapshot_Option1::CLEAR_SNAPSHOTS) &&
-            (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
+            (commandstate_msg.diag.DiagnosticMessage ==
+             (uint8_t)eros_diagnostic::Message::NOERROR)) {}
         else {
             logger->log_error("Clear Command Failed!");
             ok = false;
@@ -81,7 +82,8 @@ TEST(SnapshotNode, TestMaster) {
              (uint8_t)eros::Command::Type::GENERATE_SNAPSHOT) &&
             (commandstate_msg.CurrentCommand.Option1 ==
              (uint8_t)eros::Command::GenerateSnapshot_Option1::RUN_SLAVE) &&
-            (commandstate_msg.diag.DiagnosticMessage == (uint8_t)Diagnostic::Message::NOERROR)) {}
+            (commandstate_msg.diag.DiagnosticMessage ==
+             (uint8_t)eros_diagnostic::Message::NOERROR)) {}
         else {
             logger->log_error("Gen Snap for Slave Command Failed!");
             ok = false;

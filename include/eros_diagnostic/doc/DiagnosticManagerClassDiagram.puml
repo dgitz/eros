@@ -1,0 +1,28 @@
+@startuml
+title Diagnostic Manager Class Diagram
+
+namespace eros {
+namespace eros_diagnostic {
+    enum DiagnosticType
+    enum Message
+    struct Diagnostic 
+    class DiagnosticManager #LimeGreen {
+        +initialize(Diagnostic diagnostic)
+        +vool enable_diagnostics(DiagnoEsticType[] diagnostic_types)
+        +Diagnostic get_root_diagnostic()
+        +Diagnostic[] get_diagnostics()
+        +Diagnostic[] get_latest_diagnostics()
+        +Diagnostic update_diagnostic(DiagnosticType diagnostic_type, Level::Type level,Message message,string description)
+        +Diagnostic update_diagnostic(Diagnostic diagnostic)
+        +Diagnostic update_diagnostic(string device_name, DiagnosticType diagnostic_type,Level::Type level,Message message,string description)
+        +string pretty()
+        -string pretty(string pre,Diagnostic[] diagnostics)
+        -bool initialized
+        -Diagnostic root_diagnostic
+        -Diagnostic[] diagnostics
+
+    }
+    DiagnosticManager --> Diagnostic
+}
+}
+@enduml

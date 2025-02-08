@@ -1,13 +1,13 @@
 #include <eros/BaseNodeProcess.h>
 using namespace eros;
-Diagnostic::DiagnosticDefinition BaseNodeProcess::base_update(double t_dt, double t_system_time) {
+eros_diagnostic::Diagnostic BaseNodeProcess::base_update(double t_dt, double t_system_time) {
     run_time += t_dt;
     system_time = t_system_time;
-    Diagnostic::DiagnosticDefinition diag =
-        diagnostic_helper.update_diagnostic(Diagnostic::DiagnosticType::SOFTWARE,
-                                            Level::Type::DEBUG,
-                                            Diagnostic::Message::NOERROR,
-                                            "Base Process Updated.");
+    eros_diagnostic::Diagnostic diag =
+        diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::SOFTWARE,
+                                             Level::Type::DEBUG,
+                                             eros_diagnostic::Message::NOERROR,
+                                             "Base Process Updated.");
     if (node_state == Node::State::START) {
         request_statechange(Node::State::INITIALIZING);
     }

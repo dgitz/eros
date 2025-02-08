@@ -24,12 +24,12 @@ TEST(BasicTest, TestOperation) {
                        System::SubSystem::ENTIRE_SYSTEM,
                        System::Component::ENTIRE_SUBSYSTEM,
                        logger);
-    std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::COMMUNICATIONS);
-    diagnostic_types.push_back(Diagnostic::DiagnosticType::REMOTE_CONTROL);
+    std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::COMMUNICATIONS);
+    diagnostic_types.push_back(eros_diagnostic::DiagnosticType::REMOTE_CONTROL);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
@@ -92,7 +92,7 @@ TEST(BasicTest, TestOperation) {
     {  // Arm System
         eros::command command;
         command.Command = (uint16_t)Command::Type::ARM;
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(command);
+        std::vector<eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(command);
         EXPECT_TRUE(diag_list.size() > 0);
         for (auto diag : diag_list) {
             logger->log_diagnostic(diag);
@@ -133,7 +133,7 @@ TEST(BasicTest, TestOperation) {
     {  // Arm System
         eros::command command;
         command.Command = (uint16_t)Command::Type::ARM;
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(command);
+        std::vector<eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(command);
         EXPECT_TRUE(diag_list.size() > 0);
         for (auto diag : diag_list) {
             logger->log_diagnostic(diag);
@@ -148,7 +148,7 @@ TEST(BasicTest, TestOperation) {
     {  // Disarm System
         eros::command command;
         command.Command = (uint16_t)Command::Type::DISARM;
-        std::vector<Diagnostic::DiagnosticDefinition> diag_list = tester->new_commandmsg(command);
+        std::vector<eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(command);
         EXPECT_TRUE(diag_list.size() > 0);
         for (auto diag : diag_list) {
             logger->log_diagnostic(diag);

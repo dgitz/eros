@@ -46,7 +46,7 @@ class SystemMonitorNode : public eros::BaseNode
     }
     bool start();
     bool init_screen();
-    eros::Diagnostic::DiagnosticDefinition finish_initialization();
+    eros::eros_diagnostic::Diagnostic finish_initialization();
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -58,7 +58,7 @@ class SystemMonitorNode : public eros::BaseNode
     void thread_loop();
     void cleanup();
 
-    eros::Diagnostic::DiagnosticDefinition rescan_nodes();
+    eros::eros_diagnostic::Diagnostic rescan_nodes();
     void heartbeat_Callback(const eros::heartbeat::ConstPtr &msg);
     void resourceused_Callback(const eros::resource::ConstPtr &msg);
     void resourceavailable_Callback(const eros::resource::ConstPtr &msg);
@@ -77,7 +77,7 @@ class SystemMonitorNode : public eros::BaseNode
     std::vector<ros::Subscriber> loadfactor_subs;
     ros::Subscriber commandstate_sub;
     std::map<std::string, bool> filter_list;
-    eros::Diagnostic::DiagnosticDefinition read_launchparameters();
+    eros::eros_diagnostic::Diagnostic read_launchparameters();
     SystemMonitorProcess *process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
 };

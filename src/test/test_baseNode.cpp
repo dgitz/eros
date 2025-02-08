@@ -55,10 +55,10 @@ class BaseNodeTester : public eros::BaseNode
         set_loop2_rate(2.0);
         set_loop3_rate(3.0);
         set_ros_rate(30.0);
-        std::vector<Diagnostic::DiagnosticType> diagnostic_types;
-        diagnostic_types.push_back(Diagnostic::DiagnosticType::SOFTWARE);
-        diagnostic_types.push_back(Diagnostic::DiagnosticType::DATA_STORAGE);
-        diagnostic_types.push_back(Diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+        std::vector<eros_diagnostic::DiagnosticType> diagnostic_types;
+        diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SOFTWARE);
+        diagnostic_types.push_back(eros_diagnostic::DiagnosticType::DATA_STORAGE);
+        diagnostic_types.push_back(eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
         deviceInfo.received = true;
 
         diagnostic = finish_initialization();
@@ -66,9 +66,9 @@ class BaseNodeTester : public eros::BaseNode
             return false;
         }
         if (diagnostic.level < Level::Type::WARN) {
-            diagnostic.type = Diagnostic::DiagnosticType::SOFTWARE;
+            diagnostic.type = eros_diagnostic::DiagnosticType::SOFTWARE;
             diagnostic.level = Level::Type::INFO;
-            diagnostic.message = Diagnostic::Message::NOERROR;
+            diagnostic.message = eros_diagnostic::Message::NOERROR;
             diagnostic.description = "Node Configured.  Initializing.";
             get_logger()->log_diagnostic(diagnostic);
         }
@@ -110,13 +110,13 @@ class BaseNodeTester : public eros::BaseNode
     void cleanup() {
     }
 
-    Diagnostic::DiagnosticDefinition read_launchparameters() {
-        Diagnostic::DiagnosticDefinition diag = diagnostic;
+    eros_diagnostic::Diagnostic read_launchparameters() {
+        eros_diagnostic::Diagnostic diag = diagnostic;
         get_logger()->log_notice("Configuration Files Loaded.");
         return diag;
     }
-    Diagnostic::DiagnosticDefinition finish_initialization() {
-        Diagnostic::DiagnosticDefinition diag = diagnostic;
+    eros_diagnostic::Diagnostic finish_initialization() {
+        eros_diagnostic::Diagnostic diag = diagnostic;
         resource_available_monitor =
             new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
         diag = resource_available_monitor->init();
