@@ -51,7 +51,12 @@ More information can be found at [eros::Diagnostic Class Reference](https://dgit
 ![](../../output/Legend.png)
 
 ### Class Diagrams
-![](../../../include/eros/doc/output/DiagnosticClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticDefinitionClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticManagerClassDiagram.png)
+![](../../../include/eros_diagnostic/doc/output/DiagnosticUtilityClassDiagram.png)
+
+### Sequence Diagrams
+![](../../../include/eros_diagnostic/doc/output/DiagnosticManagerSequenceDiagram.png)
 
 ## [Diagnostic Node](DiagnosticNode.md)
 A node that listes to all diagnostics and aggregates them.

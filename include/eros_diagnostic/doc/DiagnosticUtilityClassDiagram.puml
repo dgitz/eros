@@ -1,0 +1,19 @@
+@startuml
+title Diagnostic Utility Class Diagram
+
+namespace eros {
+    class diagnostic <<M,#FFFF00>>
+namespace eros_diagnostic {
+    enum DiagnosticType
+    enum Message
+    struct Diagnostic
+    class DiagnosticUtility #LimeGreen {
+        +{static} eros::diagnostic convert(Diagnostic diagnostic)
+        +{static} Diagnostic convert(eros::diagnostic diag);
+        +{static} string DiagnosticTypeString(DiagnosticType v)
+        +{static} string DiagnosticMessageString(Message v)
+        +{string} pretty(Diagnostic v)
+    }
+}
+}
+@enduml

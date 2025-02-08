@@ -1,0 +1,63 @@
+@startuml
+title Diagnostic Definition Diagram
+
+namespace eros {
+    together {
+        enum System::MainSystem
+        enum System::SubSystem
+        enum System::Component
+        enum Level::Type
+    }
+namespace eros_diagnostic {
+    enum DiagnosticType #LimeGreen {
+        UNKNOWN
+        UNKNOWN_TYPE
+        SOFTWARE
+        COMMUNICATIONS
+        SENSORS
+        ACTUATORS
+        DATA_STORAGE
+        REMOTE_CONTROL
+        TARGETING
+        POSE
+        TIMING
+        SYSTEM_RESOURCE
+        END_OF_LIST
+    }
+    enum Message #LimeGreen {
+        UNKNOWN
+        NOERROR
+        NODATA
+        UNKNOWN_ERROR
+        INITIALIZING
+        INITIALIZING_ERROR
+        DROPPING_PACKETS
+        MISSING_HEARTBEATS
+        DEVICE_NOT_AVAILABLE
+        TEMPERATURE_HIGH
+        TEMPERATURE_LOW
+        RESOURCE_LEAK
+        HIGH_RESOURCE_USAGE
+        DIAGNOSTIC_FAILED
+        END_OF_LIST
+    }
+    struct Diagnostic #LimeGreen {
+        +string device_name
+        +string node_name
+        +System::MainSystem system
+        +System::SubSystem sub_system
+        +System::Component component
+        +DiagnosticType type
+        +Message message
+        +Level::Type level
+        +string description
+    }
+    System::MainSystem *-- Diagnostic
+    System::SubSystem *-- Diagnostic
+    System::Component *-- Diagnostic
+    Level::Type *-- Diagnostic
+    DiagnosticType *-- Diagnostic
+    Message *-- Diagnostic
+}
+}
+@enduml
