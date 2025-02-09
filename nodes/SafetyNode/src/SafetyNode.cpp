@@ -103,6 +103,10 @@ eros_diagnostic::Diagnostic SafetyNode::finish_initialization() {
                                       Level::Type::INFO,
                                       eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
+                                      Level::Type::INFO,
+                                      eros_diagnostic::Message::NOERROR,
+                                      "No Comm Events Yet...");
     // Read Ready To Arm Topics
     std::vector<std::string> topics;
     std::vector<ArmDisarmMonitor::Type> types;

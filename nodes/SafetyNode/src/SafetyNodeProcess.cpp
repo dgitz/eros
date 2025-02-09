@@ -124,7 +124,7 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, eros::ready_to_
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
             diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                 Level::Type::DEBUG,
+                                                 Level::Type::INFO,
                                                  eros_diagnostic::Message::NOERROR,
                                                  "Received Default ReadyToArm Msg");
             return true;
@@ -151,9 +151,9 @@ bool SafetyNodeProcess::new_message_readytoarm(std::string name, bool v) {
             it->second.update_count++;
             it->second.last_delta_update_time = 0.0;
             diagnostic_manager.update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
-                                                 Level::Type::DEBUG,
+                                                 Level::Type::INFO,
                                                  eros_diagnostic::Message::NOERROR,
-                                                 "UpReceived Simple ReadyToArm Msgdated");
+                                                 "Received Simple ReadyToArm Msg");
             return true;
         }
         else {
