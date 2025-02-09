@@ -234,7 +234,7 @@ bool SystemMonitorProcess::initialize_windows() {
 }
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_heartbeatmessage(
     const eros::heartbeat::ConstPtr& t_msg) {
-    eros::heartbeat msg = convert_fromptr(t_msg);
+    eros::heartbeat msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         bool status = window->new_msg(msg);
@@ -250,7 +250,7 @@ eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_heartbeatmessage(
 }
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_commandstate(
     const eros::command_state::ConstPtr& t_msg) {
-    eros::command_state msg = convert_fromptr(t_msg);
+    eros::command_state msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
 
     for (auto window : windows) {
@@ -280,7 +280,7 @@ void SystemMonitorProcess::update_armedstate(eros::ArmDisarm::State armed_state)
 }
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceusedmessage(
     const eros::resource::ConstPtr& t_msg) {
-    eros::resource msg = convert_fromptr(t_msg);
+    eros::resource msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window->get_name() != "device_window") {
@@ -298,7 +298,7 @@ eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceusedmessage(
 }
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_loadfactormessage(
     const eros::loadfactor::ConstPtr& t_msg) {
-    eros::loadfactor msg = convert_fromptr(t_msg);
+    eros::loadfactor msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         bool status = window->new_msg(msg);
@@ -314,7 +314,7 @@ eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_loadfactormessage(
 }
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceavailablemessage(
     const eros::resource::ConstPtr& t_msg) {
-    eros::resource msg = convert_fromptr(t_msg);
+    eros::resource msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();
     for (auto window : windows) {
         if (window->get_name() == "device_window") {

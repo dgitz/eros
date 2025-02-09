@@ -1,0 +1,7 @@
+catkin_add_gtest(test_core_utility test_core_utility.cpp)
+target_link_libraries(test_core_utility ${catkin_LIBRARIES} ${Boost_LIBRARIES} coreUtility)
+add_dependencies(test_core_utility eros_generate_messages_cpp)
+
+catkin_add_gtest(test_convert_utility test_convert_utility.cpp)
+target_link_libraries(test_convert_utility ${catkin_LIBRARIES} ${Boost_LIBRARIES} convertUtility)
+add_dependencies(test_convert_utility eros_generate_messages_cpp)

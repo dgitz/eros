@@ -59,6 +59,7 @@ catkin_package(INCLUDE_DIRS include DEPENDS
 include_directories(
   include
   include/eros_diagnostic
+  include/eros_utility
   ${catkin_INCLUDE_DIRS}
   ${TinyXML_INCLUDE_DIRS}
 )
@@ -71,7 +72,7 @@ install(
   DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
-add_subdirectory(sample)
+#add_subdirectory(sample)
 
 # Doxygen
 

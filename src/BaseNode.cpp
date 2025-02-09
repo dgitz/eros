@@ -56,22 +56,13 @@ void BaseNode::initialize_diagnostic(System::MainSystem t_system,
     diagnostic.component = t_component;
 }
 void BaseNode::armedstate_Callback(const eros::armed_state::ConstPtr &t_msg) {
-    armed_state = BaseNode::convert_fromptr(t_msg);
+    armed_state = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     armedstate_sub_rxtime = 0.0;
 }
 void BaseNode::modestate_Callback(const eros::mode_state::ConstPtr &t_msg) {
-    mode_state = BaseNode::convert_fromptr(t_msg);
+    mode_state = eros_utility::ConvertUtility::convert_fromptr(t_msg);
 }
-eros::armed_state BaseNode::convert_fromptr(const eros::armed_state::ConstPtr &t_ptr) {
-    eros::armed_state msg;
-    msg.armed_state = t_ptr->armed_state;
-    return msg;
-}
-eros::mode_state BaseNode::convert_fromptr(const eros::mode_state::ConstPtr &t_ptr) {
-    eros::mode_state msg;
-    msg.mode_state = t_ptr->mode_state;
-    return msg;
-}
+
 eros_diagnostic::Diagnostic BaseNode::preinitialize_basenode() {
     logger_initialized = false;
     require_pps_to_start = false;
@@ -346,7 +337,8 @@ bool BaseNode::update(Node::State node_state) {
         rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
         run_01hz_noisy();
         resource_monitor->update(mtime);
-        eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+        eros::resource resource_used =
+            eros_utility::ConvertUtility::convert(resource_monitor->get_resourceinfo());
         resource_used.stamp = ros::Time::now();
         resource_used_pub.publish(resource_used);
         std::vector<eros_diagnostic::Diagnostic> diag_list = current_diagnostics;
@@ -410,7 +402,8 @@ bool BaseNode::update(Node::State node_state) {
 }
 void BaseNode::base_reset() {
     resource_monitor->reset();
-    eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+    eros::resource resource_used =
+        eros_utility::ConvertUtility::convert(resource_monitor->get_resourceinfo());
     resource_used.stamp = ros::Time::now();
     resource_used_pub.publish(resource_used);
 }
@@ -494,13 +487,4 @@ void BaseNode::base_cleanup() {
     }
     delete resource_monitor;
     delete logger;
-}
-eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
-    eros::resource res;
-    res.Name = node_name;
-    res.PID = res_info.pid;
-    res.CPU_Perc = res_info.cpu_perc;
-    res.RAM_Perc = res_info.ram_perc;
-    res.DISK_Perc = res_info.disk_perc;
-    return res;
 }

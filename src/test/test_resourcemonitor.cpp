@@ -36,7 +36,7 @@ TEST(BasicTest, TestOperation_Process) {
     printf("%s\n", resource_monitor->pretty(resource_monitor->get_resourceinfo()).c_str());
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
-    ResourceMonitor::ResourceInfo resourceInfo = resource_monitor->get_resourceinfo();
+    eros::ResourceInfo resourceInfo = resource_monitor->get_resourceinfo();
 
     double run_time = 0.0;
     double dt = 1.0;
@@ -76,7 +76,7 @@ TEST(BasicTest, TestOperation_Device) {
     printf("%s\n", resource_monitor->pretty(resource_monitor->get_resourceinfo()).c_str());
     EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
 
-    ResourceMonitor::ResourceInfo resourceInfo = resource_monitor->get_resourceinfo();
+    eros::ResourceInfo resourceInfo = resource_monitor->get_resourceinfo();
 
     double run_time = 0.0;
     double dt = 1.0;

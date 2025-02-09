@@ -1,0 +1,31 @@
+@startuml
+title Utility Class Diagram
+
+package eros {
+    struct ExecResult
+    class file <<M>>
+
+namespace eros_utility {
+    class CoreUtility #LimeGreen {
+        +{static} bool isEqual(double a, double b, double eps)
+        +{static} ExecResult exec(const char* cmd, bool wait_for_result);
+        +{static} std::string pretty(eros::file msg);
+    }
+    class ConvertUtility #LimeGreen {
+        +{static} ros::Time convert_time(struct timeval t)
+        +{static} ros::Time convert_time(double t)
+        +{static} eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr)
+        +{static} eros::ready_to_arm convert_fromptr(const eros::ready_to_arm::ConstPtr& t_ptr)
+        +{static} eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr)
+        +{static} eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr)
+        +{static} eros_diagnostic::Diagnostic convert(const eros::diagnostic diag)
+        +{static} eros::armed_state convert(ArmDisarm::State v)
+        +{static} ArmDisarm::State convert(eros::armed_state v)
+        +{static} eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr)
+        +{static} eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr)
+        +{static} eros::loadfactor convert_fromptr(const eros::loadfactor::ConstPtr& t_ptr)
+
+    }
+}
+}
+@enduml

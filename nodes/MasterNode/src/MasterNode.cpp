@@ -25,7 +25,7 @@ void MasterNode::system_commandAction_Callback(const eros::system_commandGoalCon
     logger->log_diagnostic(diag);
 }
 void MasterNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,
@@ -185,7 +185,8 @@ bool MasterNode::run_01hz_noisy() {
     logger->log_diagnostic(diag);
     if (diag.level <= Level::Type::WARN) {
         {
-            eros::resource msg = convert(resource_available_monitor->get_resourceinfo());
+            eros::resource msg = eros_utility::ConvertUtility::convert(
+                resource_available_monitor->get_resourceinfo());
             msg.Name = get_robotnamespace() + get_hostname();
             msg.stamp = ros::Time::now();
             resource_available_pub.publish(msg);

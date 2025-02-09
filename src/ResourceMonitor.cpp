@@ -1,4 +1,5 @@
 #include <eros/ResourceMonitor.h>
+
 namespace eros {
 ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger *_logger)
     : mode(_mode),
@@ -48,7 +49,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::init() {
     // LCOV_EXCL_STOP
     resourceInfo.pid = ::getpid();
     try {
-        execResult = exec("nproc", true);
+        execResult = eros_utility::CoreUtility::exec("nproc", true);
         processor_count = std::atoi(execResult.Result.c_str());
     }
     // The following can't currently be checked for code coverage as it depends on the device being
@@ -136,7 +137,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
     std::string top_query =
         "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
     ExecResult execResult;
-    execResult = exec(top_query.c_str(), true);
+    execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
     std::string res = execResult.Result;
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
@@ -256,7 +257,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string top_query = "top -bn1 | grep '%Cpu(s)'";
                 ExecResult execResult;
-                execResult = exec(top_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
@@ -306,7 +307,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string top_query = "top -bn1 | grep 'Mem'";
                 ExecResult execResult;
-                execResult = exec(top_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
@@ -367,7 +368,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string df_query = "df -h";
                 ExecResult execResult;
-                execResult = exec(df_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(df_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> lines;
                 boost::split(lines, res, boost::is_any_of("\n"), boost::token_compress_on);
@@ -439,7 +440,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
         try {
             std::string top_query = "top -bn1 | grep 'load average:'";
             ExecResult execResult;
-            execResult = exec(top_query.c_str(), true);
+            execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
             std::string res = execResult.Result;
             std::vector<std::string> strs;
             boost::algorithm::split(strs, res, boost::is_any_of(", "), boost::token_compress_on);
@@ -494,7 +495,7 @@ Architecture::Type ResourceMonitor::read_device_architecture() {
     {
         std::string cmd = "uname -m";
         ExecResult execResult;
-        execResult = exec(cmd.c_str(), true);
+        execResult = eros_utility::CoreUtility::exec(cmd.c_str(), true);
         std::string result = execResult.Result;
         std::size_t found_x86_64 = result.find("x86_64");
         std::size_t found_armv7l = result.find("armv7l");

@@ -15,6 +15,36 @@
 
 //! Enhanced-ROS Namespace
 namespace eros {
+/*! \struct ResourceInfo
+   \brief ResourceInfo Information:
+   Holds information about a Node's Resource Usage.
+*/
+struct ResourceInfo {
+    /*@{*/
+    std::string process_name; /**< The name of the process. */
+    uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
+    double cpu_perc;  /**< CPU Usage of a Process in Percentage.  100% would indicate the process
+                         is fully utilizing 1 CPU. */
+    double ram_perc;  /**< RAM Usage of a Process in Percentage.  100% would indicate the process
+                         is using 100% of the avaialble RAM. */
+    double disk_perc; /**< Disk Usage of a Process in Percentage.  100% would indicate the
+                         process is using 100% of the available disk space. */
+    /*@}*/
+};
+/*! \struct ExecResult
+\brief ExecResult Information:
+Holds information about the result of an executed command
+*/
+struct ExecResult {
+    ExecResult(bool anyError, std::string errorString, std::string result)
+        : AnyError(anyError), ErrorString(errorString), Result(result) {
+    }
+    ExecResult() : AnyError(false), ErrorString(""), Result("") {
+    }
+    bool AnyError;
+    std::string ErrorString;
+    std::string Result;
+};
 /*! \struct Firmware
     \brief Firmware Information:
     Holds information about Firmware Version.

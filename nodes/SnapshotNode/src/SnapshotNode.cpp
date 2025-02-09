@@ -14,7 +14,7 @@ SnapshotNode::~SnapshotNode() {
 }
 void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
-    eros::command command = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command command = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     std::vector<eros_diagnostic::Diagnostic> diag_list = process->new_commandmsg(command);
     bool any_error = false;
     for (std::size_t i = 0; i < diag_list.size(); ++i) {
@@ -50,7 +50,7 @@ void SnapshotNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     }
 }
 void SnapshotNode::commandState_Callback(const eros::command_state::ConstPtr &t_msg) {
-    process->new_commandstatemsg(BaseNodeProcess::convert_fromptr(t_msg));
+    process->new_commandstatemsg(eros_utility::ConvertUtility::convert_fromptr(t_msg));
 }
 void SnapshotNode::system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal) {
     (void)goal;

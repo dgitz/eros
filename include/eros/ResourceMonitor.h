@@ -1,11 +1,10 @@
 /*! \file ResourceMonitor.h
  */
-#ifndef RESOURCEMONITOR_h
-#define RESOURCEMONITOR_H
+#pragma once
 #include <eros/Logger.h>
-#include <eros/Utility.h>
 #include <eros/eROS_Definitions.h>
 #include <eros_diagnostic/Diagnostic.h>
+#include <eros_utility/CoreUtility.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -19,23 +18,6 @@ namespace eros {
 class ResourceMonitor
 {
    public:
-    /*! \struct ResourceInfo
-        \brief ResourceInfo Information:
-        Holds information about a Node's Resource Usage.
-    */
-    struct ResourceInfo {
-        /*@{*/
-        std::string process_name; /**< The name of the process. */
-        uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
-        double cpu_perc; /**< CPU Usage of a Process in Percentage.  100% would indicate the process
-                            is fully utilizing 1 CPU. */
-        double ram_perc; /**< RAM Usage of a Process in Percentage.  100% would indicate the process
-                            is using 100% of the avaialble RAM. */
-        double disk_perc; /**< Disk Usage of a Process in Percentage.  100% would indicate the
-                             process is using 100% of the available disk space. */
-        /*@}*/
-    };
-
     enum class Mode {
         UNKNOWN = 0, /*!< Uninitialized value. */
         PROCESS = 1, /*!< This Mode is used when checking Process Resource Usage Information. */
@@ -81,4 +63,3 @@ class ResourceMonitor
     std::vector<double> load_factor;
 };
 }  // namespace eros
-#endif  // RESOURCEMONITOR_H
