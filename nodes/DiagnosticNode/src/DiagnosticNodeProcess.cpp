@@ -126,7 +126,10 @@ bool DiagnosticNodeProcess::new_external_diagnostic(eros_diagnostic::Diagnostic 
     else {
         diag_it->second = diag;
     }
-
+    update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
+                      Level::Type::INFO,
+                      eros_diagnostic::Message::NOERROR,
+                      "Received External Diagnostic");
     aggregate_it->second.update_count++;
     return true;
 }
