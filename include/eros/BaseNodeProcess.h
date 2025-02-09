@@ -99,12 +99,12 @@ class BaseNodeProcess
             t_hostname, t_node_name, t_system, t_subsystem, t_component));
         logger = _logger;
     }
+    /*! \brief Derived Process Initialization */
+    virtual eros_diagnostic::Diagnostic finish_initialization() = 0;
     bool enable_diagnostics(std::vector<eros_diagnostic::DiagnosticType> diagnostic_types) {
         return diagnostic_manager.enable_diagnostics(diagnostic_types);
     }
 
-    /*! \brief Derived Process Initialization */
-    virtual eros_diagnostic::Diagnostic finish_initialization() = 0;
     /*! \brief Resets Process. Used for counters, timers, etc.*/
     virtual void reset() = 0;
 
@@ -122,6 +122,7 @@ class BaseNodeProcess
                                                   std::string description) {
         return diagnostic_manager.update_diagnostic(diagnostic_type, level, message, description);
     }
+    eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time);
 
     // Attribute Functions
     Node::State get_nodestate() {
@@ -157,9 +158,19 @@ class BaseNodeProcess
         return logger;
     }
 
+    // Data Functions
+
     json read_configuration(std::string device_name,
                             bool include_self = true,
                             std::string file_path = "~/config/DeviceList.json");
+
+    static std::string sanitize_path(std::string path);
+
+    static FileHelper::FileInfo read_file(std::string file_path);
+    static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
+    std::vector<std::string> get_files_indir(std::string dir);
+
+    // Message Functions
 
     //! Request a Node State Change
     /*!
@@ -171,13 +182,14 @@ class BaseNodeProcess
     */
     bool request_statechange(Node::State newstate, bool override = false);
 
-    // Message Functions
     virtual std::vector<eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg) = 0;
 
     // Support Functions
     /*! \brief Must be implemented in Derived Process.  Used for diagnostic testing LEVEL2 and for
      * basic checking of different variables, if they are initialized, etc. */
     virtual std::vector<eros_diagnostic::Diagnostic> check_programvariables() = 0;
+
+    // Convert Functions
 
     //! Convert struct timeval to ros::Time
     /*!
@@ -212,13 +224,6 @@ class BaseNodeProcess
 
     static eros::armed_state convert(ArmDisarm::State v);
     static ArmDisarm::State convert(eros::armed_state v);
-    eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time);
-
-    static std::string sanitize_path(std::string path);
-
-    static FileHelper::FileInfo read_file(std::string file_path);
-    static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
-    std::vector<std::string> get_files_indir(std::string dir);
 
     // Printing Functions
 

@@ -22,6 +22,15 @@ package eros {
     Logger *-- BaseNode
     Diagnostic +- eros_diagnostic::Diagnostic
     class BaseNodeProcess #Cyan {
+
+        -- Initialization Functions --
+        -- Update Functions --
+        -- Data Functions --
+        -- Message Functions --
+        -- Support Functions --
+        -- Convert Functions --
+
+        -- TODO --
         +{abstract} eros_diagnostic::Diagnostic finish_initialization()
         +{abstract} void reset()
         +{abstract} eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
