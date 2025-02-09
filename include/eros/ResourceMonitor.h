@@ -29,7 +29,7 @@ class ResourceMonitor
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
     ~ResourceMonitor();
-    ResourceMonitor(std::string device_name,
+    ResourceMonitor(std::string name,
                     Mode _mode,
                     eros_diagnostic::Diagnostic _diag,
                     Logger* _logger);
@@ -46,6 +46,9 @@ class ResourceMonitor
         return architecture;
     }
     eros_diagnostic::Diagnostic update(double t_dt);
+    eros_diagnostic::Diagnostic get_latest_diagnostic() {
+        return diagnostic;
+    }
     eros::loadfactor get_load_factor() {
         return load_factor;
     }
@@ -58,7 +61,6 @@ class ResourceMonitor
     eros_diagnostic::Diagnostic read_device_loadfactor();
     Architecture::Type read_device_architecture();
 
-    std::string device_name;
     Mode mode;
     Architecture::Type architecture;
     eros_diagnostic::Diagnostic diagnostic;

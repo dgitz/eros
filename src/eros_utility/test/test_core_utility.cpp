@@ -39,6 +39,7 @@ TEST(PrettyFunctions, PrettyCases) {
     }
 }
 TEST(TestConversion, TimeChecks) {
+    ros::Time::init();
     ros::Time t_now = ros::Time::now();
     double t_dur = CoreUtility::measure_time_diff(t_now, t_now);
     EXPECT_NEAR(t_dur, 0.0, 1e-8);

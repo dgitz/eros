@@ -267,7 +267,8 @@ bool SnapshotNode::run_01hz() {
     return true;
 }
 bool SnapshotNode::run_01hz_noisy() {
-    eros_diagnostic::Diagnostic diag = diagnostic;
+    eros_diagnostic::Diagnostic diag = resource_monitor->get_latest_diagnostic();
+    process->update_diagnostic(diag);
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
 }

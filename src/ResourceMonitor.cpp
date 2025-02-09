@@ -1,23 +1,23 @@
 #include <eros/ResourceMonitor.h>
 
 namespace eros {
-ResourceMonitor::ResourceMonitor(std::string device_name,
+ResourceMonitor::ResourceMonitor(std::string name,
                                  Mode _mode,
                                  eros_diagnostic::Diagnostic _diag,
                                  Logger *_logger)
-    : device_name(device_name),
-      mode(_mode),
+    : mode(_mode),
       architecture(Architecture::Type::UNKNOWN),
       diagnostic(_diag),
       logger(_logger),
       initialized(false),
       run_time(0.0),
       processor_count(0) {
+    resourceInfo.process_name = name;
     resourceInfo.cpu_perc = -1.0;
     resourceInfo.disk_perc = -1.0;
     resourceInfo.ram_perc = -1.0;
     diagnostic.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
-    load_factor.DeviceName = device_name;
+    load_factor.DeviceName = name;
     load_factor.loadfactor.push_back(0.0);
     load_factor.loadfactor.push_back(0.0);
     load_factor.loadfactor.push_back(0.0);
@@ -118,6 +118,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::update(double t_dt) {
         diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
+        diagnostic = diag;
         return diag;
     }
     run_time += t_dt;
@@ -135,6 +136,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::update(double t_dt) {
         // LCOV_EXCL_STOP
         diag = read_device_loadfactor();
     }
+    diagnostic = diag;
     return diag;
 }
 eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
@@ -250,6 +252,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
         return diag;
     }
     // LCOV_EXCL_STOP
+    diag.level = Level::Type::INFO;
     diag.message = eros_diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;

@@ -118,7 +118,7 @@ class BaseNodeTester : public eros::BaseNode
     eros_diagnostic::Diagnostic finish_initialization() {
         eros_diagnostic::Diagnostic diag = diagnostic;
         resource_available_monitor =
-            new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
+            new ResourceMonitor(node_name, ResourceMonitor::Mode::DEVICE, diag, logger);
         diag = resource_available_monitor->init();
         if (diag.level > Level::Type::WARN) {
             logger->log_diagnostic(diag);

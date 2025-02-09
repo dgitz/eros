@@ -176,8 +176,7 @@ eros_diagnostic::Diagnostic BaseNode::read_baselaunchparameters() {
         robot_namespace = validate_robotnamespace(robot_namespace);
     }
 
-    resource_monitor = new ResourceMonitor(
-        get_robotnamespace() + get_hostname(), ResourceMonitor::Mode::PROCESS, diag, logger);
+    resource_monitor = new ResourceMonitor(node_name, ResourceMonitor::Mode::PROCESS, diag, logger);
     diag = resource_monitor->init();
     // No Practical way to Unit Test
     // LCOV_EXCL_START

@@ -1,12 +1,12 @@
 @startuml
 title eROS Package Diagram
-package eros #LimeGreen {
+package eros {
     class BaseNode #Cyan
     class BaseNodeProcess #Cyan
-    
     class ResourceMonitor #Cyan
     struct ExecResult #Cyan
     struct Firmware #Cyan
+    struct ResourceMonitor::ResourceInfo #LimeGreen
     class FileHelper #LimeGreen
     class System #Cyan
     class Level #Cyan
