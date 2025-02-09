@@ -8,6 +8,8 @@
 #define ROS_INSTALLED
 #include <string>
 
+#include "ros/time.h"
+
 /*!
  *  \addtogroup eros
  *  @{
@@ -21,6 +23,7 @@ namespace eros {
 */
 struct ResourceInfo {
     /*@{*/
+    ros::Time stamp;
     std::string process_name; /**< The name of the process. */
     uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
     double cpu_perc;  /**< CPU Usage of a Process in Percentage.  100% would indicate the process

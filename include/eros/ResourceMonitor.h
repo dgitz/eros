@@ -3,6 +3,7 @@
 #pragma once
 #include <eros/Logger.h>
 #include <eros/eROS_Definitions.h>
+#include <eros/loadfactor.h>
 #include <eros_diagnostic/Diagnostic.h>
 #include <eros_utility/CoreUtility.h>
 #include <stdio.h>
@@ -10,6 +11,8 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
+
+#include "ros/time.h"
 namespace eros {
 /*! \class ResourceMonitor
     \brief ResourceMonitor class
@@ -26,7 +29,10 @@ class ResourceMonitor
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
     ~ResourceMonitor();
-    ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger);
+    ResourceMonitor(std::string device_name,
+                    Mode _mode,
+                    eros_diagnostic::Diagnostic _diag,
+                    Logger* _logger);
     bool is_initialized() {
         return initialized;
     }
@@ -40,10 +46,10 @@ class ResourceMonitor
         return architecture;
     }
     eros_diagnostic::Diagnostic update(double t_dt);
-
-    std::vector<double> get_load_factor() {
+    eros::loadfactor get_load_factor() {
         return load_factor;
     }
+
     bool reset();
 
    private:
@@ -52,14 +58,15 @@ class ResourceMonitor
     eros_diagnostic::Diagnostic read_device_loadfactor();
     Architecture::Type read_device_architecture();
 
+    std::string device_name;
     Mode mode;
     Architecture::Type architecture;
     eros_diagnostic::Diagnostic diagnostic;
+    eros::loadfactor load_factor;
     Logger* logger;
     ResourceInfo resourceInfo;
     bool initialized;
     double run_time;
     uint16_t processor_count;
-    std::vector<double> load_factor;
 };
 }  // namespace eros

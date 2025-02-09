@@ -68,4 +68,8 @@ std::string CoreUtility::pretty(eros::file msg) {
     str += " Status: " + std::to_string(msg.status);
     return str;
 }
+double CoreUtility::measure_time_diff(ros::Time time_a, ros::Time time_b) {
+    double etime = time_a.toSec() - time_b.toSec();
+    return etime;
+}
 }  // namespace eros::eros_utility

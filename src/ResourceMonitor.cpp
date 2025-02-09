@@ -1,8 +1,12 @@
 #include <eros/ResourceMonitor.h>
 
 namespace eros {
-ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger *_logger)
-    : mode(_mode),
+ResourceMonitor::ResourceMonitor(std::string device_name,
+                                 Mode _mode,
+                                 eros_diagnostic::Diagnostic _diag,
+                                 Logger *_logger)
+    : device_name(device_name),
+      mode(_mode),
       architecture(Architecture::Type::UNKNOWN),
       diagnostic(_diag),
       logger(_logger),
@@ -13,9 +17,10 @@ ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, 
     resourceInfo.disk_perc = -1.0;
     resourceInfo.ram_perc = -1.0;
     diagnostic.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
-    load_factor.push_back(0.0);
-    load_factor.push_back(0.0);
-    load_factor.push_back(0.0);
+    load_factor.DeviceName = device_name;
+    load_factor.loadfactor.push_back(0.0);
+    load_factor.loadfactor.push_back(0.0);
+    load_factor.loadfactor.push_back(0.0);
 }
 ResourceMonitor::~ResourceMonitor() {
 }
@@ -141,6 +146,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
     std::string res = execResult.Result;
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
+    resourceInfo.stamp = ros::Time::now();
     if (strs.at(0) == "") {
         strs.erase(strs.begin());
     }
@@ -438,6 +444,8 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
     std::string res;
     if (architecture != Architecture::Type::UNKNOWN) {
         try {
+            std::vector<double> load_factor_data;
+            load_factor_data.resize(3);
             std::string top_query = "top -bn1 | grep 'load average:'";
             ExecResult execResult;
             execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
@@ -448,17 +456,18 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
             for (std::size_t i = 0; i < strs.size(); ++i) {
                 if (strs.at(i).find("average") != std::string::npos) {
                     if ((i + 3) <= strs.size()) {
-                        load_factor.at(0) =
+                        load_factor_data.at(0) =
                             std::atof(strs.at(i + 1).c_str()) / (double)(processor_count);
-                        load_factor.at(1) =
+                        load_factor_data.at(1) =
                             std::atof(strs.at(i + 2).c_str()) / (double)processor_count;
-                        load_factor.at(2) =
+                        load_factor_data.at(2) =
                             std::atof(strs.at(i + 3).c_str()) / (double)processor_count;
                         found_me = true;
                         break;
                     }
                 }
             }
+
             // The following can't currently be checked for code coverage as it depends on the
             // device being run on.
             // LCOV_EXCL_START
@@ -468,6 +477,12 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
                 diag.description = "Unable to process string: " + res;
                 diag.update_count++;
                 return diag;
+            }
+            else {
+                load_factor.loadfactor[0] = load_factor_data[0];
+                load_factor.loadfactor[1] = load_factor_data[1];
+                load_factor.loadfactor[2] = load_factor_data[2];
+                load_factor.stamp = ros::Time::now();
             }
             // LCOV_EXCL_STOP
         }

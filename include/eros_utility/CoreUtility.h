@@ -30,9 +30,6 @@ class CoreUtility
      * the current timestamp should be the first parameter and the previous mark should be the 2nd
      * parameter.
      */
-    static double measure_time_diff(ros::Time t_timer_a, ros::Time t_timer_b) {
-        double etime = t_timer_a.toSec() - t_timer_b.toSec();
-        return etime;
-    }
+    static double measure_time_diff(ros::Time time_a, ros::Time time_b);
 };
 }  // namespace eros::eros_utility

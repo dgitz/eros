@@ -153,7 +153,8 @@ eros_diagnostic::Diagnostic MasterNode::finish_initialization() {
                                       eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
 
-    resource_available_monitor = new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
+    resource_available_monitor = new ResourceMonitor(
+        get_robotnamespace() + get_hostname(), ResourceMonitor::Mode::DEVICE, diag, logger);
     diag = resource_available_monitor->init();
     if (diag.level > Level::Type::WARN) {
         // No practical way to unit test
@@ -192,6 +193,9 @@ bool MasterNode::run_01hz_noisy() {
             resource_available_pub.publish(msg);
         }
         {
+            eros::loadfactor msg = resource_available_monitor->get_load_factor();
+            loadfactor_pub.publish(msg);
+            /*
             eros::loadfactor msg;
             std::vector<double> load_factor = resource_available_monitor->get_load_factor();
             msg.stamp = ros::Time::now();
@@ -200,6 +204,7 @@ bool MasterNode::run_01hz_noisy() {
             msg.loadfactor.push_back(load_factor.at(1));
             msg.loadfactor.push_back(load_factor.at(2));
             loadfactor_pub.publish(msg);
+            */
         }
     }
     return true;

@@ -8,8 +8,9 @@ package eros {
 namespace eros_utility {
     class CoreUtility #LimeGreen {
         +{static} bool isEqual(double a, double b, double eps)
-        +{static} ExecResult exec(const char* cmd, bool wait_for_result);
-        +{static} std::string pretty(eros::file msg);
+        +{static} ExecResult exec(const char* cmd, bool wait_for_result)
+        +{static} std::string pretty(eros::file msg)
+        +{static} double measure_time_diff(ros::Time time_a, ros::Time time_b)
     }
     class ConvertUtility #LimeGreen {
         +{static} ros::Time convert_time(struct timeval t)
@@ -24,7 +25,6 @@ namespace eros_utility {
         +{static} eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr)
         +{static} eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr)
         +{static} eros::loadfactor convert_fromptr(const eros::loadfactor::ConstPtr& t_ptr)
-
     }
 }
 }

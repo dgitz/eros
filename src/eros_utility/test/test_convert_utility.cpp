@@ -34,6 +34,7 @@ TEST(TestConversion, ArmedState) {
         EXPECT_EQ((uint8_t)in.armed_state, (uint8_t)out.state);
     }
 }
+
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

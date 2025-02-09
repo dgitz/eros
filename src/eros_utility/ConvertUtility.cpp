@@ -122,6 +122,7 @@ eros::mode_state ConvertUtility::convert_fromptr(const eros::mode_state::ConstPt
 }
 eros::resource ConvertUtility::convert(eros::ResourceInfo res_info) {
     eros::resource res;
+    res.stamp = res_info.stamp;
     res.Name = res_info.process_name;
     res.PID = res_info.pid;
     res.CPU_Perc = res_info.cpu_perc;

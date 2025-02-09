@@ -112,6 +112,12 @@ package eros {
         -- Attribute Functions --
         +std::string get_basenodename()
         +std::string get_nodename()
+        +std::string read_robotnamespace()
+        +void set_robotnamespace(std::string _robot_namespace)
+        +std::string get_robotnamespace()
+        +std::string get_verbositylevel()
+        +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
+        +Logger *get_logger()
 
         -- Data Functions --
         -- Message Functions --
@@ -133,12 +139,7 @@ package eros {
 
         
         
-        +std::string read_robotnamespace()
-        +void set_robotnamespace(std::string _robot_namespace)
-        +std::string get_robotnamespace()
-        +std::string get_verbositylevel()
-        +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
-        +Logger *get_logger()
+        
         +void update_ready_to_arm(eros::ready_to_arm v)
         +double measure_time_diff(ros::Time t_timer_a, ros::Time t_timer_b)
         +void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg)
