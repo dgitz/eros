@@ -10,14 +10,32 @@ package eros {
 namespace eros_nodes {
     class SnapshotNode {
         -- Initialization Functions --
+        +bool start()
+        +eros_diagnostic::Diagnostic finish_initialization()
 
         -- Update Functions --
+        +bool run_loop1()
+        +bool run_loop2()
+        +bool run_loop3()
+        +bool run_001hz()
+        +bool run_01hz()
+        +bool run_01hz_noisy()
+        +bool run_1hz()
+        +bool run_10hz()
+        +thread_loop()
+        +thread_snapshotcreation()
 
         -- Attribute Functions --
+        +SnapshotProcess* get_process() 
 
         -- Data Functions --
 
         -- Message Functions --
+        +bool changenodestate_service(srv_change_nodestate::Request& req,srv_change_nodestate::Response& res)
+        +system_commandAction_Callback(const system_commandGoalConstPtr& goal)
+        +command_Callback(const command::ConstPtr& t_msg)
+        +commandState_Callback(const command_state::ConstPtr& t_msg)
+        +bool filetransfer_service(srv_filetransfer::Request& req,srv_filetransfer::Response& res)
 
         -- Support Functions --
 
@@ -26,30 +44,122 @@ namespace eros_nodes {
         -- Printing Functions --
 
         -- Destructors --
+        +cleanup()
 
-        -- TODO --
     }
     class SnapshotNodeProcess {
         -- Initialization Functions --
+        +eros_diagnostic::Diagnostic finish_initialization()
+        +reset()
 
         -- Update Functions --
+        +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
 
         -- Attribute Functions --
+        +Mode get_mode()
+        +set_mode(Mode v)
+        +set_architecture(Architecture::Type v)
+        +SnapshotConfig get_snapshot_config()
+        /// HERE 
+        eros::SnapshotState get_devicesnapshot_state() {
+            return devicesnapshot_state
+        }
+        void set_devicesnapshot_state(eros::SnapshotState v) {
+            devicesnapshot_state = v
+        }
+        eros::SnapshotState get_systemsnapshot_state() {
+            return systemsnapshot_state
+        }
+        void set_systemsnapshot_state(eros::SnapshotState v) {
+            systemsnapshot_state = v
+        }
+        double get_snapshotprogress_percentage() {
+            return snapshot_progress_percent
+        }
+        bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
+            nodeHandle = nh
+            robot_namespace = _robot_namespace
+            return true
+        }
 
         -- Data Functions --
 
         -- Message Functions --
+            std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg)
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandstatemsg(eros::command_state t_msg)
 
         -- Support Functions --
+
+    std::vector<eros::eros_diagnostic::Diagnostic> createnew_snapshot()
+    std::vector<eros::eros_diagnostic::Diagnostic> clear_snapshots()
+    eros::eros_diagnostic::Diagnostic load_config(std::string file_path,
+                                                  std::vector<std::string> override_devicenames)
+    static Mode ModeType(std::string v) {
+        if (v == "MASTER") {
+            return Mode::MASTER
+        }
+        else if (v == "SLAVE") {
+            return Mode::SLAVE
+        }
+        else {
+            return Mode::UNKNOWN
+        }
+    }
+    static std::string ModeString(Mode v) {
+        switch (v) {
+            case Mode::UNKNOWN: return "UNKNOWN" break
+            case Mode::MASTER: return "MASTER"
+            case Mode::SLAVE: return "SLAVE"
+            default: return ModeString(Mode::UNKNOWN) break
+        }
+    }
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
 
         -- Convert Functions --
         
         -- Printing Functions --
+        +string pretty()
 
         -- Destructors --
+        cleanup()
 
         -- TODO --
     }
+    enum Mode {
+        UNKNOWN,
+        MASTER,
+        SLAVE,
+        END_OF_LIST
+    }
+    SnapshotNodeProcess +-- Mode
+
+    struct ExecCommand {
+        +string command
+        +string output_file
+    }
+    SnapshotNodeProces +-- ExecCommand
+
+    struct SlaveDevice {
+        +string name
+        +bool device_snapshot_generated
+        +bool device_snapshot_processed
+        +double timer
+        +string devicesnapshot_path
+    }
+    SnapshotNodeProcess +-- SlaveDevice
+    struct SnapshotConfig {
+        +string stage_directory
+        +SlaveDevice[] snapshot_devices
+        +string[] folders
+        +std::string[] files
+        +ExecCommand[] commands
+        +string[] scripts
+        +string systemsnapshot_path
+        +string device_snapshot_path
+        +string bagfile_directory
+        +string active_device_snapshot_completepath
+    }
+    SnapshotNodeProcess +-- SnapshotConfig
 
     BaseNode <|-- SnapshotNode
     BaseNodeProcess <|-- SnapshotNodeProcess
