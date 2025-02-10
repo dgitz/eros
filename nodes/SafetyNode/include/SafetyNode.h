@@ -16,6 +16,27 @@ namespace eros_nodes {
 class SafetyNode : public eros::BaseNode
 {
    public:
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "safety_node";
 

@@ -21,6 +21,9 @@ namespace eros_nodes {
 class DataLoggerNode : public eros::BaseNode
 {
    public:
+    DataLoggerNode();
+    ~DataLoggerNode();
+    // Constants
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "datalogger_node";
 
@@ -44,13 +47,16 @@ class DataLoggerNode : public eros::BaseNode
 
     /*! \brief What Component this Node falls under.*/
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
-    DataLoggerNode();
-    ~DataLoggerNode();
-    DataLoggerProcess* get_process() {
-        return process;
-    }
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     bool start();
     eros::eros_diagnostic::Diagnostic finish_initialization();
+
+    // Update Functions
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -60,14 +66,26 @@ class DataLoggerNode : public eros::BaseNode
     bool run_1hz();
     bool run_10hz();
     void thread_loop();
-    void snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr& t_msg);
-    void run_logger(DataLoggerNode* node);
-    void cleanup();
 
+    // Attribute Functions
+    DataLoggerProcess* get_process() {
+        return process;
+    }
+
+    // Utility Functions
+
+    // Support Functions
+    void run_logger(DataLoggerNode* node);
+
+    // Message Functions
+    void snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr& t_msg);
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+
+    // Destructors
+    void cleanup();
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();

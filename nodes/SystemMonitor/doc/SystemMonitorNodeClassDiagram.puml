@@ -1,0 +1,56 @@
+@startuml
+title System Monitor Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+}
+namespace eros_nodes {
+    class SystemMonitorNode {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+    class SystemMonitorNodeProcess {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+
+    BaseNode <|-- SystemMonitorNode
+    BaseNodeProcess <|-- SystemMonitorNodeProcess
+    SystemMonitorNode -> SystemMonitorNodeProcess 
+}
+
+@enduml

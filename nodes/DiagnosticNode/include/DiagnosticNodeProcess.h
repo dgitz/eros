@@ -9,6 +9,28 @@ namespace eros_nodes {
 class DiagnosticNodeProcess : public eros::BaseNodeProcess
 {
    public:
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
+
     /*! \struct DiagnosticTypeAggregate
         \brief DiagnosticTypeAggregate Container
         Container to aggregate Diagnostic Information.

@@ -21,7 +21,7 @@ package eros_nodes::SystemMonitor {
         +std::string get_name()
         +{abstract} bool update_window()
         +bool has_focus()
-        +void set_focused(bool cmd_focus)
+        +set_focused(bool cmd_focus)
 
     }
     IWindow <|.. BaseWindow

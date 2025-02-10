@@ -10,8 +10,8 @@ class Logger #Cyan {
     +Level::Type get_logverbosity()
     +bool is_logger_ok()
     +bool set_logverbosity(Level::Type level)
-    +void disable_consoleprint()
-    +void enable_consoleprint()
+    +disable_consoleprint()
+    +enable_consoleprint()
     +bool enable_ROS_logger()
 
     +LoggerStatus log_debug(std::string str)

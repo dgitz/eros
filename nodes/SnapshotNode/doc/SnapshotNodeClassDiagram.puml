@@ -1,0 +1,56 @@
+@startuml
+title Snapshot Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+}
+namespace eros_nodes {
+    class SnapshotNode {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+    class SnapshotNodeProcess {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+
+    BaseNode <|-- SnapshotNode
+    BaseNodeProcess <|-- SnapshotNodeProcess
+    SnapshotNode -> SnapshotNodeProcess 
+}
+
+@enduml

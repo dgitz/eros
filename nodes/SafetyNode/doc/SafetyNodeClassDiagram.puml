@@ -1,0 +1,56 @@
+@startuml
+title Safety Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+}
+namespace eros_nodes {
+    class SafetyNode {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+    class SafetyNodeProcess {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+
+    BaseNode <|-- SafetyNode
+    BaseNodeProcess <|-- SafetyNodeProcess
+    SafetyNode -> SafetyNodeProcess 
+}
+
+@enduml

@@ -50,6 +50,28 @@ class SafetyNodeProcess : public eros::BaseNodeProcess
    public:
     SafetyNodeProcess();
     ~SafetyNodeProcess();
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
+
     eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
     eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);

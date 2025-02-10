@@ -23,6 +23,27 @@ namespace eros_nodes::SystemMonitor {
 class SystemMonitorProcess : public eros::BaseNodeProcess
 {
    public:
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
     const bool DEBUG_MODE = false;
     /*! \brief How long in seconds before marking a Node as Timed Out.*/
     const double COMMTIMEOUT_THRESHOLD = 5.0f;

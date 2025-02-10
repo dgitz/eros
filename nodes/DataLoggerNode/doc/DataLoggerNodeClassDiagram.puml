@@ -3,12 +3,17 @@ title Data Logger Node Class Diagram
 package eros {
     class BaseNode
     class BaseNodeProcess
+    namespace eros_diagnostic {
+        class Diagnostic
+    }
 }
 namespace eros_nodes {
-    class DataLoggerNode {
-        +DataLoggerProcess* get_process()
+    class DataLoggerNode #LimeGreen {
+        -- Initialization Functions --
         +bool start()
         +eros::eros_diagnostic::Diagnostic finish_initialization()
+
+        -- Update Functions --
         +bool run_loop1()
         +bool run_loop2()
         +bool run_loop3()
@@ -17,17 +22,62 @@ namespace eros_nodes {
         +bool run_01hz_noisy()
         +bool run_1hz()
         +bool run_10hz()
-        +void thread_loop()
-        +void snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr& t_msg)
-        +void run_logger(DataLoggerNode* node)
-        +void cleanup()
+        +thread_loop()
+
+        -- Attribute Functions --
+        +DataLoggerProcess* get_process()
+
+        -- Data Functions --
+
+        -- Message Functions --
+        +snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr& t_msg)
         +bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                     eros::srv_change_nodestate::Response& res)
-        +void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
-        +void command_Callback(const eros::command::ConstPtr& t_msg)
-    }
-    class DataLoggerNodeProcess {
+        +system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
+        +command_Callback(const eros::command::ConstPtr& t_msg)
 
+        -- Support Functions --
+        +run_logger(DataLoggerNode* node)
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+        +cleanup()
+
+    }
+    class DataLoggerNodeProcess #LimeGreen {
+        -- Initialization Functions --
+        +eros_diagnostic::Diagnostic finish_initialization()
+        +reset()
+
+        -- Update Functions --
+        +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
+
+        -- Attribute Functions --
+        +set_logfileduration(double v)
+        +double get_logfile_duration()
+        +bool set_logdirectory(std::string v)
+        +bool is_logging_enabled()
+        +string get_logdirectory() 
+        +bool getSnapshotMode()
+        +setSnapshotMode(bool v) 
+
+        -- Data Functions --
+
+        -- Message Functions --
+        +eros_diagnostic::Diagnostic[] new_commandmsg(eros::command msg)
+
+        -- Support Functions --
+        +eros::eros_diagnostic::Diagnostic[] check_programvariables()
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+        +cleanup()
     }
 
     BaseNode <|-- DataLoggerNode

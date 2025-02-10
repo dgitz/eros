@@ -10,3 +10,4 @@ For more information on the System Monitor, see [System Monitor Feature](../../.
 
 ## Sequence Diagrams
 ![](output/SystemMonitorWindowSequenceDiagram.png)
+![](output/SystemMonitorNodeSequenceDiagram.png)

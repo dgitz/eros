@@ -1,0 +1,56 @@
+@startuml
+title Master Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+}
+namespace eros_nodes {
+    class MasterNode {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+    class MasterNodeProcess {
+        -- Initialization Functions --
+
+        -- Update Functions --
+
+        -- Attribute Functions --
+
+        -- Data Functions --
+
+        -- Message Functions --
+
+        -- Support Functions --
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+
+        -- TODO --
+    }
+
+    BaseNode <|-- MasterNode
+    BaseNodeProcess <|-- MasterNodeProcess
+    MasterNode -> MasterNodeProcess 
+}
+
+@enduml

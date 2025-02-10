@@ -24,6 +24,27 @@ namespace eros_nodes {
 class MasterNode : public eros::BaseNode
 {
    public:
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "master_node";
 

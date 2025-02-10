@@ -9,6 +9,27 @@ namespace eros_nodes {
 class MasterNodeProcess : public eros::BaseNodeProcess
 {
    public:
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
     MasterNodeProcess();
     ~MasterNodeProcess();
     eros::eros_diagnostic::Diagnostic finish_initialization();

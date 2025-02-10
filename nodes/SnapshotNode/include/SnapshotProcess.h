@@ -25,6 +25,27 @@ class SnapshotProcess : public eros::BaseNodeProcess
           snapshot_progress_percent(0.0),
           holdcomplete_timer(0.0){};
     ~SnapshotProcess();
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
+
+    // Update Functions
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
+
+    // Destructors
+
+    // TODO
     const double HOLDCOMPLETE_TIME = 5.0;
     enum class Mode {
         UNKNOWN = 0,    /*!< Uninitialized value. */
