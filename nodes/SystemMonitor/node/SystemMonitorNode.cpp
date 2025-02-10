@@ -189,7 +189,7 @@ bool SystemMonitorNode::run_10hz() {
     if (process->get_killme() == true) {
         kill_node = true;
     }
-    process->update_armedstate(process->convert(armed_state));
+    process->update_armedstate(eros_utility::ConvertUtility::convert(armed_state));
     eros_diagnostic::Diagnostic diagnostic = process->update(.1, ros::Time::now().toSec());
     if (diagnostic.level > Level::Type::NOTICE) {
         logger->log_diagnostic(diagnostic);

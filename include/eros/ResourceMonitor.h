@@ -1,16 +1,18 @@
 /*! \file ResourceMonitor.h
  */
-#ifndef RESOURCEMONITOR_h
-#define RESOURCEMONITOR_H
+#pragma once
 #include <eros/Logger.h>
-#include <eros/Utility.h>
 #include <eros/eROS_Definitions.h>
+#include <eros/loadfactor.h>
 #include <eros_diagnostic/Diagnostic.h>
+#include <eros_utility/CoreUtility.h>
 #include <stdio.h>
 #include <unistd.h>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
+
+#include "ros/time.h"
 namespace eros {
 /*! \class ResourceMonitor
     \brief ResourceMonitor class
@@ -19,23 +21,6 @@ namespace eros {
 class ResourceMonitor
 {
    public:
-    /*! \struct ResourceInfo
-        \brief ResourceInfo Information:
-        Holds information about a Node's Resource Usage.
-    */
-    struct ResourceInfo {
-        /*@{*/
-        std::string process_name; /**< The name of the process. */
-        uint64_t pid;             /**< The PID of the Process.  0 is Invalid. */
-        double cpu_perc; /**< CPU Usage of a Process in Percentage.  100% would indicate the process
-                            is fully utilizing 1 CPU. */
-        double ram_perc; /**< RAM Usage of a Process in Percentage.  100% would indicate the process
-                            is using 100% of the avaialble RAM. */
-        double disk_perc; /**< Disk Usage of a Process in Percentage.  100% would indicate the
-                             process is using 100% of the available disk space. */
-        /*@}*/
-    };
-
     enum class Mode {
         UNKNOWN = 0, /*!< Uninitialized value. */
         PROCESS = 1, /*!< This Mode is used when checking Process Resource Usage Information. */
@@ -44,7 +29,10 @@ class ResourceMonitor
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
     ~ResourceMonitor();
-    ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger);
+    ResourceMonitor(std::string name,
+                    Mode _mode,
+                    eros_diagnostic::Diagnostic _diag,
+                    Logger* _logger);
     bool is_initialized() {
         return initialized;
     }
@@ -58,10 +46,13 @@ class ResourceMonitor
         return architecture;
     }
     eros_diagnostic::Diagnostic update(double t_dt);
-
-    std::vector<double> get_load_factor() {
+    eros_diagnostic::Diagnostic get_latest_diagnostic() {
+        return diagnostic;
+    }
+    eros::loadfactor get_load_factor() {
         return load_factor;
     }
+
     bool reset();
 
    private:
@@ -73,12 +64,11 @@ class ResourceMonitor
     Mode mode;
     Architecture::Type architecture;
     eros_diagnostic::Diagnostic diagnostic;
+    eros::loadfactor load_factor;
     Logger* logger;
     ResourceInfo resourceInfo;
     bool initialized;
     double run_time;
     uint16_t processor_count;
-    std::vector<double> load_factor;
 };
 }  // namespace eros
-#endif  // RESOURCEMONITOR_H

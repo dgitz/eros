@@ -163,12 +163,12 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
     {
         try {
             std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory;
-            exec(rm_cmd.c_str(), true);
+            eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
             std::string mkdir_cmd =
                 "mkdir -p " + snapshot_config.stage_directory + "/DeviceSnapshot";
-            exec(mkdir_cmd.c_str(), true);
+            eros_utility::CoreUtility::exec(mkdir_cmd.c_str(), true);
             mkdir_cmd = "mkdir -p " + snapshot_config.device_snapshot_path;
-            exec(mkdir_cmd.c_str(), true);
+            eros_utility::CoreUtility::exec(mkdir_cmd.c_str(), true);
         }
         catch (const std::exception &e) {
             diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
@@ -189,7 +189,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
                 snapshot_config.stage_directory.c_str(),
                 snapshot_config.commands.at(i).output_file.c_str());
         try {
-            exec(tempstr, true);
+            eros_utility::CoreUtility::exec(tempstr, true);
         }
         catch (const std::exception &e) {
             diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
@@ -209,7 +209,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
                 snapshot_config.files.at(i).c_str(),
                 snapshot_config.stage_directory.c_str());
         try {
-            exec(tempstr, true);
+            eros_utility::CoreUtility::exec(tempstr, true);
         }
         catch (const std::exception &e) {
             diag = update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
@@ -229,7 +229,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
                 snapshot_config.folders.at(i).c_str(),
                 snapshot_config.stage_directory.c_str());
         try {
-            exec(tempstr, true);
+            eros_utility::CoreUtility::exec(tempstr, true);
         }
         catch (const std::exception &e) {
             diag =
@@ -267,7 +267,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
                 snapshot_name.c_str());
         snapshot_config.active_device_snapshot_completepath =
             snapshot_config.device_snapshot_path + snapshot_name + ".zip";
-        exec(tempstr, true);
+        eros_utility::CoreUtility::exec(tempstr, true);
     }
     if (mode == Mode::SLAVE) {
         snapshot_progress_percent = 95.0;
@@ -348,10 +348,10 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
         }
         // Move my own device snapshot to stage directory
         std::string mkdir_cmd = "mkdir -p " + snapshot_config.stage_directory + "/SystemSnapshot";
-        exec(mkdir_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(mkdir_cmd.c_str(), true);
         std::string mv_cmd = "mv " + snapshot_config.active_device_snapshot_completepath + " " +
                              snapshot_config.stage_directory + "/SystemSnapshot";
-        exec(mv_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(mv_cmd.c_str(), true);
         snapshot_progress_percent = 92.0;
         for (std::size_t i = 0; i < snapshot_config.snapshot_devices.size(); ++i) {
             // Request file
@@ -400,7 +400,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
         {
             std::string cp_cmd = "cp -r " + snapshot_config.bagfile_directory + "/* " +
                                  snapshot_config.stage_directory + "/SystemSnapshot/";
-            exec(cp_cmd.c_str(), true);
+            eros_utility::CoreUtility::exec(cp_cmd.c_str(), true);
         }
         snapshot_progress_percent = 98.0;
 
@@ -462,7 +462,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
         }
         // Final Zip
         mkdir_cmd = "mkdir -p " + snapshot_config.systemsnapshot_path;
-        exec(mkdir_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(mkdir_cmd.c_str(), true);
         char tempstr[1024];
         sprintf(tempstr,
                 "cd %s/SystemSnapshot/ && zip -r %s/%s.zip .",
@@ -470,7 +470,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::createnew_snapshot() {
                 snapshot_config.systemsnapshot_path.c_str(),
                 systemsnap_name.c_str());
         logger->log_notice("Running: " + std::string(tempstr));
-        exec(tempstr, true);
+        eros_utility::CoreUtility::exec(tempstr, true);
         snapshot_progress_percent = 100.0;
         if (systemsnapshot_state != SnapshotState::INCOMPLETE) {
             systemsnapshot_state = SnapshotState::COMPLETE;
@@ -484,7 +484,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
     bool any_error = false;
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.device_snapshot_path + "/*";
-        exec(rm_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
         int file_count = count_files_indirectory(snapshot_config.device_snapshot_path + "/");
         if (file_count > 0) {
             any_error = true;
@@ -498,7 +498,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.systemsnapshot_path + "/*";
-        exec(rm_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
         int file_count = count_files_indirectory(snapshot_config.systemsnapshot_path + "/");
         if (file_count > 0) {
             any_error = true;
@@ -512,7 +512,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/DeviceSnapshot/*";
-        exec(rm_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
         int file_count =
             count_files_indirectory(snapshot_config.stage_directory + "/DeviceSnapshot/");
         if (file_count > 0) {
@@ -527,7 +527,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.stage_directory + "/SystemSnapshot/*";
-        exec(rm_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
         int file_count =
             count_files_indirectory(snapshot_config.stage_directory + "/SystemSnapshot/");
         if (file_count > 0) {
@@ -542,7 +542,7 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::clear_snapshots() {
     }
     {
         std::string rm_cmd = "rm -r -f " + snapshot_config.bagfile_directory + "/*";
-        exec(rm_cmd.c_str(), true);
+        eros_utility::CoreUtility::exec(rm_cmd.c_str(), true);
         int file_count = count_files_indirectory(snapshot_config.bagfile_directory + "/");
         if (file_count > 0) {
             any_error = true;
@@ -745,7 +745,7 @@ int SnapshotProcess::count_files_indirectory(std::string directory, std::string 
     try {
         char tempstr[1024];
         sprintf(tempstr, "ls %s*%s* 2>/dev/null | wc -l", directory.c_str(), filter.c_str());
-        ExecResult res = exec(tempstr, true);
+        ExecResult res = eros_utility::CoreUtility::exec(tempstr, true);
         std::string return_v = res.Result;
         boost::trim_right(return_v);
         return std::atoi(return_v.c_str());

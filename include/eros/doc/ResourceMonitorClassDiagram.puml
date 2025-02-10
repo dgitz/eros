@@ -2,38 +2,32 @@
 title Resource Monitor Class Diagram
 package eros {
    
-    struct ResourceMonitor::ResourceInfo
+    struct ResourceInfo
+    class eros::loadfactor <<M,#FFFF00>>
     enum ResourceMonitor::Mode
     together {
         struct eros_diagnostic::Diagnostic
         class Logger
         enum Architecture::Type
     }
-    ResourceMonitor +-- ResourceMonitor::ResourceInfo
     ResourceMonitor +-- ResourceMonitor::Mode
     Logger *-- ResourceMonitor
     Architecture::Type *-- ResourceMonitor 
     eros_diagnostic::Diagnostic *-- ResourceMonitor 
-    struct ResourceMonitor::ResourceInfo #LimeGreen {
-        std::string process_name
-        uint16_t pid
-        double cpu_perc
-        double ram_perc
-        double disk_perc
-    }
+    
     enum ResourceMonitor::Mode #LimeGreen {
         PROCESS
         DEVICE
     }
     class ResourceMonitor #LimeGreen {
-        +ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger)
+        +ResourceMonitor(string name,Mode _mode, eros_diagnostic::Diagnostic _diag, Logger* _logger)
         +bool is_initialized()
         +std::string pretty(ResourceInfo info)
         +eros_diagnostic::Diagnostic init()
         +ResourceInfo get_resourceinfo()
         +Architecture::Type get_architecture()
         +eros_diagnostic::Diagnostic update(double t_dt)
-        +std::vector<double> get_load_factor()
+        +eros::loadfactor get_load_factor()
         +bool reset()
 
     }

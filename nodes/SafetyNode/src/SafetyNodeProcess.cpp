@@ -227,7 +227,8 @@ bool SafetyNodeProcess::init_ros(boost::shared_ptr<ros::NodeHandle> _n) {
 }
 void SafetyNodeProcess::ReadyToArmDefaultCallback(const eros::ready_to_arm::ConstPtr &msg,
                                                   const std::string &topic_name) {
-    if (new_message_readytoarm(topic_name, BaseNodeProcess::convert_fromptr(msg)) == false) {
+    if (new_message_readytoarm(topic_name, eros_utility::ConvertUtility::convert_fromptr(msg)) ==
+        false) {
         logger->log_warn("Unable to process Topic: " + topic_name);
     }
 }
