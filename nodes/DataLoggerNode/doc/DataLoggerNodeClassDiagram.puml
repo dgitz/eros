@@ -6,7 +6,25 @@ package eros {
 }
 namespace eros_nodes {
     class DataLoggerNode {
-
+        +DataLoggerProcess* get_process()
+        +bool start()
+        +eros::eros_diagnostic::Diagnostic finish_initialization()
+        +bool run_loop1()
+        +bool run_loop2()
+        +bool run_loop3()
+        +bool run_001hz()
+        +bool run_01hz()
+        +bool run_01hz_noisy()
+        +bool run_1hz()
+        +bool run_10hz()
+        +void thread_loop()
+        +void snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr& t_msg)
+        +void run_logger(DataLoggerNode* node)
+        +void cleanup()
+        +bool changenodestate_service(eros::srv_change_nodestate::Request& req,
+                                    eros::srv_change_nodestate::Response& res)
+        +void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
+        +void command_Callback(const eros::command::ConstPtr& t_msg)
     }
     class DataLoggerNodeProcess {
 
