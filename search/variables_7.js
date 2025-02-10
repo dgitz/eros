@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['pid_481',['pid',['../structeros_1_1ResourceMonitor_1_1ResourceInfo_a4d225222e0d13ddfa5f1824ca55ca601.html#a4d225222e0d13ddfa5f1824ca55ca601',1,'eros::ResourceMonitor::ResourceInfo']]],
-  ['process_5fname_482',['process_name',['../structeros_1_1ResourceMonitor_1_1ResourceInfo_a669de58486ecbefd1abafa0559f6eadf.html#a669de58486ecbefd1abafa0559f6eadf',1,'eros::ResourceMonitor::ResourceInfo']]]
+  ['pid_489',['pid',['../group__eros_gae568c9ee43271492d99edc74f6836dd7.html#gae568c9ee43271492d99edc74f6836dd7',1,'eros::ResourceInfo']]],
+  ['process_5fname_490',['process_name',['../group__eros_ga5ce0983e7b2f0d5e1e3061648fbacb44.html#ga5ce0983e7b2f0d5e1e3061648fbacb44',1,'eros::ResourceInfo']]]
 ];

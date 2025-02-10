@@ -66,7 +66,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classeros_1_1ResourceMonitor-members.html">List of all members</a>  </div>
@@ -80,12 +79,6 @@ $(function() {
 
 <p><code>#include &lt;ResourceMonitor.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeros_1_1ResourceMonitor_1_1ResourceInfo.html">ResourceInfo</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structeros_1_1ResourceMonitor_1_1ResourceInfo.html" title="ResourceInfo Information: Holds information about a Node&#39;s Resource Usage.">ResourceInfo</a> Information: Holds information about a <a class="el" href="classeros_1_1Node.html" title="Node: A Node contains information about the process being ran.">Node</a>'s Resource Usage.  <a href="structeros_1_1ResourceMonitor_1_1ResourceInfo.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a164922763a56f5e72435889853120bf6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1ResourceMonitor_a164922763a56f5e72435889853120bf6.html#a164922763a56f5e72435889853120bf6">Mode</a> { <a class="el" href="classeros_1_1ResourceMonitor_a164922763a56f5e72435889853120bf6.html#a164922763a56f5e72435889853120bf6a696b031073e74bf2cb98e5ef201d4aa3">Mode::UNKNOWN</a> = 0, 
@@ -97,20 +90,20 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d6d77bb9e7933df3e98ac6f7ad8aa40"><td class="memItemLeft" align="right" valign="top"><a id="a0d6d77bb9e7933df3e98ac6f7ad8aa40"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ResourceMonitor</b> (<a class="el" href="classeros_1_1ResourceMonitor_a164922763a56f5e72435889853120bf6.html#a164922763a56f5e72435889853120bf6">Mode</a> _mode, <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a> _diag, <a class="el" href="classeros_1_1Logger.html">Logger</a> *_logger)</td></tr>
-<tr class="separator:a0d6d77bb9e7933df3e98ac6f7ad8aa40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2bc37133c5cf55929c9aea8eba4ab2"><td class="memItemLeft" align="right" valign="top"><a id="a3b2bc37133c5cf55929c9aea8eba4ab2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ResourceMonitor</b> (std::string name, <a class="el" href="classeros_1_1ResourceMonitor_a164922763a56f5e72435889853120bf6.html#a164922763a56f5e72435889853120bf6">Mode</a> _mode, <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a> _diag, <a class="el" href="classeros_1_1Logger.html">Logger</a> *_logger)</td></tr>
+<tr class="separator:a3b2bc37133c5cf55929c9aea8eba4ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af108b4339d4aee1b9447366bad1386dd"><td class="memItemLeft" align="right" valign="top"><a id="af108b4339d4aee1b9447366bad1386dd"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_initialized</b> ()</td></tr>
 <tr class="separator:af108b4339d4aee1b9447366bad1386dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a2c3add6ae0812fb04a35b7e32af0de"><td class="memItemLeft" align="right" valign="top"><a id="a2a2c3add6ae0812fb04a35b7e32af0de"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> (<a class="el" href="structeros_1_1ResourceMonitor_1_1ResourceInfo.html">ResourceInfo</a> info)</td></tr>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> (<a class="el" href="structeros_1_1ResourceInfo.html">ResourceInfo</a> info)</td></tr>
 <tr class="separator:a2a2c3add6ae0812fb04a35b7e32af0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef0a62749f40a6ccdbe035a623d863ab"><td class="memItemLeft" align="right" valign="top"><a id="aef0a62749f40a6ccdbe035a623d863ab"></a>
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
 <tr class="separator:aef0a62749f40a6ccdbe035a623d863ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9939c1542572aa07a7ba4574c5ef782f"><td class="memItemLeft" align="right" valign="top"><a id="a9939c1542572aa07a7ba4574c5ef782f"></a>
-<a class="el" href="structeros_1_1ResourceMonitor_1_1ResourceInfo.html">ResourceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_resourceinfo</b> ()</td></tr>
+<a class="el" href="structeros_1_1ResourceInfo.html">ResourceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_resourceinfo</b> ()</td></tr>
 <tr class="separator:a9939c1542572aa07a7ba4574c5ef782f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf70884a3e73d6fbc7a30ed73fde5e24"><td class="memItemLeft" align="right" valign="top"><a id="abf70884a3e73d6fbc7a30ed73fde5e24"></a>
 <a class="el" href="group__eros_ga4de8a31a2dd45d3d9559e76109a23e1f.html#ga4de8a31a2dd45d3d9559e76109a23e1f">Architecture::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_architecture</b> ()</td></tr>
@@ -118,9 +111,12 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> (<a
 <tr class="memitem:ac5f73bd598141af1e42be3b5060fe876"><td class="memItemLeft" align="right" valign="top"><a id="ac5f73bd598141af1e42be3b5060fe876"></a>
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (double t_dt)</td></tr>
 <tr class="separator:ac5f73bd598141af1e42be3b5060fe876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb914e1f74e5832f1f5ae5004b493780"><td class="memItemLeft" align="right" valign="top"><a id="aeb914e1f74e5832f1f5ae5004b493780"></a>
-std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_load_factor</b> ()</td></tr>
-<tr class="separator:aeb914e1f74e5832f1f5ae5004b493780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4fbf2f2445f53ee553224715be2837a"><td class="memItemLeft" align="right" valign="top"><a id="af4fbf2f2445f53ee553224715be2837a"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_latest_diagnostic</b> ()</td></tr>
+<tr class="separator:af4fbf2f2445f53ee553224715be2837a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaef8ec55ca43ab625239563292ae8641"><td class="memItemLeft" align="right" valign="top"><a id="aaef8ec55ca43ab625239563292ae8641"></a>
+eros::loadfactor&#160;</td><td class="memItemRight" valign="bottom"><b>get_load_factor</b> ()</td></tr>
+<tr class="separator:aaef8ec55ca43ab625239563292ae8641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e0ea4a47faffec8912034f2421c9022"><td class="memItemLeft" align="right" valign="top"><a id="a4e0ea4a47faffec8912034f2421c9022"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
 <tr class="separator:a4e0ea4a47faffec8912034f2421c9022"><td class="memSeparator" colspan="2">&#160;</td></tr>

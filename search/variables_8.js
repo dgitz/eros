@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ram_5fperc_483',['ram_perc',['../structeros_1_1ResourceMonitor_1_1ResourceInfo_ae9fb5ab30a8ac6e82babc1241d2594e8.html#ae9fb5ab30a8ac6e82babc1241d2594e8',1,'eros::ResourceMonitor::ResourceInfo']]]
+  ['ram_5fperc_491',['ram_perc',['../group__eros_ga9e7de4d1dd699617207f3a1d750648d5.html#ga9e7de4d1dd699617207f3a1d750648d5',1,'eros::ResourceInfo']]]
 ];
