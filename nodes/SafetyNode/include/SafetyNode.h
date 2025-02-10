@@ -16,29 +16,9 @@ namespace eros_nodes {
 class SafetyNode : public eros::BaseNode
 {
    public:
+    SafetyNode();
+    ~SafetyNode();
     // Constants
-
-    // Enums
-
-    // Structs
-
-    // Initialization Functions
-
-    // Update Functions
-
-    // Attribute Functions
-
-    // Utility Functions
-
-    // Support Functions
-
-    // Message Functions
-
-    // Destructors
-
-    // Printing Functions
-
-    // TODO
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "safety_node";
 
@@ -49,10 +29,10 @@ class SafetyNode : public eros::BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 1;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 1;
+    const uint16_t BUILD_NUMBER = 2;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 9-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 10-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -62,13 +42,16 @@ class SafetyNode : public eros::BaseNode
 
     /*! \brief What Component this Node falls under.*/
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
-    SafetyNode();
-    ~SafetyNode();
-    SafetyNodeProcess* get_process() {
-        return process;
-    }
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     bool start();
     eros::eros_diagnostic::Diagnostic finish_initialization();
+
+    // Update Functions
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -78,12 +61,26 @@ class SafetyNode : public eros::BaseNode
     bool run_1hz();
     bool run_10hz();
     void thread_loop();
-    void cleanup();
 
+    // Attribute Functions
+    SafetyNodeProcess* get_process() {
+        return process;
+    }
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+
+    // Destructors
+    void cleanup();
+
+    // Printing Functions
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();
