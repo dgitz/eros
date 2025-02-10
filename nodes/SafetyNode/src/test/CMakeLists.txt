@@ -1,3 +1,8 @@
+
+catkin_add_gtest(test_armDisarmMonitor test_armdisarm_monitor.cpp)
+target_link_libraries(test_armDisarmMonitor ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger armDisarmMonitor)
+add_dependencies(test_armDisarmMonitor eros_generate_messages_cpp)
+
 catkin_add_gtest(test_safetyNodeProcess test_SafetyNodeProcess.cpp)
 target_link_libraries(test_safetyNodeProcess ${catkin_LIBRARIES} ${Boost_LIBRARIES} logger safetyNodeProcess)
 add_dependencies(test_safetyNodeProcess eros_generate_messages_cpp)

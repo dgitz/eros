@@ -1,14 +1,7 @@
 #include "SafetyNodeProcess.h"
 using namespace eros;
 using namespace eros_nodes;
-ArmDisarmMonitor::ArmDisarmMonitor(std::string _name, Type _type) : name(_name), type(_type) {
-    ready_to_arm.ready_to_arm = false;
-    ready_to_arm.diag.Description = "Nothing Received";
-    update_count = 0;
-    last_delta_update_time = 0.0;
-}
-ArmDisarmMonitor::~ArmDisarmMonitor() {
-}
+
 SafetyNodeProcess::SafetyNodeProcess() {
     armed_state.state = ArmDisarm::Type::DISARMED_CANNOTARM;  // No monitors defined yet.
 }
