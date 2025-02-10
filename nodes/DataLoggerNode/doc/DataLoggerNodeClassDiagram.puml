@@ -1,0 +1,23 @@
+@startuml
+title Data Logger Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+}
+namespace eros_nodes {
+    class DataLoggerNode {
+
+    }
+    class DataLoggerNodeProcess {
+
+    }
+
+    BaseNode <|-- DataLoggerNode
+    BaseNodeProcess <|-- DataLoggerNodeProcess
+    DataLoggerNode -> DataLoggerNodeProcess 
+
+
+
+}
+
+@enduml
