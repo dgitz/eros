@@ -56,22 +56,13 @@ void BaseNode::initialize_diagnostic(System::MainSystem t_system,
     diagnostic.component = t_component;
 }
 void BaseNode::armedstate_Callback(const eros::armed_state::ConstPtr &t_msg) {
-    armed_state = BaseNode::convert_fromptr(t_msg);
+    armed_state = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     armedstate_sub_rxtime = 0.0;
 }
 void BaseNode::modestate_Callback(const eros::mode_state::ConstPtr &t_msg) {
-    mode_state = BaseNode::convert_fromptr(t_msg);
+    mode_state = eros_utility::ConvertUtility::convert_fromptr(t_msg);
 }
-eros::armed_state BaseNode::convert_fromptr(const eros::armed_state::ConstPtr &t_ptr) {
-    eros::armed_state msg;
-    msg.armed_state = t_ptr->armed_state;
-    return msg;
-}
-eros::mode_state BaseNode::convert_fromptr(const eros::mode_state::ConstPtr &t_ptr) {
-    eros::mode_state msg;
-    msg.mode_state = t_ptr->mode_state;
-    return msg;
-}
+
 eros_diagnostic::Diagnostic BaseNode::preinitialize_basenode() {
     logger_initialized = false;
     require_pps_to_start = false;
@@ -185,7 +176,7 @@ eros_diagnostic::Diagnostic BaseNode::read_baselaunchparameters() {
         robot_namespace = validate_robotnamespace(robot_namespace);
     }
 
-    resource_monitor = new ResourceMonitor(ResourceMonitor::Mode::PROCESS, diag, logger);
+    resource_monitor = new ResourceMonitor(node_name, ResourceMonitor::Mode::PROCESS, diag, logger);
     diag = resource_monitor->init();
     // No Practical way to Unit Test
     // LCOV_EXCL_START
@@ -334,20 +325,19 @@ bool BaseNode::update(Node::State node_state) {
     ros::Rate r(ros_rate);
     r.sleep();
     ros::spinOnce();
-    double mtime;
-    mtime = measure_time_diff(ros::Time::now(), last_001hz_timer);
+    double mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_001hz_timer);
 
     if (mtime >= 100.0) {
         run_001hz();
         last_001hz_timer = ros::Time::now();
     }
-    mtime = measure_time_diff(ros::Time::now(), last_01hz_noisy_timer);
+    mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_01hz_noisy_timer);
     if (mtime >= 10.0 + rand_delay_sec) {
         rand_delay_sec = (double)(rand() % 2000 - 1000) / 1000.0;
         run_01hz_noisy();
         resource_monitor->update(mtime);
-        eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
-        resource_used.stamp = ros::Time::now();
+        eros::resource resource_used =
+            eros_utility::ConvertUtility::convert(resource_monitor->get_resourceinfo());
         resource_used_pub.publish(resource_used);
         std::vector<eros_diagnostic::Diagnostic> diag_list = current_diagnostics;
         for (std::size_t i = 0; i < diag_list.size(); ++i) {
@@ -356,17 +346,17 @@ bool BaseNode::update(Node::State node_state) {
         }
         last_01hz_noisy_timer = ros::Time::now();
     }
-    mtime = measure_time_diff(ros::Time::now(), last_01hz_timer);
+    mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_01hz_timer);
     if (mtime >= 10.0) {
         run_01hz();
         last_01hz_timer = ros::Time::now();
     }
-    mtime = measure_time_diff(ros::Time::now(), last_1hz_timer);
+    mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_1hz_timer);
     if (mtime >= 1.0) {
         run_1hz();
         last_1hz_timer = ros::Time::now();
     }
-    mtime = measure_time_diff(ros::Time::now(), last_10hz_timer);
+    mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_10hz_timer);
     if (mtime >= 0.1) {
         run_10hz();
         heartbeat.NodeState = (uint8_t)node_state;
@@ -386,21 +376,21 @@ bool BaseNode::update(Node::State node_state) {
     }
 
     if (loop1_enabled == true) {
-        mtime = measure_time_diff(ros::Time::now(), last_loop1_timer);
+        mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_loop1_timer);
         if (mtime >= (1.0 / loop1_rate)) {
             run_loop1();
             last_loop1_timer = ros::Time::now();
         }
     }
     if (loop2_enabled == true) {
-        mtime = measure_time_diff(ros::Time::now(), last_loop2_timer);
+        mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_loop2_timer);
         if (mtime >= (1.0 / loop2_rate)) {
             run_loop2();
             last_loop2_timer = ros::Time::now();
         }
     }
     if (loop3_enabled == true) {
-        mtime = measure_time_diff(ros::Time::now(), last_loop3_timer);
+        mtime = eros_utility::CoreUtility::measure_time_diff(ros::Time::now(), last_loop3_timer);
         if (mtime >= (1.0 / loop3_rate)) {
             run_loop3();
             last_loop3_timer = ros::Time::now();
@@ -410,7 +400,8 @@ bool BaseNode::update(Node::State node_state) {
 }
 void BaseNode::base_reset() {
     resource_monitor->reset();
-    eros::resource resource_used = convert(resource_monitor->get_resourceinfo());
+    eros::resource resource_used =
+        eros_utility::ConvertUtility::convert(resource_monitor->get_resourceinfo());
     resource_used.stamp = ros::Time::now();
     resource_used_pub.publish(resource_used);
 }
@@ -494,13 +485,4 @@ void BaseNode::base_cleanup() {
     }
     delete resource_monitor;
     delete logger;
-}
-eros::resource BaseNode::convert(ResourceMonitor::ResourceInfo res_info) {
-    eros::resource res;
-    res.Name = node_name;
-    res.PID = res_info.pid;
-    res.CPU_Perc = res_info.cpu_perc;
-    res.RAM_Perc = res_info.ram_perc;
-    res.DISK_Perc = res_info.disk_perc;
-    return res;
 }

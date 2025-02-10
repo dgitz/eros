@@ -59,6 +59,7 @@ catkin_package(INCLUDE_DIRS include DEPENDS
 include_directories(
   include
   include/eros_diagnostic
+  include/eros_utility
   ${catkin_INCLUDE_DIRS}
   ${TinyXML_INCLUDE_DIRS}
 )

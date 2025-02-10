@@ -3,9 +3,10 @@ title eROS Package Diagram
 package eros {
     class BaseNode #Cyan
     class BaseNodeProcess #Cyan
-    
     class ResourceMonitor #Cyan
+    struct ExecResult #Cyan
     struct Firmware #Cyan
+    struct ResourceMonitor::ResourceInfo #LimeGreen
     class FileHelper #LimeGreen
     class System #Cyan
     class Level #Cyan
@@ -14,10 +15,15 @@ package eros {
     class Node #Cyan
     class Architecture #Cyan
     class SnapshotState #Cyan
-    package eros_diagnostic {
+    namespace eros_diagnostic #LimeGreen {
         class Diagnostic #LimeGreen
         class DiagnosticManager #LimeGreen
     }
+    namespace eros_utility {
+        class CoreUtility #LimeGreen
+        class ConvertUtility #LimeGreen
+    }
+
 
 }
 package eros_nodes {

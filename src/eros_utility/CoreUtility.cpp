@@ -1,6 +1,6 @@
-#include <eros/Utility.h>
-namespace eros {
-bool isEqual(double a, double b, double eps) {
+#include <eros_utility/CoreUtility.h>
+namespace eros::eros_utility {
+bool CoreUtility::isEqual(double a, double b, double eps) {
     double dv = a - b;
     if (fabs(dv) < eps) {
         return true;
@@ -10,7 +10,7 @@ bool isEqual(double a, double b, double eps) {
     }
 }
 
-ExecResult exec(const char *cmd, bool wait_for_result) {
+eros::ExecResult CoreUtility::exec(const char *cmd, bool wait_for_result) {
     ExecResult result;
     char buffer[512];
     try {
@@ -60,7 +60,7 @@ ExecResult exec(const char *cmd, bool wait_for_result) {
 }
 // LCOV_EXCL_STOP
 
-std::string pretty(eros::file msg) {
+std::string CoreUtility::pretty(eros::file msg) {
     std::string str;
     str = "File: " + msg.file_name;
     str += " Length: " + std::to_string(msg.data_length);
@@ -68,4 +68,8 @@ std::string pretty(eros::file msg) {
     str += " Status: " + std::to_string(msg.status);
     return str;
 }
-}  // namespace eros
+double CoreUtility::measure_time_diff(ros::Time time_a, ros::Time time_b) {
+    double etime = time_a.toSec() - time_b.toSec();
+    return etime;
+}
+}  // namespace eros::eros_utility

@@ -25,7 +25,7 @@ void DataLoggerNode::system_commandAction_Callback(const eros::system_commandGoa
     logger->log_diagnostic(diag);
 }
 void DataLoggerNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,

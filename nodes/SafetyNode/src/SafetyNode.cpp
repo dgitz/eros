@@ -19,7 +19,7 @@ void SafetyNode::system_commandAction_Callback(const eros::system_commandGoalCon
     system_command_action_server.setAborted(system_commandResult_);
 }
 void SafetyNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    process->new_commandmsg(BaseNodeProcess::convert_fromptr(t_msg));
+    process->new_commandmsg(eros_utility::ConvertUtility::convert_fromptr(t_msg));
 }
 bool SafetyNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                          eros::srv_change_nodestate::Response &res) {
@@ -213,7 +213,7 @@ bool SafetyNode::run_10hz() {
         logger->log_diagnostic(diag);
     }
 
-    armedstate_pub.publish(process->convert(process->get_armed_state()));
+    armedstate_pub.publish(eros_utility::ConvertUtility::convert(process->get_armed_state()));
     return true;
 }
 void SafetyNode::thread_loop() {
