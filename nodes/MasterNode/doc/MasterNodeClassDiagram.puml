@@ -8,16 +8,32 @@ package eros {
     }
 }
 namespace eros_nodes {
-    class MasterNode {
+    class MasterNode #LimeGreen {
         -- Initialization Functions --
+        +bool start()
+        +eros_diagnostic::Diagnostic finish_initialization()
 
         -- Update Functions --
+        +bool run_loop1();
+        +bool run_loop2();
+        +bool run_loop3();
+        +bool run_001hz();
+        +bool run_01hz();
+        +bool run_01hz_noisy();
+        +bool run_1hz();
+        +bool run_10hz();
+        +void thread_loop();
 
         -- Attribute Functions --
+        +MasterNodeProcess* get_process()
 
         -- Data Functions --
 
         -- Message Functions --
+        +bool changenodestate_service(eros::srv_change_nodestate::Request& req, eros::srv_change_nodestate::Response& res)
+        +bool device_service(eros::srv_device::Request& req, eros::srv_device::Response& res)
+        +system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
+        +command_Callback(const eros::command::ConstPtr& t_msg)
 
         -- Support Functions --
 
@@ -26,29 +42,32 @@ namespace eros_nodes {
         -- Printing Functions --
 
         -- Destructors --
-
-        -- TODO --
+        +cleanup()
     }
-    class MasterNodeProcess {
+    class MasterNodeProcess #LimeGreen {
         -- Initialization Functions --
+        +eros_diagnostic::Diagnostic finish_initialization()
+        +reset();
 
         -- Update Functions --
+        +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
 
         -- Attribute Functions --
 
         -- Data Functions --
 
         -- Message Functions --
+        +eros_diagnostic::Diagnostic[] new_commandmsg(eros::command msg)
 
         -- Support Functions --
+        +eros_diagnostic::Diagnostic[] check_programvariables()
 
         -- Convert Functions --
         
         -- Printing Functions --
 
         -- Destructors --
-
-        -- TODO --
+        +cleanup()
     }
 
     BaseNode <|-- MasterNode
