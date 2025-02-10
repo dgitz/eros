@@ -108,6 +108,7 @@ package eros {
         +{abstract} bool run_01hz_noisy()
         +{abstract} bool run_1hz()
         +{abstract} bool run_10hz()
+        +{abstract} void thread_loop()
 
         -- Attribute Functions --
         +std::string get_basenodename()
@@ -118,30 +119,15 @@ package eros {
         +std::string get_verbositylevel()
         +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
         +Logger *get_logger()
+        +{static} std::string get_hostname()
 
         -- Data Functions --
+
         -- Message Functions --
-        -- Support Functions --
-        -- Convert Functions --
-        
-        -- Printing Functions --
-
-        -- Destructors --
-
-        -- TODO -- 
-        
-        
-        +{abstract} void thread_loop()
         +{abstract} bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                                             eros::srv_change_nodestate::Response &res)
         +{abstract} void command_Callback(const eros::command::ConstPtr &t_msg)
-        +{abstract} void cleanup()
-
-        
-        
-        
         +void update_ready_to_arm(eros::ready_to_arm v)
-        +double measure_time_diff(ros::Time t_timer_a, ros::Time t_timer_b)
         +void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg)
         +bool firmware_service(eros::srv_firmware::Request &req, eros::srv_firmware::Response &res)
         +bool loggerlevel_service(eros::srv_logger_level::Request &req,
@@ -151,12 +137,15 @@ package eros {
         +void armedstate_Callback(const eros::armed_state::ConstPtr &t_msg)
         +void modestate_Callback(const eros::mode_state::ConstPtr &t_msg)
 
-
-
+        -- Support Functions --
         +{static} std::string validate_robotnamespace(std::string str)
-        +{static} std::string get_hostname()
-        +{static} eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr)
-        +{static} eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr)
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+        +{abstract} void cleanup()
     }
     BaseNode +-- DeviceInfo
 }
