@@ -74,6 +74,8 @@ class DataLoggerProcess : public eros::BaseNodeProcess
         return;
     }
 
+    // Printing Functions
+
    private:
     std::string log_directory;
     bool log_directory_available;

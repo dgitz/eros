@@ -36,6 +36,8 @@ class SafetyNode : public eros::BaseNode
 
     // Destructors
 
+    // Printing Functions
+
     // TODO
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "safety_node";

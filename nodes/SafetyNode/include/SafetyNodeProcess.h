@@ -70,6 +70,8 @@ class SafetyNodeProcess : public eros::BaseNodeProcess
 
     // Destructors
 
+    // Printing Functions
+
     // TODO
 
     eros::eros_diagnostic::Diagnostic finish_initialization();

@@ -46,6 +46,8 @@ namespace eros_nodes {
         -- Destructors --
         +cleanup()
 
+        -- Printing Functions --
+
     }
     class DataLoggerNodeProcess #LimeGreen {
         -- Initialization Functions --
@@ -78,6 +80,8 @@ namespace eros_nodes {
 
         -- Destructors --
         +cleanup()
+
+        -- Printing Functions --
     }
 
     BaseNode <|-- DataLoggerNode

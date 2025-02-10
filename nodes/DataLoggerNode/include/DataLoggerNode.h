@@ -34,10 +34,10 @@ class DataLoggerNode : public eros::BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 2;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 0;
+    const uint16_t BUILD_NUMBER = 1;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 8-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 10-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -86,6 +86,8 @@ class DataLoggerNode : public eros::BaseNode
 
     // Destructors
     void cleanup();
+
+    // Printing Functions
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();

@@ -3,6 +3,9 @@ title Safety Node Class Diagram
 package eros {
     class BaseNode
     class BaseNodeProcess
+    namespace eros_diagnostic {
+        class Diagnostic
+    }
 }
 namespace eros_nodes {
     class SafetyNode {
