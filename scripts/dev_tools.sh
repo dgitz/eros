@@ -26,7 +26,8 @@ function code_coverage_scan {
     rm -r -f $coverage_dir
     fi
     mkdir $coverage_dir
-    gcov_cmd="gcovr $bin_dir/eros -x $coverage_dir/coverage.xml --html-details -o $coverage_dir/coverage.html  --exclude ^src.*/test_[^/]*.cpp  --exclude ^nodes.*/test_[^/]*.cpp --exclude devel --fail-under-line $LINE_COVERAGE_THRESHOLD --fail-under-branch $BRANCH_COVERAGE_THRESHOLD --exclude-throw-branches --exclude-unreachable-branches"
+    gcov_cmd="gcovr $bin_dir/eros -x $coverage_dir/coverage.xml -s --html-details -o $coverage_dir/coverage.html  --exclude ^src.*/test_[^/]*.cpp  --exclude ^nodes.*/test_[^/]*.cpp --exclude devel --fail-under-line $LINE_COVERAGE_THRESHOLD --fail-under-branch $BRANCH_COVERAGE_THRESHOLD --exclude-throw-branches --exclude-unreachable-branches"
+    echo $gcov_cmd
     eval "$gcov_cmd"
     status=$?
     if [ "$status" -eq 0 ]; then
