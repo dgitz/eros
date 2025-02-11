@@ -14,15 +14,20 @@ class DataLoggerProcess : public eros::BaseNodeProcess
    public:
     DataLoggerProcess();
     ~DataLoggerProcess();
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
+
+    // Update Functions
     eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
-    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
-    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
-    void cleanup() {
-        base_cleanup();
-        return;
-    }
+
+    // Attribute Functions
     void set_logfileduration(double v) {
         logfile_duration = v;
     }
@@ -54,6 +59,22 @@ class DataLoggerProcess : public eros::BaseNodeProcess
     void setSnapshotMode(bool v) {
         snapshot_mode = v;
     }
+
+    // Utility Functions
+
+    // Support Functions
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
+
+    // Message Functions
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
+
+    // Destructors
+    void cleanup() {
+        base_cleanup();
+        return;
+    }
+
+    // Printing Functions
 
    private:
     std::string log_directory;

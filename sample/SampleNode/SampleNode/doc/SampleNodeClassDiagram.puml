@@ -28,21 +28,21 @@ package userPackage {
       +bool run_01hz_noisy()
       +bool run_1hz()
       +bool run_10hz()
-      +void thread_loop()
-      +void cleanup()
+      +thread_loop()
+      +cleanup()
       +bool changenodestate_service(eros::srv_change_nodestate::Request& req, eros::srv_change_nodestate::Response& res)
-      +void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
-      +void command_Callback(const eros::command::ConstPtr& t_msg)
+      +system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
+      +command_Callback(const eros::command::ConstPtr& t_msg)
 
       -SampleNodeProcess* process;
   }
   class SampleNodeProcess #LimeGreen {
       +eros::eros_diagnostic::Diagnostic finish_initialization()
-      +void reset()
+      +reset()
       +eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
       +std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg)
       +std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
-      +void cleanup()
+      +cleanup()
 
   }
   BaseNode <|-- SampleNode
