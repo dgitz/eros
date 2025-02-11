@@ -44,5 +44,6 @@ var searchData=
   ['drive_86',['DRIVE',['../group__eros_ga7498dad170d5c5801621fa3a7f55aad4.html#gga7498dad170d5c5801621fa3a7f55aad4a2e391a7285515e3663a36f473cf6fe20',1,'eros::Command']]],
   ['dropping_5fpackets_87',['DROPPING_PACKETS',['../namespaceeros_1_1eros__diagnostic_abe8edabb73fbbde65c46a2f392cf4cef.html#abe8edabb73fbbde65c46a2f392cf4cefa129035a81b58f10f008ddc918499b4c8',1,'eros::eros_diagnostic']]],
   ['dynamics_88',['DYNAMICS',['../group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a3573b2d8bce8526e7ccfc667cf4c7f47',1,'eros::System']]],
-  ['diagnostic_20node_89',['Diagnostic Node',['../md_nodes_DiagnosticNode_doc_DiagnosticNode.html',1,'']]]
+  ['data_20logger_20node_89',['Data Logger Node',['../md_nodes_DataLoggerNode_doc_DataLoggerNode.html',1,'']]],
+  ['diagnostic_20node_90',['Diagnostic Node',['../md_nodes_DiagnosticNode_doc_DiagnosticNode.html',1,'']]]
 ];

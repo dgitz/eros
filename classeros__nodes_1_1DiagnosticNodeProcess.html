@@ -120,12 +120,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#a45ec2cbd1d132638888c33d94e731713">update</a> (double t_dt, double t_ros_time)</td></tr>
 <tr class="memdesc:a45ec2cbd1d132638888c33d94e731713"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update function must be implemented in Derived Process. This is used for all state machine logic, etc. <br /></td></tr>
 <tr class="separator:a45ec2cbd1d132638888c33d94e731713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9bf83643bb9d57f1a149a146f98aaf3"><td class="memItemLeft" align="right" valign="top"><a id="af9bf83643bb9d57f1a149a146f98aaf3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_external_diagnostic</b> (<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> diag)</td></tr>
-<tr class="separator:af9bf83643bb9d57f1a149a146f98aaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a137f5314e7fcaf6b1d84b23ab412a7b8"><td class="memItemLeft" align="right" valign="top"><a id="a137f5314e7fcaf6b1d84b23ab412a7b8"></a>
-std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command msg)</td></tr>
-<tr class="separator:a137f5314e7fcaf6b1d84b23ab412a7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ed9e8a362fe569f04fbeadc39d9a1b"><td class="memItemLeft" align="right" valign="top"><a id="a35ed9e8a362fe569f04fbeadc39d9a1b"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_worst_diagnostic</b> (<a class="el" href="namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9">eros::eros_diagnostic::DiagnosticType</a> type)</td></tr>
+<tr class="separator:a35ed9e8a362fe569f04fbeadc39d9a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d10e1f4624b306a1de37aad703bc3bd"><td class="memItemLeft" align="right" valign="top"><a id="a1d10e1f4624b306a1de37aad703bc3bd"></a>
 std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html#a1d10e1f4624b306a1de37aad703bc3bd">check_programvariables</a> ()</td></tr>
 <tr class="memdesc:a1d10e1f4624b306a1de37aad703bc3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. <br /></td></tr>
@@ -133,9 +130,12 @@ std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic
 <tr class="memitem:ae0c81bf49c2e9a76bdfd35cefe221efb"><td class="memItemLeft" align="right" valign="top"><a id="ae0c81bf49c2e9a76bdfd35cefe221efb"></a>
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update_topiclist</b> (std::vector&lt; std::string &gt; &amp;new_diagnostic_topics_to_subscribe)</td></tr>
 <tr class="separator:ae0c81bf49c2e9a76bdfd35cefe221efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35ed9e8a362fe569f04fbeadc39d9a1b"><td class="memItemLeft" align="right" valign="top"><a id="a35ed9e8a362fe569f04fbeadc39d9a1b"></a>
-<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_worst_diagnostic</b> (<a class="el" href="namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9">eros::eros_diagnostic::DiagnosticType</a> type)</td></tr>
-<tr class="separator:a35ed9e8a362fe569f04fbeadc39d9a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9bf83643bb9d57f1a149a146f98aaf3"><td class="memItemLeft" align="right" valign="top"><a id="af9bf83643bb9d57f1a149a146f98aaf3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_external_diagnostic</b> (<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> diag)</td></tr>
+<tr class="separator:af9bf83643bb9d57f1a149a146f98aaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137f5314e7fcaf6b1d84b23ab412a7b8"><td class="memItemLeft" align="right" valign="top"><a id="a137f5314e7fcaf6b1d84b23ab412a7b8"></a>
+std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command msg)</td></tr>
+<tr class="separator:a137f5314e7fcaf6b1d84b23ab412a7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34a9edb1b6e8add797b86bd936644a88"><td class="memItemLeft" align="right" valign="top"><a id="a34a9edb1b6e8add797b86bd936644a88"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
 <tr class="separator:a34a9edb1b6e8add797b86bd936644a88"><td class="memSeparator" colspan="2">&#160;</td></tr>

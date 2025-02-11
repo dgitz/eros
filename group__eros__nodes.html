@@ -85,9 +85,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga17a3d3510d7e5c3cdb7265e42fdce0d0"><td class="memItemLeft" align="right" valign="top"><a id="ga17a3d3510d7e5c3cdb7265e42fdce0d0"></a>
-<a class="el" href="classeros__nodes_1_1MasterNodeProcess.html">MasterNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>eros_nodes::MasterNode::get_process</b> ()</td></tr>
-<tr class="separator:ga17a3d3510d7e5c3cdb7265e42fdce0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89103b8d074f2862e7e0669330c7e7a7"><td class="memItemLeft" align="right" valign="top"><a id="ga89103b8d074f2862e7e0669330c7e7a7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga89103b8d074f2862e7e0669330c7e7a7">eros_nodes::MasterNode::start</a> ()</td></tr>
 <tr class="memdesc:ga89103b8d074f2862e7e0669330c7e7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Node. <br /></td></tr>
@@ -131,9 +128,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga49356b7834bf1ef01a3f645bae1c42d2">eros_nodes::MasterNode::thread_loop</a> ()</td></tr>
 <tr class="memdesc:ga49356b7834bf1ef01a3f645bae1c42d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Loop Must be Implemented in Derived Node. <br /></td></tr>
 <tr class="separator:ga49356b7834bf1ef01a3f645bae1c42d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7476a5d6732a7f7c46fbcbfda0ce4d0"><td class="memItemLeft" align="right" valign="top"><a id="gad7476a5d6732a7f7c46fbcbfda0ce4d0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>eros_nodes::MasterNode::cleanup</b> ()</td></tr>
-<tr class="separator:gad7476a5d6732a7f7c46fbcbfda0ce4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17a3d3510d7e5c3cdb7265e42fdce0d0"><td class="memItemLeft" align="right" valign="top"><a id="ga17a3d3510d7e5c3cdb7265e42fdce0d0"></a>
+<a class="el" href="classeros__nodes_1_1MasterNodeProcess.html">MasterNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>eros_nodes::MasterNode::get_process</b> ()</td></tr>
+<tr class="separator:ga17a3d3510d7e5c3cdb7265e42fdce0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae365a6bbc15329adadd278bcd2e5aa78"><td class="memItemLeft" align="right" valign="top"><a id="gae365a6bbc15329adadd278bcd2e5aa78"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#gae365a6bbc15329adadd278bcd2e5aa78">eros_nodes::MasterNode::changenodestate_service</a> (eros::srv_change_nodestate::Request &amp;req, eros::srv_change_nodestate::Response &amp;res)</td></tr>
 <tr class="memdesc:gae365a6bbc15329adadd278bcd2e5aa78"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Node State service, used to change the Node's state. <br /></td></tr>
@@ -148,6 +145,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>eros_nodes::MasterNod
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#gaad4767d37cfd9a481a5943a3ab2619cc">eros_nodes::MasterNode::command_Callback</a> (const eros::command::ConstPtr &amp;t_msg)</td></tr>
 <tr class="memdesc:gaad4767d37cfd9a481a5943a3ab2619cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process an eros::command. <br /></td></tr>
 <tr class="separator:gaad4767d37cfd9a481a5943a3ab2619cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7476a5d6732a7f7c46fbcbfda0ce4d0"><td class="memItemLeft" align="right" valign="top"><a id="gad7476a5d6732a7f7c46fbcbfda0ce4d0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>eros_nodes::MasterNode::cleanup</b> ()</td></tr>
+<tr class="separator:gad7476a5d6732a7f7c46fbcbfda0ce4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -164,11 +164,11 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:ga4dc19e2db548372f6a923f37fa7d5a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Minor Release Version of the Node. <br /></td></tr>
 <tr class="separator:ga4dc19e2db548372f6a923f37fa7d5a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga238aaeccceda43149f0cae876e443260"><td class="memItemLeft" align="right" valign="top"><a id="ga238aaeccceda43149f0cae876e443260"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga238aaeccceda43149f0cae876e443260">eros_nodes::MasterNode::BUILD_NUMBER</a> = 0</td></tr>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga238aaeccceda43149f0cae876e443260">eros_nodes::MasterNode::BUILD_NUMBER</a> = 1</td></tr>
 <tr class="memdesc:ga238aaeccceda43149f0cae876e443260"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:ga238aaeccceda43149f0cae876e443260"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87987e256a444666ba0b48f0b377166a"><td class="memItemLeft" align="right" valign="top"><a id="ga87987e256a444666ba0b48f0b377166a"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga87987e256a444666ba0b48f0b377166a">eros_nodes::MasterNode::FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 8-Feb-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eros__nodes.html#ga87987e256a444666ba0b48f0b377166a">eros_nodes::MasterNode::FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 10-Feb-2025&quot;</td></tr>
 <tr class="memdesc:ga87987e256a444666ba0b48f0b377166a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:ga87987e256a444666ba0b48f0b377166a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9778cd4c8d886adc24843e21a3d73bb"><td class="memItemLeft" align="right" valign="top"><a id="gaf9778cd4c8d886adc24843e21a3d73bb"></a>

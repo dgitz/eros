@@ -113,16 +113,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a126eda525436aedcef86b909d202566b">update</a> (double t_dt, double t_ros_time)</td></tr>
 <tr class="memdesc:a126eda525436aedcef86b909d202566b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update function must be implemented in Derived Process. This is used for all state machine logic, etc. <br /></td></tr>
 <tr class="separator:a126eda525436aedcef86b909d202566b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa50d864be14973f846d1fa2f6bbf67b"><td class="memItemLeft" align="right" valign="top"><a id="aaa50d864be14973f846d1fa2f6bbf67b"></a>
-std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command msg)</td></tr>
-<tr class="separator:aaa50d864be14973f846d1fa2f6bbf67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61306ff990c183ff8b38d7d4c48618c5"><td class="memItemLeft" align="right" valign="top"><a id="a61306ff990c183ff8b38d7d4c48618c5"></a>
-std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a61306ff990c183ff8b38d7d4c48618c5">check_programvariables</a> ()</td></tr>
-<tr class="memdesc:a61306ff990c183ff8b38d7d4c48618c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. <br /></td></tr>
-<tr class="separator:a61306ff990c183ff8b38d7d4c48618c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7300750684593de2279ff0f20d9b676"><td class="memItemLeft" align="right" valign="top"><a id="ae7300750684593de2279ff0f20d9b676"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
-<tr class="separator:ae7300750684593de2279ff0f20d9b676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf7186eb2376d009081dadb7fe9d1156"><td class="memItemLeft" align="right" valign="top"><a id="abf7186eb2376d009081dadb7fe9d1156"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_logfileduration</b> (double v)</td></tr>
 <tr class="separator:abf7186eb2376d009081dadb7fe9d1156"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,6 +134,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>getSnapshotMode</b> (
 <tr class="memitem:ad1d74be8b281480ee3ab3b408e6dca87"><td class="memItemLeft" align="right" valign="top"><a id="ad1d74be8b281480ee3ab3b408e6dca87"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSnapshotMode</b> (bool v)</td></tr>
 <tr class="separator:ad1d74be8b281480ee3ab3b408e6dca87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61306ff990c183ff8b38d7d4c48618c5"><td class="memItemLeft" align="right" valign="top"><a id="a61306ff990c183ff8b38d7d4c48618c5"></a>
+std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerProcess.html#a61306ff990c183ff8b38d7d4c48618c5">check_programvariables</a> ()</td></tr>
+<tr class="memdesc:a61306ff990c183ff8b38d7d4c48618c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Must be implemented in Derived Process. Used for diagnostic testing LEVEL2 and for basic checking of different variables, if they are initialized, etc. <br /></td></tr>
+<tr class="separator:a61306ff990c183ff8b38d7d4c48618c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa50d864be14973f846d1fa2f6bbf67b"><td class="memItemLeft" align="right" valign="top"><a id="aaa50d864be14973f846d1fa2f6bbf67b"></a>
+std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>new_commandmsg</b> (eros::command msg)</td></tr>
+<tr class="separator:aaa50d864be14973f846d1fa2f6bbf67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7300750684593de2279ff0f20d9b676"><td class="memItemLeft" align="right" valign="top"><a id="ae7300750684593de2279ff0f20d9b676"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
+<tr class="separator:ae7300750684593de2279ff0f20d9b676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros_1_1BaseNodeProcess"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros_1_1BaseNodeProcess')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNodeProcess.html">eros::BaseNodeProcess</a></td></tr>
 <tr class="memitem:ae7e106ebe0ddb39709c7f8ecef9407e6 inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="ae7e106ebe0ddb39709c7f8ecef9407e6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNodeProcess.html#ae7e106ebe0ddb39709c7f8ecef9407e6">initialize</a> (std::string t_base_node_name, std::string t_node_name, std::string t_hostname, <a class="el" href="group__eros_ga7c607a1224b68fbf12782f6969aa5c4b.html#ga7c607a1224b68fbf12782f6969aa5c4b">System::MainSystem</a> t_system, <a class="el" href="group__eros_ga3adcdfcbabd1045cf45829dff620b1ab.html#ga3adcdfcbabd1045cf45829dff620b1ab">System::SubSystem</a> t_subsystem, <a class="el" href="group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#ga34a61840c9cd6ede13ed123e6facf338">System::Component</a> t_component, <a class="el" href="classeros_1_1Logger.html">Logger</a> *_logger)</td></tr>

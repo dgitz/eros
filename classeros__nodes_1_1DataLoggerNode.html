@@ -104,9 +104,6 @@ Collaboration diagram for eros_nodes::DataLoggerNode:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4be7a90f952dd18d9870daf087a3329d"><td class="memItemLeft" align="right" valign="top"><a id="a4be7a90f952dd18d9870daf087a3329d"></a>
-<a class="el" href="classeros__nodes_1_1DataLoggerProcess.html">DataLoggerProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
-<tr class="separator:a4be7a90f952dd18d9870daf087a3329d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab54f4d9631b2d6f047852b1ea736db48"><td class="memItemLeft" align="right" valign="top"><a id="ab54f4d9631b2d6f047852b1ea736db48"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#ab54f4d9631b2d6f047852b1ea736db48">start</a> ()</td></tr>
 <tr class="memdesc:ab54f4d9631b2d6f047852b1ea736db48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Node. <br /></td></tr>
@@ -150,15 +147,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#a97917d5ac0decfb5c3e38ac465e64755">thread_loop</a> ()</td></tr>
 <tr class="memdesc:a97917d5ac0decfb5c3e38ac465e64755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Loop Must be Implemented in Derived Node. <br /></td></tr>
 <tr class="separator:a97917d5ac0decfb5c3e38ac465e64755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1580c876ecda94985e794546aef6a71"><td class="memItemLeft" align="right" valign="top"><a id="ad1580c876ecda94985e794546aef6a71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>snapshot_trigger_Callback</b> (const std_msgs::Empty::ConstPtr &amp;t_msg)</td></tr>
-<tr class="separator:ad1580c876ecda94985e794546aef6a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be7a90f952dd18d9870daf087a3329d"><td class="memItemLeft" align="right" valign="top"><a id="a4be7a90f952dd18d9870daf087a3329d"></a>
+<a class="el" href="classeros__nodes_1_1DataLoggerProcess.html">DataLoggerProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
+<tr class="separator:a4be7a90f952dd18d9870daf087a3329d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecbced7de03315d8874d27a666037d33"><td class="memItemLeft" align="right" valign="top"><a id="aecbced7de03315d8874d27a666037d33"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>run_logger</b> (<a class="el" href="classeros__nodes_1_1DataLoggerNode.html">DataLoggerNode</a> *node)</td></tr>
 <tr class="separator:aecbced7de03315d8874d27a666037d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa778b60a334b2748230f62d3d73b991"><td class="memItemLeft" align="right" valign="top"><a id="afa778b60a334b2748230f62d3d73b991"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
-<tr class="separator:afa778b60a334b2748230f62d3d73b991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1580c876ecda94985e794546aef6a71"><td class="memItemLeft" align="right" valign="top"><a id="ad1580c876ecda94985e794546aef6a71"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>snapshot_trigger_Callback</b> (const std_msgs::Empty::ConstPtr &amp;t_msg)</td></tr>
+<tr class="separator:ad1580c876ecda94985e794546aef6a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae67b09f9ef0b2e3eb37e172e3699f54c"><td class="memItemLeft" align="right" valign="top"><a id="ae67b09f9ef0b2e3eb37e172e3699f54c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#ae67b09f9ef0b2e3eb37e172e3699f54c">changenodestate_service</a> (eros::srv_change_nodestate::Request &amp;req, eros::srv_change_nodestate::Response &amp;res)</td></tr>
 <tr class="memdesc:ae67b09f9ef0b2e3eb37e172e3699f54c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Node State service, used to change the Node's state. <br /></td></tr>
@@ -170,6 +167,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>system_commandAction_
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#aa9f803c3694ae92491ff236de6e625be">command_Callback</a> (const eros::command::ConstPtr &amp;t_msg)</td></tr>
 <tr class="memdesc:aa9f803c3694ae92491ff236de6e625be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process an eros::command. <br /></td></tr>
 <tr class="separator:aa9f803c3694ae92491ff236de6e625be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa778b60a334b2748230f62d3d73b991"><td class="memItemLeft" align="right" valign="top"><a id="afa778b60a334b2748230f62d3d73b991"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
+<tr class="separator:afa778b60a334b2748230f62d3d73b991"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros_1_1BaseNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros_1_1BaseNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNode.html">eros::BaseNode</a></td></tr>
 <tr class="memitem:a075e39a8dc82f8f3001a19e369224ae0 inherit pub_methods_classeros_1_1BaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a075e39a8dc82f8f3001a19e369224ae0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#a075e39a8dc82f8f3001a19e369224ae0">set_no_launch_enabled</a> (bool v)</td></tr>
@@ -303,11 +303,11 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:a6ce20f945dbc3d19b42e1eded30b797c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Minor Release Version of the Node. <br /></td></tr>
 <tr class="separator:a6ce20f945dbc3d19b42e1eded30b797c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a142bc47bdc7a814c4c026b95379302c3"><td class="memItemLeft" align="right" valign="top"><a id="a142bc47bdc7a814c4c026b95379302c3"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#a142bc47bdc7a814c4c026b95379302c3">BUILD_NUMBER</a> = 0</td></tr>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#a142bc47bdc7a814c4c026b95379302c3">BUILD_NUMBER</a> = 1</td></tr>
 <tr class="memdesc:a142bc47bdc7a814c4c026b95379302c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:a142bc47bdc7a814c4c026b95379302c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853101f0475ec50f1724535d3fceb952"><td class="memItemLeft" align="right" valign="top"><a id="a853101f0475ec50f1724535d3fceb952"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#a853101f0475ec50f1724535d3fceb952">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 8-Feb-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DataLoggerNode.html#a853101f0475ec50f1724535d3fceb952">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 10-Feb-2025&quot;</td></tr>
 <tr class="memdesc:a853101f0475ec50f1724535d3fceb952"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:a853101f0475ec50f1724535d3fceb952"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa939474a91ac7fd59a15b0633ddc9699"><td class="memItemLeft" align="right" valign="top"><a id="aa939474a91ac7fd59a15b0633ddc9699"></a>

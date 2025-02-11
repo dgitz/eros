@@ -104,9 +104,6 @@ Collaboration diagram for eros_nodes::SafetyNode:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac32b5683649c0053f7d827be56ed20e7"><td class="memItemLeft" align="right" valign="top"><a id="ac32b5683649c0053f7d827be56ed20e7"></a>
-<a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html">SafetyNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
-<tr class="separator:ac32b5683649c0053f7d827be56ed20e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a984f442063e562aa490b6e2d4b13e440"><td class="memItemLeft" align="right" valign="top"><a id="a984f442063e562aa490b6e2d4b13e440"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a984f442063e562aa490b6e2d4b13e440">start</a> ()</td></tr>
 <tr class="memdesc:a984f442063e562aa490b6e2d4b13e440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Node. <br /></td></tr>
@@ -150,9 +147,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a850d3bef2eb304b6cde674f7fe06e6b5">thread_loop</a> ()</td></tr>
 <tr class="memdesc:a850d3bef2eb304b6cde674f7fe06e6b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Loop Must be Implemented in Derived Node. <br /></td></tr>
 <tr class="separator:a850d3bef2eb304b6cde674f7fe06e6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adffeeb7bb265a0eaafd686fd190fcd88"><td class="memItemLeft" align="right" valign="top"><a id="adffeeb7bb265a0eaafd686fd190fcd88"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
-<tr class="separator:adffeeb7bb265a0eaafd686fd190fcd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32b5683649c0053f7d827be56ed20e7"><td class="memItemLeft" align="right" valign="top"><a id="ac32b5683649c0053f7d827be56ed20e7"></a>
+<a class="el" href="classeros__nodes_1_1SafetyNodeProcess.html">SafetyNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
+<tr class="separator:ac32b5683649c0053f7d827be56ed20e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80e860385512e8cd7f3f6267266aad92"><td class="memItemLeft" align="right" valign="top"><a id="a80e860385512e8cd7f3f6267266aad92"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a80e860385512e8cd7f3f6267266aad92">changenodestate_service</a> (eros::srv_change_nodestate::Request &amp;req, eros::srv_change_nodestate::Response &amp;res)</td></tr>
 <tr class="memdesc:a80e860385512e8cd7f3f6267266aad92"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Node State service, used to change the Node's state. <br /></td></tr>
@@ -164,6 +161,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>system_commandAction_
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a1d0ac8178745464de22cee693beeb280">command_Callback</a> (const eros::command::ConstPtr &amp;t_msg)</td></tr>
 <tr class="memdesc:a1d0ac8178745464de22cee693beeb280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process an eros::command. <br /></td></tr>
 <tr class="separator:a1d0ac8178745464de22cee693beeb280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adffeeb7bb265a0eaafd686fd190fcd88"><td class="memItemLeft" align="right" valign="top"><a id="adffeeb7bb265a0eaafd686fd190fcd88"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
+<tr class="separator:adffeeb7bb265a0eaafd686fd190fcd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros_1_1BaseNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros_1_1BaseNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNode.html">eros::BaseNode</a></td></tr>
 <tr class="memitem:a075e39a8dc82f8f3001a19e369224ae0 inherit pub_methods_classeros_1_1BaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a075e39a8dc82f8f3001a19e369224ae0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#a075e39a8dc82f8f3001a19e369224ae0">set_no_launch_enabled</a> (bool v)</td></tr>
@@ -297,11 +297,11 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:a3e081bb00b1a57143c5a2d8700a58d2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Minor Release Version of the Node. <br /></td></tr>
 <tr class="separator:a3e081bb00b1a57143c5a2d8700a58d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8c2ff26ab6d5cf965dad9bebea9881c"><td class="memItemLeft" align="right" valign="top"><a id="ab8c2ff26ab6d5cf965dad9bebea9881c"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#ab8c2ff26ab6d5cf965dad9bebea9881c">BUILD_NUMBER</a> = 1</td></tr>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#ab8c2ff26ab6d5cf965dad9bebea9881c">BUILD_NUMBER</a> = 2</td></tr>
 <tr class="memdesc:ab8c2ff26ab6d5cf965dad9bebea9881c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:ab8c2ff26ab6d5cf965dad9bebea9881c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8414cc7596366449581c0f2546301fdf"><td class="memItemLeft" align="right" valign="top"><a id="a8414cc7596366449581c0f2546301fdf"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a8414cc7596366449581c0f2546301fdf">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 9-Feb-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SafetyNode.html#a8414cc7596366449581c0f2546301fdf">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 10-Feb-2025&quot;</td></tr>
 <tr class="memdesc:a8414cc7596366449581c0f2546301fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:a8414cc7596366449581c0f2546301fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39a5a1001bffd140a66de85423cb1763"><td class="memItemLeft" align="right" valign="top"><a id="a39a5a1001bffd140a66de85423cb1763"></a>

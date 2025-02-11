@@ -104,9 +104,6 @@ Collaboration diagram for eros_nodes::DiagnosticNode:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a66725fab6848eb77b3ae6847f5450a60"><td class="memItemLeft" align="right" valign="top"><a id="a66725fab6848eb77b3ae6847f5450a60"></a>
-<a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html">DiagnosticNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
-<tr class="separator:a66725fab6848eb77b3ae6847f5450a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac15cf988402355ac8f875e2b23e9b355"><td class="memItemLeft" align="right" valign="top"><a id="ac15cf988402355ac8f875e2b23e9b355"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNode.html#ac15cf988402355ac8f875e2b23e9b355">start</a> ()</td></tr>
 <tr class="memdesc:ac15cf988402355ac8f875e2b23e9b355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Node. <br /></td></tr>
@@ -150,9 +147,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNode.html#adac798c91aa49a87b6e7aa6ff4c5bd98">thread_loop</a> ()</td></tr>
 <tr class="memdesc:adac798c91aa49a87b6e7aa6ff4c5bd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Loop Must be Implemented in Derived Node. <br /></td></tr>
 <tr class="separator:adac798c91aa49a87b6e7aa6ff4c5bd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abba9c58eaeb83bbbec4556d626ea1c0e"><td class="memItemLeft" align="right" valign="top"><a id="abba9c58eaeb83bbbec4556d626ea1c0e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
-<tr class="separator:abba9c58eaeb83bbbec4556d626ea1c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66725fab6848eb77b3ae6847f5450a60"><td class="memItemLeft" align="right" valign="top"><a id="a66725fab6848eb77b3ae6847f5450a60"></a>
+<a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html">DiagnosticNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
+<tr class="separator:a66725fab6848eb77b3ae6847f5450a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43c809e81a733510f4d62b0d1e5b29af"><td class="memItemLeft" align="right" valign="top"><a id="a43c809e81a733510f4d62b0d1e5b29af"></a>
 <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rescan_nodes</b> ()</td></tr>
 <tr class="separator:a43c809e81a733510f4d62b0d1e5b29af"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,6 +170,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af419e2748c68c511747870982ba53ffc"><td class="memItemLeft" align="right" valign="top"><a id="af419e2748c68c511747870982ba53ffc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_Callback</b> (const eros::diagnostic::ConstPtr &amp;t_msg)</td></tr>
 <tr class="separator:af419e2748c68c511747870982ba53ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abba9c58eaeb83bbbec4556d626ea1c0e"><td class="memItemLeft" align="right" valign="top"><a id="abba9c58eaeb83bbbec4556d626ea1c0e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
+<tr class="separator:abba9c58eaeb83bbbec4556d626ea1c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros_1_1BaseNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros_1_1BaseNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros_1_1BaseNode.html">eros::BaseNode</a></td></tr>
 <tr class="memitem:a075e39a8dc82f8f3001a19e369224ae0 inherit pub_methods_classeros_1_1BaseNode"><td class="memItemLeft" align="right" valign="top"><a id="a075e39a8dc82f8f3001a19e369224ae0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1BaseNode.html#a075e39a8dc82f8f3001a19e369224ae0">set_no_launch_enabled</a> (bool v)</td></tr>
@@ -310,7 +310,7 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:a3e527d95df35c01e72bd37dc01b1990f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:a3e527d95df35c01e72bd37dc01b1990f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a109ece5f3f0fe3707e9492f55e4862ab"><td class="memItemLeft" align="right" valign="top"><a id="a109ece5f3f0fe3707e9492f55e4862ab"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNode.html#a109ece5f3f0fe3707e9492f55e4862ab">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 9-Feb-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNode.html#a109ece5f3f0fe3707e9492f55e4862ab">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 10-Feb-2025&quot;</td></tr>
 <tr class="memdesc:a109ece5f3f0fe3707e9492f55e4862ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:a109ece5f3f0fe3707e9492f55e4862ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afee019bf38497910cf6bf6251c4e57f3"><td class="memItemLeft" align="right" valign="top"><a id="afee019bf38497910cf6bf6251c4e57f3"></a>
