@@ -1,4 +1,4 @@
-/*! \file test_SafetyNodeProcess.cpp
+/*! \file test_armdisarm_monitor.cpp
  */
 #include <gtest/gtest.h>
 #include <stdio.h>

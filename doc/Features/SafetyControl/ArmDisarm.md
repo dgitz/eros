@@ -22,7 +22,7 @@ The following state machine describes the operation of the Arm/Disarm Logic:
     Start --> | Boot | DisarmedCannotArm
     DisarmedCannotArm --> | All Ready To Arm == True | Disarmed
     Disarmed --> | System Command-Arm | Arming
-    Arming --> Armed
+    Arming -->  | timer > Arming Time | Armed
     Armed --> | System Command-Disarm | Disarming
     Disarming --> Disarmed
     Armed --> | Any Ready To Arm == False OR timeout | DisarmedCannotArm
@@ -58,3 +58,12 @@ The following state machine describes the operation of the Arm/Disarm Logic:
 ### ARMING
 
 ### ARMED
+
+## Software Design
+![](../../output/Legend.png)
+
+### Class Diagrams
+![](../../../include/eros/doc/output/ArmedStateManagerClassDiagram.png)
+
+### Sequence Diagrams
+![](../../../include/eros/doc/output/ArmedStateManagerSequenceDiagram.png)

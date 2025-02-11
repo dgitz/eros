@@ -1,0 +1,50 @@
+@startuml
+title Armed State Manager Class DiagramBorderColor
+
+package eros {
+    class ArmDisarm
+    together {
+        class System::MainSystem
+        class System::SubSystem
+        class System::Component
+    }
+    together {
+        class armed_state <<M,#FFFF00>>
+        class command <<M,#FFFF00>>
+    }
+    namespace eros_diagnostic {
+        class Diagnostic
+        enum DiagnosticType
+        enum Message
+    }
+class ArmedStateManager #Orange {
+    -- Initialization Functions --
+    +bool reset()
+        
+    -- Update Functions --
+    +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
+    
+    -- Attribute Functions --
+    +ArmDisarm::State get_armed_state() 
+    +armed_state get_armed_state_msg()
+    
+    -- Data Functions --
+    
+    -- Message Functions --
+    +bool new_command(command cmd)
+    +bool new_all_ready_to_arm(bool data)
+    
+    -- Support Functions --
+    
+    -- Convert Functions --
+    
+    -- Printing Functions --
+    +string pretty()
+
+    -- Destructors --
+        
+    -ArmDisarm::State current_armed_state
+}
+}
+
+@enduml

@@ -10,6 +10,10 @@ add_library(resourceMonitor ResourceMonitor.cpp)
 target_link_libraries(resourceMonitor ${catkin_LIBRARIES} coreUtility)
 add_dependencies(resourceMonitor eros_generate_messages_cpp)
 
+add_library(armedStateManager ArmedStateManager.cpp)
+target_link_libraries(armedStateManager ${catkin_LIBRARIES} diagnosticUtility)
+add_dependencies(armedStateManager ${eros_EXPORTED_TARGETS})
+
 add_library(baseNodeProcess BaseNodeProcess.cpp)
 target_link_libraries(baseNodeProcess ${catkin_LIBRARIES} coreUtility convertUtility logger diagnosticUtility diagnosticManager)
 add_dependencies(baseNodeProcess eros_generate_messages_cpp)

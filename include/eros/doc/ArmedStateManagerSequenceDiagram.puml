@@ -1,0 +1,23 @@
+@startuml
+title Armed State Manager Sequence Diagram
+actor User as user
+
+participant ArmedStateManager as manager
+
+alt initialize
+    activate manager
+end
+
+alt messages 
+    user -> manager++: new_command(command cmd)
+    manager --> user--: status
+    user -> manager++: new_all_ready_to_arm(bool data)
+    manager --> user--: status
+
+end
+alt update
+    user -> manager++: update(double t_dt, double t_ros_time)
+    manager --> user--: diagnostic
+end
+
+@enduml
