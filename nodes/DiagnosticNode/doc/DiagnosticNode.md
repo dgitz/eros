@@ -13,8 +13,11 @@ The Diagnostic Node listes to all diagnostics on a system and aggregates them.
 ## Software Design
 ![](../../../doc/output/Legend.png)
 
-### Sequence Diagram
-![](../../../nodes/DiagnosticNode/doc/output/DiagnosticNodeSequenceDiagram.png)
+### Class Diagrams
+![](output/DiagnosticNodeClassDiagram.png)
+
+### Sequence Diagrams
+![](output/DiagnosticNodeSequenceDiagram.png)
 
 ## Troubleshooting
 

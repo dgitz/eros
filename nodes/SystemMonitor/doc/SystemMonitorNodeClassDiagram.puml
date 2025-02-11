@@ -1,0 +1,106 @@
+@startuml
+title System Monitor Node Class Diagram
+package eros {
+    class BaseNode
+    class BaseNodeProcess
+    namespace eros_diagnostic {
+        class Diagnostic
+    }
+}
+namespace eros_nodes {
+    class SystemMonitorNode #LimeGreen {
+        -- Initialization Functions --
+        +bool start()
+        +bool init_screen()
+        +eros_diagnostic::Diagnostic finish_initialization()
+
+        -- Update Functions --
+        +bool run_loop1()
+        +bool run_loop2()
+        +bool run_loop3()
+        +bool run_001hz()
+        +bool run_01hz()
+        +bool run_01hz_noisy()
+        +bool run_1hz()
+        +bool run_10hz()
+        +thread_loop()
+
+        -- Attribute Functions --
+        +SystemMonitorProcess *get_process()
+
+        -- Data Functions --
+
+        -- Message Functions --
+        +heartbeat_Callback(const eros::heartbeat::ConstPtr &msg)
+        +resourceused_Callback(const eros::resource::ConstPtr &msg)
+        +resourceavailable_Callback(const eros::resource::ConstPtr &msg)
+        +loadfactor_Callback(const eros::loadfactor::ConstPtr &msg)
+        +bool changenodestate_service(eros::srv_change_nodestate::Request &req,eros::srv_change_nodestate::Response &res)
+        +system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal)
+        +command_Callback(const eros::command::ConstPtr &t_msg)
+        +commandState_Callback(const eros::command_state::ConstPtr &t_msg)
+
+        -- Support Functions --
+        +eros::eros_diagnostic::Diagnostic rescan_nodes()
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+
+        -- Destructors --
+        +cleanup()
+   
+    }
+    class SystemMonitorNodeProcess #LimeGreen {
+        -- Initialization Functions --
+        +eros_diagnostic::Diagnostic finish_initialization()
+        +reset()
+        +bool initialize_windows()
+
+        -- Update Functions --
+        +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
+
+        -- Attribute Functions --
+        +bool set_nodeHandle(ros::NodeHandle* nh, string _robot_namespace)
+        +update_armedstate(eros::ArmDisarm::State armed_state)
+        +bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height)
+        +bool get_killme()
+
+        -- Data Functions --
+
+        -- Message Functions --
+        +eros_diagnostic::Diagnostic[] new_commandmsg(eros::command msg)
+        +eros_diagnostic::Diagnostic new_commandstate(const eros::command_state::ConstPtr& t_msg)
+        +eros_diagnostic::Diagnostic new_heartbeatmessage(const eros::heartbeat::ConstPtr& t_msg)
+        +eros_diagnostic::Diagnostic new_resourceusedmessage(const eros::resource::ConstPtr& t_msg)
+        +eros_diagnostic::Diagnostic new_resourceavailablemessage(const eros::resource::ConstPtr& t_msg)
+        +eros::eros_diagnostic::Diagnostic new_loadfactormessage(const eros::loadfactor::ConstPtr& t_msg)
+
+        -- Support Functions --
+        +eros_diagnostic::Diagnostic update_monitorlist(
+            string[] heartbeat_list,
+            string[] resourceused_list,
+            string[] resourceavailable_list,
+            string[] loadfactor_list,
+            string[] new_heartbeat_topics_to_subscribe,
+            string[] new_resourceused_topics_to_subscribe,
+            string[] new_resourceavailable_topics_to_subscribe,
+            string[] new_loadfactor_topics_to_subscribe)
+        +eros_diagnostic::Diagnostic[] check_programvariables()
+
+        -- Convert Functions --
+        
+        -- Printing Functions --
+        +string pretty()
+
+        -- Destructors --
+        +cleanup()
+
+    }
+
+    BaseNode <|-- SystemMonitorNode
+    BaseNodeProcess <|-- SystemMonitorNodeProcess
+    SystemMonitorNode -> SystemMonitorNodeProcess 
+}
+
+@enduml
