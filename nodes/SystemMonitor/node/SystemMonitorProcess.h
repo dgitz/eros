@@ -23,29 +23,15 @@ namespace eros_nodes::SystemMonitor {
 class SystemMonitorProcess : public eros::BaseNodeProcess
 {
    public:
+    SystemMonitorProcess()
+        : kill_me(false),
+          nodeHandle(nullptr),
+          robot_namespace("/"),
+          mainwindow_width(0),
+          mainwindow_height(0) {
+    }
+    ~SystemMonitorProcess();
     // Constants
-
-    // Enums
-
-    // Structs
-
-    // Initialization Functions
-
-    // Update Functions
-
-    // Attribute Functions
-
-    // Utility Functions
-
-    // Support Functions
-
-    // Message Functions
-
-    // Destructors
-
-    // Printing Functions
-
-    // TODO
     const bool DEBUG_MODE = false;
     /*! \brief How long in seconds before marking a Node as Timed Out.*/
     const double COMMTIMEOUT_THRESHOLD = 5.0f;
@@ -57,16 +43,6 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     /*! \brief The amount of time to show text in the message window.*/
     const double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
 
-    SystemMonitorProcess()
-        : kill_me(false),
-          nodeHandle(nullptr),
-          robot_namespace("/"),
-          mainwindow_width(0),
-          mainwindow_height(0) {
-    }
-    ~SystemMonitorProcess();
-    // Constants
-
     // Enums
 
     // Structs
@@ -74,6 +50,12 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     // Initialization Functions
     eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
+    bool initialize_windows();
+
+    // Update Functions
+    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+
+    // Attribute Functions
     bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
         nodeHandle = nh;
         robot_namespace = _robot_namespace;
@@ -82,10 +64,32 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
 
         return true;
     }
-    bool initialize_windows();
+    void update_armedstate(eros::ArmDisarm::State armed_state);
+    bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
+        mainwindow_width = t_mainwindow_width;
+        mainwindow_height = t_mainwindow_height;
+        if (mainwindow_width < MINWINDOW_WIDTH) {
+            return false;
+        }
+        return true;
+    }
+    bool get_killme() {
+        return kill_me;
+    }
 
-    // Update Functions
-    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+    // Utility Functions
+
+    // Support Functions
+    eros::eros_diagnostic::Diagnostic update_monitorlist(
+        std::vector<std::string> heartbeat_list,
+        std::vector<std::string> resourceused_list,
+        std::vector<std::string> resourceavailable_list,
+        std::vector<std::string> loadfactor_list,
+        std::vector<std::string>& new_heartbeat_topics_to_subscribe,
+        std::vector<std::string>& new_resourceused_topics_to_subscribe,
+        std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
+        std::vector<std::string>& new_loadfactor_topics_to_subscribe);
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
 
     // Message Functions
     std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
@@ -97,38 +101,15 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
         const eros::resource::ConstPtr& t_msg);
     eros::eros_diagnostic::Diagnostic new_loadfactormessage(
         const eros::loadfactor::ConstPtr& t_msg);
-    // Attribute Functions
-    void update_armedstate(eros::ArmDisarm::State armed_state);
-    bool set_mainwindow(uint16_t t_mainwindow_width, uint16_t t_mainwindow_height) {
-        mainwindow_width = t_mainwindow_width;
-        mainwindow_height = t_mainwindow_height;
-        if (mainwindow_width < MINWINDOW_WIDTH) {
-            return false;
-        }
-        return true;
-    }
-    eros::eros_diagnostic::Diagnostic update_monitorlist(
-        std::vector<std::string> heartbeat_list,
-        std::vector<std::string> resourceused_list,
-        std::vector<std::string> resourceavailable_list,
-        std::vector<std::string> loadfactor_list,
-        std::vector<std::string>& new_heartbeat_topics_to_subscribe,
-        std::vector<std::string>& new_resourceused_topics_to_subscribe,
-        std::vector<std::string>& new_resourceavailable_topics_to_subscribe,
-        std::vector<std::string>& new_loadfactor_topics_to_subscribe);
-
-    // Support Functions
-    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
-    std::string pretty();
 
     // Destructors
-    bool get_killme() {
-        return kill_me;
-    }
     void cleanup() {
         base_cleanup();
         endwin();
     }
+
+    // Printing Functions
+    std::string pretty();
 
    private:
     bool kill_me{false};

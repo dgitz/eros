@@ -16,30 +16,10 @@ namespace eros_nodes::SystemMonitor {
 class SystemMonitorNode : public eros::BaseNode
 {
    public:
+    SystemMonitorNode();
+    ~SystemMonitorNode();
+
     // Constants
-
-    // Enums
-
-    // Structs
-
-    // Initialization Functions
-
-    // Update Functions
-
-    // Attribute Functions
-
-    // Utility Functions
-
-    // Support Functions
-
-    // Message Functions
-
-    // Destructors
-
-    // Printing Functions
-
-    // TODO
-
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "system_monitor";
 
@@ -50,10 +30,10 @@ class SystemMonitorNode : public eros::BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 3;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 0;
+    const uint16_t BUILD_NUMBER = 1;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 8-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 10-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::REMOTE_CONTROL;
@@ -63,14 +43,17 @@ class SystemMonitorNode : public eros::BaseNode
 
     /*! \brief What Component this Node falls under.*/
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
-    SystemMonitorNode();
-    ~SystemMonitorNode();
-    SystemMonitorProcess *get_process() {
-        return process;
-    }
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     bool start();
     bool init_screen();
     eros::eros_diagnostic::Diagnostic finish_initialization();
+
+    // Update Functions
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -80,9 +63,18 @@ class SystemMonitorNode : public eros::BaseNode
     bool run_1hz();
     bool run_10hz();
     void thread_loop();
-    void cleanup();
 
+    // Attribute Functions
+    SystemMonitorProcess *get_process() {
+        return process;
+    }
+
+    // Utility Functions
+
+    // Support Functions
     eros::eros_diagnostic::Diagnostic rescan_nodes();
+
+    // Message Functions
     void heartbeat_Callback(const eros::heartbeat::ConstPtr &msg);
     void resourceused_Callback(const eros::resource::ConstPtr &msg);
     void resourceavailable_Callback(const eros::resource::ConstPtr &msg);
@@ -92,6 +84,11 @@ class SystemMonitorNode : public eros::BaseNode
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr &goal);
     void command_Callback(const eros::command::ConstPtr &t_msg);
     void commandState_Callback(const eros::command_state::ConstPtr &t_msg);
+
+    // Destructors
+    void cleanup();
+
+    // Printing Functions
 
    private:
     std::string extract_robotnamespace(std::string str);

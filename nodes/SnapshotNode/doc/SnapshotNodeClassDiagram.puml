@@ -8,7 +8,7 @@ package eros {
     }
 }
 namespace eros_nodes {
-    class SnapshotNode {
+    class SnapshotNode #LimeGreen {
         -- Initialization Functions --
         +bool start()
         +eros_diagnostic::Diagnostic finish_initialization()
@@ -47,7 +47,7 @@ namespace eros_nodes {
         +cleanup()
 
     }
-    class SnapshotNodeProcess {
+    class SnapshotNodeProcess #LimeGreen {
         -- Initialization Functions --
         +eros_diagnostic::Diagnostic finish_initialization()
         +reset()
@@ -60,60 +60,26 @@ namespace eros_nodes {
         +set_mode(Mode v)
         +set_architecture(Architecture::Type v)
         +SnapshotConfig get_snapshot_config()
-        /// HERE 
-        eros::SnapshotState get_devicesnapshot_state() {
-            return devicesnapshot_state
-        }
-        void set_devicesnapshot_state(eros::SnapshotState v) {
-            devicesnapshot_state = v
-        }
-        eros::SnapshotState get_systemsnapshot_state() {
-            return systemsnapshot_state
-        }
-        void set_systemsnapshot_state(eros::SnapshotState v) {
-            systemsnapshot_state = v
-        }
-        double get_snapshotprogress_percentage() {
-            return snapshot_progress_percent
-        }
-        bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
-            nodeHandle = nh
-            robot_namespace = _robot_namespace
-            return true
-        }
+        +SnapshotState get_devicesnapshot_state()
+        +set_devicesnapshot_state(eros::SnapshotState v)
+        +SnapshotState get_systemsnapshot_state()
+        +set_systemsnapshot_state(SnapshotState v)
+        +double get_snapshotprogress_percentage()
+        + bool set_nodeHandle(ros::NodeHandle* nh, string _robot_namespace)
 
         -- Data Functions --
 
         -- Message Functions --
-            std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg)
-    std::vector<eros::eros_diagnostic::Diagnostic> new_commandstatemsg(eros::command_state t_msg)
+        +eros_diagnostic::Diagnostic[] new_commandmsg(eros::command t_msg)
+        +eros_diagnostic::Diagnostic[] new_commandstatemsg(eros::command_state t_msg)
 
         -- Support Functions --
-
-    std::vector<eros::eros_diagnostic::Diagnostic> createnew_snapshot()
-    std::vector<eros::eros_diagnostic::Diagnostic> clear_snapshots()
-    eros::eros_diagnostic::Diagnostic load_config(std::string file_path,
-                                                  std::vector<std::string> override_devicenames)
-    static Mode ModeType(std::string v) {
-        if (v == "MASTER") {
-            return Mode::MASTER
-        }
-        else if (v == "SLAVE") {
-            return Mode::SLAVE
-        }
-        else {
-            return Mode::UNKNOWN
-        }
-    }
-    static std::string ModeString(Mode v) {
-        switch (v) {
-            case Mode::UNKNOWN: return "UNKNOWN" break
-            case Mode::MASTER: return "MASTER"
-            case Mode::SLAVE: return "SLAVE"
-            default: return ModeString(Mode::UNKNOWN) break
-        }
-    }
-    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
+        +eros_diagnostic::Diagnostic[] createnew_snapshot()
+        +eros_diagnostic::Diagnostic[] clear_snapshots()
+        +eros_diagnostic::Diagnostic load_config(string file_path, string[] override_devicenames)
+        +{static} Mode ModeType(string v)
+        +{static} string ModeString(Mode v)
+        +eros_diagnostic::Diagnostic[] check_programvariables()
 
         -- Convert Functions --
         
@@ -121,11 +87,9 @@ namespace eros_nodes {
         +string pretty()
 
         -- Destructors --
-        cleanup()
-
-        -- TODO --
+        +cleanup()
     }
-    enum Mode {
+    enum Mode #LimeGreen {
         UNKNOWN,
         MASTER,
         SLAVE,
@@ -133,13 +97,13 @@ namespace eros_nodes {
     }
     SnapshotNodeProcess +-- Mode
 
-    struct ExecCommand {
+    struct ExecCommand #LimeGreen {
         +string command
         +string output_file
     }
-    SnapshotNodeProces +-- ExecCommand
+    SnapshotNodeProcess +-- ExecCommand
 
-    struct SlaveDevice {
+    struct SlaveDevice #LimeGreen {
         +string name
         +bool device_snapshot_generated
         +bool device_snapshot_processed
@@ -147,7 +111,7 @@ namespace eros_nodes {
         +string devicesnapshot_path
     }
     SnapshotNodeProcess +-- SlaveDevice
-    struct SnapshotConfig {
+    struct SnapshotConfig #LimeGreen {
         +string stage_directory
         +SlaveDevice[] snapshot_devices
         +string[] folders

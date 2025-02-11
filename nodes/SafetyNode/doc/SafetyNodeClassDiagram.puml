@@ -8,7 +8,7 @@ package eros {
     }
 }
 namespace eros_nodes {
-    class SafetyNode {
+    class SafetyNode #LimeGreen {
         -- Initialization Functions --
         +bool start()
         +eros_diagnostic::Diagnostic finish_initialization()
@@ -44,7 +44,7 @@ namespace eros_nodes {
         +void cleanup()
     
     }
-    class SafetyNodeProcess {
+    class SafetyNodeProcess #LimeGreen {
         -- Initialization Functions --
         +eros::eros_diagnostic::Diagnostic finish_initialization()
         +reset()
