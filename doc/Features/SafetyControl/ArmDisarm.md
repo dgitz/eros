@@ -24,7 +24,7 @@ The following state machine describes the operation of the Arm/Disarm Logic:
     Disarmed --> | System Command-Arm | Arming
     Arming -->  | timer > Arming Time | Armed
     Armed --> | System Command-Disarm | Disarming
-    Disarming --> Disarmed
+    Disarming --> | timer > Disarming Time| Disarmed
     Armed --> | Any Ready To Arm == False OR timeout | DisarmedCannotArm
     Arming --> | Any Ready To Arm == False OR timeout  | DisarmedCannotArm
     Disarmed --> | Any Ready To Arm == False OR timeout  | DisarmedCannotArm

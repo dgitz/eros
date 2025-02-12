@@ -13,13 +13,23 @@ namespace eros {
 class ArmedStateManager
 {
    public:
+    struct ReadyToArmSignal {
+        ReadyToArmSignal(std::string signal_name)
+            : signal_name(signal_name), status(false), last_update_time(-1.0) {
+        }
+        std::string signal_name;
+        bool status;
+        double last_update_time;
+    };
     ArmedStateManager(std::string device_name,
                       std::string node_name,
                       System::MainSystem system,
-                      System::SubSystem sub_system);
+                      System::SubSystem sub_system,
+                      std::vector<std::string> ready_to_arm_list);
     ~ArmedStateManager();
     // Constants
-
+    static constexpr double ARMING_TIME_SEC = 5.0;
+    static constexpr double DISARMING_TIME_SEC = 5.0;
     // Enums
 
     // Structs
@@ -28,7 +38,7 @@ class ArmedStateManager
     bool reset();
 
     // Update Functions
-    eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+    eros_diagnostic::Diagnostic update(double t_ros_time);
 
     // Attribute Functions
     eros_diagnostic::Diagnostic get_current_diagnostic() {
@@ -49,7 +59,7 @@ class ArmedStateManager
 
     // Message Functions
     bool new_command(eros::command cmd);
-    bool new_all_ready_to_arm(bool data);
+    bool new_ready_to_arm_msg(std::string signal, bool data);
 
     // Destructors
     void cleanup() {
@@ -62,5 +72,9 @@ class ArmedStateManager
    private:
     eros_diagnostic::Diagnostic current_diagnostic;
     ArmDisarm::State current_armed_state;
+    std::map<std::string, ReadyToArmSignal> ready_to_arm_signals;
+    double current_time{-1.0};
+    double arming_timer{-1.0};
+    double disarming_timer{-1.0};
 };
 }  // namespace eros
