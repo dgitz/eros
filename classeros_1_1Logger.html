@@ -69,6 +69,8 @@ $(function() {
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros_1_1Logger-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros::Logger Class Reference</div>  </div>
@@ -152,6 +154,57 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a62175cacd26e9f34a6274ef909a3223f"><td class="memItemLeft" align="right" valign="top"><a id="a62175cacd26e9f34a6274ef909a3223f"></a>
 static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>MAXLINE_COUNT</b> = 5000</td></tr>
 <tr class="separator:a62175cacd26e9f34a6274ef909a3223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac002f90edd2cdc38df852c298bfe643f"><td class="memItemLeft" align="right" valign="top"><a id="ac002f90edd2cdc38df852c298bfe643f"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>map_logverbosity_tostring</b> (int v)</td></tr>
+<tr class="separator:ac002f90edd2cdc38df852c298bfe643f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada1064f34df5fb54eaabbc2668058564"><td class="memItemLeft" align="right" valign="top"><a id="ada1064f34df5fb54eaabbc2668058564"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>map_logverbosity_toint</b> (std::string level)</td></tr>
+<tr class="separator:ada1064f34df5fb54eaabbc2668058564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe5a322297ff098daf4ea68e1b8c0979"><td class="memItemLeft" align="right" valign="top"><a id="abe5a322297ff098daf4ea68e1b8c0979"></a>
+<a class="el" href="classeros_1_1Logger_ae09869e0345da7e623b505c31fed7572.html#ae09869e0345da7e623b505c31fed7572">LoggerStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>print_log</b> (std::string filename, uint64_t linenumber, <a class="el" href="group__eros_gadf15b7ed977a35b7cc7ab70708ad4822.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level, std::string tempstr)</td></tr>
+<tr class="separator:abe5a322297ff098daf4ea68e1b8c0979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a651b62e1374da10682c40142eba4dd59"><td class="memItemLeft" align="right" valign="top"><a id="a651b62e1374da10682c40142eba4dd59"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>GREEN_FOREGROUND</b> = &quot;\033[1;32m&quot;</td></tr>
+<tr class="separator:a651b62e1374da10682c40142eba4dd59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18565c4eede5c68cfa4ebd422616edec"><td class="memItemLeft" align="right" valign="top"><a id="a18565c4eede5c68cfa4ebd422616edec"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>YELLOW_FOREGROUND</b> = &quot;\033[1;33m&quot;</td></tr>
+<tr class="separator:a18565c4eede5c68cfa4ebd422616edec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8b3bfaa48ac9e5e28bbc7e727f3f266"><td class="memItemLeft" align="right" valign="top"><a id="af8b3bfaa48ac9e5e28bbc7e727f3f266"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>RED_FOREGROUND</b> = &quot;\033[1;31m&quot;</td></tr>
+<tr class="separator:af8b3bfaa48ac9e5e28bbc7e727f3f266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00160984d72e7ab98e8cd5df7ebbbf4c"><td class="memItemLeft" align="right" valign="top"><a id="a00160984d72e7ab98e8cd5df7ebbbf4c"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>END_COLOR</b> = &quot;\033[0m&quot;</td></tr>
+<tr class="separator:a00160984d72e7ab98e8cd5df7ebbbf4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d896fe15f731de09b28a5857bc97f7f"><td class="memItemLeft" align="right" valign="top"><a id="a6d896fe15f731de09b28a5857bc97f7f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>logger_ok</b></td></tr>
+<tr class="separator:a6d896fe15f731de09b28a5857bc97f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d9d831156751ffa9fcad850dba4fe3"><td class="memItemLeft" align="right" valign="top"><a id="a57d9d831156751ffa9fcad850dba4fe3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>line_counter</b></td></tr>
+<tr class="separator:a57d9d831156751ffa9fcad850dba4fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d70dd5c5c325cb2f8a31aef33bc42a"><td class="memItemLeft" align="right" valign="top"><a id="a20d70dd5c5c325cb2f8a31aef33bc42a"></a>
+<a class="el" href="group__eros_gadf15b7ed977a35b7cc7ab70708ad4822.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>verbosity</b></td></tr>
+<tr class="separator:a20d70dd5c5c325cb2f8a31aef33bc42a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7791df5f8188159a45930bb0883c55ed"><td class="memItemLeft" align="right" valign="top"><a id="a7791df5f8188159a45930bb0883c55ed"></a>
+std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><b>log_file</b></td></tr>
+<tr class="separator:a7791df5f8188159a45930bb0883c55ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0c04a12b9179d0bbd44c43ae3062ed0"><td class="memItemLeft" align="right" valign="top"><a id="aa0c04a12b9179d0bbd44c43ae3062ed0"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>node_name</b></td></tr>
+<tr class="separator:aa0c04a12b9179d0bbd44c43ae3062ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b65b4fb364dd1199d924ab9760ff639"><td class="memItemLeft" align="right" valign="top"><a id="a6b65b4fb364dd1199d924ab9760ff639"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>file_path</b> [120]</td></tr>
+<tr class="separator:a6b65b4fb364dd1199d924ab9760ff639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc6d7b68567337115c48793570c6dc5"><td class="memItemLeft" align="right" valign="top"><a id="a1dc6d7b68567337115c48793570c6dc5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>console_print</b></td></tr>
+<tr class="separator:a1dc6d7b68567337115c48793570c6dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad00e790bdecb8f01b813571501f5dfd1"><td class="memItemLeft" align="right" valign="top"><a id="ad00e790bdecb8f01b813571501f5dfd1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ROS_logger</b></td></tr>
+<tr class="separator:ad00e790bdecb8f01b813571501f5dfd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a> class <a class="el" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console...">Logger</a> class used to write log outputs for strings and diagnostic information to console and output text files. </p>

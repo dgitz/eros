@@ -68,6 +68,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1SystemMonitor_1_1InstructionWindow-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::SystemMonitor::InstructionWindow Class Reference</div>  </div>
@@ -88,12 +90,13 @@ Collaboration diagram for eros_nodes::SystemMonitor::InstructionWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SystemMonitor_1_1InstructionWindow__coll__graph.png" border="0" usemap="#eros__nodes_1_1SystemMonitor_1_1InstructionWindow_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1SystemMonitor_1_1InstructionWindow_coll__map" id="eros__nodes_1_1SystemMonitor_1_1InstructionWindow_coll__map">
-<area shape="rect" title=" " alt="" coords="637,100,840,141"/>
+<area shape="rect" title=" " alt="" coords="776,141,979,183"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1BaseWindow.html" title=" " alt="" coords="385,100,588,141"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title=" " alt="" coords="5,5,208,47"/>
 <area shape="rect" href="structeros__nodes_1_1SystemMonitor_1_1ScreenCoordinatePerc.html" title="ScreenCoordinatePerc container." alt="" coords="5,71,208,112"/>
 <area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="55,137,158,163"/>
 <area shape="rect" href="structeros__nodes_1_1SystemMonitor_1_1ScreenCoordinatePixel.html" title="ScreenCoordinatePixel container." alt="" coords="5,188,208,229"/>
+<area shape="rect" href="structeros_1_1ArmDisarm_1_1State.html" title="ArmDisarm Container Holds information about ArmDisarm." alt="" coords="399,166,574,193"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -118,9 +121,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_selectable</b> () 
 <tr class="memitem:a9babc4c61f0560fa7b3029eb0ac535f7"><td class="memItemLeft" align="right" valign="top"><a id="a9babc4c61f0560fa7b3029eb0ac535f7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (double dt, double t_ros_time) override</td></tr>
 <tr class="separator:a9babc4c61f0560fa7b3029eb0ac535f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b56d054be64f52eb8c7b0bd52d49477"><td class="memItemLeft" align="right" valign="top"><a id="a2b56d054be64f52eb8c7b0bd52d49477"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_msg</b> (<a class="el" href="structeros_1_1ArmDisarm_1_1State.html">eros::ArmDisarm::State</a>) override</td></tr>
-<tr class="separator:a2b56d054be64f52eb8c7b0bd52d49477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36d5feb716ecc4794fc97c715cccdc9a"><td class="memItemLeft" align="right" valign="top"><a id="a36d5feb716ecc4794fc97c715cccdc9a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_msg</b> (<a class="el" href="structeros_1_1ArmDisarm_1_1State.html">eros::ArmDisarm::State</a> armed_state) override</td></tr>
+<tr class="separator:a36d5feb716ecc4794fc97c715cccdc9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab25486c1c800d14039acb237a956858"><td class="memItemLeft" align="right" valign="top"><a id="aab25486c1c800d14039acb237a956858"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_msg</b> (eros::heartbeat) override</td></tr>
 <tr class="separator:aab25486c1c800d14039acb237a956858"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +189,27 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_window_records_ar
 <tr class="memitem:aae65d5b0098576c2bd97397dee81b24b inherit pub_methods_classeros__nodes_1_1SystemMonitor_1_1BaseWindow"><td class="memItemLeft" align="right" valign="top"><a id="aae65d5b0098576c2bd97397dee81b24b"></a>
 int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_selected_record</b> ()</td></tr>
 <tr class="separator:aae65d5b0098576c2bd97397dee81b24b inherit pub_methods_classeros__nodes_1_1SystemMonitor_1_1BaseWindow"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af2e78d243c33543f31a1e845ddb8fa86"><td class="memItemLeft" align="right" valign="top"><a id="af2e78d243c33543f31a1e845ddb8fa86"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>update_window</b> ()</td></tr>
+<tr class="separator:af2e78d243c33543f31a1e845ddb8fa86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a4bb46b95716b8f8d886bf148392b5c09"><td class="memItemLeft" align="right" valign="top"><a id="a4bb46b95716b8f8d886bf148392b5c09"></a>
+InstructionMode&#160;</td><td class="memItemRight" valign="bottom"><b>instruction_mode</b> {InstructionMode::NODE}</td></tr>
+<tr class="separator:a4bb46b95716b8f8d886bf148392b5c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5a2f372ea38296e42738eab50e46582"><td class="memItemLeft" align="right" valign="top"><a id="ab5a2f372ea38296e42738eab50e46582"></a>
+DiagnosticMode&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_mode</b> {DiagnosticMode::SYSTEM}</td></tr>
+<tr class="separator:ab5a2f372ea38296e42738eab50e46582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb656228ab0877816252289d16844c3d"><td class="memItemLeft" align="right" valign="top"><a id="abb656228ab0877816252289d16844c3d"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>command_pub</b></td></tr>
+<tr class="separator:abb656228ab0877816252289d16844c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9177f0644bdc07125da8b60eb38ed60"><td class="memItemLeft" align="right" valign="top"><a id="ac9177f0644bdc07125da8b60eb38ed60"></a>
+<a class="el" href="structeros_1_1ArmDisarm_1_1State.html">eros::ArmDisarm::State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>current_armed_state</b></td></tr>
+<tr class="separator:ac9177f0644bdc07125da8b60eb38ed60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

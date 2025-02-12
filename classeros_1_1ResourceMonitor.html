@@ -68,6 +68,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros_1_1ResourceMonitor-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros::ResourceMonitor Class Reference</div>  </div>
@@ -78,6 +80,17 @@ $(function() {
  <a href="classeros_1_1ResourceMonitor.html#details">More...</a></p>
 
 <p><code>#include &lt;ResourceMonitor.h&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for eros::ResourceMonitor:</div>
+<div class="dyncontent">
+<div class="center"><img src="classeros_1_1ResourceMonitor__coll__graph.png" border="0" usemap="#eros_1_1ResourceMonitor_coll__map" alt="Collaboration graph"/></div>
+<map name="eros_1_1ResourceMonitor_coll__map" id="eros_1_1ResourceMonitor_coll__map">
+<area shape="rect" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="157,109,325,136"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,5,165,47"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="190,13,293,39"/>
+<area shape="rect" href="structeros_1_1ResourceInfo.html" title="ResourceInfo Information: Holds information about a Node&#39;s Resource Usage." alt="" coords="317,13,459,39"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -120,6 +133,51 @@ eros::loadfactor&#160;</td><td class="memItemRight" valign="bottom"><b>get_load_
 <tr class="memitem:a4e0ea4a47faffec8912034f2421c9022"><td class="memItemLeft" align="right" valign="top"><a id="a4e0ea4a47faffec8912034f2421c9022"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
 <tr class="separator:a4e0ea4a47faffec8912034f2421c9022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af33425b1c0bf0a464c6178f8915b8ec4"><td class="memItemLeft" align="right" valign="top"><a id="af33425b1c0bf0a464c6178f8915b8ec4"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_process_resource_usage</b> ()</td></tr>
+<tr class="separator:af33425b1c0bf0a464c6178f8915b8ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5970a3f144d86ee5514071ca6623db7f"><td class="memItemLeft" align="right" valign="top"><a id="a5970a3f144d86ee5514071ca6623db7f"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_device_resource_availability</b> ()</td></tr>
+<tr class="separator:a5970a3f144d86ee5514071ca6623db7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe6552999ee37425769b58dc35d4da9"><td class="memItemLeft" align="right" valign="top"><a id="a5fe6552999ee37425769b58dc35d4da9"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_device_loadfactor</b> ()</td></tr>
+<tr class="separator:a5fe6552999ee37425769b58dc35d4da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef42c293a0ec0d8ba23fcefe9ec6f6d"><td class="memItemLeft" align="right" valign="top"><a id="abef42c293a0ec0d8ba23fcefe9ec6f6d"></a>
+<a class="el" href="group__eros_ga4de8a31a2dd45d3d9559e76109a23e1f.html#ga4de8a31a2dd45d3d9559e76109a23e1f">Architecture::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_device_architecture</b> ()</td></tr>
+<tr class="separator:abef42c293a0ec0d8ba23fcefe9ec6f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a8a05d58af4d0fd64e1145e28cb6b240a"><td class="memItemLeft" align="right" valign="top"><a id="a8a05d58af4d0fd64e1145e28cb6b240a"></a>
+<a class="el" href="classeros_1_1ResourceMonitor_a164922763a56f5e72435889853120bf6.html#a164922763a56f5e72435889853120bf6">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="separator:a8a05d58af4d0fd64e1145e28cb6b240a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c1da3fd2c178f954e976c55b0df1f83"><td class="memItemLeft" align="right" valign="top"><a id="a7c1da3fd2c178f954e976c55b0df1f83"></a>
+<a class="el" href="group__eros_ga4de8a31a2dd45d3d9559e76109a23e1f.html#ga4de8a31a2dd45d3d9559e76109a23e1f">Architecture::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>architecture</b></td></tr>
+<tr class="separator:a7c1da3fd2c178f954e976c55b0df1f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad066cc3e9635bd08a16bd17e3fe86a56"><td class="memItemLeft" align="right" valign="top"><a id="ad066cc3e9635bd08a16bd17e3fe86a56"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic</b></td></tr>
+<tr class="separator:ad066cc3e9635bd08a16bd17e3fe86a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7195d9457085b8636df539fc1d978a34"><td class="memItemLeft" align="right" valign="top"><a id="a7195d9457085b8636df539fc1d978a34"></a>
+eros::loadfactor&#160;</td><td class="memItemRight" valign="bottom"><b>load_factor</b></td></tr>
+<tr class="separator:a7195d9457085b8636df539fc1d978a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aefd8be1e1a7152f0da467e795decfe"><td class="memItemLeft" align="right" valign="top"><a id="a4aefd8be1e1a7152f0da467e795decfe"></a>
+<a class="el" href="classeros_1_1Logger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>logger</b></td></tr>
+<tr class="separator:a4aefd8be1e1a7152f0da467e795decfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6108c53e69bca349e30f3c3998e4b96"><td class="memItemLeft" align="right" valign="top"><a id="ae6108c53e69bca349e30f3c3998e4b96"></a>
+<a class="el" href="structeros_1_1ResourceInfo.html">ResourceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>resourceInfo</b></td></tr>
+<tr class="separator:ae6108c53e69bca349e30f3c3998e4b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab151de4578aeee0816a1b68af7bbce39"><td class="memItemLeft" align="right" valign="top"><a id="ab151de4578aeee0816a1b68af7bbce39"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>initialized</b></td></tr>
+<tr class="separator:ab151de4578aeee0816a1b68af7bbce39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f7912087d41ac24a0646b00e729e2e4"><td class="memItemLeft" align="right" valign="top"><a id="a5f7912087d41ac24a0646b00e729e2e4"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>run_time</b></td></tr>
+<tr class="separator:a5f7912087d41ac24a0646b00e729e2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2f70620596086ca2b25f1b507eaa8c5"><td class="memItemLeft" align="right" valign="top"><a id="ac2f70620596086ca2b25f1b507eaa8c5"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>processor_count</b></td></tr>
+<tr class="separator:ac2f70620596086ca2b25f1b507eaa8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi...">ResourceMonitor</a> class <a class="el" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi...">ResourceMonitor</a> class used to collect resource information on a process or device. </p>

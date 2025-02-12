@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1DataLoggerProcess-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::DataLoggerProcess Class Reference</div>  </div>
@@ -92,10 +93,11 @@ Collaboration diagram for eros_nodes::DataLoggerProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1DataLoggerProcess__coll__graph.png" border="0" usemap="#eros__nodes_1_1DataLoggerProcess_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1DataLoggerProcess_coll__map" id="eros__nodes_1_1DataLoggerProcess_coll__map">
-<area shape="rect" title="The process utility for the DataLogger." alt="" coords="55,185,284,212"/>
-<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,109,257,136"/>
-<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,5,165,47"/>
-<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,13,305,39"/>
+<area shape="rect" title="The process utility for the DataLogger." alt="" coords="55,289,284,316"/>
+<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,213,257,240"/>
+<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,109,165,151"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,5,165,47"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,117,305,143"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -203,6 +205,24 @@ std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bott
 <tr class="memitem:a5f19d762dd0e7dc7118d8275955fc6cc inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a5f19d762dd0e7dc7118d8275955fc6cc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</td></tr>
 <tr class="separator:a5f19d762dd0e7dc7118d8275955fc6cc inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab28ec0dc6d5fed7e86ca2f7b81cb9025"><td class="memItemLeft" align="right" valign="top"><a id="ab28ec0dc6d5fed7e86ca2f7b81cb9025"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>log_directory</b></td></tr>
+<tr class="separator:ab28ec0dc6d5fed7e86ca2f7b81cb9025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd2f5fe36861eb0d8d1873db2a7b456"><td class="memItemLeft" align="right" valign="top"><a id="a1fd2f5fe36861eb0d8d1873db2a7b456"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>log_directory_available</b></td></tr>
+<tr class="separator:a1fd2f5fe36861eb0d8d1873db2a7b456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f1ea4eb20f8aa0e444f6ce591f76600"><td class="memItemLeft" align="right" valign="top"><a id="a5f1ea4eb20f8aa0e444f6ce591f76600"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>logfile_duration</b></td></tr>
+<tr class="separator:a5f1ea4eb20f8aa0e444f6ce591f76600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3735fe6fe932e4ad91893e23d6a18109"><td class="memItemLeft" align="right" valign="top"><a id="a3735fe6fe932e4ad91893e23d6a18109"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>logging_enabled</b></td></tr>
+<tr class="separator:a3735fe6fe932e4ad91893e23d6a18109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd52ccc1dd8cab50aa1d80546032a059"><td class="memItemLeft" align="right" valign="top"><a id="abd52ccc1dd8cab50aa1d80546032a059"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>snapshot_mode</b></td></tr>
+<tr class="separator:abd52ccc1dd8cab50aa1d80546032a059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

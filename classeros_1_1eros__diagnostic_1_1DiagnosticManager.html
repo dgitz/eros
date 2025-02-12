@@ -67,11 +67,22 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros_1_1eros__diagnostic_1_1DiagnosticManager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros::eros_diagnostic::DiagnosticManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Collaboration diagram for eros::eros_diagnostic::DiagnosticManager:</div>
+<div class="dyncontent">
+<div class="center"><img src="classeros_1_1eros__diagnostic_1_1DiagnosticManager__coll__graph.png" border="0" usemap="#eros_1_1eros__diagnostic_1_1DiagnosticManager_coll__map" alt="Collaboration graph"/></div>
+<map name="eros_1_1eros__diagnostic_1_1DiagnosticManager_coll__map" id="eros_1_1eros__diagnostic_1_1DiagnosticManager_coll__map">
+<area shape="rect" title=" " alt="" coords="5,109,165,151"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,5,165,47"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -102,6 +113,24 @@ std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic
 <tr class="memitem:a848d887f7b86994c6de37bdeda9844ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager_a848d887f7b86994c6de37bdeda9844ef.html#a848d887f7b86994c6de37bdeda9844ef">update_diagnostic</a> (std::string device_name, <a class="el" href="namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9">DiagnosticType</a> diagnostic_type, <a class="el" href="group__eros_gadf15b7ed977a35b7cc7ab70708ad4822.html#gadf15b7ed977a35b7cc7ab70708ad4822">Level::Type</a> level, <a class="el" href="namespaceeros_1_1eros__diagnostic_abe8edabb73fbbde65c46a2f392cf4cef.html#abe8edabb73fbbde65c46a2f392cf4cef">Message</a> message, std::string description)</td></tr>
 <tr class="memdesc:a848d887f7b86994c6de37bdeda9844ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic.">Diagnostic</a>.  <a href="classeros_1_1eros__diagnostic_1_1DiagnosticManager_a848d887f7b86994c6de37bdeda9844ef.html#a848d887f7b86994c6de37bdeda9844ef">More...</a><br /></td></tr>
 <tr class="separator:a848d887f7b86994c6de37bdeda9844ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a41743f2b66d35b851de247724e50eda4"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager_a41743f2b66d35b851de247724e50eda4.html#a41743f2b66d35b851de247724e50eda4">pretty</a> (std::string pre, std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">Diagnostic</a> &gt; diagnostics)</td></tr>
+<tr class="memdesc:a41743f2b66d35b851de247724e50eda4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate human readable string of a vector of diagnostics.  <a href="classeros_1_1eros__diagnostic_1_1DiagnosticManager_a41743f2b66d35b851de247724e50eda4.html#a41743f2b66d35b851de247724e50eda4">More...</a><br /></td></tr>
+<tr class="separator:a41743f2b66d35b851de247724e50eda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7d7b748f9bdf7c2f4fef61e001f88e4c"><td class="memItemLeft" align="right" valign="top"><a id="a7d7b748f9bdf7c2f4fef61e001f88e4c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>initialized</b> {false}</td></tr>
+<tr class="separator:a7d7b748f9bdf7c2f4fef61e001f88e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654daad12a01f2fa9fb3bc3ecafbcc23"><td class="memItemLeft" align="right" valign="top"><a id="a654daad12a01f2fa9fb3bc3ecafbcc23"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>root_diagnostic</b></td></tr>
+<tr class="separator:a654daad12a01f2fa9fb3bc3ecafbcc23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef1f5c1a8b5eb551db37f29a7dff10af"><td class="memItemLeft" align="right" valign="top"><a id="aef1f5c1a8b5eb551db37f29a7dff10af"></a>
+std::vector&lt; <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostics</b></td></tr>
+<tr class="separator:aef1f5c1a8b5eb551db37f29a7dff10af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/eros_diagnostic/DiagnosticManager.h</li>

@@ -68,6 +68,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1SnapshotNode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::SnapshotNode Class Reference</div>  </div>
@@ -92,13 +94,18 @@ Collaboration diagram for eros_nodes::SnapshotNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SnapshotNode__coll__graph.png" border="0" usemap="#eros__nodes_1_1SnapshotNode_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1SnapshotNode_coll__map" id="eros__nodes_1_1SnapshotNode_coll__map">
-<area shape="rect" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis." alt="" coords="548,122,747,149"/>
-<area shape="rect" href="classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="375,122,499,149"/>
-<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="27,5,187,47"/>
-<area shape="rect" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="23,71,191,98"/>
-<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="55,122,158,149"/>
-<area shape="rect" href="structeros_1_1Firmware.html" title="Firmware Information: Holds information about Firmware Version." alt="" coords="47,173,166,199"/>
-<area shape="rect" href="structeros_1_1BaseNode_1_1DeviceInfo.html" title="DeviceInfo Logic Container and logic for DeviceInfo processing." alt="" coords="5,223,208,250"/>
+<area shape="rect" title="The SnapshotNode is used to collect diagnostic information about a device for future analysis." alt="" coords="1397,220,1596,247"/>
+<area shape="rect" href="classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="752,181,876,208"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,314,165,355"/>
+<area shape="rect" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="336,43,504,69"/>
+<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="340,383,500,425"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="34,95,137,121"/>
+<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="727,259,901,285"/>
+<area shape="rect" href="structeros_1_1ResourceInfo.html" title="ResourceInfo Information: Holds information about a Node&#39;s Resource Usage." alt="" coords="14,5,157,32"/>
+<area shape="rect" href="structeros_1_1Firmware.html" title="Firmware Information: Holds information about Firmware Version." alt="" coords="361,207,479,233"/>
+<area shape="rect" href="structeros_1_1BaseNode_1_1DeviceInfo.html" title="DeviceInfo Logic Container and logic for DeviceInfo processing." alt="" coords="319,156,521,183"/>
+<area shape="rect" href="classeros__nodes_1_1SnapshotProcess.html" title="The process utility for the Snapshot Node." alt="" coords="1080,259,1295,285"/>
+<area shape="rect" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html" title="SnapshotConfig container, used for holding Snapshot Configuration parameters." alt="" coords="707,310,921,351"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -325,6 +332,39 @@ const <a class="el" href="group__eros_ga3adcdfcbabd1045cf45829dff620b1ab.html#ga
 const <a class="el" href="group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#ga34a61840c9cd6ede13ed123e6facf338">eros::System::Component</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1SnapshotNode.html#a632bbfffa98f28153e9cb29aeec784f7">DIAGNOSTIC_COMPONENT</a> = <a class="el" href="group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a1ba95aa8d735cc8ab55d670b1c957bec">eros::System::Component::DIAGNOSTIC</a></td></tr>
 <tr class="memdesc:a632bbfffa98f28153e9cb29aeec784f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">What Component this Node falls under. <br /></td></tr>
 <tr class="separator:a632bbfffa98f28153e9cb29aeec784f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ad734801eda689c70bdbe6c0c4ded995c"><td class="memItemLeft" align="right" valign="top"><a id="ad734801eda689c70bdbe6c0c4ded995c"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_launchparameters</b> ()</td></tr>
+<tr class="separator:ad734801eda689c70bdbe6c0c4ded995c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7c1cba7a0717613e576ce8dba792444f"><td class="memItemLeft" align="right" valign="top"><a id="a7c1cba7a0717613e576ce8dba792444f"></a>
+boost::shared_ptr&lt; ros::NodeHandle &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>test_sp_handle</b></td></tr>
+<tr class="separator:a7c1cba7a0717613e576ce8dba792444f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f90512000bc02cc59b5fe35c3dc0c5c"><td class="memItemLeft" align="right" valign="top"><a id="a5f90512000bc02cc59b5fe35c3dc0c5c"></a>
+<a class="el" href="classeros__nodes_1_1SnapshotProcess.html">SnapshotProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>process</b></td></tr>
+<tr class="separator:a5f90512000bc02cc59b5fe35c3dc0c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b4450b50b0d6204322c65965af13d82"><td class="memItemLeft" align="right" valign="top"><a id="a6b4450b50b0d6204322c65965af13d82"></a>
+actionlib::SimpleActionServer&lt; eros::system_commandAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>system_command_action_server</b></td></tr>
+<tr class="separator:a6b4450b50b0d6204322c65965af13d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af292ad4fef1d52d82ee7335af1282b90"><td class="memItemLeft" align="right" valign="top"><a id="af292ad4fef1d52d82ee7335af1282b90"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>filetransfer_srv</b></td></tr>
+<tr class="separator:af292ad4fef1d52d82ee7335af1282b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6327ab479e0ddfa1daab2e3453baf5a8"><td class="memItemLeft" align="right" valign="top"><a id="a6327ab479e0ddfa1daab2e3453baf5a8"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>commandstate_pub</b></td></tr>
+<tr class="separator:a6327ab479e0ddfa1daab2e3453baf5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bcc2e8d054eb1b47719e8dcf2c29444"><td class="memItemLeft" align="right" valign="top"><a id="a5bcc2e8d054eb1b47719e8dcf2c29444"></a>
+ros::Subscriber&#160;</td><td class="memItemRight" valign="bottom"><b>commandstate_sub</b></td></tr>
+<tr class="separator:a5bcc2e8d054eb1b47719e8dcf2c29444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab5b87f411c347ff82aa524b10b7a70"><td class="memItemLeft" align="right" valign="top"><a id="adab5b87f411c347ff82aa524b10b7a70"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>command_pub</b></td></tr>
+<tr class="separator:adab5b87f411c347ff82aa524b10b7a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18c06249ec8eda48a1a8b4002702f0e"><td class="memItemLeft" align="right" valign="top"><a id="ab18c06249ec8eda48a1a8b4002702f0e"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>bagfile_snapshottrigger_pub</b></td></tr>
+<tr class="separator:ab18c06249ec8eda48a1a8b4002702f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

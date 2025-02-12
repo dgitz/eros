@@ -67,6 +67,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1SystemMonitor_1_1NodeWindow-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::SystemMonitor::NodeWindow Class Reference</div>  </div>
@@ -175,6 +177,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_window_records_ar
 <tr class="memitem:aae65d5b0098576c2bd97397dee81b24b inherit pub_methods_classeros__nodes_1_1SystemMonitor_1_1BaseWindow"><td class="memItemLeft" align="right" valign="top"><a id="aae65d5b0098576c2bd97397dee81b24b"></a>
 int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_selected_record</b> ()</td></tr>
 <tr class="separator:aae65d5b0098576c2bd97397dee81b24b inherit pub_methods_classeros__nodes_1_1SystemMonitor_1_1BaseWindow"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac3674d0d8c3c7add2a0c08510524f951"><td class="memItemLeft" align="right" valign="top"><a id="ac3674d0d8c3c7add2a0c08510524f951"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>insertNode</b> (NodeType node_type, std::string device, std::string base_node_name, std::string node_name)</td></tr>
+<tr class="separator:ac3674d0d8c3c7add2a0c08510524f951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdbfbc2049fee7fbdd4345c66c3eecd"><td class="memItemLeft" align="right" valign="top"><a id="a2cdbfbc2049fee7fbdd4345c66c3eecd"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>get_nodeheader</b> ()</td></tr>
+<tr class="separator:a2cdbfbc2049fee7fbdd4345c66c3eecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b48d71aeb00eb0bfda8a93460c98dee"><td class="memItemLeft" align="right" valign="top"><a id="a9b48d71aeb00eb0bfda8a93460c98dee"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>update_window</b> ()</td></tr>
+<tr class="separator:a9b48d71aeb00eb0bfda8a93460c98dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae954e4c7d559bce1d6bd0050d1010ad0"><td class="memItemLeft" align="right" valign="top"><a id="ae954e4c7d559bce1d6bd0050d1010ad0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>previous_key</b> {-1}</td></tr>
+<tr class="separator:ae954e4c7d559bce1d6bd0050d1010ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ed1c096bd67f0c96ab9a5697ac8354a"><td class="memItemLeft" align="right" valign="top"><a id="a1ed1c096bd67f0c96ab9a5697ac8354a"></a>
+std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>node_list_mutex</b></td></tr>
+<tr class="separator:a1ed1c096bd67f0c96ab9a5697ac8354a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e179c6d405566b95ebba1d3201f743e"><td class="memItemLeft" align="right" valign="top"><a id="a8e179c6d405566b95ebba1d3201f743e"></a>
+std::map&lt; NodeFieldColumn, <a class="el" href="structeros__nodes_1_1SystemMonitor_1_1Field.html">Field</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>node_window_fields</b></td></tr>
+<tr class="separator:a8e179c6d405566b95ebba1d3201f743e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b6a8a74c0c9373104bfe04171279e8"><td class="memItemLeft" align="right" valign="top"><a id="ad8b6a8a74c0c9373104bfe04171279e8"></a>
+std::vector&lt; <a class="el" href="structeros__nodes_1_1SystemMonitor_1_1NodeData.html">NodeData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>node_list</b></td></tr>
+<tr class="separator:ad8b6a8a74c0c9373104bfe04171279e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

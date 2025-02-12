@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['sensors_589',['SENSORS',['../namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9a3f9d1c3652820e6c9716f628c6f0b5af',1,'eros::eros_diagnostic']]],
-  ['setloglevel_590',['SETLOGLEVEL',['../group__eros_ga7498dad170d5c5801621fa3a7f55aad4.html#gga7498dad170d5c5801621fa3a7f55aad4ad4d93a6cf19baa920a80d9c3b2ebc116',1,'eros::Command']]],
-  ['simple_591',['SIMPLE',['../classeros__nodes_1_1ArmDisarmMonitor_a0781bd46282348cc27a3f3c0a04c6c57.html#a0781bd46282348cc27a3f3c0a04c6c57ae5564829e2f85f6a6873a9d5c4f26d09',1,'eros_nodes::ArmDisarmMonitor']]],
+  ['sensors_590',['SENSORS',['../namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9a3f9d1c3652820e6c9716f628c6f0b5af',1,'eros::eros_diagnostic']]],
+  ['setloglevel_591',['SETLOGLEVEL',['../group__eros_ga7498dad170d5c5801621fa3a7f55aad4.html#gga7498dad170d5c5801621fa3a7f55aad4ad4d93a6cf19baa920a80d9c3b2ebc116',1,'eros::Command']]],
   ['simrover_592',['SIMROVER',['../group__eros_ga7c607a1224b68fbf12782f6969aa5c4b.html#gga7c607a1224b68fbf12782f6969aa5c4ba0ae1c4cb0b9be64eeffdadce7643a3e8',1,'eros::System']]],
   ['slave_593',['SLAVE',['../classeros__nodes_1_1SnapshotProcess_a87c7ff829a75ae218c271cbe554fb257.html#a87c7ff829a75ae218c271cbe554fb257a79e19bc2ac33d6c81272024561992f37',1,'eros_nodes::SnapshotProcess']]],
   ['software_594',['SOFTWARE',['../namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9aaea541d7f9574587656dc5125116e548',1,'eros::eros_diagnostic']]],

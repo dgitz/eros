@@ -68,6 +68,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1DiagnosticNodeProcess-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::DiagnosticNodeProcess Class Reference</div>  </div>
@@ -93,10 +95,11 @@ Collaboration diagram for eros_nodes::DiagnosticNodeProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1DiagnosticNodeProcess__coll__graph.png" border="0" usemap="#eros__nodes_1_1DiagnosticNodeProcess_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1DiagnosticNodeProcess_coll__map" id="eros__nodes_1_1DiagnosticNodeProcess_coll__map">
-<area shape="rect" title="The process utility for the DiagnosticNode." alt="" coords="66,185,273,227"/>
-<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,109,257,136"/>
-<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,5,165,47"/>
-<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,13,305,39"/>
+<area shape="rect" title="The process utility for the DiagnosticNode." alt="" coords="66,289,273,331"/>
+<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,213,257,240"/>
+<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,109,165,151"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,5,165,47"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,117,305,143"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -201,6 +204,21 @@ std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bott
 <tr class="memitem:a5f19d762dd0e7dc7118d8275955fc6cc inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memItemLeft" align="right" valign="top"><a id="a5f19d762dd0e7dc7118d8275955fc6cc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>base_cleanup</b> ()</td></tr>
 <tr class="separator:a5f19d762dd0e7dc7118d8275955fc6cc inherit pub_methods_classeros_1_1BaseNodeProcess"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aae8027da5f85f4f5d8a1cc3c5270990c"><td class="memItemLeft" align="right" valign="top"><a id="aae8027da5f85f4f5d8a1cc3c5270990c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>build_key</b> (<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>)</td></tr>
+<tr class="separator:aae8027da5f85f4f5d8a1cc3c5270990c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a23b4c088174f654a4718ad222e8e7c29"><td class="memItemLeft" align="right" valign="top"><a id="a23b4c088174f654a4718ad222e8e7c29"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_topics_already_monitoring</b></td></tr>
+<tr class="separator:a23b4c088174f654a4718ad222e8e7c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ec681fc6ea36d0b4179ecbaec02064"><td class="memItemLeft" align="right" valign="top"><a id="ab1ec681fc6ea36d0b4179ecbaec02064"></a>
+std::map&lt; <a class="el" href="namespaceeros_1_1eros__diagnostic_aba02f79005989fd1d3c81c660b2b2fa9.html#aba02f79005989fd1d3c81c660b2b2fa9">eros::eros_diagnostic::DiagnosticType</a>, <a class="el" href="structeros__nodes_1_1DiagnosticNodeProcess_1_1DiagnosticTypeAggregate.html">DiagnosticTypeAggregate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_aggregator</b></td></tr>
+<tr class="separator:ab1ec681fc6ea36d0b4179ecbaec02064"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

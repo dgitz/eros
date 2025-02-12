@@ -69,6 +69,8 @@ $(function() {
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1SystemMonitor_1_1DiagnosticsWindow-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::SystemMonitor::DiagnosticsWindow Class Reference</div>  </div>
@@ -188,6 +190,27 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a79e7d6e1703128b2db45d654aa731537"><td class="memItemLeft" align="right" valign="top"><a id="a79e7d6e1703128b2db45d654aa731537"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>REQUEST_DATA_RATE</b> = 1.0</td></tr>
 <tr class="separator:a79e7d6e1703128b2db45d654aa731537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ae7125ca54b19a19ed21bb22243e99267"><td class="memItemLeft" align="right" valign="top"><a id="ae7125ca54b19a19ed21bb22243e99267"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>update_window</b> ()</td></tr>
+<tr class="separator:ae7125ca54b19a19ed21bb22243e99267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad8b32a1e58b02b1a42bf05f54d2305e4"><td class="memItemLeft" align="right" valign="top"><a id="ad8b32a1e58b02b1a42bf05f54d2305e4"></a>
+DiagnosticMode&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_mode</b> {DiagnosticMode::SYSTEM}</td></tr>
+<tr class="separator:ad8b32a1e58b02b1a42bf05f54d2305e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0cd61545bac0aae5831baeff5ced079"><td class="memItemLeft" align="right" valign="top"><a id="ab0cd61545bac0aae5831baeff5ced079"></a>
+std::map&lt; uint8_t, <a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_data</b></td></tr>
+<tr class="separator:ab0cd61545bac0aae5831baeff5ced079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52f702510c6c98d18e3444b9faecd0bf"><td class="memItemLeft" align="right" valign="top"><a id="a52f702510c6c98d18e3444b9faecd0bf"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>request_data_timer</b> {0.0}</td></tr>
+<tr class="separator:a52f702510c6c98d18e3444b9faecd0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69d762e66c845c98edddc78d3450ac4c"><td class="memItemLeft" align="right" valign="top"><a id="a69d762e66c845c98edddc78d3450ac4c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>node_to_monitor</b> {&quot;&quot;}</td></tr>
+<tr class="separator:a69d762e66c845c98edddc78d3450ac4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

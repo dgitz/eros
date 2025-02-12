@@ -68,6 +68,13 @@ $(function() {
 <div class="textblock"><h1>Overview</h1>
 <h1>Features</h1>
 <h1>Configuration</h1>
+<p>In the node launch file, add the following entries to have the Safety Node monitor topics to inform the arm/disarm system.</p><ul>
+<li>Note that the number indicated in the _000 field should increment on each new topic, regardless of what type it is.</li>
+<li>At least 1 Topic is required for the system to go from DISARMED_CANNOTARM to DISARM.</li>
+</ul>
+<h3>Topics of type eros/ready_to_arm</h3>
+<p><code>&lt;param name="ReadyToArm_Topic_000" value="&lt;TOPIC NAME&gt;"/&gt;</code>\ <code>&lt;param name="ReadyToArm_Topic_001" value="&lt;TOPIC NAME&gt;/&gt;</code>\ ...</p>
+<p>Note that only 1 instance of the Safety Node should be run per system.</p>
 <h1>Software Design</h1>
 <p><img src="../../../doc/output/Legend.png" alt="" class="inline"/></p>
 <h2>Class Diagrams</h2>
@@ -76,6 +83,10 @@ $(function() {
 <p><img src="output/SafetyNodeSequenceDiagram.png" alt="" class="inline"/></p>
 <h1>Troubleshooting</h1>
 <h1>Future Features</h1>
+<h2>Features</h2>
+<ul>
+<li>Deciding the Armed State of the System </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

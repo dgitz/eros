@@ -71,6 +71,8 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1SnapshotProcess-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::SnapshotProcess Class Reference</div>  </div>
@@ -96,10 +98,12 @@ Collaboration diagram for eros_nodes::SnapshotProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SnapshotProcess__coll__graph.png" border="0" usemap="#eros__nodes_1_1SnapshotProcess_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1SnapshotProcess_coll__map" id="eros__nodes_1_1SnapshotProcess_coll__map">
-<area shape="rect" title="The process utility for the Snapshot Node." alt="" coords="62,185,277,212"/>
-<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,109,257,136"/>
-<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,5,165,47"/>
-<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,13,305,39"/>
+<area shape="rect" title="The process utility for the Snapshot Node." alt="" coords="171,317,386,344"/>
+<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="82,221,257,247"/>
+<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="5,109,165,151"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,5,165,47"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="202,117,305,143"/>
+<area shape="rect" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html" title="SnapshotConfig container, used for holding Snapshot Configuration parameters." alt="" coords="281,213,495,255"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -277,6 +281,42 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac38187a911085cc52d9fb80b56a12e47"><td class="memItemLeft" align="right" valign="top"><a id="ac38187a911085cc52d9fb80b56a12e47"></a>
 const double&#160;</td><td class="memItemRight" valign="bottom"><b>HOLDCOMPLETE_TIME</b> = 5.0</td></tr>
 <tr class="separator:ac38187a911085cc52d9fb80b56a12e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac54388d60a55b7aab34eb73505c2b2f1"><td class="memItemLeft" align="right" valign="top"><a id="ac54388d60a55b7aab34eb73505c2b2f1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>count_files_indirectory</b> (std::string directory, std::string filter=&quot;&quot;)</td></tr>
+<tr class="separator:ac54388d60a55b7aab34eb73505c2b2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0c45a025af10b4e9d71f3f652a1a9586"><td class="memItemLeft" align="right" valign="top"><a id="a0c45a025af10b4e9d71f3f652a1a9586"></a>
+ros::NodeHandle *&#160;</td><td class="memItemRight" valign="bottom"><b>nodeHandle</b></td></tr>
+<tr class="separator:a0c45a025af10b4e9d71f3f652a1a9586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3df554e1cb49cdc071314ab17c2095"><td class="memItemLeft" align="right" valign="top"><a id="aff3df554e1cb49cdc071314ab17c2095"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>robot_namespace</b></td></tr>
+<tr class="separator:aff3df554e1cb49cdc071314ab17c2095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27797d23c611bde6cb5dc3ea350fce4e"><td class="memItemLeft" align="right" valign="top"><a id="a27797d23c611bde6cb5dc3ea350fce4e"></a>
+<a class="el" href="classeros__nodes_1_1SnapshotProcess_a87c7ff829a75ae218c271cbe554fb257.html#a87c7ff829a75ae218c271cbe554fb257">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="separator:a27797d23c611bde6cb5dc3ea350fce4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65bb6f51db438019adf6c33a4c525821"><td class="memItemLeft" align="right" valign="top"><a id="a65bb6f51db438019adf6c33a4c525821"></a>
+<a class="el" href="group__eros_ga4de8a31a2dd45d3d9559e76109a23e1f.html#ga4de8a31a2dd45d3d9559e76109a23e1f">eros::Architecture::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>architecture</b></td></tr>
+<tr class="separator:a65bb6f51db438019adf6c33a4c525821"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf6c11d850f08f5afd1602575c31f0d"><td class="memItemLeft" align="right" valign="top"><a id="abbf6c11d850f08f5afd1602575c31f0d"></a>
+<a class="el" href="group__eros_ga209031320c478c9ba5fd268b317e4508.html#ga209031320c478c9ba5fd268b317e4508">eros::SnapshotState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>devicesnapshot_state</b></td></tr>
+<tr class="separator:abbf6c11d850f08f5afd1602575c31f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23a69f7e1574e5392acf8470a29aca2e"><td class="memItemLeft" align="right" valign="top"><a id="a23a69f7e1574e5392acf8470a29aca2e"></a>
+<a class="el" href="group__eros_ga209031320c478c9ba5fd268b317e4508.html#ga209031320c478c9ba5fd268b317e4508">eros::SnapshotState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>systemsnapshot_state</b></td></tr>
+<tr class="separator:a23a69f7e1574e5392acf8470a29aca2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2aa430cad4010a84a86401b2ad49e36"><td class="memItemLeft" align="right" valign="top"><a id="ac2aa430cad4010a84a86401b2ad49e36"></a>
+<a class="el" href="structeros__nodes_1_1SnapshotProcess_1_1SnapshotConfig.html">SnapshotConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>snapshot_config</b></td></tr>
+<tr class="separator:ac2aa430cad4010a84a86401b2ad49e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c2b4096d02b45fef5e038e2d8f2a053"><td class="memItemLeft" align="right" valign="top"><a id="a2c2b4096d02b45fef5e038e2d8f2a053"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>snapshot_progress_percent</b></td></tr>
+<tr class="separator:a2c2b4096d02b45fef5e038e2d8f2a053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5d0711fb0ef36fcfdc4ea0ae6d39979"><td class="memItemLeft" align="right" valign="top"><a id="ac5d0711fb0ef36fcfdc4ea0ae6d39979"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>holdcomplete_timer</b></td></tr>
+<tr class="separator:ac5d0711fb0ef36fcfdc4ea0ae6d39979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

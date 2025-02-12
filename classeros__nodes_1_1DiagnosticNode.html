@@ -68,6 +68,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classeros__nodes_1_1DiagnosticNode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eros_nodes::DiagnosticNode Class Reference</div>  </div>
@@ -92,13 +94,17 @@ Collaboration diagram for eros_nodes::DiagnosticNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1DiagnosticNode__coll__graph.png" border="0" usemap="#eros__nodes_1_1DiagnosticNode_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1DiagnosticNode_coll__map" id="eros__nodes_1_1DiagnosticNode_coll__map">
-<area shape="rect" title="A node used to collect diagnostic information." alt="" coords="548,122,755,149"/>
-<area shape="rect" href="classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="375,122,499,149"/>
-<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="27,5,187,47"/>
-<area shape="rect" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="23,71,191,98"/>
-<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="55,122,158,149"/>
-<area shape="rect" href="structeros_1_1Firmware.html" title="Firmware Information: Holds information about Firmware Version." alt="" coords="47,173,166,199"/>
-<area shape="rect" href="structeros_1_1BaseNode_1_1DeviceInfo.html" title="DeviceInfo Logic Container and logic for DeviceInfo processing." alt="" coords="5,223,208,250"/>
+<area shape="rect" title="A node used to collect diagnostic information." alt="" coords="1240,198,1447,225"/>
+<area shape="rect" href="classeros_1_1BaseNode.html" title="This is a BaseNode class. All Nodes should be a derived class from this Base Class." alt="" coords="732,225,856,251"/>
+<area shape="rect" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html" title="Contains the definition for the Diagnostic." alt="" coords="5,65,165,107"/>
+<area shape="rect" href="classeros_1_1ResourceMonitor.html" title="ResourceMonitor class ResourceMonitor class used to collect resource information on a process or devi..." alt="" coords="336,197,504,223"/>
+<area shape="rect" href="classeros_1_1eros__diagnostic_1_1DiagnosticManager.html" title=" " alt="" coords="340,5,500,47"/>
+<area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="34,215,137,242"/>
+<area shape="rect" href="classeros_1_1BaseNodeProcess.html" title="This is a BaseNodeProcess class. All NodeProcess should be a derived class from this BaseNodeProcess ..." alt="" coords="707,135,881,162"/>
+<area shape="rect" href="structeros_1_1ResourceInfo.html" title="ResourceInfo Information: Holds information about a Node&#39;s Resource Usage." alt="" coords="14,385,157,411"/>
+<area shape="rect" href="structeros_1_1Firmware.html" title="Firmware Information: Holds information about Firmware Version." alt="" coords="361,298,479,325"/>
+<area shape="rect" href="structeros_1_1BaseNode_1_1DeviceInfo.html" title="DeviceInfo Logic Container and logic for DeviceInfo processing." alt="" coords="319,247,521,274"/>
+<area shape="rect" href="classeros__nodes_1_1DiagnosticNodeProcess.html" title="The process utility for the DiagnosticNode." alt="" coords="931,140,1137,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -325,6 +331,27 @@ const <a class="el" href="group__eros_ga3adcdfcbabd1045cf45829dff620b1ab.html#ga
 const <a class="el" href="group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#ga34a61840c9cd6ede13ed123e6facf338">eros::System::Component</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeros__nodes_1_1DiagnosticNode.html#a3592321b9377d8c6c4d900b9f9783ec5">DIAGNOSTIC_COMPONENT</a> = <a class="el" href="group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a1ba95aa8d735cc8ab55d670b1c957bec">eros::System::Component::DIAGNOSTIC</a></td></tr>
 <tr class="memdesc:a3592321b9377d8c6c4d900b9f9783ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">What Component this Node falls under. <br /></td></tr>
 <tr class="separator:a3592321b9377d8c6c4d900b9f9783ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:accfca8d591ef4f0122dd927c4074e1ad"><td class="memItemLeft" align="right" valign="top"><a id="accfca8d591ef4f0122dd927c4074e1ad"></a>
+<a class="el" href="structeros_1_1eros__diagnostic_1_1Diagnostic.html">eros::eros_diagnostic::Diagnostic</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read_launchparameters</b> ()</td></tr>
+<tr class="separator:accfca8d591ef4f0122dd927c4074e1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a418ed41f9f8f7a0dc328e76a6e4b6a80"><td class="memItemLeft" align="right" valign="top"><a id="a418ed41f9f8f7a0dc328e76a6e4b6a80"></a>
+<a class="el" href="classeros__nodes_1_1DiagnosticNodeProcess.html">DiagnosticNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>process</b></td></tr>
+<tr class="separator:a418ed41f9f8f7a0dc328e76a6e4b6a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12233276e7f1207a4e6542dcf8cc8c84"><td class="memItemLeft" align="right" valign="top"><a id="a12233276e7f1207a4e6542dcf8cc8c84"></a>
+actionlib::SimpleActionServer&lt; eros::system_commandAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>system_command_action_server</b></td></tr>
+<tr class="separator:a12233276e7f1207a4e6542dcf8cc8c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a138df89ce584369f5258ce35585e65"><td class="memItemLeft" align="right" valign="top"><a id="a8a138df89ce584369f5258ce35585e65"></a>
+std::vector&lt; ros::Subscriber &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagnostic_subs</b></td></tr>
+<tr class="separator:a8a138df89ce584369f5258ce35585e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ddc2711309de904f1aefac7035f2253"><td class="memItemLeft" align="right" valign="top"><a id="a1ddc2711309de904f1aefac7035f2253"></a>
+ros::ServiceServer&#160;</td><td class="memItemRight" valign="bottom"><b>system_diagnostics_srv</b></td></tr>
+<tr class="separator:a1ddc2711309de904f1aefac7035f2253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
