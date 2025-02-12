@@ -1,0 +1,3 @@
+catkin_add_gtest(test_baseWindow test_base_window.cpp)
+target_link_libraries(test_baseWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} baseWindow)
+add_dependencies(test_baseWindow eros_generate_messages_cpp)
