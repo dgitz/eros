@@ -32,7 +32,7 @@ class SafetyNode : public eros::BaseNode
     const uint16_t BUILD_NUMBER = 2;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 10-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 12-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -76,6 +76,7 @@ class SafetyNode : public eros::BaseNode
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+    void ReadyToArmCallback(const eros::ready_to_arm::ConstPtr& msg, const std::string& topic_name);
 
     // Destructors
     void cleanup();
@@ -88,6 +89,7 @@ class SafetyNode : public eros::BaseNode
     SafetyNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
     ros::Publisher armedstate_pub;
+    std::vector<ros::Subscriber> ready_to_arm_subs;
 };
 }  // namespace eros_nodes
 #endif  // SafetyNode_H

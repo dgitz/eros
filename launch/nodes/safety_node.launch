@@ -14,8 +14,5 @@
         <param name="ReadyToArm_Topic_000"   value="/diagnostic_node/ready_to_arm"/>
         <param name="ReadyToArm_Topic_001"   value="/$(arg device_hostname)/snapshot_node/ready_to_arm"/>
         <param name="ReadyToArm_Topic_002"   value="/$(arg device_hostname)/master_node/ready_to_arm"/>
-        <param name="ReadyToArm_Type_000"   value="DEFAULT"/>
-        <param name="ReadyToArm_Type_001"   value="DEFAULT"/>
-        <param name="ReadyToArm_Type_002"   value="DEFAULT"/>
 </node>
 </launch>

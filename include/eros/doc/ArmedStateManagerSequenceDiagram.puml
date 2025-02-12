@@ -1,0 +1,26 @@
+@startuml
+title Armed State Manager Sequence Diagram
+actor User as user
+
+participant ArmedStateManager as manager
+
+alt initialize
+    activate manager
+    user -> manager: ArmedStateManager(string device_name,string node_name,System::MainSystem system, System::SubSystem subsystem,string[] ready_to_arm_list)
+    
+end
+
+alt messages 
+    user -> manager++: new_command(command cmd)
+    manager --> user--: diagnostic
+    user -> manager++: new_ready_to_arm_msg(string signal, bool data)
+    manager --> user--: status
+
+end
+alt update
+    user -> manager++: update(double t_ros_time)
+    hnote across: Run Armed State FSM
+    manager --> user--: diagnostic
+end
+
+@enduml
