@@ -18,6 +18,10 @@ TEST(BasicTest, TestOperation_HappyFlow) {
                           ready_to_arm_list);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
     auto current_diag = SUT.get_current_diagnostic();
+    logger->log_diagnostic(current_diag);
+    auto cannot_arm_reasons = SUT.get_cannotarm_reasons();
+    ASSERT_TRUE(cannot_arm_reasons.size() > 0);
+    for (auto cannot_arm_reason : cannot_arm_reasons) { logger->log_warn(cannot_arm_reason); }
 
     double current_time = 0.0;
     double delta_time = 0.1;
@@ -32,10 +36,13 @@ TEST(BasicTest, TestOperation_HappyFlow) {
     current_diag = SUT.update(current_time += delta_time);
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED);
+    ASSERT_TRUE(SUT.get_cannotarm_reasons().size() == 0);
 
     eros::command cmd;
     cmd.Command = (uint16_t)Command::Type::ARM;
-    EXPECT_TRUE(SUT.new_command(cmd));
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::INFO);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::ARMING);
     double time_to_run = current_time + ArmedStateManager::ARMING_TIME_SEC + delta_time;
@@ -49,7 +56,9 @@ TEST(BasicTest, TestOperation_HappyFlow) {
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::ARMED);
 
     cmd.Command = (uint16_t)Command::Type::DISARM;
-    EXPECT_TRUE(SUT.new_command(cmd));
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::INFO);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMING);
 
@@ -92,6 +101,12 @@ TEST(BasicTest, TestOperation_MultipleArmSignals) {
 
     EXPECT_EQ(current_diag.level, Level::Type::INFO);
     EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
+    current_diag = SUT.update(current_time += delta_time);
+    EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
+
+    auto cannot_arm_reasons = SUT.get_cannotarm_reasons();
+    ASSERT_TRUE(cannot_arm_reasons.size() > 0);
+    for (auto cannot_arm_reason : cannot_arm_reasons) { logger->log_warn(cannot_arm_reason); }
 
     EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal1", true));
     current_diag = SUT.update(current_time += delta_time);
@@ -100,25 +115,40 @@ TEST(BasicTest, TestOperation_MultipleArmSignals) {
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
 
-    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal2", true));
+    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal2", false));
     current_diag = SUT.update(current_time += delta_time);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
 
-    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal3", true));
+    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal3", false));
     current_diag = SUT.update(current_time += delta_time);
-    EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED);
+    EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
+
+    eros::command cmd;
+    cmd.Command = (uint16_t)Command::Type::ARM;
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::WARN);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::DROPPING_PACKETS);
+    logger->log_diagnostic(current_diag);
 
     EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal1", false));
     current_diag = SUT.update(current_time += delta_time);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
+    cannot_arm_reasons = SUT.get_cannotarm_reasons();
+    ASSERT_TRUE(cannot_arm_reasons.size() == 3);
+    for (auto cannot_arm_reason : cannot_arm_reasons) { logger->log_warn(cannot_arm_reason); }
 
     EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal1", true));
+    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal2", true));
+    EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal3", true));
     current_diag = SUT.update(current_time += delta_time);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED);
 
     current_diag =
         SUT.update(current_time += ArmedStateManager::ARMED_SIGNAL_TIMEOUT_SEC + delta_time);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
+    cannot_arm_reasons = SUT.get_cannotarm_reasons();
+    ASSERT_TRUE(cannot_arm_reasons.size() > 0);
+    for (auto cannot_arm_reason : cannot_arm_reasons) { logger->log_warn(cannot_arm_reason); }
 
     EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal1", true));
     current_diag = SUT.update(current_time += delta_time);
@@ -132,12 +162,14 @@ TEST(BasicTest, TestOperation_MultipleArmSignals) {
 
     EXPECT_TRUE(SUT.new_ready_to_arm_msg("Signal3", true));
     current_diag = SUT.update(current_time += delta_time);
+    ASSERT_TRUE(SUT.get_cannotarm_reasons().size() == 0);
     logger->log_info(SUT.pretty());
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED);
 
-    eros::command cmd;
     cmd.Command = (uint16_t)Command::Type::ARM;
-    EXPECT_TRUE(SUT.new_command(cmd));
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::INFO);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::ARMING);
 
@@ -214,7 +246,9 @@ TEST(BasicTest, TestOperation_Reset) {
 
     eros::command cmd;
     cmd.Command = (uint16_t)Command::Type::ARM;
-    EXPECT_TRUE(SUT.new_command(cmd));
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::INFO);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
 
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::ARMING);
 
@@ -279,7 +313,9 @@ TEST(BasicTest, TestOperation_FailureCases) {
     // Send a Command that should never be supported
     eros::command cmd;
     cmd.Command = (uint16_t)Command::Type::END_OF_LIST;
-    EXPECT_FALSE(SUT.new_command(cmd));
+    current_diag = SUT.new_command(cmd);
+    EXPECT_EQ(current_diag.level, Level::Type::WARN);
+    EXPECT_EQ(current_diag.message, eros_diagnostic::Message::DROPPING_PACKETS);
 
     delete logger;
 }
@@ -305,6 +341,9 @@ TEST(BasicTest, TestOperation_NoSignals) {
     EXPECT_EQ(current_diag.level, Level::Type::INFO);
     EXPECT_EQ(current_diag.message, eros_diagnostic::Message::NOERROR);
     EXPECT_EQ(SUT.get_armed_state().state, ArmDisarm::Type::DISARMED_CANNOTARM);
+    auto cannot_arm_reasons = SUT.get_cannotarm_reasons();
+    ASSERT_TRUE(cannot_arm_reasons.size() > 0);
+    for (auto cannot_arm_reason : cannot_arm_reasons) { logger->log_warn(cannot_arm_reason); }
 
     delete logger;
 }

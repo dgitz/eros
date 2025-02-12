@@ -99,16 +99,53 @@ eros_diagnostic::Diagnostic SafetyNode::finish_initialization() {
                                       Level::Type::INFO,
                                       eros_diagnostic::Message::NOERROR,
                                       "Running");
-    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
-                                      Level::Type::INFO,
-                                      eros_diagnostic::Message::NOERROR,
-                                      "All Configuration Files Loaded.");
+
     diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
                                       Level::Type::INFO,
                                       eros_diagnostic::Message::NOERROR,
                                       "No Comm Events Yet...");
+    // Read Ready To Arm Topics
+    std::vector<std::string> topics;
 
+    uint16_t counter = 0;
+    bool valid_arm_topic = true;
+    while (valid_arm_topic == true) {
+        char param_topic[512];
+        sprintf(param_topic, "%s/ReadyToArm_Topic_%03d", node_name.c_str(), counter);
+        std::string topic;
+        if (n->getParam(param_topic, topic) == true) {
+            logger->log_notice("Subscribing to ReadyToArm Topic: " + topic);
+            topics.push_back(topic);
+        }
+        else {
+            valid_arm_topic = false;
+            break;
+        }
+        counter++;
+    }
+    diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                      Level::Type::INFO,
+                                      eros_diagnostic::Message::NOERROR,
+                                      "All Configuration Files Loaded.");
+    if (process->set_ready_to_arm_signals(topics) == false) {
+        diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
+                                          Level::Type::ERROR,
+                                          eros_diagnostic::Message::INITIALIZING_ERROR,
+                                          "Unable to initialize all Ready To Arm Signals.");
+    }
+    for (auto topic : topics) {
+        ros::Subscriber sub = n->subscribe<eros::ready_to_arm>(
+            topic, 10, boost::bind(&SafetyNode::ReadyToArmCallback, this, _1, topic));
+        ready_to_arm_subs.push_back(sub);
+    }
     return diag;
+}
+void SafetyNode::ReadyToArmCallback(const eros::ready_to_arm::ConstPtr &msg,
+                                    const std::string &topic_name) {
+    if (process->new_message_readytoarm(
+            topic_name, eros_utility::ConvertUtility::convert_fromptr(msg)) == false) {
+        logger->log_warn("Unable to process Topic: " + topic_name);
+    }
 }
 bool SafetyNode::run_loop1() {
     return true;
@@ -150,6 +187,11 @@ bool SafetyNode::run_1hz() {
             logger->log_diagnostic(diag);
         }
     }
+    if (process->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM) {
+        auto cannotarm_reasons = process->get_cannotarm_reasons();
+        for (auto reason : cannotarm_reasons) { logger->log_warn(reason); }
+    }
+    logger->log_debug(process->pretty());
     return true;
 }
 bool SafetyNode::run_10hz() {
@@ -159,7 +201,7 @@ bool SafetyNode::run_10hz() {
         logger->log_diagnostic(diag);
     }
 
-    // armedstate_pub.publish(eros_utility::ConvertUtility::convert(process->get_armed_state()));
+    armedstate_pub.publish(process->get_armed_state());
     return true;
 }
 void SafetyNode::thread_loop() {

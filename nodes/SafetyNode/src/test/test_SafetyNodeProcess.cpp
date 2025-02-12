@@ -33,62 +33,60 @@ TEST(BasicTest, TestOperation) {
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 Logger::LoggerStatus::LOG_WRITTEN);
+    std::vector<std::string> topics;
+    topics.push_back("Topic1");
+    topics.push_back("Topic2");
+    topics.push_back("Topic3");
+    EXPECT_TRUE(tester->set_ready_to_arm_signals(topics));
 
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED_CANNOTARM);
-
-    {  // Create Ready To Arm Monitors
-        std::vector<std::string> topics;
-        topics.push_back("Topic1");
-        topics.push_back("Topic2");
-        topics.push_back("Topic3");
-
-        std::vector<ArmDisarmMonitor::Type> types;
-        types.push_back(ArmDisarmMonitor::Type::DEFAULT);
-        types.push_back(ArmDisarmMonitor::Type::SIMPLE);
-        types.push_back(ArmDisarmMonitor::Type::DEFAULT);
-        EXPECT_TRUE(tester->initialize_readytoarm_monitors(topics, types) == true);
-    }
-
-    EXPECT_TRUE(tester->get_armed_state().state ==
-                ArmDisarm::Type::DISARMED_CANNOTARM);  // No Armed Monitors Updated Yet.
-    tester->update(0.1, 0.1);
+    EXPECT_TRUE(tester->get_armed_state().armed_state ==
+                (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM);
+    double current_time = 0.0;
+    double delta_time = 0.1;
+    tester->update(delta_time, current_time += delta_time);
     {
         std::vector<std::string> cannotarm_reasons = tester->get_cannotarm_reasons();
         EXPECT_TRUE(cannotarm_reasons.size() > 0);
         for (auto reason : cannotarm_reasons) { logger->log_warn(reason); }
     }
-
+    // Change another topic to not ready to arm
     {
-        EXPECT_FALSE(tester->new_message_readytoarm("Topic1", true));
         eros::ready_to_arm arm;
         arm.ready_to_arm = true;
         EXPECT_TRUE(tester->new_message_readytoarm("Topic1", arm));
     }
-    { EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true)); }
+    {
+        eros::ready_to_arm arm;
+        arm.ready_to_arm = true;
+        EXPECT_TRUE(tester->new_message_readytoarm("Topic2", arm));
+    }
     {
         eros::ready_to_arm arm;
         arm.ready_to_arm = true;
         EXPECT_TRUE(tester->new_message_readytoarm("Topic3", arm));
     }
-    tester->update(0.1, 0.2);
+    tester->update(delta_time, current_time += delta_time);
+    EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 0);
+
+    EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMED);
     {
-        std::vector<std::string> cannotarm_reasons = tester->get_cannotarm_reasons();
-        EXPECT_TRUE(cannotarm_reasons.size() == 0);
+        eros::ready_to_arm arm;
+        arm.ready_to_arm = false;
+        EXPECT_TRUE(tester->new_message_readytoarm("Topic2", arm));
     }
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED);
-    EXPECT_TRUE(tester->new_message_readytoarm("Topic2", false));
-    tester->update(0.1, 0.3);
+    tester->update(delta_time, current_time += delta_time);
     {
         std::vector<std::string> cannotarm_reasons = tester->get_cannotarm_reasons();
         EXPECT_TRUE(cannotarm_reasons.size() == 1);
         for (auto reason : cannotarm_reasons) { logger->log_warn(reason); }
     }
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED_CANNOTARM);
+    EXPECT_TRUE(tester->get_armed_state().armed_state ==
+                (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM);
 
     EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true));
-    tester->update(0.1, 0.4);
+    tester->update(delta_time, current_time += delta_time);
     EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 0);
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED);
+    EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMED);
     {  // Arm System
         eros::command command;
         command.Command = (uint16_t)Command::Type::ARM;
@@ -98,14 +96,23 @@ TEST(BasicTest, TestOperation) {
             logger->log_diagnostic(diag);
             EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         }
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::ARMING);
-        tester->update(0.1, 0.5);
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::ARMED);
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::ARMING);
+        double time_to_run = current_time + ArmedStateManager::ARMING_TIME_SEC + delta_time;
+        while (current_time < time_to_run) {
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic1", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic3", true));
+            tester->update(delta_time, current_time);
+            current_time += delta_time;
+        }
+        logger->log_info(tester->pretty());
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::ARMED);
     }
     // Change a Topic to Not Read to Arm
     EXPECT_TRUE(tester->new_message_readytoarm("Topic2", false));
-    tester->update(0.1, 0.6);
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED_CANNOTARM);
+    tester->update(delta_time, current_time += delta_time);
+    EXPECT_TRUE(tester->get_armed_state().armed_state ==
+                (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM);
     EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 1);
     // Change another topic to not ready to arm
     {
@@ -113,8 +120,9 @@ TEST(BasicTest, TestOperation) {
         arm.ready_to_arm = false;
         EXPECT_TRUE(tester->new_message_readytoarm("Topic3", arm));
     }
-    tester->update(0.1, 0.7);
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED_CANNOTARM);
+    tester->update(delta_time, current_time += delta_time);
+    EXPECT_TRUE(tester->get_armed_state().armed_state ==
+                (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM);
     EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 2);
     // Change both back to ready to arm, state should be disarmed
     {
@@ -122,12 +130,13 @@ TEST(BasicTest, TestOperation) {
         arm.ready_to_arm = true;
         EXPECT_TRUE(tester->new_message_readytoarm("Topic3", arm));
     }
-    tester->update(0.1, 0.8);
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED_CANNOTARM);
+    tester->update(delta_time, current_time += delta_time);
+    EXPECT_TRUE(tester->get_armed_state().armed_state ==
+                (uint8_t)ArmDisarm::Type::DISARMED_CANNOTARM);
     EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 1);
     EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true));
-    tester->update(0.1, 0.9);
-    EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED);
+    tester->update(delta_time, current_time += delta_time);
+    EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMED);
     EXPECT_TRUE(tester->get_cannotarm_reasons().size() == 0);
     // Arm Again
     {  // Arm System
@@ -139,13 +148,21 @@ TEST(BasicTest, TestOperation) {
             logger->log_diagnostic(diag);
             EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         }
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::ARMING);
-        tester->update(0.1, 1.0);
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::ARMED);
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::ARMING);
+        double time_to_run = current_time + ArmedStateManager::ARMING_TIME_SEC + delta_time;
+        while (current_time < time_to_run) {
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic1", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic3", true));
+            tester->update(delta_time, current_time);
+            current_time += delta_time;
+        }
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::ARMED);
     }
     // Disarm Normally via command
 
     {  // Disarm System
+        logger->log_info(tester->pretty());
         eros::command command;
         command.Command = (uint16_t)Command::Type::DISARM;
         std::vector<eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(command);
@@ -154,9 +171,16 @@ TEST(BasicTest, TestOperation) {
             logger->log_diagnostic(diag);
             EXPECT_TRUE(diag.level <= Level::Type::NOTICE);
         }
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMING);
-        tester->update(0.1, 1.1);
-        EXPECT_TRUE(tester->get_armed_state().state == ArmDisarm::Type::DISARMED);
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMING);
+        double time_to_run = current_time + ArmedStateManager::DISARMING_TIME_SEC + delta_time;
+        while (current_time < time_to_run) {
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic1", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic2", true));
+            EXPECT_TRUE(tester->new_message_readytoarm("Topic3", true));
+            tester->update(delta_time, current_time);
+            current_time += delta_time;
+        }
+        EXPECT_TRUE(tester->get_armed_state().armed_state == (uint8_t)ArmDisarm::Type::DISARMED);
     }
 
     delete logger;

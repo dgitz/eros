@@ -18,17 +18,19 @@ class ArmedStateManager
             : signal_name(signal_name),
               status(false),
               last_update_time(-1.0),
-              signal_timeout(false) {
+              signal_timeout(false),
+              update_count(0) {
         }
         std::string signal_name;
         bool status;
         double last_update_time;
         bool signal_timeout;
+        uint64_t update_count;
     };
     ArmedStateManager(std::string device_name,
                       std::string node_name,
                       System::MainSystem system,
-                      System::SubSystem sub_system,
+                      System::SubSystem subsystem,
                       std::vector<std::string> ready_to_arm_list);
     ~ArmedStateManager();
     // Constants
@@ -57,13 +59,14 @@ class ArmedStateManager
         msg.armed_state = (uint8_t)current_armed_state.state;
         return msg;
     }
+    std::vector<std::string> get_cannotarm_reasons();
 
     // Utility Functions
 
     // Support Functions
 
     // Message Functions
-    bool new_command(eros::command cmd);
+    eros_diagnostic::Diagnostic new_command(eros::command cmd);
     bool new_ready_to_arm_msg(std::string signal, bool data);
 
     // Destructors
