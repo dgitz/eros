@@ -3,6 +3,7 @@ title Safety Node Class Diagram
 package eros {
     class BaseNode
     class BaseNodeProcess
+    class ArmedStateManager
     namespace eros_diagnostic {
         class Diagnostic
     }
@@ -31,8 +32,9 @@ namespace eros_nodes {
 
         -- Message Functions --
         +bool changenodestate_service(eros::srv_change_nodestate::Request& req, eros::srv_change_nodestate::Response& res)
-        void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
-        void command_Callback(const eros::command::ConstPtr& t_msg)
+        +void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
+        +void command_Callback(const eros::command::ConstPtr& t_msg)
+        +void ReadyToArmCallback(const eros::ready_to_arm::ConstPtr& msg, const std::string& topic_name)
 
         -- Support Functions --
 
@@ -48,15 +50,14 @@ namespace eros_nodes {
         -- Initialization Functions --
         +eros::eros_diagnostic::Diagnostic finish_initialization()
         +reset()
-        +bool initialize_readytoarm_monitors(string[] topics,ArmDisarmMonitor::Type[] types)
-        +bool init_ros(boost::shared_ptr<ros::NodeHandle> _n)
+        +bool set_ready_to_arm_signals(string[] signals)
 
         -- Update Functions --
         +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
 
         -- Attribute Functions --
+        +armed_state get_armed_state()
         +string[] get_cannotarm_reasons()
-        +ArmDisarm::State get_armed_state()
 
         -- Data Functions --
 
@@ -64,8 +65,6 @@ namespace eros_nodes {
         +eros_diagnostic::Diagnostic[] new_commandmsg(eros::command msg)
         +bool new_message_readytoarm(string name, ready_to_arm ready_to_arm)
         +new_message_readytoarm(string name, bool v)
-        +eadyToArmDefaultCallback(const eros::ready_to_arm::ConstPtr &msg,const string topic_name)
-        +ReadyToArmSimpleCallback(const std_msgs::Bool::ConstPtr &msg,const string topic_name)
 
         -- Support Functions --
         eros_diagnostic::Diagnostic[] check_programvariables()
@@ -73,6 +72,7 @@ namespace eros_nodes {
         -- Convert Functions --
         
         -- Printing Functions --
+        +string pretty()
 
         -- Destructors --
         +cleanup()
@@ -81,6 +81,7 @@ namespace eros_nodes {
     BaseNode <|-- SafetyNode
     BaseNodeProcess <|-- SafetyNodeProcess
     SafetyNode -> SafetyNodeProcess 
+    SafetyNodeProcess --> ArmedStateManager
 }
 
 @enduml

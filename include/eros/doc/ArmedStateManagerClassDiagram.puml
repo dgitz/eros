@@ -17,7 +17,7 @@ package eros {
         enum DiagnosticType
         enum Message
     }
-class ArmedStateManager #Orange {
+class ArmedStateManager #LimeGreen {
     -- Initialization Functions --
     +bool reset()
         
@@ -25,14 +25,16 @@ class ArmedStateManager #Orange {
     +eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
     
     -- Attribute Functions --
+    +eros_diagnostic::Diagnostic get_current_diagnostic()
     +ArmDisarm::State get_armed_state() 
     +armed_state get_armed_state_msg()
+    +string[] get_cannotarm_reasons()
     
     -- Data Functions --
     
     -- Message Functions --
     +bool new_command(command cmd)
-    +bool new_all_ready_to_arm(bool data)
+    +bool new_ready_to_arm_msg(string signal, bool data)
     
     -- Support Functions --
     

@@ -36,7 +36,7 @@ class ArmedStateManager
     // Constants
     static constexpr double ARMING_TIME_SEC = 5.0;
     static constexpr double DISARMING_TIME_SEC = 5.0;
-    static constexpr double ARMED_SIGNAL_TIMEOUT_SEC = 1.0;
+    static constexpr double ARMED_SIGNAL_TIMEOUT_SEC = 2.5;
     // Enums
 
     // Structs

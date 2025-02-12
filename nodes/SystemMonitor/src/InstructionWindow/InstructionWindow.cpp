@@ -16,7 +16,7 @@ bool InstructionWindow::update(double dt, double t_ros_time) {
 bool InstructionWindow::update_window() {
     std::vector<std::string> instruction_string;
     // Instructions that are always supported
-    instruction_string.push_back("Space: Reset Screen");
+    instruction_string.push_back("Esc: Reset Screen.  SPACE: Arm/Disarm.");
     instruction_string.push_back("S: Start System Snapshot. (C: Clear Snapshots)");
     if (diagnostic_mode == DiagnosticMode::SYSTEM) {
         instruction_string.push_back("D: View NODE Diagnostics");
@@ -54,13 +54,38 @@ bool InstructionWindow::update_window() {
 KeyEventContainer InstructionWindow::new_keyevent(int key) {
     KeyEventContainer output;
     // Keys that are always supported.
-    if ((key == KEY_space)) {
+    if ((key == KEY_esc)) {
         output.command.type = WindowCommandType::VIEW_DIAGNOSTICS_SYSTEM;
         std::string str = "Requesting Diagnostics for System";
         MessageText message(str, eros::Level::Type::INFO);
         logger->log_debug(str);
         output.message = message;
         return output;
+    }
+    else if (key == KEY_space) {
+        if (current_armed_state.state == eros::ArmDisarm::Type::DISARMED) {
+            MessageText message("Arming Robot...", eros::Level::Type::INFO);
+            eros::command command;
+            command.stamp = ros::Time::now();
+            command.Command = (uint16_t)eros::Command::Type::ARM;
+            command_pub.publish(command);
+            output.message = message;
+            return output;
+        }
+        else if (current_armed_state.state == eros::ArmDisarm::Type::ARMED) {
+            MessageText message("Disarming Robot...", eros::Level::Type::INFO);
+            eros::command command;
+            command.stamp = ros::Time::now();
+            command.Command = (uint16_t)eros::Command::Type::DISARM;
+            command_pub.publish(command);
+            output.message = message;
+            return output;
+        }
+        else {
+            MessageText message("Arm/Disarm Command Not Allowed.", eros::Level::Type::WARN);
+            output.message = message;
+            return output;
+        }
     }
     else if ((key == KEY_s) || (key == KEY_S)) {
         MessageText message("Requesting System Snapshot...", eros::Level::Type::INFO);

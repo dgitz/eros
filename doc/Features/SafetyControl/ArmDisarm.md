@@ -6,7 +6,7 @@ The purpose of the Arm/Disarm logic is to disable defined actuators/set default 
 
 ## Configuration
 - To enable the Default Ready To Arm ROS Publisher, enable the Publisher before the call to "preinitialize_basenode" via: `enable_ready_to_arm_pub(true);`
-- The Safety Node needs to be configured and running.  See: [Safety Node](../SafetyControl/SafetyNode.md)
+- The Safety Node needs to be configured and running.  See: [Safety Node](../../../nodes/SafetyNode/doc/SafetyNode.md).
 
 ## Operation
 The following state machine describes the operation of the Arm/Disarm Logic:
@@ -37,6 +37,7 @@ The following state machine describes the operation of the Arm/Disarm Logic:
     click Armed href "https://mermaid.js.org/syntax/flowchart.html" " "
 
 ```
+
 
 
 1. Boot: System is: "DISARMED/CANNOTARM"

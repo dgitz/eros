@@ -22,7 +22,7 @@ bool HeaderWindow::update_window() {
         str.insert(str.end(), 40 - str.size(), ' ');
         switch (armed_state_.state) {
             case eros::ArmDisarm::Type::ARMED:
-                color = Color::GREEN_COLOR;
+                color = Color::BLUE_COLOR;
                 break;  // Should be BLUE for RC Mode, GREEN for Manual, PURPLE for Auto
             case eros::ArmDisarm::Type::DISARMED_CANNOTARM: color = Color::RED_COLOR; break;
             case eros::ArmDisarm::Type::DISARMED: color = Color::GREEN_COLOR; break;

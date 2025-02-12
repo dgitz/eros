@@ -32,7 +32,7 @@ class SafetyNode : public eros::BaseNode
     const uint16_t BUILD_NUMBER = 2;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 10-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 12-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
