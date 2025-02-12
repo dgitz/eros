@@ -15,11 +15,15 @@ class ArmedStateManager
    public:
     struct ReadyToArmSignal {
         ReadyToArmSignal(std::string signal_name)
-            : signal_name(signal_name), status(false), last_update_time(-1.0) {
+            : signal_name(signal_name),
+              status(false),
+              last_update_time(-1.0),
+              signal_timeout(false) {
         }
         std::string signal_name;
         bool status;
         double last_update_time;
+        bool signal_timeout;
     };
     ArmedStateManager(std::string device_name,
                       std::string node_name,
@@ -30,6 +34,7 @@ class ArmedStateManager
     // Constants
     static constexpr double ARMING_TIME_SEC = 5.0;
     static constexpr double DISARMING_TIME_SEC = 5.0;
+    static constexpr double ARMED_SIGNAL_TIMEOUT_SEC = 1.0;
     // Enums
 
     // Structs

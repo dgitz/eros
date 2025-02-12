@@ -36,8 +36,17 @@ eros_diagnostic::Diagnostic ArmedStateManager::update(double t_ros_time) {
         return diag;
     }
     double prev_time = current_time;
+
+    double delta_time = t_ros_time - prev_time;
+    if (delta_time < 0) {
+        diag.message = eros_diagnostic::Message::DIAGNOSTIC_FAILED;
+        diag.level = Level::Type::ERROR;
+        diag.description = "Went back in time!";
+        current_diagnostic = diag;
+        return diag;
+    }
     current_time = t_ros_time;
-    double delta_time = current_time - prev_time;
+
     // Update all Timers for Ready to Arm Signals
     std::map<std::string, ReadyToArmSignal>::iterator it = ready_to_arm_signals.begin();
     bool all_ready_to_arm = true;
@@ -46,9 +55,20 @@ eros_diagnostic::Diagnostic ArmedStateManager::update(double t_ros_time) {
         if (it->second.status == false) {
             all_ready_to_arm = false;
         }
+        double delta_time = current_time - it->second.last_update_time;
+        if (delta_time > ArmedStateManager::ARMED_SIGNAL_TIMEOUT_SEC) {
+            any_ready_to_arm_timeout = true;
+            it->second.signal_timeout = true;
+        }
+        else {
+            it->second.signal_timeout = false;
+        }
     }
     // State Machine for Armed State
-    if (current_armed_state.state == ArmDisarm::Type::DISARMED_CANNOTARM) {
+    if ((all_ready_to_arm == false) || (any_ready_to_arm_timeout == true)) {
+        current_armed_state.state = ArmDisarm::Type::DISARMED_CANNOTARM;
+    }
+    else if (current_armed_state.state == ArmDisarm::Type::DISARMED_CANNOTARM) {
         if ((all_ready_to_arm == true) && (any_ready_to_arm_timeout == false)) {
             current_armed_state.state = ArmDisarm::Type::DISARMED;
         }
@@ -65,8 +85,11 @@ eros_diagnostic::Diagnostic ArmedStateManager::update(double t_ros_time) {
             current_armed_state.state = ArmDisarm::Type::DISARMED;
         }
     }
+    diag.message = eros_diagnostic::Message::NOERROR;
+    diag.level = Level::Type::INFO;
+    diag.description = "Updated";
     return diag;
-}
+}  // namespace eros
 bool ArmedStateManager::new_command(eros::command cmd) {
     // Safe Armed State Change based on Commands
     if (current_armed_state.state == ArmDisarm::Type::DISARMED) {
@@ -98,7 +121,16 @@ bool ArmedStateManager::new_ready_to_arm_msg(std::string signal, bool data) {
     return false;
 }
 bool ArmedStateManager::reset() {
-    return false;
+    arming_timer = 0.0;
+    disarming_timer = 0.0;
+    std::map<std::string, ReadyToArmSignal>::iterator it = ready_to_arm_signals.begin();
+    for (; it != ready_to_arm_signals.end(); it++) {
+        it->second.status = false;
+        it->second.last_update_time = -1.0;
+        it->second.signal_timeout = true;
+    }
+    current_armed_state.state = ArmDisarm::Type::DISARMED_CANNOTARM;
+    return true;
 }
 std::string ArmedStateManager::pretty() {
     std::string str = "-----Armed State Manager-----\n";
@@ -109,7 +141,8 @@ std::string ArmedStateManager::pretty() {
     for (; it != ready_to_arm_signals.end(); it++) {
         str += "\t\tSignal: " + it->second.signal_name +
                " Status: " + std::to_string(it->second.status) +
-               " Last Update: " + std::to_string(it->second.last_update_time) + " (sec)\n ";
+               " Last Update: " + std::to_string(it->second.last_update_time) + " (sec)" +
+               " Timeout? " + std::to_string(it->second.signal_timeout) + "\n";
     }
     str += "\tArmed State: " + ArmDisarm::ArmDisarmString(current_armed_state.state) + "\n";
     str += "\tDiag: " + eros_diagnostic::DiagnosticUtility::pretty("", current_diagnostic, false) +

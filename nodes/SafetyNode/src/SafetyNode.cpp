@@ -107,57 +107,7 @@ eros_diagnostic::Diagnostic SafetyNode::finish_initialization() {
                                       Level::Type::INFO,
                                       eros_diagnostic::Message::NOERROR,
                                       "No Comm Events Yet...");
-    // Read Ready To Arm Topics
-    std::vector<std::string> topics;
-    std::vector<ArmDisarmMonitor::Type> types;
 
-    uint16_t counter = 0;
-    bool valid_arm_topic = true;
-    while (valid_arm_topic == true) {
-        char param_topic[512];
-        sprintf(param_topic, "%s/ReadyToArm_Topic_%03d", node_name.c_str(), counter);
-        std::string topic;
-        if (n->getParam(param_topic, topic) == true) {
-            logger->log_notice("Subscribing to ReadyToArm Topic: " + topic);
-            topics.push_back(topic);
-        }
-        else {
-            valid_arm_topic = false;
-            break;
-        }
-        char param_type[512];
-        sprintf(param_type, "%s/ReadyToArm_Type_%03d", node_name.c_str(), counter);
-        std::string type_str;
-        if (n->getParam(param_type, type_str) == true) {
-            ArmDisarmMonitor::Type type = ArmDisarmMonitor::TypeEnum(type_str);
-            if (type != ArmDisarmMonitor::Type::UNKNOWN) {
-                types.push_back(type);
-            }
-        }
-        else {
-            valid_arm_topic = false;
-            break;
-        }
-
-        counter++;
-    }
-
-    if (process->initialize_readytoarm_monitors(topics, types) == false) {
-        diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::DATA_STORAGE,
-                                          Level::Type::ERROR,
-                                          eros_diagnostic::Message::INITIALIZING_ERROR,
-                                          "Unable to initialize Ready To Arm Monitors.");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
-    if (process->init_ros(n) == false) {
-        diag = process->update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
-                                          Level::Type::ERROR,
-                                          eros_diagnostic::Message::INITIALIZING_ERROR,
-                                          "Unable to initialize ROS in Safety Node Process");
-        logger->log_diagnostic(diag);
-        return diag;
-    }
     return diag;
 }
 bool SafetyNode::run_loop1() {
@@ -176,10 +126,6 @@ bool SafetyNode::run_01hz() {
     return true;
 }
 bool SafetyNode::run_01hz_noisy() {
-    {
-        std::vector<std::string> cannotarm_reasons = process->get_cannotarm_reasons();
-        for (auto reason : cannotarm_reasons) { logger->log_warn(reason); }
-    }
     eros_diagnostic::Diagnostic diag = diagnostic;
     logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
     return true;
@@ -213,7 +159,7 @@ bool SafetyNode::run_10hz() {
         logger->log_diagnostic(diag);
     }
 
-    armedstate_pub.publish(eros_utility::ConvertUtility::convert(process->get_armed_state()));
+    // armedstate_pub.publish(eros_utility::ConvertUtility::convert(process->get_armed_state()));
     return true;
 }
 void SafetyNode::thread_loop() {
