@@ -23,7 +23,7 @@ package eros {
     Diagnostic +- eros_diagnostic::Diagnostic
     class BaseNodeProcess #Cyan {
         -- Initialization Functions --
-        +void initialize(std::string t_base_node_name,std::string t_node_name,std::string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
+        +initialize(std::string t_base_node_name,std::string t_node_name,std::string t_hostname,System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component,Logger* _logger)
         +{abstract} eros_diagnostic::Diagnostic finish_initialization()
         +bool enable_diagnostics(std::vector<eros_diagnostic::DiagnosticType> diagnostic_types)
         +{abstract} void reset()
@@ -66,7 +66,7 @@ package eros {
 
         -- Destructors --
         +{abstract} void cleanup()
-        +void base_cleanup()
+        +base_cleanup()
   
         #Logger* logger
         #std::string hostname
@@ -82,21 +82,21 @@ package eros {
     }
     class BaseNode #Cyan {
         -- Initialization Functions --
-        +void set_no_launch_enabled(bool v)
-        +void disable_armedstate_sub()
-        +void disable_modestate_sub()
-        +void enable_ready_to_arm_pub(bool v)
-        +void set_basenodename(std::string t_base_node_name)
-        +void initialize_diagnostic(System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component)
-        +void initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,std::string t_description)
-        +void set_nodename(std::string t_node_name)
+        +set_no_launch_enabled(bool v)
+        +disable_armedstate_sub()
+        +disable_modestate_sub()
+        +enable_ready_to_arm_pub(bool v)
+        +set_basenodename(std::string t_base_node_name)
+        +initialize_diagnostic(System::MainSystem t_system,System::SubSystem t_subsystem,System::Component t_component)
+        +initialize_firmware(uint16_t t_major_version,uint16_t t_minor_version,uint16_t t_build_number,std::string t_description)
+        +set_nodename(std::string t_node_name)
         +{abstract} bool start()
         +eros_diagnostic::Diagnostic preinitialize_basenode()
-        +void set_loop1_rate(double t_rate)
-        +void set_loop2_rate(double t_rate)
-        +void set_loop3_rate(double t_rate)
-        +void set_ros_rate(double t_rate)
-        +void base_reset()
+        +set_loop1_rate(double t_rate)
+        +set_loop2_rate(double t_rate)
+        +set_loop3_rate(double t_rate)
+        +set_ros_rate(double t_rate)
+        +base_reset()
 
         -- Update Functions --
         +bool update(Node::State node_state)
@@ -114,7 +114,7 @@ package eros {
         +std::string get_basenodename()
         +std::string get_nodename()
         +std::string read_robotnamespace()
-        +void set_robotnamespace(std::string _robot_namespace)
+        +set_robotnamespace(std::string _robot_namespace)
         +std::string get_robotnamespace()
         +std::string get_verbositylevel()
         +boost::shared_ptr<ros::NodeHandle> get_nodehandle()
@@ -127,15 +127,15 @@ package eros {
         +{abstract} bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                                             eros::srv_change_nodestate::Response &res)
         +{abstract} void command_Callback(const eros::command::ConstPtr &t_msg)
-        +void update_ready_to_arm(eros::ready_to_arm v)
-        +void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg)
+        +update_ready_to_arm(eros::ready_to_arm v)
+        +new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg)
         +bool firmware_service(eros::srv_firmware::Request &req, eros::srv_firmware::Response &res)
         +bool loggerlevel_service(eros::srv_logger_level::Request &req,
                                 eros::srv_logger_level::Response &res)
         +bool diagnostics_service(eros::srv_get_diagnostics::Request &req,
                                 eros::srv_get_diagnostics::Response &res)
-        +void armedstate_Callback(const eros::armed_state::ConstPtr &t_msg)
-        +void modestate_Callback(const eros::mode_state::ConstPtr &t_msg)
+        +armedstate_Callback(const eros::armed_state::ConstPtr &t_msg)
+        +modestate_Callback(const eros::mode_state::ConstPtr &t_msg)
 
         -- Support Functions --
         +{static} std::string validate_robotnamespace(std::string str)

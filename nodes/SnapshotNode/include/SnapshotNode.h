@@ -17,6 +17,10 @@ namespace eros_nodes {
 class SnapshotNode : public eros::BaseNode
 {
    public:
+    SnapshotNode();
+    ~SnapshotNode();
+
+    // Constants
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "snapshot_node";
 
@@ -40,13 +44,16 @@ class SnapshotNode : public eros::BaseNode
 
     /*! \brief What Component this Node falls under.*/
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::DIAGNOSTIC;
-    SnapshotNode();
-    ~SnapshotNode();
-    SnapshotProcess* get_process() {
-        return process;
-    }
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     bool start();
     eros::eros_diagnostic::Diagnostic finish_initialization();
+
+    // Update Functions
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -57,8 +64,17 @@ class SnapshotNode : public eros::BaseNode
     bool run_10hz();
     void thread_loop();
     void thread_snapshotcreation();
-    void cleanup();
 
+    // Attribute Functions
+    SnapshotProcess* get_process() {
+        return process;
+    }
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
@@ -66,6 +82,11 @@ class SnapshotNode : public eros::BaseNode
     void commandState_Callback(const eros::command_state::ConstPtr& t_msg);
     bool filetransfer_service(eros::srv_filetransfer::Request& req,
                               eros::srv_filetransfer::Response& res);
+
+    // Destructors
+    void cleanup();
+
+    // Printing Functions
 
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;

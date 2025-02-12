@@ -7,6 +7,8 @@ For more information on the System Monitor, see [System Monitor Feature](../../.
 ![](output/SystemMonitorDefinitionClassDiagram.png)
 ![](output/SystemMonitorUtilityClassDiagram.png)
 ![](output/SystemMonitorWindowClassDiagram.png)
+![](output/SystemMonitorNodeClassDiagram.png)
 
 ## Sequence Diagrams
 ![](output/SystemMonitorWindowSequenceDiagram.png)
+![](output/SystemMonitorNodeSequenceDiagram.png)

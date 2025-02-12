@@ -51,7 +51,8 @@ class InstructionWindow : public BaseWindow
         return false;
     }
     bool update(double dt, double t_ros_time) override;
-    bool new_msg(eros::ArmDisarm::State /* armed_state */) override {  // Not Used
+    bool new_msg(eros::ArmDisarm::State armed_state) override {
+        current_armed_state = armed_state;
         return true;
     }
     bool new_msg(eros::heartbeat /* heartbeat_msg */) override {  // Not Used
@@ -79,5 +80,6 @@ class InstructionWindow : public BaseWindow
     InstructionMode instruction_mode{InstructionMode::NODE};
     DiagnosticMode diagnostic_mode{DiagnosticMode::SYSTEM};
     ros::Publisher command_pub;
+    eros::ArmDisarm::State current_armed_state;
 };
 }  // namespace eros_nodes::SystemMonitor
