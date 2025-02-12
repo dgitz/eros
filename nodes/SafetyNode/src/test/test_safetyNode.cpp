@@ -12,6 +12,7 @@ void heartbeat_Callback(const eros::heartbeat& msg) {
     heartbeat_count++;
 }
 void armedsate_Callback(const eros::armed_state& msg) {
+    (void)msg;
     armedstate_count++;
 }
 TEST(SafetyNode, TestSafetyNode) {
