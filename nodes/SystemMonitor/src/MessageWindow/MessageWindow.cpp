@@ -1,5 +1,9 @@
 #include "MessageWindow/MessageWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double MessageWindow::START_X_PERC;
+constexpr double MessageWindow::START_Y_PERC;
+constexpr double MessageWindow::WIDTH_PERC;
+constexpr double MessageWindow::HEIGHT_PERC;
 MessageWindow::~MessageWindow() {
 }
 

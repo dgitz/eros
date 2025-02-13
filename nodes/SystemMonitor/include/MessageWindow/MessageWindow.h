@@ -4,8 +4,16 @@
 namespace eros_nodes::SystemMonitor {
 class MessageWindow : public BaseWindow
 {
-    const double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
+    static constexpr double TIME_TO_SHOW_MESSAGES = 10.0f;  // Seconds
    public:
+    static constexpr double START_X_PERC =
+        0.0; /*!< What percentage of the screen to put top left corner (X) of window. */
+    static constexpr double START_Y_PERC =
+        75.0; /*!< What percentage of the screen to put top left corner (Y) of window. */
+    static constexpr double WIDTH_PERC =
+        100.0; /*!< What percentage of the screen (Width) to draw the window. */
+    static constexpr double HEIGHT_PERC =
+        7.0; /*!< What percentage of the screen (Height) to draw the window. */
     MessageWindow(ros::NodeHandle* nodeHandle,
                   std::string robot_namespace,
                   eros::Logger* logger,
@@ -23,6 +31,7 @@ class MessageWindow : public BaseWindow
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
+        // NO Supported Keys
         ScreenCoordinatePixel coord_pix = SystemMonitorUtility::convertCoordinate(
             get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = SystemMonitorUtility::create_newwin(coord_pix.height_pix,
