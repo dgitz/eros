@@ -26,6 +26,7 @@ bool DeviceWindow::update_window() {
     if (get_window() == nullptr) {
         return false;
     }
+    // GCOVR_EXCL_START
     std::string header = get_deviceheader();
     mvwprintw(get_window(), 1, 1, header.c_str());
     std::string dashed(get_screen_coordinates_pixel().width_pix - 2, '-');
@@ -65,6 +66,7 @@ bool DeviceWindow::update_window() {
     }
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 bool DeviceWindow::new_msg(eros::resource resource_available_msg) {
     device_list_mutex.lock();

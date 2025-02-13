@@ -9,6 +9,7 @@ using namespace eros_nodes::SystemMonitor;
 TEST(BasicTest, Test_Initialization) {
     eros::Logger* logger = new eros::Logger("INFO", "test_device_window");
     DeviceWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    // Verify Properties
     EXPECT_EQ(SUT.get_name(), "device_window");
     EXPECT_FALSE(SUT.has_focus());
     SUT.set_focused(false);
@@ -29,6 +30,9 @@ TEST(BasicTest, Test_Initialization) {
     SUT.set_window_records_are_selectable(false);
     EXPECT_FALSE(SUT.get_window_records_are_selectable());
     EXPECT_EQ(SUT.get_selected_record(), 0);
+    EXPECT_TRUE(SUT.is_selectable());
+
+    // Verify Events
     auto output = SUT.new_keyevent(KEY_UP);
     output = SUT.new_keyevent(KEY_DOWN);
 
