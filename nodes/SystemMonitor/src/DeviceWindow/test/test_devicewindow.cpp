@@ -70,9 +70,38 @@ TEST(BasicTest, Test_OneDevice) {
     // New Resource Available Msg
     {
         eros::resource resource_msg;
-        EXPECT_FALSE(SUT.new_msg(resource_msg));
-    }
+        resource_msg.Name = "/TestDevice1";
+        EXPECT_TRUE(SUT.new_msg(resource_msg));
 
+        eros::loadfactor loadfactor_msg;
+        loadfactor_msg.DeviceName = resource_msg.Name;
+        loadfactor_msg.loadfactor.push_back(1.0);
+        loadfactor_msg.loadfactor.push_back(2.0);
+        loadfactor_msg.loadfactor.push_back(3.0);
+        EXPECT_TRUE(SUT.new_msg(loadfactor_msg));
+
+        EXPECT_TRUE(SUT.new_msg(resource_msg));
+
+        EXPECT_TRUE(SUT.new_msg(loadfactor_msg));
+    }
+    EXPECT_FALSE(SUT.update(0.0, 0.0));  // Can't update Window, this requires Drawing.
+    logger->log_info(SUT.pretty());
+    delete logger;
+}
+TEST(BasicTest, Test_MultipleDevice) {
+    eros::Logger* logger = new eros::Logger("INFO", "test_device_window");
+    DeviceWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    // New Load Factor Msg
+    {
+        eros::loadfactor loadfactor_msg;
+        loadfactor_msg.DeviceName = "/Test/Device2";
+        loadfactor_msg.loadfactor.push_back(1.0);
+        loadfactor_msg.loadfactor.push_back(2.0);
+        loadfactor_msg.loadfactor.push_back(3.0);
+        EXPECT_TRUE(SUT.new_msg(loadfactor_msg));
+    }
+    EXPECT_FALSE(SUT.update(0.0, 0.0));  // Can't update Window, this requires Drawing.
+    logger->log_info(SUT.pretty());
     delete logger;
 }
 

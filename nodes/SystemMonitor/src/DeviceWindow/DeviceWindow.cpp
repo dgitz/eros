@@ -68,6 +68,21 @@ bool DeviceWindow::update_window() {
     return true;
     // GCOVR_EXCL_STOP
 }
+std::string DeviceWindow::pretty() {
+    std::string str = "-----Device Window-----\n";
+    if (device_list.size() == 0) {
+        str += "\tNo Devices Found.";
+    }
+    else {
+        str += get_deviceheader() + "\n";
+        std::map<std::string, DeviceData>::iterator device_it = device_list.begin();
+        while (device_it != device_list.end()) {
+            str += get_device_info(device_it->second, false) + "\n";
+            ++device_it;
+        }
+    }
+    return str;
+}
 bool DeviceWindow::new_msg(eros::resource resource_available_msg) {
     device_list_mutex.lock();
     if (resource_available_msg.Name == "") {

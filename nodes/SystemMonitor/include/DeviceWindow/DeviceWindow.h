@@ -108,6 +108,7 @@ class DeviceWindow : public BaseWindow
     bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
         return true;
     }
+    std::string pretty();
 
    private:
     bool insertDevice(eros::resource resource_data);
@@ -118,5 +119,5 @@ class DeviceWindow : public BaseWindow
     std::mutex device_list_mutex;
     std::map<DeviceFieldColumn, Field> device_window_fields;
     std::map<std::string, DeviceData> device_list;
-};  // namespace eros_nodes::SystemMonitor
+};
 }  // namespace eros_nodes::SystemMonitor
