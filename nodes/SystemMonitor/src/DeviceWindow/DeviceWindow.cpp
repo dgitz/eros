@@ -70,6 +70,9 @@ bool DeviceWindow::update_window() {
 }
 bool DeviceWindow::new_msg(eros::resource resource_available_msg) {
     device_list_mutex.lock();
+    if (resource_available_msg.Name == "") {
+        return false;
+    }
     std::map<std::string, DeviceData>::iterator device_it;
 
     device_it = device_list.find(resource_available_msg.Name);

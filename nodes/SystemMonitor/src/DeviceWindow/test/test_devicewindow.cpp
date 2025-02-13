@@ -32,12 +32,47 @@ TEST(BasicTest, Test_Initialization) {
     EXPECT_EQ(SUT.get_selected_record(), 0);
     EXPECT_TRUE(SUT.is_selectable());
 
+    // Verify Unsupported Commands
+    {
+        eros::ArmDisarm::State msg;
+        EXPECT_TRUE(SUT.new_msg(msg));
+    }
+    {
+        eros::heartbeat msg;
+        EXPECT_TRUE(SUT.new_msg(msg));
+    }
+    {
+        eros::command_state msg;
+        EXPECT_TRUE(SUT.new_msg(msg));
+    }
+    {
+        int key = -1;
+        SUT.new_keyevent(key);
+    }
+    {
+        std::vector<WindowCommand> commands;
+        EXPECT_TRUE(SUT.new_command(commands));
+    }
     // Verify Events
     auto output = SUT.new_keyevent(KEY_UP);
     output = SUT.new_keyevent(KEY_DOWN);
+    eros::resource resource_msg;
+    EXPECT_FALSE(SUT.new_msg(resource_msg));
 
     output = SUT.new_keyevent(KEY_5);
     EXPECT_FALSE(SUT.update(0.0, 0.0));  // Can't update Window, this requires Drawing.
+    delete logger;
+}
+
+TEST(BasicTest, Test_OneDevice) {
+    eros::Logger* logger = new eros::Logger("INFO", "test_device_window");
+    DeviceWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    // New Resource Available Msg
+    {
+        eros::resource resource_msg;
+        EXPECT_FALSE(SUT.new_msg(resource_msg));
+    }
+
     delete logger;
 }
 
