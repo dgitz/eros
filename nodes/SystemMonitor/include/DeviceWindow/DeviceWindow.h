@@ -37,6 +37,10 @@ struct DeviceData {
 class DeviceWindow : public BaseWindow
 {
    public:
+    static constexpr double START_X_PERC = 55.0;
+    static constexpr double START_Y_PERC = 80.0;
+    static constexpr double WIDTH_PERC = 45.0;
+    static constexpr double HEIGHT_PERC = 20.0;
     DeviceWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
@@ -45,16 +49,15 @@ class DeviceWindow : public BaseWindow
                  uint16_t mainwindow_width)
         : BaseWindow("device_window",
                      tab_order,
-                     55.0,
-                     80.0,
-                     45.0,
-                     20.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
-        logger->log_warn("Device Header");
         device_window_fields.insert(
             std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::MARKER, Field("", 3)));
         device_window_fields.insert(

@@ -24,19 +24,19 @@ class TesterBaseWindow : public BaseWindow
         }
         return true;
     }
-    bool new_msg(eros::ArmDisarm::State armed_state) {
+    bool new_msg(eros::ArmDisarm::State /* armed_state */) {
         return false;
     }
-    bool new_msg(eros::heartbeat heartbeat_msg) override {
+    bool new_msg(eros::heartbeat /* heartbeat_msg */) override {
         return false;
     }
-    bool new_msg(eros::resource resource_msg) override {
+    bool new_msg(eros::resource /* resource_msg */) override {
         return false;
     }
-    bool new_msg(eros::loadfactor loadfactor_msg) override {
+    bool new_msg(eros::loadfactor /* loadfactor_msg */) override {
         return false;
     }
-    bool new_msg(eros::command_state command_state_msg) override {
+    bool new_msg(eros::command_state /* command_state_msg */) override {
         return false;
     }
     KeyEventContainer new_keyevent(int key) override {
@@ -52,7 +52,7 @@ class TesterBaseWindow : public BaseWindow
         }
         return output;
     }
-    bool new_command(std::vector<WindowCommand> commands) override {
+    bool new_command(std::vector<WindowCommand> /* commands */) override {
         return false;
     }
     bool update_window() {

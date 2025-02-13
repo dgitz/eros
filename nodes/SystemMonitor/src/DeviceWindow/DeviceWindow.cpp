@@ -1,5 +1,9 @@
 #include "DeviceWindow/DeviceWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double DeviceWindow::START_X_PERC;
+constexpr double DeviceWindow::START_Y_PERC;
+constexpr double DeviceWindow::WIDTH_PERC;
+constexpr double DeviceWindow::HEIGHT_PERC;
 DeviceWindow::~DeviceWindow() {
 }
 bool DeviceWindow::update(double dt, double t_ros_time) {
@@ -19,6 +23,9 @@ bool DeviceWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool DeviceWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
     std::string header = get_deviceheader();
     mvwprintw(get_window(), 1, 1, header.c_str());
     std::string dashed(get_screen_coordinates_pixel().width_pix - 2, '-');
