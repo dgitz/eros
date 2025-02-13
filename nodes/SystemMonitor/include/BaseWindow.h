@@ -17,7 +17,10 @@
 #include "WindowDefinitions.h"
 #include "ros/ros.h"
 namespace eros_nodes::SystemMonitor {
-
+/**
+ * @brief Abstract class for Windows that supports some common implementation.
+ *
+ */
 class BaseWindow : public IWindow
 {
    public:
@@ -106,6 +109,9 @@ class BaseWindow : public IWindow
     int16_t get_selected_record() {
         return record_selected;
     }
+    std::vector<int> get_supported_keys() override {
+        return supported_keys;
+    }
 
    protected:
     void update_record_count(uint16_t count);
@@ -126,6 +132,8 @@ class BaseWindow : public IWindow
     bool update(double /*dt*/, double t_ros_time);
 
     bool focused{false};
+
+    std::vector<int> supported_keys;
 
    private:
     WINDOW* win_;

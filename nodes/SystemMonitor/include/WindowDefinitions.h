@@ -7,12 +7,20 @@
 //! Namespace for SystemMonitor
 namespace eros_nodes::SystemMonitor {
 const double COMMTIMEOUT_THRESHOLD = 5.0f;
+/**
+ * @brief Commands supported by Windows
+ *
+ */
 enum class WindowCommandType {
     UNKNOWN = 0,                 /*!< Uninitialized value. */
     VIEW_DIAGNOSTICS_NODE = 1,   /*!< View Diagnostics for a Node. */
     VIEW_DIAGNOSTICS_SYSTEM = 2, /*!< View Diagnostics for the System. */
     END_OF_LIST = 3              /*!< Last item of list. Used for Range Checks. */
 };
+/**
+ * @brief Colors supported
+ *
+ */
 enum class Color {
     UNKNOWN = 0,      /*!< Uninitialized value. */
     NO_COLOR = 1,     /*!< No Color. */
@@ -68,7 +76,10 @@ struct Field {
     std::string text;
     std::size_t width;
 };
-
+/**
+ * @brief Text that's rendered to Message Window
+ *
+ */
 struct MessageText {
     MessageText(std::string text, eros::Level::Type level) : text(text), level(level) {
     }
@@ -77,6 +88,10 @@ struct MessageText {
     std::string text;
     eros::Level::Type level;
 };
+/**
+ * @brief Container for results of a Key Event
+ *
+ */
 struct KeyEventContainer {
     WindowCommand command;
     MessageText message;

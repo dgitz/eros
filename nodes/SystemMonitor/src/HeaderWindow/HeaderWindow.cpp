@@ -1,5 +1,9 @@
 #include "HeaderWindow/HeaderWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double HeaderWindow::START_X_PERC;
+constexpr double HeaderWindow::START_Y_PERC;
+constexpr double HeaderWindow::WIDTH_PERC;
+constexpr double HeaderWindow::HEIGHT_PERC;
 HeaderWindow::~HeaderWindow() {
 }
 bool HeaderWindow::new_msg(eros::ArmDisarm::State armed_state) {

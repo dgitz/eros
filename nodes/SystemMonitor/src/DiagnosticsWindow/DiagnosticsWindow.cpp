@@ -12,8 +12,9 @@ bool DiagnosticsWindow::update(double dt, double t_ros_time) {
     if (status == false) {
         return false;
     }
+
     request_data_timer += dt;
-    if (request_data_timer >= REQUEST_DATA_RATE) {
+    if (request_data_timer >= REQUEST_DATA_SEC) {
         request_data_timer = 0.0;
         if (diagnostic_mode == DiagnosticMode::SYSTEM) {
             std::string system_diagnostic_topic = robot_namespace + "srv_system_diagnostics";

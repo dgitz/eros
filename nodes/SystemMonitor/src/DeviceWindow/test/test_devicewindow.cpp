@@ -11,6 +11,7 @@ TEST(BasicTest, Test_Initialization) {
     DeviceWindow SUT(nullptr, "/", logger, 0, 400, 400);
     // Verify Properties
     EXPECT_EQ(SUT.get_name(), "device_window");
+    EXPECT_EQ(SUT.get_supported_keys().size(), 0);  // NO Supported Keys
     EXPECT_FALSE(SUT.has_focus());
     SUT.set_focused(false);
     ScreenCoordinatePixel empty_coordinates_pixel(0.0, 0.0, 0.0, 0.0);
