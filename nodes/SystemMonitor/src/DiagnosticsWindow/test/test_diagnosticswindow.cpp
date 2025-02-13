@@ -8,20 +8,18 @@
 using namespace eros_nodes::SystemMonitor;
 TEST(BasicTest, Test_Initialization) {
     eros::Logger* logger = new eros::Logger("INFO", "test_diagnostics_window");
-    EXPECT_TRUE(false);
-    /*
-    DeviceWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    DiagnosticsWindow SUT(nullptr, "/", logger, 0, 400, 400);
     // Verify Properties
-    EXPECT_EQ(SUT.get_name(), "device_window");
+    EXPECT_EQ(SUT.get_name(), "diagnostics_window");
     EXPECT_FALSE(SUT.has_focus());
     SUT.set_focused(false);
     ScreenCoordinatePixel empty_coordinates_pixel(0.0, 0.0, 0.0, 0.0);
     SUT.set_screen_coordinates_pix(empty_coordinates_pixel);
     auto screen_coord_perc = SUT.get_screen_coordinates_perc();
-    EXPECT_EQ(screen_coord_perc.start_x_perc, DeviceWindow::START_X_PERC);
-    EXPECT_EQ(screen_coord_perc.start_y_perc, DeviceWindow::START_Y_PERC);
-    EXPECT_EQ(screen_coord_perc.width_perc, DeviceWindow::WIDTH_PERC);
-    EXPECT_EQ(screen_coord_perc.height_perc, DeviceWindow::HEIGHT_PERC);
+    EXPECT_EQ(screen_coord_perc.start_x_perc, DiagnosticsWindow::START_X_PERC);
+    EXPECT_EQ(screen_coord_perc.start_y_perc, DiagnosticsWindow::START_Y_PERC);
+    EXPECT_EQ(screen_coord_perc.width_perc, DiagnosticsWindow::WIDTH_PERC);
+    EXPECT_EQ(screen_coord_perc.height_perc, DiagnosticsWindow::HEIGHT_PERC);
     auto screen_coord_pixel = SUT.get_screen_coordinates_pixel();
     EXPECT_EQ(screen_coord_pixel.start_x_pix, 0);
     EXPECT_EQ(screen_coord_pixel.start_y_pix, 0);
@@ -48,6 +46,14 @@ TEST(BasicTest, Test_Initialization) {
         EXPECT_TRUE(SUT.new_msg(msg));
     }
     {
+        eros::resource msg;
+        EXPECT_TRUE(SUT.new_msg(msg));
+    }
+    {
+        eros::loadfactor msg;
+        EXPECT_TRUE(SUT.new_msg(msg));
+    }
+    {
         int key = -1;
         SUT.new_keyevent(key);
     }
@@ -55,15 +61,7 @@ TEST(BasicTest, Test_Initialization) {
         std::vector<WindowCommand> commands;
         EXPECT_TRUE(SUT.new_command(commands));
     }
-    // Verify Events
-    auto output = SUT.new_keyevent(KEY_UP);
-    output = SUT.new_keyevent(KEY_DOWN);
-    eros::resource resource_msg;
-    EXPECT_FALSE(SUT.new_msg(resource_msg));
-
-    output = SUT.new_keyevent(KEY_5);
     EXPECT_FALSE(SUT.update(0.0, 0.0));  // Can't update Window, this requires Drawing.
-    */
     delete logger;
 }
 

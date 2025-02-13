@@ -14,6 +14,10 @@ bool MessageWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool MessageWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     if (timer_showing_message_in_window > TIME_TO_SHOW_MESSAGES) {
         message_text = "";
         message_text_color = Color::NO_COLOR;
@@ -25,6 +29,7 @@ bool MessageWindow::update_window() {
     box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 bool MessageWindow::new_msg(eros::command_state msg) {
     if ((msg.CurrentCommand.Command == (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT)) {

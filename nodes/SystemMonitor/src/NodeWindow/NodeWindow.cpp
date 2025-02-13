@@ -44,6 +44,10 @@ bool NodeWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool NodeWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
     uint16_t index = 0;
@@ -79,6 +83,7 @@ bool NodeWindow::update_window() {
 
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 bool NodeWindow::insertNode(NodeType node_type,
                             std::string device,

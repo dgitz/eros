@@ -5,6 +5,10 @@ class DiagnosticsWindow : public BaseWindow
 {
    public:
     const double REQUEST_DATA_RATE = 1.0;  // Hz
+    static constexpr double START_X_PERC = 66.0;
+    static constexpr double START_Y_PERC = 15.0;
+    static constexpr double WIDTH_PERC = 34.5;
+    static constexpr double HEIGHT_PERC = 60.0;
     enum class DiagnosticMode { UNKNOWN = 0, SYSTEM = 1, NODE = 2 };
     DiagnosticsWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
@@ -14,10 +18,10 @@ class DiagnosticsWindow : public BaseWindow
                       uint16_t mainwindow_width)
         : BaseWindow("diagnostics_window",
                      tab_order,
-                     66,
-                     15.0,
-                     34.5,
-                     60.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,

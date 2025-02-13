@@ -1,5 +1,9 @@
 #include "DiagnosticsWindow/DiagnosticsWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double DiagnosticsWindow::START_X_PERC;
+constexpr double DiagnosticsWindow::START_Y_PERC;
+constexpr double DiagnosticsWindow::WIDTH_PERC;
+constexpr double DiagnosticsWindow::HEIGHT_PERC;
 DiagnosticsWindow::~DiagnosticsWindow() {
 }
 
@@ -70,6 +74,10 @@ bool DiagnosticsWindow::new_command(std::vector<WindowCommand> commands) {
     return true;
 }
 bool DiagnosticsWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     uint16_t index = 0;
     std::string header_string;
     if (diagnostic_mode == DiagnosticMode::SYSTEM) {
@@ -130,5 +138,6 @@ bool DiagnosticsWindow::update_window() {
     }
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 }  // namespace eros_nodes::SystemMonitor

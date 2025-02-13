@@ -14,6 +14,10 @@ bool InstructionWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool InstructionWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     std::vector<std::string> instruction_string;
     // Instructions that are always supported
     instruction_string.push_back("Esc: Reset Screen.  SPACE: Arm/Disarm.");
@@ -50,6 +54,7 @@ bool InstructionWindow::update_window() {
     box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 KeyEventContainer InstructionWindow::new_keyevent(int key) {
     KeyEventContainer output;
