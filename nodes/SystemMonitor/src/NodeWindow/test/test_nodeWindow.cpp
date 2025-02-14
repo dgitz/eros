@@ -89,6 +89,12 @@ bool node_loggerlevel_service(eros::srv_logger_level::Request& /* req */,
     node_loggerlevel_service_rx++;
     return true;
 }
+uint64_t node_change_nodestate_service_rx = 0;
+bool node_change_nodestate_service(eros::srv_change_nodestate::Request& /* req */,
+                                   eros::srv_change_nodestate::Response& /* res */) {
+    node_change_nodestate_service_rx++;
+    return true;
+}
 TEST(BasicTest, Test_Keys_WithNodes) {
     ros::NodeHandle nh("~");
     eros::Logger* logger = new eros::Logger("DEBUG", "test_instruction_window");
@@ -99,6 +105,7 @@ TEST(BasicTest, Test_Keys_WithNodes) {
     nodes.push_back("Node3");
     std::vector<ros::ServiceServer> firmware_srv_list;
     std::vector<ros::ServiceServer> loggerlevel_srv_list;
+    std::vector<ros::ServiceServer> change_nodestate_srv_list;
     for (auto node : nodes) {
         std::string srv_firmware_topic = "/" + node + "/srv_firmware";
         ros::ServiceServer node_firmware_srv;
@@ -109,6 +116,11 @@ TEST(BasicTest, Test_Keys_WithNodes) {
         node_loggerlevel_srv =
             nh.advertiseService(srv_loggerlevel_topic, &node_loggerlevel_service);
         loggerlevel_srv_list.push_back(node_loggerlevel_srv);
+        std::string srv_change_nodestate_topic = "/" + node + "/srv_nodestate_change";
+        ros::ServiceServer node_change_nodestate_srv;
+        node_change_nodestate_srv =
+            nh.advertiseService(srv_change_nodestate_topic, &node_change_nodestate_service);
+        change_nodestate_srv_list.push_back(node_change_nodestate_srv);
     }
 
     SUT.set_focused(true);
@@ -118,6 +130,7 @@ TEST(BasicTest, Test_Keys_WithNodes) {
     for (auto node : nodes) {
         eros::heartbeat heartbeat;
         heartbeat.NodeName = node;
+        EXPECT_TRUE(SUT.new_msg(heartbeat));
         EXPECT_TRUE(SUT.new_msg(heartbeat));
     }
     for (auto str : SUT.get_node_info()) { logger->log_info(str); }
@@ -134,6 +147,12 @@ TEST(BasicTest, Test_Keys_WithNodes) {
                 result = SUT.new_keyevent(KEY_3);
                 EXPECT_TRUE(result.message.level <= eros::Level::Type::ERROR);
             }
+            if ((key == KEY_n) || (key == KEY_N)) {
+                auto result = SUT.new_keyevent(key);
+                EXPECT_TRUE(result.message.level <= eros::Level::Type::ERROR);
+                result = SUT.new_keyevent(KEY_5);
+                EXPECT_TRUE(result.message.level <= eros::Level::Type::ERROR);
+            }
             else {
                 auto result = SUT.new_keyevent(key);
                 EXPECT_TRUE(result.message.level <= eros::Level::Type::ERROR);
@@ -143,6 +162,7 @@ TEST(BasicTest, Test_Keys_WithNodes) {
     sleep(5);
     EXPECT_GT(node_firmware_service_rx, 0);
     EXPECT_GT(node_loggerlevel_service_rx, 0);
+    EXPECT_GT(node_change_nodestate_service_rx, 0);
 
     delete logger;
 }

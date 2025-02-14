@@ -238,7 +238,7 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
                 }
 
                 auto node = node_list.at((uint16_t)get_selected_record());
-                std::string nodestate_topic = node.node_name + "/srv_nodestate_change";
+                std::string nodestate_topic = "/" + node.node_name + "/srv_nodestate_change";
                 ros::ServiceClient client =
                     nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
                 eros::srv_change_nodestate srv;
