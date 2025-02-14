@@ -55,6 +55,14 @@ struct NodeData {
 class NodeWindow : public BaseWindow
 {
    public:
+    static constexpr double START_X_PERC =
+        0.0; /*!< What percentage of the screen to put top left corner (X) of window. */
+    static constexpr double START_Y_PERC =
+        15.0; /*!< What percentage of the screen to put top left corner (Y) of window. */
+    static constexpr double WIDTH_PERC =
+        66.0; /*!< What percentage of the screen (Width) to draw the window. */
+    static constexpr double HEIGHT_PERC =
+        60.0; /*!< What percentage of the screen (Height) to draw the window. */
     NodeWindow(ros::NodeHandle* nodeHandle,
                std::string robot_namespace,
                eros::Logger* logger,
@@ -63,15 +71,35 @@ class NodeWindow : public BaseWindow
                uint16_t mainwindow_width)
         : BaseWindow("node_window",
                      tab_order,
-                     0.0,
-                     15.0,
-                     66.0,
-                     60.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
+        supported_keys.push_back(KEY_UP);
+        supported_keys.push_back(KEY_DOWN);
+        supported_keys.push_back(KEY_f);
+        supported_keys.push_back(KEY_F);
+        supported_keys.push_back(KEY_l);
+        supported_keys.push_back(KEY_L);
+        supported_keys.push_back(KEY_n);
+        supported_keys.push_back(KEY_N);
+        supported_keys.push_back(KEY_d);
+        supported_keys.push_back(KEY_D);
+        supported_keys.push_back(KEY_1);
+        supported_keys.push_back(KEY_2);
+        supported_keys.push_back(KEY_3);
+        supported_keys.push_back(KEY_4);
+        supported_keys.push_back(KEY_5);
+        supported_keys.push_back(KEY_6);
+        supported_keys.push_back(KEY_7);
+        supported_keys.push_back(KEY_8);
+        supported_keys.push_back(KEY_9);
+        // Don't add Supported Keys for Numeric
         set_window_records_are_selectable(true);
         node_window_fields.insert(
             std::pair<NodeFieldColumn, Field>(NodeFieldColumn::MARKER, Field("", 3)));
@@ -129,6 +157,7 @@ class NodeWindow : public BaseWindow
     bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
         return true;
     }
+    std::vector<std::string> get_node_info();
 
    private:
     bool insertNode(NodeType node_type,

@@ -65,7 +65,70 @@ TEST(BasicTest, Test_Initialization) {
     EXPECT_FALSE(SUT.update(0.0, 0.0));  // Can't update Window, this requires Drawing.
     delete logger;
 }
+TEST(MessageTest, MsgCommand) {
+    eros::Logger* logger = new eros::Logger("INFO", "test_message_window");
+    MessageWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    // Verify Properties
+    EXPECT_EQ(SUT.get_name(), "message_window");
 
+    {
+        eros::command_state cmd_state;
+        cmd_state.CurrentCommand.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
+        cmd_state.CurrentCommand.Option1 =
+            (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER;
+        cmd_state.State = (uint8_t)eros::SnapshotState::RUNNING;
+        EXPECT_TRUE(SUT.new_msg(cmd_state));
+    }
+    {
+        eros::command_state cmd_state;
+        cmd_state.CurrentCommand.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
+        cmd_state.CurrentCommand.Option1 =
+            (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER;
+        cmd_state.State = (uint8_t)eros::SnapshotState::INCOMPLETE;
+        EXPECT_TRUE(SUT.new_msg(cmd_state));
+    }
+    {
+        eros::command_state cmd_state;
+        cmd_state.CurrentCommand.Command = (uint16_t)eros::Command::Type::GENERATE_SNAPSHOT;
+        cmd_state.CurrentCommand.Option1 =
+            (uint16_t)eros::Command::GenerateSnapshot_Option1::RUN_MASTER;
+        cmd_state.State = (uint8_t)eros::SnapshotState::COMPLETE;
+        EXPECT_TRUE(SUT.new_msg(cmd_state));
+    }
+    delete logger;
+}
+TEST(MessageTest, MsgMessageText) {
+    eros::Logger* logger = new eros::Logger("INFO", "test_message_window");
+    MessageWindow SUT(nullptr, "/", logger, 0, 400, 400);
+    // Verify Properties
+    EXPECT_EQ(SUT.get_name(), "message_window");
+
+    {  // 0 Messages
+        std::vector<MessageText> messages;
+        EXPECT_TRUE(SUT.new_MessageTextList(messages));
+    }
+    {  // 1 Messages
+        for (uint8_t i = (uint8_t)eros::Level::Type::UNKNOWN;
+             i < (uint8_t)eros::Level::Type::END_OF_LIST;
+             ++i) {
+            std::vector<MessageText> messages;
+            MessageText message1("SomeMessage", (eros::Level::Type)i);
+            messages.push_back(message1);
+            EXPECT_TRUE(SUT.new_MessageTextList(messages));
+        }
+    }
+    {
+        // 2 Messages (or more)
+        std::vector<MessageText> messages;
+        MessageText message1("Message1", eros::Level::Type::INFO);
+        messages.push_back(message1);
+        MessageText message2("Message2", eros::Level::Type::INFO);
+        messages.push_back(message2);
+        logger->log_warn("The following will produce an error message.");
+        EXPECT_FALSE(SUT.new_MessageTextList(messages));
+    }
+    delete logger;
+}
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

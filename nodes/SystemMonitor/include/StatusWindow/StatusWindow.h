@@ -4,6 +4,14 @@ namespace eros_nodes::SystemMonitor {
 class StatusWindow : public BaseWindow
 {
    public:
+    static constexpr double START_X_PERC =
+        0.0; /*!< What percentage of the screen to put top left corner (X) of window. */
+    static constexpr double START_Y_PERC =
+        80.0; /*!< What percentage of the screen to put top left corner (Y) of window. */
+    static constexpr double WIDTH_PERC =
+        30.0; /*!< What percentage of the screen (Width) to draw the window. */
+    static constexpr double HEIGHT_PERC =
+        20.0; /*!< What percentage of the screen (Height) to draw the window. */
     StatusWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
@@ -12,15 +20,16 @@ class StatusWindow : public BaseWindow
                  uint16_t mainwindow_width)
         : BaseWindow("status_window",
                      tab_order,
-                     0,
-                     80.0,
-                     30.0,
-                     20.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
+        // NO Supported Keys
         ScreenCoordinatePixel coord_pix = SystemMonitorUtility::convertCoordinate(
             get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = SystemMonitorUtility::create_newwin(coord_pix.height_pix,

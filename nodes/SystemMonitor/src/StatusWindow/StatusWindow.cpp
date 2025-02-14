@@ -1,5 +1,9 @@
 #include "StatusWindow/StatusWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double StatusWindow::START_X_PERC;
+constexpr double StatusWindow::START_Y_PERC;
+constexpr double StatusWindow::WIDTH_PERC;
+constexpr double StatusWindow::HEIGHT_PERC;
 StatusWindow::~StatusWindow() {
 }
 
