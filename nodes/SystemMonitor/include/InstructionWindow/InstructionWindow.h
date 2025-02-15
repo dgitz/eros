@@ -11,6 +11,14 @@ class InstructionWindow : public BaseWindow
         NODE = 0,
         SYSTEM = 1,
     };
+    static constexpr double START_X_PERC =
+        30.0; /*!< What percentage of the screen to put top left corner (X) of window. */
+    static constexpr double START_Y_PERC =
+        80.0; /*!< What percentage of the screen to put top left corner (Y) of window. */
+    static constexpr double WIDTH_PERC =
+        25.0; /*!< What percentage of the screen (Width) to draw the window. */
+    static constexpr double HEIGHT_PERC =
+        20.0; /*!< What percentage of the screen (Height) to draw the window. */
     InstructionWindow(ros::NodeHandle* nodeHandle,
                       std::string robot_namespace,
                       eros::Logger* logger,
@@ -20,16 +28,22 @@ class InstructionWindow : public BaseWindow
                       ros::Publisher command_pub)
         : BaseWindow("instruction_window",
                      tab_order,
-                     30,
-                     80.0,
-                     25.0,
-                     20.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width),
           command_pub(command_pub) {
+        supported_keys.push_back(KEY_esc);
+        supported_keys.push_back(KEY_space);
+        supported_keys.push_back(KEY_s);
+        supported_keys.push_back(KEY_S);
+        supported_keys.push_back(KEY_c);
+        supported_keys.push_back(KEY_C);
         ScreenCoordinatePixel coord_pix = SystemMonitorUtility::convertCoordinate(
             get_screen_coordinates_perc(), mainwindow_width, mainwindow_height);
         WINDOW* win = SystemMonitorUtility::create_newwin(coord_pix.height_pix,

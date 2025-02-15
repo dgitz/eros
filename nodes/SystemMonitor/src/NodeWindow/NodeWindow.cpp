@@ -1,5 +1,9 @@
 #include "NodeWindow/NodeWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double NodeWindow::START_X_PERC;
+constexpr double NodeWindow::START_Y_PERC;
+constexpr double NodeWindow::WIDTH_PERC;
+constexpr double NodeWindow::HEIGHT_PERC;
 NodeWindow::~NodeWindow() {
 }
 std::string NodeWindow::get_nodeheader() {
@@ -44,6 +48,10 @@ bool NodeWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool NodeWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     const uint16_t TASKSTART_COORD_Y = 1;
     const uint16_t TASKSTART_COORD_X = 1;
     uint16_t index = 0;
@@ -79,6 +87,7 @@ bool NodeWindow::update_window() {
 
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 bool NodeWindow::insertNode(NodeType node_type,
                             std::string device,
@@ -96,7 +105,12 @@ bool NodeWindow::insertNode(NodeType node_type,
 KeyEventContainer NodeWindow::new_keyevent(int key) {
     KeyEventContainer output;
     MessageText message;
-    if (key == -1) {
+    if (std::find(supported_keys.begin(), supported_keys.end(), key) != supported_keys.end()) {
+        output.message.level =
+            eros::Level::Type::ERROR;  // Set default Level to error, so if any supported keys
+                                       // are not processed, will actively fail.
+    }
+    else {
         return output;
     }
     logger->log_debug("Key: " + std::to_string(key));
@@ -108,9 +122,13 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
             increment_selected_record();
         }
         else if ((key == KEY_f) || (key == KEY_F)) {
+            if (node_list.size() == 0) {
+                return output;
+            }
             auto node = node_list.at((uint16_t)get_selected_record());
             if (node.type == NodeType::EROS) {
-                std::string firmware_topic = node.node_name + "/srv_firmware";
+                std::string firmware_topic = "/" + node.node_name + "/srv_firmware";
+                logger->log_warn("Client Topic: " + firmware_topic);
                 if (nodeHandle == nullptr) {
                     logger->log_error("Node Handle has no memory!");
                 }
@@ -169,6 +187,9 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
             message = MessageText(str, eros::Level::Type::INFO);
         }
         else if ((key == KEY_d) || (key == KEY_D)) {
+            if (node_list.size() == 0) {
+                return output;
+            }
             auto node = node_list.at((uint16_t)get_selected_record());
             output.command.type = WindowCommandType::VIEW_DIAGNOSTICS_NODE;
             output.command.option = node.node_name;
@@ -179,6 +200,9 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
         else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4) ||
                  (key == KEY_5) || (key == KEY_6) || (key == KEY_7) || (key == KEY_8) ||
                  (key == KEY_9)) {
+            if (node_list.size() == 0) {
+                return output;
+            }
             if ((previous_key == KEY_l) || (previous_key == KEY_L)) {
                 uint16_t verbosity_value = key - (KEY_1) + 1;
                 std::string verbosity_level =
@@ -189,7 +213,7 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
                     logger->log_warn(str);
                 }
                 auto node = node_list.at((uint16_t)get_selected_record());
-                std::string logger_level_topic = node.node_name + "/srv_loggerlevel";
+                std::string logger_level_topic = "/" + node.node_name + "/srv_loggerlevel";
                 ros::ServiceClient client =
                     nodeHandle->serviceClient<eros::srv_logger_level>(logger_level_topic);
                 eros::srv_logger_level srv;
@@ -214,7 +238,7 @@ KeyEventContainer NodeWindow::new_keyevent(int key) {
                 }
 
                 auto node = node_list.at((uint16_t)get_selected_record());
-                std::string nodestate_topic = node.node_name + "/srv_nodestate_change";
+                std::string nodestate_topic = "/" + node.node_name + "/srv_nodestate_change";
                 ros::ServiceClient client =
                     nodeHandle->serviceClient<eros::srv_change_nodestate>(nodestate_topic);
                 eros::srv_change_nodestate srv;
@@ -265,6 +289,15 @@ bool NodeWindow::new_msg(eros::heartbeat heartbeat_msg) {
     node_list_mutex.unlock();
     return insertNode(
         NodeType::EROS, "Unknown", heartbeat_msg.BaseNodeName, heartbeat_msg.NodeName);
+}
+std::vector<std::string> NodeWindow::get_node_info() {
+    std::vector<std::string> strs;
+    for (std::vector<NodeData>::iterator node_it = node_list.begin(); node_it != node_list.end();
+         ++node_it) {
+        std::string str = get_node_info((*node_it), false);
+        strs.push_back(str);
+    }
+    return strs;
 }
 bool NodeWindow::new_msg(eros::resource resource_used_msg) {
     node_list_mutex.lock();

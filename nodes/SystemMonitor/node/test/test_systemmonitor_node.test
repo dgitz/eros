@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="system_monitor" pkg="eros" type="system_monitor"  output="screen" clear_params="true">
+        </node>
+    <test test-name="test_systemmonitor_node" pkg="eros" type="test_systemmonitor_node"/>
+</launch>

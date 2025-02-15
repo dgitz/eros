@@ -1,0 +1,3 @@
+catkin_add_gtest(test_messageWindow test_messageWindow.cpp)
+target_link_libraries(test_messageWindow ${catkin_LIBRARIES} ${Boost_LIBRARIES} messageWindow logger)
+add_dependencies(test_messageWindow eros_generate_messages_cpp)

@@ -25,8 +25,6 @@ Logger::Logger(std::string level, std::string directory, std::string name) : log
     logger_ok = true;
 }
 Logger::Logger(std::string level, std::string name) : logger_ok(false) {
-    console_print = true;
-    use_ROS_logger = false;
     verbosity = Level::LevelType(level);
     line_counter = 0;
     if (name.at(0) == '/') {

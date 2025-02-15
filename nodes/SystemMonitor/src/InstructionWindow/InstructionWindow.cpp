@@ -2,6 +2,10 @@
 
 #include <eros/command.h>
 namespace eros_nodes::SystemMonitor {
+constexpr double InstructionWindow::START_X_PERC;
+constexpr double InstructionWindow::START_Y_PERC;
+constexpr double InstructionWindow::WIDTH_PERC;
+constexpr double InstructionWindow::HEIGHT_PERC;
 InstructionWindow::~InstructionWindow() {
 }
 
@@ -14,6 +18,10 @@ bool InstructionWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool InstructionWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     std::vector<std::string> instruction_string;
     // Instructions that are always supported
     instruction_string.push_back("Esc: Reset Screen.  SPACE: Arm/Disarm.");
@@ -28,14 +36,6 @@ bool InstructionWindow::update_window() {
         instruction_string.push_back("F: Get Node Firmware.");
         instruction_string.push_back("L: Change Log Level.");
         instruction_string.push_back("N: Change Node State (1-9).");
-        /*
-        if (show_task_diagnostic_mode == false) {
-            instruction_string.push_back("D: Show Task Diagnostics.");
-        }
-        else {
-            instruction_string.push_back("D: Show System Diagnostics.");
-        }
-        */
     }
 
     else {
@@ -50,9 +50,18 @@ bool InstructionWindow::update_window() {
     box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 KeyEventContainer InstructionWindow::new_keyevent(int key) {
     KeyEventContainer output;
+    if (std::find(supported_keys.begin(), supported_keys.end(), key) != supported_keys.end()) {
+        output.message.level =
+            eros::Level::Type::ERROR;  // Set default Level to error, so if any supported keys
+                                       // are not processed, will actively fail.
+    }
+    else {
+        return output;
+    }
     // Keys that are always supported.
     if ((key == KEY_esc)) {
         output.command.type = WindowCommandType::VIEW_DIAGNOSTICS_SYSTEM;
@@ -107,7 +116,10 @@ KeyEventContainer InstructionWindow::new_keyevent(int key) {
         output.message = message;
         return output;
     }
-
+    else {
+        return output;
+    }
+    /*
     // Specific Key/Mode support
     if (instruction_mode == InstructionMode::NODE) {}
     else {
@@ -115,5 +127,6 @@ KeyEventContainer InstructionWindow::new_keyevent(int key) {
         return output;
     }
     return output;
+    */
 }
 }  // namespace eros_nodes::SystemMonitor
