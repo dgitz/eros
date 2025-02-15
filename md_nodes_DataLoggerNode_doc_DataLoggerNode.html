@@ -66,15 +66,28 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1>Overview</h1>
+<p>The Data Logger Node wraps the ROS Bag Recorder API in a more friendly node. <br  />
+</p>
 <h1>Features</h1>
+<ul>
+<li>No-Snapshot Mode: Will always write to disk. <br  />
+</li>
+<li>Snapshot Mode: Only writes to disk when the topic <code>/snapshot_trigger</code> is triggered. Note: This can eat up a large amount of RAM, especially with large ros data traffic.</li>
+<li>Snapshot file is created when trigger is generated, which includes information about the snapshot.</li>
+<li>Configurable directory where bag files are stored.</li>
+</ul>
 <h1>Configuration</h1>
-<h1>Software Design</h1>
+<p>The following configuration items are used for this Node:</p>
+<div class="fragment"><div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;LogFile_Duration&quot;</span>      <span class="keyword">value</span>=<span class="stringliteral">&quot;600.0&quot;</span>/&gt;</div>
+<div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;LogFile_Directory&quot;</span>     <span class="keyword">value</span>=<span class="stringliteral">&quot;~/storage/DATALOGS/&quot;</span>/&gt; </div>
+<div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;SnapshotMode&quot;</span>          <span class="keyword">value</span>=<span class="stringliteral">&quot;true&quot;</span>/&gt;</div>
+</div><!-- fragment --><h1>Software Design</h1>
 <p><img src="../../../doc/output/Legend.png" alt="" class="inline"/></p>
 <h2>Class Diagrams</h2>
 <p><img src="output/DataLoggerNodeClassDiagram.png" alt="" class="inline"/></p>
 <h2>Sequence Diagrams</h2>
-<p><img src="output/DataLoggerNodeSequenceDiagram.png" alt="" class="inline"/> </p><h1>Troubleshooting</h1>
-<h1>Future Features</h1>
+<p><img src="output/DataLoggerNodeSequenceDiagram.png" alt="" class="inline"/></p>
+<h1>Troubleshooting</h1>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
