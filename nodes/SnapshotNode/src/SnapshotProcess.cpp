@@ -98,7 +98,8 @@ std::vector<eros_diagnostic::Diagnostic> SnapshotProcess::check_programvariables
     return diag_list;
 }
 std::string SnapshotProcess::pretty() {
-    std::string str = "--- Snapshot Config ---\n";
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    str += "--- Snapshot Config ---\n";
     str += " Mode: " + ModeString(mode) + "\n";
     if (mode == Mode::MASTER) {
         str += " System Snapshot State: " + SnapshotStateString(systemsnapshot_state) + "\n";

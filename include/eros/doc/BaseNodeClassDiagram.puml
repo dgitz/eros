@@ -63,6 +63,7 @@ package eros {
         -- Convert Functions --
         
         -- Printing Functions --
+        +{abstract} string pretty()
 
         -- Destructors --
         +{abstract} void cleanup()
@@ -143,6 +144,7 @@ package eros {
         -- Convert Functions --
         
         -- Printing Functions --
+        +{abstract} string pretty()
 
         -- Destructors --
         +{abstract} void cleanup()

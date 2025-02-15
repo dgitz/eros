@@ -263,6 +263,8 @@ class BaseNode
     /*! \brief Process an eros::mode_state. */
     void modestate_Callback(const eros::mode_state::ConstPtr &t_msg);
 
+    virtual std::string pretty() = 0;
+
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();

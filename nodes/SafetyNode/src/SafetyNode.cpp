@@ -164,8 +164,12 @@ bool SafetyNode::run_01hz() {
 }
 bool SafetyNode::run_01hz_noisy() {
     eros_diagnostic::Diagnostic diag = diagnostic;
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     return true;
+}
+std::string SafetyNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool SafetyNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

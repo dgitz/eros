@@ -33,3 +33,7 @@ std::vector<eros_diagnostic::Diagnostic> DataLoggerProcess::check_programvariabl
     std::vector<eros_diagnostic::Diagnostic> diag_list;
     return diag_list;
 }
+std::string DataLoggerProcess::pretty() {
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    return str;
+}

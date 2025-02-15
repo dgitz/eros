@@ -46,6 +46,9 @@ class BaseNodeProcessTester : public BaseNodeProcess
         std::vector<eros_diagnostic::Diagnostic> diag_list;
         return diag_list;
     }
+    std::string pretty() {
+        return "";
+    }
 };
 TEST(BasicTest, TestOperation_BaseNodeProcess) {
     Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");

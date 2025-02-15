@@ -61,6 +61,7 @@ class SampleNode : public eros::BaseNode
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+    std::string pretty() override;
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();

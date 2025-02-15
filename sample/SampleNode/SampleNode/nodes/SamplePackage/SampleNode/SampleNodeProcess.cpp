@@ -25,3 +25,7 @@ std::vector<eros_diagnostic::Diagnostic> SampleNodeProcess::check_programvariabl
     logger->log_warn("No Program Variables Checked.");
     return diag_list;
 }
+std::string SampleNodeProcess::pretty() {
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    return str;
+}

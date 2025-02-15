@@ -89,6 +89,7 @@ class SystemMonitorNode : public eros::BaseNode
     void cleanup();
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
     std::string extract_robotnamespace(std::string str);
