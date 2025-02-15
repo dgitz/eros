@@ -5,7 +5,7 @@ changelog:
     labels:
       - ignore-for-release
   categories:
-    -title: Release 🤖
+    - title: Release 🤖
       labels:
         - release
     - title: Breaking Changes 🛠
