@@ -3,11 +3,13 @@ title Snapshot Node Sequence Diagram
 actor User as user
 participant SnapshotNode as node
 participant SnapshotNodeProcess as process
+participant SnapshotCreationThread as snapshot_thread
 participant Logger as logger
 
 alt initialize
     activate node
     node -> node++: start()
+    node -> thread_snapshotcreation++
     node -> node: initialize_diagnostic
     node -> process++: SnapshotNodeProcess()
     node -> node: preinitialize_basenode()
@@ -20,6 +22,16 @@ alt initialize
 end
 
 alt message_callback
+    alt system_commandAction_Callback
+    end
+    alt command_Callback
+    end
+    alt commandState_Callback
+    end
+end
+alt services
+    alt filetransfer_service(req,res)
+    end
 end
 
 alt loops
