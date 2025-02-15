@@ -13,7 +13,7 @@ The following is a brief guide for setup operations on these different devices.
 1. Set permissions on gpio by following this link: https://www.raspberrypi.org/forums/viewtopic.php?t=8999
 1. Install the following dependencies:\
   `sudo apt install wiringpi python-smbus i2c-tools`
-1. Follow the typical ROS Raspberry Pi Melodic (ros_comm) install instructions (use "~/catkin_ws" as your workspace): http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Melodic%20on%20the%20Raspberry%20Pi
+1. Follow the [ROS Raspberry Pi Noetic install instructions](https://varhowto.com/install-ros-noetic-raspberry-pi-4/).
 1. Install the following packages (by using the section "Adding Released Packages" as your guide): `rosbag actionlib sensor_msgs rosunit`
 1. Depending on what type of device this is (i.e. lower end Raspberry Pi or higher end) you may or may not want to use this device to actually build content, just to use pre-built content.  Note that if you want to use as only a No Build Target, you will still need to have another device on your network that has the same architecture that can be used as a Build Server.
 1. Create the necessary calls to perform startup scripts:  Edit the /etc/rc.local file and add the following line:\

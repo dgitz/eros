@@ -54,7 +54,7 @@ def run_setup():
         os.system("sudo apt --yes --force-yes install " + apt_dependency_list[i])
     print(CGREEN + "Installing Dependencies via pip..." + CEND)
     for i in range(0,len(pip_dependency_list)):
-        os.system("pip install " + pip_dependency_list[i])
+        os.system("pip3 install " + pip_dependency_list[i])
     os.system("python3 -m pip install --user cookiecutter")
     os.system("sudo snap install cookiecutter --edge")
     os.system('sudo bash -c "curl -L https://raw.githubusercontent.com/riboseinc/plantuml-install/master/ubuntu.sh | bash"')
