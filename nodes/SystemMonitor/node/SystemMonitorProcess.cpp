@@ -4,6 +4,7 @@ using namespace eros;
 namespace eros_nodes::SystemMonitor {
 SystemMonitorProcess::~SystemMonitorProcess() {
     for (auto window : windows) { delete window; }
+    cleanup();
 }
 eros_diagnostic::Diagnostic SystemMonitorProcess::finish_initialization() {
     eros_diagnostic::Diagnostic diag = diagnostic_manager.get_root_diagnostic();
@@ -183,6 +184,7 @@ std::vector<eros_diagnostic::Diagnostic> SystemMonitorProcess::check_programvari
     diag_list.push_back(diag);
     return diag_list;
 }
+// GCOVR_EXCL_START
 bool SystemMonitorProcess::initialize_windows() {
     timeout(0);
     keypad(stdscr, TRUE);
@@ -230,8 +232,10 @@ bool SystemMonitorProcess::initialize_windows() {
             nodeHandle, robot_namespace, logger, -1, mainwindow_height, mainwindow_width);
         windows.push_back(window);
     }
+
     return true;
 }
+// GCOVR_EXCL_STOP
 eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_heartbeatmessage(
     const eros::heartbeat::ConstPtr& t_msg) {
     eros::heartbeat msg = eros_utility::ConvertUtility::convert_fromptr(t_msg);

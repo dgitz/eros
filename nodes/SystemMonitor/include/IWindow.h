@@ -9,7 +9,10 @@
 
 #include "WindowDefinitions.h"
 namespace eros_nodes::SystemMonitor {
-
+/**
+ * @brief Interface class for generic Windows
+ *
+ */
 class IWindow
 {
    public:
@@ -33,6 +36,7 @@ class IWindow
 
     virtual int16_t get_tab_order() = 0;
 
+    virtual std::vector<int> get_supported_keys() = 0;
     virtual KeyEventContainer new_keyevent(int key) = 0;
 };
 }  // namespace eros_nodes::SystemMonitor

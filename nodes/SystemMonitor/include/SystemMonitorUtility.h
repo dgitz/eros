@@ -3,6 +3,10 @@
 
 #include "WindowDefinitions.h"
 namespace eros_nodes::SystemMonitor {
+/**
+ * @brief Various utility functions for System Monitor
+ *
+ */
 class SystemMonitorUtility
 {
    public:

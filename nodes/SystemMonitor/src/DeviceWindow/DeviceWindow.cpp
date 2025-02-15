@@ -1,5 +1,9 @@
 #include "DeviceWindow/DeviceWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double DeviceWindow::START_X_PERC;
+constexpr double DeviceWindow::START_Y_PERC;
+constexpr double DeviceWindow::WIDTH_PERC;
+constexpr double DeviceWindow::HEIGHT_PERC;
 DeviceWindow::~DeviceWindow() {
 }
 bool DeviceWindow::update(double dt, double t_ros_time) {
@@ -19,6 +23,10 @@ bool DeviceWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool DeviceWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     std::string header = get_deviceheader();
     mvwprintw(get_window(), 1, 1, header.c_str());
     std::string dashed(get_screen_coordinates_pixel().width_pix - 2, '-');
@@ -58,9 +66,28 @@ bool DeviceWindow::update_window() {
     }
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
+}
+std::string DeviceWindow::pretty() {
+    std::string str = "-----Device Window-----\n";
+    if (device_list.size() == 0) {
+        str += "\tNo Devices Found.";
+    }
+    else {
+        str += get_deviceheader() + "\n";
+        std::map<std::string, DeviceData>::iterator device_it = device_list.begin();
+        while (device_it != device_list.end()) {
+            str += get_device_info(device_it->second, false) + "\n";
+            ++device_it;
+        }
+    }
+    return str;
 }
 bool DeviceWindow::new_msg(eros::resource resource_available_msg) {
     device_list_mutex.lock();
+    if (resource_available_msg.Name == "") {
+        return false;
+    }
     std::map<std::string, DeviceData>::iterator device_it;
 
     device_it = device_list.find(resource_available_msg.Name);

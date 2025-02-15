@@ -1,5 +1,9 @@
 #include "HeaderWindow/HeaderWindow.h"
 namespace eros_nodes::SystemMonitor {
+constexpr double HeaderWindow::START_X_PERC;
+constexpr double HeaderWindow::START_Y_PERC;
+constexpr double HeaderWindow::WIDTH_PERC;
+constexpr double HeaderWindow::HEIGHT_PERC;
 HeaderWindow::~HeaderWindow() {
 }
 bool HeaderWindow::new_msg(eros::ArmDisarm::State armed_state) {
@@ -15,6 +19,10 @@ bool HeaderWindow::update(double dt, double t_ros_time) {
     return status;
 }
 bool HeaderWindow::update_window() {
+    if (get_window() == nullptr) {
+        return false;
+    }
+    // GCOVR_EXCL_START
     {  // Armed State
 
         Color color;
@@ -39,5 +47,6 @@ bool HeaderWindow::update_window() {
     box(get_window(), 0, 0);
     wrefresh(get_window());
     return true;
+    // GCOVR_EXCL_STOP
 }
 }  // namespace eros_nodes::SystemMonitor
