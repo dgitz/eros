@@ -34,6 +34,7 @@ def checkDeviceFileFormat():
 def ReadSyncConfig(file_path):
     #global devicefile
     FolderList = []
+    print(file_path)
     tree = ET.parse(file_path)
     root = tree.getroot()
     for List in root:

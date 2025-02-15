@@ -11,6 +11,13 @@ CYELLOW = '\33[33m'
 CGREEN = '\33[32m'
 CBLUE = '\33[34m'
 CEND = '\033[0m'
+def sync_remote(syncconfig_file,device_name):
+    print(CGREEN + "Sync Started to: " + device_name + CEND)
+    folders = ReadSyncConfig(syncconfig_file)
+    for folder in folders:
+        if((folder.Type == 'Source') or (folder.Type == 'Config')):            
+            subprocess.call("rsync -iart " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'",shell=True)
+    print(CGREEN + "Sync Completed to: " + device_name  + CEND)
 
 def sync_remote_to_remote(syncconfig_file,origin,remote):
     print(CGREEN + "Sync From: " + origin + " To: " + remote + " Started..." + CEND)
@@ -25,14 +32,7 @@ def sync_remote_to_remote(syncconfig_file,origin,remote):
     sshProcess.stdin.close()
     print(CGREEN + "Sync From: " + origin + " To: " + remote + " Finished." + CEND)
 
-def sync_remote(syncconfig_file,device_name):
-    print(CGREEN + "Sync Started to: " + device_name + CEND)
-    syncconfig_file = "/home/davidgitz/config/SyncConfig.xml" #Bug: AB#1319
-    folders = ReadSyncConfig(syncconfig_file)
-    for folder in folders:
-        if((folder.Type == 'Source') or (folder.Type == 'Config')):            
-            subprocess.call("rsync -iart " + folder.Directory + "/* robot@" + device_name + ":" + folder.Directory + "| grep '^<' | awk '{ print $2 }'",shell=True)
-    print(CGREEN + "Sync Completed to: " + device_name  + CEND)
+
     
 
 def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
@@ -91,7 +91,7 @@ def main():
     parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,remote, [default: %default]")
     parser.add_option("-b","--build",dest="build",default=0,help="1,0 [default: %default]",type="int")
     parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
-    parser.add_option("-c","--config_dir",dest="config_dir",default="~/config/",help="Location where Config dir should be found. default=~/config")
+    parser.add_option("-c","--config_dir",dest="config_dir",default= os.environ['HOME'] + "/config/",help="Location where Config dir should be found. default=" + os.environ['HOME'] + "/config")
     (opts,args) = parser.parse_args()
     if(opts.syncmode == "all"):
         print(CRED + "Not Supported!" + CEND)
@@ -106,7 +106,7 @@ def main():
         remotes = devices
         for device in remotes:
             print(CGREEN + "Syncing Remote: " + device + CEND)
-            #sync_remote(opts.config_dir + "SyncConfig.xml",device)
+            sync_remote(opts.config_dir + "SyncConfig.xml",device)
         
     elif (opts.syncmode=="buildserver"):
         print(CRED + "Not Supported!" + CEND)

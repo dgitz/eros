@@ -8,7 +8,12 @@ Here are some basic assumptions:
 
 The following is a brief guide for setup operations on these different devices.
 
-# ARM7VL
+# ARM7VL Target
+1. Setup ssh so you don't have to keep entering permissions:
+```bash
+  ssh-keygen # If not already done
+  ssh-copy-id -i ~/.ssh/id_rsa.pub remote-user@remote-host
+```
 1. Add user to dialout group: `sudo usermod -a -G gpio <USER ACCOUNT>`
 1. Set permissions on gpio by following this link: https://www.raspberrypi.org/forums/viewtopic.php?t=8999
 1. Install the following dependencies:\
@@ -19,6 +24,7 @@ The following is a brief guide for setup operations on these different devices.
 1. Create the necessary calls to perform startup scripts:  Edit the /etc/rc.local file and add the following line:\
 `sudo /home/<USER ACCOUNT>/config/Startup/$(hostname)_Startup.sh`
 
+# NOT Supported
 ## ARMV7L Build Server
 1. Go to your workspace/src folder and clone eROS: \
   `git clone https://github.com/dgitz/eROS.git`
