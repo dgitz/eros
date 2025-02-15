@@ -88,19 +88,29 @@ def sync_buildserver(devicelist_file,syncconfig_file,device_name,build):
 # Main
 def main():
     parser = OptionParser("syncSoftware.py [options]")
-    parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,buildserver,buildserver_target, [default: %default]")
+    parser.add_option("-s","--syncmode",dest="syncmode",default="all",help="all,remote, [default: %default]")
     parser.add_option("-b","--build",dest="build",default=0,help="1,0 [default: %default]",type="int")
     parser.add_option("-d","--devices",dest="devices",default="",help="DeviceName1,DeviceName2,... [default: %default]")
     parser.add_option("-c","--config_dir",dest="config_dir",default="~/config/",help="Location where Config dir should be found. default=~/config")
     (opts,args) = parser.parse_args()
     if(opts.syncmode == "all"):
-        print(CRED + "WIP!!!" + CEND)
+        print(CRED + "Not Supported!" + CEND)
+        return
         devices = opts.devices.split(",")
         remotes = devices
         for device in remotes:
             sync_remote(opts.config_dir + "SyncConfig.xml",device)
         print(CGREEN + 'Remote Sync Finished' + CEND)
+    elif (opts.syncmode =="remote"):
+        devices = opts.devices.split(",")
+        remotes = devices
+        for device in remotes:
+            print(CGREEN + "Syncing Remote: " + device + CEND)
+            #sync_remote(opts.config_dir + "SyncConfig.xml",device)
+        
     elif (opts.syncmode=="buildserver"):
+        print(CRED + "Not Supported!" + CEND)
+        return
         devices = opts.devices.split(",")
         if(len(devices) < 1):
             print(CRED,"No Devices Specified.")
@@ -112,6 +122,8 @@ def main():
                 return        
             sync_buildserver(opts.config_dir + "DeviceList.json",opts.config_dir + "SyncArtifactConfig.xml",device,opts.build)
     elif(opts.syncmode == "buildserver_target"):
+        print(CRED + "Not Supported!" + CEND)
+        return
         devices = opts.devices.split(",")
         if(len(devices) < 2):
             print(CRED,"Not enough Devices Specified.")
