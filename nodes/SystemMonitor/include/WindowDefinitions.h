@@ -1,7 +1,7 @@
 /*! \file WindowDefinitions.h
  */
 #pragma once
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 
 #include <string>
 //! Namespace for SystemMonitor

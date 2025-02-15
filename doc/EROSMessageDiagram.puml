@@ -1,5 +1,5 @@
 @startuml
-title eROS Message Definitions
+title eros Message Definitions
 package eros {
     class armed_state <<M,#FFFF00>>
     class command_state <<M,#FFFF00>>

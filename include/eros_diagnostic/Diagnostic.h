@@ -1,7 +1,7 @@
 /*! \file Diagnostic.h
  */
 #pragma once
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 
 #include <algorithm>
 #include <string>

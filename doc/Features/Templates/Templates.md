@@ -3,7 +3,7 @@
 # Templates
 
 ## Overview
-eROS provides a few different templates that can be used to create nodes and classes that use all the eROS functionality.  
+eros provides a few different templates that can be used to create nodes and classes that use all the eros functionality.  
 
 ## Software Design
 ![](../../output/Legend.png)

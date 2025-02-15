@@ -52,7 +52,7 @@
 
 #include "Logger.h"
 #include "ResourceMonitor.h"
-#include "eROS_Definitions.h"
+#include "eros_Definitions.h"
 
 using json = nlohmann::json;
 namespace eros {

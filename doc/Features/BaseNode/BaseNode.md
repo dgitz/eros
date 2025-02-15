@@ -2,7 +2,7 @@
 
 # Base Node
 ## Overview
-The eROS Base Node is a derivable Node that adds a lot of functionality to your Nodes.
+The eros Base Node is a derivable Node that adds a lot of functionality to your Nodes.
 
 ## Software Design
 ![](../../output/Legend.png)
@@ -58,7 +58,7 @@ graph TD;
 
 ```
 
-In order for an eROS Custom Node to support this, the following must be supported in the Custom Node:
+In order for an eros Custom Node to support this, the following must be supported in the Custom Node:
 ```code
 bool changenodestate_service(eros::srv_change_nodestate::Request &req,
                              eros::srv_change_nodestate::Response &res);

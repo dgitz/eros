@@ -16,11 +16,11 @@ The following features are currently supported:
 * Node will show PID, CPU and RAM Used (in perc)
 * System Monitor is still an EROS Node, so all output file information is available.
 * Select Task (up/down) and perform the following:
-  * View Node Diagnostics (eROS Nodes Only). Press "D".
-  * View Node Firmware version (eROS Nodes Only). Press "F". 
-  * Change Node Log Level (eROS Nodes Only). Press "L" and then press 1-6 (DEBUG-FATAL).
-  * Change Node State (eROS Nodes Only). Select "N" and then press 1-9 (INITIALIZING-CRASHED).
-* View Device Information (only for Devices running the eROS Master Node)
+  * View Node Diagnostics (eros Nodes Only). Press "D".
+  * View Node Firmware version (eros Nodes Only). Press "F". 
+  * Change Node Log Level (eros Nodes Only). Press "L" and then press 1-6 (DEBUG-FATAL).
+  * Change Node State (eros Nodes Only). Select "N" and then press 1-9 (INITIALIZING-CRASHED).
+* View Device Information (only for Devices running the eros Master Node)
   * Shows Available CPU, RAM and Disk (in Percentage)
   * Shows Device Load Factor (scaled by number of processors on the device) in 1, 5 and 15 min bins.
 * Request System Snapshot (System Snapshot is made up of individual Device Snapshots).

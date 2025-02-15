@@ -3,7 +3,7 @@
 # Logger
 
 ## Overview
-The eROS Logger gives you a nice way of printing out to console and to text files, to aid in debugging your contnet.
+The eros Logger gives you a nice way of printing out to console and to text files, to aid in debugging your contnet.
 
 ## Features
 The EROS Logger has the following features:

@@ -2,7 +2,7 @@
  */
 #pragma once
 
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <eros/file.h>
 #include <math.h>
 #include <stdio.h>

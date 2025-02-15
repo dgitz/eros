@@ -90,9 +90,6 @@ TEST(BasicTest, TestOperation) {
         diag = SUT.update(0.0, 0.0);
         EXPECT_TRUE(diag.level < Level::Type::WARN);
     }
-
-    double dt = 0.1;
-    double system_time = 0.0;
     delete logger;
 }
 

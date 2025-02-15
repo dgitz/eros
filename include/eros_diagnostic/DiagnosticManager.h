@@ -1,5 +1,5 @@
 #pragma once
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 
 #include "Diagnostic.h"
 

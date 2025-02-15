@@ -2,9 +2,9 @@
 <SyncConfigFile>
     <Folders>
         <Folder>
-            <Name>eROS</Name>
+            <Name>eros</Name>
             <Type>Source</Type>
-            <Directory>~/catkin_ws/src/eROS/</Directory>
+            <Directory>~/catkin_ws/src/eros/</Directory>
             <Architecture>x86_64</Architecture>
             <Architecture>armv7l</Architecture>
             <Architecture>aarch64</Architecture>

@@ -1,5 +1,5 @@
 @startuml
-title eROS Package Diagram
+title eros Package Diagram
 package eros {
     class BaseNode #Cyan
     class BaseNodeProcess #Cyan
