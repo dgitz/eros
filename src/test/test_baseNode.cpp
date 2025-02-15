@@ -118,13 +118,17 @@ class BaseNodeTester : public eros::BaseNode
     eros_diagnostic::Diagnostic finish_initialization() {
         eros_diagnostic::Diagnostic diag = diagnostic;
         resource_available_monitor =
-            new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
+            new ResourceMonitor(node_name, ResourceMonitor::Mode::DEVICE, diag, logger);
         diag = resource_available_monitor->init();
         if (diag.level > Level::Type::WARN) {
             logger->log_diagnostic(diag);
             return diag;
         }
         return diag;
+    }
+    std::string pretty() {
+        std::string str = "";
+        return str;
     }
 
    private:
@@ -159,17 +163,6 @@ TEST(BaseNode, BasicFunctionality) {
             EXPECT_TRUE(output_str == expected_str);
             i++;
         }
-    }
-    {  // Time Checks
-        ros::Time t_now = ros::Time::now();
-        double t_dur = tester.measure_time_diff(t_now, t_now);
-        EXPECT_NEAR(t_dur, 0.0, 1e-8);
-        sleep(1.0);
-        ros::Time t_future = ros::Time::now();
-        t_dur = tester.measure_time_diff(t_now, t_future);
-        EXPECT_NEAR(t_dur, -1.0, 0.25);  // Allow for imprecise time clocks
-        t_dur = tester.measure_time_diff(t_future, t_now);
-        EXPECT_NEAR(t_dur, 1.0, 0.25);  // Allow for imprecise time clocks
     }
 }
 int main(int argc, char** argv) {

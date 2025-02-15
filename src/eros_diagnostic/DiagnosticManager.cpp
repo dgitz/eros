@@ -20,6 +20,7 @@ bool DiagnosticManager::enable_diagnostics(std::vector<DiagnosticType> diagnosti
     for (std::size_t i = 0; i < diagnostic_types.size(); ++i) {
         Diagnostic diag = root_diagnostic;
         diag.type = diagnostic_types.at(i);
+        /*
         if (diag.type == DiagnosticType::SYSTEM_RESOURCE)  // This is special, so we don't throw
                                                            // a ton of warn messages when the
                                                            // system launches.
@@ -33,6 +34,7 @@ bool DiagnosticManager::enable_diagnostics(std::vector<DiagnosticType> diagnosti
             diag.message = Message::INITIALIZING;
             diag.description = "Initializing Diagnostic.";
         }
+        */
         bool add_me = true;
         for (std::size_t j = 0; j < diagnostics.size(); ++j) {
             if (diagnostics.at(j).type == diagnostic_types.at(i)) {

@@ -1,0 +1,79 @@
+@startuml
+title Data Logger Node Sequence Diagram
+actor User as user
+participant DataLoggerNode as node
+participant DataLoggerProcess as process
+participant DataLoggerThread as logger_thread
+participant Recorder as recorder
+
+alt initialize
+    activate node
+    node -> node++: start()
+    node -> logger_thread++: run_logger()
+    logger_thread -> recorder++: run()
+    node -> node: initialize_diagnostic
+    node -> process++: DataLoggerProcess()
+    node -> node: preinitialize_basenode()
+    node -> process: enable_diagnostics()
+    node -> process: finish_initialization()
+    node -> node: finish_initialization()
+    node -> process: request_statechange(RUNNING,override=true)
+    node--
+end
+
+alt message_callback
+    alt snapshot_trigger_Callback(msg)
+        node -> node: create_snapshot_file()
+    
+    end
+end
+
+alt loops
+    alt loop1
+        node -> node++: run_loop1
+        node--
+    end
+    alt loop2
+        node -> node++: run_loop2
+        node--
+    end
+    alt loop3
+        node -> node++: run_loop3
+        node--
+    end
+    alt run_001hz
+        node -> node++: run_001hz
+        node--
+    end
+    alt run_01hz
+        node -> node++: run_001hz
+        node--
+    end
+    alt run_01hz_noisy
+        node -> node++: pretty()
+        node -> process++: pretty()
+        process --> node--: str
+        node --> node--: str
+        node -> logger:log_debug(str)
+    end
+    alt run_1hz
+        node -> process: get_latest_diagnostics()
+        process --> node: latest_diagnostics
+        node -> user: publish(latest_diagnostics)
+    end
+    alt run_10hz
+        node -> process: update(0.1, now)
+        process --> node: diag
+        alt if diag.level >= NOTICE
+            node -> logger: log_diagnostic(diag)
+        end
+        node -> process: get_diagnostics()
+        process --> node: diagnostics
+        node -> node: update_diagnostics(diagnostics)
+        node -> process: get_ready_to_arm()
+        process --> node: ready_to_arm
+        node -> node: update_ready_to_arm(ready_to_arm)
+
+    end
+end
+@enduml

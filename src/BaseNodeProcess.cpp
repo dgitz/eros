@@ -13,19 +13,6 @@ eros_diagnostic::Diagnostic BaseNodeProcess::base_update(double t_dt, double t_s
     }
     return diag;
 }
-ros::Time BaseNodeProcess::convert_time(struct timeval t_) {
-    ros::Time t;
-    t.sec = t_.tv_sec;
-    t.nsec = t_.tv_usec * 1000;
-    return t;
-}
-ros::Time BaseNodeProcess::convert_time(double t_) {
-    ros::Time t;
-    t.sec = (int64_t)t_;
-    double rem = t_ - (double)t.sec;
-    t.nsec = (int64_t)(rem * 1000000.0);
-    return t;
-}
 bool BaseNodeProcess::request_statechange(Node::State newstate, bool override) {
     Node::State current_state = node_state;
     bool state_changed = false;
@@ -112,102 +99,6 @@ bool BaseNodeProcess::request_statechange(Node::State newstate, bool override) {
     }
     return state_changed;
 }
-eros::armed_state BaseNodeProcess::convert(ArmDisarm::State v) {
-    eros::armed_state msg;
-    msg.armed_state = (uint8_t)v.state;
-    return msg;
-}
-ArmDisarm::State BaseNodeProcess::convert(eros::armed_state v) {
-    ArmDisarm::State data;
-    data.state = (ArmDisarm::Type)v.armed_state;
-    return data;
-}
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::ready_to_arm BaseNodeProcess::convert_fromptr(const eros::ready_to_arm::ConstPtr &t_ptr) {
-    eros::ready_to_arm msg;
-    msg.ready_to_arm = t_ptr->ready_to_arm;
-    msg.diag = t_ptr->diag;
-    return msg;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::heartbeat BaseNodeProcess::convert_fromptr(const eros::heartbeat::ConstPtr &t_ptr) {
-    eros::heartbeat msg;
-    msg.stamp = t_ptr->stamp;
-    msg.HostName = t_ptr->HostName;
-    msg.BaseNodeName = t_ptr->BaseNodeName;
-    msg.NodeName = t_ptr->NodeName;
-    msg.NodeState = t_ptr->NodeState;
-    return msg;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::command BaseNodeProcess::convert_fromptr(const eros::command::ConstPtr &t_ptr) {
-    eros::command cmd;
-    cmd.Command = t_ptr->Command;
-    cmd.CommandText = t_ptr->CommandText;
-    cmd.Description = t_ptr->Description;
-    cmd.Option1 = t_ptr->Option1;
-    cmd.Option2 = t_ptr->Option2;
-    cmd.Option3 = t_ptr->Option3;
-    return cmd;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::diagnostic BaseNodeProcess::convert_fromptr(const eros::diagnostic::ConstPtr &t_ptr) {
-    eros::diagnostic diag;
-    diag.Component = t_ptr->Component;
-    diag.Description = t_ptr->Description;
-    diag.DeviceName = t_ptr->DeviceName;
-    diag.DiagnosticMessage = t_ptr->DiagnosticMessage;
-    diag.DiagnosticType = t_ptr->DiagnosticType;
-    diag.Level = t_ptr->Level;
-    diag.NodeName = t_ptr->NodeName;
-    diag.SubSystem = t_ptr->SubSystem;
-    diag.System = t_ptr->System;
-    return diag;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::resource BaseNodeProcess::convert_fromptr(const eros::resource::ConstPtr &t_ptr) {
-    eros::resource msg;
-    msg.stamp = t_ptr->stamp;
-    msg.Name = t_ptr->Name;
-    msg.PID = t_ptr->PID;
-    msg.CPU_Perc = t_ptr->CPU_Perc;
-    msg.RAM_Perc = t_ptr->RAM_Perc;
-    msg.DISK_Perc = t_ptr->DISK_Perc;
-    return msg;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::loadfactor BaseNodeProcess::convert_fromptr(const eros::loadfactor::ConstPtr &t_ptr) {
-    eros::loadfactor msg;
-    msg.stamp = t_ptr->stamp;
-    msg.DeviceName = t_ptr->DeviceName;
-    msg.loadfactor = t_ptr->loadfactor;
-    return msg;
-}
-// LCOV_EXCL_STOP
-// No Obvious way to Unit test
-// LCOV_EXCL_START
-eros::command_state BaseNodeProcess::convert_fromptr(const eros::command_state::ConstPtr &t_ptr) {
-    eros::command_state msg;
-    msg.stamp = t_ptr->stamp;
-    msg.Name = t_ptr->Name;
-    msg.CurrentCommand = t_ptr->CurrentCommand;
-    msg.State = t_ptr->State;
-    msg.PercentComplete = t_ptr->PercentComplete;
-    msg.diag = t_ptr->diag;
-    return msg;
-}
-// LCOV_EXCL_STOP
 
 void BaseNodeProcess::base_cleanup() {
     return;
@@ -323,7 +214,7 @@ FileHelper::FileInfo BaseNodeProcess::write_file(std::string full_path,
 std::vector<std::string> BaseNodeProcess::get_files_indir(std::string dir) {
     std::vector<std::string> files;
     std::string ls_cmd = "ls " + dir;
-    ExecResult execResult = exec(ls_cmd.c_str(), true);
+    ExecResult execResult = eros_utility::CoreUtility::exec(ls_cmd.c_str(), true);
     std::string res = execResult.Result;
     boost::split(files, res, boost::is_any_of("\n"), boost::token_compress_on);
     for (std::vector<std::string>::iterator it = files.begin(); it != files.end();) {

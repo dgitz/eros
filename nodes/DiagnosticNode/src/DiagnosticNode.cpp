@@ -24,7 +24,7 @@ void DiagnosticNode::system_commandAction_Callback(const eros::system_commandGoa
     logger->log_diagnostic(diag);
 }
 void DiagnosticNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,
@@ -34,7 +34,7 @@ void DiagnosticNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     logger->log_diagnostic(diag);
 }
 void DiagnosticNode::diagnostic_Callback(const eros::diagnostic::ConstPtr &t_msg) {
-    eros::diagnostic eros_diag = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::diagnostic eros_diag = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = eros_diagnostic::DiagnosticUtility::convert(eros_diag);
     process->new_external_diagnostic(diag);
 }
@@ -185,9 +185,12 @@ bool DiagnosticNode::run_01hz() {
 }
 bool DiagnosticNode::run_01hz_noisy() {
     eros_diagnostic::Diagnostic diag = diagnostic;
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
-    logger->log_debug(process->pretty());
+    logger->log_debug(pretty());
     return true;
+}
+std::string DiagnosticNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool DiagnosticNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

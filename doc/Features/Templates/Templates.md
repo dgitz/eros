@@ -10,6 +10,9 @@ eROS provides a few different templates that can be used to create nodes and cla
 ### Class Diagrams
 ![](../../../sample/SampleNode/SampleNode/doc/output/SampleNodeClassDiagram.png)
 
+### Sequence Diagrams
+![](../../../sample/SampleNode/SampleNode/doc/output/SampleNodeSequenceDiagram.png)
+
 ## Usage
 ### Setup
 To use these you will need to install cookiecutter at the following:  https://cookiecutter.readthedocs.io/en/1.7.2/installation.html

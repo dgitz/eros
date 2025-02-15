@@ -75,7 +75,7 @@ class BaseNode
     /*! \struct DeviceInfo
     \brief DeviceInfo Logic
     Container and logic for DeviceInfo processing.
-*/
+    */
     struct DeviceInfo {
         DeviceInfo() : received(false) {
         }
@@ -152,6 +152,8 @@ class BaseNode
     void set_ros_rate(double t_rate) {
         ros_rate = t_rate;
     }
+    /*! \brief Reset the Base Node */
+    void base_reset();
 
     // Update Functions
     /*! \brief Main Node update section, will call all derived Node Loop Functions, and publish base
@@ -227,28 +229,14 @@ class BaseNode
         return logger;
     }
 
+    // Utility Functions
+
+    // Message Functions
     /*! \brief Update the node's ready to arm information.  This should be updated at least at 10Hz.
      */
     void update_ready_to_arm(eros::ready_to_arm v) {
         ready_to_arm = v;
     }
-
-    // Utility Functions
-    /*! \brief Measures time delay between 2 ros::Time timestamps.
-     *  Generally, if wanting to measure the time from now to a previous mark,
-     * the current timestamp should be the first parameter and the previous mark should be the 2nd
-     * parameter.
-     */
-    double measure_time_diff(ros::Time t_timer_a, ros::Time t_timer_b) {
-        double etime = t_timer_a.toSec() - t_timer_b.toSec();
-        return etime;
-    }
-
-    eros::resource convert(ResourceMonitor::ResourceInfo res_info);
-    static eros::armed_state convert_fromptr(const eros::armed_state::ConstPtr &t_ptr);
-    static eros::mode_state convert_fromptr(const eros::mode_state::ConstPtr &t_ptr);
-
-    // Message Functions
     /*! \brief Handles receiving the 1 PPS Msg. */
     void new_ppsmsg(const std_msgs::Bool::ConstPtr &t_msg);
 
@@ -275,8 +263,8 @@ class BaseNode
     /*! \brief Process an eros::mode_state. */
     void modestate_Callback(const eros::mode_state::ConstPtr &t_msg);
 
-    /*! \brief Reset the Base Node */
-    void base_reset();
+    virtual std::string pretty() = 0;
+
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();

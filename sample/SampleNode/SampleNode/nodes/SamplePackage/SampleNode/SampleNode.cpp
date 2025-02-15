@@ -23,7 +23,7 @@ void SampleNode::system_commandAction_Callback(const eros::system_commandGoalCon
     logger->log_diagnostic(diag);
 }
 void SampleNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,
@@ -143,8 +143,12 @@ bool SampleNode::run_01hz() {
 }
 bool SampleNode::run_01hz_noisy() {
     eros_diagnostic::Diagnostic diag = diagnostic;
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     return true;
+}
+std::string SampleNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool SampleNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

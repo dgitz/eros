@@ -1,4 +1,5 @@
 EROS Defines some new ROS Messages.  These are:
+![](../output/EROSMessageDiagram.png)
 
 # Command
 A message to be used to command various actions to perform.

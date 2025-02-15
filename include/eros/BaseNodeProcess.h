@@ -1,8 +1,7 @@
 /*! \file BaseNodeProcess.h
  */
 
-#ifndef EROS_BASENODEPROCESS_H
-#define EROS_BASENODEPROCESS_H
+#pragma once
 // BaseNodeProcess class
 // C System Files
 #include <stdlib.h>
@@ -46,12 +45,13 @@
 #include <eros_diagnostic/Diagnostic.h>
 #include <eros_diagnostic/DiagnosticManager.h>
 #include <eros_diagnostic/DiagnosticUtility.h>
+#include <eros_utility/ConvertUtility.h>
+#include <eros_utility/CoreUtility.h>
 
 #include <nlohmann/json.hpp>
 
 #include "Logger.h"
 #include "ResourceMonitor.h"
-#include "Utility.h"
 #include "eROS_Definitions.h"
 
 using json = nlohmann::json;
@@ -99,12 +99,12 @@ class BaseNodeProcess
             t_hostname, t_node_name, t_system, t_subsystem, t_component));
         logger = _logger;
     }
+    /*! \brief Derived Process Initialization */
+    virtual eros_diagnostic::Diagnostic finish_initialization() = 0;
     bool enable_diagnostics(std::vector<eros_diagnostic::DiagnosticType> diagnostic_types) {
         return diagnostic_manager.enable_diagnostics(diagnostic_types);
     }
 
-    /*! \brief Derived Process Initialization */
-    virtual eros_diagnostic::Diagnostic finish_initialization() = 0;
     /*! \brief Resets Process. Used for counters, timers, etc.*/
     virtual void reset() = 0;
 
@@ -122,12 +122,19 @@ class BaseNodeProcess
                                                   std::string description) {
         return diagnostic_manager.update_diagnostic(diagnostic_type, level, message, description);
     }
+    eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time);
 
     // Attribute Functions
     Node::State get_nodestate() {
         return node_state;
     }
     double get_runtime() {
+        return run_time;
+    }
+    double get_system_time() {
+        return system_time;
+    }
+    double get_run_time() {
         return run_time;
     }
     eros::ready_to_arm get_ready_to_arm() {
@@ -146,20 +153,24 @@ class BaseNodeProcess
     std::vector<eros_diagnostic::Diagnostic> get_latest_diagnostics() {
         return diagnostic_manager.get_latest_diagnostics();
     }
-    double get_system_time() {
-        return system_time;
-    }
-    double get_run_time() {
-        return run_time;
-    }
 
     Logger* get_logger() {
         return logger;
     }
 
+    // Data Functions
+
     json read_configuration(std::string device_name,
                             bool include_self = true,
                             std::string file_path = "~/config/DeviceList.json");
+
+    static std::string sanitize_path(std::string path);
+
+    static FileHelper::FileInfo read_file(std::string file_path);
+    static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
+    std::vector<std::string> get_files_indir(std::string dir);
+
+    // Message Functions
 
     //! Request a Node State Change
     /*!
@@ -171,7 +182,6 @@ class BaseNodeProcess
     */
     bool request_statechange(Node::State newstate, bool override = false);
 
-    // Message Functions
     virtual std::vector<eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg) = 0;
 
     // Support Functions
@@ -179,75 +189,14 @@ class BaseNodeProcess
      * basic checking of different variables, if they are initialized, etc. */
     virtual std::vector<eros_diagnostic::Diagnostic> check_programvariables() = 0;
 
-    //! Convert struct timeval to ros::Time
-    /*!
-      \param t Standard timeval object
-      \return Time converted to ros::Time
-    */
-    static ros::Time convert_time(struct timeval t);
-
-    //! Convert time as a float to ros::Time
-    /*!
-      \param t timestamp in seconds.
-      \return Time converted to ros::Time
-    */
-    static ros::Time convert_time(double t);
-
-    //! Convert eros::command message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    static eros::command convert_fromptr(const eros::command::ConstPtr& t_ptr);
-    static eros::ready_to_arm convert_fromptr(const eros::ready_to_arm::ConstPtr& t_ptr);
-
-    static eros::command_state convert_fromptr(const eros::command_state::ConstPtr& t_ptr);
-
-    //! Convert eros::diagnostic message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    static eros::diagnostic convert_fromptr(const eros::diagnostic::ConstPtr& t_ptr);
-
-    static eros::armed_state convert(ArmDisarm::State v);
-    static ArmDisarm::State convert(eros::armed_state v);
-    eros_diagnostic::Diagnostic base_update(double t_dt, double t_system_time);
-
-    static std::string sanitize_path(std::string path);
-
-    static FileHelper::FileInfo read_file(std::string file_path);
-    static FileHelper::FileInfo write_file(std::string full_path, char* bytes, uint64_t byte_count);
-    std::vector<std::string> get_files_indir(std::string dir);
-
     // Printing Functions
+    virtual std::string pretty() = 0;
 
     // Destructors
     virtual void cleanup() = 0;
     void base_cleanup();
 
    protected:
-    //! Convert eros::heartbeat message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    eros::heartbeat convert_fromptr(const eros::heartbeat::ConstPtr& t_ptr);
-
-    //! Convert eros::resource message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    eros::resource convert_fromptr(const eros::resource::ConstPtr& t_ptr);
-
-    //! Convert eros::loadfactor message (as received via a ROS Node) to the regular datatype
-    /*!
-      \param t_ptr The pointer to the object
-      \return The object
-    */
-    eros::loadfactor convert_fromptr(const eros::loadfactor::ConstPtr& t_ptr);
-
     //! Base Update Function of all Node Process Classes.
     /*!
       \param t_dt The delta in the sample time.
@@ -269,4 +218,3 @@ class BaseNodeProcess
     std::string homeDir;
 };
 }  // namespace eros
-#endif  // EROS_BASENODEPROCESS_H

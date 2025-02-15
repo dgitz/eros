@@ -25,7 +25,7 @@ void MasterNode::system_commandAction_Callback(const eros::system_commandGoalCon
     logger->log_diagnostic(diag);
 }
 void MasterNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,
@@ -153,7 +153,8 @@ eros_diagnostic::Diagnostic MasterNode::finish_initialization() {
                                       eros_diagnostic::Message::NOERROR,
                                       "All Configuration Files Loaded.");
 
-    resource_available_monitor = new ResourceMonitor(ResourceMonitor::Mode::DEVICE, diag, logger);
+    resource_available_monitor = new ResourceMonitor(
+        get_robotnamespace() + get_hostname(), ResourceMonitor::Mode::DEVICE, diag, logger);
     diag = resource_available_monitor->init();
     if (diag.level > Level::Type::WARN) {
         // No practical way to unit test
@@ -180,28 +181,27 @@ bool MasterNode::run_01hz() {
     return true;
 }
 bool MasterNode::run_01hz_noisy() {
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     eros_diagnostic::Diagnostic diag = resource_available_monitor->update(10.0);
     logger->log_diagnostic(diag);
     if (diag.level <= Level::Type::WARN) {
         {
-            eros::resource msg = convert(resource_available_monitor->get_resourceinfo());
+            eros::resource msg = eros_utility::ConvertUtility::convert(
+                resource_available_monitor->get_resourceinfo());
             msg.Name = get_robotnamespace() + get_hostname();
             msg.stamp = ros::Time::now();
             resource_available_pub.publish(msg);
         }
         {
-            eros::loadfactor msg;
-            std::vector<double> load_factor = resource_available_monitor->get_load_factor();
-            msg.stamp = ros::Time::now();
-            msg.DeviceName = get_robotnamespace() + get_hostname();
-            msg.loadfactor.push_back(load_factor.at(0));
-            msg.loadfactor.push_back(load_factor.at(1));
-            msg.loadfactor.push_back(load_factor.at(2));
+            eros::loadfactor msg = resource_available_monitor->get_load_factor();
             loadfactor_pub.publish(msg);
         }
     }
     return true;
+}
+std::string MasterNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool MasterNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

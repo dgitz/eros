@@ -16,12 +16,14 @@ package eros_nodes::SystemMonitor {
         +{abstract} bool new_msg(eros::loadfactor loadfactor_msg)
         +{abstract} bool has_focus()
         +{abstract} void set_focused(bool cmd_focus)
+        +{abstract} int[] get_supported_keys()
     }
     abstract BaseWindow #LimeGreen {
         +std::string get_name()
         +{abstract} bool update_window()
         +bool has_focus()
-        +void set_focused(bool cmd_focus)
+        +set_focused(bool cmd_focus)
+        +int[] get_supported_keys()
 
     }
     IWindow <|.. BaseWindow

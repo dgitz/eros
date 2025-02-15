@@ -46,6 +46,9 @@ class BaseNodeProcessTester : public BaseNodeProcess
         std::vector<eros_diagnostic::Diagnostic> diag_list;
         return diag_list;
     }
+    std::string pretty() {
+        return "";
+    }
 };
 TEST(BasicTest, TestOperation_BaseNodeProcess) {
     Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");
@@ -196,36 +199,7 @@ TEST(BasicTest, TestOperation_StateChange_Override) {
     delete logger;
     delete tester;
 }
-TEST(TestConversion, ConvertTime) {
-    {
-        double t_in = 0.0;
-        ros::Time t = BaseNodeProcess::convert_time(t_in);
-        EXPECT_EQ(t.sec, 0);
-        EXPECT_EQ(t.nsec, 0);
-    }
-    {
-        struct timeval t_in;
-        t_in.tv_sec = 0;
-        t_in.tv_usec = 0;
-        ros::Time t = BaseNodeProcess::convert_time(t_in);
-        EXPECT_EQ(t.sec, 0);
-        EXPECT_EQ(t.nsec, 0);
-    }
-}
-TEST(TestConversion, ArmedState) {
-    {
-        ArmDisarm::State in;
-        in.state = ArmDisarm::Type::ARMED;
-        eros::armed_state out = BaseNodeProcess::convert(in);
-        EXPECT_EQ((uint8_t)in.state, (uint8_t)out.armed_state);
-    }
-    {
-        eros::armed_state in;
-        in.armed_state = (uint8_t)ArmDisarm::Type::ARMED;
-        ArmDisarm::State out = BaseNodeProcess::convert(in);
-        EXPECT_EQ((uint8_t)in.armed_state, (uint8_t)out.state);
-    }
-}
+
 TEST(ConfigurationTests, ConfigurationTestCases) {
     Logger* logger = new Logger("DEBUG", "UnitTestBaseNodeProcess");
     BaseNodeProcessTester* tester = new BaseNodeProcessTester;
@@ -289,13 +263,13 @@ TEST(FileReadTests, FileReadTestCases) {
         // Failure Tests: Corrupted Files
         std::string filePath = "EmptyZip.zip";
         std::string cmd = "touch " + filePath;
-        ExecResult res = exec(cmd.c_str(), true);
+        ExecResult res = eros_utility::CoreUtility::exec(cmd.c_str(), true);
         EXPECT_FALSE(res.AnyError);
         FileHelper::FileInfo info = tester->read_file(filePath);
         EXPECT_EQ(info.fileStatus, FileHelper::FileStatus::FILE_ERROR);
         EXPECT_EQ(info.fileType, FileHelper::FileType::ZIP);
         cmd = "rm " + filePath;
-        res = exec(cmd.c_str(), true);
+        res = eros_utility::CoreUtility::exec(cmd.c_str(), true);
         EXPECT_FALSE(res.AnyError);
     }
     delete tester;

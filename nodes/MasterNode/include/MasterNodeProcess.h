@@ -11,15 +11,37 @@ class MasterNodeProcess : public eros::BaseNodeProcess
    public:
     MasterNodeProcess();
     ~MasterNodeProcess();
+    // Constants
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
+
+    // Update Functions
     eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
-    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
+
+    // Attribute Functions
+
+    // Utility Functions
+
+    // Support Functions
     std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
+
+    // Message Functions
+    std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg);
+
+    // Destructors
     void cleanup() {
         base_cleanup();
         return;
     }
+
+    // Printing Functions
+    std::string pretty() override;
 
    private:
 };

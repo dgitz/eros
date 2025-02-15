@@ -25,7 +25,7 @@ void DataLoggerNode::system_commandAction_Callback(const eros::system_commandGoa
     logger->log_diagnostic(diag);
 }
 void DataLoggerNode::command_Callback(const eros::command::ConstPtr &t_msg) {
-    eros::command cmd = BaseNodeProcess::convert_fromptr(t_msg);
+    eros::command cmd = eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
     diag = process->update_diagnostic(
         eros_diagnostic::DiagnosticType::COMMUNICATIONS,
@@ -205,6 +205,11 @@ eros_diagnostic::Diagnostic DataLoggerNode::finish_initialization() {
 void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &t_msg) {
     (void)t_msg;
     logger->log_notice("Bag File Snapshot Trigger Received.");
+    if (create_snapshot_file() == false) {
+        logger->log_warn("Unable to create Snapshot File!");
+    }
+}
+bool DataLoggerNode::create_snapshot_file() {
     std::ofstream snapshot_file;
     std::string snapshot_file_path = process->get_logdirectory() + "/BagFile_Snapshots.txt";
     snapshot_file.open(snapshot_file_path, std::ios::out | std::ios::app);
@@ -231,8 +236,10 @@ void DataLoggerNode::snapshot_trigger_Callback(const std_msgs::Empty::ConstPtr &
     // LCOV_EXCL_START
     else {
         logger->log_warn("Could not open file: " + snapshot_file_path);
+        return false;
     }
     // LCOV_EXCL_STOP
+    return true;
 }
 // Not used by Node, No way to unit test.  Still need to keep for BaseNode.
 // LCOV_EXCL_START
@@ -260,8 +267,12 @@ bool DataLoggerNode::run_01hz() {
 }
 bool DataLoggerNode::run_01hz_noisy() {
     eros_diagnostic::Diagnostic diag = diagnostic;
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     return true;
+}
+std::string DataLoggerNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool DataLoggerNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

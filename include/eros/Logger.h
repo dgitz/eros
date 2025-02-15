@@ -164,8 +164,8 @@ class Logger
                            uint64_t linenumber,
                            Level::Type level,
                            std::string tempstr);
-    bool console_print;
-    bool use_ROS_logger;
+    bool console_print{true};
+    bool use_ROS_logger{false};
 };
 }  // namespace eros
 #endif  // LOGGER_H

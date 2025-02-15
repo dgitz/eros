@@ -3,7 +3,7 @@
 #ifndef SnapshotProcess_H
 #define SnapshotProcess_H
 #include <eros/BaseNodeProcess.h>
-#include <eros/Utility.h>
+#include <eros_utility/CoreUtility.h>
 #include <tinyxml.h>
 
 #include <boost/thread.hpp>
@@ -25,37 +25,21 @@ class SnapshotProcess : public eros::BaseNodeProcess
           snapshot_progress_percent(0.0),
           holdcomplete_timer(0.0){};
     ~SnapshotProcess();
+    // Constants
     const double HOLDCOMPLETE_TIME = 5.0;
+
+    // Enums
     enum class Mode {
         UNKNOWN = 0,    /*!< Uninitialized value. */
         MASTER = 1,     /*!< The SnapshotNode is running as a Master. */
         SLAVE = 2,      /*!< The SnapshotNode is running as a Slave. */
         END_OF_LIST = 3 /*!< Last item of list. Used for Range Checks. */
     };
-
-    static Mode ModeType(std::string v) {
-        if (v == "MASTER") {
-            return Mode::MASTER;
-        }
-        else if (v == "SLAVE") {
-            return Mode::SLAVE;
-        }
-        else {
-            return Mode::UNKNOWN;
-        }
-    }
-    static std::string ModeString(Mode v) {
-        switch (v) {
-            case Mode::UNKNOWN: return "UNKNOWN"; break;
-            case Mode::MASTER: return "MASTER";
-            case Mode::SLAVE: return "SLAVE";
-            default: return ModeString(Mode::UNKNOWN); break;
-        }
-    }
+    // Structs
     /*! \struct ExecCommand
-    \brief ExecCommand container.  Holds executable commands and where there output goes for a
-    Snapshot.
-    */
+   \brief ExecCommand container.  Holds executable commands and where there output goes for a
+   Snapshot.
+   */
     struct ExecCommand {
         std::string command;
         std::string output_file;
@@ -89,7 +73,15 @@ class SnapshotProcess : public eros::BaseNodeProcess
         std::string bagfile_directory;
         std::string active_device_snapshot_completepath;
     };
+
+    // Initialization Functions
     eros::eros_diagnostic::Diagnostic finish_initialization();
+    void reset();
+
+    // Update Functions
+    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+
+    // Attribute Functions
     Mode get_mode() {
         return mode;
     }
@@ -117,25 +109,52 @@ class SnapshotProcess : public eros::BaseNodeProcess
     double get_snapshotprogress_percentage() {
         return snapshot_progress_percent;
     }
-    std::vector<eros::eros_diagnostic::Diagnostic> clear_snapshots();
     bool set_nodeHandle(ros::NodeHandle* nh, std::string _robot_namespace) {
         nodeHandle = nh;
         robot_namespace = _robot_namespace;
         return true;
     }
+
+    // Utility Functions
+
+    // Support Functions
+    std::vector<eros::eros_diagnostic::Diagnostic> createnew_snapshot();
+    std::vector<eros::eros_diagnostic::Diagnostic> clear_snapshots();
     eros::eros_diagnostic::Diagnostic load_config(std::string file_path,
                                                   std::vector<std::string> override_devicenames);
-    void reset();
-    eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time);
+    static Mode ModeType(std::string v) {
+        if (v == "MASTER") {
+            return Mode::MASTER;
+        }
+        else if (v == "SLAVE") {
+            return Mode::SLAVE;
+        }
+        else {
+            return Mode::UNKNOWN;
+        }
+    }
+    static std::string ModeString(Mode v) {
+        switch (v) {
+            case Mode::UNKNOWN: return "UNKNOWN"; break;
+            case Mode::MASTER: return "MASTER";
+            case Mode::SLAVE: return "SLAVE";
+            default: return ModeString(Mode::UNKNOWN); break;
+        }
+    }
+    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
+
+    // Message Functions
     std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command t_msg);
     std::vector<eros::eros_diagnostic::Diagnostic> new_commandstatemsg(eros::command_state t_msg);
-    std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables();
+
+    // Destructors
     void cleanup() {
         base_cleanup();
         return;
     }
-    std::string pretty();
-    std::vector<eros::eros_diagnostic::Diagnostic> createnew_snapshot();
+
+    // Printing Functions
+    std::string pretty() override;
 
    private:
     int count_files_indirectory(std::string directory, std::string filter = "");

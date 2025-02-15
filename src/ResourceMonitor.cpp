@@ -1,6 +1,10 @@
 #include <eros/ResourceMonitor.h>
+
 namespace eros {
-ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, Logger *_logger)
+ResourceMonitor::ResourceMonitor(std::string name,
+                                 Mode _mode,
+                                 eros_diagnostic::Diagnostic _diag,
+                                 Logger *_logger)
     : mode(_mode),
       architecture(Architecture::Type::UNKNOWN),
       diagnostic(_diag),
@@ -8,13 +12,15 @@ ResourceMonitor::ResourceMonitor(Mode _mode, eros_diagnostic::Diagnostic _diag, 
       initialized(false),
       run_time(0.0),
       processor_count(0) {
+    resourceInfo.process_name = name;
     resourceInfo.cpu_perc = -1.0;
     resourceInfo.disk_perc = -1.0;
     resourceInfo.ram_perc = -1.0;
     diagnostic.type = eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE;
-    load_factor.push_back(0.0);
-    load_factor.push_back(0.0);
-    load_factor.push_back(0.0);
+    load_factor.DeviceName = name;
+    load_factor.loadfactor.push_back(0.0);
+    load_factor.loadfactor.push_back(0.0);
+    load_factor.loadfactor.push_back(0.0);
 }
 ResourceMonitor::~ResourceMonitor() {
 }
@@ -48,7 +54,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::init() {
     // LCOV_EXCL_STOP
     resourceInfo.pid = ::getpid();
     try {
-        execResult = exec("nproc", true);
+        execResult = eros_utility::CoreUtility::exec("nproc", true);
         processor_count = std::atoi(execResult.Result.c_str());
     }
     // The following can't currently be checked for code coverage as it depends on the device being
@@ -112,6 +118,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::update(double t_dt) {
         diag.message = eros_diagnostic::Message::INITIALIZING_ERROR;
         diag.description = "Architecture Not Supported.";
         diag.update_count++;
+        diagnostic = diag;
         return diag;
     }
     run_time += t_dt;
@@ -129,6 +136,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::update(double t_dt) {
         // LCOV_EXCL_STOP
         diag = read_device_loadfactor();
     }
+    diagnostic = diag;
     return diag;
 }
 eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
@@ -136,10 +144,11 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
     std::string top_query =
         "top -b -n 2 -d 0.2 -p " + std::to_string(resourceInfo.pid) + " | tail -1";
     ExecResult execResult;
-    execResult = exec(top_query.c_str(), true);
+    execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
     std::string res = execResult.Result;
     std::vector<std::string> strs;
     boost::algorithm::split(strs, res, boost::is_any_of("\t "), boost::token_compress_on);
+    resourceInfo.stamp = ros::Time::now();
     if (strs.at(0) == "") {
         strs.erase(strs.begin());
     }
@@ -243,6 +252,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_process_resource_usage() {
         return diag;
     }
     // LCOV_EXCL_STOP
+    diag.level = Level::Type::INFO;
     diag.message = eros_diagnostic::Message::NOERROR;
     diag.description = "Updated.";
     diag.update_count++;
@@ -256,7 +266,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string top_query = "top -bn1 | grep '%Cpu(s)'";
                 ExecResult execResult;
-                execResult = exec(top_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
@@ -306,7 +316,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string top_query = "top -bn1 | grep 'Mem'";
                 ExecResult execResult;
-                execResult = exec(top_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> strs;
                 boost::algorithm::split(
@@ -367,7 +377,7 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_resource_availability()
             try {
                 std::string df_query = "df -h";
                 ExecResult execResult;
-                execResult = exec(df_query.c_str(), true);
+                execResult = eros_utility::CoreUtility::exec(df_query.c_str(), true);
                 std::string res = execResult.Result;
                 std::vector<std::string> lines;
                 boost::split(lines, res, boost::is_any_of("\n"), boost::token_compress_on);
@@ -437,9 +447,11 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
     std::string res;
     if (architecture != Architecture::Type::UNKNOWN) {
         try {
+            std::vector<double> load_factor_data;
+            load_factor_data.resize(3);
             std::string top_query = "top -bn1 | grep 'load average:'";
             ExecResult execResult;
-            execResult = exec(top_query.c_str(), true);
+            execResult = eros_utility::CoreUtility::exec(top_query.c_str(), true);
             std::string res = execResult.Result;
             std::vector<std::string> strs;
             boost::algorithm::split(strs, res, boost::is_any_of(", "), boost::token_compress_on);
@@ -447,17 +459,18 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
             for (std::size_t i = 0; i < strs.size(); ++i) {
                 if (strs.at(i).find("average") != std::string::npos) {
                     if ((i + 3) <= strs.size()) {
-                        load_factor.at(0) =
+                        load_factor_data.at(0) =
                             std::atof(strs.at(i + 1).c_str()) / (double)(processor_count);
-                        load_factor.at(1) =
+                        load_factor_data.at(1) =
                             std::atof(strs.at(i + 2).c_str()) / (double)processor_count;
-                        load_factor.at(2) =
+                        load_factor_data.at(2) =
                             std::atof(strs.at(i + 3).c_str()) / (double)processor_count;
                         found_me = true;
                         break;
                     }
                 }
             }
+
             // The following can't currently be checked for code coverage as it depends on the
             // device being run on.
             // LCOV_EXCL_START
@@ -467,6 +480,12 @@ eros_diagnostic::Diagnostic ResourceMonitor::read_device_loadfactor() {
                 diag.description = "Unable to process string: " + res;
                 diag.update_count++;
                 return diag;
+            }
+            else {
+                load_factor.loadfactor[0] = load_factor_data[0];
+                load_factor.loadfactor[1] = load_factor_data[1];
+                load_factor.loadfactor[2] = load_factor_data[2];
+                load_factor.stamp = ros::Time::now();
             }
             // LCOV_EXCL_STOP
         }
@@ -494,7 +513,7 @@ Architecture::Type ResourceMonitor::read_device_architecture() {
     {
         std::string cmd = "uname -m";
         ExecResult execResult;
-        execResult = exec(cmd.c_str(), true);
+        execResult = eros_utility::CoreUtility::exec(cmd.c_str(), true);
         std::string result = execResult.Result;
         std::size_t found_x86_64 = result.find("x86_64");
         std::size_t found_armv7l = result.find("armv7l");

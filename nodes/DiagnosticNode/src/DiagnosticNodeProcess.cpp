@@ -126,12 +126,16 @@ bool DiagnosticNodeProcess::new_external_diagnostic(eros_diagnostic::Diagnostic 
     else {
         diag_it->second = diag;
     }
-
+    update_diagnostic(eros_diagnostic::DiagnosticType::COMMUNICATIONS,
+                      Level::Type::INFO,
+                      eros_diagnostic::Message::NOERROR,
+                      "Received External Diagnostic");
     aggregate_it->second.update_count++;
     return true;
 }
 std::string DiagnosticNodeProcess::pretty() {
-    std::string str = "---Diagnostic Aggregates---\n";
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    str += "---Diagnostic Aggregates---\n";
     uint8_t i = 1;
     for (auto aggregate_it : diagnostic_aggregator) {
         str += "[" + std::to_string(i) + "/" + std::to_string(diagnostic_aggregator.size()) + "] " +

@@ -34,9 +34,21 @@ struct DeviceData {
     double disk_av_perc;
     std::vector<double> load_factor;
 };
+/**
+ * @brief A Window to render Device Information
+ *
+ */
 class DeviceWindow : public BaseWindow
 {
    public:
+    static constexpr double START_X_PERC =
+        55.0; /*!< What percentage of the screen to put top left corner (X) of window. */
+    static constexpr double START_Y_PERC =
+        80.0; /*!< What percentage of the screen to put top left corner (Y) of window. */
+    static constexpr double WIDTH_PERC =
+        45.0; /*!< What percentage of the screen (Width) to draw the window. */
+    static constexpr double HEIGHT_PERC =
+        20.0; /*!< What percentage of the screen (Height) to draw the window. */
     DeviceWindow(ros::NodeHandle* nodeHandle,
                  std::string robot_namespace,
                  eros::Logger* logger,
@@ -45,16 +57,17 @@ class DeviceWindow : public BaseWindow
                  uint16_t mainwindow_width)
         : BaseWindow("device_window",
                      tab_order,
-                     55.0,
-                     80.0,
-                     45.0,
-                     20.0,
+                     START_X_PERC,
+                     START_Y_PERC,
+                     WIDTH_PERC,
+                     HEIGHT_PERC,
                      nodeHandle,
                      robot_namespace,
                      logger,
                      mainwindow_height,
                      mainwindow_width) {
-        logger->log_warn("Device Header");
+        // NO Supported Keys
+
         device_window_fields.insert(
             std::pair<DeviceFieldColumn, Field>(DeviceFieldColumn::MARKER, Field("", 3)));
         device_window_fields.insert(
@@ -105,6 +118,7 @@ class DeviceWindow : public BaseWindow
     bool new_command(std::vector<WindowCommand> /* commands*/) override {  // Not Used
         return true;
     }
+    std::string pretty();
 
    private:
     bool insertDevice(eros::resource resource_data);
@@ -115,5 +129,5 @@ class DeviceWindow : public BaseWindow
     std::mutex device_list_mutex;
     std::map<DeviceFieldColumn, Field> device_window_fields;
     std::map<std::string, DeviceData> device_list;
-};  // namespace eros_nodes::SystemMonitor
+};
 }  // namespace eros_nodes::SystemMonitor
