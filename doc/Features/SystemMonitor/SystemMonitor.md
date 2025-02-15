@@ -27,20 +27,4 @@ The following features are currently supported:
 * View Aggregate of System Diagnostics (press "D" to toggle Task/System mode).
 * View Info based on a specified robot namespace
 
-## Usage Instructions:
-After building the eros application, simply run:
-```
-rosrun eros system_monitor # With no __ns, will use a root namespace.
-rosrun eros system_monitor __ns:=<NAMESPACE> # Run in a namespace, only monitors on this namespace.
-```
-
-## Software Design
-![](../../output/Legend.png)
-
-### Class Diagrams
-![](../../../nodes/SystemMonitor/doc/output/SystemMonitorUtilitiesClassDiagram.png)
-![](../../../nodes/SystemMonitor/doc/output/SystemMonitorWindowClassDiagram.png)
-![](../../../nodes/SystemMonitor/doc/output/SystemMonitorNodeClassDiagram.png)
-
-### Sequence Diagrams
-![](../../../nodes/SystemMonitor/doc/output/SystemMonitorWindowSequenceDiagram.png)
+More detailed information can be found in the [System Monitor Documentation](../../../nodes/SystemMonitor/doc/SystemMonitorNode.md).
