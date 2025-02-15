@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pid_495',['pid',['../group__eros_gae568c9ee43271492d99edc74f6836dd7.html#gae568c9ee43271492d99edc74f6836dd7',1,'eros::ResourceInfo']]],
-  ['process_5fname_496',['process_name',['../group__eros_ga5ce0983e7b2f0d5e1e3061648fbacb44.html#ga5ce0983e7b2f0d5e1e3061648fbacb44',1,'eros::ResourceInfo']]]
+  ['node_5fname_516',['node_name',['../structeros_1_1eros__diagnostic_1_1Diagnostic_ac5c9177f0ee198a7f587888a274346a3.html#ac5c9177f0ee198a7f587888a274346a3',1,'eros::eros_diagnostic::Diagnostic']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ram_5fperc_497',['ram_perc',['../group__eros_ga9e7de4d1dd699617207f3a1d750648d5.html#ga9e7de4d1dd699617207f3a1d750648d5',1,'eros::ResourceInfo']]]
+  ['pid_517',['pid',['../group__eros_gae568c9ee43271492d99edc74f6836dd7.html#gae568c9ee43271492d99edc74f6836dd7',1,'eros::ResourceInfo']]],
+  ['process_5fname_518',['process_name',['../group__eros_ga5ce0983e7b2f0d5e1e3061648fbacb44.html#ga5ce0983e7b2f0d5e1e3061648fbacb44',1,'eros::ResourceInfo']]]
 ];

@@ -75,20 +75,26 @@ $(function() {
 <div class="title">eros_nodes::SystemMonitor::BaseWindow Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Abstract class for Windows that supports some common implementation.  
+ <a href="classeros__nodes_1_1SystemMonitor_1_1BaseWindow.html#details">More...</a></p>
+
+<p><code>#include &lt;BaseWindow.h&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for eros_nodes::SystemMonitor::BaseWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SystemMonitor_1_1BaseWindow__inherit__graph.png" border="0" usemap="#eros__nodes_1_1SystemMonitor_1_1BaseWindow_inherit__map" alt="Inheritance graph"/></div>
 <map name="eros__nodes_1_1SystemMonitor_1_1BaseWindow_inherit__map" id="eros__nodes_1_1SystemMonitor_1_1BaseWindow_inherit__map">
-<area shape="rect" title=" " alt="" coords="256,201,459,243"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DeviceWindow.html" title=" " alt="" coords="507,5,709,47"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DiagnosticsWindow.html" title=" " alt="" coords="507,71,709,112"/>
+<area shape="rect" title="Abstract class for Windows that supports some common implementation." alt="" coords="256,235,459,276"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DeviceWindow.html" title="A Window to render Device Information." alt="" coords="507,5,709,47"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DiagnosticsWindow.html" title="A window to render Diagnostic Information." alt="" coords="507,71,709,112"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1HeaderWindow.html" title=" " alt="" coords="507,136,709,177"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1InstructionWindow.html" title=" " alt="" coords="507,201,709,243"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1MessageWindow.html" title=" " alt="" coords="507,267,709,308"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1NodeWindow.html" title=" " alt="" coords="507,332,709,373"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1StatusWindow.html" title=" " alt="" coords="507,397,709,439"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title=" " alt="" coords="5,201,208,243"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1TesterBaseWindow.html" title=" " alt="" coords="507,463,709,504"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title="Interface class for generic Windows." alt="" coords="5,235,208,276"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -96,8 +102,8 @@ Collaboration diagram for eros_nodes::SystemMonitor::BaseWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SystemMonitor_1_1BaseWindow__coll__graph.png" border="0" usemap="#eros__nodes_1_1SystemMonitor_1_1BaseWindow_coll__map" alt="Collaboration graph"/></div>
 <map name="eros__nodes_1_1SystemMonitor_1_1BaseWindow_coll__map" id="eros__nodes_1_1SystemMonitor_1_1BaseWindow_coll__map">
-<area shape="rect" title=" " alt="" coords="385,100,588,141"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title=" " alt="" coords="5,5,208,47"/>
+<area shape="rect" title="Abstract class for Windows that supports some common implementation." alt="" coords="385,100,588,141"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html" title="Interface class for generic Windows." alt="" coords="5,5,208,47"/>
 <area shape="rect" href="structeros__nodes_1_1SystemMonitor_1_1ScreenCoordinatePerc.html" title="ScreenCoordinatePerc container." alt="" coords="5,71,208,112"/>
 <area shape="rect" href="classeros_1_1Logger.html" title="Logger class Logger class used to write log outputs for strings and diagnostic information to console..." alt="" coords="55,137,158,163"/>
 <area shape="rect" href="structeros__nodes_1_1SystemMonitor_1_1ScreenCoordinatePixel.html" title="ScreenCoordinatePixel container." alt="" coords="5,188,208,229"/>
@@ -152,6 +158,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_window_records_ar
 <tr class="memitem:aae65d5b0098576c2bd97397dee81b24b"><td class="memItemLeft" align="right" valign="top"><a id="aae65d5b0098576c2bd97397dee81b24b"></a>
 int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_selected_record</b> ()</td></tr>
 <tr class="separator:aae65d5b0098576c2bd97397dee81b24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a148c5f22c09d0eab624ba82086115712"><td class="memItemLeft" align="right" valign="top"><a id="a148c5f22c09d0eab624ba82086115712"></a>
+std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_supported_keys</b> () override</td></tr>
+<tr class="separator:a148c5f22c09d0eab624ba82086115712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classeros__nodes_1_1SystemMonitor_1_1IWindow"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classeros__nodes_1_1SystemMonitor_1_1IWindow')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html">eros_nodes::SystemMonitor::IWindow</a></td></tr>
 <tr class="memitem:ae249d9a9866662771dcd0b96f3c3ff20 inherit pub_methods_classeros__nodes_1_1SystemMonitor_1_1IWindow"><td class="memItemLeft" align="right" valign="top"><a id="ae249d9a9866662771dcd0b96f3c3ff20"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>new_msg</b> (<a class="el" href="structeros_1_1ArmDisarm_1_1State.html">eros::ArmDisarm::State</a> armed_state)=0</td></tr>
@@ -228,6 +237,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>t_ros_time_</b> {0.
 <tr class="memitem:a77d4cd7363e9bddb101ad722d5566e62"><td class="memItemLeft" align="right" valign="top"><a id="a77d4cd7363e9bddb101ad722d5566e62"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>focused</b> {false}</td></tr>
 <tr class="separator:a77d4cd7363e9bddb101ad722d5566e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedfc1fe2589ea6350d03b395144e2bc8"><td class="memItemLeft" align="right" valign="top"><a id="aedfc1fe2589ea6350d03b395144e2bc8"></a>
+std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>supported_keys</b></td></tr>
+<tr class="separator:aedfc1fe2589ea6350d03b395144e2bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -244,7 +256,9 @@ int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>record_selected</b
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>record_count</b> {0}</td></tr>
 <tr class="separator:a77b479c9310772b36e29fc0d60b40b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Abstract class for Windows that supports some common implementation. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>nodes/SystemMonitor/include/BaseWindow.h</li>
 <li>nodes/SystemMonitor/src/BaseWindow.cpp</li>
 </ul>

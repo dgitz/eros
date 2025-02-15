@@ -72,20 +72,26 @@ $(function() {
 <div class="title">eros_nodes::SystemMonitor::IWindow Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Interface class for generic Windows.  
+ <a href="classeros__nodes_1_1SystemMonitor_1_1IWindow.html#details">More...</a></p>
+
+<p><code>#include &lt;IWindow.h&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for eros_nodes::SystemMonitor::IWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeros__nodes_1_1SystemMonitor_1_1IWindow__inherit__graph.png" border="0" usemap="#eros__nodes_1_1SystemMonitor_1_1IWindow_inherit__map" alt="Inheritance graph"/></div>
 <map name="eros__nodes_1_1SystemMonitor_1_1IWindow_inherit__map" id="eros__nodes_1_1SystemMonitor_1_1IWindow_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,201,208,243"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1BaseWindow.html" title=" " alt="" coords="256,201,459,243"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DeviceWindow.html" title=" " alt="" coords="507,5,709,47"/>
-<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DiagnosticsWindow.html" title=" " alt="" coords="507,71,709,112"/>
+<area shape="rect" title="Interface class for generic Windows." alt="" coords="5,235,208,276"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1BaseWindow.html" title="Abstract class for Windows that supports some common implementation." alt="" coords="256,235,459,276"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DeviceWindow.html" title="A Window to render Device Information." alt="" coords="507,5,709,47"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1DiagnosticsWindow.html" title="A window to render Diagnostic Information." alt="" coords="507,71,709,112"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1HeaderWindow.html" title=" " alt="" coords="507,136,709,177"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1InstructionWindow.html" title=" " alt="" coords="507,201,709,243"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1MessageWindow.html" title=" " alt="" coords="507,267,709,308"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1NodeWindow.html" title=" " alt="" coords="507,332,709,373"/>
 <area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1StatusWindow.html" title=" " alt="" coords="507,397,709,439"/>
+<area shape="rect" href="classeros__nodes_1_1SystemMonitor_1_1TesterBaseWindow.html" title=" " alt="" coords="507,463,709,504"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -128,11 +134,16 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_selectable
 <tr class="memitem:a9657d9cbbb897ecd335718d763b70792"><td class="memItemLeft" align="right" valign="top"><a id="a9657d9cbbb897ecd335718d763b70792"></a>
 virtual int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_tab_order</b> ()=0</td></tr>
 <tr class="separator:a9657d9cbbb897ecd335718d763b70792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87c3d6fdd6dd04514aa3c535f7879bc"><td class="memItemLeft" align="right" valign="top"><a id="af87c3d6fdd6dd04514aa3c535f7879bc"></a>
+virtual std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_supported_keys</b> ()=0</td></tr>
+<tr class="separator:af87c3d6fdd6dd04514aa3c535f7879bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedb397f1e75ab94cb2a2836ab1fd54d4"><td class="memItemLeft" align="right" valign="top"><a id="aedb397f1e75ab94cb2a2836ab1fd54d4"></a>
 virtual <a class="el" href="structeros__nodes_1_1SystemMonitor_1_1KeyEventContainer.html">KeyEventContainer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>new_keyevent</b> (int key)=0</td></tr>
 <tr class="separator:aedb397f1e75ab94cb2a2836ab1fd54d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Interface class for generic Windows. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>nodes/SystemMonitor/include/IWindow.h</li>
 </ul>
 </div><!-- contents -->
