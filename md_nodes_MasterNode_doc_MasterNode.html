@@ -66,15 +66,25 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1>Overview</h1>
+<p>The Master Node provides a master coordinating capability for ROS environment.</p>
 <h1>Features</h1>
+<p>The Master Node performs the following:</p><ul>
+<li>Reads device info.</li>
+<li>Creates a service to pass this device info to other nodes.</li>
+<li>Reports device resource usage availability (individual nodes report their resource usage, the master reports what's left).</li>
+<li>Reports device load factor values (1,5 and 15 min)</li>
+</ul>
 <h1>Configuration</h1>
+<ul>
+<li>1 Master Node should be ran on each device in an EROS compatible system. No special configuration is required for the Master Node.</li>
+</ul>
 <h1>Software Design</h1>
 <p><img src="../../../doc/output/Legend.png" alt="" class="inline"/></p>
 <h2>Class Diagrams</h2>
 <p><img src="output/MasterNodeClassDiagram.png" alt="" class="inline"/></p>
 <h2>Sequence Diagrams</h2>
-<p><img src="output/MasterNodeSequenceDiagram.png" alt="" class="inline"/> </p><h1>Troubleshooting</h1>
-<h1>Future Features</h1>
+<p><img src="output/MasterNodeSequenceDiagram.png" alt="" class="inline"/></p>
+<h1>Troubleshooting</h1>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

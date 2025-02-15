@@ -66,6 +66,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>For more information on the System Monitor, see ../../../doc/Features/SystemMonitor/SystemMonitor.md "System Monitor Feature"</p>
+<h1>Usage Instructions:</h1>
+<p>After building the eros application, simply run: </p><div class="fragment"><div class="line">rosrun eros system_monitor # With no __ns, will use a root namespace.</div>
+<div class="line">rosrun eros system_monitor __ns:=&lt;NAMESPACE&gt; # Run in a namespace, only monitors on this namespace.</div>
+</div><!-- fragment --><h1>Configuration</h1>
+<p>There is no configuration required for typical usage of the System Monitor.</p>
 <h1>Software Architecture</h1>
 <h2>Class Diagrams</h2>
 <p><img src="../../../doc/output/Legend.png" alt="" class="inline"/> <img src="output/SystemMonitorDefinitionClassDiagram.png" alt="" class="inline"/> <img src="output/SystemMonitorUtilityClassDiagram.png" alt="" class="inline"/> <img src="output/SystemMonitorWindowClassDiagram.png" alt="" class="inline"/> <img src="output/SystemMonitorNodeClassDiagram.png" alt="" class="inline"/></p>
