@@ -143,8 +143,12 @@ bool SampleNode::run_01hz() {
 }
 bool SampleNode::run_01hz_noisy() {
     eros_diagnostic::Diagnostic diag = diagnostic;
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     return true;
+}
+std::string SampleNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool SampleNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

@@ -87,6 +87,7 @@ class SnapshotNode : public eros::BaseNode
     void cleanup();
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
     boost::shared_ptr<ros::NodeHandle> test_sp_handle;

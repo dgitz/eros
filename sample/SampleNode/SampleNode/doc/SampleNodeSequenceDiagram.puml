@@ -1,15 +1,15 @@
 @startuml
-title Snapshot Node Sequence Diagram
+title Sample Node Sequence Diagram
 actor User as user
-participant SnapshotNode as node
-participant SnapshotNodeProcess as process
+participant SampleNode as node
+participant SampleNodeProcess as process
 participant Logger as logger
 
 alt initialize
     activate node
     node -> node++: start()
     node -> node: initialize_diagnostic
-    node -> process++: SnapshotNodeProcess()
+    node -> process++: SampleNodeProcess()
     node -> node: preinitialize_basenode()
     node -> process: enable_diagnostics()
     node -> process: finish_initialization()

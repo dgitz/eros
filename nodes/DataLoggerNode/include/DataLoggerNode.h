@@ -88,8 +88,10 @@ class DataLoggerNode : public eros::BaseNode
     void cleanup();
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
+    bool create_snapshot_file();
     eros::eros_diagnostic::Diagnostic read_launchparameters();
     DataLoggerProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;

@@ -41,6 +41,7 @@ class MasterNodeProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
 };

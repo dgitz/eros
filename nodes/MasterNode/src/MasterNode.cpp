@@ -181,7 +181,7 @@ bool MasterNode::run_01hz() {
     return true;
 }
 bool MasterNode::run_01hz_noisy() {
-    logger->log_notice("Node State: " + Node::NodeStateString(process->get_nodestate()));
+    logger->log_debug(pretty());
     eros_diagnostic::Diagnostic diag = resource_available_monitor->update(10.0);
     logger->log_diagnostic(diag);
     if (diag.level <= Level::Type::WARN) {
@@ -195,19 +195,13 @@ bool MasterNode::run_01hz_noisy() {
         {
             eros::loadfactor msg = resource_available_monitor->get_load_factor();
             loadfactor_pub.publish(msg);
-            /*
-            eros::loadfactor msg;
-            std::vector<double> load_factor = resource_available_monitor->get_load_factor();
-            msg.stamp = ros::Time::now();
-            msg.DeviceName = get_robotnamespace() + get_hostname();
-            msg.loadfactor.push_back(load_factor.at(0));
-            msg.loadfactor.push_back(load_factor.at(1));
-            msg.loadfactor.push_back(load_factor.at(2));
-            loadfactor_pub.publish(msg);
-            */
         }
     }
     return true;
+}
+std::string MasterNode::pretty() {
+    std::string str = process->pretty();
+    return str;
 }
 bool MasterNode::run_1hz() {
     std::vector<eros_diagnostic::Diagnostic> latest_diagnostics = process->get_latest_diagnostics();

@@ -190,6 +190,7 @@ class BaseNodeProcess
     virtual std::vector<eros_diagnostic::Diagnostic> check_programvariables() = 0;
 
     // Printing Functions
+    virtual std::string pretty() = 0;
 
     // Destructors
     virtual void cleanup() = 0;

@@ -1,5 +1,9 @@
 @startuml
 title Data Logger Node Class Diagram
+package ros {
+    class rosbag::RecorderOptions
+    class rosbag::Recorder
+}
 package eros {
     class BaseNode
     class BaseNodeProcess
@@ -38,6 +42,7 @@ namespace eros_nodes {
 
         -- Support Functions --
         +run_logger(DataLoggerNode* node)
+        -create_snapshot_file()
 
         -- Convert Functions --
         
@@ -47,6 +52,7 @@ namespace eros_nodes {
         +cleanup()
 
         -- Printing Functions --
+        +string pretty()
 
     }
     class DataLoggerNodeProcess #LimeGreen {
@@ -82,6 +88,7 @@ namespace eros_nodes {
         +cleanup()
 
         -- Printing Functions --
+        +string pretty()
     }
 
     BaseNode <|-- DataLoggerNode

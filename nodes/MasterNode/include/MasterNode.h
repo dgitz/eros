@@ -90,6 +90,7 @@ class MasterNode : public eros::BaseNode
     void cleanup();
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();

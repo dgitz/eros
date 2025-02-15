@@ -336,7 +336,8 @@ eros::eros_diagnostic::Diagnostic SystemMonitorProcess::new_resourceavailablemes
     return diag;
 }
 std::string SystemMonitorProcess::pretty() {
-    std::string str = "\n----- System Monitor Node Process -----\n";
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    str += "\n----- System Monitor Node Process -----\n";
     str += "Monitored Topics:Heartbeat(" +
            std::to_string((uint16_t)monitored_heartbeat_topics.size()) + ")\n";
     for (auto v : monitored_heartbeat_topics) { str += "\t" + v + "\n"; }

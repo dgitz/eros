@@ -109,7 +109,7 @@ class SystemMonitorProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
-    std::string pretty();
+    std::string pretty() override;
 
    private:
     bool kill_me{false};
