@@ -42,7 +42,7 @@ The following is a brief guide for setup operations on these different devices.
 
 # Auto Setup
 1. Go to your workspace/src/eros/ folder and run:
-`python scripts/simple_setup.py`
+`python3 scripts/simple_setup.py`
 
 # Manual Setup
 1. Create the following directories: \
