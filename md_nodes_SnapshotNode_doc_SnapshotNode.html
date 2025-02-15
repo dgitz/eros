@@ -66,16 +66,49 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1>Overview</h1>
+<p>The Snapshot Node provides the capability to capture various information on demand that can be useful for development, debugging, etc.</p>
 <h1>Features</h1>
+<ul>
+<li>Supports "Device Snapshots" and "System Snapshots". As a robot may include multiple devices, each device can generate a snapshot, and the System Snapshot is the combined snapshot of the entire system.</li>
+<li>System Commands: A configuration file is available that includes running arbitrary commands on each device and logging the relevant output. For example, you can look at CPU performance (<code>top -bn1</code>), Get the latest syslog report, get a list of all processes running (<code>ps aux</code>), etc.</li>
+<li>Files/Folders: A configurable list of files and/or folders is available that will dump whatever contents are in these into the device snapshot.</li>
+<li>Architecture Support: The configuration to define what commands, files, and folders to include in the device snapshots is defined at the Architecture level, as typically different platforms can put files in diffrent locations on the file system, have different command line support, etc.</li>
+<li>The System Snapshot includes ROS bags that are snapshotted themselves, which allows only storing bags when events occurred. NOTE that this requires running the Data Logger Node.</li>
+</ul>
 <h1>Configuration</h1>
-<h1>Software Design</h1>
+<h2>Node Configuration</h2>
+<p>An instance of the Snapshot Node should be run on each device in the ROS System. There should be 1 Master Snapshot Node and multiple Slave Snapshot Nodes. Note that the Master Snapshot Node should be run on the same device as the Data Logger Node. The specific configuration for the Master instance is: </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Mode&quot;</span>              <span class="keyword">value</span>=<span class="stringliteral">&quot;MASTER&quot;</span>/&gt; <span class="comment">&lt;!-- MASTER,SLAVE--&gt;</span></div>
+<div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Config_Directory&quot;</span> <span class="keyword">value</span>=<span class="stringliteral">&quot;~/config&quot;</span>/&gt; <span class="comment">&lt;!-- Where the Snapshot.xml file is located --&gt;</span></div>
+</div><!-- fragment --><p>And the specific configuration for each Slave instance is: </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Mode&quot;</span>              <span class="keyword">value</span>=<span class="stringliteral">&quot;SLAVE&quot;</span>/&gt; <span class="comment">&lt;!-- MASTER,SLAVE--&gt;</span></div>
+<div class="line">&lt;<span class="keywordtype">param</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Config_Directory&quot;</span> <span class="keyword">value</span>=<span class="stringliteral">&quot;~/config&quot;</span>/&gt; <span class="comment">&lt;!-- Where the Snapshot.xml file is located --&gt;</span></div>
+</div><!-- fragment --><h2>Snapshot Configuration</h2>
+<p>In the Snapshot Config xml file, add all the devices that should report a device snapshot: </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">SnapshotConfigFile</span>&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">SnapshotConfig</span>&gt;</div>
+<div class="line">        &lt;<span class="keywordtype">SnapshotDevices</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">Device</span>&gt;<span class="keyword">DevComputer1</span>&lt;/<span class="keywordtype">Device</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">Device</span>&gt;<span class="keyword">DevModule1</span>&lt;/<span class="keywordtype">Device</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">Device</span>&gt;<span class="keyword">BuildServer1</span>&lt;/<span class="keywordtype">Device</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">Device</span>&gt;<span class="keyword">ControlModule2</span>&lt;/<span class="keywordtype">Device</span>&gt;</div>
+<div class="line">            ...</div>
+<div class="line">        &lt;/<span class="keywordtype">SnapshotDevices</span>&gt;</div>
+<div class="line">        &lt;<span class="keywordtype">BagFileDirectory</span>&gt;~/<span class="keyword">storage</span>/<span class="keyword">DATALOGS</span>/&lt;/<span class="keywordtype">BagFileDirectory</span>&gt; <span class="comment">&lt;!-- Where Bag files are stored --&gt;</span></div>
+<div class="line">        &lt;<span class="keywordtype">StageDirectory</span>&gt;~/<span class="keyword">storage</span>/<span class="keyword">stage</span>/&lt;/<span class="keywordtype">StageDirectory</span>&gt;  <span class="comment">&lt;!-- Snapshot Node will create sub folders here freely!  --&gt;</span></div>
+<div class="line">        &lt;<span class="keywordtype">SystemSnapshotPath</span>&gt;~/<span class="keyword">storage</span>/<span class="keyword">SNAPSHOT</span>/<span class="keyword">SYSTEMSNAPSHOT</span>/&lt;/<span class="keywordtype">SystemSnapshotPath</span>&gt; <span class="comment">&lt;!-- Where System Snapshots will get stored. --&gt;</span></div>
+<div class="line">        &lt;<span class="keywordtype">Architecture</span> <span class="keyword">type</span>=<span class="stringliteral">&quot;X86_64&quot;</span>&gt; <span class="comment">&lt;!-- Architecture Specific Config --&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">DeviceSnapshotPath</span>&gt;~/<span class="keyword">storage</span>/<span class="keyword">SNAPSHOT</span>/<span class="keyword">DEVICESNAPSHOT</span>/&lt;/<span class="keywordtype">DeviceSnapshotPath</span>&gt; <span class="comment">&lt;!-- Where Device Snapshots will be stored. --&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">Command</span> <span class="keyword">file</span>=<span class="stringliteral">&quot;ps_log&quot;</span>&gt;<span class="keyword">ps</span> <span class="keyword">aux</span>&lt;/<span class="keywordtype">Command</span>&gt; <span class="comment">&lt;!-- System Commands to be executed and stored in Device Snapshot. Add as many entries as needed. --&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">Folder</span>&gt;~/<span class="keyword">var</span>/<span class="keyword">log</span>/<span class="keyword">output</span>/&lt;/<span class="keywordtype">Folder</span>&gt; <span class="comment">&lt;!-- Folders to copy into Device Snapshot. Add as many entries as needed. --&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">File</span>&gt;/<span class="keyword">var</span>/<span class="keyword">log</span>/<span class="keyword">syslog</span>&lt;/<span class="keywordtype">File</span>&gt; <span class="comment">&lt;!-- Files to copy into Device Snapshot. Add as many entries as needed. --&gt;</span></div>
+<div class="line">        &lt;/<span class="keywordtype">Architecture</span>&gt;</div>
+<div class="line">    &lt;/<span class="keywordtype">SnapshotConfig</span>&gt;</div>
+<div class="line">&lt;/<span class="keywordtype">SnapshotConfigFile</span>&gt;</div>
+</div><!-- fragment --><h1>Software Design</h1>
 <p><img src="../../../doc/output/Legend.png" alt="" class="inline"/></p>
 <h2>Class Diagrams</h2>
 <p><img src="output/SnapshotNodeClassDiagram.png" alt="" class="inline"/></p>
 <h2>Sequence Diagrams</h2>
 <p><img src="output/SnapshotNodeSequenceDiagram.png" alt="" class="inline"/></p>
 <h1>Troubleshooting</h1>
-<h1>Future Features</h1>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
