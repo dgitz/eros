@@ -58,7 +58,7 @@ class DiagnosticNodeProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
-    std::string pretty();
+    std::string pretty() override;
 
    private:
     std::string build_key(eros::eros_diagnostic::Diagnostic);

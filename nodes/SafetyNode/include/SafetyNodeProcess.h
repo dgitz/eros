@@ -53,9 +53,7 @@ class SafetyNodeProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
-    std::string pretty() {
-        return armed_state_manager->pretty();
-    }
+    std::string pretty() override;
 
    private:
     eros::ArmedStateManager* armed_state_manager;

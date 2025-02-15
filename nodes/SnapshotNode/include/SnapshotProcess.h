@@ -154,7 +154,7 @@ class SnapshotProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
-    std::string pretty();
+    std::string pretty() override;
 
    private:
     int count_files_indirectory(std::string directory, std::string filter = "");

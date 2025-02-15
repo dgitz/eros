@@ -126,6 +126,10 @@ class BaseNodeTester : public eros::BaseNode
         }
         return diag;
     }
+    std::string pretty() {
+        std::string str = "";
+        return str;
+    }
 
    private:
     eros::ResourceMonitor* resource_available_monitor;

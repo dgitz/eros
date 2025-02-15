@@ -75,6 +75,7 @@ class DataLoggerProcess : public eros::BaseNodeProcess
     }
 
     // Printing Functions
+    std::string pretty() override;
 
    private:
     std::string log_directory;

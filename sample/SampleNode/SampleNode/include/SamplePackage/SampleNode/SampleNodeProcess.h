@@ -19,6 +19,7 @@ class SampleNodeProcess : public eros::BaseNodeProcess
         base_cleanup();
         return;
     }
+    std::string pretty() override;
 
    private:
 };

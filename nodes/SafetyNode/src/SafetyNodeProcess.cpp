@@ -53,3 +53,8 @@ bool SafetyNodeProcess::set_ready_to_arm_signals(std::vector<std::string> signal
         diag.device_name, diag.node_name, diag.system, diag.subsystem, signals);
     return true;
 }
+std::string SafetyNodeProcess::pretty() {
+    std::string str = "Node State: " + Node::NodeStateString(get_nodestate());
+    str += armed_state_manager->pretty();
+    return str;
+}

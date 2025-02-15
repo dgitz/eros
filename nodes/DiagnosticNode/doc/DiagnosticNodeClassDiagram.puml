@@ -42,6 +42,7 @@ namespace eros_nodes {
         -- Convert Functions --
         
         -- Printing Functions --
+        +string pretty()
 
         -- Destructors --
         +cleanup()
