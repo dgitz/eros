@@ -21,7 +21,7 @@ Welcome to the EROS Wiki!
 EROS is: "Enhanced ROS".  For more information on ROS, see: https://www.ros.org/ 
 
 ## ROS Version Support
-eros will target ROS Noetic for future releases.
+eros will target ROS Noetic for current and releases.
 
 eros Support for ROS Melodic is limited.  Final planned release is [CAPTAINMARVEL02](https://github.com/fastrobotics/eros/releases/tag/CAPTAINMARVEL02) and code branch [melodic-devel](https://github.com/fastrobotics/eros/tree/melodic-devel)
 
