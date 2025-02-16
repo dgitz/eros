@@ -6,8 +6,8 @@ on:
 
 jobs:
   BuildTest:
-    runs-on: 
-      group: Default
+    runs-on: self-hosted
+      #group: Default
 
 
     steps:   
