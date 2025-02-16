@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>eROS: EROS</title>
+<title>eros: EROS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">eROS
+   <div id="projectname">eros
    </div>
   </td>
  </tr>
@@ -65,7 +65,7 @@ $(function() {
 <div class="title">EROS </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://github.com/dgitz/eros/actions/workflows/Push.yml"><object type="image/svg+xml" data="https://github.com/dgitz/eros/actions/workflows/Push.yml/badge.svg" style="pointer-events: none;">Push</object></a></p>
+<div class="textblock"><p><a href="https://github.com/fastrobotics/eros/actions/workflows/Push.yml"><object type="image/svg+xml" data="https://github.com/fastrobotics/eros/actions/workflows/Push.yml/badge.svg" style="pointer-events: none;">Push</object></a></p>
 <p><b>TOC</b></p><ul>
 <li><a href="#ros-version-support">ROS Version Support</a></li>
 <li><a href="#overview">Overview</a></li>
@@ -82,8 +82,8 @@ $(function() {
 <p><a href="https://dgitz.github.io/eros/">Source Code Documentation</a></p>
 <p>EROS is: "Enhanced ROS". For more information on ROS, see: <a href="https://www.ros.org/">https://www.ros.org/</a></p>
 <h1>ROS Version Support</h1>
-<p>eROS will target ROS Noetic for future releases.</p>
-<p>eROS Support for ROS Melodic is limited. Final planned release is <a href="https://github.com/dgitz/eros/releases/tag/CAPTAINMARVEL02">CAPTAINMARVEL02</a> and code branch <a href="https://github.com/dgitz/eros/tree/melodic-devel">melodic-devel</a></p>
+<p>eros will target ROS Noetic for future releases.</p>
+<p>eros Support for ROS Melodic is limited. Final planned release is <a href="https://github.com/fastrobotics/eros/releases/tag/CAPTAINMARVEL02">CAPTAINMARVEL02</a> and code branch <a href="https://github.com/fastrobotics/eros/tree/melodic-devel">melodic-devel</a></p>
 <h1>Overview</h1>
 <p>ROS is a great tool for developing software for robotics. However there are definitely features lacking in ROS that I have encountered over the years, starting with my first forays into ROS Diamondback back in the day. After more than 25 years of robotics development, I've found that the biggest hurdle with developing robots is knowing exactly what is going on with a robot (good or bad), in a timely fashion. <br  />
 </p>
@@ -99,9 +99,9 @@ $(function() {
 <h1>@ref doc/Features/Features.md "Features"</h1>
 <h1>Sister Repositories</h1>
 <ul>
-<li><a href="https://github.com/dgitz/robot_dev/wiki">robot_dev</a></li>
-<li><a href="https://github.com/dgitz/ros_hats/wiki">ros_hats</a></li>
-<li><a href="https://github.com/dgitz/ros_display_hats/wiki">ros_display_hats</a></li>
+<li><a href="https://github.com/fastrobotics/robot_dev/wiki">robot_dev</a></li>
+<li><a href="https://github.com/fastrobotics/ros_hats/wiki">ros_hats</a></li>
+<li><a href="https://github.com/fastrobotics/ros_display_hats/wiki">ros_display_hats</a></li>
 </ul>
 <p>I am very interested in what other people have to say about this project how they can integrate this into their applications. Please let me know about any feature requests, bugs, etc that you encounter. <br  />
 </p>
@@ -111,18 +111,18 @@ $(function() {
 <li>AArch Linux (such as a Jetson Nano)</li>
 <li>ARM7L (such as Raspberry Pi 2 or 3)</li>
 </ul>
-<p>There are currently only a few features of eROS that actually need to be compatible with these architectures:</p><ul>
+<p>There are currently only a few features of eros that actually need to be compatible with these architectures:</p><ul>
 <li>Resource Monitor</li>
 </ul>
 <p>If you would like to use this in your project on an architecture that is not currently supported (but is still ROS compliant), let me know and I'll see what I can do to help.</p>
-<p>Installation instructions for each of these supported device types are on the side, under <a href="https://github.com/dgitz/eROS/wiki/Device-Deployment">Device Deployment</a>.</p>
+<p>Installation instructions for each of these supported device types are on the side, under <a href="https://github.com/fastrobotics/eros/wiki/Device-Deployment">Device Deployment</a>.</p>
 <h1>Setup Instructions</h1>
 <h2>x86</h2>
 <p>For x86 Setup, perform the following:</p><ol type="1">
 <li>Follow the typical ROS Noetic install instructions: <a href="http://wiki.ros.org/noetic/Installation/Ubuntu">http://wiki.ros.org/noetic/Installation/Ubuntu</a></li>
 </ol>
 <ol type="1">
-<li>Go to your workspace/src folder and clone eROS: \ <code>git clone <a href="https://github.com/dgitz/eros.git">https://github.com/dgitz/eros.git</a></code></li>
+<li>Go to your workspace/src folder and clone eros: \ <code>git clone <a href="https://github.com/fastrobotics/eros.git">https://github.com/fastrobotics/eros.git</a></code></li>
 </ol>
 <ol type="1">
 <li>Run the Auto Setup Script: <code>cd eros &amp;&amp; python3 scripts/simple_setup.py</code></li>
@@ -131,7 +131,7 @@ $(function() {
 <li>Go back to your workspace directory</li>
 </ol>
 <ol type="1">
-<li>Install all dependencies, build eROS and run unit tests.\ <code>rosdep install eros</code>\ <code>catkin_make</code> \ <code>catkin_make run_tests_eros</code></li>
+<li>Install all dependencies, build eros and run unit tests.\ <code>rosdep install eros</code>\ <code>catkin_make</code> \ <code>catkin_make run_tests_eros</code></li>
 </ol>
 <ol type="1">
 <li>Setup <a href="https://wiki.ros.org/ROS/NetworkSetup">ROS Network Environment</a>.</li>

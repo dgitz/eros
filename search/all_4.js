@@ -7,7 +7,7 @@ var searchData=
   ['entire_5fsubsystem_95',['ENTIRE_SUBSYSTEM',['../group__eros_ga34a61840c9cd6ede13ed123e6facf338.html#gga34a61840c9cd6ede13ed123e6facf338a69a6f1fd6022dae1896ebd34f71d5a17',1,'eros::System']]],
   ['entire_5fsystem_96',['ENTIRE_SYSTEM',['../group__eros_ga3adcdfcbabd1045cf45829dff620b1ab.html#gga3adcdfcbabd1045cf45829dff620b1aba14f1f77bc31384d949bda4170d3c8477',1,'eros::System']]],
   ['eros_97',['eros',['../namespaceeros.html',1,'eros'],['../group__eros.html',1,'(Global Namespace)']]],
-  ['eros_5fdefinitions_2eh_98',['eROS_Definitions.h',['../eROS__Definitions_8h.html',1,'']]],
+  ['eros_5fdefinitions_2eh_98',['eros_Definitions.h',['../eros__Definitions_8h.html',1,'']]],
   ['eros_5fdiagnostic_99',['eros_diagnostic',['../namespaceeros_1_1eros__diagnostic.html',1,'eros']]],
   ['eros_5fnodes_100',['eros_nodes',['../namespaceeros__nodes.html',1,'eros_nodes'],['../group__eros__nodes.html',1,'(Global Namespace)']]],
   ['eros_5futility_101',['eros_utility',['../namespaceeros_1_1eros__utility.html',1,'eros']]],
