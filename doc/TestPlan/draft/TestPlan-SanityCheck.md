@@ -15,7 +15,7 @@
 cd ~/git/
 rm -rf test_workspaces/
 mkdir -p test_workspaces/catkin_ws/src/ && cd test_workspaces/catkin_ws/src/
-git clone https://github.com/dgitz/eros
+git clone https://github.com/fastrobotics/eros
 git checkout <EROS_BRANCH>
 git branch
 ```

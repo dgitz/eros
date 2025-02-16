@@ -29,7 +29,7 @@ rosinstall_generator ros_comm rosbag actionlib sensor_msgs rosunit --rosdistro n
 # NOT Supported
 ## ARMV7L Build Server
 1. Go to your workspace/src folder and clone eros: \
-  `git clone https://github.com/dgitz/eros.git`
+  `git clone https://github.com/fastrobotics/eros.git`
 1. Perform either [Auto Setup](#auto-setup) or [Manual Setup](#manual-setup)
 1. Go back to your catkin_ws directory
 1. Install all dependencies, build eros and run unit tests.\
@@ -38,8 +38,8 @@ rosinstall_generator ros_comm rosbag actionlib sensor_msgs rosunit --rosdistro n
   `catkin_make run_tests_eros`
 ## ARMV7L No Build Target
 1. Go to your workspace/src folder and clone eros: \
-  `git clone --branch small_target https://github.com/dgitz/eros.git`\
-  `git clone --branch small_target https://github.com/dgitz/ros_hats.git`
+  `git clone --branch small_target https://github.com/fastrobotics/eros.git`\
+  `git clone --branch small_target https://github.com/fastrobotics/ros_hats.git`
 1. Go back to your catkin_ws directory
 1. Install all dependencies, build eros and run unit tests.\
   `rosdep install eros`\
