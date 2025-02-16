@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "eROS_Definitions.h"
+#include "eros_Definitions.h"
 
 #ifdef ROS_INSTALLED
 #include <ros/console.h>

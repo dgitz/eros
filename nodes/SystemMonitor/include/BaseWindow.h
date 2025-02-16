@@ -1,7 +1,7 @@
 #pragma once
 #include <curses.h>
 #include <eros/Logger.h>
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <eros/heartbeat.h>
 #include <eros/srv_change_nodestate.h>
 #include <eros/srv_firmware.h>

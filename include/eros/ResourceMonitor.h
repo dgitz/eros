@@ -2,7 +2,7 @@
  */
 #pragma once
 #include <eros/Logger.h>
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <eros/loadfactor.h>
 #include <eros_diagnostic/Diagnostic.h>
 #include <eros_utility/CoreUtility.h>

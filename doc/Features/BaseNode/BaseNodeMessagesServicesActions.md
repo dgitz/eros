@@ -4,7 +4,7 @@ A Heartbeat is published at approximately 10 Hz and includes the following infor
  - The HostName of the device the node is running on.
  - The Base NodeName of the node.
  - The actual NodeName of the node.
- - The current Node::State (defined in eROS_Definitions.h)
+ - The current Node::State (defined in eros_Definitions.h)
 
 Example
 ```
@@ -20,7 +20,7 @@ NodeState: 4
 ```
 
 # Get Node Diagnostics (Service)
-Get the current Node Diagnostics.  A request is made with the following parameters:  Minimum Level and Diagnostic Type.  See eROS_Definitions.h for more info.  
+Get the current Node Diagnostics.  A request is made with the following parameters:  Minimum Level and Diagnostic Type.  See eros_Definitions.h for more info.  
 
 * Use 0 and 0 to to get all diagnostics reported by the node.
 * Use the specific values to filter on (Minimum Level or Diagnostic Type).

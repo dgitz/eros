@@ -7,7 +7,7 @@ Used to sync software to different devices.  Here are some features:
 
 # Configuration
 1. Create a config directory (if not already done).  Default: `/home/robot/config/`
-1. Copy the file "SyncConfig.xml" from the eROS/config/ directory to this new directory.
+1. Copy the file "SyncConfig.xml" from the eros/config/ directory to this new directory.
 1. Add other Folder xml tags as needed to this file:
   * `Name` is a user defined Name, does not have to match anything.
   * `Type` is one of the following: "Config","Source","Binary".

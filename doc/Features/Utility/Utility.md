@@ -1,5 +1,5 @@
 # Overview
-eROS Provides a few Utilities to aid in your development.
+eros Provides a few Utilities to aid in your development.
 
 # Software Architecture
 ![](../../output/Legend.png)

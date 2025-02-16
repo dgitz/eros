@@ -6,7 +6,7 @@
 #include <eros/command.h>
 #include <eros/command_state.h>
 #include <eros/diagnostic.h>
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <eros/file.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>

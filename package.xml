@@ -2,7 +2,7 @@
 <package format="2">
     <name>eros</name>
     <version>0.0.0</version>
-    <description>The eROS package</description>
+    <description>The eros package</description>
     <maintainer email="davidgitz@gmail.com">David Gitz</maintainer>
     <license>MIT</license>
     

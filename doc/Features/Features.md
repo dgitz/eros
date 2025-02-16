@@ -1,7 +1,7 @@
 [README](../../README.md) 
 
-# eROS Features
-eROS has different features to help make your robot more robust.  Here is some documentation.
+# eros Features
+eros has different features to help make your robot more robust.  Here is some documentation.
 
 | Status | Feature |
 | --- | --- |

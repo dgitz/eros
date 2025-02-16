@@ -106,7 +106,7 @@ Applies To:
 `roslaunch eros launch_master.launch`
 
 >>> Let run for at least 4 hours, Then:
-Follow: [Log Analysis](https://github.com/dgitz/eros/wiki/LogAnalysis) and Save Images to Wiki
+Follow: [Log Analysis](https://github.com/fastrobotics/eros/wiki/LogAnalysis) and Save Images to Wiki
 
 
 | Test | Description | Checks |

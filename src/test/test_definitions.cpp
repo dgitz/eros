@@ -1,6 +1,6 @@
 /*! \file test_definitions.cpp
  */
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
 using namespace eros;

@@ -1,6 +1,6 @@
 #pragma once
 #include <eros/command_state.h>
-#include <eros/eROS_Definitions.h>
+#include <eros/eros_Definitions.h>
 #include <eros/heartbeat.h>
 #include <eros/loadfactor.h>
 #include <eros/resource.h>

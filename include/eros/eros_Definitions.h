@@ -1,4 +1,4 @@
-/*! \file eROS_Definitions.h
+/*! \file eros_Definitions.h
  */
 
 #ifndef EROSDEFINITIONS_H

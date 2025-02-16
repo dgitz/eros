@@ -1,1 +1,1 @@
-A Template to use eROS content to generate a ROS Node.
+A Template to use eros content to generate a ROS Node.
