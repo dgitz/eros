@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.8.3)
 project(eros)
 ## Compile as C++11, supported in ROS Kinetic and newer
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage -fpermissive ${WARNING_FLAGS}")
+if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL armv7l)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DARCHITECTURE_ARMV7L")
+endif()
 add_definitions(-std=c++11 -Wall -Wextra -Wno-switch)
 find_package(catkin REQUIRED COMPONENTS
   roscpp

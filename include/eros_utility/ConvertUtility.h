@@ -37,8 +37,6 @@ class ConvertUtility
     */
     static ros::Time convert_time(double t);
 
-    static ros::Time convert_time(timestamp_t t_);
-
     //! Convert eros::command message (as received via a ROS Node) to the regular datatype
     /*!
       \param t_ptr The pointer to the object
