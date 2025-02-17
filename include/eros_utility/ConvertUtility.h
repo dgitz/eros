@@ -15,6 +15,7 @@
 #include <eros/resource.h>
 #include <eros/uptime.h>
 #include <std_msgs/Bool.h>
+#include <time.h>
 
 #include <string>
 
@@ -35,6 +36,8 @@ class ConvertUtility
       \return Time converted to ros::Time
     */
     static ros::Time convert_time(double t);
+
+    static ros::Time convert_time(timestamp_t t_);
 
     //! Convert eros::command message (as received via a ROS Node) to the regular datatype
     /*!
