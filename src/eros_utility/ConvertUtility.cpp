@@ -14,6 +14,7 @@ ros::Time ConvertUtility::convert_time(double t_) {
     t.nsec = (int64_t)(rem * 1000000.0);
     return t;
 }
+
 eros::armed_state ConvertUtility::convert(ArmDisarm::State v) {
     eros::armed_state msg;
     msg.armed_state = (uint8_t)v.state;

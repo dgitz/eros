@@ -15,6 +15,7 @@
 #include <eros/resource.h>
 #include <eros/uptime.h>
 #include <std_msgs/Bool.h>
+#include <time.h>
 
 #include <string>
 
